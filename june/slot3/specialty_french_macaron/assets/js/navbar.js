@@ -217,7 +217,10 @@
     function handleCartClick() {
       // Cart button bounce animation
       this.classList.add('cart-bounce');
-      setTimeout(() => this.classList.remove('cart-bounce'), 400);
+      setTimeout(() => {
+        this.classList.remove('cart-bounce');
+        window.location.href = `${base}/pages/services.html`;
+      }, 400);
     }
 
     if (cartDesktop) cartDesktop.addEventListener('click', handleCartClick);
