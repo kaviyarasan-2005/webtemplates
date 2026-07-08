@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Create your LeatherCraft Bindery account — start ordering custom leather journals, track shipments, and save your bespoke designs." />
+  <title>Sign Up | LeatherCraft Bindery</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'><rect x='4' y='6' width='5' height='32' rx='2' fill='%232F5D50'/><rect x='9' y='4' width='28' height='36' rx='3' fill='%232F5D50'/><rect x='16' y='14' width='16' height='2' rx='1' fill='%23C4A962'/></svg>" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <link rel="stylesheet" href="../assets/css/animations.css" />
+  <link rel="stylesheet" href="../assets/css/navbar.css" />
+  <link rel="stylesheet" href="../assets/css/footer.css" />
+  <link rel="stylesheet" href="../assets/css/auth.css" />
+  <style>
+    .auth-page-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a3a30 0%, #2a5444 45%, #3d7a69 100%);
+    }
+
+    .auth-page-wrap::before,
+    .auth-page-wrap::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .auth-page-wrap::before {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(196,169,98,0.15) 0%, transparent 70%);
+      top: -80px;
+      right: -100px;
+      animation: float 9s ease-in-out infinite;
+    }
+    .auth-page-wrap::after {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(47,93,80,0.4) 0%, transparent 70%);
+      bottom: -60px;
+      left: -80px;
+      animation: float 11s ease-in-out infinite reverse;
+    }
+
+    .auth-inner {
+      position: relative;
+      z-index: 2;
+      padding: var(--space-6);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-card {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(20px) saturate(1.6);
+      -webkit-backdrop-filter: blur(20px) saturate(1.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 24px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.2);
+      padding: clamp(2rem, 5vw, 3.5rem);
+      width: min(480px, 100%);
+      text-align: center;
+      animation: fade-in-up 0.7s ease both;
+    }
+
+    .auth-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      margin-bottom: 2rem;
+    }
+
+    .auth-logo-icon {
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+
+    .auth-logo-name {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--antique-gold);
+      letter-spacing: -0.02em;
+    }
+
+    .auth-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(196,169,98,0.8);
+      margin-bottom: 0.5rem;
+    }
+
+    .auth-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .auth-subtitle {
+      font-size: 0.9rem;
+      color: rgba(248,245,238,0.65);
+      margin-bottom: 2rem;
+    }
+
+    .auth-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--antique-gold);
+      margin: 0 auto 2rem;
+      border-radius: 2px;
+      opacity: 0.7;
+    }
+
+    .auth-form {
+      text-align: left;
+    }
+
+    .auth-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .auth-form-row { grid-template-columns: 1fr; }
+    }
+
+    .auth-form-group {
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+
+    .auth-form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(248,245,238,0.7);
+      margin-bottom: 0.5rem;
+    }
+
+    .auth-form-input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    }
+
+    .auth-form-input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+
+    .auth-form-input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.1);
+      border-color: var(--antique-gold);
+      box-shadow: 0 0 0 3px rgba(196,169,98,0.15);
+    }
+
+    .auth-form-input.is-error {
+      border-color: #e05c5c;
+    }
+
+    .auth-error-msg {
+      display: none;
+      font-size: 0.75rem;
+      color: #e05c5c;
+      margin-top: 0.4rem;
+    }
+
+    .auth-form-input.is-error + .auth-error-msg {
+      display: block;
+    }
+
+    .auth-password-strength {
+      margin-top: 0.4rem;
+      font-size: 0.72rem;
+      color: rgba(248,245,238,0.5);
+    }
+
+    .auth-strength-bar {
+      height: 3px;
+      border-radius: 2px;
+      margin-top: 0.3rem;
+      background: rgba(255,255,255,0.1);
+      overflow: hidden;
+    }
+
+    .auth-strength-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 2px;
+      transition: width 0.3s, background 0.3s;
+    }
+
+    .auth-checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .auth-checkbox {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--color-primary);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .auth-checkbox-label {
+      font-size: 0.82rem;
+      color: rgba(248,245,238,0.65);
+      line-height: 1.5;
+    }
+
+    .auth-checkbox-label a {
+      color: var(--antique-gold);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .auth-checkbox-label a:hover {
+      color: #fff;
+    }
+
+    .auth-submit-btn {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--color-primary);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+    }
+
+    .auth-submit-btn:hover {
+      background: var(--color-primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(47,93,80,0.45);
+    }
+
+    .auth-submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Perks strip */
+    .auth-perks {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .auth-perk {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      background: rgba(196,169,98,0.1);
+      border: 1px solid rgba(196,169,98,0.2);
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: rgba(196,169,98,0.9);
+      letter-spacing: 0.04em;
+    }
+
+    .auth-footer-text {
+      margin-top: 1.75rem;
+      font-size: 0.85rem;
+      color: rgba(248,245,238,0.55);
+      text-align: center;
+    }
+
+    .auth-footer-text a {
+      color: var(--antique-gold);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .auth-footer-text a:hover {
+      color: #fff;
+    }
+
+    /* ── Floating auth page controls (theme/RTL toggles) ── */
+    .auth-controls {
+      position: fixed;
+      top: 1rem;
+      inset-inline-end: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+
+    .auth-ctrl-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: rgba(248, 245, 238, 0.85);
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .auth-ctrl-btn:hover {
+      background: rgba(196, 169, 98, 0.2);
+      border-color: rgba(196, 169, 98, 0.5);
+      color: #fff;
+    }
+
+    .auth-rtl-btn { width: auto; padding-inline: 0.75rem; }
+
+    [data-theme="light"] .auth-theme-btn .icon-sun  { display: none; }
+    [data-theme="light"] .auth-theme-btn .icon-moon { display: block; }
+    [data-theme="dark"]  .auth-theme-btn .icon-moon { display: none; }
+    [data-theme="dark"]  .auth-theme-btn .icon-sun  { display: block; }
+
+    /* ══════════════════════════════════
+       LIGHT MODE OVERRIDES
+    ══════════════════════════════════ */
+    [data-theme="light"] .auth-page-wrap {
+      background: linear-gradient(135deg, #c0d9ce 0%, #d5e8de 45%, #edf5f0 100%);
+    }
+
+    [data-theme="light"] .auth-page-wrap::before {
+      background: radial-gradient(circle, rgba(196,169,98,0.12) 0%, transparent 70%);
+    }
+
+    [data-theme="light"] .auth-page-wrap::after {
+      background: radial-gradient(circle, rgba(47,93,80,0.12) 0%, transparent 70%);
+    }
+
+    [data-theme="light"] .auth-card {
+      background: rgba(255, 255, 255, 0.82);
+      border-color: rgba(47, 93, 80, 0.15);
+      box-shadow: 0 32px 80px rgba(30,61,52,0.15), 0 8px 24px rgba(30,61,52,0.08);
+    }
+
+    [data-theme="light"] .auth-logo-name {
+      color: #2f5d50;
+    }
+
+    [data-theme="light"] .auth-eyebrow {
+      color: rgba(47, 93, 80, 0.75);
+    }
+
+    [data-theme="light"] .auth-title {
+      color: #1e3d34;
+    }
+
+    [data-theme="light"] .auth-subtitle {
+      color: rgba(30, 61, 52, 0.65);
+    }
+
+    [data-theme="light"] .auth-divider {
+      background: #2f5d50;
+    }
+
+    [data-theme="light"] .auth-perk {
+      background: rgba(47, 93, 80, 0.08);
+      border-color: rgba(47, 93, 80, 0.2);
+      color: #2f5d50;
+    }
+
+    [data-theme="light"] .auth-form-label {
+      color: rgba(30, 61, 52, 0.75);
+    }
+
+    [data-theme="light"] .auth-form-input {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(47, 93, 80, 0.22);
+      color: #1e3d34;
+    }
+
+    [data-theme="light"] .auth-form-input::placeholder {
+      color: rgba(47, 93, 80, 0.35);
+    }
+
+    [data-theme="light"] .auth-form-input:focus {
+      background: #fff;
+      border-color: #2f5d50;
+      box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.12);
+    }
+
+    [data-theme="light"] .auth-password-strength {
+      color: rgba(30, 61, 52, 0.6);
+    }
+
+    [data-theme="light"] .auth-strength-bar {
+      background: rgba(47, 93, 80, 0.12);
+    }
+
+    [data-theme="light"] .auth-checkbox-label {
+      color: rgba(30, 61, 52, 0.7);
+    }
+
+    [data-theme="light"] .auth-checkbox-label a {
+      color: #2f5d50;
+    }
+
+    [data-theme="light"] .auth-footer-text {
+      color: rgba(30, 61, 52, 0.6);
+    }
+
+    [data-theme="light"] .auth-footer-text a {
+      color: #2f5d50;
+    }
+
+    [data-theme="light"] .auth-ctrl-btn {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: rgba(47, 93, 80, 0.2);
+      color: #2f5d50;
+    }
+
+    [data-theme="light"] .auth-ctrl-btn:hover {
+      background: rgba(47, 93, 80, 0.1);
+      border-color: rgba(47, 93, 80, 0.4);
+      color: #1e3d34;
+    }
+  </style>
+  <script src="../assets/js/theme.js"></script>
+</head>
+
+<main id="main-content">
+
+  <!-- Floating Controls -->
+  <div class="auth-controls" role="toolbar" aria-label="Page controls">
+    <button class="auth-ctrl-btn auth-rtl-btn" id="rtlToggle" aria-label="Switch to RTL layout" title="Switch to right-to-left layout">
+      <span>RTL</span>
+    </button>
+    <button class="auth-ctrl-btn auth-theme-btn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </button>
+  </div>
+  <div class="auth-page-wrap">
+    <div class="auth-inner">
+      <div class="auth-card" role="main">
+
+        <!-- Logo -->
+        <a href="../index.html" class="auth-logo" aria-label="LeatherCraft Bindery — Home">
+          <img src="../assets/leather_logo.png" alt="LeatherCraft Logo" class="auth-logo-icon">
+          <span class="auth-logo-name">LeatherCraft</span>
+        </a>
+
+        <p class="auth-eyebrow">Join the Craft</p>
+        <h1 class="auth-title">Create Account</h1>
+        <p class="auth-subtitle">Start your artisan journal journey today.</p>
+        <div class="auth-divider"></div>
+
+        <!-- Perks -->
+        <div class="auth-perks" aria-label="Account benefits">
+          <span class="auth-perk">✦ Order Tracking</span>
+          <span class="auth-perk">✦ Saved Designs</span>
+          <span class="auth-perk">✦ Member Discounts</span>
+        </div>
+
+        <!-- Signup Form -->
+        <form class="auth-form" id="signupForm" novalidate aria-label="Sign up form">
+
+          <!-- Name Row -->
+          <div class="auth-form-row">
+            <div class="auth-form-group">
+              <label class="auth-form-label" for="signupFirstName">First Name</label>
+              <input
+                class="auth-form-input"
+                type="text"
+                id="signupFirstName"
+                name="first_name"
+                placeholder="Elena"
+                autocomplete="given-name"
+                required
+              />
+              <span class="auth-error-msg" id="signupFirstNameErr" role="alert">First name is required.</span>
+            </div>
+            <div class="auth-form-group">
+              <label class="auth-form-label" for="signupLastName">Last Name</label>
+              <input
+                class="auth-form-input"
+                type="text"
+                id="signupLastName"
+                name="last_name"
+                placeholder="Marsh"
+                autocomplete="family-name"
+                required
+              />
+              <span class="auth-error-msg" id="signupLastNameErr" role="alert">Last name is required.</span>
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="signupEmail">Email Address</label>
+            <input
+              class="auth-form-input"
+              type="email"
+              id="signupEmail"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+            <span class="auth-error-msg" id="signupEmailErr" role="alert">Please enter a valid email address.</span>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="signupPassword">Password</label>
+            <input
+              class="auth-form-input"
+              type="password"
+              id="signupPassword"
+              name="password"
+              placeholder="At least 8 characters"
+              autocomplete="new-password"
+              required
+              minlength="8"
+            />
+            <span class="auth-error-msg" id="signupPasswordErr" role="alert">Password must be at least 8 characters.</span>
+            <div class="auth-password-strength" id="passwordStrengthLabel" aria-live="polite"></div>
+            <div class="auth-strength-bar" aria-hidden="true">
+              <div class="auth-strength-fill" id="passwordStrengthBar"></div>
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="signupConfirmPassword">Confirm Password</label>
+            <input
+              class="auth-form-input"
+              type="password"
+              id="signupConfirmPassword"
+              name="confirm_password"
+              placeholder="Repeat your password"
+              autocomplete="new-password"
+              required
+            />
+            <span class="auth-error-msg" id="signupConfirmPasswordErr" role="alert">Passwords do not match.</span>
+          </div>
+
+          <div class="auth-checkbox-group">
+            <input type="checkbox" class="auth-checkbox" id="signupTerms" name="terms" required />
+            <label class="auth-checkbox-label" for="signupTerms">
+              I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I may receive occasional emails about new collections and exclusive offers.
+            </label>
+          </div>
+
+          <button type="submit" class="auth-submit-btn" id="signupSubmitBtn">Create My Account</button>
+        </form>
+
+        <p class="auth-footer-text">
+          Already have an account? <a href="login.html">Sign in here</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
