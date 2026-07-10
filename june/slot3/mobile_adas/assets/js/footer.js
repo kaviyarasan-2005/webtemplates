@@ -88,8 +88,7 @@
     </footer>
   `;
 
-  document.addEventListener('DOMContentLoaded', () => {
-    // Check if it's a dashboard page - do not inject default footer
+  const initFooter = () => {
     const path = window.location.pathname;
     const page = path.split('/').pop() || 'index.html';
     if (page.includes('dashboard')) {
@@ -103,9 +102,14 @@
       document.body.insertAdjacentHTML('beforeend', footerHtml);
     }
 
-    // Refresh icons
     if (window.lucide) {
       window.lucide.createIcons();
     }
-  });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFooter);
+  } else {
+    initFooter();
+  }
 })();

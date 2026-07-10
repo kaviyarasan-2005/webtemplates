@@ -105,13 +105,9 @@
     </header>
   `;
 
-  // Inject navbar as first child of body or before page-hero / main-content
-  document.addEventListener('DOMContentLoaded', () => {
-    // If it's a dashboard page, it might have its own header or layout. Let's still inject if needed, or check if the layout requires it.
-    // Dashboard pages usually have a custom layout with sidebar, but let's make sure the script runs nicely.
+  const initNavbar = () => {
     const isDashboard = page.includes('dashboard');
     if (isDashboard) {
-      // Dashboards might not need the standard site navbar, or they have a specialized dashboard header
       return;
     }
 
@@ -122,9 +118,14 @@
       document.body.insertAdjacentHTML('afterbegin', navbarHtml);
     }
 
-    // Refresh icons
     if (window.lucide) {
       window.lucide.createIcons();
     }
-  });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavbar);
+  } else {
+    initNavbar();
+  }
 })();
