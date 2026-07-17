@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MediCare Plus Admin Dashboard — Manage orders, inventory, customers, and pharmacy operations.">
+  <title>Admin Dashboard — MediCare Plus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages/dashboard.css">
+  <script>(function(){const t=localStorage.getItem('medicare-theme');const d=localStorage.getItem('medicare-dir');if(t)document.documentElement.setAttribute('data-theme',JSON.parse(t));else if(window.matchMedia('(prefers-color-scheme:dark)').matches)document.documentElement.setAttribute('data-theme','dark');if(d){const dir=JSON.parse(d);document.documentElement.setAttribute('dir',dir);document.documentElement.setAttribute('lang',dir==='rtl'?'ar':'en');}})();</script>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="dashboard-layout">
+
+    <!-- ── ADMIN SIDEBAR ─────────────────────────────────────── -->
+    <aside class="dashboard-sidebar" aria-label="Admin dashboard navigation">
+      <div class="user-profile-card">
+        <div class="user-avatar" aria-hidden="true"><i class="fas fa-shield-halved"></i></div>
+        <div class="user-name">Dr. Arun Mehta</div>
+        <div class="user-role">Administrator</div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Admin menu" role="navigation">
+        <a class="sidebar-nav__link is-active" href="./dashboard-admin.html" aria-current="page">
+          <i class="fas fa-gauge" aria-hidden="true"></i> Overview
+        </a>
+
+        <div class="sidebar-nav__group-title">Operations</div>
+        <a class="sidebar-nav__link" href="#" aria-label="Manage all orders">
+          <i class="fas fa-box" aria-hidden="true"></i> Orders
+          <span class="sidebar-nav__badge" aria-label="12 pending orders">12</span>
+        </a>
+        <a class="sidebar-nav__link" href="#" aria-label="Review prescription uploads">
+          <i class="fas fa-file-prescription" aria-hidden="true"></i> Prescriptions
+          <span class="sidebar-nav__badge" aria-label="5 pending prescriptions">5</span>
+        </a>
+        <a class="sidebar-nav__link" href="#" aria-label="Manage medicine inventory">
+          <i class="fas fa-warehouse" aria-hidden="true"></i> Inventory
+        </a>
+        <a class="sidebar-nav__link" href="#" aria-label="Manage delivery schedule">
+          <i class="fas fa-truck-fast" aria-hidden="true"></i> Deliveries
+        </a>
+
+        <div class="sidebar-nav__group-title">Customers</div>
+        <a class="sidebar-nav__link" href="#" aria-label="Manage customer accounts">
+          <i class="fas fa-users" aria-hidden="true"></i> Customers
+        </a>
+        <a class="sidebar-nav__link" href="#" aria-label="View customer support tickets">
+          <i class="fas fa-headset" aria-hidden="true"></i> Support Tickets
+          <span class="sidebar-nav__badge" aria-label="3 open tickets">3</span>
+        </a>
+
+        <div class="sidebar-nav__group-title">Analytics</div>
+        <a class="sidebar-nav__link" href="#" aria-label="View sales analytics">
+          <i class="fas fa-chart-line" aria-hidden="true"></i> Sales Report
+        </a>
+        <a class="sidebar-nav__link" href="#" aria-label="View inventory analytics">
+          <i class="fas fa-chart-pie" aria-hidden="true"></i> Inventory Report
+        </a>
+
+        <div class="sidebar-nav__group-title">Settings</div>
+        <a class="sidebar-nav__link" href="#" aria-label="Manage store settings">
+          <i class="fas fa-gear" aria-hidden="true"></i> Store Settings
+        </a>
+        <a class="sidebar-nav__link" href="#" aria-label="Manage team members">
+          <i class="fas fa-user-plus" aria-hidden="true"></i> Team Management
+        </a>
+        <a class="sidebar-nav__link" href="./login.html" style="color:var(--clr-danger);" aria-label="Sign out of admin account">
+          <i class="fas fa-right-from-bracket" aria-hidden="true"></i> Sign Out
+        </a>
+      </nav>
+    </aside>
+
+    <!-- ── ADMIN MAIN ─────────────────────────────────────────── -->
+    <main class="dashboard-main" id="main-content">
+
+      <!-- Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp-8);flex-wrap:wrap;gap:var(--sp-4);">
+        <div>
+          <h1 style="font-size:var(--fs-2xl);color:var(--clr-text);">Admin Overview</h1>
+          <p style="color:var(--clr-text-secondary);font-size:var(--fs-sm);">Wednesday, July 16, 2026 — Last synced: 2 minutes ago</p>
+        </div>
+        <div style="display:flex;gap:var(--sp-3);">
+          <button class="btn-icon" id="rtlToggle" aria-label="Toggle RTL/LTR direction">
+            <i class="fas fa-language" id="rtlIcon" aria-hidden="true"></i>
+          </button>
+          <button class="btn-icon" id="themeToggle" aria-label="Toggle dark/light mode">
+            <i class="fas fa-moon" id="themeIcon" aria-hidden="true"></i>
+          </button>
+          <button class="btn btn--primary" aria-label="Generate and export report">
+            <i class="fas fa-download" aria-hidden="true"></i> Export Report
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Stats -->
+      <div class="grid grid--4" style="margin-bottom:var(--sp-8);" role="list" aria-label="Key performance indicators">
+        <div class="dash-stat" role="listitem" data-animate="fadeInUp">
+          <div class="dash-stat__icon" style="background:var(--clr-primary-100);color:var(--clr-primary);" aria-hidden="true"><i class="fas fa-indian-rupee-sign"></i></div>
+          <div>
+            <div class="dash-stat__number">₹18.4L</div>
+            <div class="dash-stat__label">Today's Revenue</div>
+            <div class="dash-stat__change dash-stat__change--up"><i class="fas fa-arrow-trend-up" aria-hidden="true"></i> +12% vs yesterday</div>
+          </div>
+        </div>
+        <div class="dash-stat" role="listitem" data-animate="fadeInUp" data-delay="100">
+          <div class="dash-stat__icon" style="background:var(--clr-secondary-100);color:var(--clr-secondary);" aria-hidden="true"><i class="fas fa-box"></i></div>
+          <div>
+            <div class="dash-stat__number">847</div>
+            <div class="dash-stat__label">Orders Today</div>
+            <div class="dash-stat__change dash-stat__change--up"><i class="fas fa-arrow-trend-up" aria-hidden="true"></i> +8% vs yesterday</div>
+          </div>
+        </div>
+        <div class="dash-stat" role="listitem" data-animate="fadeInUp" data-delay="200">
+          <div class="dash-stat__icon" style="background:rgba(245,158,11,0.12);color:var(--clr-accent);" aria-hidden="true"><i class="fas fa-users"></i></div>
+          <div>
+            <div class="dash-stat__number">12,480</div>
+            <div class="dash-stat__label">Active Customers</div>
+            <div class="dash-stat__change dash-stat__change--up"><i class="fas fa-arrow-trend-up" aria-hidden="true"></i> +245 new today</div>
+          </div>
+        </div>
+        <div class="dash-stat" role="listitem" data-animate="fadeInUp" data-delay="300">
+          <div class="dash-stat__icon" style="background:var(--clr-danger-light);color:var(--clr-danger);" aria-hidden="true"><i class="fas fa-triangle-exclamation"></i></div>
+          <div>
+            <div class="dash-stat__number">23</div>
+            <div class="dash-stat__label">Low Stock Alerts</div>
+            <div class="dash-stat__change dash-stat__change--down"><i class="fas fa-arrow-trend-down" aria-hidden="true"></i> Needs attention</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Prescriptions + Recent Orders -->
+      <div class="grid grid--2" style="margin-bottom:var(--sp-8);">
+
+        <!-- Pending Prescriptions -->
+        <div class="dash-widget">
+          <div class="dash-widget__header">
+            <h2 class="dash-widget__title">
+              Pending Prescriptions
+              <span class="badge badge--warning" style="margin-left:var(--sp-2);" aria-label="5 pending">5</span>
+            </h2>
+            <a href="#" class="btn btn--outline btn--sm" aria-label="View all prescriptions">View All</a>
+          </div>
+          <div class="dash-widget__body">
+            <div role="list" aria-label="Pending prescription review list">
+              <div class="rx-item" role="listitem">
+                <div class="rx-item__thumb" aria-hidden="true"><i class="fas fa-file-medical"></i></div>
+                <div>
+                  <div class="rx-item__name">Priya Sharma — Metformin 500mg</div>
+                  <div class="rx-item__date">Submitted: Jul 16, 2026 at 7:15 PM</div>
+                </div>
+                <div class="rx-item__actions">
+                  <button class="btn btn--secondary btn--sm" aria-label="Approve Priya Sharma's prescription">Approve</button>
+                  <button class="btn-icon" aria-label="Reject prescription"><i class="fas fa-times" aria-hidden="true"></i></button>
+                </div>
+              </div>
+              <div class="rx-item" role="listitem">
+                <div class="rx-item__thumb" aria-hidden="true"><i class="fas fa-file-medical"></i></div>
+                <div>
+                  <div class="rx-item__name">Rajesh Gupta — Amlodipine 5mg</div>
+                  <div class="rx-item__date">Submitted: Jul 16, 2026 at 6:42 PM</div>
+                </div>
+                <div class="rx-item__actions">
+                  <button class="btn btn--secondary btn--sm" aria-label="Approve Rajesh Gupta's prescription">Approve</button>
+                  <button class="btn-icon" aria-label="Reject prescription"><i class="fas fa-times" aria-hidden="true"></i></button>
+                </div>
+              </div>
+              <div class="rx-item" role="listitem">
+                <div class="rx-item__thumb" aria-hidden="true"><i class="fas fa-file-medical"></i></div>
+                <div>
+                  <div class="rx-item__name">Ananya Krishnan — Pantoprazole</div>
+                  <div class="rx-item__date">Submitted: Jul 16, 2026 at 5:30 PM</div>
+                </div>
+                <div class="rx-item__actions">
+                  <button class="btn btn--secondary btn--sm" aria-label="Approve Ananya Krishnan's prescription">Approve</button>
+                  <button class="btn-icon" aria-label="Reject prescription"><i class="fas fa-times" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="dash-widget">
+          <div class="dash-widget__header">
+            <h2 class="dash-widget__title">Recent Orders</h2>
+            <a href="#" class="btn btn--ghost btn--sm" aria-label="View all orders">View All</a>
+          </div>
+          <div class="dash-widget__body" style="padding:0;">
+            <div class="table-wrapper" style="border:none;border-radius:0;">
+              <table class="table" aria-label="Recent orders management table">
+                <thead>
+                  <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#ORD-847</td>
+                    <td>Priya S.</td>
+                    <td>₹850</td>
+                    <td><span class="order-status order-status--processing">Processing</span></td>
+                    <td><button class="btn btn--ghost btn--sm" aria-label="View order 847 details">View</button></td>
+                  </tr>
+                  <tr>
+                    <td>#ORD-846</td>
+                    <td>Rajesh G.</td>
+                    <td>₹2,100</td>
+                    <td><span class="order-status order-status--pending">Pending</span></td>
+                    <td><button class="btn btn--ghost btn--sm" aria-label="View order 846 details">View</button></td>
+                  </tr>
+                  <tr>
+                    <td>#ORD-845</td>
+                    <td>Ananya K.</td>
+                    <td>₹450</td>
+                    <td><span class="order-status order-status--delivered">Delivered</span></td>
+                    <td><button class="btn btn--ghost btn--sm" aria-label="View order 845 details">View</button></td>
+                  </tr>
+                  <tr>
+                    <td>#ORD-844</td>
+                    <td>Mohan D.</td>
+                    <td>₹1,650</td>
+                    <td><span class="order-status order-status--delivered">Delivered</span></td>
+                    <td><button class="btn btn--ghost btn--sm" aria-label="View order 844 details">View</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Low Stock Inventory Alert -->
+      <div class="dash-widget">
+        <div class="dash-widget__header">
+          <h2 class="dash-widget__title">
+            <i class="fas fa-triangle-exclamation" style="color:var(--clr-warning);" aria-hidden="true"></i>
+            Low Stock Alerts
+          </h2>
+          <button class="btn btn--outline btn--sm" aria-label="View full inventory">
+            <i class="fas fa-warehouse" aria-hidden="true"></i> Full Inventory
+          </button>
+        </div>
+        <div class="dash-widget__body" style="padding:0;">
+          <div class="table-wrapper" style="border:none;border-radius:0;">
+            <table class="table" aria-label="Low stock medicine inventory table">
+              <thead>
+                <tr>
+                  <th scope="col">Medicine</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Stock</th>
+                  <th scope="col">Threshold</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Metformin 500mg (Strip)</td>
+                  <td><span class="badge badge--primary">Diabetes</span></td>
+                  <td><span style="color:var(--clr-danger);font-weight:var(--fw-semibold);">45 strips</span></td>
+                  <td>100 strips</td>
+                  <td><button class="btn btn--primary btn--sm" aria-label="Reorder Metformin 500mg">Reorder</button></td>
+                </tr>
+                <tr>
+                  <td>Insulin Glargine 100U/mL</td>
+                  <td><span class="badge badge--primary">Diabetes</span></td>
+                  <td><span style="color:var(--clr-danger);font-weight:var(--fw-semibold);">8 vials</span></td>
+                  <td>50 vials</td>
+                  <td><button class="btn btn--primary btn--sm" aria-label="Reorder Insulin Glargine">Reorder</button></td>
+                </tr>
+                <tr>
+                  <td>Amlodipine 5mg (Strip)</td>
+                  <td><span class="badge badge--danger">Cardiac</span></td>
+                  <td><span style="color:var(--clr-warning);font-weight:var(--fw-semibold);">65 strips</span></td>
+                  <td>100 strips</td>
+                  <td><button class="btn btn--outline btn--sm" aria-label="Reorder Amlodipine 5mg">Reorder</button></td>
+                </tr>
+                <tr>
+                  <td>Vitamin D3 2000IU (Bottle)</td>
+                  <td><span class="badge badge--secondary">Vitamins</span></td>
+                  <td><span style="color:var(--clr-warning);font-weight:var(--fw-semibold);">30 bottles</span></td>
+                  <td>50 bottles</td>
+                  <td><button class="btn btn--outline btn--sm" aria-label="Reorder Vitamin D3">Reorder</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module" src="../js/components.js"></script>
+  <script type="module" src="../js/theme.js"></script>
+  <script type="module" src="../js/nav.js"></script>
+  <script type="module" src="../js/animations.js"></script>
+</body>
+</html>
