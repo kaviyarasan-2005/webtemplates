@@ -32,7 +32,7 @@
         <div class="page-loader-icon">
           <i class="fa-solid fa-eye"></i>
         </div>
-        <span class="page-loader-text">VisionCare Optical</span>
+        <span class="page-loader-text">Optic</span>
       </div>
     </div>
 
@@ -44,13 +44,12 @@
       <div class="nav-container">
 
         <!-- Brand -->
-        <a href="${base}index.html" class="nav-brand" aria-label="VisionCare Optical - Home">
+        <a href="${base}index.html" class="nav-brand" aria-label="Optic - Home">
           <div class="nav-logo" aria-hidden="true">
             <i class="fa-solid fa-eye"></i>
           </div>
           <div class="nav-brand-text">
-            <span class="nav-brand-name">VisionCare</span>
-            <span class="nav-brand-tagline">Optical & Eye Care</span>
+            <span class="nav-brand-name">Optic</span>
           </div>
         </a>
 
@@ -67,13 +66,11 @@
             <div class="nav-dropdown" role="menu">
               <a href="${base}index.html"
                  class="nav-dropdown-item ${active(isHome1)}" role="menuitem">
-                <i class="fa-solid fa-house" aria-hidden="true"></i>
-                Home One
+                Home 1
               </a>
               <a href="${base}pages/home2.html"
                  class="nav-dropdown-item ${active(isHome2)}" role="menuitem">
-                <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
-                Home Two
+                Home 2
               </a>
             </div>
           </li>
@@ -106,7 +103,6 @@
                   data-dir-toggle
                   aria-label="Switch to RTL layout"
                   title="Switch to RTL layout">
-            <i class="fa-solid fa-align-right" aria-hidden="true"></i>
             <span class="toggle-label">RTL</span>
           </button>
 
@@ -116,7 +112,6 @@
                   aria-label="Switch to dark mode"
                   title="Switch to dark mode">
             <i class="fa-solid fa-moon" aria-hidden="true"></i>
-            <span class="toggle-label">Dark</span>
           </button>
 
           <!-- Login CTA -->
@@ -162,10 +157,10 @@
           </button>
           <div class="mobile-dropdown" id="mobileHomeDropdown" role="menu">
             <a href="${base}index.html" class="mobile-dropdown-link" role="menuitem">
-              <i class="fa-solid fa-house" aria-hidden="true"></i> Home One
+              Home 1
             </a>
             <a href="${base}pages/home2.html" class="mobile-dropdown-link" role="menuitem">
-              <i class="fa-solid fa-layer-group" aria-hidden="true"></i> Home Two
+              Home 2
             </a>
           </div>
         </li>
@@ -226,18 +221,17 @@
 
           <!-- Brand Column -->
           <div class="footer-brand-col">
-            <a href="${base}index.html" class="footer-logo" aria-label="VisionCare Optical">
+            <a href="${base}index.html" class="footer-logo" aria-label="Optic">
               <div class="footer-logo-icon" aria-hidden="true">
                 <i class="fa-solid fa-eye"></i>
               </div>
               <div>
-                <div class="footer-brand-name">VisionCare</div>
-                <div class="footer-brand-tag">Optical & Eye Care</div>
+                <div class="footer-brand-name">Optic</div>
               </div>
             </a>
             <p class="footer-desc">
               Providing exceptional eye care and premium eyewear since 2005.
-              Your vision is our passion — see the world more clearly with VisionCare Optical.
+              Your vision is our passion — see the world more clearly with Optic.
             </p>
             <div class="footer-social">
               <a href="#" class="social-btn" aria-label="Facebook">
@@ -338,7 +332,7 @@
 
         <div class="footer-bottom">
           <p class="footer-copyright">
-            &copy; <span id="footerYear"></span> VisionCare Optical. All rights reserved.
+            &copy; <span id="footerYear"></span> Optic. All rights reserved.
           </p>
           <nav class="footer-legal" aria-label="Legal links">
             <a href="#">Privacy Policy</a>
@@ -472,6 +466,10 @@
         }
       });
     }
+
+    /* ── Sync Theme Icons ── */
+    if (window.VCTheme) window.VCTheme.updateIcons(window.VCTheme.current);
+    if (window.VCDir) window.VCDir.updateButtons(window.VCDir.current);
 
   }); // end DOMContentLoaded
 

@@ -102,17 +102,16 @@
     }
   };
 
-  /* ── Bind click events after DOM loads ── */
-  document.addEventListener('DOMContentLoaded', () => {
-    // Theme toggle buttons
-    document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
-      btn.addEventListener('click', () => ThemeManager.toggle());
-    });
-
-    // Direction toggle buttons
-    document.querySelectorAll('[data-dir-toggle]').forEach(btn => {
-      btn.addEventListener('click', () => DirectionManager.toggle());
-    });
+  /* ── Bind click events (using event delegation) ── */
+  document.addEventListener('click', (e) => {
+    const themeBtn = e.target.closest('[data-theme-toggle]');
+    if (themeBtn) {
+      ThemeManager.toggle();
+    }
+    const dirBtn = e.target.closest('[data-dir-toggle]');
+    if (dirBtn) {
+      DirectionManager.toggle();
+    }
   });
 
   /* ── Initialize immediately (before paint) ── */
