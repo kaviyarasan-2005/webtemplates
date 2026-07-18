@@ -211,38 +211,6 @@
   /* ── Shared Footer HTML ── */
   function buildFooter() {
     return `
-    <!-- ══════════════════════
-         CTA SECTION (Injected Globally)
-         ══════════════════════ -->
-    <section class="cta-section section" aria-labelledby="global-cta-title">
-      <div class="container">
-        <div class="cta-content">
-          <div class="badge badge-secondary" style="margin-inline:auto;margin-bottom:var(--space-4);">
-            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
-            Book Today
-          </div>
-          <h2 class="cta-title section-title reveal" id="global-cta-title">
-            Your Clear Vision<br>Starts Here
-          </h2>
-          <p class="cta-text reveal delay-100">
-            Schedule a comprehensive eye test today. Walk in or book online —
-            no long waits, just expert care with a smile.
-          </p>
-          <div class="cta-actions reveal delay-200">
-            <a href="${base}pages/contact.html#appointment" class="btn btn-white btn-lg">
-              <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
-              Book Eye Test
-            </a>
-            <a href="${base}pages/pricing.html" class="btn btn-outline btn-lg"
-               style="border-color:rgba(255,255,255,0.5);color:white;">
-              <i class="fa-solid fa-tag" aria-hidden="true"></i>
-              View Pricing
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <footer class="footer" role="contentinfo">
       <div class="container">
         <div class="footer-grid">
