@@ -166,27 +166,27 @@
         </li>
         <li class="mobile-nav-item">
           <a href="${base}pages/about.html" class="mobile-nav-link">
-            About <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            About
           </a>
         </li>
         <li class="mobile-nav-item">
           <a href="${base}pages/service.html" class="mobile-nav-link">
-            Services <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            Services
           </a>
         </li>
         <li class="mobile-nav-item">
           <a href="${base}pages/blog.html" class="mobile-nav-link">
-            Blog <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            Blog
           </a>
         </li>
         <li class="mobile-nav-item">
           <a href="${base}pages/pricing.html" class="mobile-nav-link">
-            Pricing <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            Pricing
           </a>
         </li>
         <li class="mobile-nav-item">
           <a href="${base}pages/contact.html" class="mobile-nav-link">
-            Contact <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            Contact
           </a>
         </li>
       </ul>
@@ -194,10 +194,6 @@
         <a href="${base}pages/login.html" class="btn btn-primary btn-full">
           <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
           Login to Account
-        </a>
-        <a href="${base}pages/signup.html" class="btn btn-outline btn-full">
-          <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
-          Create Account
         </a>
       </div>
     </div>
