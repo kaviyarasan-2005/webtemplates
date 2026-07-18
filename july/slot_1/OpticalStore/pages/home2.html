@@ -16,53 +16,75 @@
   <link rel="stylesheet" href="../assets/css/utilities.css">
   <script src="../assets/js/theme.js"></script>
   <style>
-    /* ── Full Screen Parallax Hero ── */
-    .hero-glass {
+    /* ── Asymmetric Hero ── */
+    .hero-modern {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: var(--space-20) var(--space-4);
+      padding-top: var(--space-20);
+      padding-bottom: var(--space-20);
       background: url('../assets/images/hero_home.png') center/cover no-repeat fixed;
       position: relative;
     }
-    .hero-glass::before {
+    .hero-modern::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+      background: linear-gradient(to right, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, transparent 100%);
     }
-    .glass-card {
+    [data-theme="light"] .hero-modern::before {
+      background: linear-gradient(to right, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%);
+    }
+    .hero-modern-content {
       position: relative;
       z-index: 1;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: var(--radius-2xl);
-      padding: var(--space-12) var(--space-8);
-      max-width: 800px;
-      text-align: center;
-      color: white;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      max-width: 650px;
+      padding: var(--space-8);
+      border-left: 4px solid var(--color-primary);
     }
-    [data-theme="dark"] .glass-card {
-      background: rgba(15, 23, 42, 0.4);
-      border-color: rgba(255, 255, 255, 0.1);
-    }
-    .hero-glass-title {
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
+    .hero-modern-title {
+      font-size: clamp(3rem, 6vw, 5rem);
       font-family: var(--font-display);
       font-weight: var(--font-extrabold);
-      line-height: 1.1;
+      line-height: 1.05;
       margin-bottom: var(--space-6);
-      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      color: white;
     }
-    .hero-glass-desc {
+    [data-theme="light"] .hero-modern-title { color: var(--color-slate-900); }
+
+    .hero-modern-desc {
       font-size: var(--text-lg);
       margin-bottom: var(--space-8);
-      opacity: 0.9;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.6;
     }
+    [data-theme="light"] .hero-modern-desc { color: var(--color-slate-700); }
+
+    .hero-features-bar {
+      display: flex;
+      gap: var(--space-6);
+      margin-top: var(--space-10);
+      padding-top: var(--space-6);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap;
+    }
+    [data-theme="light"] .hero-features-bar { border-color: rgba(0,0,0,0.1); }
+    
+    .hf-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .hf-icon {
+      color: var(--color-primary);
+      font-size: var(--text-xl);
+    }
+    .hf-text {
+      font-size: var(--text-sm);
+      font-weight: var(--font-bold);
+      color: white;
+    }
+    [data-theme="light"] .hf-text { color: var(--color-slate-800); }
 
     /* ── Typography Intro ── */
     .intro-section {
@@ -248,23 +270,41 @@
 <main id="main-content">
 
   <!-- ══════════════════════
-       HERO (Glassmorphism)
+       HERO (Asymmetric Modern)
        ══════════════════════ -->
-  <section class="hero-glass" aria-labelledby="hero-title">
-    <div class="glass-card animate-fade-in-up">
-      <h1 class="hero-glass-title" id="hero-title">
-        Vision meets Craftsmanship
-      </h1>
-      <p class="hero-glass-desc">
-        Experience clarity like never before with our state-of-the-art diagnostic technology and curated collections of premium eyewear.
-      </p>
-      <div style="display:flex;gap:var(--space-4);justify-content:center;flex-wrap:wrap;">
-        <a href="../pages/contact.html#appointment" class="btn btn-primary btn-lg">
-          <i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Book Consultation
-        </a>
-        <a href="../pages/service.html" class="btn btn-white btn-lg" style="color:var(--text-primary);">
-          Explore Collections
-        </a>
+  <section class="hero-modern" aria-labelledby="hero-title">
+    <div class="container">
+      <div class="hero-modern-content animate-fade-in-left">
+        <h1 class="hero-modern-title" id="hero-title">
+          Vision meets<br>Craftsmanship
+        </h1>
+        <p class="hero-modern-desc">
+          Experience clarity like never before with our state-of-the-art diagnostic technology and curated collections of premium eyewear tailored for you.
+        </p>
+        <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;">
+          <a href="../pages/contact.html#appointment" class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Book Consultation
+          </a>
+          <a href="../pages/service.html" class="btn btn-outline btn-lg" style="color:var(--text-primary);border-color:var(--text-primary);">
+            Explore Collections
+          </a>
+        </div>
+        
+        <!-- Features Bar -->
+        <div class="hero-features-bar">
+          <div class="hf-item">
+            <i class="fa-solid fa-user-doctor hf-icon"></i>
+            <span class="hf-text">Expert Optometrists</span>
+          </div>
+          <div class="hf-item">
+            <i class="fa-solid fa-glasses hf-icon"></i>
+            <span class="hf-text">Premium Frames</span>
+          </div>
+          <div class="hf-item">
+            <i class="fa-solid fa-shield-halved hf-icon"></i>
+            <span class="hf-text">UV400 Protection</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -296,7 +336,7 @@
       <!-- Row 1 -->
       <div class="split-row reveal">
         <div class="split-img-wrapper">
-          <img src="../assets/images/about-story.jpg" alt="Comprehensive Eye Examination" loading="lazy">
+          <img src="../assets/images/home2_about.png" alt="Comprehensive Eye Examination" loading="lazy">
         </div>
         <div class="split-content">
           <span class="split-label">Clinical Care</span>
@@ -316,7 +356,7 @@
       <!-- Row 2 -->
       <div class="split-row reveal delay-100">
         <div class="split-img-wrapper">
-          <img src="../assets/images/frames-reading.jpg" alt="Frame Styling and Selection" loading="lazy">
+          <img src="../assets/images/home2_frames.png" alt="Frame Styling and Selection" loading="lazy">
         </div>
         <div class="split-content">
           <span class="split-label">Bespoke Style</span>
@@ -336,7 +376,7 @@
       <!-- Row 3 -->
       <div class="split-row reveal delay-200">
         <div class="split-img-wrapper">
-          <img src="../assets/images/lens-types.jpg" alt="Advanced Lens Technology" loading="lazy">
+          <img src="../assets/images/home2_lens.png" alt="Advanced Lens Technology" loading="lazy">
         </div>
         <div class="split-content">
           <span class="split-label">Precision Vision</span>
@@ -396,7 +436,7 @@
       <div class="featured-blog-grid">
         <!-- Featured Main Article -->
         <a href="../pages/blog.html" class="blog-featured reveal delay-100" style="text-decoration:none;">
-          <img src="../assets/images/blog-1.jpg" alt="How often should adults have their eyes tested" loading="lazy">
+          <img src="../assets/images/home2_blog1.png" alt="How often should adults have their eyes tested" loading="lazy">
           <div class="blog-featured-content">
             <span class="badge badge-primary" style="margin-bottom:var(--space-3);">Featured Guide</span>
             <h3 style="font-family:var(--font-display);font-size:var(--text-3xl);margin-bottom:var(--space-2);">The Ultimate Guide to Digital Eye Strain</h3>
@@ -410,7 +450,7 @@
         <!-- Side List -->
         <div class="blog-side-list reveal delay-200">
           <a href="../pages/blog.html" class="blog-side-item" style="text-decoration:none;">
-            <img src="../assets/images/blog-2.jpg" alt="Choosing sunglasses" class="blog-side-img" loading="lazy">
+            <img src="../assets/images/home2_blog2.png" alt="Choosing sunglasses" class="blog-side-img" loading="lazy">
             <div>
               <div style="font-size:var(--text-xs);color:var(--color-primary);font-weight:var(--font-bold);text-transform:uppercase;margin-bottom:var(--space-1);">Style & Health</div>
               <h4 style="color:var(--text-primary);font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--space-2);">Why Polarised Sunglasses Are Worth the Investment</h4>
@@ -418,7 +458,7 @@
             </div>
           </a>
           <a href="../pages/blog.html" class="blog-side-item" style="text-decoration:none;">
-            <img src="../assets/images/blog-3.jpg" alt="Kids eye exam" class="blog-side-img" loading="lazy">
+            <img src="../assets/images/home2_blog3.png" alt="Kids eye exam" class="blog-side-img" loading="lazy">
             <div>
               <div style="font-size:var(--text-xs);color:var(--color-primary);font-weight:var(--font-bold);text-transform:uppercase;margin-bottom:var(--space-1);">Paediatrics</div>
               <h4 style="color:var(--text-primary);font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--space-2);">7 Signs Your Child Might Need Glasses Before School Starts</h4>
