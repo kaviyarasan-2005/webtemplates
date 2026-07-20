@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedDir = localStorage.getItem('dir');
     if (savedDir === 'rtl') {
         htmlElement.setAttribute('dir', 'rtl');
+          if (dirToggleBtn) dirToggleBtn.innerHTML = '<span class="dir-text" style="font-weight: 700; font-size: 0.8rem;">LTR</span>';
     } else {
         htmlElement.setAttribute('dir', 'ltr'); // Default
     }
@@ -59,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const newDir = currentDir === 'rtl' ? 'ltr' : 'rtl';
             htmlElement.setAttribute('dir', newDir);
             localStorage.setItem('dir', newDir);
+            dirToggleBtn.innerHTML = newDir === 'rtl' ? '<span class="dir-text" style="font-weight: 700; font-size: 0.8rem;">LTR</span>' : '<span class="dir-text" style="font-weight: 700; font-size: 0.8rem;">RTL</span>';
         });
     }
 });
