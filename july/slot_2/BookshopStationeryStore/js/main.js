@@ -53,6 +53,7 @@ function initDirectionToggle() {
 
   const savedDir = localStorage.getItem('dir') || 'ltr';
   document.documentElement.setAttribute('dir', savedDir);
+  dirBtn.textContent = savedDir === 'ltr' ? 'RTL' : 'LTR';
 
   dirBtn.addEventListener('click', () => {
     const currentDir = document.documentElement.getAttribute('dir');
@@ -60,6 +61,7 @@ function initDirectionToggle() {
     
     document.documentElement.setAttribute('dir', newDir);
     localStorage.setItem('dir', newDir);
+    dirBtn.textContent = newDir === 'ltr' ? 'RTL' : 'LTR';
   });
 }
 
