@@ -90,7 +90,7 @@ function initMobileNav() {
     toggle.addEventListener('click', (e) => {
       if (window.innerWidth <= 1024) {
         e.preventDefault();
-        toggle.parentElement.classList.toggle('active');
+        toggle.parentElement.classList.toggle('show-dropdown');
       }
     });
   });
