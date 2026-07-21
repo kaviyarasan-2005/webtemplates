@@ -1,5 +1,5 @@
 /* ============================================================
-   MediCare Plus — Layout: Navbar, Footer, Container, Grid
+   Pulse — Layout: Navbar, Footer, Container, Grid
    ============================================================ */
 
 /* ── Container ───────────────────────────────────────────── */
@@ -97,16 +97,28 @@
 }
 
 .navbar.is-scrolled {
-  box-shadow: var(--shadow-md);
-  background: var(--clr-bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .navbar.is-scrolled {
+  background: rgba(15, 23, 42, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
 }
 
 .navbar .container {
+  height: 100%;
+}
+
+.navbar__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   height: 100%;
   gap: var(--sp-6);
 }
@@ -121,6 +133,11 @@
   align-items: center;
   gap: var(--sp-3);
   text-decoration: none;
+  transition: transform var(--transition-spring);
+}
+
+.navbar__logo:hover {
+  transform: scale(1.03);
 }
 
 .navbar__logo-icon {
@@ -170,23 +187,44 @@
   display: inline-flex;
   align-items: center;
   gap: var(--sp-1);
-  padding: var(--sp-2) var(--sp-3);
+  padding: var(--sp-2) var(--sp-1);
+  margin: 0 var(--sp-2);
   font-size: var(--fs-sm);
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-semibold);
   color: var(--clr-text-secondary);
-  border-radius: var(--radius-md);
   text-decoration: none;
-  transition: color var(--transition-fast), background var(--transition-fast);
+  position: relative;
+  transition: color var(--transition-base);
   cursor: pointer;
   border: none;
   background: none;
   white-space: nowrap;
 }
 
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--clr-primary), var(--clr-secondary));
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--transition-base) ease-in-out;
+}
+
 .navbar__link:hover,
 .navbar__link.is-active {
-  color: var(--clr-primary);
-  background: var(--clr-primary-50);
+  color: var(--clr-text);
+  background: transparent;
+}
+
+.navbar__link:hover::after,
+.navbar__link.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .navbar__link i.fa-chevron-down {
@@ -265,38 +303,23 @@
 /* ── Hamburger ───────────────────────────────────────────── */
 .navbar__hamburger {
   display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 24px;
-  height: 18px;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   background: none;
   border: none;
   padding: 0;
   flex-shrink: 0;
+  font-size: 1.25rem;
+  color: var(--clr-text);
+  border-radius: var(--radius-md);
+  transition: background var(--transition-fast);
 }
 
-.navbar__hamburger span {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background: var(--clr-text);
-  border-radius: var(--radius-full);
-  transition: all var(--transition-base);
-  transform-origin: center;
-}
-
-.navbar__hamburger.is-active span:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
-}
-
-.navbar__hamburger.is-active span:nth-child(2) {
-  opacity: 0;
-  transform: scaleX(0);
-}
-
-.navbar__hamburger.is-active span:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
+.navbar__hamburger:hover {
+  background: var(--clr-bg-alt);
 }
 
 /* ── Mobile Drawer ───────────────────────────────────────── */
@@ -338,6 +361,7 @@
 
   .navbar__link {
     padding: var(--sp-3) var(--sp-4);
+    margin: 0;
     font-size: var(--fs-base);
     justify-content: space-between;
   }

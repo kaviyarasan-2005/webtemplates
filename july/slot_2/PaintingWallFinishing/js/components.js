@@ -1,5 +1,5 @@
 /**
- * MediCare Plus — Components.js
+ * Pulse — Components.js
  * Injects shared Navbar and Footer into every page.
  * Detects page depth (root vs pages/) automatically.
  */
@@ -19,74 +19,46 @@ function buildNavbar() {
     <div class="navbar__inner">
 
       <!-- Logo -->
-      <a href="${BASE}index.html" class="navbar__logo" aria-label="MediCare Plus - Go to homepage">
+      <a href="${BASE}index.html" class="navbar__logo" aria-label="Pulse - Go to homepage">
         <div class="navbar__logo-icon" aria-hidden="true">
           <i class="fas fa-cross"></i>
         </div>
-        <span class="navbar__logo-text">MediCare<span class="accent">Plus</span></span>
+        <span class="navbar__logo-text">Pulse</span>
       </a>
 
-      <!-- Desktop Nav -->
-      <nav class="navbar__nav" role="navigation" aria-label="Main navigation">
+      <!-- Desktop & Mobile Nav -->
+      <div class="navbar__menu" id="mobileMenu">
+        <nav class="navbar__nav" role="navigation" aria-label="Main navigation">
 
         <!-- Home Dropdown -->
-        <div class="nav-dropdown" role="none">
-          <button class="nav-link nav-link--dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="homeDropdown" id="homeDropdownBtn">
-            Home <i class="fas fa-chevron-down nav-dropdown__caret" aria-hidden="true"></i>
+        <div class="navbar__item navbar__item--dropdown" role="none">
+          <button class="navbar__link navbar__link--dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="homeDropdown" id="homeDropdownBtn">
+            Home <i class="fas fa-chevron-down" aria-hidden="true"></i>
           </button>
-          <div class="nav-dropdown__menu" id="homeDropdown" role="menu" aria-labelledby="homeDropdownBtn">
-            <a href="${BASE}index.html" class="nav-dropdown__item" role="menuitem" ${isPage('index.html')}>
-              <i class="fas fa-house" aria-hidden="true"></i>
-              <div>
-                <div class="nav-dropdown__item-title">Home 1</div>
-                <div class="nav-dropdown__item-desc">Main landing page</div>
-              </div>
+          <div class="navbar__dropdown" id="homeDropdown" role="menu" aria-labelledby="homeDropdownBtn">
+            <a href="${BASE}index.html" class="navbar__dropdown-link" role="menuitem" ${isPage('index.html')}>
+              Home 1
             </a>
-            <a href="${BASE}pages/home2.html" class="nav-dropdown__item" role="menuitem" ${isPage('home2.html')}>
-              <i class="fas fa-house-medical" aria-hidden="true"></i>
-              <div>
-                <div class="nav-dropdown__item-title">Home 2</div>
-                <div class="nav-dropdown__item-desc">Alternate layout</div>
-              </div>
+            <a href="${BASE}pages/home2.html" class="navbar__dropdown-link" role="menuitem" ${isPage('home2.html')}>
+              Home 2
             </a>
           </div>
         </div>
 
-        <a href="${BASE}pages/about.html" class="nav-link ${isActive('about.html')}" ${isPage('about.html')}>About</a>
-        <a href="${BASE}pages/service.html" class="nav-link ${isActive('service.html')}" ${isPage('service.html')}>Service</a>
-        <a href="${BASE}pages/blog.html" class="nav-link ${isActive('blog.html')}" ${isPage('blog.html')}>Blog</a>
-        <a href="${BASE}pages/pricing.html" class="nav-link ${isActive('pricing.html')}" ${isPage('pricing.html')}>Pricing</a>
-        <a href="${BASE}pages/contact.html" class="nav-link ${isActive('contact.html')}" ${isPage('contact.html')}>Contact</a>
+        <a href="${BASE}pages/about.html" class="navbar__link ${isActive('about.html')}" ${isPage('about.html')}>About</a>
+        <a href="${BASE}pages/service.html" class="navbar__link ${isActive('service.html')}" ${isPage('service.html')}>Service</a>
+        <a href="${BASE}pages/blog.html" class="navbar__link ${isActive('blog.html')}" ${isPage('blog.html')}>Blog</a>
+        <a href="${BASE}pages/pricing.html" class="navbar__link ${isActive('pricing.html')}" ${isPage('pricing.html')}>Pricing</a>
+        <a href="${BASE}pages/contact.html" class="navbar__link ${isActive('contact.html')}" ${isPage('contact.html')}>Contact</a>
 
-        <!-- Dashboard Dropdown -->
-        <div class="nav-dropdown" role="none">
-          <button class="nav-link nav-link--dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="dashDropdown" id="dashDropdownBtn">
-            Dashboard <i class="fas fa-chevron-down nav-dropdown__caret" aria-hidden="true"></i>
-          </button>
-          <div class="nav-dropdown__menu" id="dashDropdown" role="menu" aria-labelledby="dashDropdownBtn">
-            <a href="${BASE}pages/dashboard-user.html" class="nav-dropdown__item" role="menuitem" ${isPage('dashboard-user.html')}>
-              <i class="fas fa-user-circle" aria-hidden="true"></i>
-              <div>
-                <div class="nav-dropdown__item-title">User Dashboard</div>
-                <div class="nav-dropdown__item-desc">Orders, prescriptions, profile</div>
-              </div>
-            </a>
-            <a href="${BASE}pages/dashboard-admin.html" class="nav-dropdown__item" role="menuitem" ${isPage('dashboard-admin.html')}>
-              <i class="fas fa-shield-halved" aria-hidden="true"></i>
-              <div>
-                <div class="nav-dropdown__item-title">Admin Dashboard</div>
-                <div class="nav-dropdown__item-desc">Store management & analytics</div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
-      <!-- Controls -->
-      <div class="navbar__controls">
+      <!-- Actions -->
+      <div class="navbar__actions">
         <!-- RTL Toggle -->
         <button class="btn-icon" id="rtlToggle" aria-label="Toggle RTL/LTR text direction" title="Toggle RTL/LTR">
-          <i class="fas fa-language" id="rtlIcon" aria-hidden="true"></i>
+          <span id="rtlText">RTL</span>
         </button>
 
         <!-- Theme Toggle -->
@@ -94,13 +66,7 @@ function buildNavbar() {
           <i class="fas fa-moon" id="themeIcon" aria-hidden="true"></i>
         </button>
 
-        <!-- CTA -->
-        <a href="${BASE}pages/login.html" class="btn btn--outline btn--sm navbar__cta" aria-label="Sign in to your account">
-          <i class="fas fa-right-to-bracket" aria-hidden="true"></i> Sign In
-        </a>
-        <a href="${BASE}pages/signup.html" class="btn btn--primary btn--sm navbar__cta--primary" aria-label="Create a free account">
-          <i class="fas fa-user-plus" aria-hidden="true"></i> Sign Up
-        </a>
+
 
         <!-- Mobile hamburger -->
         <button class="navbar__hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -110,60 +76,7 @@ function buildNavbar() {
     </div>
   </div>
 
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu" aria-hidden="true" role="dialog" aria-label="Mobile navigation menu">
-    <nav aria-label="Mobile navigation">
-      <div class="mobile-menu__section">Home</div>
-      <a href="${BASE}index.html" class="mobile-menu__link" ${isPage('index.html')}>
-        <i class="fas fa-house" aria-hidden="true"></i> Home 1
-      </a>
-      <a href="${BASE}pages/home2.html" class="mobile-menu__link" ${isPage('home2.html')}>
-        <i class="fas fa-house-medical" aria-hidden="true"></i> Home 2
-      </a>
 
-      <div class="mobile-menu__section">Pages</div>
-      <a href="${BASE}pages/about.html" class="mobile-menu__link" ${isPage('about.html')}>
-        <i class="fas fa-circle-info" aria-hidden="true"></i> About
-      </a>
-      <a href="${BASE}pages/service.html" class="mobile-menu__link" ${isPage('service.html')}>
-        <i class="fas fa-hand-holding-heart" aria-hidden="true"></i> Service
-      </a>
-      <a href="${BASE}pages/blog.html" class="mobile-menu__link" ${isPage('blog.html')}>
-        <i class="fas fa-newspaper" aria-hidden="true"></i> Blog
-      </a>
-      <a href="${BASE}pages/pricing.html" class="mobile-menu__link" ${isPage('pricing.html')}>
-        <i class="fas fa-tag" aria-hidden="true"></i> Pricing
-      </a>
-      <a href="${BASE}pages/contact.html" class="mobile-menu__link" ${isPage('contact.html')}>
-        <i class="fas fa-headset" aria-hidden="true"></i> Contact
-      </a>
-
-      <div class="mobile-menu__section">Dashboard</div>
-      <a href="${BASE}pages/dashboard-user.html" class="mobile-menu__link" ${isPage('dashboard-user.html')}>
-        <i class="fas fa-user-circle" aria-hidden="true"></i> User Dashboard
-      </a>
-      <a href="${BASE}pages/dashboard-admin.html" class="mobile-menu__link" ${isPage('dashboard-admin.html')}>
-        <i class="fas fa-shield-halved" aria-hidden="true"></i> Admin Dashboard
-      </a>
-
-      <div class="mobile-menu__section">Account</div>
-      <a href="${BASE}pages/login.html" class="mobile-menu__link" ${isPage('login.html')}>
-        <i class="fas fa-right-to-bracket" aria-hidden="true"></i> Sign In
-      </a>
-      <a href="${BASE}pages/signup.html" class="mobile-menu__link" ${isPage('signup.html')}>
-        <i class="fas fa-user-plus" aria-hidden="true"></i> Create Account
-      </a>
-
-      <div style="display:flex;gap:var(--sp-3);padding:var(--sp-4) var(--sp-5);">
-        <button class="btn-icon" id="rtlToggleMobile" aria-label="Toggle RTL/LTR">
-          <i class="fas fa-language" aria-hidden="true"></i>
-        </button>
-        <button class="btn-icon" id="themeToggleMobile" aria-label="Toggle theme">
-          <i class="fas fa-moon" aria-hidden="true"></i>
-        </button>
-      </div>
-    </nav>
-  </div>
 </header>`;
 }
 
@@ -171,26 +84,26 @@ function buildNavbar() {
 function buildFooter() {
   const currentYear = new Date().getFullYear();
   return `
-<footer class="footer" role="contentinfo" aria-label="MediCare Plus footer">
+<footer class="footer" role="contentinfo" aria-label="Pulse footer">
   <div class="footer__main">
     <div class="container">
       <div class="footer__grid">
 
         <!-- Brand -->
         <div class="footer__brand">
-          <a href="${BASE}index.html" class="footer__logo" aria-label="MediCare Plus - Home">
+          <a href="${BASE}index.html" class="footer__logo" aria-label="Pulse - Home">
             <div class="footer__logo-icon" aria-hidden="true"><i class="fas fa-cross"></i></div>
-            <span>MediCare<span class="footer__logo-accent">Plus</span></span>
+            <span>Pulse</span>
           </a>
           <p class="footer__brand-desc">
             India's most trusted pharmacy delivering genuine medicines, vitamins, baby care, and medical devices to your doorstep since 2009.
           </p>
           <div class="footer__social" role="list" aria-label="Social media links">
-            <a href="#" class="footer__social-link" role="listitem" aria-label="MediCare Plus on Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" role="listitem" aria-label="MediCare Plus on Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" role="listitem" aria-label="MediCare Plus on X/Twitter"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" role="listitem" aria-label="MediCare Plus on WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" role="listitem" aria-label="MediCare Plus on YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" role="listitem" aria-label="Pulse on Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" role="listitem" aria-label="Pulse on Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" role="listitem" aria-label="Pulse on X/Twitter"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" role="listitem" aria-label="Pulse on WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" role="listitem" aria-label="Pulse on YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
           </div>
         </div>
 
@@ -239,8 +152,8 @@ function buildFooter() {
               <a href="tel:+911800123456" class="footer__link" style="display:flex;gap:var(--sp-2);align-items:center;">
                 <i class="fas fa-phone" style="width:14px;" aria-hidden="true"></i> +91 1800-123-456
               </a>
-              <a href="mailto:care@medicareplus.in" class="footer__link" style="display:flex;gap:var(--sp-2);align-items:center;">
-                <i class="fas fa-envelope" style="width:14px;" aria-hidden="true"></i> care@medicareplus.in
+              <a href="mailto:care@Pulse.in" class="footer__link" style="display:flex;gap:var(--sp-2);align-items:center;">
+                <i class="fas fa-envelope" style="width:14px;" aria-hidden="true"></i> care@Pulse.in
               </a>
               <span class="footer__link" style="display:flex;gap:var(--sp-2);align-items:flex-start;cursor:default;">
                 <i class="fas fa-location-dot" style="width:14px;margin-top:2px;" aria-hidden="true"></i>
@@ -259,7 +172,7 @@ function buildFooter() {
     <div class="container">
       <div class="footer__bottom-inner">
         <p class="footer__copyright">
-          &copy; ${currentYear} MediCare Plus. All rights reserved. Drug License No: MH-DL-2009-001.
+          &copy; ${currentYear} Pulse. All rights reserved. Drug License No: MH-DL-2009-001.
         </p>
         <nav class="footer__legal" aria-label="Legal links">
           <a href="#" class="footer__legal-link">Privacy Policy</a>
@@ -283,25 +196,25 @@ document.addEventListener('DOMContentLoaded', () => {
   if (footEl) { footEl.outerHTML = buildFooter(); }
 
   // Wire up dropdown toggles
-  document.querySelectorAll('.nav-link--dropdown').forEach(btn => {
+  document.querySelectorAll('.navbar__link--dropdown').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const expanded = btn.getAttribute('aria-expanded') === 'true';
-      document.querySelectorAll('.nav-link--dropdown').forEach(b => {
+      document.querySelectorAll('.navbar__link--dropdown').forEach(b => {
         b.setAttribute('aria-expanded', 'false');
-        b.closest('.nav-dropdown')?.classList.remove('is-open');
+        b.closest('.navbar__item--dropdown')?.classList.remove('is-open');
       });
       if (!expanded) {
         btn.setAttribute('aria-expanded', 'true');
-        btn.closest('.nav-dropdown')?.classList.add('is-open');
+        btn.closest('.navbar__item--dropdown')?.classList.add('is-open');
       }
     });
   });
 
   // Close dropdowns on outside click
   document.addEventListener('click', () => {
-    document.querySelectorAll('.nav-dropdown.is-open').forEach(d => d.classList.remove('is-open'));
-    document.querySelectorAll('.nav-link--dropdown').forEach(b => b.setAttribute('aria-expanded', 'false'));
+    document.querySelectorAll('.navbar__item--dropdown.is-open').forEach(d => d.classList.remove('is-open'));
+    document.querySelectorAll('.navbar__link--dropdown').forEach(b => b.setAttribute('aria-expanded', 'false'));
   });
 
   // Mobile hamburger
@@ -360,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const current = document.documentElement.getAttribute('data-theme');
         const next = current === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('medicare-theme', JSON.stringify(next));
+        localStorage.setItem('Pulse-theme', JSON.stringify(next));
       });
     }
   });

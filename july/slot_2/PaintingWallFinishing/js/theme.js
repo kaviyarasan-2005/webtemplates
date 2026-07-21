@@ -1,10 +1,10 @@
 /**
- * MediCare Plus — theme.js
+ * Pulse — theme.js
  * Handles dark/light mode and RTL/LTR toggle.
  */
 
-const THEME_KEY = 'medicare-theme';
-const DIR_KEY   = 'medicare-dir';
+const THEME_KEY = 'Pulse-theme';
+const DIR_KEY   = 'Pulse-dir';
 
 export function getTheme() {
   try {
@@ -55,9 +55,12 @@ export function syncIcons() {
     icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
   });
 
-  // All RTL icons
-  document.querySelectorAll('#rtlIcon, #rtlIconMobile').forEach(icon => {
-    icon.className = dir === 'rtl' ? 'fas fa-align-left' : 'fas fa-language';
+  // All RTL toggles text
+  document.querySelectorAll('#rtlText, #rtlTextMobile').forEach(el => {
+    el.textContent = dir === 'rtl' ? 'LTR' : 'RTL';
+    el.style.fontSize = '0.9rem';
+    el.style.fontWeight = 'var(--fw-bold)';
+    el.style.fontFamily = 'var(--font-base)';
   });
 
   // Aria labels

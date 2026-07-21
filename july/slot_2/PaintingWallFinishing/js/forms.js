@@ -1,5 +1,5 @@
 /**
- * MediCare Plus — forms.js
+ * Pulse — forms.js
  * Client-side form validation, file upload, and form submission handling.
  */
 

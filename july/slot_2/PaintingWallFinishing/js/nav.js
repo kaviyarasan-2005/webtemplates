@@ -1,5 +1,5 @@
 /* ============================================================
-   MediCare Plus — Navigation Controller
+   Pulse — Navigation Controller
    ============================================================ */
 
 'use strict';

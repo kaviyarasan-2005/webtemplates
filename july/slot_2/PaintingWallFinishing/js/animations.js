@@ -1,5 +1,5 @@
 /**
- * MediCare Plus — animations.js
+ * Pulse — animations.js
  * Scroll-triggered animations using IntersectionObserver.
  * Also handles: counter animation, hero parallax, skeleton loaders.
  */
@@ -78,9 +78,9 @@ function initCounters() {
 
 /* ── Float animation for 404 icon ────────────────────────────── */
 function injectKeyframes() {
-  if (document.getElementById('medicare-keyframes')) return;
+  if (document.getElementById('Pulse-keyframes')) return;
   const style = document.createElement('style');
-  style.id = 'medicare-keyframes';
+  style.id = 'Pulse-keyframes';
   style.textContent = `
     @keyframes float {
       0%, 100% { transform: translateY(0); }
