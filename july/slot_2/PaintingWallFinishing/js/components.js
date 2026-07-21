@@ -91,9 +91,9 @@ function buildFooter() {
 
         <!-- Brand -->
         <div class="footer__brand">
-          <a href="${BASE}index.html" class="footer__logo" aria-label="Pulse - Home">
-            <div class="footer__logo-icon" aria-hidden="true"><i class="fas fa-cross"></i></div>
-            <span>Pulse</span>
+          <a href="${BASE}index.html" class="footer__brand-logo" aria-label="Pulse - Home">
+            <div class="footer__brand-icon" aria-hidden="true"><i class="fas fa-cross"></i></div>
+            <span class="footer__brand-name">Pulse</span>
           </a>
           <p class="footer__brand-desc">
             India's most trusted pharmacy delivering genuine medicines, vitamins, baby care, and medical devices to your doorstep since 2009.
@@ -141,9 +141,6 @@ function buildFooter() {
           <p style="color:rgba(255,255,255,0.6);font-size:var(--fs-sm);margin-bottom:var(--sp-4);">Get weekly health tips, medicine alerts, and exclusive member offers.</p>
           <form class="footer__newsletter" aria-label="Newsletter subscription" data-newsletter>
             <input type="email" name="email" class="footer__newsletter-input" placeholder="Enter your email..." aria-label="Email address for newsletter" required>
-            <button type="submit" class="footer__newsletter-btn" aria-label="Subscribe to newsletter">
-              <i class="fas fa-paper-plane" aria-hidden="true"></i>
-            </button>
           </form>
 
           <div style="margin-top:var(--sp-6);">
@@ -172,7 +169,7 @@ function buildFooter() {
     <div class="container">
       <div class="footer__bottom-inner">
         <p class="footer__copyright">
-          &copy; ${currentYear} Pulse. All rights reserved. Drug License No: MH-DL-2009-001.
+          &copy; ${currentYear} Pulse. All rights reserved.
         </p>
         <nav class="footer__legal" aria-label="Legal links">
           <a href="#" class="footer__legal-link">Privacy Policy</a>
@@ -227,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hamburger.setAttribute('aria-expanded', isOpen);
       mobileMenu.setAttribute('aria-hidden', !isOpen);
       if (hamburgerIcon) hamburgerIcon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
     // Close mobile menu on link click
     mobileMenu.querySelectorAll('a').forEach(link => {
@@ -235,6 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.setAttribute('aria-expanded', 'false');
         mobileMenu.setAttribute('aria-hidden', 'true');
         if (hamburgerIcon) hamburgerIcon.className = 'fas fa-bars';
+        document.body.style.overflow = '';
       });
     });
   }

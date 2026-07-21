@@ -103,6 +103,13 @@ function initNav() {
       const linkPath = new URL(link.href, window.location.origin).pathname;
       if (linkPath === currentPath || (linkPath.endsWith('index.html') && currentPath === '/')) {
         link.classList.add('is-active');
+        
+        // Also highlight parent dropdown button if applicable
+        const dropdownItem = link.closest('.navbar__item--dropdown');
+        if (dropdownItem) {
+          const toggleBtn = dropdownItem.querySelector('.navbar__link--dropdown');
+          if (toggleBtn) toggleBtn.classList.add('is-active');
+        }
       }
     }
   });
