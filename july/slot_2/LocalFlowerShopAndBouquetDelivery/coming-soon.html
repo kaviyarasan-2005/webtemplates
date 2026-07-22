@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming Soon — BLOOM New Season Collection</title>
+  <meta name="description" content="New season blooms arriving soon at BLOOM! Sign up to be notified when our latest floral collection launches.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='28' font-size='28'%3E%F0%9F%8C%B8%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="coming-soon-page">
+    <img src="https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=1920&q=80" alt="Blurred floral bokeh in warm tones" class="hero-bg" style="filter:blur(4px);transform:scale(1.05)">
+    <div class="hero-overlay"></div>
+
+    <div class="coming-soon-content fade-in">
+      <div style="margin-bottom:var(--space-5)">
+        <a href="index.html" style="display:inline-flex;align-items:center;gap:var(--space-1);font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:700;color:var(--color-white);text-decoration:none">
+          <i class="ph ph-flower-lotus" style="font-size:2.5rem;color:var(--color-accent-light,#D4929B)"></i>
+          BLOOM
+        </a>
+      </div>
+
+      <h1 class="fade-in fade-in-delay-1">New Season Blooms Arriving Soon</h1>
+      <p class="fade-in fade-in-delay-2" style="font-size:var(--fs-md)">We're curating our most stunning collection yet. Be the first to explore new arrangements, seasonal favorites, and exclusive designs.</p>
+
+      <!-- Countdown Timer -->
+      <div class="countdown fade-in fade-in-delay-3" id="countdown">
+        <div class="countdown-item">
+          <div class="countdown-number" id="cd-days">00</div>
+          <div class="countdown-label">Days</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="cd-hours">00</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="cd-minutes">00</div>
+          <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="cd-seconds">00</div>
+          <div class="countdown-label">Seconds</div>
+        </div>
+      </div>
+
+      <!-- Email Signup -->
+      <form class="newsletter-form fade-in fade-in-delay-4" onsubmit="event.preventDefault();this.style.display='none';document.getElementById('cs-success').style.display='block';" style="max-width:440px">
+        <input type="email" placeholder="Enter your email" required aria-label="Email for launch notification" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:#fff">
+        <button type="submit" class="btn btn-accent">Notify Me</button>
+      </form>
+      <div id="cs-success" style="display:none;color:var(--color-white);margin-top:var(--space-2);font-weight:500">
+        <i class="ph-fill ph-check-circle"></i> You're on the list! We'll notify you when we launch.
+      </div>
+
+      <!-- Social Links -->
+      <div class="footer-social" style="justify-content:center;margin-top:var(--space-5)">
+        <a href="#" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);color:#fff;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.3s ease" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
+        <a href="#" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);color:#fff;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.3s ease" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+        <a href="#" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);color:#fff;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.3s ease" aria-label="Pinterest"><i class="ph ph-pinterest-logo"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme persistence
+    const saved = localStorage.getItem('bloom-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+    else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    // Countdown Timer — Set launch date 30 days from now
+    const launchDate = new Date();
+    launchDate.setDate(launchDate.getDate() + 30);
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = launchDate - now;
+
+      if (diff <= 0) {
+        document.getElementById('cd-days').textContent = '00';
+        document.getElementById('cd-hours').textContent = '00';
+        document.getElementById('cd-minutes').textContent = '00';
+        document.getElementById('cd-seconds').textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
