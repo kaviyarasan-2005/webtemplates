@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   if (savedDir) {
     document.documentElement.setAttribute('dir', savedDir);
+    updateDirText(savedDir);
+  } else {
+    updateDirText('ltr');
   }
 
   if (dirToggle) {
@@ -50,7 +53,14 @@ document.addEventListener('DOMContentLoaded', () => {
       
       document.documentElement.setAttribute('dir', newDir);
       localStorage.setItem('dir', newDir);
+      updateDirText(newDir);
     });
+  }
+
+  function updateDirText(dir) {
+    if (dirToggle) {
+      dirToggle.textContent = dir === 'rtl' ? 'LTR' : 'RTL';
+    }
   }
 
   // --- Mobile Menu Toggle ---
@@ -68,6 +78,21 @@ document.addEventListener('DOMContentLoaded', () => {
         icon.classList.remove('ri-close-line');
         icon.classList.add('ri-menu-3-line');
       }
+    });
+
+    // Close menu when clicking links on mobile
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 1024) {
+          navMenu.classList.remove('active');
+          const icon = mobileToggle.querySelector('i');
+          if (icon) {
+            icon.classList.remove('ri-close-line');
+            icon.classList.add('ri-menu-3-line');
+          }
+        }
+      });
     });
   }
 
