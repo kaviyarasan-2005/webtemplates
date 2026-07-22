@@ -31,6 +31,10 @@ function initNav() {
   if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
       const isOpen = navMenu.classList.toggle('is-open');
+      if (navbar) {
+        navbar.classList.toggle('is-menu-open', isOpen);
+        navbar.classList.remove('is-hidden');
+      }
       hamburger.classList.toggle('is-active', isOpen);
       hamburger.setAttribute('aria-expanded', String(isOpen));
       document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -51,6 +55,10 @@ function initNav() {
 
   function closeMenu() {
     if (navMenu) navMenu.classList.remove('is-open');
+    if (navbar) {
+      navbar.classList.remove('is-menu-open');
+      navbar.classList.remove('is-hidden');
+    }
     if (hamburger) {
       hamburger.classList.remove('is-active');
       hamburger.setAttribute('aria-expanded', 'false');

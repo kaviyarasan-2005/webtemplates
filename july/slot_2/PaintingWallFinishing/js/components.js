@@ -221,6 +221,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (hamburger && mobileMenu) {
     hamburger.addEventListener('click', () => {
       const isOpen = mobileMenu.classList.toggle('is-open');
+      const navbarEl = document.getElementById('navbar');
+      if (navbarEl) {
+        navbarEl.classList.toggle('is-menu-open', isOpen);
+        navbarEl.classList.remove('is-hidden');
+      }
       hamburger.setAttribute('aria-expanded', isOpen);
       mobileMenu.setAttribute('aria-hidden', !isOpen);
       if (hamburgerIcon) hamburgerIcon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
@@ -230,6 +235,8 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         mobileMenu.classList.remove('is-open');
+        const navbarEl = document.getElementById('navbar');
+        if (navbarEl) navbarEl.classList.remove('is-menu-open');
         hamburger.setAttribute('aria-expanded', 'false');
         mobileMenu.setAttribute('aria-hidden', 'true');
         if (hamburgerIcon) hamburgerIcon.className = 'fas fa-bars';
@@ -246,8 +253,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const y = window.scrollY;
       if (y > 60) navbar.classList.add('is-scrolled');
       else navbar.classList.remove('is-scrolled');
-      if (y > lastY && y > 200) navbar.classList.add('is-hidden');
-      else navbar.classList.remove('is-hidden');
+
+      const mobileMenuEl = document.getElementById('mobileMenu');
+      if (y > lastY && y > 200 && !mobileMenuEl?.classList.contains('is-open')) {
+        navbar.classList.add('is-hidden');
+      } else {
+        navbar.classList.remove('is-hidden');
+      }
       lastY = y;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
