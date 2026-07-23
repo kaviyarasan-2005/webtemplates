@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System Documentation — CHIC Boutique</title>
+  <meta name="description" content="CHIC Boutique design system reference: color tokens, typography scale, component classes, spacing system, and usage patterns.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23D4AF37'/><text y='.9em' font-size='70' font-family='serif' font-weight='700' fill='%230F0F0F' x='50%' text-anchor='middle' dominant-baseline='middle' dy='.1em'>C</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <style>
+    .doc-nav { position: sticky; top: 0; background: var(--clr-surface); border-bottom: 1px solid var(--clr-border); padding: 1rem 2rem; z-index: 10; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+    .doc-nav a { font-size: .875rem; font-weight: 500; color: var(--clr-text-muted); }
+    .doc-nav a:hover { color: var(--clr-secondary); }
+    .doc-section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; border-bottom: 1px solid var(--clr-border); }
+    .doc-section:last-child { border-bottom: none; }
+    .doc-section h2 { font-family: var(--ff-heading); font-size: 2rem; margin-bottom: 2rem; color: var(--clr-text); }
+    .doc-section h3 { font-size: 1.125rem; font-weight: 600; color: var(--clr-text); margin-bottom: 1rem; margin-top: 2rem; }
+    .color-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+    .swatch { border-radius: 8px; overflow: hidden; border: 1px solid var(--clr-border); }
+    .swatch__color { height: 80px; }
+    .swatch__info { padding: .75rem; background: var(--clr-surface); }
+    .swatch__name { font-weight: 600; font-size: .875rem; color: var(--clr-text); }
+    .swatch__value { font-size: .75rem; color: var(--clr-text-muted); font-family: monospace; }
+    .type-scale { display: flex; flex-direction: column; gap: 1rem; }
+    .type-item { display: flex; align-items: baseline; gap: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--clr-border); }
+    .type-item__label { font-size: .75rem; color: var(--clr-text-muted); min-width: 80px; font-family: monospace; }
+    .spacing-scale { display: flex; flex-direction: column; gap: .5rem; }
+    .spacing-item { display: flex; align-items: center; gap: 1rem; }
+    .spacing-item__bar { background: var(--clr-secondary); height: 20px; border-radius: 4px; opacity: .7; }
+    .spacing-item__label { font-size: .875rem; color: var(--clr-text-muted); font-family: monospace; min-width: 140px; }
+    .class-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+    .class-table th { text-align: left; padding: .75rem 1rem; background: var(--clr-bg-alt); border-bottom: 1px solid var(--clr-border); font-weight: 600; }
+    .class-table td { padding: .75rem 1rem; border-bottom: 1px solid var(--clr-border); color: var(--clr-text-muted); }
+    .class-table td:first-child { font-family: monospace; color: var(--clr-secondary); font-size: .8rem; }
+    .page-badge { display: inline-block; padding: .25rem .75rem; background: rgba(212,175,55,.12); color: var(--clr-secondary); border-radius: 9999px; font-size: .75rem; font-weight: 700; margin-right: .5rem; margin-bottom: .25rem; }
+    code { background: var(--clr-bg-alt); padding: .1rem .4rem; border-radius: 4px; font-family: monospace; font-size: .85em; color: var(--clr-secondary); }
+  </style>
+</head>
+<body>
+  <!-- Doc Nav -->
+  <nav class="doc-nav" aria-label="Documentation navigation">
+    <a href="../pages/index.html" style="font-family:var(--ff-heading);font-size:1.25rem;font-weight:700;color:var(--clr-secondary);">CHIC Docs</a>
+    <a href="#colors">Colors</a>
+    <a href="#typography">Typography</a>
+    <a href="#spacing">Spacing</a>
+    <a href="#buttons">Buttons</a>
+    <a href="#cards">Cards</a>
+    <a href="#layout">Layout</a>
+    <a href="#components">Components</a>
+    <a href="#pages">Pages</a>
+  </nav>
+
+  <main>
+    <!-- Colors -->
+    <section class="doc-section" id="colors" aria-labelledby="colorsTitle">
+      <h2 id="colorsTitle">Color System</h2>
+      <h3>Brand Colors</h3>
+      <div class="color-swatches">
+        <div class="swatch"><div class="swatch__color" style="background:#0F0F0F;"></div><div class="swatch__info"><p class="swatch__name">Primary</p><p class="swatch__value">#0F0F0F — Obsidian</p></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#D4AF37;"></div><div class="swatch__info"><p class="swatch__name">Secondary</p><p class="swatch__value">#D4AF37 — Champagne Gold</p></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#FAFAFA;border:1px solid #eee;"></div><div class="swatch__info"><p class="swatch__name">Accent</p><p class="swatch__value">#FAFAFA — Pearl</p></div></div>
+      </div>
+      <h3>Light Mode Semantics</h3>
+      <div class="color-swatches">
+        <div class="swatch"><div class="swatch__color" style="background:#FFFFFF;border:1px solid #eee;"></div><div class="swatch__info"><p class="swatch__name">Background</p><p class="swatch__value">#FFFFFF</p></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#F5F5F5;"></div><div class="swatch__info"><p class="swatch__name">Alt Background</p><p class="swatch__value">#F5F5F5</p></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#1A1A1A;"></div><div class="swatch__info"><p class="swatch__name">Text Primary</p><p class="swatch__value">#1A1A1A</p></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#666666;"></div><div class="swatch__info"><p class="swatch__name">Text Muted</p><p class="swatch__value">#666666</p></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#E2E2E2;"></div><div class="swatch__info"><p class="swatch__name">Border</p><p class="swatch__value">#E2E2E2</p></div></div>
+      </div>
+      <h3>Dark Mode Semantics</h3>
+      <div class="color-swatches">
+        <div class="swatch"><div class="swatch__color" style="background:#000000;"></div><div class="swatch__info"><p class="swatch__name">Dark BG</p><p class="swatch__value">#000000</p></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#141414;"></div><div class="swatch__info"><p class="swatch__name">Dark Alt BG</p><p class="swatch__value">#141414</p></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#1A1A1A;"></div><div class="swatch__info"><p class="swatch__name">Dark Surface</p><p class="swatch__value">#1A1A1A</p></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#F5F5F5;"></div><div class="swatch__info"><p class="swatch__name">Dark Text</p><p class="swatch__value">#F5F5F5</p></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#A0A0A0;"></div><div class="swatch__info"><p class="swatch__name">Dark Muted</p><p class="swatch__value">#A0A0A0</p></div></div>
+      </div>
+      <p style="margin-top:1.5rem;font-size:.875rem;color:var(--clr-text-muted);">All color pairs meet <strong>WCAG 2.1 AA</strong> contrast requirements (4.5:1 for normal text, 3:1 for large text).</p>
+    </section>
+
+    <!-- Typography -->
+    <section class="doc-section" id="typography" aria-labelledby="typographyTitle">
+      <h2 id="typographyTitle">Typography</h2>
+      <p style="color:var(--clr-text-muted);margin-bottom:2rem;">Two font families: <strong>Playfair Display</strong> (headings) + <strong>Inter</strong> (body). Both loaded from Google Fonts CDN.</p>
+      <div class="type-scale">
+        <div class="type-item"><span class="type-item__label">H1 / 48–64px</span><h1 style="font-size:clamp(2.5rem,5vw,4rem);margin:0;">Redefine Elegance</h1></div>
+        <div class="type-item"><span class="type-item__label">H2 / 36–48px</span><h2 style="font-size:clamp(2rem,4vw,3rem);margin:0;">New Arrivals</h2></div>
+        <div class="type-item"><span class="type-item__label">H3 / 24–32px</span><h3 style="font-size:clamp(1.25rem,2.5vw,2rem);margin:0;">Personal Styling</h3></div>
+        <div class="type-item"><span class="type-item__label">H4 / 18–20px</span><h4 style="font-size:1.125rem;margin:0;">Opening Hours</h4></div>
+        <div class="type-item"><span class="type-item__label">Body / 16px</span><p style="margin:0;">Our curated world of fashion brings timeless elegance to every occasion.</p></div>
+        <div class="type-item"><span class="type-item__label">Small / 14px</span><p style="font-size:.875rem;margin:0;">Section tags, card metadata, captions, and muted supplementary text.</p></div>
+        <div class="type-item"><span class="type-item__label">XS / 12px</span><p style="font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--clr-secondary);margin:0;">New Collection</p></div>
+      </div>
+    </section>
+
+    <!-- Spacing -->
+    <section class="doc-section" id="spacing" aria-labelledby="spacingTitle">
+      <h2 id="spacingTitle">Spacing Scale (8px base)</h2>
+      <div class="spacing-scale">
+        <div class="spacing-item"><span class="spacing-item__label">--sp-1 = 8px</span><div class="spacing-item__bar" style="width:8px;"></div></div>
+        <div class="spacing-item"><span class="spacing-item__label">--sp-2 = 16px</span><div class="spacing-item__bar" style="width:16px;"></div></div>
+        <div class="spacing-item"><span class="spacing-item__label">--sp-3 = 24px</span><div class="spacing-item__bar" style="width:24px;"></div></div>
+        <div class="spacing-item"><span class="spacing-item__label">--sp-4 = 32px</span><div class="spacing-item__bar" style="width:32px;"></div></div>
+        <div class="spacing-item"><span class="spacing-item__label">--sp-5 = 40px</span><div class="spacing-item__bar" style="width:40px;"></div></div>
+        <div class="spacing-item"><span class="spacing-item__label">--sp-6 = 48px</span><div class="spacing-item__bar" style="width:48px;"></div></div>
+        <div class="spacing-item"><span class="spacing-item__label">--sp-8 = 64px</span><div class="spacing-item__bar" style="width:64px;"></div></div>
+        <div class="spacing-item"><span class="spacing-item__label">--sp-10 = 80px</span><div class="spacing-item__bar" style="width:80px;"></div></div>
+        <div class="spacing-item"><span class="spacing-item__label">--sp-15 = 120px</span><div class="spacing-item__bar" style="width:120px;"></div></div>
+      </div>
+    </section>
+
+    <!-- Buttons -->
+    <section class="doc-section" id="buttons" aria-labelledby="buttonsTitle">
+      <h2 id="buttonsTitle">Buttons</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;">
+        <button class="btn btn--primary">Primary</button>
+        <button class="btn btn--dark">Dark</button>
+        <button class="btn btn--outline">Outline</button>
+        <button class="btn btn--outline-gold">Outline Gold</button>
+        <button class="btn btn--primary btn--sm">Small</button>
+        <button class="btn btn--primary btn--lg">Large</button>
+      </div>
+      <table class="class-table" style="margin-top:2rem;">
+        <thead><tr><th>Class</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>.btn--primary</td><td>Gold background, primary text. Main CTA.</td></tr>
+          <tr><td>.btn--dark</td><td>Dark background, pearl text. Secondary CTA.</td></tr>
+          <tr><td>.btn--outline</td><td>Transparent + border. Tertiary actions.</td></tr>
+          <tr><td>.btn--outline-gold</td><td>Gold border + gold text. Accent CTA.</td></tr>
+          <tr><td>.btn--sm</td><td>Smaller padding and font. Nav CTA size.</td></tr>
+          <tr><td>.btn--lg</td><td>Larger padding. Hero and banner CTAs.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Cards -->
+    <section class="doc-section" id="cards" aria-labelledby="cardsTitle">
+      <h2 id="cardsTitle">Card Components</h2>
+      <table class="class-table">
+        <thead><tr><th>Class</th><th>Used On</th><th>Key Children</th></tr></thead>
+        <tbody>
+          <tr><td>.product-card</td><td>Home 1 — New Arrivals</td><td>__img, __badge, __body, __name, __price, __link</td></tr>
+          <tr><td>.article-card</td><td>Blog, 404 paths</td><td>__img, __body, __tag, __title, __meta, __excerpt, __read</td></tr>
+          <tr><td>.service-card</td><td>Services, Service Details</td><td>__img, __body, __title, __desc, __link</td></tr>
+          <tr><td>.team-card</td><td>About — Team</td><td>__img, __name, __role</td></tr>
+          <tr><td>.value-card</td><td>About — Values</td><td>__icon, __title, __desc</td></tr>
+          <tr><td>.occasion-card</td><td>Home 2 — Occasions</td><td>img, __label</td></tr>
+          <tr><td>.category-card</td><td>Home 1 — Categories</td><td>img, __label</td></tr>
+          <tr><td>.testimonial-card</td><td>Home 2 — Testimonials</td><td>__quote-icon, __text, __author, __occasion</td></tr>
+          <tr><td>.pricing-card</td><td>Pricing, Services</td><td>__badge, __tier, __name, __price, __features, __feature</td></tr>
+          <tr><td>.trend-card</td><td>Home 2 — Carousel</td><td>__img, __body, __cat, __title</td></tr>
+          <tr><td>.story-card</td><td>Pricing — Transformations</td><td>__img, __body, __quote, __name, __detail</td></tr>
+          <tr><td>.trending-item</td><td>Blog — Trending Reads</td><td>__img, __tag, __title, __reads</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Layout -->
+    <section class="doc-section" id="layout" aria-labelledby="layoutTitle">
+      <h2 id="layoutTitle">Layout Utilities</h2>
+      <table class="class-table">
+        <thead><tr><th>Class</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>.container</td><td>Max 1280px, centered, clamp padding</td></tr>
+          <tr><td>.section</td><td>Vertical padding: clamp(3rem, 8vw, 7.5rem)</td></tr>
+          <tr><td>.section--alt</td><td>Alternate section background (bg-alt)</td></tr>
+          <tr><td>.section__header</td><td>Centered heading block with margin-bottom</td></tr>
+          <tr><td>.grid</td><td>CSS Grid with 1rem gap</td></tr>
+          <tr><td>.grid--2 / --3 / --4</td><td>2, 3, or 4 equal columns</td></tr>
+          <tr><td>.split</td><td>Two-column text/image split (1fr 1fr)</td></tr>
+          <tr><td>.hero</td><td>Full-viewport hero with overlay and centered content</td></tr>
+          <tr><td>.hero--inner</td><td>Reduced-height hero (60vh) for inner pages</td></tr>
+          <tr><td>.banner</td><td>Full-width section with BG image and dark overlay</td></tr>
+          <tr><td>.reveal</td><td>Scroll-reveal element (opacity+translateY animation)</td></tr>
+          <tr><td>.delay-1 / -2 / -3 / -4</td><td>Stagger transition delays (0.1s increments)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Components -->
+    <section class="doc-section" id="components" aria-labelledby="componentsTitle">
+      <h2 id="componentsTitle">Interactive Components</h2>
+      <table class="class-table">
+        <thead><tr><th>Component</th><th>Class / ID</th><th>JS Init Function</th></tr></thead>
+        <tbody>
+          <tr><td>Navbar</td><td>#navbar .navbar</td><td>initNavbar(), initActiveNav()</td></tr>
+          <tr><td>Mobile Menu</td><td>#mobileMenu .mobile-menu</td><td>initMobileMenu()</td></tr>
+          <tr><td>Book Now Modal</td><td>#bookModal .modal</td><td>initModal(), initModalForm()</td></tr>
+          <tr><td>Theme Toggle</td><td>[data-theme-toggle]</td><td>initTheme()</td></tr>
+          <tr><td>RTL Toggle</td><td>[data-dir-toggle]</td><td>initDir()</td></tr>
+          <tr><td>Accordion</td><td>.accordion .accordion__header</td><td>initAccordions()</td></tr>
+          <tr><td>Carousel</td><td>[data-carousel]</td><td>initCarousel()</td></tr>
+          <tr><td>Blog Filter</td><td>#blogPills [data-filter]</td><td>initBlogFilter()</td></tr>
+          <tr><td>Lightbox</td><td>#lightbox [data-lightbox]</td><td>initLightbox()</td></tr>
+          <tr><td>Countdown</td><td>#countdown [data-target]</td><td>initCountdown()</td></tr>
+          <tr><td>Scroll Reveal</td><td>.reveal</td><td>initScrollReveal()</td></tr>
+          <tr><td>Hero Parallax</td><td>.hero[data-parallax]</td><td>initParallax()</td></tr>
+          <tr><td>Newsletter</td><td>[data-newsletter]</td><td>initNewsletterForms()</td></tr>
+          <tr><td>Contact Form</td><td>#contactForm</td><td>initContactForm()</td></tr>
+          <tr><td>Comment Form</td><td>#commentForm</td><td>initCommentForm()</td></tr>
+          <tr><td>Early Access</td><td>#earlyAccessForm</td><td>initEarlyAccess()</td></tr>
+          <tr><td>Share Buttons</td><td>[data-share]</td><td>initShareButtons()</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Pages -->
+    <section class="doc-section" id="pages" aria-labelledby="pagesTitle">
+      <h2 id="pagesTitle">Page Index</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div><span class="page-badge">Home</span><a href="../pages/index.html">index.html</a> — General boutique landing: hero, new arrivals, categories, seasonal sale, style guide, store preview.</div>
+        <div><span class="page-badge">Home</span><a href="../pages/home-2.html">home-2.html</a> — Editorial focus: hero, trending carousel, occasion selector, lookbook, testimonials, social feed.</div>
+        <div><span class="page-badge">About</span><a href="../pages/about.html">about.html</a> — Brand story, values, team, press, store visit. JSON-LD Organization schema.</div>
+        <div><span class="page-badge">Services</span><a href="../pages/services.html">services.html</a> — 4-service grid, signature offering, 4-step process, pricing teasers, CTA.</div>
+        <div><span class="page-badge">Services</span><a href="../pages/service-details.html">service-details.html</a> — Bespoke evening wear: narrative, lightbox gallery, size guide, FAQ, related services.</div>
+        <div><span class="page-badge">Pricing</span><a href="../pages/pricing.html">pricing.html</a> — 3-tier pricing, comparison, bespoke commission, transformation stories, CTA.</div>
+        <div><span class="page-badge">Blog</span><a href="../pages/blog.html">blog.html</a> — Featured article, article mosaic, JS category filter, trending reads, newsletter.</div>
+        <div><span class="page-badge">Blog</span><a href="../pages/blog-details.html">blog-details.html</a> — Article body, author card, related stories, comments, social share + newsletter.</div>
+        <div><span class="page-badge">Contact</span><a href="../pages/contact.html">contact.html</a> — Validated form, map, hours table, FAQ, social presence. JSON-LD LocalBusiness schema.</div>
+        <div><span class="page-badge">Special</span><a href="../pages/404.html">404.html</a> — Standalone. Error hero, navigation links, search, support contact, home return CTA.</div>
+        <div><span class="page-badge">Special</span><a href="../pages/coming-soon.html">coming-soon.html</a> — Standalone. Hero, countdown timer, early access form, social links, sneak peek.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="text-align:center;padding:2rem;font-size:.875rem;color:var(--clr-text-muted);border-top:1px solid var(--clr-border);">
+    CHIC Boutique Design System &mdash; Version 1.0.0 &mdash; 2026
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>
