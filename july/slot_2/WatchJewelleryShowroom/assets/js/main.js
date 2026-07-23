@@ -3,29 +3,50 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    const htmlElement = document.documentElement;
+
     // ==========================================
     // Theme Toggle (Dark/Light Mode)
     // ==========================================
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const htmlElement = document.documentElement;
-    
-    // Check for saved theme preference or OS preference
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
+    let initialTheme = 'light';
+
     if (savedTheme) {
-        htmlElement.setAttribute('data-theme', savedTheme);
+        initialTheme = savedTheme;
     } else if (prefersDark) {
-        htmlElement.setAttribute('data-theme', 'dark');
+        initialTheme = 'dark';
     }
-    
-    // Toggle theme
+
+    htmlElement.setAttribute('data-theme', initialTheme);
+    updateThemeIcon(initialTheme);
+
+    function updateThemeIcon(theme) {
+        if (!themeToggleBtn) return;
+        let icon = themeToggleBtn.querySelector('i');
+        if (!icon) {
+            icon = document.createElement('i');
+            themeToggleBtn.appendChild(icon);
+        }
+        if (theme === 'dark') {
+            icon.className = 'fa-solid fa-sun';
+            themeToggleBtn.setAttribute('title', 'Switch to Light Mode');
+            themeToggleBtn.setAttribute('aria-label', 'Switch to Light Mode');
+        } else {
+            icon.className = 'fa-solid fa-moon';
+            themeToggleBtn.setAttribute('title', 'Switch to Dark Mode');
+            themeToggleBtn.setAttribute('aria-label', 'Switch to Dark Mode');
+        }
+    }
+
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = htmlElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             htmlElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
         });
     }
 
@@ -33,19 +54,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // LTR/RTL Toggle
     // ==========================================
     const dirToggleBtn = document.getElementById('dir-toggle');
-    
-    // Check for saved direction
-    const savedDir = localStorage.getItem('dir');
-    if (savedDir) {
-        htmlElement.setAttribute('dir', savedDir);
+    const savedDir = localStorage.getItem('dir') || 'ltr';
+
+    htmlElement.setAttribute('dir', savedDir);
+    updateDirUI(savedDir);
+
+    function updateDirUI(dir) {
+        if (!dirToggleBtn) return;
+        const targetDirLabel = (dir === 'rtl') ? 'LTR' : 'RTL';
+        dirToggleBtn.innerHTML = `<span class="dir-badge">${targetDirLabel}</span>`;
+        dirToggleBtn.setAttribute('title', dir === 'rtl' ? 'Switch to Left-to-Right (LTR)' : 'Switch to Right-to-Left (RTL)');
+        dirToggleBtn.setAttribute('aria-label', dir === 'rtl' ? 'Switch to Left-to-Right (LTR)' : 'Switch to Right-to-Left (RTL)');
     }
-    
+
     if (dirToggleBtn) {
         dirToggleBtn.addEventListener('click', () => {
             const currentDir = htmlElement.getAttribute('dir');
             const newDir = (currentDir === 'rtl') ? 'ltr' : 'rtl';
             htmlElement.setAttribute('dir', newDir);
             localStorage.setItem('dir', newDir);
+            updateDirUI(newDir);
         });
     }
 
