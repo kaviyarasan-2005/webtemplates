@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VisionCare Optical Services – Comprehensive eye tests, designer frames (reading, sunglasses, kids), precision lenses, contact lens fitting, and children's eye care in Chennai.">
+  <meta name="author" content="VisionCare Optical">
+  <meta property="og:title" content="Our Services – VisionCare Optical">
+  <meta name="theme-color" content="#2563EB">
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+  <title>Services – VisionCare Optical | Eye Tests, Frames & Lenses</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/utilities.css">
+  <script src="../assets/js/theme.js"></script>
+  <style>
+    /* Service Detail */
+    .service-detail {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: var(--space-10);
+      margin-bottom: var(--space-10);
+    }
+    .service-detail:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    @media (min-width: 1024px) {
+      .service-detail {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-12);
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+      .service-detail.reverse .service-img { order: 2; }
+      .service-detail.reverse .service-info { order: 1; }
+    }
+    .service-img img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-xl);
+    }
+    @media (min-width: 1024px) {
+      .service-img img { height: 420px; }
+    }
+    .service-feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin: var(--space-4) 0;
+    }
+    .service-feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    .service-feature-list li i {
+      color: var(--color-secondary);
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    /* Mobile: center-align service info text */
+    @media (max-width: 1023px) {
+      .service-info {
+        text-align: center;
+      }
+      .service-info .section-eyebrow {
+        justify-content: center !important;
+      }
+      .service-info .service-feature-list li {
+        text-align: left;
+      }
+      .service-info > div:last-child {
+        justify-content: center;
+      }
+    }
+
+    /* Frame Tabs */
+    .frame-tabs {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-8);
+    }
+    .frame-tab {
+      padding: var(--space-2) var(--space-5);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      color: var(--text-secondary);
+      cursor: pointer;
+      background: var(--bg-card);
+      transition: all var(--transition-fast);
+    }
+    .frame-tab.active,
+    .frame-tab:hover {
+      border-color: var(--color-primary);
+      background: var(--color-primary-subtle);
+      color: var(--color-primary);
+    }
+
+    /* Lens Comparison Table */
+    .lens-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .lens-table th {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+      color: white;
+      padding: var(--space-4);
+      text-align: left;
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+    }
+    .lens-table td {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--border-color);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      background: var(--bg-card);
+    }
+    .lens-table tr:last-child td { border-bottom: none; }
+    .lens-table tr:nth-child(even) td {
+      background: var(--bg-secondary);
+    }
+    .lens-table td:first-child {
+      font-weight: var(--font-semibold);
+      color: var(--text-primary);
+    }
+    .check-yes { color: var(--color-secondary); }
+    .check-no  { color: var(--color-error); }
+
+    /* Frame Grid */
+    .frames-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+    @media (min-width: 640px) { .frames-detail-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (min-width: 1024px) { .frames-detail-grid { grid-template-columns: repeat(3,1fr); } }
+
+    /* Quick Nav Pill Strip */
+    .service-quick-nav {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      padding: var(--space-3) 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-primary) transparent;
+    }
+    .service-quick-nav::-webkit-scrollbar { height: 3px; }
+    .service-quick-nav::-webkit-scrollbar-track { background: transparent; }
+    .service-quick-nav::-webkit-scrollbar-thumb {
+      background: var(--color-primary);
+      border-radius: var(--radius-full);
+    }
+    .service-nav-pill {
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      text-decoration: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      transition: all .2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .service-nav-pill:hover,
+    .service-nav-pill.active {
+      background: var(--color-primary-subtle);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    @media (max-width: 639px) {
+      .service-quick-nav { padding: var(--space-2) 0; }
+      .service-nav-pill {
+        padding: 0.3rem var(--space-3);
+        font-size: var(--text-xs);
+      }
+    }
+
+    /* Table Scroll Wrapper */
+    .table-scroll-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-primary) transparent;
+      border-radius: var(--radius-xl);
+    }
+    .table-scroll-wrap::-webkit-scrollbar { height: 3px; }
+    .table-scroll-wrap::-webkit-scrollbar-track { background: transparent; }
+    .table-scroll-wrap::-webkit-scrollbar-thumb {
+      background: var(--color-primary);
+      border-radius: var(--radius-full);
+    }
+  </style>
+</head>
+<body>
+
+<main id="main-content">
+
+  <!-- Page Hero -->
+  <section class="page-hero" aria-labelledby="service-hero-title" style="background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('../assets/images/hero_service.png') center/cover no-repeat;">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="badge badge-secondary" style="margin-inline:auto;margin-bottom:var(--space-4);">
+          <i class="fa-solid fa-stethoscope" aria-hidden="true"></i>
+          Full Eye Care
+        </div>
+        <h1 class="page-hero-title" id="service-hero-title">Our Services</h1>
+        <p class="page-hero-desc">
+          Comprehensive eye care from diagnosis to eyewear — all delivered by qualified optometrists
+          using state-of-the-art technology.
+        </p>
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <span class="breadcrumb-item"><a href="../index.html">Home</a></span>
+          <span class="breadcrumb-sep" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+          <span class="breadcrumb-item" aria-current="page">Services</span>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Nav -->
+  <div class="service-quick-nav">
+    <div class="container">
+      <nav style="display:flex;gap:var(--space-2);" aria-label="Service sections">
+        <a href="#eye-test"       class="service-nav-pill service-nav-link">Eye Test</a>
+        <a href="#lenses"         class="service-nav-pill service-nav-link">Lenses</a>
+        <a href="#frames"         class="service-nav-pill service-nav-link">Frames</a>
+        <a href="#contact-lenses" class="service-nav-pill service-nav-link">Contact Lenses</a>
+        <a href="#sunglasses"     class="service-nav-pill service-nav-link">Sunglasses</a>
+        <a href="#kids"           class="service-nav-pill service-nav-link">Children's Care</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ── Eye Test ── -->
+  <section class="section" id="eye-test" aria-labelledby="eye-test-title">
+    <div class="container">
+      <div class="service-detail">
+        <div class="service-img reveal-left">
+          <img src="../assets/images/service_hero_inline.png"
+               alt="Optometrist using a slit-lamp microscope during a comprehensive eye examination"
+               loading="lazy" width="600" height="420">
+        </div>
+        <div class="service-info reveal-right">
+          <div class="section-eyebrow">Clinical Service</div>
+          <h2 style="font-family:var(--font-display);font-size:clamp(1.75rem,3vw,2.5rem);font-weight:var(--font-extrabold);color:var(--text-primary);margin-bottom:var(--space-4);" id="eye-test-title">
+            Comprehensive <span style="color:var(--color-primary);">Eye Examination</span>
+          </h2>
+          <p style="color:var(--text-secondary);line-height:var(--leading-relaxed);margin-bottom:var(--space-4);">
+            Our 60-minute comprehensive eye test goes far beyond a simple vision check.
+            Using the latest diagnostic technology, we assess the full health of your eyes
+            and produce an accurate, detailed prescription.
+          </p>
+          <ul class="service-feature-list">
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Visual acuity and refraction assessment</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Intraocular pressure (glaucoma screening)</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Slit-lamp anterior segment examination</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Dilated retinal fundus examination</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Colour vision and stereo-vision tests</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Digital prescription with optical report</li>
+          </ul>
+          <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;">
+            <a href="../pages/contact.html#appointment" class="btn btn-primary">
+              <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+              Book Eye Test
+            </a>
+            <a href="../pages/pricing.html" class="btn btn-outline">
+              <i class="fa-solid fa-tag" aria-hidden="true"></i>
+              View Pricing
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Lenses ── -->
+  <section class="section bg-section" id="lenses" aria-labelledby="lenses-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Lens Solutions</div>
+        <h2 class="section-title" id="lenses-title">
+          Precision <span>Lenses</span> for Every Need
+        </h2>
+        <p class="section-subtitle">We work with leading manufacturers Essilor, Zeiss, and Hoya to provide lenses that meet the highest optical standards.</p>
+      </div>
+
+      <div class="grid-3" style="margin-bottom:var(--space-12);">
+        <div class="lens-card reveal delay-100">
+          <div class="lens-card-header">
+            <i class="fa-solid fa-circle-half-stroke lens-card-icon" aria-hidden="true"></i>
+            <h3 class="lens-card-title">Single Vision</h3>
+          </div>
+          <div class="lens-card-body">
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-4);">One focal point — ideal for distance, near, or intermediate vision. Available in standard, hi-index, and ultra-thin profiles.</p>
+            <ul class="service-feature-list">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i>Standard, 1.6 &amp; 1.67 hi-index</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i>Anti-reflection coating</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i>UV400 protection</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i>Scratch-resistant hard coat</li>
+            </ul>
+          </div>
+        </div>
+        <div class="lens-card reveal delay-200">
+          <div class="lens-card-header">
+            <i class="fa-solid fa-layer-group lens-card-icon" aria-hidden="true"></i>
+            <h3 class="lens-card-title">Progressive</h3>
+          </div>
+          <div class="lens-card-body">
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-4);">No-line bifocals with seamless vision at all distances — near, intermediate, and far.</p>
+            <ul class="service-feature-list">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i>Premium corridor design</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i>Zeiss &amp; Essilor brands</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i>Free-form digital surfacing</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i>Anti-fatigue options</li>
+            </ul>
+          </div>
+        </div>
+        <div class="lens-card reveal delay-300">
+          <div class="lens-card-header">
+            <i class="fa-solid fa-display lens-card-icon" aria-hidden="true"></i>
+            <h3 class="lens-card-title">Blue Light Filter</h3>
+          </div>
+          <div class="lens-card-body">
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-4);">Specialist lens coating that reduces high-energy blue light from digital screens, easing eye fatigue.</p>
+            <ul class="service-feature-list">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i>Filters 420–450nm light</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i>Clear lens appearance</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i>With or without prescription</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i>Improves sleep quality</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison Table -->
+      <h3 class="section-title" style="margin-bottom:var(--space-6);" id="lens-comparison">Lens Type Comparison</h3>
+      <div class="table-scroll-wrap">
+        <table class="lens-table" aria-label="Lens type comparison">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Single Vision</th>
+              <th>Bifocal</th>
+              <th>Progressive</th>
+              <th>Blue Light</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Near Vision</td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+            </tr>
+            <tr>
+              <td>Distance Vision</td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+            </tr>
+            <tr>
+              <td>Intermediate Vision</td>
+              <td><i class="fa-solid fa-xmark check-no" aria-label="No"></i></td>
+              <td><i class="fa-solid fa-xmark check-no" aria-label="No"></i></td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+            </tr>
+            <tr>
+              <td>No Visible Lines</td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+              <td><i class="fa-solid fa-xmark check-no" aria-label="No"></i></td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+            </tr>
+            <tr>
+              <td>Blue Light Filtering</td>
+              <td><i class="fa-solid fa-xmark check-no" aria-label="No"></i></td>
+              <td><i class="fa-solid fa-xmark check-no" aria-label="No"></i></td>
+              <td><i class="fa-solid fa-xmark check-no" aria-label="No"></i></td>
+              <td><i class="fa-solid fa-check check-yes" aria-label="Yes"></i></td>
+            </tr>
+            <tr>
+              <td>Suitable Age</td>
+              <td>All ages</td>
+              <td>40+</td>
+              <td>40+</td>
+              <td>All ages</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Frames ── -->
+  <section class="section" id="frames" aria-labelledby="frames-service-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Frame Collections</div>
+        <h2 class="section-title" id="frames-service-title">
+          500+ <span>Frame Styles</span>
+        </h2>
+        <p class="section-subtitle">From classic to contemporary, budget to luxury — find the perfect frame to match your face, personality, and lifestyle.</p>
+      </div>
+
+      <div class="frames-detail-grid">
+        <div class="card reveal delay-100">
+          <img src="../assets/images/service_frames_reading.png"
+               alt="Reading glasses collection" class="card-img" loading="lazy" width="400" height="220">
+          <div class="card-body">
+            <h3 class="card-title">Reading Glasses</h3>
+            <p class="card-text">Lightweight metal and premium acetate frames designed for comfortable near-vision wear. Available in slim, full-rim, and half-rim styles.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:auto;padding-top:var(--space-4);">
+              <span class="badge badge-primary"><i class="fa-solid fa-tag" aria-hidden="true"></i> From ₹799</span>
+              <span class="badge badge-secondary"><i class="fa-solid fa-check" aria-hidden="true"></i> 150+ Styles</span>
+            </div>
+          </div>
+        </div>
+        <div class="card reveal delay-200">
+          <img src="../assets/images/service_frames_sunglasses.png"
+               alt="Designer sunglasses" class="card-img" loading="lazy" width="400" height="220">
+          <div class="card-body">
+            <h3 class="card-title">Sunglasses</h3>
+            <p class="card-text">Premium polarised lenses in acetate, titanium, and TR90 frames. Ray-Ban, Oakley, Vogue, and exclusive store-label collections.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:auto;padding-top:var(--space-4);">
+              <span class="badge badge-primary"><i class="fa-solid fa-tag" aria-hidden="true"></i> From ₹1,499</span>
+              <span class="badge badge-secondary"><i class="fa-solid fa-check" aria-hidden="true"></i> 200+ Styles</span>
+            </div>
+          </div>
+        </div>
+        <div class="card reveal delay-300">
+          <img src="../assets/images/service_frames_kids.png"
+               alt="Children's glasses" class="card-img" loading="lazy" width="400" height="220">
+          <div class="card-body">
+            <h3 class="card-title">Kids Frames</h3>
+            <p class="card-text">Flexible, impact-resistant frames in fun colours specifically designed for growing children. Spring hinges, rubber nose pads, and 1-year breakage warranty.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:auto;padding-top:var(--space-4);">
+              <span class="badge badge-primary"><i class="fa-solid fa-tag" aria-hidden="true"></i> From ₹599</span>
+              <span class="badge badge-secondary"><i class="fa-solid fa-check" aria-hidden="true"></i> 80+ Styles</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact Lenses ── -->
+  <section class="section bg-section" id="contact-lenses" aria-labelledby="cl-title">
+    <div class="container">
+      <div class="service-detail reverse">
+        <div class="service-img reveal-right">
+          <img src="../assets/images/service_lens_types.png"
+               alt="Contact lens fitting consultation with optometrist"
+               loading="lazy" width="600" height="420">
+        </div>
+        <div class="service-info reveal-left">
+          <div class="section-eyebrow" style="justify-content:flex-start;">Contact Lenses</div>
+          <h2 style="font-family:var(--font-display);font-size:clamp(1.75rem,3vw,2.5rem);font-weight:var(--font-extrabold);color:var(--text-primary);margin-bottom:var(--space-4);" id="cl-title">
+            Perfect <span style="color:var(--color-primary);">Contact Lens</span> Fitting
+          </h2>
+          <p style="color:var(--text-secondary);line-height:var(--leading-relaxed);margin-bottom:var(--space-4);">
+            Our contact lens clinic offers a complete fitting service, trial lenses, and
+            in-depth aftercare instruction for all lens types.
+          </p>
+          <ul class="service-feature-list">
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Daily, monthly, and toric lenses</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Multifocal contact lenses</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Coloured cosmetic lenses</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Keratoconus scleral lenses</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Proper insertion/removal training</li>
+          </ul>
+          <a href="../pages/contact.html#appointment" class="btn btn-primary">
+            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+            Book Fitting
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Sunglasses ── -->
+  <section class="section" id="sunglasses" aria-labelledby="sun-title">
+    <div class="container">
+      <div class="service-detail">
+        <div class="service-img reveal-left">
+          <img src="../assets/images/service_contact_lenses.png"
+               alt="Premium polarised sunglasses collection"
+               loading="lazy" width="600" height="420">
+        </div>
+        <div class="service-info reveal-right">
+          <div class="section-eyebrow" style="justify-content:flex-start;">UV Protection</div>
+          <h2 style="font-family:var(--font-display);font-size:clamp(1.75rem,3vw,2.5rem);font-weight:var(--font-extrabold);color:var(--text-primary);margin-bottom:var(--space-4);" id="sun-title">
+            Premium <span style="color:var(--color-primary);">Sunglasses</span>
+          </h2>
+          <p style="color:var(--text-secondary);line-height:var(--leading-relaxed);margin-bottom:var(--space-4);">
+            Protect your eyes from UV radiation while looking effortlessly stylish.
+            We stock 200+ styles and can add your prescription to any sunglass frame.
+          </p>
+          <ul class="service-feature-list">
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>UV400 certified lenses on all models</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Polarised options to reduce glare</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Prescription-tinted lenses available</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Photochromic (transitions) lenses</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Sports and wraparound styles</li>
+          </ul>
+          <a href="../pages/pricing.html" class="btn btn-primary">
+            <i class="fa-solid fa-tag" aria-hidden="true"></i>
+            View Pricing
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Kids Eye Care ── -->
+  <section class="section bg-section" id="kids" aria-labelledby="kids-title">
+    <div class="container">
+      <div class="service-detail reverse">
+        <div class="service-img reveal-right">
+          <img src="../assets/images/service_children_care.png"
+               alt="Child wearing their new glasses during a friendly paediatric eye exam"
+               loading="lazy" width="600" height="420">
+        </div>
+        <div class="service-info reveal-left">
+          <div class="section-eyebrow" style="justify-content:flex-start;">Paediatric Care</div>
+          <h2 style="font-family:var(--font-display);font-size:clamp(1.75rem,3vw,2.5rem);font-weight:var(--font-extrabold);color:var(--text-primary);margin-bottom:var(--space-4);" id="kids-title">
+            Children's <span style="color:var(--color-primary);">Eye Care</span>
+          </h2>
+          <p style="color:var(--text-secondary);line-height:var(--leading-relaxed);margin-bottom:var(--space-4);">
+            Children's eyes develop rapidly. Early detection of vision problems — lazy eye,
+            squint, or refractive errors — is critical for healthy visual development and
+            academic success.
+          </p>
+          <ul class="service-feature-list">
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Child-friendly examination techniques</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Amblyopia (lazy eye) detection and treatment</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Myopia management and control</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>School vision screening packages</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i>Durable, flexible frame collection (age 3–16)</li>
+          </ul>
+          <a href="../pages/contact.html#appointment" class="btn btn-primary">
+            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+            Book Children's Test
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+
+
+  <!-- CTA -->
+  <section class="cta-section section" aria-labelledby="service-cta-title">
+    <div class="container">
+      <div class="cta-content reveal">
+        <h2 class="cta-title section-title" id="service-cta-title">
+          Ready to Start Your Vision Journey?
+        </h2>
+        <p class="cta-text">Book a comprehensive eye test today — done in 60 minutes, results and prescription issued on the same day.</p>
+        <div class="cta-actions">
+          <a href="../pages/contact.html#appointment" class="btn btn-white btn-lg">
+            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+            Book Eye Test
+          </a>
+          <a href="../pages/pricing.html" class="btn btn-lg"
+             style="border:2px solid rgba(255,255,255,0.4);color:white;">
+            <i class="fa-solid fa-tag" aria-hidden="true"></i>
+            View Pricing
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

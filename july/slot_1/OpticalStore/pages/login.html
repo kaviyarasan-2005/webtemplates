@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Log in to your Optic patient account to view your prescriptions, book appointments, and manage your eye care records.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#2563EB">
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+  <title>Login – Optic | Patient Account</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/utilities.css">
+  <script src="../assets/js/theme.js"></script>
+  <style>
+    body { min-height: 100vh; }
+    .auth-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    @media(min-width:1024px) { .auth-page { grid-template-columns: 1fr 1fr; } }
+
+    .auth-left {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 60%, #1a3a6b 100%);
+      padding: var(--space-12);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 300px;
+    }
+    .auth-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(16,185,129,0.25) 0%, transparent 60%);
+    }
+    @media(max-width:1023px) { .auth-left { display: none; } }
+
+    .auth-left-content { position: relative; z-index: 1; }
+
+    .auth-left-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-12);
+      margin-top: 10px;
+      text-decoration: none;
+    }
+    .auth-left-logo-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.2);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+    .auth-left-logo-text {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: white;
+    }
+
+    .auth-left-feature {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+    .auth-left-feature-icon {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      background: rgba(255,255,255,0.15);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: var(--text-base);
+    }
+    .auth-left-feature-text {
+      color: rgba(255,255,255,0.85);
+      font-size: var(--text-sm);
+      line-height: var(--leading-snug);
+    }
+    .auth-left-feature-title {
+      font-weight: var(--font-semibold);
+      color: white;
+      display: block;
+      margin-bottom: var(--space-1);
+    }
+
+    .auth-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: var(--space-8) var(--space-6);
+      background: var(--bg-primary);
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: var(--space-8);
+    }
+
+    .auth-mobile-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
+      text-decoration: none;
+      margin-bottom: var(--space-6);
+      margin-top: 10px;
+    }
+
+    @media(min-width:1024px) { .auth-mobile-logo { display: none; } }
+
+    .auth-mobile-logo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+    }
+
+    .auth-title {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-extrabold);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+    .auth-subtitle {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    .social-login {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+    .social-login-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--text-primary);
+      background: var(--bg-card);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      min-height: 44px;
+    }
+    .social-login-btn:hover {
+      border-color: var(--color-primary);
+      background: var(--color-primary-subtle);
+      color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Theme/RTL Toggles -->
+  <div style="position: absolute; top: var(--space-4); inset-inline-end: var(--space-6); display: flex; gap: var(--space-2); z-index: var(--z-sticky);">
+    <button class="toggle-btn" data-dir-toggle aria-label="Switch to RTL layout" title="Switch to RTL layout">
+      <span class="toggle-label">RTL</span>
+    </button>
+    <button class="toggle-btn" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode">
+      <i class="fa-solid fa-moon" aria-hidden="true"></i>
+    </button>
+  </div>
+
+<main id="main-content">
+  <div class="auth-page">
+
+    <!-- Left Panel -->
+    <div class="auth-left" role="complementary">
+      <div class="auth-left-content">
+        <a href="../index.html" class="auth-left-logo" aria-label="Optic">
+          <div class="auth-left-logo-icon" aria-hidden="true">
+            <i class="fa-solid fa-eye"></i>
+          </div>
+          <span class="auth-left-logo-text">Optic</span>
+        </a>
+
+        <h2 style="font-family:var(--font-display);font-size:clamp(1.5rem,3vw,2rem);color:white;margin-bottom:var(--space-3);">
+          Your Vision,<br>Our Priority
+        </h2>
+        <p style="color:rgba(255,255,255,0.7);font-size:var(--text-sm);margin-bottom:var(--space-10);">
+          Access your patient account to manage appointments, view prescriptions, and track your eye health journey.
+        </p>
+
+        <div class="auth-left-feature">
+          <div class="auth-left-feature-icon" aria-hidden="true"><i class="fa-solid fa-file-prescription"></i></div>
+          <div class="auth-left-feature-text">
+            <span class="auth-left-feature-title">Digital Prescriptions</span>
+            Access and download your current and past prescriptions anytime.
+          </div>
+        </div>
+        <div class="auth-left-feature">
+          <div class="auth-left-feature-icon" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></div>
+          <div class="auth-left-feature-text">
+            <span class="auth-left-feature-title">Appointment Management</span>
+            Book, reschedule, or cancel appointments from your dashboard.
+          </div>
+        </div>
+        <div class="auth-left-feature">
+          <div class="auth-left-feature-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></div>
+          <div class="auth-left-feature-text">
+            <span class="auth-left-feature-title">Vision History</span>
+            Track changes in your prescription over time with visual charts.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel – Login Form -->
+    <div class="auth-right">
+      <div class="auth-card">
+
+        <!-- Mobile Logo -->
+        <a href="../index.html" class="auth-mobile-logo" aria-label="Optic">
+          <div class="auth-mobile-logo-icon" aria-hidden="true"><i class="fa-solid fa-eye"></i></div>
+          <span style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:var(--font-bold);color:var(--text-primary);">Optic</span>
+        </a>
+
+        <div class="auth-header">
+          <h1 class="auth-title">Welcome Back</h1>
+          <p class="auth-subtitle">Sign in to your patient account</p>
+        </div>
+
+        <!-- Social Login -->
+        <div class="social-login" role="group" aria-label="Social login options">
+          <a href="#" class="social-login-btn" onclick="return false;">
+            <i class="fa-brands fa-google" style="color:#EA4335;" aria-hidden="true"></i>
+            Google
+          </a>
+          <a href="#" class="social-login-btn" onclick="return false;">
+            <i class="fa-brands fa-apple" aria-hidden="true"></i>
+            Apple
+          </a>
+        </div>
+
+        <div class="divider-text">or continue with email</div>
+
+        <form data-validate-form data-form-type="login" novalidate id="loginForm">
+
+          <div class="form-group">
+            <label class="form-label required" for="login-email">Email Address</label>
+            <div class="form-control-wrap">
+              <i class="fa-solid fa-envelope form-control-icon" aria-hidden="true"></i>
+              <input type="email" id="login-email" name="email" class="form-control"
+                placeholder="your@email.com"
+                data-validate="required|email"
+                aria-required="true"
+                autocomplete="email">
+            </div>
+            <span class="form-error" id="login-email-error" role="alert">
+              <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-2);">
+              <label class="form-label required" for="login-password" style="margin-bottom:0;">Password</label>
+              <a href="#" style="font-size:var(--text-xs);color:var(--color-primary);">Forgot password?</a>
+            </div>
+            <div class="form-control-wrap" style="position:relative;">
+              <i class="fa-solid fa-lock form-control-icon" aria-hidden="true"></i>
+              <input type="password" id="login-password" name="password" class="form-control"
+                placeholder="Your password"
+                data-validate="required|minlen:6"
+                aria-required="true"
+                autocomplete="current-password"
+                style="padding-left:2.75rem;padding-right:2.75rem;">
+              <button type="button" class="password-toggle" aria-label="Show password">
+                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+            <span class="form-error" id="login-password-error" role="alert">
+              <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-check">
+              <input type="checkbox" class="form-check-input" name="remember" id="login-remember">
+              <span class="form-check-label">Keep me signed in for 30 days</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full btn-lg">
+            <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+            Sign In to Account
+          </button>
+
+        </form>
+
+        <p style="text-align:center;margin-top:var(--space-6);font-size:var(--text-sm);color:var(--text-secondary);">
+          Don't have an account?
+          <a href="signup.html" style="color:var(--color-primary);font-weight:var(--font-semibold);">Create Account</a>
+        </p>
+
+        <p style="text-align:center;margin-top:var(--space-4);font-size:var(--text-xs);color:var(--text-muted);">
+          By signing in, you agree to our
+          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
