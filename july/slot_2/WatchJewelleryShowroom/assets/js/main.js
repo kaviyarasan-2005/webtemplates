@@ -113,6 +113,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
+    // Mobile / Touch Dropdown Accordion Toggle
+    // ==========================================
+    const navDropdowns = document.querySelectorAll('.nav-dropdown');
+
+    navDropdowns.forEach(dropdown => {
+        const link = dropdown.querySelector('.nav-link');
+        if (link) {
+            link.addEventListener('click', (e) => {
+                const isMobile = window.innerWidth <= 1024;
+                const isHashLink = link.getAttribute('href') === '#' || link.getAttribute('href') === '';
+                
+                if (isMobile || isHashLink) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                    
+                    // Toggle chevron rotation
+                    const chevron = link.querySelector('i.fa-chevron-down');
+                    if (chevron) {
+                        chevron.style.transform = dropdown.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                    }
+                }
+            });
+        }
+    });
+
+    // ==========================================
     // Form Validation (Client-Side)
     // ==========================================
     const contactForm = document.getElementById('contact-form');
