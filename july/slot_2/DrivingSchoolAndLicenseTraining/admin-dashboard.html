@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DRIV — Admin Operations Dashboard</title>
+  <meta name="description" content="Manage student bookings, analytics reports, instructor evaluations, and monthly revenue performance within the DRIV admin panel.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='3'%3E%3C/circle%3E%3Cpath d='M12 2v7'%3E%3C/path%3E%3Cpath d='M12 15v7'%3E%3C/path%3E%3Cpath d='M2 12h7'%3E%3C/path%3E%3Cpath d='M15 12h7'%3E%3C/path%3E%3C/svg%3E">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Skip Link for Accessibility -->
+  <a href="#dashboard-main-content" class="skip-link">Skip to dashboard content</a>
+
+  <!-- Dashboard Container -->
+  <div class="dashboard">
+    
+    <!-- Collapsible Sidebar -->
+    <aside class="sidebar" aria-label="Admin Sidebar">
+      <div class="sidebar__header">
+        <a href="index.html" class="sidebar__logo" aria-label="DRIV Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-primary);">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 2v7"></path>
+            <path d="M12 15v7"></path>
+            <path d="M2 12h7"></path>
+            <path d="M15 12h7"></path>
+          </svg>
+          <span class="sidebar__logo-text">DRIV</span>
+        </a>
+      </div>
+      
+      <nav class="sidebar__nav" aria-label="Sidebar navigation">
+        <!-- Active highlighted overview link -->
+        <a href="admin-dashboard.html" class="sidebar__link active">
+          <i data-lucide="layout-dashboard"></i>
+          <span class="sidebar__link-text">Overview</span>
+        </a>
+        <a href="#analytics" class="sidebar__link">
+          <i data-lucide="bar-chart-3"></i>
+          <span class="sidebar__link-text">Analytics</span>
+        </a>
+        <a href="#students" class="sidebar__link">
+          <i data-lucide="users"></i>
+          <span class="sidebar__link-text">Students</span>
+        </a>
+        <a href="#bookings" class="sidebar__link">
+          <i data-lucide="calendar"></i>
+          <span class="sidebar__link-text">Bookings</span>
+        </a>
+        <a href="#messages" class="sidebar__link">
+          <!-- Envelope/mail shape for hamburger drawer triggers on mobile -->
+          <i data-lucide="mail"></i>
+          <span class="sidebar__link-text">Messages</span>
+        </a>
+        <a href="#settings" class="sidebar__link">
+          <i data-lucide="settings"></i>
+          <span class="sidebar__link-text">Settings</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Dashboard Main Area -->
+    <div class="dashboard__main">
+      
+      <!-- Top Sticky Bar -->
+      <header class="topbar">
+        <div class="flex flex--gap-md" style="align-items: center;">
+          <!-- Sidebar Toggle (Hamburger menu) -->
+          <button class="sidebar__toggle topbar__icon-btn" aria-label="Toggle menu">
+            <i data-lucide="menu"></i>
+          </button>
+          
+          <div class="topbar__search">
+            <i data-lucide="search"></i>
+            <input type="search" placeholder="Search bookings or students..." aria-label="Search inputs">
+          </div>
+        </div>
+
+        <div class="topbar__actions">
+          <button class="topbar__icon-btn theme-toggle" aria-label="Toggle dark mode">
+            <i data-lucide="moon"></i>
+          </button>
+          <button class="topbar__icon-btn rtl-toggle" aria-label="Toggle language direction">RTL</button>
+          <button class="topbar__icon-btn" aria-label="Notifications" style="position:relative;">
+            <i data-lucide="bell"></i>
+            <span class="notification-dot"></span>
+          </button>
+          
+          <div class="topbar__user">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80&fm=webp" alt="Administrator avatar" class="topbar__user-avatar">
+            <div class="topbar__user-info">
+              <span class="topbar__user-name">Clara Higgins</span>
+              <span class="topbar__user-role">Operations Admin</span>
+            </div>
+            <i data-lucide="chevron-down" style="font-size:14px; margin-left: 4px;"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Scrollable dashboard content -->
+      <main class="dashboard__content" id="dashboard-main-content">
+        <div class="fade-in">
+          <h2 class="dashboard__title">Admin Overview</h2>
+          <p class="dashboard__subtitle">Welcome back, Clara. Here is your operations snapshot for today.</p>
+        </div>
+
+        <!-- SECTION 1: OVERVIEW STATS CARDS (Subtle photo textures) -->
+        <section class="stat-cards fade-in delay-1" aria-label="Operational stats">
+          
+          <!-- Card 1 -->
+          <div class="stat-card" >
+            <div class="stat-card__header">
+              <div class="stat-card__icon"><i data-lucide="users"></i></div>
+              <span class="stat-card__change up"><i data-lucide="arrow-up-right"></i> +12%</span>
+            </div>
+            <div class="stat-card__value">1,480</div>
+            <div class="stat-card__label">Active Students</div>
+            <div class="stat-card__chart">
+              <canvas id="mini-line-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="stat-card" >
+            <div class="stat-card__header">
+              <div class="stat-card__icon"><i data-lucide="dollar-sign"></i></div>
+              <span class="stat-card__change up"><i data-lucide="arrow-up-right"></i> +8.4%</span>
+            </div>
+            <div class="stat-card__value">$41,200</div>
+            <div class="stat-card__label">Monthly Revenue</div>
+            <div class="stat-card__chart">
+              <canvas id="mini-bar-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="stat-card" >
+            <div class="stat-card__header">
+              <div class="stat-card__icon"><i data-lucide="award"></i></div>
+              <span class="stat-card__change up"><i data-lucide="arrow-up-right"></i> +1.2%</span>
+            </div>
+            <div class="stat-card__value">95%</div>
+            <div class="stat-card__label">Average Pass Rate</div>
+            <div class="stat-card__chart">
+              <canvas id="mini-pie-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="stat-card" >
+            <div class="stat-card__header">
+              <div class="stat-card__icon"><i data-lucide="calendar"></i></div>
+              <span class="stat-card__change down"><i data-lucide="arrow-down-left"></i> -3%</span>
+            </div>
+            <div class="stat-card__value">185</div>
+            <div class="stat-card__label">Upcoming Lessons</div>
+            <div class="stat-card__chart">
+              <canvas id="mini-area-chart"></canvas>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- SECTION 2: REVENUE LINE CHART -->
+        <section class="chart-panel fade-in delay-2" aria-labelledby="revenue-chart-title" >
+          <div class="chart-panel__header">
+            <h3 id="revenue-chart-title" class="chart-panel__title">Revenue & Expense Flow</h3>
+            <div class="chart-panel__actions">
+              <select class="form-control" style="width:120px; padding: 4px 8px; font-size: 12px;" aria-label="Select year for analytics">
+                <option value="2026">Year 2026</option>
+                <option value="2025">Year 2025</option>
+              </select>
+            </div>
+          </div>
+          <div class="chart-panel__canvas">
+            <canvas id="revenue-chart" style="height: 280px;"></canvas>
+          </div>
+        </section>
+
+        <!-- Grids for Donut, Tables, and Activity feeds -->
+        <div class="grid grid--2 fade-in delay-3">
+          
+          <!-- SECTION 3: BOOKING STATUS DISTRIBUTION (Donut) -->
+          <div class="chart-panel" aria-labelledby="booking-dist-title" >
+            <div class="chart-panel__header">
+              <h3 id="booking-dist-title" class="chart-panel__title">Booking Status Distribution</h3>
+            </div>
+            <div class="chart-panel__canvas" style="max-height: 220px;">
+              <canvas id="booking-status-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- SECTION 5: TOP INSTRUCTORS BAR CHART -->
+          <div class="chart-panel" aria-labelledby="top-inst-title" >
+            <div class="chart-panel__header">
+              <h3 id="top-inst-title" class="chart-panel__title">Top Instructors by Pass Rate</h3>
+            </div>
+            <div class="chart-panel__canvas" style="max-height: 220px;">
+              <canvas id="instructors-chart"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SECTION 4: RECENT BOOKINGS TABLE -->
+        <section class="chart-panel fade-in delay-4" aria-labelledby="recent-bookings-title" style="margin-top: var(--space-8);">
+          <div class="chart-panel__header">
+            <h3 id="recent-bookings-title" class="chart-panel__title">Recent Lesson Bookings</h3>
+            <div class="flex flex--gap-sm">
+              <select class="form-control status-filter" data-table="#recent-bookings-list" style="width:140px; padding: 4px 8px; font-size: 12px;" aria-label="Filter bookings by status">
+                <option value="all">All Statuses</option>
+                <option value="scheduled">Scheduled</option>
+                <option value="in progress">In Progress</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="table" id="recent-bookings-list">
+              <thead>
+                <tr>
+                  <th data-sort="number">Booking ID <i data-lucide="arrow-up-down" style="width: 12px; height: 12px; vertical-align: middle;"></i></th>
+                  <th data-sort="string">Student Name <i data-lucide="arrow-up-down" style="width: 12px; height: 12px; vertical-align: middle;"></i></th>
+                  <th data-sort="string">Service Type <i data-lucide="arrow-up-down" style="width: 12px; height: 12px; vertical-align: middle;"></i></th>
+                  <th data-sort="string">Instructor <i data-lucide="arrow-up-down" style="width: 12px; height: 12px; vertical-align: middle;"></i></th>
+                  <th>Status</th>
+                  <th data-sort="string">Date <i data-lucide="arrow-up-down" style="width: 12px; height: 12px; vertical-align: middle;"></i></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#9024</td>
+                  <td>Nathan Carter</td>
+                  <td>Beginner Lessons</td>
+                  <td>James Miller</td>
+                  <td><span class="badge badge--success">Completed</span></td>
+                  <td>July 21, 2026</td>
+                </tr>
+                <tr>
+                  <td>#9025</td>
+                  <td>Marcus Chen</td>
+                  <td>Advanced Driving</td>
+                  <td>Sarah Jenkins</td>
+                  <td><span class="badge badge--info">In Progress</span></td>
+                  <td>July 22, 2026</td>
+                </tr>
+                <tr>
+                  <td>#9026</td>
+                  <td>Lily Foster</td>
+                  <td>License Prep</td>
+                  <td>David Lopez</td>
+                  <td><span class="badge badge--primary">Scheduled</span></td>
+                  <td>July 22, 2026</td>
+                </tr>
+                <tr>
+                  <td>#9027</td>
+                  <td>Robert Harris</td>
+                  <td>Night Driving</td>
+                  <td>Sarah Jenkins</td>
+                  <td><span class="badge badge--primary">Scheduled</span></td>
+                  <td>July 23, 2026</td>
+                </tr>
+                <tr>
+                  <td>#9028</td>
+                  <td>Arthur Pendelton</td>
+                  <td>Refresher Course</td>
+                  <td>James Miller</td>
+                  <td><span class="badge badge--error">Cancelled</span></td>
+                  <td>July 24, 2026</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 6: ACTIVITY FEED -->
+        <section class="chart-panel fade-in delay-5" aria-labelledby="activity-title" style="margin-top: var(--space-8);">
+          <div class="chart-panel__header">
+            <h3 id="activity-title" class="chart-panel__title">Recent System Activities</h3>
+          </div>
+          <div class="activity-feed">
+            <div class="activity-item">
+              <div class="activity-item__dot" style="background: var(--color-success);"></div>
+              <div class="activity-item__content">
+                <p class="activity-item__text"><strong>Nathan Carter</strong> successfully passed their practical exam under <strong>James Miller</strong>'s guidance.</p>
+                <span class="activity-item__time">2 hours ago</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-item__dot" style="background: var(--color-primary);"></div>
+              <div class="activity-item__content">
+                <p class="activity-item__text">New booking #9027 registered for <strong>Robert Harris</strong> on Night Driving training program.</p>
+                <span class="activity-item__time">4 hours ago</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-item__dot" style="background: var(--color-error);"></div>
+              <div class="activity-item__content">
+                <p class="activity-item__text">Booking #9028 was cancelled by student <strong>Arthur Pendelton</strong> due to scheduling conflict.</p>
+                <span class="activity-item__time">5 hours ago</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-item__dot" style="background: var(--color-info);"></div>
+              <div class="activity-item__content">
+                <p class="activity-item__text">Instructor <strong>Sarah Jenkins</strong> updated the lesson completion checklist for <strong>Marcus Chen</strong>.</p>
+                <span class="activity-item__time">Yesterday</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Dashboard JavaScript -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+  
+</body>
+</html>

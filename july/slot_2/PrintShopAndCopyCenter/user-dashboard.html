@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INKA | User Dashboard</title>
+  <meta name="description"
+    content="Manage your INKA Print Shop orders, upload artwork designs, track printing status, and reorder favorites.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+</head>
+
+<body style="overflow-x: hidden;">
+
+  <div class="dashboard-layout">
+    <!-- ====== SIDEBAR ====== -->
+    <aside class="sidebar" aria-label="User Navigation">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-brand" aria-label="INKA Home">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="22" fill="#fff" opacity="0.2" />
+            <path d="M24 6C24 6 20 18 20 26C20 30.4183 21.7909 34 24 34C26.2091 34 28 30.4183 28 26C28 18 24 6 24 6Z"
+              fill="#fff" />
+            <circle cx="24" cy="38" r="4" fill="#fff" />
+          </svg>
+          <span>INKA Client</span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#welcome" class="sidebar-link active">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="9" />
+            <rect x="14" y="3" width="7" height="5" />
+            <rect x="14" y="12" width="7" height="9" />
+            <rect x="3" y="16" width="7" height="5" />
+          </svg>
+          <span>Overview</span>
+        </a>
+        <a href="#upload" class="sidebar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
+          <span>Upload Designs</span>
+        </a>
+        <a href="#timeline" class="sidebar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <span>Track Delivery</span>
+        </a>
+        <a href="#spending" class="sidebar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23" />
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+          </svg>
+          <span>My Spending</span>
+        </a>
+        <a href="#recent" class="sidebar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <span>Order History</span>
+        </a>
+        <a href="#favorites" class="sidebar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+          <span>Reorder Favorites</span>
+        </a>
+      </nav>
+
+      <div
+        style="padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); border-top: 1px solid rgba(255, 255, 255, 0.06);">
+        <a href="index.html" class="sidebar-link" style="margin-bottom: 0;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span>Sign Out</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ====== MAIN DASHBOARD ====== -->
+    <main class="dashboard-main" id="main-content">
+      <!-- ====== TOPBAR ====== -->
+      <header class="dashboard-topbar">
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <button class="sidebar-toggle" aria-label="Toggle sidebar collapse">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+          <button class="mobile-sidebar-toggle btn-icon btn-ghost" aria-label="Open sidebar menu"
+            style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+          <h2 style="font-size: var(--fs-h4); font-weight: var(--fw-semibold); color: var(--text-primary);">Dashboard
+          </h2>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="toggle-btn rtl-toggle" aria-label="Toggle text direction">LTR</button>
+          <button class="toggle-btn theme-toggle" aria-label="Toggle dark/light mode">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
+
+          <div style="position: relative;">
+            <button class="topbar-notification" aria-label="Notifications list">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
+              <span class="notification-badge"></span>
+            </button>
+            <div class="notification-dropdown">
+              <h4>Notifications</h4>
+              <div class="notification-list">
+                <a href="#" class="notification-item">
+                  <div
+                    style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-cta); margin-top: 4px; flex-shrink: 0;">
+                  </div>
+                  <div>Your order #ORD-12891 is printed and ready for dispatch.</div>
+                </a>
+                <a href="#" class="notification-item">
+                  <div
+                    style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-grey-300); margin-top: 4px; flex-shrink: 0;">
+                  </div>
+                  <div>Artwork files checked successfully.</div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div style="position: relative;">
+            <div class="topbar-avatar">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80"
+                alt="Client profile avatar">
+              <span>David C.</span>
+            </div>
+            <div class="avatar-dropdown">
+              <h4>My Settings</h4>
+              <div class="avatar-dropdown-links">
+                <a href="#">Account Info</a>
+                <a href="#">Saved Addresses</a>
+                <a href="index.html">Sign Out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ====== DASHBOARD CONTENT ====== -->
+      <div class="dashboard-content" style="display: flex; flex-direction: column; gap: var(--space-8);">
+
+        <!-- SECTION 1: WELCOME STATS -->
+        <section id="welcome" style="padding: 0;" aria-label="Welcome Statistics">
+          <div style="margin-bottom: var(--space-6);">
+            <h3 style="font-size: var(--fs-h3); margin-bottom: 2px;">Welcome back, David!</h3>
+            <p style="font-size: var(--fs-small); color: var(--text-tertiary); margin-bottom: 0;">Here is a summary of
+              your recent print jobs and stats.</p>
+          </div>
+          <div class="grid grid-4" style="gap: var(--space-6);">
+            <!-- Stat 1 -->
+            <div class="dash-stat-card">
+              <div class="dash-stat-info">
+                <h4>Total Spent</h4>
+                <div class="dash-stat-value">$2,450</div>
+                <div class="dash-stat-change positive">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="3">
+                    <polyline points="18 15 12 9 6 15" />
+                  </svg>
+                  <span>15.2% vs last quarter</span>
+                </div>
+              </div>
+              <div class="dash-stat-icon purple">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="1" x2="12" y2="23" />
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Stat 2 -->
+            <div class="dash-stat-card">
+              <div class="dash-stat-info">
+                <h4>Active Orders</h4>
+                <div class="dash-stat-value">2</div>
+                <div class="dash-stat-change positive">
+                  <span>Track progress below</span>
+                </div>
+              </div>
+              <div class="dash-stat-icon green">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <circle cx="9" cy="21" r="1" />
+                  <circle cx="20" cy="21" r="1" />
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Stat 3 -->
+            <div class="dash-stat-card">
+              <div class="dash-stat-info">
+                <h4>Uploaded Designs</h4>
+                <div class="dash-stat-value">12</div>
+                <div class="dash-stat-change">
+                  <span>Print-ready files</span>
+                </div>
+              </div>
+              <div class="dash-stat-icon accent">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                  <polyline points="13 2 13 9 20 9" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Stat 4 -->
+            <div class="dash-stat-card">
+              <div class="dash-stat-info">
+                <h4>Reward Points</h4>
+                <div class="dash-stat-value">450</div>
+                <div class="dash-stat-change positive">
+                  <span>Equivalent to $45 credit</span>
+                </div>
+              </div>
+              <div class="dash-stat-icon crimson">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: FILE UPLOAD ZONE -->
+        <section id="upload" style="padding: 0;" aria-labelledby="upload-heading">
+          <div class="card" style="padding: var(--space-6);">
+            <h3 id="upload-heading" style="margin-bottom: var(--space-4);">Quick File Upload</h3>
+            <p style="font-size: var(--fs-small); color: var(--text-tertiary); margin-bottom: var(--space-6);">Drag and
+              drop your print-ready design files below to associate them with a new print job.</p>
+            <div class="upload-zone">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+              <h4>Drag & Drop Files Here</h4>
+              <p>Or click to browse from your computer</p>
+              <div class="file-types">
+                <span class="file-type-badge">PDF</span>
+                <span class="file-type-badge">AI</span>
+                <span class="file-type-badge">PSD</span>
+                <span class="file-type-badge">PNG</span>
+                <span class="file-type-badge">JPG</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: ORDER TIMELINE -->
+        <section id="timeline" style="padding: 0;" aria-labelledby="timeline-heading">
+          <div class="card" style="padding: var(--space-6);">
+            <h3 id="timeline-heading" style="margin-bottom: var(--space-6);">Job #ORD-12891 Status</h3>
+            <div class="timeline" style="padding: var(--space-4) 0;">
+              <div class="timeline-step">
+                <div class="timeline-dot"
+                  style="background: var(--color-success); box-shadow: 0 4px 12px rgba(40,167,69,0.3);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <div class="timeline-content">
+                  <h4>Submitted</h4>
+                  <p>Oct 17, 2026</p>
+                </div>
+              </div>
+              <div class="timeline-step">
+                <div class="timeline-dot"
+                  style="background: var(--color-success); box-shadow: 0 4px 12px rgba(40,167,69,0.3);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <div class="timeline-content">
+                  <h4>Approved</h4>
+                  <p>Oct 18, 2026</p>
+                </div>
+              </div>
+              <div class="timeline-step">
+                <div class="timeline-dot"
+                  style="background: var(--color-primary); box-shadow: 0 4px 12px rgba(108,52,131,0.3);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </div>
+                <div class="timeline-content">
+                  <h4>Printing</h4>
+                  <p>In Progress</p>
+                </div>
+              </div>
+              <div class="timeline-step">
+                <div class="timeline-dot"
+                  style="background: var(--color-grey-300); color: var(--color-grey-500); box-shadow: none;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <rect x="1" y="3" width="15" height="13" />
+                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                    <circle cx="5.5" cy="18.5" r="2.5" />
+                    <circle cx="18.5" cy="18.5" r="2.5" />
+                  </svg>
+                </div>
+                <div class="timeline-content">
+                  <h4>Dispatched</h4>
+                  <p>Pending</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: SPENDING ANALYTICS -->
+        <section id="spending" style="padding: 0;" aria-labelledby="spending-heading">
+          <div class="chart-container">
+            <div class="chart-header">
+              <h3 id="spending-heading">Monthly Print Spending ($)</h3>
+              <div style="font-size: var(--fs-xs); color: var(--text-tertiary);">Last 6 Months</div>
+            </div>
+            <div class="chart-canvas" style="height: 250px;">
+              <canvas id="spendingChart"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: RECENT ORDERS TABLE -->
+        <section id="recent" style="padding: 0;" aria-labelledby="history-heading">
+          <div class="card" style="padding: var(--space-6);">
+            <div
+              style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-6);">
+              <h3 id="history-heading">Order History</h3>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th data-sort>Order ID</th>
+                    <th data-sort>Product</th>
+                    <th data-sort>Amount</th>
+                    <th data-sort>Status</th>
+                    <th data-sort>Order Date</th>
+                    <th>Invoice</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#ORD-12891</td>
+                    <td>Custom Brand Packaging</td>
+                    <td>$650.00</td>
+                    <td><span class="status-badge processing">Processing</span></td>
+                    <td>Oct 17, 2026</td>
+                    <td><a href="#" style="color: var(--color-primary); font-weight: var(--fw-semibold);">Download
+                        PDF</a></td>
+                  </tr>
+                  <tr>
+                    <td>#ORD-12885</td>
+                    <td>Luxury Cotton Business Cards</td>
+                    <td>$199.00</td>
+                    <td><span class="status-badge completed">Completed</span></td>
+                    <td>Sep 25, 2026</td>
+                    <td><a href="#" style="color: var(--color-primary); font-weight: var(--fw-semibold);">Download
+                        PDF</a></td>
+                  </tr>
+                  <tr>
+                    <td>#ORD-12864</td>
+                    <td>Large Format Vinyl Banners</td>
+                    <td>$345.00</td>
+                    <td><span class="status-badge completed">Completed</span></td>
+                    <td>Aug 14, 2026</td>
+                    <td><a href="#" style="color: var(--color-primary); font-weight: var(--fw-semibold);">Download
+                        PDF</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: REORDER FAVORITES -->
+        <section id="favorites" style="padding: 0; padding-bottom: var(--space-12);" aria-labelledby="favs-heading">
+          <div class="section-header" style="text-align: left; margin-bottom: var(--space-6);">
+            <h3 id="favs-heading">Reorder Favorites</h3>
+            <p style="font-size: var(--fs-small); color: var(--text-tertiary); margin-bottom: 0;">Quick reorder with
+              pre-saved layouts, specifications, and files.</p>
+          </div>
+
+          <div class="grid grid-3">
+            <!-- Favorite 1 -->
+            <div class="card"
+              style="overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;">
+              <div class="card-img-wrapper" style="height: 140px;">
+                <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?auto=format&fit=crop&w=400&q=80"
+                  alt="Luxury Business Cards Favorite" class="card-img" style="height: 100%;">
+              </div>
+              <div class="card-body"
+                style="padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3);">
+                <h4 style="font-size: var(--fs-body);">Luxury Cotton Cards</h4>
+                <p style="font-size: var(--fs-xs); color: var(--text-tertiary); margin-bottom: 0;">Size: 3.5"x2" |
+                  Paper: 600gsm Cotton | Finish: Gold Edge Foil</p>
+                <div
+                  style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-2);">
+                  <span
+                    style="font-weight: var(--fw-bold); color: var(--color-primary); font-size: var(--fs-small);">$199.00</span>
+                  <button class="btn btn-primary btn-sm">Reorder</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Favorite 2 -->
+            <div class="card"
+              style="overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;">
+              <div class="card-img-wrapper" style="height: 140px;">
+                <img src="assets/images/vinyl banner favorite.jpg" alt="Vinyl Banners Favorite" class="card-img"
+                  style="height: 100%;">
+              </div>
+              <div class="card-body"
+                style="padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3);">
+                <h4 style="font-size: var(--fs-body);">Outdoor Event Vinyl Banners</h4>
+                <p style="font-size: var(--fs-xs); color: var(--text-tertiary); margin-bottom: 0;">Size: 8ft x 4ft |
+                  Paper: Heavy Vinyl | Finish: Metal Grommets</p>
+                <div
+                  style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-2);">
+                  <span
+                    style="font-weight: var(--fw-bold); color: var(--color-primary); font-size: var(--fs-small);">$115.00</span>
+                  <button class="btn btn-primary btn-sm">Reorder</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Favorite 3 -->
+            <div class="card"
+              style="overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;">
+              <div class="card-img-wrapper" style="height: 140px;">
+                <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?auto=format&fit=crop&w=400&q=80"
+                  alt="Brochures Favorite" class="card-img" style="height: 100%;">
+              </div>
+              <div class="card-body"
+                style="padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3);">
+                <h4 style="font-size: var(--fs-body);">Corporate Brochures</h4>
+                <p style="font-size: var(--fs-xs); color: var(--text-tertiary); margin-bottom: 0;">Size: A4 Tri-fold |
+                  Paper: 250gsm Silk | Finish: Matte Lamination</p>
+                <div
+                  style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-2);">
+                  <span
+                    style="font-weight: var(--fw-bold); color: var(--color-primary); font-size: var(--fs-small);">$189.00</span>
+                  <button class="btn btn-primary btn-sm">Reorder</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Chart.js from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+
+</html>

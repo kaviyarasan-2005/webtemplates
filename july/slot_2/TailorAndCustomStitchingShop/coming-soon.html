@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming Soon — SEWIT New Collection</title>
+  <meta name="description" content="A new collection is stitching soon at SEWIT. Sign up to be the first to know when we launch.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='28' font-size='28'%3E🧵%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body>
+  <div class="coming-soon">
+    <div class="coming-soon__bg">
+      <img src="https://images.unsplash.com/photo-1612423284934-2850a4ea6b0f?auto=format&fit=crop&w=1920&q=80" alt="Blurred view of premium fabric rolls in motion" loading="eager">
+    </div>
+    <div class="coming-soon__overlay"></div>
+
+    <div class="coming-soon__content">
+      <div class="coming-soon__logo">
+        <i class="ph ph-needle" aria-hidden="true"></i>
+        <span>SEWIT</span>
+      </div>
+
+      <h1>New Collection Stitching Soon</h1>
+      <p>We're crafting something extraordinary. Be the first to experience our upcoming collection of bespoke designs and premium fabrics.</p>
+
+      <!-- Countdown Timer -->
+      <div class="countdown" id="countdown" aria-label="Countdown to launch">
+        <div class="countdown__item">
+          <span class="countdown__number" id="cd-days">00</span>
+          <span class="countdown__label">Days</span>
+        </div>
+        <div class="countdown__item">
+          <span class="countdown__number" id="cd-hours">00</span>
+          <span class="countdown__label">Hours</span>
+        </div>
+        <div class="countdown__item">
+          <span class="countdown__number" id="cd-minutes">00</span>
+          <span class="countdown__label">Minutes</span>
+        </div>
+        <div class="countdown__item">
+          <span class="countdown__number" id="cd-seconds">00</span>
+          <span class="countdown__label">Seconds</span>
+        </div>
+      </div>
+
+      <!-- Email Signup -->
+      <form class="newsletter__form" id="coming-soon-form" aria-label="Notify me form" style="margin-bottom:var(--space-6);">
+        <input type="email" class="form-input" placeholder="Enter your email to get notified" aria-label="Email address" required>
+        <button type="submit" class="btn btn--accent">Notify Me</button>
+      </form>
+
+      <!-- Social Links -->
+      <div class="social-icons" style="justify-content:center;">
+        <a href="#" class="social-icon social-icon--facebook" aria-label="Facebook"><i class="ph ph-facebook-logo" aria-hidden="true"></i></a>
+        <a href="#" class="social-icon social-icon--instagram" aria-label="Instagram"><i class="ph ph-instagram-logo" aria-hidden="true"></i></a>
+        <a href="#" class="social-icon social-icon--pinterest" aria-label="Pinterest"><i class="ph ph-pinterest-logo" aria-hidden="true"></i></a>
+        <a href="#" class="social-icon social-icon--whatsapp" aria-label="WhatsApp"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Apply saved theme
+    const saved = localStorage.getItem('sewit-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+    else if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.setAttribute('data-theme', 'dark');
+
+    // Countdown Timer — set launch date 30 days from now
+    (function() {
+      const launchDate = new Date();
+      launchDate.setDate(launchDate.getDate() + 30);
+
+      function updateCountdown() {
+        const now = new Date();
+        const diff = launchDate - now;
+
+        if (diff <= 0) {
+          document.getElementById('cd-days').textContent = '00';
+          document.getElementById('cd-hours').textContent = '00';
+          document.getElementById('cd-minutes').textContent = '00';
+          document.getElementById('cd-seconds').textContent = '00';
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    })();
+
+    // Form handler
+    document.getElementById('coming-soon-form')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = this.querySelector('input[type="email"]');
+      if (input && input.value) {
+        input.value = '';
+        alert('Thank you! We\'ll notify you as soon as the new collection launches.');
+      }
+    });
+  </script>
+</body>
+</html>

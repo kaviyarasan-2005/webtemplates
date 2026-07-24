@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page Not Found | SEWIT</title>
+  <meta name="description" content="The page you're looking for seems to have gone missing. Let's get you back on track.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='28' font-size='28'%3E🧵%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <style>
+    .error-page {
+      background-color: var(--color-bg);
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(45,106,79,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(193,120,80,0.06) 0%, transparent 50%);
+    }
+    .error-page__spool {
+      position: relative;
+      display: inline-block;
+      margin-bottom: var(--space-4);
+    }
+    .error-page__number {
+      position: relative;
+      display: inline-block;
+    }
+    .thread-container {
+      position: absolute;
+      top: 50%;
+      right: -120px;
+      transform: translateY(-50%);
+      width: 120px;
+      height: 40px;
+      overflow: visible;
+    }
+    .thread-path {
+      stroke: var(--color-accent);
+      stroke-width: 2;
+      fill: none;
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: drawThread 3s ease-in-out infinite;
+    }
+    @keyframes drawThread {
+      0% { stroke-dashoffset: 200; }
+      40% { stroke-dashoffset: 0; }
+      60% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -200; }
+    }
+    .spool-icon {
+      position: absolute;
+      right: -160px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2.5rem;
+      color: var(--color-accent);
+      animation: spoolSpin 3s linear infinite;
+    }
+    @keyframes spoolSpin {
+      from { transform: translateY(-50%) rotate(0deg); }
+      to { transform: translateY(-50%) rotate(360deg); }
+    }
+    .bg-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: repeating-linear-gradient(
+        45deg,
+        var(--color-text) 0px,
+        var(--color-text) 1px,
+        transparent 1px,
+        transparent 20px
+      );
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="error-page">
+    <div class="bg-pattern" aria-hidden="true"></div>
+    <div class="error-page__content">
+      <div class="error-page__spool">
+        <div class="error-page__number">
+          404
+          <svg class="thread-container" viewBox="0 0 120 40" aria-hidden="true">
+            <path class="thread-path" d="M0,20 Q30,5 60,20 Q90,35 120,20" />
+          </svg>
+          <i class="ph ph-sewing-pin spool-icon" aria-hidden="true"></i>
+        </div>
+      </div>
+      <p class="error-page__message">Looks like this thread got tangled.</p>
+      <p style="color:var(--color-text-muted);margin-bottom:var(--space-4);font-size:var(--fs-small);">The page you're looking for doesn't exist or has been moved.</p>
+      <a href="index.html" class="btn btn--primary btn--lg">
+        <i class="ph ph-house" aria-hidden="true"></i>
+        Back to Home
+      </a>
+    </div>
+  </div>
+  <script>
+    // Apply saved theme
+    const saved = localStorage.getItem('sewit-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+    else if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.setAttribute('data-theme', 'dark');
+  </script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DRIV — Student Learning Dashboard</title>
+  <meta name="description" content="Track your driving lesson progress, schedule hours, check instructor feedback, and monitor your test readiness statistics in your student portal.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='3'%3E%3C/circle%3E%%3Cpath d='M12 2v7'%3E%3C/path%3E%3Cpath d='M12 15v7'%3E%3C/path%3E%3Cpath d='M2 12h7'%3E%3C/path%3E%3Cpath d='M15 12h7'%3E%3C/path%3E%3C/svg%3E">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Skip Link for Accessibility -->
+  <a href="#dashboard-main-content" class="skip-link">Skip to dashboard content</a>
+
+  <!-- Dashboard Container -->
+  <div class="dashboard">
+    
+    <!-- Collapsible Sidebar -->
+    <aside class="sidebar" aria-label="Student Sidebar">
+      <div class="sidebar__header">
+        <a href="index.html" class="sidebar__logo" aria-label="DRIV Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-primary);">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 2v7"></path>
+            <path d="M12 15v7"></path>
+            <path d="M2 12h7"></path>
+            <path d="M15 12h7"></path>
+          </svg>
+          <span class="sidebar__logo-text">DRIV</span>
+        </a>
+      </div>
+      
+      <nav class="sidebar__nav" aria-label="Sidebar navigation">
+        <a href="user-dashboard.html" class="sidebar__link active">
+          <i data-lucide="layout-dashboard"></i>
+          <span class="sidebar__link-text">Overview</span>
+        </a>
+        <a href="#lessons" class="sidebar__link">
+          <i data-lucide="book-open"></i>
+          <span class="sidebar__link-text">My Lessons</span>
+        </a>
+        <a href="#book" class="sidebar__link">
+          <i data-lucide="calendar-plus"></i>
+          <span class="sidebar__link-text">Book Lesson</span>
+        </a>
+        <a href="#progress" class="sidebar__link">
+          <i data-lucide="trending-up"></i>
+          <span class="sidebar__link-text">Progress</span>
+        </a>
+        <a href="#messages" class="sidebar__link">
+          <!-- Envelope shape icon shape -->
+          <i data-lucide="mail"></i>
+          <span class="sidebar__link-text">Messages</span>
+        </a>
+        <a href="#settings" class="sidebar__link">
+          <i data-lucide="settings"></i>
+          <span class="sidebar__link-text">Settings</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Dashboard Main Area -->
+    <div class="dashboard__main">
+      
+      <!-- Top Sticky Bar -->
+      <header class="topbar">
+        <div class="flex flex--gap-md" style="align-items: center;">
+          <!-- Sidebar Toggle (Hamburger menu) -->
+          <button class="sidebar__toggle topbar__icon-btn" aria-label="Toggle menu">
+            <i data-lucide="menu"></i>
+          </button>
+          
+          <div class="topbar__search">
+            <i data-lucide="search"></i>
+            <input type="search" placeholder="Search scheduled hours..." aria-label="Search inputs">
+          </div>
+        </div>
+
+        <div class="topbar__actions">
+          <button class="topbar__icon-btn theme-toggle" aria-label="Toggle dark mode">
+            <i data-lucide="moon"></i>
+          </button>
+          <button class="topbar__icon-btn rtl-toggle" aria-label="Toggle language direction">RTL</button>
+          <button class="topbar__icon-btn" aria-label="Notifications" style="position:relative;">
+            <i data-lucide="bell"></i>
+            <span class="notification-dot"></span>
+          </button>
+          
+          <div class="topbar__user">
+            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&q=80&fm=webp" alt="Student avatar portrait" class="topbar__user-avatar">
+            <div class="topbar__user-info">
+              <span class="topbar__user-name">Nathan Carter</span>
+              <span class="topbar__user-role">Student Driver</span>
+            </div>
+            <i data-lucide="chevron-down" style="font-size:14px; margin-left: 4px;"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Scrollable dashboard content -->
+      <main class="dashboard__content" id="dashboard-main-content">
+        <div class="fade-in">
+          <h2 class="dashboard__title">Welcome Back, Nathan!</h2>
+          <p class="dashboard__subtitle">Keep driving. You are currently on track to pass your test in 10 hours.</p>
+        </div>
+
+        <!-- SECTION 1: STATS CARDS (Subtle backgrounds) -->
+        <section class="stat-cards fade-in delay-1" aria-label="Student progress stats">
+          
+          <!-- Stats 1: Active lessons -->
+          <div class="stat-card" >
+            <div class="stat-card__header">
+              <div class="stat-card__icon"><i data-lucide="book-open"></i></div>
+            </div>
+            <div class="stat-card__value">10 / 20</div>
+            <div class="stat-card__label">Active Lessons Block</div>
+            <div class="stat-card__chart">
+              <canvas id="mini-line-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Stats 2: Hours Completed -->
+          <div class="stat-card" >
+            <div class="stat-card__header">
+              <div class="stat-card__icon"><i data-lucide="clock"></i></div>
+            </div>
+            <div class="stat-card__value">24.5 h</div>
+            <div class="stat-card__label">Hours Logged</div>
+            <div class="stat-card__chart">
+              <canvas id="mini-bar-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Stats 3: Test Readiness -->
+          <div class="stat-card" >
+            <div class="stat-card__header">
+              <div class="stat-card__icon"><i data-lucide="gauge"></i></div>
+            </div>
+            <div class="stat-card__value">75%</div>
+            <div class="stat-card__label">Test Readiness</div>
+            <div class="stat-card__chart">
+              <canvas id="mini-pie-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Stats 4: Next Lesson -->
+          <div class="stat-card" >
+            <div class="stat-card__header">
+              <div class="stat-card__icon"><i data-lucide="calendar"></i></div>
+            </div>
+            <div class="stat-card__value">July 23</div>
+            <div class="stat-card__label">Next Session @ 10:00 AM</div>
+            <div class="stat-card__chart">
+              <canvas id="mini-area-chart"></canvas>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- Donut & Bar Split -->
+        <div class="grid grid--2 fade-in delay-2">
+          
+          <!-- SECTION 2: LESSON PROGRESS TIMELINE -->
+          <div class="chart-panel" aria-labelledby="timeline-title" >
+            <div class="chart-panel__header">
+              <h3 id="timeline-title" class="chart-panel__title">Lesson Progress Roadmap</h3>
+            </div>
+            <div class="timeline timeline--vertical">
+              
+              <div class="timeline__step" style="padding: 10px 0;">
+                <div class="timeline__icon" style="background: var(--color-success); border-color: var(--color-success); color: var(--color-white); width: 24px; height: 24px;"><i data-lucide="check" style="font-size: 12px;"></i></div>
+                <h4 style="font-size: 14px;">Theory Preparation Complete</h4>
+              </div>
+
+              <div class="timeline__step" style="padding: 10px 0;">
+                <div class="timeline__icon" style="background: var(--color-success); border-color: var(--color-success); color: var(--color-white); width: 24px; height: 24px;"><i data-lucide="check" style="font-size: 12px;"></i></div>
+                <h4 style="font-size: 14px;">Basic Cockpit & Clutch Controls</h4>
+              </div>
+
+              <div class="timeline__step" style="padding: 10px 0;">
+                <div class="timeline__icon" style="background: var(--color-success); border-color: var(--color-success); color: var(--color-white); width: 24px; height: 24px;"><i data-lucide="check" style="font-size: 12px;"></i></div>
+                <h4 style="font-size: 14px;">Highway Road Overtaking Checks</h4>
+              </div>
+
+              <div class="timeline__step" style="padding: 10px 0;">
+                <div class="timeline__icon" style="background: var(--color-primary); border-color: var(--color-primary); color: var(--color-white); width: 24px; height: 24px;"><i data-lucide="navigation" style="font-size: 12px;"></i></div>
+                <h4 style="font-size: 14px; color: var(--color-primary);">Parking & Turning Maneuvers (In Progress)</h4>
+              </div>
+
+              <div class="timeline__step" style="padding: 10px 0;">
+                <div class="timeline__icon" style="background: var(--bg-card); border-color: var(--border-color); color: var(--text-muted); width: 24px; height: 24px;"><i data-lucide="circle" style="font-size: 12px;"></i></div>
+                <h4 style="font-size: 14px; opacity: 0.5;">Official Mock Test Simulator</h4>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- SECTION 3: HOURS ANALYTICS BAR CHART -->
+          <div class="chart-panel" aria-labelledby="hours-title" >
+            <div class="chart-panel__header">
+              <h3 id="hours-title" class="chart-panel__title">Weekly Training Hours Logged</h3>
+            </div>
+            <div class="chart-panel__canvas">
+              <canvas id="hours-chart" style="height: 220px;"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SECTION 4: BOOK LESSON FORM -->
+        <section class="chart-panel fade-in delay-3" aria-labelledby="book-form-title" style="margin-top: var(--space-8);">
+          <div class="chart-panel__header">
+            <h3 id="book-form-title" class="chart-panel__title">Schedule Your Next Lesson Slot</h3>
+          </div>
+          <form id="student-book-form">
+            <div class="grid grid--3">
+              <div class="form-group">
+                <label for="book-date">Choose Date</label>
+                <input type="date" id="book-date" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="book-time">Preferred Time Slot</label>
+                <select id="book-time" class="form-control" required>
+                  <option value="">Select a time slot</option>
+                  <option value="morning">Morning (08:00 AM - 10:00 AM)</option>
+                  <option value="noon">Noon (10:30 AM - 12:30 PM)</option>
+                  <option value="afternoon">Afternoon (01:30 PM - 03:30 PM)</option>
+                  <option value="evening">Evening (04:00 PM - 06:00 PM)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="book-coach">Choose Instructor</label>
+                <select id="book-coach" class="form-control" required>
+                  <option value="">Select driving instructor</option>
+                  <option value="james">James Miller (Manual)</option>
+                  <option value="sarah">Sarah Jenkins (Automatic)</option>
+                  <option value="david">David Lopez (Theory)</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid--2">
+              <div class="form-group">
+                <label for="book-type">Lesson Type / Program</label>
+                <select id="book-type" class="form-control" required>
+                  <option value="">Select lesson focus</option>
+                  <option value="beginner">Beginner Maneuvers & Control</option>
+                  <option value="highway">High-Speed Motorway Overtaking</option>
+                  <option value="parking">Parallel and Bay Parking drills</option>
+                  <option value="mock">Official Mock Test Simulator</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="book-pickup">Pickup & Drop-off Address</label>
+                <input type="text" id="book-pickup" class="form-control" placeholder="Enter pickup coordinates address" required>
+              </div>
+            </div>
+            <button type="submit" class="btn btn--primary" style="margin-top: var(--space-2);">Confirm Scheduled Slot</button>
+          </form>
+          <div id="student-book-alert" style="display:none; background:rgba(46,204,113,0.1); color:#2ECC71; padding:12px 16px; border-radius:6px; font-size:14px; font-weight:500; text-align:center; margin-top:16px;">
+            Lesson successfully booked! Your instructor has been notified.
+          </div>
+        </section>
+
+        <!-- SECTION 5: RECENT LESSONS LIST -->
+        <section class="chart-panel fade-in delay-4" aria-labelledby="recent-lessons-title" style="margin-top: var(--space-8);">
+          <div class="chart-panel__header">
+            <h3 id="recent-lessons-title" class="chart-panel__title">Lesson History Log</h3>
+          </div>
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Session Date</th>
+                  <th>Instructor</th>
+                  <th>Lesson Focus</th>
+                  <th>Hours Logged</th>
+                  <th>Feedback Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>July 18, 2026</td>
+                  <td>James Miller</td>
+                  <td>Junctions & Signaling Cues</td>
+                  <td>2.0 Hours</td>
+                  <td><span class="badge badge--success">Good Control</span></td>
+                </tr>
+                <tr>
+                  <td>July 15, 2026</td>
+                  <td>James Miller</td>
+                  <td>Clutch biting control & Starts</td>
+                  <td>2.0 Hours</td>
+                  <td><span class="badge badge--success">Passed Milestones</span></td>
+                </tr>
+                <tr>
+                  <td>July 12, 2026</td>
+                  <td>James Miller</td>
+                  <td>Suburban roads & Mirror positioning</td>
+                  <td>2.0 Hours</td>
+                  <td><span class="badge badge--warning">Practices needed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 6: INSTRUCTOR FEEDBACK -->
+        <section class="chart-panel fade-in delay-5" aria-labelledby="feedback-title" style="margin-top: var(--space-8);">
+          <div class="chart-panel__header">
+            <h3 id="feedback-title" class="chart-panel__title">Latest Instructor Notes</h3>
+          </div>
+          <div class="grid grid--2">
+            <div class="card" style="padding: var(--space-6);">
+              <div class="flex flex--between mb-2">
+                <strong>James Miller</strong>
+                <span style="font-size: var(--fs-xs); color: var(--text-muted);">July 18, 2026</span>
+              </div>
+              <p style="font-size: var(--fs-small); color: var(--text-secondary); line-height: 1.5;">"Nathan showed great improvement in clutch release controls today. However, we need to focus on mirror-signal-maneuver routines before accelerating into multi-lane roundabouts next lesson."</p>
+            </div>
+            <div class="card" style="padding: var(--space-6);">
+              <div class="flex flex--between mb-2">
+                <strong>James Miller</strong>
+                <span style="font-size: var(--fs-xs); color: var(--text-muted);">July 15, 2026</span>
+              </div>
+              <p style="font-size: var(--fs-small); color: var(--text-secondary); line-height: 1.5;">"Steering control is excellent during left and right turns. Make sure to keep looking far ahead on the road path to identify hazards early."</p>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Dashboard JavaScript -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+  
+  <script>
+    // Schedule submission
+    const form = document.getElementById('student-book-form');
+    const alertBox = document.getElementById('student-book-alert');
+    if (form && alertBox) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alertBox.style.display = 'block';
+        form.reset();
+        setTimeout(() => { alertBox.style.display = 'none'; }, 4000);
+      });
+    }
+  </script>
+</body>
+</html>

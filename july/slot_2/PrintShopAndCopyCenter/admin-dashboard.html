@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INKA | Admin Dashboard</title>
+  <meta name="description" content="INKA Print Shop administrative dashboard for overviewing revenue, orders, client statistics, and activity.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+</head>
+<body style="overflow-x: hidden;">
+
+  <div class="dashboard-layout">
+    <!-- ====== SIDEBAR ====== -->
+    <aside class="sidebar" aria-label="Admin Navigation">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-brand" aria-label="INKA Home">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="22" fill="#fff" opacity="0.2"/>
+            <path d="M24 6C24 6 20 18 20 26C20 30.4183 21.7909 34 24 34C26.2091 34 28 30.4183 28 26C28 18 24 6 24 6Z" fill="#fff"/>
+            <circle cx="24" cy="38" r="4" fill="#fff"/>
+          </svg>
+          <span>INKA Admin</span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#overview" class="sidebar-link active">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          <span>Overview</span>
+        </a>
+        <a href="#revenue" class="sidebar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>Revenue Analytics</span>
+        </a>
+        <a href="#orders" class="sidebar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span>Order Status</span>
+        </a>
+        <a href="#recent" class="sidebar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Recent Orders</span>
+        </a>
+        <a href="#customers" class="sidebar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Top Customers</span>
+        </a>
+        <a href="#activity" class="sidebar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Activity Log</span>
+        </a>
+      </nav>
+
+      <div style="padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); border-top: 1px solid rgba(255, 255, 255, 0.06);">
+        <a href="index.html" class="sidebar-link" style="margin-bottom: 0;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Sign Out</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ====== MAIN DASHBOARD ====== -->
+    <main class="dashboard-main" id="main-content">
+      <!-- ====== TOPBAR ====== -->
+      <header class="dashboard-topbar">
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <button class="sidebar-toggle" aria-label="Toggle sidebar collapse">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <button class="mobile-sidebar-toggle btn-icon btn-ghost" aria-label="Open sidebar menu" style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="topbar-search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search orders, invoices, customers..." aria-label="Search">
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="toggle-btn rtl-toggle" aria-label="Toggle text direction">LTR</button>
+          <button class="toggle-btn theme-toggle" aria-label="Toggle dark/light mode">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+          
+          <div style="position: relative;">
+            <button class="topbar-notification" aria-label="Notifications list">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <span class="notification-badge"></span>
+            </button>
+            <div class="notification-dropdown">
+              <h4>Notifications</h4>
+              <div class="notification-list">
+                <a href="#" class="notification-item">
+                  <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-cta); margin-top: 4px; flex-shrink: 0;"></div>
+                  <div>New order #12894 received from Acme Corp.</div>
+                </a>
+                <a href="#" class="notification-item">
+                  <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-cta); margin-top: 4px; flex-shrink: 0;"></div>
+                  <div>Artwork files uploaded for job #12891.</div>
+                </a>
+                <a href="#" class="notification-item">
+                  <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-grey-300); margin-top: 4px; flex-shrink: 0;"></div>
+                  <div>System maintenance scheduled for Sunday 2 AM.</div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div style="position: relative;">
+            <div class="topbar-avatar">
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80" alt="Admin profile avatar">
+              <span>Robert H.</span>
+            </div>
+            <div class="avatar-dropdown">
+              <h4>My Account</h4>
+              <div class="avatar-dropdown-links">
+                <a href="#">Profile Settings</a>
+                <a href="#">System Settings</a>
+                <a href="index.html">Sign Out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ====== DASHBOARD CONTENT ====== -->
+      <div class="dashboard-content" style="display: flex; flex-direction: column; gap: var(--space-8);">
+        
+        <!-- SECTION 1: OVERVIEW CARDS -->
+        <section id="overview" style="padding: 0;" aria-label="Overview Statistics">
+          <div class="grid grid-4" style="gap: var(--space-6);">
+            <!-- Card 1 -->
+            <div class="dash-stat-card">
+              <div class="dash-stat-info">
+                <h4>Total Revenue</h4>
+                <div class="dash-stat-value">$35,000</div>
+                <div class="dash-stat-change positive">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="18 15 12 9 6 15"/></svg>
+                  <span>12.5% vs last month</span>
+                </div>
+              </div>
+              <div class="dash-stat-icon purple">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="dash-stat-card">
+              <div class="dash-stat-info">
+                <h4>Active Orders</h4>
+                <div class="dash-stat-value">256</div>
+                <div class="dash-stat-change positive">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="18 15 12 9 6 15"/></svg>
+                  <span>8.3% vs last week</span>
+                </div>
+              </div>
+              <div class="dash-stat-icon green">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="dash-stat-card">
+              <div class="dash-stat-info">
+                <h4>Pending Jobs</h4>
+                <div class="dash-stat-value">45</div>
+                <div class="dash-stat-change negative">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
+                  <span>-2.4% vs yesterday</span>
+                </div>
+              </div>
+              <div class="dash-stat-icon accent">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="dash-stat-card">
+              <div class="dash-stat-info">
+                <h4>Cancelled Jobs</h4>
+                <div class="dash-stat-value">5</div>
+                <div class="dash-stat-change negative">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
+                  <span>-15.8% vs last month</span>
+                </div>
+              </div>
+              <div class="dash-stat-icon crimson">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: REVENUE ANALYTICS -->
+        <section id="revenue" style="padding: 0;" aria-labelledby="revenue-heading">
+          <div class="chart-container">
+            <div class="chart-header">
+              <h3 id="revenue-heading">Annual Revenue Trend</h3>
+              <div style="font-size: var(--fs-xs); color: var(--text-tertiary);">Jan - Dec 2026</div>
+            </div>
+            <div class="chart-canvas" style="height: 300px;">
+              <canvas id="revenueChart"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: ORDER STATUS -->
+        <div class="grid grid-2" style="gap: var(--space-6); align-items: stretch;">
+          <!-- Order volume bar chart -->
+          <section id="orders" style="padding: 0;" aria-labelledby="orders-heading">
+            <div class="chart-container" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+              <div class="chart-header">
+                <h3 id="orders-heading">Monthly Order Volume</h3>
+                <div style="font-size: var(--fs-xs); color: var(--text-tertiary);">Last 6 Months</div>
+              </div>
+              <div class="chart-canvas" style="height: 250px;">
+                <canvas id="ordersBarChart"></canvas>
+              </div>
+            </div>
+          </section>
+
+          <!-- Order Status Pie Chart -->
+          <section id="donut-section" style="padding: 0;" aria-labelledby="donut-heading">
+            <div class="chart-container" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+              <div class="chart-header">
+                <h3 id="donut-heading">Job Status breakdown</h3>
+                <div style="font-size: var(--fs-xs); color: var(--text-tertiary);">Current Distribution</div>
+              </div>
+              <div class="chart-canvas" style="height: 250px;">
+                <canvas id="statusDonut"></canvas>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- SECTION 4: RECENT ORDERS TABLE -->
+        <section id="recent" style="padding: 0;" aria-labelledby="recent-heading">
+          <div class="card" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-6);">
+              <h3 id="recent-heading">Recent Orders</h3>
+              <button class="btn btn-outline-primary btn-sm">Export CSV</button>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th data-sort>Order ID</th>
+                    <th data-sort>Client</th>
+                    <th data-sort>Product</th>
+                    <th data-sort>Amount</th>
+                    <th data-sort>Status</th>
+                    <th data-sort>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#ORD-12894</td>
+                    <td>Acme Corp</td>
+                    <td>Premium Business Cards</td>
+                    <td>$495.00</td>
+                    <td><span class="status-badge processing">Processing</span></td>
+                    <td>Oct 19, 2026</td>
+                  </tr>
+                  <tr>
+                    <td>#ORD-12893</td>
+                    <td>TechStart Inc</td>
+                    <td>Corporate Brochures</td>
+                    <td>$1,280.00</td>
+                    <td><span class="status-badge completed">Completed</span></td>
+                    <td>Oct 18, 2026</td>
+                  </tr>
+                  <tr>
+                    <td>#ORD-12892</td>
+                    <td>Design Studio</td>
+                    <td>Vinyl Banners</td>
+                    <td>$320.00</td>
+                    <td><span class="status-badge pending">Pending</span></td>
+                    <td>Oct 18, 2026</td>
+                  </tr>
+                  <tr>
+                    <td>#ORD-12891</td>
+                    <td>David Chen</td>
+                    <td>Custom Packaging</td>
+                    <td>$650.00</td>
+                    <td><span class="status-badge processing">Processing</span></td>
+                    <td>Oct 17, 2026</td>
+                  </tr>
+                  <tr>
+                    <td>#ORD-12890</td>
+                    <td>MediaGroup</td>
+                    <td>Exhibition Banners</td>
+                    <td>$950.00</td>
+                    <td><span class="status-badge cancelled">Cancelled</span></td>
+                    <td>Oct 15, 2026</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: TOP CUSTOMERS & PENDING AREA CHART -->
+        <div class="grid grid-2" style="gap: var(--space-6); align-items: stretch;">
+          <!-- Top Customers Horizontal Bar -->
+          <section id="customers" style="padding: 0;" aria-labelledby="customers-heading">
+            <div class="chart-container" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+              <div class="chart-header">
+                <h3 id="customers-heading">Top Spenders</h3>
+                <div style="font-size: var(--fs-xs); color: var(--text-tertiary);">Total Lifetime Spend</div>
+              </div>
+              <div class="chart-canvas" style="height: 250px;">
+                <canvas id="topCustomersChart"></canvas>
+              </div>
+            </div>
+          </section>
+
+          <!-- Pending Jobs Area Chart -->
+          <section id="pending-jobs-section" style="padding: 0;" aria-labelledby="pending-heading">
+            <div class="chart-container" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+              <div class="chart-header">
+                <h3 id="pending-heading">Pending Job Queue Load</h3>
+                <div style="font-size: var(--fs-xs); color: var(--text-tertiary);">Active Load Trend</div>
+              </div>
+              <div class="chart-canvas" style="height: 250px;">
+                <canvas id="pendingArea"></canvas>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- SECTION 6: ACTIVITY FEED -->
+        <section id="activity" style="padding: 0; padding-bottom: var(--space-12);" aria-labelledby="activity-heading">
+          <div class="card" style="padding: var(--space-6);">
+            <div class="chart-header">
+              <h3 id="activity-heading">Activity Feed</h3>
+            </div>
+            <ul class="activity-feed">
+              <li class="activity-item">
+                <div class="activity-dot">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <div class="activity-text">Order #ORD-12893 printed, packed, and marked completed.</div>
+                  <div class="activity-time">2 hours ago</div>
+                </div>
+              </li>
+              <li class="activity-item">
+                <div class="activity-dot">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </div>
+                <div>
+                  <div class="activity-text">Customer David Chen uploaded premium files for #ORD-12891.</div>
+                  <div class="activity-time">5 hours ago</div>
+                </div>
+              </li>
+              <li class="activity-item">
+                <div class="activity-dot">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <div>
+                  <div class="activity-text">Warning: Large job #ORD-12892 is pending prepress file resolution.</div>
+                  <div class="activity-time">1 day ago</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Chart.js from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

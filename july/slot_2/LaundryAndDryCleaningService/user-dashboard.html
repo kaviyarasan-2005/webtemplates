@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WASH - User Dashboard | My Clean Wardrobe</title>
+  <meta name="description" content="Customer portal for WASH laundry services. Book pickups, track active laundry, manage payment options, and view order history.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-page">
+  <a href="#dashboard-content" class="skip-link">Skip to main dashboard content</a>
+
+  <div class="dashboard">
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar" role="navigation" aria-label="Dashboard navigation">
+      <div class="sidebar__header">
+        <a href="index.html" class="sidebar__logo" aria-label="WASH Home">
+          <svg class="sidebar__logo-icon" width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="20" cy="20" r="18" stroke="#D48C2E" stroke-width="2.5" fill="none"/>
+            <path d="M20 8C20 8 14 16 14 22C14 25.3137 16.6863 28 20 28C23.3137 28 26 25.3137 26 22C26 16 20 8 20 8Z" fill="#D48C2E"/>
+          </svg>
+          <span class="sidebar__logo-text">WASH</span>
+        </a>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="user-dashboard.html" class="sidebar__link active">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+          <span class="sidebar__link-text">Overview</span>
+        </a>
+        <a href="#schedule-pickup-sec" class="sidebar__link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+          <span class="sidebar__link-text">Book Pickup</span>
+        </a>
+        <a href="#" class="sidebar__link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+          <span class="sidebar__link-text">My Orders</span>
+        </a>
+        <a href="#" class="sidebar__link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span class="sidebar__link-text">Payments</span>
+        </a>
+        <a href="#" class="sidebar__link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="sidebar__link-text">Profile</span>
+        </a>
+      </nav>
+
+      <div style="padding: var(--space-2); border-top: 1px solid var(--color-border);">
+        <a href="index.html" class="sidebar__link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+          <span class="sidebar__link-text">Exit Dashboard</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ============ MAIN CONTENT AREA ============ -->
+    <main class="dashboard__main" id="dashboard-content">
+      <!-- Dashboard Topbar -->
+      <header class="dashboard-topbar">
+        <button class="sidebar__toggle toggle-btn" aria-label="Toggle navigation sidebar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </button>
+
+        <div class="dashboard-topbar__search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" placeholder="Search my orders, bills, pickups..." aria-label="Search dashboard">
+        </div>
+
+        <div class="dashboard-topbar__actions">
+          <!-- Text Direction RTL/LTR -->
+          <button class="rtl-toggle toggle-btn" aria-label="Toggle text direction" title="Toggle RTL/LTR">RTL</button>
+          
+          <!-- Theme Toggle -->
+          <button class="theme-toggle toggle-btn" aria-label="Toggle dark mode" title="Toggle theme">
+            <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          </button>
+
+          <!-- Notifications -->
+          <div class="dashboard-topbar__notification" aria-haspopup="true" aria-expanded="false" title="Notifications">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+            <span class="dashboard-topbar__notification-badge"></span>
+          </div>
+
+          <!-- User Details -->
+          <div class="dashboard-topbar__user" aria-haspopup="true" aria-expanded="false">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="James Cooper" class="dashboard-topbar__avatar">
+            <div class="dashboard-topbar__user-info">
+              <span class="dashboard-topbar__user-name">James Cooper</span>
+              <span class="dashboard-topbar__user-role">Premium Member</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Main Content Grid -->
+      <div class="dashboard__content">
+        <!-- Stats Row -->
+        <div class="grid grid--4 mb-8 stagger-children">
+          <!-- Stat 1 -->
+          <div class="dash-stat">
+            <div class="dash-stat__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+            </div>
+            <div class="dash-stat__info">
+              <div class="dash-stat__label">Garments Cleaned</div>
+              <div class="dash-stat__value">184</div>
+              <span class="dash-stat__change dash-stat__change--up">
+                Total lifecycle
+              </span>
+            </div>
+          </div>
+
+          <!-- Stat 2 -->
+          <div class="dash-stat">
+            <div class="dash-stat__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+            </div>
+            <div class="dash-stat__info">
+              <div class="dash-stat__label">Active Orders</div>
+              <div class="dash-stat__value">1 Order</div>
+              <span class="dash-stat__change dash-stat__change--up" style="color:var(--color-accent);">
+                In Progress
+              </span>
+            </div>
+          </div>
+
+          <!-- Stat 3 -->
+          <div class="dash-stat">
+            <div class="dash-stat__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+            </div>
+            <div class="dash-stat__info">
+              <div class="dash-stat__label">Next Pickup</div>
+              <div class="dash-stat__value" style="font-size: 1.15rem;">July 24, 9 AM</div>
+              <span class="dash-stat__change dash-stat__change--up">
+                Scheduled
+              </span>
+            </div>
+          </div>
+
+          <!-- Stat 4 -->
+          <div class="dash-stat">
+            <div class="dash-stat__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="dash-stat__info">
+              <div class="dash-stat__label">Savings Generated</div>
+              <div class="dash-stat__value">$45.00</div>
+              <span class="dash-stat__change dash-stat__change--up">
+                Via Subscription
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upper Grid (Spending Chart & Booking Form) -->
+        <div class="grid grid--2 mb-8 stagger-children">
+          <!-- Left: Spending Analysis -->
+          <div class="dash-chart">
+            <div class="dash-chart__header">
+              <h3 class="dash-chart__title">Monthly Spending Profile ($)</h3>
+              <div style="font-size: var(--xs-size); color: var(--color-text-tertiary);">Last 6 Months</div>
+            </div>
+            <div class="dash-chart__canvas">
+              <canvas id="spendingChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Right: Saved Addresses -->
+          <div class="dash-chart">
+            <div class="dash-chart__header">
+              <h3 class="dash-chart__title">My Pickup Locations</h3>
+              <button class="btn btn--outline btn--sm" style="padding: 2px 8px; font-size: var(--xs-size);">+ Add New</button>
+            </div>
+            <div class="grid grid--2" style="gap: var(--space-2);">
+              <!-- Address 1 -->
+              <div class="address-card">
+                <span class="address-card__label">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Primary Home
+                </span>
+                <p class="address-card__text">
+                  456 Stone Avenue, Apt 4B<br>
+                  Freshville, FL 33100
+                </p>
+                <div class="address-card__actions">
+                  <button class="btn btn--ghost" style="padding:0; font-size: var(--xs-size); color: var(--color-accent);">Edit</button>
+                  <span style="color:var(--color-border);">&bull;</span>
+                  <button class="btn btn--ghost" style="padding:0; font-size: var(--xs-size); color: var(--color-error);">Delete</button>
+                </div>
+              </div>
+
+              <!-- Address 2 -->
+              <div class="address-card">
+                <span class="address-card__label">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Office
+                </span>
+                <p class="address-card__text">
+                  123 Corporate Blvd, Tower C<br>
+                  Miami, FL 33131
+                </p>
+                <div class="address-card__actions">
+                  <button class="btn btn--ghost" style="padding:0; font-size: var(--xs-size); color: var(--color-accent);">Edit</button>
+                  <span style="color:var(--color-border);">&bull;</span>
+                  <button class="btn btn--ghost" style="padding:0; font-size: var(--xs-size); color: var(--color-error);">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lower Section: Booking Form & Active Order Details -->
+        <div class="grid grid--dash-layout stagger-children" id="schedule-pickup-sec">
+          <!-- Left: Schedule Booking Form -->
+          <div class="schedule-form">
+            <h3 style="margin-bottom: var(--space-3);">Book a Laundry Pickup</h3>
+            <form id="pickupForm" data-validate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="pickup-service" class="form-label">Select Service Type</label>
+                  <select id="pickup-service" name="service" class="form-input" required>
+                    <option value="" disabled selected>Choose a service</option>
+                    <option value="wash-fold">Wash & Fold ($3.50/kg)</option>
+                    <option value="dry-clean">Dry Cleaning (Per-item)</option>
+                    <option value="ironing">Ironing & Pressing</option>
+                    <option value="express">Express Same-Day</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="pickup-address" class="form-label">Pickup Address</label>
+                  <select id="pickup-address" name="address" class="form-input" required>
+                    <option value="home">Primary Home (456 Stone Avenue)</option>
+                    <option value="office">Office (123 Corporate Blvd)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row" style="margin-top: var(--space-2);">
+                <div class="form-group">
+                  <label for="pickup-date" class="form-label">Preferred Pickup Date</label>
+                  <input type="date" id="pickup-date" name="date" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="pickup-time" class="form-label">Preferred Time Slot</label>
+                  <select id="pickup-time" name="timeSlot" class="form-input" required>
+                    <option value="" disabled selected>Select time slot</option>
+                    <option value="morning">Morning (7:00 AM - 11:00 AM)</option>
+                    <option value="afternoon">Afternoon (12:00 PM - 4:00 PM)</option>
+                    <option value="evening">Evening (5:00 PM - 9:00 PM)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top: var(--space-2);">
+                <label for="pickup-notes" class="form-label">Special Instructions (Optional)</label>
+                <textarea id="pickup-notes" name="notes" class="form-input" placeholder="e.g. Separate delicate white silks, use fragrance-free detergent, etc." style="min-height: 80px; resize: vertical;"></textarea>
+              </div>
+
+              <button type="submit" class="btn btn--primary mt-4">Schedule Pickup Order</button>
+              <p class="form-success" style="display:none;color:var(--color-success);font-size:var(--small-size);margin-top:10px;">Pickup scheduled successfully! We will coordinate via SMS.</p>
+            </form>
+          </div>
+
+          <!-- Right: Order History list -->
+          <div class="dash-chart">
+            <h3 class="dash-chart__title" style="margin-bottom: var(--space-3);">Order History</h3>
+            <div class="table-container">
+              <table class="table" role="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#W8403</td>
+                    <td><span class="badge badge--accent">In Progress</span></td>
+                    <td>$115.00</td>
+                  </tr>
+                  <tr>
+                    <td>#W8352</td>
+                    <td><span class="badge badge--success">Completed</span></td>
+                    <td>$52.00</td>
+                  </tr>
+                  <tr>
+                    <td>#W8211</td>
+                    <td><span class="badge badge--success">Completed</span></td>
+                    <td>$34.50</td>
+                  </tr>
+                  <tr>
+                    <td>#W8105</td>
+                    <td><span class="badge badge--success">Completed</span></td>
+                    <td>$89.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>
+
+
+
+
