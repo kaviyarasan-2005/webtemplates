@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing, Deals &amp; Combo Meals — YUMZ Restaurant</title>
+  <meta name="description" content="View YUMZ pricing plans, combo meal deals, catering packages, and loyalty programme. Value pricing for dine-in, takeaway, and delivery in Foodville.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+  <style>
+    /* Pricing toggle */
+    .pricing-toggle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .pricing-toggle__label {
+      font-family: var(--font-heading);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--clr-text-sub);
+      white-space: nowrap;
+      transition: color var(--transition-fast);
+    }
+    .pricing-toggle__label.active { color: var(--clr-primary); }
+    .toggle-switch {
+      width: 52px;
+      height: 28px;
+      background-color: var(--clr-border);
+      border-radius: var(--radius-full);
+      position: relative;
+      cursor: pointer;
+      transition: background-color var(--transition-base);
+      border: none;
+      flex-shrink: 0;
+    }
+    .toggle-switch.active { background-color: var(--clr-primary); }
+    .toggle-switch__thumb {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      background-color: #fff;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: transform var(--transition-base);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .toggle-switch.active .toggle-switch__thumb { transform: translateX(24px); }
+    .pricing-toggle__save {
+      display: inline-block;
+      background-color: rgba(42,157,143,0.12);
+      color: var(--clr-accent-dark);
+      border: 1px solid rgba(42,157,143,0.3);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    [data-theme="dark"] .pricing-toggle__save { background-color: rgba(42,157,143,0.15); color: #2A9D8F; }
+
+    /* Pricing grid */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* Comparison table */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: var(--clr-card-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .compare-table th, .compare-table td {
+      padding: 16px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--clr-border);
+      font-size: 0.9375rem;
+    }
+    .compare-table th {
+      background-color: var(--clr-bg-alt);
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--clr-text);
+    }
+    .compare-table th:first-child,
+    .compare-table td:first-child { text-align: left; }
+    [dir="rtl"] .compare-table th:first-child,
+    [dir="rtl"] .compare-table td:first-child { text-align: right; }
+    .compare-table th.featured-col {
+      background: linear-gradient(135deg, rgba(214,40,40,0.08), rgba(247,127,0,0.06));
+      color: var(--clr-primary);
+    }
+    .compare-table td:nth-child(3) {
+      background-color: rgba(214,40,40,0.03);
+    }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table .check { color: var(--clr-accent); font-size: 1.1rem; }
+    .compare-table .cross  { color: var(--clr-text-sub); font-size: 1rem; }
+    [data-theme="dark"] .compare-table { background-color: #1E1E1E; border-color: #2E2E2E; }
+    [data-theme="dark"] .compare-table th { background-color: #2A2A2A; color: #fff; border-bottom-color: #2E2E2E; }
+    [data-theme="dark"] .compare-table td { color: #E5E5E5; border-bottom-color: #2E2E2E; }
+
+    /* Catering packages */
+    .catering-card {
+      background-color: var(--clr-card-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-xl);
+      padding: var(--sp-4);
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+    .catering-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .catering-card__icon {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, rgba(214,40,40,0.1), rgba(247,127,0,0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      color: var(--clr-primary);
+    }
+    .catering-card__body { flex: 1; }
+    .catering-card__name {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--clr-text);
+      margin-bottom: 6px;
+    }
+    .catering-card__desc { font-size: 0.9rem; color: var(--clr-text-sub); margin-bottom: 14px; line-height: 1.6; }
+    .catering-card__meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .catering-card__price { font-family: var(--font-heading); font-size: 1.375rem; font-weight: 700; color: var(--clr-primary); }
+    .catering-card__price small { font-size: 0.8125rem; color: var(--clr-text-sub); font-weight: 400; }
+    .catering-card__action {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    [data-theme="dark"] .catering-card { background-color: #1E1E1E; border-color: #2E2E2E; }
+    [data-theme="dark"] .catering-card__name { color: #fff; }
+    [data-theme="dark"] .catering-card__desc { color: #9CA3AF; }
+
+    /* Loyalty programme */
+    .loyalty-tier {
+      background-color: var(--clr-card-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-4);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+    .loyalty-tier:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .loyalty-tier::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+    }
+    .loyalty-tier--bronze::before  { background: linear-gradient(to right, #CD7F32, #B87333); }
+    .loyalty-tier--silver::before  { background: linear-gradient(to right, #C0C0C0, #A8A9AD); }
+    .loyalty-tier--gold::before    { background: linear-gradient(to right, #FFD700, #FFA500); }
+    .loyalty-tier--platinum::before { background: linear-gradient(to right, #E5E4E2, #2A9D8F); }
+    .loyalty-tier__icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .loyalty-tier--bronze  .loyalty-tier__icon { color: #CD7F32; }
+    .loyalty-tier--silver  .loyalty-tier__icon { color: #909090; }
+    .loyalty-tier--gold    .loyalty-tier__icon { color: #FFD700; }
+    .loyalty-tier--platinum .loyalty-tier__icon { color: #2A9D8F; }
+    .loyalty-tier__name { font-family: var(--font-heading); font-size: 1.125rem; font-weight: 700; color: var(--clr-text); margin-bottom: 6px; }
+    .loyalty-tier__range { font-size: 0.8125rem; color: var(--clr-text-sub); margin-bottom: 16px; }
+    .loyalty-tier__perks { display: flex; flex-direction: column; gap: 8px; text-align: left; }
+    .loyalty-tier__perk { display: flex; align-items: center; gap: 8px; font-size: 0.875rem; color: var(--clr-text-body); }
+    .loyalty-tier__perk i { color: var(--clr-accent); font-size: 0.8rem; flex-shrink: 0; }
+    [data-theme="dark"] .loyalty-tier { background-color: #1E1E1E; border-color: #2E2E2E; }
+    [data-theme="dark"] .loyalty-tier__name { color: #fff; }
+    [data-theme="dark"] .loyalty-tier__perk { color: #E5E5E5; }
+
+    @media (max-width: 1023px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
+      .catering-card__action { align-items: flex-start; width: 100%; margin-top: 8px; }
+    }
+    @media (max-width: 768px) {
+      .catering-card { flex-direction: column; }
+      .compare-table th, .compare-table td { padding: 12px 12px; font-size: 0.8125rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <button class="navbar__hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+      </button>
+      <a href="index.html" class="navbar__logo" aria-label="YUMZ — Return to homepage">
+        <svg class="navbar__logo-svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="20" fill="#D62828"/>
+          <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+        </svg>
+        <span class="navbar__brand">YUMZ</span>
+      </a>
+      <nav class="navbar__nav" id="navMenu" role="navigation" aria-label="Main navigation">
+        <ul class="navbar__links" role="list">
+          <li class="navbar__item navbar__item--dropdown">
+            <a href="#" class="navbar__link navbar__link--has-dropdown" aria-haspopup="true">
+              Home <i class="fa-solid fa-chevron-down navbar__dropdown-icon" aria-hidden="true"></i>
+            </a>
+            <ul class="navbar__dropdown" role="list">
+              <li><a href="index.html" class="navbar__dropdown-link">Home 1</a></li>
+              <li><a href="home-2.html" class="navbar__dropdown-link">Home 2</a></li>
+            </ul>
+          </li>
+          <li class="navbar__item"><a href="about.html" class="navbar__link">About</a></li>
+          <li class="navbar__item"><a href="services.html" class="navbar__link">Services</a></li>
+          <li class="navbar__item"><a href="pricing.html" class="navbar__link active">Pricing</a></li>
+          <li class="navbar__item"><a href="blog.html" class="navbar__link">Blog</a></li>
+          <li class="navbar__item"><a href="contact.html" class="navbar__link">Contact</a></li>
+        </ul>
+        <div class="navbar__toggles-mobile">
+          <button class="navbar__theme-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">
+            <i class="fa-solid fa-moon" id="themeIconMobile" aria-hidden="true"></i>
+          </button>
+          <button class="navbar__rtl-toggle" id="rtlToggleMobile" aria-label="Toggle text direction">LTR</button>
+        </div>
+      </nav>
+      <div class="navbar__actions">
+        <button class="navbar__theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon" id="themeIcon" aria-hidden="true"></i>
+        </button>
+        <button class="navbar__rtl-toggle" id="rtlToggle" aria-label="Toggle text direction">LTR</button>
+        <button class="btn btn--primary navbar__order-btn" id="orderBtn" aria-haspopup="dialog">ORDER</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ===== SECTION 1: PAGE HERO ===== -->
+    <section class="page-hero" aria-labelledby="pricing-hero-title">
+      <img class="page-hero__bg" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80" alt="Variety of YUMZ food dishes spread on a table" fetchpriority="high">
+      <div class="page-hero__overlay" aria-hidden="true"></div>
+      <div class="container page-hero__content">
+        <nav class="page-hero__breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          <span aria-current="page">Pricing</span>
+        </nav>
+        <h1 class="page-hero__title" id="pricing-hero-title" data-animate="slide-up">Pricing &amp; Deals</h1>
+        <p style="color: rgba(255,255,255,0.8); font-size: 1.0625rem; margin-top: 12px;" data-animate="slide-up" data-animate-delay="1">Great food at honest prices. Transparent, fair, and always worth it.</p>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: COMBO MEAL PLANS ===== -->
+    <section class="section" id="combos" aria-labelledby="combos-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">Best Value</span>
+          <h2 id="combos-heading">Combo Meal Plans</h2>
+          <p>Choose a bundle that works for you — single diner, couple, or the whole family.</p>
+        </header>
+
+        <!-- Toggle: Dine-In / Delivery -->
+        <div class="pricing-toggle" data-animate="fade-in">
+          <span class="pricing-toggle__label active" id="toggleLabelDineIn">Dine-In</span>
+          <button class="toggle-switch" id="pricingToggle" aria-label="Toggle between Dine-In and Delivery pricing" aria-pressed="false">
+            <span class="toggle-switch__thumb"></span>
+          </button>
+          <span class="pricing-toggle__label" id="toggleLabelDelivery">Delivery</span>
+          <span class="pricing-toggle__save">Save more dining in!</span>
+        </div>
+
+        <div class="pricing-grid" data-stagger>
+          <!-- Solo Plan -->
+          <div class="pricing-card" data-animate="slide-up" data-animate-delay="1">
+            <div class="pricing-card__name">Solo Deal</div>
+            <p class="pricing-card__description">Perfect for one hungry person.</p>
+            <div class="pricing-card__price-wrap">
+              <div class="pricing-card__price" data-dinein="$10.99" data-delivery="$12.99">$10.99</div>
+              <p class="pricing-card__price-note">per person / per order</p>
+              <p class="pricing-card__save">Save up to $4 vs. ordering separately</p>
+            </div>
+            <ul class="pricing-card__features">
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> 1 Main (any pizza or burger)</li>
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> Regular Fries</li>
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> 1 Fountain Drink</li>
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> 1 Dipping Sauce</li>
+              <li class="pricing-card__feature" style="color: var(--clr-text-sub);"><i class="fa-solid fa-xmark" style="color: var(--clr-text-sub);" aria-hidden="true"></i> No dessert included</li>
+            </ul>
+            <button class="btn btn--outline pricing-card__cta" onclick="document.getElementById('orderBtn').click()">
+              Order Solo Deal
+            </button>
+          </div>
+
+          <!-- Duo Plan (Featured) -->
+          <div class="pricing-card pricing-card--featured" data-animate="slide-up" data-animate-delay="2">
+            <div class="pricing-card__badge">
+              <span class="badge badge--popular">Most Popular</span>
+            </div>
+            <div class="pricing-card__name">Duo Deal</div>
+            <p class="pricing-card__description">The ultimate couple's combo.</p>
+            <div class="pricing-card__price-wrap">
+              <div class="pricing-card__price" data-dinein="$22.99" data-delivery="$25.99">$22.99</div>
+              <p class="pricing-card__price-note">for 2 people / per order</p>
+              <p class="pricing-card__save">Save up to $9 vs. ordering separately</p>
+            </div>
+            <ul class="pricing-card__features">
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> 2 Mains (any combo)</li>
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> Large Fries to Share</li>
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> 2 Drinks of Choice</li>
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> Garlic Bread</li>
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> 1 Dessert to Share</li>
+            </ul>
+            <button class="btn btn--primary pricing-card__cta" onclick="document.getElementById('orderBtn').click()">
+              Order Duo Deal
+            </button>
+          </div>
+
+          <!-- Family Plan -->
+          <div class="pricing-card" data-animate="slide-up" data-animate-delay="3">
+            <div class="pricing-card__name">Family Feast</div>
+            <p class="pricing-card__description">Feed the whole crew for less.</p>
+            <div class="pricing-card__price-wrap">
+              <div class="pricing-card__price" data-dinein="$44.99" data-delivery="$49.99">$44.99</div>
+              <p class="pricing-card__price-note">for 4 people / per order</p>
+              <p class="pricing-card__save">Save up to $18 vs. ordering separately</p>
+            </div>
+            <ul class="pricing-card__features">
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> 2 Large Pizzas (any toppings)</li>
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> 2 Sides of Your Choice</li>
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> 4 Drinks</li>
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> Garlic Bread x2</li>
+              <li class="pricing-card__feature"><i class="fa-solid fa-check" aria-hidden="true"></i> 2 Desserts to Share</li>
+            </ul>
+            <button class="btn btn--outline pricing-card__cta" onclick="document.getElementById('orderBtn').click()">
+              Order Family Feast
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: FEATURE COMPARISON TABLE ===== -->
+    <section class="section section--alt" id="comparison" aria-labelledby="compare-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">Side by Side</span>
+          <h2 id="compare-heading">What's Included in Each Deal</h2>
+          <p>A full breakdown of what you get with each combo meal plan.</p>
+        </header>
+
+        <div class="table-wrap" data-animate="fade-in">
+          <table class="compare-table" aria-label="Combo plan feature comparison">
+            <thead>
+              <tr>
+                <th scope="col">Feature</th>
+                <th scope="col">Solo Deal</th>
+                <th scope="col" class="featured-col">Duo Deal ★</th>
+                <th scope="col">Family Feast</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Number of Mains</td>
+                <td>1</td>
+                <td><strong>2</strong></td>
+                <td>2 Large Pizzas</td>
+              </tr>
+              <tr>
+                <td>Fries Included</td>
+                <td><i class="fa-solid fa-check check" aria-label="Included"></i> Regular</td>
+                <td><i class="fa-solid fa-check check" aria-label="Included"></i> Large</td>
+                <td><i class="fa-solid fa-check check" aria-label="Included"></i> 2 Sides</td>
+              </tr>
+              <tr>
+                <td>Drinks Included</td>
+                <td>1</td>
+                <td>2</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Garlic Bread</td>
+                <td><i class="fa-solid fa-xmark cross" aria-label="Not included"></i></td>
+                <td><i class="fa-solid fa-check check" aria-label="Included"></i></td>
+                <td><i class="fa-solid fa-check check" aria-label="Included"></i> x2</td>
+              </tr>
+              <tr>
+                <td>Dessert</td>
+                <td><i class="fa-solid fa-xmark cross" aria-label="Not included"></i></td>
+                <td><i class="fa-solid fa-check check" aria-label="Included"></i> 1 to share</td>
+                <td><i class="fa-solid fa-check check" aria-label="Included"></i> 2 to share</td>
+              </tr>
+              <tr>
+                <td>Dipping Sauces</td>
+                <td>1</td>
+                <td>2</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Priority Preparation</td>
+                <td><i class="fa-solid fa-xmark cross" aria-label="Not included"></i></td>
+                <td><i class="fa-solid fa-check check" aria-label="Included"></i></td>
+                <td><i class="fa-solid fa-check check" aria-label="Included"></i></td>
+              </tr>
+              <tr>
+                <td>Delivery Surcharge</td>
+                <td>+ $2.00</td>
+                <td>+ $3.00</td>
+                <td>Free delivery</td>
+              </tr>
+              <tr>
+                <td>Loyalty Points Earned</td>
+                <td>2x</td>
+                <td><strong>3x</strong></td>
+                <td><strong>5x</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: CATERING PACKAGES ===== -->
+    <section class="section" id="catering" aria-labelledby="catering-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">Feeding a Crowd</span>
+          <h2 id="catering-heading">Catering Packages</h2>
+          <p>We cater for corporate events, birthdays, weddings, school events, and team meals. All packages are fully customisable.</p>
+        </header>
+
+        <div style="display: flex; flex-direction: column; gap: 20px;" data-stagger>
+          <article class="catering-card" data-animate="slide-up" data-animate-delay="1">
+            <div class="catering-card__icon" aria-hidden="true">
+              <i class="fa-solid fa-briefcase"></i>
+            </div>
+            <div class="catering-card__body">
+              <h3 class="catering-card__name">Corporate Lunch Package</h3>
+              <p class="catering-card__desc">Ideal for office meetings, team lunches, or corporate events up to 50 guests. Includes a selection of pizzas, sides, drinks, and desserts delivered and set up on-site. Minimum 48-hour notice required.</p>
+              <div class="catering-card__meta">
+                <ul style="display: flex; gap: 16px; flex-wrap: wrap;">
+                  <li style="display: flex; align-items: center; gap: 6px; font-size: 0.875rem; color: var(--clr-text-sub);"><i class="fa-solid fa-users" style="color: var(--clr-primary);" aria-hidden="true"></i> Up to 50 guests</li>
+                  <li style="display: flex; align-items: center; gap: 6px; font-size: 0.875rem; color: var(--clr-text-sub);"><i class="fa-solid fa-clock" style="color: var(--clr-primary);" aria-hidden="true"></i> 48-hour notice</li>
+                  <li style="display: flex; align-items: center; gap: 6px; font-size: 0.875rem; color: var(--clr-text-sub);"><i class="fa-solid fa-truck" style="color: var(--clr-primary);" aria-hidden="true"></i> Delivery included</li>
+                </ul>
+                <div class="catering-card__action">
+                  <div class="catering-card__price">from $12.99 <small>/ person</small></div>
+                  <a href="contact.html" class="btn btn--primary" style="font-size: 0.875rem; padding: 10px 20px;">Get a Quote</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="catering-card" data-animate="slide-up" data-animate-delay="2">
+            <div class="catering-card__icon" aria-hidden="true">
+              <i class="fa-solid fa-cake-candles"></i>
+            </div>
+            <div class="catering-card__body">
+              <h3 class="catering-card__name">Party &amp; Celebration Package</h3>
+              <p class="catering-card__desc">Perfect for birthdays, anniversaries, and private parties. Custom menu, themed presentation, and optional dedicated team member to serve. Works for 10–120 guests with full venue setup service available.</p>
+              <div class="catering-card__meta">
+                <ul style="display: flex; gap: 16px; flex-wrap: wrap;">
+                  <li style="display: flex; align-items: center; gap: 6px; font-size: 0.875rem; color: var(--clr-text-sub);"><i class="fa-solid fa-users" style="color: var(--clr-primary);" aria-hidden="true"></i> 10–120 guests</li>
+                  <li style="display: flex; align-items: center; gap: 6px; font-size: 0.875rem; color: var(--clr-text-sub);"><i class="fa-solid fa-clock" style="color: var(--clr-primary);" aria-hidden="true"></i> 72-hour notice</li>
+                  <li style="display: flex; align-items: center; gap: 6px; font-size: 0.875rem; color: var(--clr-text-sub);"><i class="fa-solid fa-star" style="color: var(--clr-secondary);" aria-hidden="true"></i> Custom menu</li>
+                </ul>
+                <div class="catering-card__action">
+                  <div class="catering-card__price">from $15.99 <small>/ person</small></div>
+                  <a href="contact.html" class="btn btn--primary" style="font-size: 0.875rem; padding: 10px 20px;">Get a Quote</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="catering-card" data-animate="slide-up" data-animate-delay="3">
+            <div class="catering-card__icon" aria-hidden="true">
+              <i class="fa-solid fa-school"></i>
+            </div>
+            <div class="catering-card__body">
+              <h3 class="catering-card__name">School &amp; Community Package</h3>
+              <p class="catering-card__desc">Our most affordable catering option, designed for schools, sports clubs, fundraisers, and community events. Flexible menus, child-friendly options, and a 10% discount for registered charities and non-profits.</p>
+              <div class="catering-card__meta">
+                <ul style="display: flex; gap: 16px; flex-wrap: wrap;">
+                  <li style="display: flex; align-items: center; gap: 6px; font-size: 0.875rem; color: var(--clr-text-sub);"><i class="fa-solid fa-users" style="color: var(--clr-primary);" aria-hidden="true"></i> Any group size</li>
+                  <li style="display: flex; align-items: center; gap: 6px; font-size: 0.875rem; color: var(--clr-text-sub);"><i class="fa-solid fa-heart" style="color: var(--clr-primary);" aria-hidden="true"></i> Community pricing</li>
+                  <li style="display: flex; align-items: center; gap: 6px; font-size: 0.875rem; color: var(--clr-text-sub);"><i class="fa-solid fa-percentage" style="color: var(--clr-accent);" aria-hidden="true"></i> 10% charity discount</li>
+                </ul>
+                <div class="catering-card__action">
+                  <div class="catering-card__price">from $9.99 <small>/ person</small></div>
+                  <a href="contact.html" class="btn btn--primary" style="font-size: 0.875rem; padding: 10px 20px;">Get a Quote</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: LOYALTY PROGRAMME ===== -->
+    <section class="section section--alt" id="loyalty" aria-labelledby="loyalty-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">Rewards Programme</span>
+          <h2 id="loyalty-heading">YUMZ Loyalty Club</h2>
+          <p>Every order earns you points. The more you eat, the more you save. Four tiers — unlimited rewards.</p>
+        </header>
+
+        <div class="grid grid--4" data-stagger>
+          <article class="loyalty-tier loyalty-tier--bronze" data-animate="slide-up" data-animate-delay="1">
+            <i class="loyalty-tier__icon fa-solid fa-medal" aria-hidden="true"></i>
+            <h3 class="loyalty-tier__name">Bronze</h3>
+            <p class="loyalty-tier__range">0 – 499 points</p>
+            <ul class="loyalty-tier__perks">
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> 1 point per $1 spent</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> Birthday free drink</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> Members-only flash deals</li>
+            </ul>
+          </article>
+
+          <article class="loyalty-tier loyalty-tier--silver" data-animate="slide-up" data-animate-delay="2">
+            <i class="loyalty-tier__icon fa-solid fa-medal" aria-hidden="true"></i>
+            <h3 class="loyalty-tier__name">Silver</h3>
+            <p class="loyalty-tier__range">500 – 1,499 points</p>
+            <ul class="loyalty-tier__perks">
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> 1.5 points per $1 spent</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> Free side every month</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> 5% off every order</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> Priority delivery queue</li>
+            </ul>
+          </article>
+
+          <article class="loyalty-tier loyalty-tier--gold" data-animate="slide-up" data-animate-delay="3">
+            <i class="loyalty-tier__icon fa-solid fa-trophy" aria-hidden="true"></i>
+            <h3 class="loyalty-tier__name">Gold</h3>
+            <p class="loyalty-tier__range">1,500 – 4,999 points</p>
+            <ul class="loyalty-tier__perks">
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> 2 points per $1 spent</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> Free pizza every month</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> 10% off every order</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> Early access to new menu items</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> Free delivery always</li>
+            </ul>
+          </article>
+
+          <article class="loyalty-tier loyalty-tier--platinum" data-animate="slide-up" data-animate-delay="4">
+            <i class="loyalty-tier__icon fa-solid fa-crown" aria-hidden="true"></i>
+            <h3 class="loyalty-tier__name">Platinum</h3>
+            <p class="loyalty-tier__range">5,000+ points</p>
+            <ul class="loyalty-tier__perks">
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> 3 points per $1 spent</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> 15% off every order</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> Chef's Table access</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> Exclusive seasonal dishes</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> Dedicated account manager</li>
+              <li class="loyalty-tier__perk"><i class="fa-solid fa-check" aria-hidden="true"></i> Free family feast per quarter</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="text-center mt-4" data-animate="fade-in">
+          <p style="color: var(--clr-text-sub); font-size: 0.9rem; margin-bottom: 16px;">Sign up for free by calling us or dining in. Points are tracked automatically.</p>
+          <a href="contact.html" class="btn btn--primary btn--large">
+            <i class="fa-solid fa-star" aria-hidden="true"></i> Join YUMZ Loyalty Club
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: FAQ ===== -->
+    <section class="section" id="pricing-faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 800px;">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">Got Questions?</span>
+          <h2 id="faq-heading">Pricing FAQ</h2>
+        </header>
+
+        <div class="accordion" data-animate="fade-in">
+          <div class="accordion__item">
+            <button class="accordion__header" aria-expanded="false">
+              <span class="accordion__question">Are the combo deals available for delivery?</span>
+              <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="accordion__content">
+              <p class="accordion__answer">Yes! All combo deals are available for both dine-in and delivery. Note that there is a small delivery surcharge (except for the Family Feast, which includes free delivery). Toggle between pricing modes above to see delivery prices.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__header" aria-expanded="false">
+              <span class="accordion__question">Can I mix and match items within a combo?</span>
+              <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="accordion__content">
+              <p class="accordion__answer">Absolutely. Any main can be substituted for any other main of equal or lesser value. Want a burger instead of a pizza? No problem. Just let us know when ordering and we'll accommodate your preferences.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__header" aria-expanded="false">
+              <span class="accordion__question">How do I get a catering quote?</span>
+              <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="accordion__content">
+              <p class="accordion__answer">Simply use our contact form or call us directly at +1-555-YUMZ. Our catering manager will get back to you within 24 hours with a personalised quote based on your group size, dietary requirements, and event details.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__header" aria-expanded="false">
+              <span class="accordion__question">Do prices include tax?</span>
+              <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="accordion__content">
+              <p class="accordion__answer">All prices shown are inclusive of applicable sales tax. No hidden fees — what you see is what you pay, except for the optional delivery surcharge on single and duo deals.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__header" aria-expanded="false">
+              <span class="accordion__question">How do I earn and redeem loyalty points?</span>
+              <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="accordion__content">
+              <p class="accordion__answer">Points are earned automatically on every order when you give your name or phone number. To redeem, simply mention your reward when ordering — our staff will apply your discount instantly. Points never expire as long as you order at least once every 6 months.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: CTA BANNER ===== -->
+    <section class="banner" id="pricing-cta" aria-labelledby="pricing-cta-heading">
+      <img class="banner__bg" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1920&q=80" alt="YUMZ restaurant dining room, welcoming atmosphere" loading="lazy" width="1920" height="500">
+      <div class="banner__overlay" aria-hidden="true"></div>
+      <div class="container banner__content">
+        <h2 class="banner__title" id="pricing-cta-heading" data-animate="slide-up">Ready to Dig In?</h2>
+        <p class="banner__subtitle" data-animate="slide-up" data-animate-delay="1">
+          All deals available to order by phone, walk-in, or delivery. Our team is ready to take your order right now.
+        </p>
+        <div class="hero__cta-group" data-animate="slide-up" data-animate-delay="2">
+          <button class="btn btn--secondary btn--large" onclick="document.getElementById('orderBtn').click()">
+            <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Order a Deal Now
+          </button>
+          <a href="contact.html" class="btn btn--outline-white btn--large">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i> Enquire About Catering
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand-wrap">
+          <a href="index.html" class="footer__logo" aria-label="YUMZ — Return to homepage">
+            <svg class="footer__logo-svg" width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="20" cy="20" r="20" fill="#D62828"/>
+              <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+            </svg>
+            <span class="footer__brand-name">YUMZ</span>
+          </a>
+          <p class="footer__tagline">Fresh. Fast. Flavorful.</p>
+        </div>
+      </div>
+      <div class="footer__columns">
+        <div class="footer__col">
+          <h4 class="footer__heading">Quick Links</h4>
+          <ul class="footer__list">
+            <li><a href="index.html" class="footer__link">Home</a></li>
+            <li><a href="about.html" class="footer__link">About</a></li>
+            <li><a href="services.html" class="footer__link">Services</a></li>
+            <li><a href="pricing.html" class="footer__link">Pricing</a></li>
+            <li><a href="blog.html" class="footer__link">Blog</a></li>
+            <li><a href="contact.html" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Contact Info</h4>
+          <ul class="footer__list">
+            <li><a href="tel:+15559863" class="footer__link"><i class="fa-solid fa-phone" aria-hidden="true"></i> +1-555-YUMZ</a></li>
+            <li><a href="mailto:hello@yumz.com" class="footer__link"><i class="fa-solid fa-envelope" aria-hidden="true"></i> hello@yumz.com</a></li>
+            <li><span class="footer__link"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> 123 Flavor Street, Foodville, NY</span></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Opening Hours</h4>
+          <ul class="footer__list">
+            <li><span class="footer__link">Mon–Thu: 11:00 AM – 10:00 PM</span></li>
+            <li><span class="footer__link">Fri–Sat: 11:00 AM – 11:00 PM</span></li>
+            <li><span class="footer__link">Sunday: 12:00 PM – 9:00 PM</span></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Legal</h4>
+          <ul class="footer__list">
+            <li><a href="#" class="footer__link">Privacy Policy</a></li>
+            <li><a href="#" class="footer__link">Terms of Service</a></li>
+            <li><a href="sitemap.xml" class="footer__link">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__social">
+        <a href="#" class="footer__social-btn footer__social-btn--facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--instagram" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--twitter" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="footerYear">2024</span> YUMZ Restaurant. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ORDER MODAL -->
+  <div class="order-modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle" aria-hidden="true">
+    <div class="order-modal__overlay" id="orderModalOverlay"></div>
+    <div class="order-modal__content">
+      <button class="order-modal__close" id="orderModalClose" aria-label="Close order options">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <h2 class="order-modal__title" id="orderModalTitle">How Would You Like to Order?</h2>
+      <div class="order-modal__actions">
+        <a href="tel:+15559863" class="order-modal__action-btn">
+          <i class="fa-solid fa-phone" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">Call Now</span><span class="order-modal__action-sub">+1-555-YUMZ</span></div>
+        </a>
+        <a href="contact.html#map-section" class="order-modal__action-btn">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">Find Our Location</span><span class="order-modal__action-sub">123 Flavor Street, Foodville</span></div>
+        </a>
+        <a href="services.html" class="order-modal__action-btn">
+          <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">View Full Menu</span><span class="order-modal__action-sub">Browse all dishes</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Close image viewer">
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="">
+  </div>
+
+  <script>
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    // Pricing toggle: Dine-In vs Delivery
+    const toggle       = document.getElementById('pricingToggle');
+    const labelDineIn  = document.getElementById('toggleLabelDineIn');
+    const labelDelivery = document.getElementById('toggleLabelDelivery');
+    const priceEls     = document.querySelectorAll('.pricing-card__price[data-dinein]');
+
+    let isDelivery = false;
+
+    function updatePrices() {
+      priceEls.forEach(el => {
+        el.textContent = isDelivery
+          ? el.getAttribute('data-delivery')
+          : el.getAttribute('data-dinein');
+      });
+
+      toggle.classList.toggle('active', isDelivery);
+      toggle.setAttribute('aria-pressed', String(isDelivery));
+      labelDineIn.classList.toggle('active', !isDelivery);
+      labelDelivery.classList.toggle('active', isDelivery);
+    }
+
+    toggle.addEventListener('click', () => {
+      isDelivery = !isDelivery;
+      updatePrices();
+    });
+  </script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/validation.js"></script>
+</body>
+</html>

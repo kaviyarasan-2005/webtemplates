@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YUMZ — Fast Delivery &amp; Fresh Food Online</title>
+  <meta name="description" content="Order from YUMZ online — flash deals, best sellers, and fast delivery right to your door. Fresh pizza and fast food in Foodville, NY.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+  <style>
+    /* Page-specific styles */
+    .flash-deal-header {
+      background: linear-gradient(135deg, #D62828, #F77F00);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .flash-deal-header__text h2 { color: #fff; margin-bottom: 4px; }
+    .flash-deal-header__text p  { color: rgba(255,255,255,0.85); margin: 0; }
+    .flash-deal-header__countdown { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .flash-deal-header__countdown-label { font-size: 0.8125rem; color: rgba(255,255,255,0.75); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .how-it-works-section { position: relative; overflow: hidden; }
+    .how-it-works-section::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(214,40,40,0.04) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .social-preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .social-preview-card {
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      position: relative;
+      cursor: pointer;
+    }
+    .social-preview-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .social-preview-card:hover img { transform: scale(1.06); }
+    .social-preview-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+      display: flex;
+      align-items: flex-end;
+      padding: 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .social-preview-card:hover .social-preview-card__overlay { opacity: 1; }
+    .social-preview-card__overlay i { color: #fff; font-size: 1.25rem; }
+
+    .connect-section { background: linear-gradient(135deg, #1A1A1A 0%, #121212 100%); }
+    .connect-section h2, .connect-section h3 { color: #fff; }
+    .connect-section p { color: #9CA3AF; }
+
+    @media (max-width: 767px) {
+      .flash-deal-header { flex-direction: column; align-items: flex-start; }
+      .flash-deal-header__countdown { align-items: flex-start; }
+      .social-preview-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <button class="navbar__hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+      </button>
+      <a href="index.html" class="navbar__logo" aria-label="YUMZ — Return to homepage">
+        <svg class="navbar__logo-svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="20" fill="#D62828"/>
+          <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+        </svg>
+        <span class="navbar__brand">YUMZ</span>
+      </a>
+      <nav class="navbar__nav" id="navMenu" role="navigation" aria-label="Main navigation">
+        <ul class="navbar__links" role="list">
+          <li class="navbar__item navbar__item--dropdown">
+            <a href="#" class="navbar__link navbar__link--has-dropdown active" aria-haspopup="true" aria-expanded="false">
+              Home <i class="fa-solid fa-chevron-down navbar__dropdown-icon" aria-hidden="true"></i>
+            </a>
+            <ul class="navbar__dropdown" role="list">
+              <li><a href="index.html" class="navbar__dropdown-link">Home 1</a></li>
+              <li><a href="home-2.html" class="navbar__dropdown-link active">Home 2</a></li>
+            </ul>
+          </li>
+          <li class="navbar__item"><a href="about.html" class="navbar__link">About</a></li>
+          <li class="navbar__item"><a href="services.html" class="navbar__link">Services</a></li>
+          <li class="navbar__item"><a href="pricing.html" class="navbar__link">Pricing</a></li>
+          <li class="navbar__item"><a href="blog.html" class="navbar__link">Blog</a></li>
+          <li class="navbar__item"><a href="contact.html" class="navbar__link">Contact</a></li>
+        </ul>
+        <div class="navbar__toggles-mobile">
+          <button class="navbar__theme-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">
+            <i class="fa-solid fa-moon" id="themeIconMobile" aria-hidden="true"></i>
+          </button>
+          <button class="navbar__rtl-toggle" id="rtlToggleMobile" aria-label="Toggle text direction">LTR</button>
+        </div>
+      </nav>
+      <div class="navbar__actions">
+        <button class="navbar__theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon" id="themeIcon" aria-hidden="true"></i>
+        </button>
+        <button class="navbar__rtl-toggle" id="rtlToggle" aria-label="Toggle text direction">LTR</button>
+        <button class="btn btn--primary navbar__order-btn" id="orderBtn" aria-haspopup="dialog">ORDER</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ===== SECTION 1: HERO ===== -->
+    <section class="hero" aria-labelledby="hero2-title">
+      <img
+        class="hero__bg"
+        src="https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=1920&q=80"
+        alt="YUMZ delivery rider on a motorbike speeding through the city with a hot food bag"
+        fetchpriority="high"
+      >
+      <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="hero__content">
+        <span class="hero__label" data-animate="fade-in">
+          <i class="fa-solid fa-motorcycle" aria-hidden="true"></i> Lightning-Fast Delivery
+        </span>
+        <h1 class="hero__title" id="hero2-title" data-animate="slide-up" data-animate-delay="1">YUMZ</h1>
+        <p class="hero__subtitle" data-animate="slide-up" data-animate-delay="2">
+          Fast. Fresh. Delivered to Your Door.
+        </p>
+        <div class="hero__cta-group" data-animate="slide-up" data-animate-delay="3">
+          <a href="pricing.html" class="btn btn--primary btn--large">
+            <i class="fa-solid fa-tag" aria-hidden="true"></i> View Today's Deals
+          </a>
+          <button class="btn btn--outline-white btn--large" disabled aria-disabled="true" title="Live order tracking coming soon">
+            <i class="fa-solid fa-location-arrow" aria-hidden="true"></i> Track My Order
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: FLASH DEALS ===== -->
+    <section class="section" id="flash-deals" aria-labelledby="deals-heading">
+      <div class="container">
+        <div class="flash-deal-header" data-animate="fade-in">
+          <div class="flash-deal-header__text">
+            <h2 id="deals-heading" style="margin-bottom: 4px;">
+              <i class="fa-solid fa-bolt" aria-hidden="true"></i> Limited-Time Flash Deals
+            </h2>
+            <p>Grab these offers before they're gone — deals reset at midnight!</p>
+          </div>
+          <div class="flash-deal-header__countdown">
+            <span class="flash-deal-header__countdown-label">
+              <i class="fa-regular fa-clock" aria-hidden="true"></i> Ends In
+            </span>
+            <div class="countdown countdown--dark" id="dealsCountdown" aria-label="Countdown to end of flash deals">
+              <div class="countdown__item">
+                <span class="countdown__value" data-countdown="hours">--</span>
+                <span class="countdown__label">Hours</span>
+              </div>
+              <div class="countdown__item">
+                <span class="countdown__value" data-countdown="minutes">--</span>
+                <span class="countdown__label">Mins</span>
+              </div>
+              <div class="countdown__item">
+                <span class="countdown__value" data-countdown="seconds">--</span>
+                <span class="countdown__label">Secs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid--3" data-stagger>
+          <article class="deal-card" data-animate="slide-up" data-animate-delay="1">
+            <div class="deal-card__badge"><span class="badge badge--sale">40% OFF</span></div>
+            <div class="deal-card__image-wrap">
+              <img class="deal-card__image" src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=600&q=80" alt="Pepperoni pizza deal at 40% off" loading="lazy" width="600" height="450">
+            </div>
+            <div class="deal-card__body">
+              <h3 class="deal-card__name">Pepperoni Supreme</h3>
+              <p class="card__text">Large pepperoni pizza with extra cheese, freshly baked.</p>
+              <div class="deal-card__pricing">
+                <span class="deal-card__price">$12.99</span>
+                <span class="deal-card__price-old">$21.99</span>
+              </div>
+              <button class="btn btn--primary btn--full" onclick="document.getElementById('orderBtn').click()">
+                <i class="fa-solid fa-bolt" aria-hidden="true"></i> Grab This Deal
+              </button>
+            </div>
+          </article>
+
+          <article class="deal-card" data-animate="slide-up" data-animate-delay="2">
+            <div class="deal-card__badge"><span class="badge badge--popular">Flash Deal</span></div>
+            <div class="deal-card__image-wrap">
+              <img class="deal-card__image" src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80" alt="Crispy chicken burger flash deal" loading="lazy" width="600" height="450">
+            </div>
+            <div class="deal-card__body">
+              <h3 class="deal-card__name">Crispy Chicken Stack</h3>
+              <p class="card__text">Double crispy chicken burger with coleslaw and pickles.</p>
+              <div class="deal-card__pricing">
+                <span class="deal-card__price">$9.99</span>
+                <span class="deal-card__price-old">$15.99</span>
+              </div>
+              <button class="btn btn--primary btn--full" onclick="document.getElementById('orderBtn').click()">
+                <i class="fa-solid fa-bolt" aria-hidden="true"></i> Grab This Deal
+              </button>
+            </div>
+          </article>
+
+          <article class="deal-card" data-animate="slide-up" data-animate-delay="3">
+            <div class="deal-card__badge"><span class="badge badge--value">35% OFF</span></div>
+            <div class="deal-card__image-wrap">
+              <img class="deal-card__image" src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=600&q=80" alt="BBQ ribs and fries flash deal" loading="lazy" width="600" height="450">
+            </div>
+            <div class="deal-card__body">
+              <h3 class="deal-card__name">BBQ Rib Platter</h3>
+              <p class="card__text">Half rack of slow-cooked BBQ ribs with seasoned fries.</p>
+              <div class="deal-card__pricing">
+                <span class="deal-card__price">$16.99</span>
+                <span class="deal-card__price-old">$25.99</span>
+              </div>
+              <button class="btn btn--primary btn--full" onclick="document.getElementById('orderBtn').click()">
+                <i class="fa-solid fa-bolt" aria-hidden="true"></i> Grab This Deal
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: BEST SELLERS ===== -->
+    <section class="section section--alt" id="best-sellers" aria-labelledby="bestsellers-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">Customer Favourites</span>
+          <h2 id="bestsellers-heading">Our Best Sellers</h2>
+          <p>The dishes our customers keep coming back for — rated and loved by thousands.</p>
+        </header>
+
+        <!-- Desktop grid -->
+        <div class="grid grid--4 d-desktop-only" data-stagger aria-label="Best selling items">
+          <article class="seller-card" data-animate="slide-up" data-animate-delay="1">
+            <img class="seller-card__image" src="https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?auto=format&fit=crop&w=400&q=80" alt="BBQ Loaded Pizza — best seller" loading="lazy" width="400" height="400">
+            <div class="seller-card__body">
+              <h3 class="seller-card__title">BBQ Loaded Pizza</h3>
+              <div class="seller-card__ratings">
+                <span class="stars" aria-label="4.9 stars"><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i></span>
+                <span>4.9 (2.1k)</span>
+              </div>
+              <div class="seller-card__price">$16.99</div>
+            </div>
+          </article>
+
+          <article class="seller-card" data-animate="slide-up" data-animate-delay="2">
+            <img class="seller-card__image" src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=400&q=80" alt="The Double Down smash burger — best seller" loading="lazy" width="400" height="400">
+            <div class="seller-card__body">
+              <h3 class="seller-card__title">The Double Down</h3>
+              <div class="seller-card__ratings">
+                <span class="stars" aria-label="4.8 stars"><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i></span>
+                <span>4.8 (1.8k)</span>
+              </div>
+              <div class="seller-card__price">$13.99</div>
+            </div>
+          </article>
+
+          <article class="seller-card" data-animate="slide-up" data-animate-delay="3">
+            <img class="seller-card__image" src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=400&q=80" alt="Carbonara pasta — best seller" loading="lazy" width="400" height="400">
+            <div class="seller-card__body">
+              <h3 class="seller-card__title">Creamy Carbonara</h3>
+              <div class="seller-card__ratings">
+                <span class="stars" aria-label="4.7 stars"><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-regular fa-star-half-stroke" aria-hidden="true"></i></span>
+                <span>4.7 (940)</span>
+              </div>
+              <div class="seller-card__price">$14.99</div>
+            </div>
+          </article>
+
+          <article class="seller-card" data-animate="slide-up" data-animate-delay="4">
+            <img class="seller-card__image" src="https://images.unsplash.com/photo-1585325701956-60dd9c8553bc?auto=format&fit=crop&w=400&q=80" alt="Buffalo wings platter — best seller" loading="lazy" width="400" height="400">
+            <div class="seller-card__body">
+              <h3 class="seller-card__title">Buffalo Wing Platter</h3>
+              <div class="seller-card__ratings">
+                <span class="stars" aria-label="4.9 stars"><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i></span>
+                <span>4.9 (3.2k)</span>
+              </div>
+              <div class="seller-card__price">$15.99</div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Mobile horizontal scroll -->
+        <div class="scroll-row d-mobile-only" role="list" aria-label="Best selling items">
+          <article class="card" role="listitem" style="flex: 0 0 220px;">
+            <div class="card__image-wrap"><img class="card__image" src="https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?auto=format&fit=crop&w=400&q=80" alt="BBQ Loaded Pizza" loading="lazy" width="400" height="300"></div>
+            <div class="card__body"><h3 class="card__title" style="font-size: 0.95rem;">BBQ Loaded Pizza</h3><div class="card__price">$16.99</div></div>
+          </article>
+          <article class="card" role="listitem" style="flex: 0 0 220px;">
+            <div class="card__image-wrap"><img class="card__image" src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=400&q=80" alt="The Double Down" loading="lazy" width="400" height="300"></div>
+            <div class="card__body"><h3 class="card__title" style="font-size: 0.95rem;">The Double Down</h3><div class="card__price">$13.99</div></div>
+          </article>
+          <article class="card" role="listitem" style="flex: 0 0 220px;">
+            <div class="card__image-wrap"><img class="card__image" src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=400&q=80" alt="Creamy Carbonara" loading="lazy" width="400" height="300"></div>
+            <div class="card__body"><h3 class="card__title" style="font-size: 0.95rem;">Creamy Carbonara</h3><div class="card__price">$14.99</div></div>
+          </article>
+          <article class="card" role="listitem" style="flex: 0 0 220px;">
+            <div class="card__image-wrap"><img class="card__image" src="https://images.unsplash.com/photo-1585325701956-60dd9c8553bc?auto=format&fit=crop&w=400&q=80" alt="Buffalo Wing Platter" loading="lazy" width="400" height="300"></div>
+            <div class="card__body"><h3 class="card__title" style="font-size: 0.95rem;">Buffalo Wing Platter</h3><div class="card__price">$15.99</div></div>
+          </article>
+        </div>
+
+        <div class="text-center mt-3" data-animate="fade-in">
+          <a href="services.html" class="btn btn--primary">
+            <i class="fa-solid fa-list" aria-hidden="true"></i> See Full Menu
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: HOW IT WORKS ===== -->
+    <section class="section how-it-works-section" id="how-it-works" aria-labelledby="how-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">Simple &amp; Easy</span>
+          <h2 id="how-heading">Order in 3 Simple Steps</h2>
+          <p>Getting your favourite YUMZ food has never been easier. Follow these simple steps and your order is on its way.</p>
+        </header>
+
+        <div class="steps" role="list">
+          <div class="steps__item" role="listitem" data-animate="slide-up" data-animate-delay="1">
+            <div class="steps__icon" aria-hidden="true">
+              <i class="fa-solid fa-mobile-screen-button"></i>
+              <span class="steps__number">1</span>
+            </div>
+            <h3 class="steps__title">Place Your Order</h3>
+            <p class="steps__text">Choose from our full menu online, by phone, or walk in. Customise your order exactly the way you like it.</p>
+          </div>
+          <div class="steps__item" role="listitem" data-animate="slide-up" data-animate-delay="2">
+            <div class="steps__icon" aria-hidden="true">
+              <i class="fa-solid fa-fire-burner"></i>
+              <span class="steps__number">2</span>
+            </div>
+            <h3 class="steps__title">We Freshly Prepare</h3>
+            <p class="steps__text">Our chefs immediately begin preparing your food fresh-to-order using premium ingredients — no pre-made shortcuts.</p>
+          </div>
+          <div class="steps__item" role="listitem" data-animate="slide-up" data-animate-delay="3">
+            <div class="steps__icon" aria-hidden="true">
+              <i class="fa-solid fa-person-biking"></i>
+              <span class="steps__number">3</span>
+            </div>
+            <h3 class="steps__title">Fast Delivery</h3>
+            <p class="steps__text">Your hot, fresh food is delivered straight to your door by our expert riders — typically within 30 minutes.</p>
+          </div>
+        </div>
+
+        <div class="text-center mt-4" data-animate="fade-in">
+          <button class="btn btn--primary btn--large" onclick="document.getElementById('orderBtn').click()">
+            <i class="fa-solid fa-rocket" aria-hidden="true"></i> Start My Order Now
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: FOOD GALLERY ===== -->
+    <section class="section section--alt" id="gallery" aria-labelledby="gallery-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">Food Photography</span>
+          <h2 id="gallery-heading">Feast Your Eyes First</h2>
+          <p>A visual journey through our kitchen — every image a reason to order.</p>
+        </header>
+
+        <div class="gallery" role="list" aria-label="Food gallery images">
+          <div class="gallery__item" role="listitem" data-lightbox="true" data-animate="fade-in">
+            <img class="gallery__img" src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=600&q=80" alt="Colourful feast spread with various dishes" loading="lazy" width="600" height="400" data-src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=1200&q=90">
+          </div>
+          <div class="gallery__item" role="listitem" data-lightbox="true" data-animate="fade-in" data-animate-delay="1">
+            <img class="gallery__img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Fresh food preparation in YUMZ kitchen" loading="lazy" width="600" height="800" data-src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=90">
+          </div>
+          <div class="gallery__item" role="listitem" data-lightbox="true" data-animate="fade-in" data-animate-delay="2">
+            <img class="gallery__img" src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=600&q=80" alt="Pasta dish with fresh herbs" loading="lazy" width="600" height="450" data-src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1200&q=90">
+          </div>
+          <div class="gallery__item" role="listitem" data-lightbox="true" data-animate="fade-in" data-animate-delay="1">
+            <img class="gallery__img" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80" alt="Healthy and fresh ingredient spread" loading="lazy" width="600" height="700" data-src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1200&q=90">
+          </div>
+          <div class="gallery__item" role="listitem" data-lightbox="true" data-animate="fade-in" data-animate-delay="2">
+            <img class="gallery__img" src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80" alt="Fresh market vegetables and ingredients" loading="lazy" width="600" height="400" data-src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=90">
+          </div>
+          <div class="gallery__item" role="listitem" data-lightbox="true" data-animate="fade-in" data-animate-delay="3">
+            <img class="gallery__img" src="https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=600&q=80" alt="Gourmet burger close-up" loading="lazy" width="600" height="600" data-src="https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=1200&q=90">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: CONNECT WITH US ===== -->
+    <section class="section connect-section" id="connect" aria-labelledby="connect-heading">
+      <div class="container">
+        <div class="two-col" style="align-items: start;">
+          <!-- Newsletter -->
+          <div data-animate="slide-right">
+            <span class="section-label" style="color: #F77F00;">Stay In The Loop</span>
+            <h2 id="connect-heading" style="color: #fff; margin-bottom: 12px;">Never Miss a Deal</h2>
+            <p style="margin-bottom: 24px;">Subscribe to our newsletter and be the first to know about flash deals, new menu items, and exclusive member offers delivered straight to your inbox.</p>
+            <form class="newsletter-form" data-validate="true" data-form-type="newsletter" novalidate style="max-width: 100%;">
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <input
+                  type="email"
+                  name="email"
+                  class="form__input"
+                  placeholder="Enter your email address"
+                  aria-label="Email address for newsletter"
+                  required
+                  style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: #fff;"
+                >
+                <button type="submit" class="btn btn--secondary">
+                  <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Subscribe
+                </button>
+              </div>
+              <p style="font-size: 0.8125rem; color: #6B7280; margin-top: 10px;">
+                <i class="fa-solid fa-shield-halved" aria-hidden="true"></i> No spam. Unsubscribe any time.
+              </p>
+            </form>
+
+            <div class="social-links mt-4" style="flex-wrap: wrap;">
+              <a href="#" class="social-btn social-btn--facebook" aria-label="Follow YUMZ on Facebook">
+                <i class="fa-brands fa-facebook-f" aria-hidden="true"></i> Facebook
+              </a>
+              <a href="#" class="social-btn social-btn--instagram" aria-label="Follow YUMZ on Instagram">
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i> Instagram
+              </a>
+              <a href="#" class="social-btn social-btn--tiktok" aria-label="Follow YUMZ on TikTok">
+                <i class="fa-brands fa-tiktok" aria-hidden="true"></i> TikTok
+              </a>
+            </div>
+          </div>
+
+          <!-- Social Preview Grid -->
+          <div data-animate="slide-left">
+            <h3 style="color: #fff; margin-bottom: 16px;">
+              <i class="fa-brands fa-instagram" aria-hidden="true" style="color: #E4405F;"></i> Follow for Daily Food Inspo
+            </h3>
+            <div class="social-preview-grid" aria-label="YUMZ Instagram feed preview">
+              <div class="social-preview-card">
+                <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=300&q=80" alt="Food spread post on Instagram" loading="lazy" width="300" height="300">
+                <div class="social-preview-card__overlay"><i class="fa-brands fa-instagram" aria-hidden="true"></i></div>
+              </div>
+              <div class="social-preview-card">
+                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=300&q=80" alt="Pizza Instagram post" loading="lazy" width="300" height="300">
+                <div class="social-preview-card__overlay"><i class="fa-brands fa-instagram" aria-hidden="true"></i></div>
+              </div>
+              <div class="social-preview-card">
+                <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=300&q=80" alt="Burger Instagram post" loading="lazy" width="300" height="300">
+                <div class="social-preview-card__overlay"><i class="fa-brands fa-instagram" aria-hidden="true"></i></div>
+              </div>
+              <div class="social-preview-card">
+                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=300&q=80" alt="Fresh ingredients Instagram post" loading="lazy" width="300" height="300">
+                <div class="social-preview-card__overlay"><i class="fa-brands fa-instagram" aria-hidden="true"></i></div>
+              </div>
+              <div class="social-preview-card">
+                <img src="https://images.unsplash.com/photo-1585325701956-60dd9c8553bc?auto=format&fit=crop&w=300&q=80" alt="Wings platter Instagram post" loading="lazy" width="300" height="300">
+                <div class="social-preview-card__overlay"><i class="fa-brands fa-instagram" aria-hidden="true"></i></div>
+              </div>
+              <div class="social-preview-card">
+                <img src="https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=300&q=80" alt="Gourmet burger Instagram post" loading="lazy" width="300" height="300">
+                <div class="social-preview-card__overlay"><i class="fa-brands fa-instagram" aria-hidden="true"></i></div>
+              </div>
+            </div>
+            <div class="text-center mt-2">
+              <a href="#" class="btn btn--outline-white">
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i> Follow @yumzeats for Deals
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand-wrap">
+          <a href="index.html" class="footer__logo" aria-label="YUMZ — Return to homepage">
+            <svg class="footer__logo-svg" width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="20" cy="20" r="20" fill="#D62828"/>
+              <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+            </svg>
+            <span class="footer__brand-name">YUMZ</span>
+          </a>
+          <p class="footer__tagline">Fresh. Fast. Flavorful.</p>
+        </div>
+      </div>
+      <div class="footer__columns">
+        <div class="footer__col">
+          <h4 class="footer__heading">Quick Links</h4>
+          <ul class="footer__list">
+            <li><a href="index.html" class="footer__link">Home</a></li>
+            <li><a href="about.html" class="footer__link">About</a></li>
+            <li><a href="services.html" class="footer__link">Services</a></li>
+            <li><a href="pricing.html" class="footer__link">Pricing</a></li>
+            <li><a href="blog.html" class="footer__link">Blog</a></li>
+            <li><a href="contact.html" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Contact Info</h4>
+          <ul class="footer__list">
+            <li><a href="tel:+15559863" class="footer__link"><i class="fa-solid fa-phone" aria-hidden="true"></i> +1-555-YUMZ</a></li>
+            <li><a href="mailto:hello@yumz.com" class="footer__link"><i class="fa-solid fa-envelope" aria-hidden="true"></i> hello@yumz.com</a></li>
+            <li><span class="footer__link"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> 123 Flavor Street, Foodville, NY 10001</span></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Opening Hours</h4>
+          <ul class="footer__list">
+            <li><span class="footer__link">Mon–Thu: 11:00 AM – 10:00 PM</span></li>
+            <li><span class="footer__link">Fri–Sat: 11:00 AM – 11:00 PM</span></li>
+            <li><span class="footer__link">Sunday: 12:00 PM – 9:00 PM</span></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Legal</h4>
+          <ul class="footer__list">
+            <li><a href="#" class="footer__link">Privacy Policy</a></li>
+            <li><a href="#" class="footer__link">Terms of Service</a></li>
+            <li><a href="sitemap.xml" class="footer__link">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__social">
+        <a href="#" class="footer__social-btn footer__social-btn--facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--instagram" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--twitter" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="footerYear">2024</span> YUMZ Restaurant. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ORDER MODAL -->
+  <div class="order-modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle" aria-hidden="true">
+    <div class="order-modal__overlay" id="orderModalOverlay"></div>
+    <div class="order-modal__content">
+      <button class="order-modal__close" id="orderModalClose" aria-label="Close order options">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <h2 class="order-modal__title" id="orderModalTitle">How Would You Like to Order?</h2>
+      <div class="order-modal__actions">
+        <a href="tel:+15559863" class="order-modal__action-btn">
+          <i class="fa-solid fa-phone" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">Call Now</span><span class="order-modal__action-sub">+1-555-YUMZ</span></div>
+        </a>
+        <a href="contact.html#map-section" class="order-modal__action-btn">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">Find Our Location</span><span class="order-modal__action-sub">123 Flavor Street, Foodville</span></div>
+        </a>
+        <a href="services.html" class="order-modal__action-btn">
+          <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">View Full Menu</span><span class="order-modal__action-sub">Browse all dishes &amp; combos</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Close image viewer">
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="">
+  </div>
+
+  <style>
+    /* Desktop / Mobile visibility helpers */
+    .d-desktop-only { display: grid; }
+    .d-mobile-only  { display: none; }
+    @media (max-width: 767px) {
+      .d-desktop-only { display: none !important; }
+      .d-mobile-only  { display: flex !important; }
+    }
+  </style>
+
+  <script>
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+  </script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/validation.js"></script>
+</body>
+</html>

@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pepperoni Supreme — Pizza Details | YUMZ Restaurant</title>
+  <meta name="description" content="Full details for YUMZ Pepperoni Supreme pizza — ingredients, nutritional information, allergens, size options, and customisation guide.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+  <style>
+    /* Product detail layout */
+    .product-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .product-gallery { position: sticky; top: calc(var(--navbar-h) + 24px); }
+    .product-gallery__main {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      margin-bottom: 12px;
+      aspect-ratio: 4/3;
+    }
+    .product-gallery__main img { width: 100%; height: 100%; object-fit: cover; }
+    .product-gallery__thumbs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .product-gallery__thumb {
+      width: 80px;
+      height: 64px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 2px solid var(--clr-border);
+      cursor: pointer;
+      transition: border-color var(--transition-fast);
+    }
+    .product-gallery__thumb:hover, .product-gallery__thumb.active { border-color: var(--clr-primary); }
+    .product-gallery__thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    .product-detail__tag { margin-bottom: 12px; }
+    .product-detail__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      font-weight: 700;
+      color: var(--clr-text);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .product-detail__rating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .product-detail__stars { display: flex; gap: 3px; }
+    .product-detail__stars i { color: var(--clr-secondary); }
+    .product-detail__rating-count { font-size: 0.875rem; color: var(--clr-text-sub); }
+    .product-detail__price {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--clr-primary);
+      margin-bottom: 20px;
+      line-height: 1;
+    }
+    .product-detail__price small {
+      font-size: 0.9rem;
+      color: var(--clr-text-sub);
+      font-weight: 400;
+    }
+    .product-detail__desc {
+      font-size: 1.0625rem;
+      color: var(--clr-text-body);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    /* Size selector */
+    .size-selector { margin-bottom: 24px; }
+    .size-selector__label {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--clr-text);
+      margin-bottom: 10px;
+    }
+    .size-options { display: flex; gap: 10px; flex-wrap: wrap; }
+    .size-btn {
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--clr-border);
+      background-color: var(--clr-bg);
+      color: var(--clr-text-sub);
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 90px;
+    }
+    .size-btn small { font-size: 0.75rem; font-weight: 400; color: var(--clr-text-sub); margin-top: 2px; }
+    .size-btn:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
+    .size-btn.active { border-color: var(--clr-primary); color: var(--clr-primary); background-color: rgba(214,40,40,0.06); }
+    [data-theme="dark"] .size-btn { background-color: #2A2A2A; border-color: #3A3A3A; }
+
+    /* Topping toggles */
+    .toppings { margin-bottom: 24px; }
+    .toppings__label {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--clr-text);
+      margin-bottom: 10px;
+    }
+    .toppings__grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .topping-btn {
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--clr-border);
+      background-color: var(--clr-bg-alt);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--clr-text-sub);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      min-height: 36px;
+    }
+    .topping-btn:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
+    .topping-btn.active { background-color: rgba(214,40,40,0.08); border-color: var(--clr-primary); color: var(--clr-primary); font-weight: 600; }
+    [data-theme="dark"] .topping-btn { background-color: #2A2A2A; border-color: #3A3A3A; }
+
+    /* Summary panel */
+    .order-summary {
+      background-color: var(--clr-bg-alt);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-3);
+      margin-bottom: 20px;
+    }
+    .order-summary__row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      color: var(--clr-text-body);
+    }
+    .order-summary__total {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--clr-text);
+      padding-top: 10px;
+      border-top: 1px solid var(--clr-border);
+      margin-top: 10px;
+    }
+    .order-summary__total span:last-child { color: var(--clr-primary); }
+
+    /* Allergen grid */
+    .allergen-grid {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .allergen-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      background-color: rgba(247,127,0,0.1);
+      color: #B86600;
+      border: 1px solid rgba(247,127,0,0.3);
+    }
+    [data-theme="dark"] .allergen-badge { background-color: rgba(247,127,0,0.12); color: #F77F00; }
+
+    /* Sidebar related items */
+    .related-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px;
+      background-color: var(--clr-card-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .related-card:hover { transform: translateX(4px); box-shadow: var(--shadow-sm); }
+    .related-card__img { width: 60px; height: 60px; border-radius: var(--radius-sm); object-fit: cover; flex-shrink: 0; }
+    .related-card__name { font-family: var(--font-heading); font-size: 0.9rem; font-weight: 600; color: var(--clr-text); margin-bottom: 3px; }
+    .related-card__price { font-size: 0.875rem; color: var(--clr-primary); font-weight: 600; }
+    [data-theme="dark"] .related-card { background-color: #1E1E1E; border-color: #2E2E2E; }
+    [data-theme="dark"] .related-card__name { color: #fff; }
+
+    .steps--4 { grid-template-columns: repeat(4, 1fr); }
+    .steps--4::before {
+      left: calc(12.5% + var(--sp-2));
+      right: calc(12.5% + var(--sp-2));
+    }
+    [dir="rtl"] .steps--4::before {
+      left: calc(12.5% + var(--sp-2));
+      right: calc(12.5% + var(--sp-2));
+      background: linear-gradient(to left, var(--clr-primary), var(--clr-secondary));
+    }
+    @media (max-width: 1023px) {
+      .product-layout { grid-template-columns: 1fr; gap: 32px; }
+      .product-gallery { position: static; }
+      .steps--4 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 639px) {
+      .steps--4 { grid-template-columns: 1fr; }
+      .process-heading { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <button class="navbar__hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+      </button>
+      <a href="index.html" class="navbar__logo" aria-label="YUMZ — Return to homepage">
+        <svg class="navbar__logo-svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="20" fill="#D62828"/>
+          <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+        </svg>
+        <span class="navbar__brand">YUMZ</span>
+      </a>
+      <nav class="navbar__nav" id="navMenu" role="navigation" aria-label="Main navigation">
+        <ul class="navbar__links" role="list">
+          <li class="navbar__item navbar__item--dropdown">
+            <a href="#" class="navbar__link navbar__link--has-dropdown" aria-haspopup="true">
+              Home <i class="fa-solid fa-chevron-down navbar__dropdown-icon" aria-hidden="true"></i>
+            </a>
+            <ul class="navbar__dropdown" role="list">
+              <li><a href="index.html" class="navbar__dropdown-link">Home 1</a></li>
+              <li><a href="home-2.html" class="navbar__dropdown-link">Home 2</a></li>
+            </ul>
+          </li>
+          <li class="navbar__item"><a href="about.html" class="navbar__link">About</a></li>
+          <li class="navbar__item"><a href="services.html" class="navbar__link active">Services</a></li>
+          <li class="navbar__item"><a href="pricing.html" class="navbar__link">Pricing</a></li>
+          <li class="navbar__item"><a href="blog.html" class="navbar__link">Blog</a></li>
+          <li class="navbar__item"><a href="contact.html" class="navbar__link">Contact</a></li>
+        </ul>
+        <div class="navbar__toggles-mobile">
+          <button class="navbar__theme-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">
+            <i class="fa-solid fa-moon" id="themeIconMobile" aria-hidden="true"></i>
+          </button>
+          <button class="navbar__rtl-toggle" id="rtlToggleMobile" aria-label="Toggle text direction">LTR</button>
+        </div>
+      </nav>
+      <div class="navbar__actions">
+        <button class="navbar__theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon" id="themeIcon" aria-hidden="true"></i>
+        </button>
+        <button class="navbar__rtl-toggle" id="rtlToggle" aria-label="Toggle text direction">LTR</button>
+        <button class="btn btn--primary navbar__order-btn" id="orderBtn" aria-haspopup="dialog">ORDER</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ===== BREADCRUMB BAR ===== -->
+    <div style="background-color: var(--clr-bg-alt); border-bottom: 1px solid var(--clr-border); padding: 14px 0;">
+      <div class="container">
+        <nav aria-label="Breadcrumb">
+          <ol style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; list-style: none; font-size: 0.875rem; color: var(--clr-text-sub);">
+            <li><a href="index.html" style="color: var(--clr-text-sub);">Home</a></li>
+            <li><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;" aria-hidden="true"></i></li>
+            <li><a href="services.html" style="color: var(--clr-text-sub);">Menu</a></li>
+            <li><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;" aria-hidden="true"></i></li>
+            <li><a href="services.html#pizzas" style="color: var(--clr-text-sub);">Pizzas</a></li>
+            <li><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;" aria-hidden="true"></i></li>
+            <li style="color: var(--clr-text);" aria-current="page">Pepperoni Supreme</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 1: PRODUCT DETAIL ===== -->
+    <section class="section" id="product-detail" aria-labelledby="product-title">
+      <div class="container">
+        <div class="product-layout">
+
+          <!-- LEFT: Gallery -->
+          <div class="product-gallery" data-animate="slide-up">
+            <div class="product-gallery__main">
+              <img
+                id="mainProductImg"
+                src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=80"
+                alt="Pepperoni Supreme pizza with double pepperoni and extra cheese"
+                loading="eager"
+                width="800" height="600"
+              >
+            </div>
+            <div class="product-gallery__thumbs" role="list" aria-label="Pizza photo gallery">
+              <div class="product-gallery__thumb active" role="listitem" tabindex="0" aria-label="View main pizza photo" data-img="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=80">
+                <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=160&q=80" alt="Pepperoni Supreme front view" loading="lazy" width="80" height="64">
+              </div>
+              <div class="product-gallery__thumb" role="listitem" tabindex="0" aria-label="View close-up photo" data-img="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80">
+                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=160&q=80" alt="Pepperoni Supreme close-up slice" loading="lazy" width="80" height="64">
+              </div>
+              <div class="product-gallery__thumb" role="listitem" tabindex="0" aria-label="View oven photo" data-img="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=160&q=80" alt="Pizza coming out of stone oven" loading="lazy" width="80" height="64">
+              </div>
+              <div class="product-gallery__thumb" role="listitem" tabindex="0" aria-label="View slice pull photo" data-img="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80">
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=160&q=80" alt="Pepperoni Supreme slice being pulled" loading="lazy" width="80" height="64">
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Details -->
+          <div class="product-detail" data-animate="slide-up">
+            <div class="product-detail__tag">
+              <span class="badge badge--popular">Fan Favourite</span>
+              <span class="badge badge--sale" style="margin-left: 6px;">On Deal Today</span>
+            </div>
+
+            <h1 class="product-detail__title" id="product-title">Pepperoni Supreme</h1>
+
+            <div class="product-detail__rating">
+              <div class="product-detail__stars" aria-label="4.9 out of 5 stars">
+                <i class="fa-solid fa-star" aria-hidden="true"></i>
+                <i class="fa-solid fa-star" aria-hidden="true"></i>
+                <i class="fa-solid fa-star" aria-hidden="true"></i>
+                <i class="fa-solid fa-star" aria-hidden="true"></i>
+                <i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i>
+              </div>
+              <span class="product-detail__rating-count">4.9 (1,847 reviews)</span>
+              <span style="color: var(--clr-accent); font-size: 0.875rem; font-weight: 600;">
+                <i class="fa-solid fa-trophy" aria-hidden="true"></i> #1 Most Ordered
+              </span>
+            </div>
+
+            <div class="product-detail__price">
+              $14.99 <small>/ Medium (10")</small>
+            </div>
+
+            <p class="product-detail__desc">
+              Our legendary Pepperoni Supreme is layered with double pepperoni, extra-stretchy mozzarella, roasted sweet peppers, and finished with house chilli flakes and a light honey drizzle on our slow-fermented sourdough crust. Stone-baked to achieve the perfect leopard-spot char.
+            </p>
+
+            <!-- Size Selector -->
+            <div class="size-selector">
+              <div class="size-selector__label">Choose Your Size</div>
+              <div class="size-options" role="group" aria-label="Pizza size options">
+                <button class="size-btn active" data-size="Medium" data-price="14.99" aria-pressed="true">
+                  Medium
+                  <small>10 inches</small>
+                  <small>$14.99</small>
+                </button>
+                <button class="size-btn" data-size="Large" data-price="18.99" aria-pressed="false">
+                  Large
+                  <small>14 inches</small>
+                  <small>$18.99</small>
+                </button>
+                <button class="size-btn" data-size="XL" data-price="23.99" aria-pressed="false">
+                  Extra Large
+                  <small>18 inches</small>
+                  <small>$23.99</small>
+                </button>
+              </div>
+            </div>
+
+            <!-- Topping Customisation -->
+            <div class="toppings">
+              <div class="toppings__label">Extra Toppings <span style="font-weight: 400; color: var(--clr-text-sub);">(+ $1.50 each)</span></div>
+              <div class="toppings__grid" role="group" aria-label="Extra toppings">
+                <button class="topping-btn" aria-pressed="false">Extra Cheese</button>
+                <button class="topping-btn" aria-pressed="false">Jalapeños</button>
+                <button class="topping-btn" aria-pressed="false">Mushrooms</button>
+                <button class="topping-btn" aria-pressed="false">Olives</button>
+                <button class="topping-btn" aria-pressed="false">Bacon</button>
+                <button class="topping-btn" aria-pressed="false">Spinach</button>
+                <button class="topping-btn" aria-pressed="false">Anchovies</button>
+                <button class="topping-btn" aria-pressed="false">Sun-dried Tomatoes</button>
+              </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary" aria-live="polite" aria-label="Order summary">
+              <div class="order-summary__row">
+                <span>Pepperoni Supreme (Medium)</span>
+                <span id="summaryBasePrice">$14.99</span>
+              </div>
+              <div class="order-summary__row" id="summaryToppingsRow" style="display: none;">
+                <span>Extra toppings (<span id="summaryToppingsCount">0</span>)</span>
+                <span id="summaryToppingsPrice">$0.00</span>
+              </div>
+              <div class="order-summary__total">
+                <span>Total</span>
+                <span id="summaryTotal">$14.99</span>
+              </div>
+            </div>
+
+            <div class="btn-group mb-3">
+              <button class="btn btn--primary" style="flex: 1;" onclick="document.getElementById('orderBtn').click()">
+                <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Order Now
+              </button>
+              <a href="tel:+15559863" class="btn btn--outline">
+                <i class="fa-solid fa-phone" aria-hidden="true"></i> Call to Order
+              </a>
+            </div>
+
+            <div style="display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.875rem; color: var(--clr-text-sub);">
+              <span><i class="fa-solid fa-clock" aria-hidden="true" style="color: var(--clr-primary);"></i> Ready in 18–22 min</span>
+              <span><i class="fa-solid fa-motorcycle" aria-hidden="true" style="color: var(--clr-primary);"></i> Delivery available</span>
+              <span><i class="fa-solid fa-leaf" aria-hidden="true" style="color: var(--clr-accent);"></i> No artificial preservatives</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: TABS — Ingredients / Nutrition / Allergens / FAQ ===== -->
+    <section class="section section--alt" id="product-info" aria-labelledby="product-info-title">
+      <div class="container">
+        <h2 id="product-info-title" class="sr-only">Detailed Product Information</h2>
+        <div class="tabs" role="tablist" aria-label="Product information tabs">
+          <div class="tabs__nav">
+            <button class="tabs__btn tabs__btn--active" data-tab="ingredients" role="tab" aria-selected="true" aria-controls="tab-ingredients" id="tab-btn-ingredients">Ingredients</button>
+            <button class="tabs__btn" data-tab="nutrition" role="tab" aria-selected="false" aria-controls="tab-nutrition" id="tab-btn-nutrition">Nutrition</button>
+            <button class="tabs__btn" data-tab="allergens" role="tab" aria-selected="false" aria-controls="tab-allergens" id="tab-btn-allergens">Allergens</button>
+            <button class="tabs__btn" data-tab="faq" role="tab" aria-selected="false" aria-controls="tab-faq" id="tab-btn-faq">FAQ</button>
+          </div>
+
+          <!-- INGREDIENTS -->
+          <div class="tabs__panel tabs__panel--active" id="tab-ingredients" role="tabpanel" aria-labelledby="tab-btn-ingredients" data-tab-panel="ingredients">
+            <h3 style="margin-bottom: 20px;" data-animate="slide-up">What Goes Into Your Pizza</h3>
+            <div class="ingredients-grid" data-animate="fade-in">
+              <div class="ingredient-item"><i class="fa-solid fa-wheat-awn" aria-hidden="true"></i> Sourdough Crust</div>
+              <div class="ingredient-item"><i class="fa-solid fa-jar" aria-hidden="true"></i> San Marzano Tomato Sauce</div>
+              <div class="ingredient-item"><i class="fa-solid fa-cheese" aria-hidden="true"></i> Buffalo Mozzarella (DOP)</div>
+              <div class="ingredient-item"><i class="fa-solid fa-sausage" aria-hidden="true"></i> Double Pepperoni (2 layers)</div>
+              <div class="ingredient-item"><i class="fa-solid fa-pepper-hot" aria-hidden="true"></i> Roasted Sweet Peppers</div>
+              <div class="ingredient-item"><i class="fa-solid fa-fire" aria-hidden="true"></i> House Chilli Flakes</div>
+              <div class="ingredient-item"><i class="fa-solid fa-droplet" aria-hidden="true"></i> Wildflower Honey Drizzle</div>
+              <div class="ingredient-item"><i class="fa-solid fa-leaf" aria-hidden="true"></i> Fresh Oregano</div>
+              <div class="ingredient-item"><i class="fa-solid fa-bottle-droplet" aria-hidden="true"></i> Extra Virgin Olive Oil</div>
+            </div>
+
+            <div style="margin-top: 32px;" data-animate="slide-up">
+              <h3 class="process-heading" style="margin-bottom: 16px;">Preparation Process</h3>
+              <div class="steps steps--4">
+                <div class="steps__item">
+                  <div class="steps__icon"><i class="fa-solid fa-wheat-awn"></i><span class="steps__number">1</span></div>
+                  <h4 class="steps__title" style="font-size: 0.9rem;">48-Hour Ferment</h4>
+                  <p class="steps__text">Our sourdough dough ferments for 48 hours for maximum flavour.</p>
+                </div>
+                <div class="steps__item">
+                  <div class="steps__icon"><i class="fa-solid fa-hand"></i><span class="steps__number">2</span></div>
+                  <h4 class="steps__title" style="font-size: 0.9rem;">Hand Stretched</h4>
+                  <p class="steps__text">Each base is hand-stretched to order — never rolled or pressed.</p>
+                </div>
+                <div class="steps__item">
+                  <div class="steps__icon"><i class="fa-solid fa-layer-group"></i><span class="steps__number">3</span></div>
+                  <h4 class="steps__title" style="font-size: 0.9rem;">Double Layered</h4>
+                  <p class="steps__text">Pepperoni is applied under AND over the cheese for maximum flavour.</p>
+                </div>
+                <div class="steps__item">
+                  <div class="steps__icon"><i class="fa-solid fa-fire-burner"></i><span class="steps__number">4</span></div>
+                  <h4 class="steps__title" style="font-size: 0.9rem;">Stone Baked</h4>
+                  <p class="steps__text">Fired at 450°C for 90 seconds in our wood-effect stone deck oven.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- NUTRITION -->
+          <div class="tabs__panel" id="tab-nutrition" role="tabpanel" aria-labelledby="tab-btn-nutrition" data-tab-panel="nutrition">
+            <h3 style="margin-bottom: 8px;">Nutritional Information</h3>
+            <p style="color: var(--clr-text-sub); font-size: 0.875rem; margin-bottom: 20px;">Per serving (Medium 10" — serves 2). Values are approximate and may vary with customisations.</p>
+
+            <div class="table-wrap" data-animate="fade-in">
+              <table class="nutrition-table" aria-label="Nutritional values per serving">
+                <thead>
+                  <tr>
+                    <th scope="col">Nutrient</th>
+                    <th scope="col">Per Serving</th>
+                    <th scope="col">Per 100g</th>
+                    <th scope="col">% Daily Value*</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="highlighted-row">
+                    <td><strong>Calories (kcal)</strong></td>
+                    <td><strong>620</strong></td>
+                    <td>248</td>
+                    <td>31%</td>
+                  </tr>
+                  <tr>
+                    <td>Total Fat</td>
+                    <td>26g</td>
+                    <td>10.4g</td>
+                    <td>33%</td>
+                  </tr>
+                  <tr>
+                    <td>— Saturated Fat</td>
+                    <td>11g</td>
+                    <td>4.4g</td>
+                    <td>55%</td>
+                  </tr>
+                  <tr>
+                    <td>— Trans Fat</td>
+                    <td>0g</td>
+                    <td>0g</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td>Cholesterol</td>
+                    <td>58mg</td>
+                    <td>23mg</td>
+                    <td>19%</td>
+                  </tr>
+                  <tr>
+                    <td>Sodium</td>
+                    <td>1,180mg</td>
+                    <td>472mg</td>
+                    <td>51%</td>
+                  </tr>
+                  <tr>
+                    <td>Total Carbohydrates</td>
+                    <td>64g</td>
+                    <td>25.6g</td>
+                    <td>23%</td>
+                  </tr>
+                  <tr>
+                    <td>— Dietary Fibre</td>
+                    <td>3g</td>
+                    <td>1.2g</td>
+                    <td>11%</td>
+                  </tr>
+                  <tr>
+                    <td>— Total Sugars</td>
+                    <td>6g</td>
+                    <td>2.4g</td>
+                    <td>—</td>
+                  </tr>
+                  <tr class="highlighted-row">
+                    <td><strong>Protein</strong></td>
+                    <td><strong>28g</strong></td>
+                    <td>11.2g</td>
+                    <td>56%</td>
+                  </tr>
+                  <tr>
+                    <td>Calcium</td>
+                    <td>340mg</td>
+                    <td>136mg</td>
+                    <td>26%</td>
+                  </tr>
+                  <tr>
+                    <td>Iron</td>
+                    <td>4.2mg</td>
+                    <td>1.7mg</td>
+                    <td>23%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size: 0.8125rem; color: var(--clr-text-sub); margin-top: 12px;">*Percent Daily Values are based on a 2,000-calorie diet.</p>
+
+            <div style="margin-top: 32px;" data-animate="slide-up">
+              <h4 style="margin-bottom: 16px;">Macronutrient Breakdown</h4>
+              <div style="max-width: 400px;">
+                <div class="progress-bar__label"><span>Protein (28g)</span><span>18%</span></div>
+                <div class="progress-bar"><div class="progress-bar__fill" data-width="18%"></div></div>
+                <div class="progress-bar__label"><span>Carbohydrates (64g)</span><span>41%</span></div>
+                <div class="progress-bar"><div class="progress-bar__fill" data-width="41%" style="background: linear-gradient(to right, var(--clr-secondary), var(--clr-accent));"></div></div>
+                <div class="progress-bar__label"><span>Fat (26g)</span><span>38%</span></div>
+                <div class="progress-bar"><div class="progress-bar__fill" data-width="38%" style="background: linear-gradient(to right, var(--clr-primary-dark), var(--clr-primary));"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ALLERGENS -->
+          <div class="tabs__panel" id="tab-allergens" role="tabpanel" aria-labelledby="tab-btn-allergens" data-tab-panel="allergens">
+            <h3 style="margin-bottom: 8px;">Allergen Information</h3>
+            <p style="color: var(--clr-text-sub); font-size: 0.875rem; margin-bottom: 20px;">Always inform us of any allergies or dietary requirements when ordering. Cross-contamination is possible as we handle all major allergens in our kitchen.</p>
+
+            <div style="margin-bottom: 28px;" data-animate="fade-in">
+              <h4 style="margin-bottom: 12px; color: var(--clr-primary);">
+                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Contains
+              </h4>
+              <div class="allergen-grid">
+                <span class="allergen-badge"><i class="fa-solid fa-wheat-awn" aria-hidden="true"></i> Gluten</span>
+                <span class="allergen-badge"><i class="fa-solid fa-cheese" aria-hidden="true"></i> Dairy / Milk</span>
+                <span class="allergen-badge"><i class="fa-solid fa-egg" aria-hidden="true"></i> Eggs</span>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 28px;" data-animate="fade-in">
+              <h4 style="margin-bottom: 12px; color: var(--clr-accent);">
+                <i class="fa-solid fa-circle-check" aria-hidden="true"></i> Free From
+              </h4>
+              <div class="allergen-grid">
+                <span class="allergen-badge" style="background-color: rgba(42,157,143,0.1); color: var(--clr-accent-dark); border-color: rgba(42,157,143,0.3);">
+                  <i class="fa-solid fa-fish" aria-hidden="true"></i> Fish-Free
+                </span>
+                <span class="allergen-badge" style="background-color: rgba(42,157,143,0.1); color: var(--clr-accent-dark); border-color: rgba(42,157,143,0.3);">
+                  <i class="fa-solid fa-shrimp" aria-hidden="true"></i> Shellfish-Free
+                </span>
+                <span class="allergen-badge" style="background-color: rgba(42,157,143,0.1); color: var(--clr-accent-dark); border-color: rgba(42,157,143,0.3);">
+                  <i class="fa-solid fa-seedling" aria-hidden="true"></i> Nut-Free
+                </span>
+                <span class="allergen-badge" style="background-color: rgba(42,157,143,0.1); color: var(--clr-accent-dark); border-color: rgba(42,157,143,0.3);">
+                  <i class="fa-solid fa-soy" aria-hidden="true"></i> Soy-Free
+                </span>
+              </div>
+            </div>
+
+            <div class="card" style="border-left: 4px solid var(--clr-secondary);" data-animate="fade-in">
+              <div class="card__body">
+                <h4 style="margin-bottom: 8px;"><i class="fa-solid fa-triangle-exclamation" style="color: var(--clr-secondary);" aria-hidden="true"></i> Dietary Options Available</h4>
+                <p style="font-size: 0.9rem; color: var(--clr-text-body); margin: 0;">
+                  Ask about our <strong>gluten-free crust</strong> (add $2.50) or <strong>vegan cheese</strong> substitution (add $1.50). Please mention dietary needs when ordering so we can prepare safely.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ -->
+          <div class="tabs__panel" id="tab-faq" role="tabpanel" aria-labelledby="tab-btn-faq" data-tab-panel="faq">
+            <h3 style="margin-bottom: 20px;">Frequently Asked Questions</h3>
+            <div class="accordion" data-animate="fade-in">
+              <div class="accordion__item">
+                <button class="accordion__header" aria-expanded="false">
+                  <span class="accordion__question">Can I request half-and-half toppings?</span>
+                  <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+                </button>
+                <div class="accordion__content">
+                  <p class="accordion__answer">Yes! Call us and we'll happily do half-and-half toppings on any of our pizzas. Simply mention it when placing your phone order and our team will note the split toppings for each half.</p>
+                </div>
+              </div>
+
+              <div class="accordion__item">
+                <button class="accordion__header" aria-expanded="false">
+                  <span class="accordion__question">Is the sourdough crust made fresh daily?</span>
+                  <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+                </button>
+                <div class="accordion__content">
+                  <p class="accordion__answer">Absolutely. Our sourdough starter is 15 years old and the dough is made fresh every morning and allowed to ferment for 48 hours. This is why our crust has that distinctive flavour and texture — it's never frozen or pre-made.</p>
+                </div>
+              </div>
+
+              <div class="accordion__item">
+                <button class="accordion__header" aria-expanded="false">
+                  <span class="accordion__question">Can I get this pizza without the chilli flakes?</span>
+                  <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+                </button>
+                <div class="accordion__content">
+                  <p class="accordion__answer">Of course. We can omit or adjust any topping based on your preference. Simply mention it when ordering and our kitchen team will prepare it exactly to your specification.</p>
+                </div>
+              </div>
+
+              <div class="accordion__item">
+                <button class="accordion__header" aria-expanded="false">
+                  <span class="accordion__question">How long does delivery take for this pizza?</span>
+                  <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+                </button>
+                <div class="accordion__content">
+                  <p class="accordion__answer">The Pepperoni Supreme takes 18–22 minutes to prepare. Add 10–15 minutes for delivery depending on your location within our 5-mile delivery radius. Our target is always hot food at your door within 35 minutes of ordering.</p>
+                </div>
+              </div>
+
+              <div class="accordion__item">
+                <button class="accordion__header" aria-expanded="false">
+                  <span class="accordion__question">Is a gluten-free version available?</span>
+                  <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+                </button>
+                <div class="accordion__content">
+                  <p class="accordion__answer">Yes, we offer a dedicated gluten-free crust for an additional $2.50. Note that our kitchen handles gluten-containing products, so we cannot guarantee zero cross-contamination. Those with severe gluten intolerance or coeliac disease should let us know.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: RELATED MENU ITEMS ===== -->
+    <section class="section" id="related-items" aria-labelledby="related-heading">
+      <div class="container">
+        <div style="display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start;" class="related-layout">
+          <div>
+            <header class="section-header" data-animate="slide-up">
+              <span class="section-label">You Might Also Love</span>
+              <h2 id="related-heading">Popular Pizza Picks</h2>
+            </header>
+
+            <div class="grid grid--2" data-stagger>
+              <article class="card" data-animate="slide-up" data-animate-delay="1">
+                <div class="card__image-wrap">
+                  <img class="card__image" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=600&q=80" alt="Margherita Classica pizza" loading="lazy" width="600" height="450">
+                </div>
+                <div class="card__body">
+                  <span class="card__tag">Vegetarian</span>
+                  <h3 class="card__title">Margherita Classica</h3>
+                  <p class="card__text">San Marzano tomato, buffalo mozzarella, fresh basil.</p>
+                  <div class="d-flex align-center" style="justify-content: space-between; margin-top: 10px;">
+                    <span class="card__price">from $11.99</span>
+                    <button class="btn btn--primary" style="padding: 8px 16px; font-size: 0.8125rem;" onclick="document.getElementById('orderBtn').click()">Order</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card" data-animate="slide-up" data-animate-delay="2">
+                <div class="card__image-wrap">
+                  <img class="card__image" src="https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?auto=format&fit=crop&w=600&q=80" alt="BBQ Chicken Loaded pizza" loading="lazy" width="600" height="450">
+                </div>
+                <div class="card__body">
+                  <span class="card__tag">Fan Favourite</span>
+                  <h3 class="card__title">BBQ Chicken Loaded</h3>
+                  <p class="card__text">BBQ base, pulled chicken, jalapeños, mozzarella.</p>
+                  <div class="d-flex align-center" style="justify-content: space-between; margin-top: 10px;">
+                    <span class="card__price">from $15.99</span>
+                    <button class="btn btn--primary" style="padding: 8px 16px; font-size: 0.8125rem;" onclick="document.getElementById('orderBtn').click()">Order</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card" data-animate="slide-up" data-animate-delay="3">
+                <div class="card__image-wrap">
+                  <img class="card__image" src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80" alt="Truffle Mushroom pizza" loading="lazy" width="600" height="450">
+                </div>
+                <div class="card__body">
+                  <span class="card__tag">Vegetarian</span>
+                  <h3 class="card__title">Truffle Mushroom</h3>
+                  <p class="card__text">Truffle oil, wild mushrooms, parmesan, arugula.</p>
+                  <div class="d-flex align-center" style="justify-content: space-between; margin-top: 10px;">
+                    <span class="card__price">from $16.99</span>
+                    <button class="btn btn--primary" style="padding: 8px 16px; font-size: 0.8125rem;" onclick="document.getElementById('orderBtn').click()">Order</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card" data-animate="slide-up" data-animate-delay="4">
+                <div class="card__image-wrap">
+                  <img class="card__image" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80" alt="The Meat Feast pizza" loading="lazy" width="600" height="450">
+                </div>
+                <div class="card__body">
+                  <span class="card__tag">Most Ordered</span>
+                  <h3 class="card__title">The Meat Feast</h3>
+                  <p class="card__text">Pepperoni, sausage, bacon, pulled pork, extra cheese.</p>
+                  <div class="d-flex align-center" style="justify-content: space-between; margin-top: 10px;">
+                    <span class="card__price">from $17.99</span>
+                    <button class="btn btn--primary" style="padding: 8px 16px; font-size: 0.8125rem;" onclick="document.getElementById('orderBtn').click()">Order</button>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Sidebar: Quick picks -->
+          <div data-animate="slide-left" style="margin-top: 8px;">
+            <h3 style="margin-bottom: 16px; font-size: 1.0625rem;">Order Alongside</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px;">
+              <a class="related-card" href="services.html#sides" aria-label="Order Hand-Cut Fries">
+                <img class="related-card__img" src="https://images.unsplash.com/photo-1518013431117-eb1465fa5752?auto=format&fit=crop&w=120&q=80" alt="Hand-Cut Fries" loading="lazy" width="60" height="60">
+                <div>
+                  <div class="related-card__name">Hand-Cut Fries</div>
+                  <div class="related-card__price">$4.99</div>
+                </div>
+              </a>
+              <a class="related-card" href="services.html#sides" aria-label="Order Buffalo Wings">
+                <img class="related-card__img" src="https://images.unsplash.com/photo-1585325701956-60dd9c8553bc?auto=format&fit=crop&w=120&q=80" alt="Buffalo Wings" loading="lazy" width="60" height="60">
+                <div>
+                  <div class="related-card__name">Buffalo Wings (8pc)</div>
+                  <div class="related-card__price">$9.99</div>
+                </div>
+              </a>
+              <a class="related-card" href="services.html#drinks" aria-label="Order Classic Milkshake">
+                <img class="related-card__img" src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=120&q=80" alt="Classic Milkshake" loading="lazy" width="60" height="60">
+                <div>
+                  <div class="related-card__name">Classic Milkshake</div>
+                  <div class="related-card__price">$5.99</div>
+                </div>
+              </a>
+              <a class="related-card" href="services.html#desserts" aria-label="Order Nutella Lava Brownie">
+                <img class="related-card__img" src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=120&q=80" alt="Nutella Lava Brownie" loading="lazy" width="60" height="60">
+                <div>
+                  <div class="related-card__name">Nutella Lava Brownie</div>
+                  <div class="related-card__price">$7.99</div>
+                </div>
+              </a>
+            </div>
+
+            <div class="card" style="background: linear-gradient(135deg, rgba(214,40,40,0.06), rgba(247,127,0,0.04)); border-color: rgba(214,40,40,0.15);">
+              <div class="card__body">
+                <h4 style="margin-bottom: 8px;">
+                  <i class="fa-solid fa-tag" style="color: var(--clr-primary);" aria-hidden="true"></i> Bundle &amp; Save
+                </h4>
+                <p style="font-size: 0.875rem; color: var(--clr-text-sub); margin-bottom: 12px;">Add fries + a drink to any pizza and save $3.00 with our Combo Deal.</p>
+                <a href="pricing.html" class="btn btn--primary btn--full" style="font-size: 0.8125rem;">View Combo Deals</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand-wrap">
+          <a href="index.html" class="footer__logo" aria-label="YUMZ — Return to homepage">
+            <svg class="footer__logo-svg" width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="20" cy="20" r="20" fill="#D62828"/>
+              <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+            </svg>
+            <span class="footer__brand-name">YUMZ</span>
+          </a>
+          <p class="footer__tagline">Fresh. Fast. Flavorful.</p>
+        </div>
+      </div>
+      <div class="footer__columns">
+        <div class="footer__col">
+          <h4 class="footer__heading">Quick Links</h4>
+          <ul class="footer__list">
+            <li><a href="index.html" class="footer__link">Home</a></li>
+            <li><a href="about.html" class="footer__link">About</a></li>
+            <li><a href="services.html" class="footer__link">Services</a></li>
+            <li><a href="pricing.html" class="footer__link">Pricing</a></li>
+            <li><a href="blog.html" class="footer__link">Blog</a></li>
+            <li><a href="contact.html" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Contact Info</h4>
+          <ul class="footer__list">
+            <li><a href="tel:+15559863" class="footer__link"><i class="fa-solid fa-phone" aria-hidden="true"></i> +1-555-YUMZ</a></li>
+            <li><a href="mailto:hello@yumz.com" class="footer__link"><i class="fa-solid fa-envelope" aria-hidden="true"></i> hello@yumz.com</a></li>
+            <li><span class="footer__link"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> 123 Flavor Street, Foodville, NY</span></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Opening Hours</h4>
+          <ul class="footer__list">
+            <li><span class="footer__link">Mon–Thu: 11:00 AM – 10:00 PM</span></li>
+            <li><span class="footer__link">Fri–Sat: 11:00 AM – 11:00 PM</span></li>
+            <li><span class="footer__link">Sunday: 12:00 PM – 9:00 PM</span></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Legal</h4>
+          <ul class="footer__list">
+            <li><a href="#" class="footer__link">Privacy Policy</a></li>
+            <li><a href="#" class="footer__link">Terms of Service</a></li>
+            <li><a href="sitemap.xml" class="footer__link">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__social">
+        <a href="#" class="footer__social-btn footer__social-btn--facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--instagram" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--twitter" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="footerYear">2024</span> YUMZ Restaurant. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ORDER MODAL -->
+  <div class="order-modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle" aria-hidden="true">
+    <div class="order-modal__overlay" id="orderModalOverlay"></div>
+    <div class="order-modal__content">
+      <button class="order-modal__close" id="orderModalClose" aria-label="Close order options">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <h2 class="order-modal__title" id="orderModalTitle">How Would You Like to Order?</h2>
+      <div class="order-modal__actions">
+        <a href="tel:+15559863" class="order-modal__action-btn">
+          <i class="fa-solid fa-phone" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">Call Now</span><span class="order-modal__action-sub">+1-555-YUMZ</span></div>
+        </a>
+        <a href="contact.html#map-section" class="order-modal__action-btn">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">Find Our Location</span><span class="order-modal__action-sub">123 Flavor Street, Foodville</span></div>
+        </a>
+        <a href="services.html" class="order-modal__action-btn">
+          <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">View Full Menu</span><span class="order-modal__action-sub">Browse all dishes</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Close image viewer">
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="">
+  </div>
+
+  <style>
+    @media (max-width: 1023px) {
+      .related-layout { grid-template-columns: 1fr !important; }
+    }
+  </style>
+
+  <script>
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    /* Gallery thumbnail switcher */
+    const mainImg = document.getElementById('mainProductImg');
+    document.querySelectorAll('.product-gallery__thumb').forEach(thumb => {
+      const handler = () => {
+        document.querySelectorAll('.product-gallery__thumb').forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+        const newSrc = thumb.getAttribute('data-img');
+        if (newSrc && mainImg) {
+          mainImg.style.opacity = '0';
+          setTimeout(() => {
+            mainImg.src = newSrc;
+            mainImg.style.opacity = '1';
+          }, 150);
+          mainImg.style.transition = 'opacity 0.15s ease';
+        }
+      };
+      thumb.addEventListener('click', handler);
+      thumb.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); } });
+    });
+
+    /* Size selector + live price calculator */
+    const sizeBtns     = document.querySelectorAll('.size-btn');
+    const toppingBtns  = document.querySelectorAll('.topping-btn');
+    const summaryBase  = document.getElementById('summaryBasePrice');
+    const summaryTotal = document.getElementById('summaryTotal');
+    const summaryToppingsRow   = document.getElementById('summaryToppingsRow');
+    const summaryToppingsCount = document.getElementById('summaryToppingsCount');
+    const summaryToppingsPrice = document.getElementById('summaryToppingsPrice');
+    const priceDisplay = document.querySelector('.product-detail__price');
+
+    let basePrice      = 14.99;
+    let selectedSize   = 'Medium';
+    let toppingCount   = 0;
+    const TOPPING_COST = 1.50;
+
+    function recalculate() {
+      const toppingTotal = toppingCount * TOPPING_COST;
+      const total = basePrice + toppingTotal;
+
+      summaryBase.textContent  = '$' + basePrice.toFixed(2);
+      summaryTotal.textContent = '$' + total.toFixed(2);
+      priceDisplay.innerHTML   = '$' + basePrice.toFixed(2) + ' <small>/ ' + selectedSize + '</small>';
+
+      if (toppingCount > 0) {
+        summaryToppingsRow.style.display = 'flex';
+        summaryToppingsCount.textContent = toppingCount;
+        summaryToppingsPrice.textContent = '$' + toppingTotal.toFixed(2);
+      } else {
+        summaryToppingsRow.style.display = 'none';
+      }
+    }
+
+    sizeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sizeBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+        basePrice    = parseFloat(btn.getAttribute('data-price'));
+        selectedSize = btn.getAttribute('data-size');
+        recalculate();
+      });
+    });
+
+    toppingBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isActive = btn.classList.toggle('active');
+        btn.setAttribute('aria-pressed', String(isActive));
+        toppingCount += isActive ? 1 : -1;
+        recalculate();
+      });
+    });
+  </script>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/validation.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+/* ============================================
+   DESK — RTL Overrides
+   Activated via dir="rtl" on <html>
+   Most layout is handled by logical properties
+   in style.css. This file covers edge cases.
+   ============================================ */
+
+/* Header — force horizontal nav in RTL on desktop */
+@media (min-width: 1024px) {
+  [dir="rtl"] .header__container {
+    flex-direction: row;
+  }
+
+  [dir="rtl"] .header__nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  [dir="rtl"] .header__controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  [dir="rtl"] .header__hamburger {
+    display: none !important;
+  }
+
+  [dir="rtl"] .mobile-menu {
+    transform: translateX(-100%) !important;
+    visibility: hidden !important;
+  }
+
+  [dir="rtl"] .mobile-menu__overlay {
+    display: none !important;
+  }
+}
+
+
+/* Mobile Menu — slides from left in RTL */
+[dir="rtl"] .mobile-menu {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+  transform: translateX(-100%);
+}
+
+[dir="rtl"] .mobile-menu.open {
+  transform: translateX(0);
+}
+
+/* Mobile Menu Hamburger RTL */
+[dir="rtl"] .header__hamburger.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 5px);
+}
+
+[dir="rtl"] .header__hamburger.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -5px);
+}
+
+/* Dropdown arrow flip — chevron is symmetric, no flip needed */
+
+/* Card link arrow direction */
+[dir="rtl"] .card__link svg {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .card__link:hover svg {
+  transform: scaleX(-1) translateX(-4px);
+}
+
+/* Timeline — flip line and dots to right side */
+[dir="rtl"] .timeline {
+  padding-inline-start: 0;
+  padding-inline-end: 40px;
+}
+
+[dir="rtl"] .timeline::before {
+  inset-inline-start: auto;
+  inset-inline-end: 14px;
+}
+
+[dir="rtl"] .timeline__dot {
+  inset-inline-start: auto;
+  inset-inline-end: -33px;
+}
+
+/* Accordion chevron */
+[dir="rtl"] .accordion__header svg {
+  margin-inline-start: var(--sp-4);
+  margin-inline-end: 0;
+}
+
+/* Blockquote border */
+[dir="rtl"] .article-body blockquote {
+  border-inline-start: none;
+  border-inline-end: 4px solid var(--color-primary);
+  border-start-start-radius: var(--radius-md);
+  border-end-start-radius: var(--radius-md);
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+/* Header active link underline */
+[dir="rtl"] .header__nav-link.active::after {
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+}
+
+/* Process steps line (horizontal) — flip gradient in RTL */
+[dir="rtl"] .process-steps::before {
+  background: linear-gradient(270deg, var(--color-primary), var(--color-accent));
+}
+
+/* Phone number inputs — always LTR */
+[dir="rtl"] input[type="tel"] {
+  direction: ltr;
+  text-align: right;
+}

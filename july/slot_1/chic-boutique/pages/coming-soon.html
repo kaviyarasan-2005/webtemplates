@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Something Special is Coming — CHIC Boutique</title>
+  <meta name="description" content="CHIC Boutique is preparing something extraordinary. Join the list to be the first to know when we unveil our newest collection.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23D4AF37'/><text y='.9em' font-size='70' font-family='serif' font-weight='700' fill='%230F0F0F' x='50%' text-anchor='middle' dominant-baseline='middle' dy='.1em'>C</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <style>
+    :root{--clr-primary:#0F0F0F;--clr-secondary:#D4AF37;--clr-pearl:#FAFAFA;--ff-heading:'Playfair Display',Georgia,serif;--ff-body:'Inter',system-ui,sans-serif;}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--ff-body);
+      background: var(--clr-primary);
+      color: var(--clr-pearl);
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .cs-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .cs-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--clr-primary));
+    }
+    .cs-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(.7);
+    }
+    .cs-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3rem;
+      position: relative;
+    }
+    .cs-logo {
+      font-family: var(--ff-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--clr-secondary);
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .cs-tag {
+      display: inline-block;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--clr-secondary);
+      border: 1px solid rgba(212,175,55,.4);
+      padding: .375rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+    .cs-title {
+      font-family: var(--ff-heading);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--clr-pearl);
+      margin-bottom: 1.25rem;
+    }
+    .cs-title em {
+      font-style: italic;
+      color: var(--clr-secondary);
+    }
+    .cs-desc {
+      font-size: 1.0625rem;
+      color: rgba(250,250,250,.7);
+      line-height: 1.75;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+    }
+    .cs-divider {
+      width: 50px;
+      height: 2px;
+      background: var(--clr-secondary);
+      margin-bottom: 2.5rem;
+    }
+    /* Countdown */
+    .countdown {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .countdown__unit {
+      text-align: center;
+    }
+    .countdown__number {
+      font-family: var(--ff-heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--clr-secondary);
+      line-height: 1;
+      display: block;
+    }
+    .countdown__label {
+      font-size: .6875rem;
+      font-weight: 500;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(250,250,250,.5);
+      margin-top: .375rem;
+      display: block;
+    }
+    .countdown__sep {
+      font-family: var(--ff-heading);
+      font-size: 2.5rem;
+      color: rgba(212,175,55,.4);
+      align-self: flex-start;
+      padding-top: .125rem;
+    }
+    /* Newsletter form */
+    .cs-form {
+      display: flex;
+      gap: 0;
+      max-width: 420px;
+      margin-bottom: 2rem;
+    }
+    .cs-form input {
+      flex: 1;
+      padding: .875rem 1.125rem;
+      font-family: var(--ff-body);
+      font-size: .9375rem;
+      color: var(--clr-pearl);
+      background: rgba(250,250,250,.08);
+      border: 1px solid rgba(250,250,250,.2);
+      border-right: none;
+      border-radius: 4px 0 0 4px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .cs-form input::placeholder { color: rgba(250,250,250,.4); }
+    .cs-form input:focus { border-color: var(--clr-secondary); }
+    .cs-form button {
+      padding: .875rem 1.375rem;
+      background: var(--clr-secondary);
+      color: var(--clr-primary);
+      font-family: var(--ff-body);
+      font-size: .9375rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .cs-form button:hover { opacity: .88; }
+    .cs-success-msg {
+      display: none;
+      align-items: center;
+      gap: .625rem;
+      color: var(--clr-secondary);
+      font-size: .9375rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+    }
+    .cs-socials {
+      display: flex;
+      gap: .875rem;
+    }
+    .cs-social-link {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(250,250,250,.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(250,250,250,.7);
+      font-size: 1.25rem;
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .cs-social-link:hover { border-color: var(--clr-secondary); color: var(--clr-secondary); }
+    /* Responsive */
+    @media (max-width: 768px) {
+      body { grid-template-columns: 1fr; }
+      .cs-image { height: 45vh; }
+      .cs-image::after { background: linear-gradient(to top, var(--clr-primary) 5%, transparent); }
+      .cs-content { padding: 2.5rem 1.5rem; }
+      .countdown { gap: 1rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation-duration: 0ms !important; transition-duration: 0ms !important; } }
+  </style>
+</head>
+<body>
+
+  <div class="cs-image" role="img" aria-label="Moody editorial fashion photograph of a model in a beautifully draped gown">
+    <img src="https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?auto=format&fit=crop&w=900&q=80" alt="Editorial fashion photograph — anticipation before the CHIC new collection launch" width="900" height="1200" loading="eager">
+  </div>
+
+  <main class="cs-content" id="main-content" role="main">
+    <a href="index.html" class="cs-logo" aria-label="CHIC Boutique — Homepage">CHIC</a>
+    <div class="cs-tag">New Season Incoming</div>
+    <h1 class="cs-title">Something <em>Beautiful</em><br>is Being Made</h1>
+    <p class="cs-desc">Our new collection is being curated with exceptional care. Be the first to discover it when we open the doors. Enter your email and we&rsquo;ll notify you the moment it arrives.</p>
+    <div class="cs-divider" aria-hidden="true"></div>
+
+    <!-- Countdown -->
+    <div class="countdown" id="countdown" aria-label="Launch countdown timer" role="timer" aria-live="polite">
+      <div class="countdown__unit"><span class="countdown__number" id="cdDays">00</span><span class="countdown__label">Days</span></div>
+      <span class="countdown__sep" aria-hidden="true">:</span>
+      <div class="countdown__unit"><span class="countdown__number" id="cdHours">00</span><span class="countdown__label">Hours</span></div>
+      <span class="countdown__sep" aria-hidden="true">:</span>
+      <div class="countdown__unit"><span class="countdown__number" id="cdMins">00</span><span class="countdown__label">Minutes</span></div>
+      <span class="countdown__sep" aria-hidden="true">:</span>
+      <div class="countdown__unit"><span class="countdown__number" id="cdSecs">00</span><span class="countdown__label">Seconds</span></div>
+    </div>
+
+    <!-- Newsletter -->
+    <form class="cs-form" id="csForm" novalidate aria-label="Early access notification signup">
+      <label for="csEmail" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Email address</label>
+      <input type="email" id="csEmail" name="email" required autocomplete="email" placeholder="Your email address" aria-label="Email address for notification">
+      <button type="submit" aria-label="Notify me when we launch">Notify Me</button>
+    </form>
+    <p id="csSuccessMsg" class="cs-success-msg" role="status" aria-live="polite">
+      <i class="ph ph-check-circle" aria-hidden="true"></i> You're on the list! We'll be in touch.
+    </p>
+
+    <!-- Socials -->
+    <div class="cs-socials" aria-label="Follow CHIC Boutique on social media">
+      <a href="#" class="cs-social-link" aria-label="Instagram"><i class="ph ph-instagram-logo" aria-hidden="true"></i></a>
+      <a href="#" class="cs-social-link" aria-label="Facebook"><i class="ph ph-facebook-logo" aria-hidden="true"></i></a>
+      <a href="#" class="cs-social-link" aria-label="Pinterest"><i class="ph ph-pinterest-logo" aria-hidden="true"></i></a>
+      <a href="#" class="cs-social-link" aria-label="TikTok"><i class="ph ph-tiktok-logo" aria-hidden="true"></i></a>
+    </div>
+  </main>
+
+  <script>
+    // Countdown — target date 30 days from now
+    (function () {
+      const target = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+      const $d = document.getElementById('cdDays');
+      const $h = document.getElementById('cdHours');
+      const $m = document.getElementById('cdMins');
+      const $s = document.getElementById('cdSecs');
+      const pad = n => String(n).padStart(2, '0');
+      function tick() {
+        const diff = Math.max(0, target - Date.now());
+        $d.textContent = pad(Math.floor(diff / 86400000));
+        $h.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+        $m.textContent = pad(Math.floor((diff % 3600000) / 60000));
+        $s.textContent = pad(Math.floor((diff % 60000) / 1000));
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+
+    // Email signup
+    document.getElementById('csForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const input = document.getElementById('csEmail');
+      const msg = document.getElementById('csSuccessMsg');
+      if (!input.value || !/\S+@\S+\.\S+/.test(input.value)) {
+        input.style.borderColor = '#e53e3e';
+        return;
+      }
+      input.style.borderColor = '';
+      this.style.display = 'none';
+      msg.style.display = 'flex';
+    });
+  </script>
+</body>
+</html>

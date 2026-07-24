@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Something Exciting Is Coming — YUMZ Restaurant</title>
+  <meta name="description" content="YUMZ is preparing something delicious. Subscribe for early access and be the first to know when we go live.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+  <style>
+    /* Full-page coming soon layout */
+    .coming-soon {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Left panel */
+    .coming-soon__left {
+      background-color: var(--clr-bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(40px, 8vw, 80px) clamp(32px, 6vw, 64px);
+      position: relative;
+      z-index: 2;
+    }
+    .coming-soon__logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      margin-bottom: 48px;
+    }
+    .coming-soon__brand {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--clr-text);
+      letter-spacing: -0.02em;
+    }
+    [data-theme="dark"] .coming-soon__brand { color: #fff; }
+    .coming-soon__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: rgba(214,40,40,0.1);
+      color: var(--clr-primary);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .coming-soon__title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--clr-text);
+      line-height: 1.15;
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+    .coming-soon__title span { color: var(--clr-primary); }
+    [data-theme="dark"] .coming-soon__title { color: #fff; }
+    .coming-soon__desc {
+      font-size: 1.0625rem;
+      color: var(--clr-text-sub);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 440px;
+    }
+
+    /* Countdown */
+    .countdown {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .countdown__unit {
+      background-color: var(--clr-card-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      text-align: center;
+      min-width: 80px;
+    }
+    .countdown__number {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--clr-primary);
+      line-height: 1;
+      display: block;
+    }
+    .countdown__label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--clr-text-sub);
+      margin-top: 6px;
+      display: block;
+    }
+    [data-theme="dark"] .countdown__unit { background-color: #1E1E1E; border-color: #2E2E2E; }
+
+    /* Subscribe form */
+    .subscribe-form__row {
+      display: flex;
+      gap: 10px;
+    }
+    .subscribe-form__row input {
+      flex: 1;
+    }
+    .subscribe-form__consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 0.8125rem;
+      color: var(--clr-text-sub);
+    }
+    .subscribe-form__consent input { flex-shrink: 0; margin-top: 2px; }
+    .subscribe-form__success {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background-color: rgba(42,157,143,0.1);
+      border: 1px solid rgba(42,157,143,0.3);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: var(--clr-accent-dark);
+    }
+    .subscribe-form__success i { font-size: 1.25rem; }
+
+    /* Progress indicator */
+    .launch-progress { margin-bottom: 40px; }
+    .launch-progress__label {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--clr-text-sub);
+      margin-bottom: 8px;
+    }
+    .launch-progress__bar {
+      height: 8px;
+      background-color: var(--clr-border);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    .launch-progress__fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, var(--clr-primary), var(--clr-secondary));
+      border-radius: var(--radius-full);
+      transition: width 1.5s ease;
+    }
+
+    /* Social links */
+    .cs-social {
+      display: flex;
+      gap: 10px;
+      margin-top: 32px;
+    }
+    .cs-social__link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--clr-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--clr-text-sub);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all var(--transition-fast);
+    }
+    .cs-social__link:hover {
+      background-color: var(--clr-primary);
+      border-color: var(--clr-primary);
+      color: #fff;
+    }
+
+    /* Right panel — image */
+    .coming-soon__right {
+      position: relative;
+      overflow: hidden;
+    }
+    .coming-soon__right-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .coming-soon__right-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(214,40,40,0.55), rgba(247,127,0,0.35));
+    }
+    .coming-soon__right-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(32px, 6vw, 64px);
+      text-align: center;
+    }
+    .coming-soon__feature {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius-xl);
+      padding: 28px 32px;
+      max-width: 380px;
+      margin-bottom: 20px;
+    }
+    .coming-soon__feature i {
+      font-size: 2.25rem;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+    .coming-soon__feature h3 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .coming-soon__feature p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.6;
+    }
+    .coming-soon__teaser {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 380px;
+    }
+    .teaser-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+    }
+    .teaser-item i { color: var(--clr-secondary); font-size: 1.1rem; }
+    .teaser-item span { font-size: 0.9rem; color: rgba(255,255,255,0.9); font-weight: 500; }
+
+    /* Theme toggle in nav */
+    .cs-nav {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+      display: flex;
+      gap: 8px;
+    }
+    .cs-nav__btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--clr-border);
+      background-color: var(--clr-bg);
+      color: var(--clr-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all var(--transition-fast);
+    }
+    .cs-nav__btn:hover { background-color: var(--clr-primary); border-color: var(--clr-primary); color: #fff; }
+
+    @media (max-width: 1023px) {
+      .coming-soon { grid-template-columns: 1fr; }
+      .coming-soon__right { min-height: 260px; max-height: 340px; }
+      .coming-soon__left { order: 2; }
+      .coming-soon__right { order: 1; }
+    }
+    @media (max-width: 479px) {
+      .subscribe-form__row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar controls -->
+  <div class="cs-nav">
+    <button class="cs-nav__btn navbar__theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <i class="fa-solid fa-moon" id="themeIcon" aria-hidden="true"></i>
+    </button>
+    <button class="cs-nav__btn navbar__rtl-toggle" id="rtlToggle" aria-label="Toggle text direction">LTR</button>
+  </div>
+
+  <main id="main-content">
+    <div class="coming-soon">
+
+      <!-- LEFT: Content -->
+      <div class="coming-soon__left" data-animate="slide-right">
+
+        <a href="index.html" class="coming-soon__logo" aria-label="YUMZ — Return to homepage">
+          <svg width="44" height="44" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="20" cy="20" r="20" fill="#D62828"/>
+            <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+          </svg>
+          <span class="coming-soon__brand">YUMZ</span>
+        </a>
+
+        <div class="coming-soon__eyebrow">
+          <i class="fa-solid fa-fire" aria-hidden="true"></i> Something Exciting is Cooking
+        </div>
+
+        <h1 class="coming-soon__title" id="cs-title">
+          We're Launching<br>Something <span>Delicious</span>
+        </h1>
+
+        <p class="coming-soon__desc">
+          Our new online ordering platform is almost ready. Be among the first to know — subscribe for early access, an exclusive launch discount, and a behind-the-scenes preview.
+        </p>
+
+        <!-- Countdown -->
+        <div class="countdown" aria-label="Countdown to launch">
+          <div class="countdown__unit">
+            <span class="countdown__number" id="cd-days">00</span>
+            <span class="countdown__label">Days</span>
+          </div>
+          <div class="countdown__unit">
+            <span class="countdown__number" id="cd-hours">00</span>
+            <span class="countdown__label">Hours</span>
+          </div>
+          <div class="countdown__unit">
+            <span class="countdown__number" id="cd-mins">00</span>
+            <span class="countdown__label">Minutes</span>
+          </div>
+          <div class="countdown__unit">
+            <span class="countdown__number" id="cd-secs">00</span>
+            <span class="countdown__label">Seconds</span>
+          </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="launch-progress">
+          <div class="launch-progress__label">
+            <span>Launch Progress</span>
+            <span>87% Complete</span>
+          </div>
+          <div class="launch-progress__bar">
+            <div class="launch-progress__fill" id="progressFill" role="progressbar" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100" aria-label="Launch progress: 87%"></div>
+          </div>
+        </div>
+
+        <!-- Subscribe form -->
+        <form class="subscribe-form" data-form-type="newsletter" novalidate id="csForm">
+          <label for="cs-email" style="font-family:var(--font-heading);font-size:0.875rem;font-weight:600;color:var(--clr-text);display:block;margin-bottom:10px;">
+            Get Early Access
+          </label>
+          <div class="subscribe-form__row">
+            <input
+              type="email"
+              id="cs-email"
+              name="email"
+              class="form__input"
+              placeholder="Enter your email address"
+              required
+              autocomplete="email"
+            >
+            <button type="submit" class="btn btn--primary" style="white-space:nowrap;">
+              <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Notify Me
+            </button>
+          </div>
+          <div class="subscribe-form__consent">
+            <input type="checkbox" id="cs-consent" name="consent" required>
+            <label for="cs-consent">I agree to receive emails from YUMZ. Unsubscribe anytime.</label>
+          </div>
+          <div class="subscribe-form__success" id="csSuccess" role="alert" aria-live="polite">
+            <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+            You're on the list! We'll be in touch very soon.
+          </div>
+        </form>
+
+        <!-- Social -->
+        <nav class="cs-social" aria-label="YUMZ social media">
+          <a href="#" class="cs-social__link" aria-label="Follow YUMZ on Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+          <a href="#" class="cs-social__link" aria-label="Follow YUMZ on Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" class="cs-social__link" aria-label="Follow YUMZ on TikTok"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></a>
+          <a href="#" class="cs-social__link" aria-label="Chat with YUMZ on WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+          <a href="tel:+15559863" class="cs-social__link" aria-label="Call YUMZ now"><i class="fa-solid fa-phone" aria-hidden="true"></i></a>
+        </nav>
+
+        <p style="font-size:0.8125rem;color:var(--clr-text-sub);margin-top:24px;">
+          Already a customer? <a href="contact.html" style="color:var(--clr-primary);">Contact us</a> or call <a href="tel:+15559863" style="color:var(--clr-primary);">+1-555-YUMZ</a>
+        </p>
+      </div>
+
+      <!-- RIGHT: Image panel -->
+      <div class="coming-soon__right">
+        <img
+          class="coming-soon__right-img"
+          src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80"
+          alt="Fresh YUMZ pizza coming out of a stone-fired oven"
+          fetchpriority="high"
+        >
+        <div class="coming-soon__right-overlay" aria-hidden="true"></div>
+        <div class="coming-soon__right-content">
+          <div class="coming-soon__feature" data-animate="fade-in">
+            <i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>
+            <h2 class="coming-soon__feature h3">New Online Ordering</h2>
+            <p>Order your favourites from anywhere — customise every detail, track your delivery live, and earn loyalty points automatically.</p>
+          </div>
+          <div class="coming-soon__teaser" data-animate="slide-up">
+            <div class="teaser-item">
+              <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+              <span>Real-time order tracking</span>
+            </div>
+            <div class="teaser-item">
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <span>Automatic loyalty points</span>
+            </div>
+            <div class="teaser-item">
+              <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+              <span>Full menu customisation</span>
+            </div>
+            <div class="teaser-item">
+              <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+              <span>Secure, instant checkout</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- mobile navbar toggle targets (for JS compatibility) -->
+  <div id="navMenu" style="display:none;"></div>
+  <div id="hamburgerBtn" style="display:none;"></div>
+
+  <script>
+    // Countdown timer — target date: 30 days from page load
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 30);
+
+    function updateCountdown() {
+      const diff = targetDate - new Date();
+      if (diff <= 0) return;
+      const d  = Math.floor(diff / 86400000);
+      const h  = Math.floor((diff % 86400000) / 3600000);
+      const m  = Math.floor((diff % 3600000) / 60000);
+      const s  = Math.floor((diff % 60000) / 1000);
+      const pad = n => String(n).padStart(2, '0');
+      document.getElementById('cd-days').textContent  = pad(d);
+      document.getElementById('cd-hours').textContent = pad(h);
+      document.getElementById('cd-mins').textContent  = pad(m);
+      document.getElementById('cd-secs').textContent  = pad(s);
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Progress bar animation
+    window.addEventListener('load', () => {
+      const fill = document.getElementById('progressFill');
+      if (fill) setTimeout(() => { fill.style.width = '87%'; }, 400);
+    });
+
+    // Subscribe form
+    document.getElementById('csForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const email   = document.getElementById('cs-email');
+      const consent = document.getElementById('cs-consent');
+      const success = document.getElementById('csSuccess');
+
+      if (!email.value || !email.validity.valid) {
+        email.classList.add('form__input--error');
+        email.focus();
+        return;
+      }
+      if (!consent.checked) {
+        consent.focus();
+        return;
+      }
+
+      email.classList.remove('form__input--error');
+      success.style.display = 'flex';
+      email.value = '';
+      email.disabled = true;
+      document.querySelector('#csForm button[type="submit"]').disabled = true;
+    });
+  </script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+</body>
+</html>

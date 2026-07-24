@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog &amp; Food Stories — YUMZ Restaurant</title>
+  <meta name="description" content="Read the YUMZ blog — recipes, behind-the-scenes kitchen stories, food tips, local event coverage, and restaurant news from Foodville's favourite pizza spot.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+  <style>
+    /* Blog page layout */
+    .blog-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* Featured post (hero card) */
+    .featured-post {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+      min-height: 480px;
+      display: flex;
+      align-items: flex-end;
+      text-decoration: none;
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+      margin-bottom: 40px;
+    }
+    .featured-post:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+    .featured-post__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+    .featured-post:hover .featured-post__bg { transform: scale(1.04); }
+    .featured-post__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.2) 55%, transparent 100%);
+    }
+    .featured-post__content {
+      position: relative;
+      z-index: 2;
+      padding: 36px;
+      color: #fff;
+      width: 100%;
+    }
+    .featured-post__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: var(--clr-primary);
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .featured-post__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .featured-post__meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.75);
+    }
+    .featured-post__meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Blog category filter */
+    .blog-filter {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .blog-filter__btn {
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      border: 2px solid var(--clr-border);
+      background-color: var(--clr-bg);
+      color: var(--clr-text-sub);
+      font-family: var(--font-heading);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .blog-filter__btn:hover,
+    .blog-filter__btn.active {
+      background-color: var(--clr-primary);
+      border-color: var(--clr-primary);
+      color: #fff;
+    }
+    [data-theme="dark"] .blog-filter__btn {
+      background-color: #2A2A2A;
+      border-color: #3A3A3A;
+      color: #9CA3AF;
+    }
+    [data-theme="dark"] .blog-filter__btn.active {
+      background-color: var(--clr-primary);
+      border-color: var(--clr-primary);
+      color: #fff;
+    }
+
+    /* Blog post card */
+    .blog-card {
+      background-color: var(--clr-card-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .blog-card__image-wrap { overflow: hidden; }
+    .blog-card__image {
+      width: 100%;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+    .blog-card:hover .blog-card__image { transform: scale(1.05); }
+    .blog-card__body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .blog-card__category {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--clr-primary);
+      margin-bottom: 10px;
+    }
+    .blog-card__title {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--clr-text);
+      line-height: 1.35;
+      margin-bottom: 10px;
+      flex: 1;
+    }
+    .blog-card__title a {
+      color: inherit;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .blog-card__title a:hover { color: var(--clr-primary); }
+    .blog-card__excerpt {
+      font-size: 0.9rem;
+      color: var(--clr-text-sub);
+      line-height: 1.65;
+      margin-bottom: 18px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .blog-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .blog-card__meta {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8125rem;
+      color: var(--clr-text-sub);
+    }
+    .blog-card__meta i { font-size: 0.75rem; }
+    .blog-card__read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-heading);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--clr-primary);
+      text-decoration: none;
+      transition: gap var(--transition-fast);
+    }
+    .blog-card__read-more:hover { gap: 8px; }
+    [data-theme="dark"] .blog-card { background-color: #1E1E1E; border-color: #2E2E2E; }
+    [data-theme="dark"] .blog-card__title { color: #fff; }
+    [data-theme="dark"] .blog-card__excerpt { color: #9CA3AF; }
+
+    /* Sidebar components */
+    .sidebar { display: flex; flex-direction: column; gap: 32px; }
+    .sidebar__widget {
+      background-color: var(--clr-card-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-xl);
+      padding: var(--sp-3);
+    }
+    .sidebar__widget-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--clr-text);
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--clr-primary);
+      display: inline-block;
+    }
+    [data-theme="dark"] .sidebar__widget { background-color: #1E1E1E; border-color: #2E2E2E; }
+    [data-theme="dark"] .sidebar__widget-title { color: #fff; }
+
+    /* Sidebar: popular posts */
+    .popular-post {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--clr-border);
+      text-decoration: none;
+      transition: transform var(--transition-fast);
+    }
+    .popular-post:last-child { border-bottom: none; padding-bottom: 0; }
+    .popular-post:hover { transform: translateX(4px); }
+    .popular-post__img {
+      width: 68px;
+      height: 52px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .popular-post__title {
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--clr-text);
+      line-height: 1.35;
+      margin-bottom: 4px;
+      transition: color var(--transition-fast);
+    }
+    .popular-post:hover .popular-post__title { color: var(--clr-primary); }
+    .popular-post__date { font-size: 0.75rem; color: var(--clr-text-sub); }
+    [data-theme="dark"] .popular-post__title { color: #fff; }
+    [data-theme="dark"] .popular-post { border-bottom-color: #2E2E2E; }
+
+    /* Sidebar: categories */
+    .category-list { display: flex; flex-direction: column; gap: 4px; }
+    .category-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--clr-text-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all var(--transition-fast);
+    }
+    .category-item:hover {
+      background-color: rgba(214,40,40,0.06);
+      color: var(--clr-primary);
+      padding-left: 18px;
+    }
+    .category-item__count {
+      background-color: var(--clr-bg-alt);
+      color: var(--clr-text-sub);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      transition: all var(--transition-fast);
+    }
+    .category-item:hover .category-item__count {
+      background-color: rgba(214,40,40,0.12);
+      color: var(--clr-primary);
+    }
+    [data-theme="dark"] .category-item { color: #E5E5E5; }
+    [data-theme="dark"] .category-item__count { background-color: #2A2A2A; color: #9CA3AF; }
+
+    /* Sidebar: tags */
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag-item {
+      padding: 5px 13px;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+      color: var(--clr-text-sub);
+      text-decoration: none;
+      transition: all var(--transition-fast);
+    }
+    .tag-item:hover {
+      border-color: var(--clr-primary);
+      background-color: rgba(214,40,40,0.06);
+      color: var(--clr-primary);
+    }
+    [data-theme="dark"] .tag-item { border-color: #3A3A3A; color: #9CA3AF; }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .pagination__btn {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--clr-text-sub);
+      background-color: var(--clr-bg-alt);
+      border: 1px solid var(--clr-border);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--transition-fast);
+    }
+    .pagination__btn:hover, .pagination__btn.active {
+      background-color: var(--clr-primary);
+      border-color: var(--clr-primary);
+      color: #fff;
+    }
+    .pagination__btn--dots {
+      background: none;
+      border: none;
+      color: var(--clr-text-sub);
+      cursor: default;
+      width: auto;
+      padding: 0 4px;
+    }
+    .pagination__btn--dots:hover { background: none; color: var(--clr-text-sub); }
+    [data-theme="dark"] .pagination__btn { background-color: #2A2A2A; border-color: #3A3A3A; color: #9CA3AF; }
+
+    @media (max-width: 1023px) {
+      .blog-layout {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "main"
+          "sidebar";
+      }
+      .blog-layout > :first-child { grid-area: main; }
+      .sidebar { grid-area: sidebar; }
+    }
+    @media (max-width: 767px) {
+      .featured-post { min-height: 300px; }
+      .featured-post__content { padding: 20px; }
+      .featured-post__title { font-size: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <button class="navbar__hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+      </button>
+      <a href="index.html" class="navbar__logo" aria-label="YUMZ — Return to homepage">
+        <svg class="navbar__logo-svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="20" fill="#D62828"/>
+          <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+        </svg>
+        <span class="navbar__brand">YUMZ</span>
+      </a>
+      <nav class="navbar__nav" id="navMenu" role="navigation" aria-label="Main navigation">
+        <ul class="navbar__links" role="list">
+          <li class="navbar__item navbar__item--dropdown">
+            <a href="#" class="navbar__link navbar__link--has-dropdown" aria-haspopup="true">
+              Home <i class="fa-solid fa-chevron-down navbar__dropdown-icon" aria-hidden="true"></i>
+            </a>
+            <ul class="navbar__dropdown" role="list">
+              <li><a href="index.html" class="navbar__dropdown-link">Home 1</a></li>
+              <li><a href="home-2.html" class="navbar__dropdown-link">Home 2</a></li>
+            </ul>
+          </li>
+          <li class="navbar__item"><a href="about.html" class="navbar__link">About</a></li>
+          <li class="navbar__item"><a href="services.html" class="navbar__link">Services</a></li>
+          <li class="navbar__item"><a href="pricing.html" class="navbar__link">Pricing</a></li>
+          <li class="navbar__item"><a href="blog.html" class="navbar__link active">Blog</a></li>
+          <li class="navbar__item"><a href="contact.html" class="navbar__link">Contact</a></li>
+        </ul>
+        <div class="navbar__toggles-mobile">
+          <button class="navbar__theme-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">
+            <i class="fa-solid fa-moon" id="themeIconMobile" aria-hidden="true"></i>
+          </button>
+          <button class="navbar__rtl-toggle" id="rtlToggleMobile" aria-label="Toggle text direction">LTR</button>
+        </div>
+      </nav>
+      <div class="navbar__actions">
+        <button class="navbar__theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon" id="themeIcon" aria-hidden="true"></i>
+        </button>
+        <button class="navbar__rtl-toggle" id="rtlToggle" aria-label="Toggle text direction">LTR</button>
+        <button class="btn btn--primary navbar__order-btn" id="orderBtn" aria-haspopup="dialog">ORDER</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ===== PAGE HERO ===== -->
+    <section class="page-hero" aria-labelledby="blog-hero-title">
+      <img class="page-hero__bg" src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=1920&q=80" alt="Colourful food spread on a table, vibrant and appetising" fetchpriority="high">
+      <div class="page-hero__overlay" aria-hidden="true"></div>
+      <div class="container page-hero__content">
+        <nav class="page-hero__breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          <span aria-current="page">Blog</span>
+        </nav>
+        <h1 class="page-hero__title" id="blog-hero-title" data-animate="slide-up">Food Stories &amp; News</h1>
+        <p style="color:rgba(255,255,255,0.8);font-size:1.0625rem;margin-top:12px;" data-animate="slide-up" data-animate-delay="1">Recipes, behind-the-scenes stories, and everything food from the YUMZ kitchen.</p>
+      </div>
+    </section>
+
+    <!-- ===== BLOG MAIN SECTION ===== -->
+    <section class="section" id="blog-posts" aria-labelledby="blog-posts-heading">
+      <div class="container">
+        <h2 id="blog-posts-heading" class="sr-only">Blog Posts</h2>
+
+        <!-- Featured Post -->
+        <a href="blog-details.html" class="featured-post" aria-label="Read featured post: The Secret Behind Our 48-Hour Sourdough Dough" data-animate="fade-in">
+          <img class="featured-post__bg" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1400&q=80" alt="Chef hand-stretching pizza dough in the YUMZ kitchen" loading="eager">
+          <div class="featured-post__overlay" aria-hidden="true"></div>
+          <div class="featured-post__content">
+            <span class="featured-post__label">
+              <i class="fa-solid fa-star" aria-hidden="true"></i> Featured Post
+            </span>
+            <h2 class="featured-post__title">The Secret Behind Our 48-Hour Sourdough Dough</h2>
+            <div class="featured-post__meta">
+              <span class="featured-post__meta-item">
+                <i class="fa-solid fa-user" aria-hidden="true"></i> Marco Rossi
+              </span>
+              <span class="featured-post__meta-item">
+                <i class="fa-regular fa-calendar" aria-hidden="true"></i> July 10, 2024
+              </span>
+              <span class="featured-post__meta-item">
+                <i class="fa-regular fa-clock" aria-hidden="true"></i> 8 min read
+              </span>
+              <span class="featured-post__meta-item">
+                <i class="fa-regular fa-comment" aria-hidden="true"></i> 24 comments
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <div class="blog-layout">
+          <!-- Main posts column -->
+          <div>
+            <!-- Category filter -->
+            <div class="blog-filter" role="list" aria-label="Filter posts by category">
+              <button class="blog-filter__btn active" data-filter="all" role="listitem">
+                <i class="fa-solid fa-grip" aria-hidden="true"></i> All Posts
+              </button>
+              <button class="blog-filter__btn" data-filter="recipes" role="listitem">
+                <i class="fa-solid fa-book-open" aria-hidden="true"></i> Recipes
+              </button>
+              <button class="blog-filter__btn" data-filter="behind-scenes" role="listitem">
+                <i class="fa-solid fa-kitchen-set" aria-hidden="true"></i> Behind the Scenes
+              </button>
+              <button class="blog-filter__btn" data-filter="tips" role="listitem">
+                <i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Food Tips
+              </button>
+              <button class="blog-filter__btn" data-filter="news" role="listitem">
+                <i class="fa-solid fa-newspaper" aria-hidden="true"></i> News
+              </button>
+            </div>
+
+            <!-- Posts grid -->
+            <div class="grid grid--2" id="postsGrid" data-stagger>
+
+              <!-- Post 1 -->
+              <article class="blog-card" data-animate="slide-up" data-animate-delay="1" data-category="recipes">
+                <div class="blog-card__image-wrap">
+                  <img class="blog-card__image" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="The perfect smash burger with cheese and sauce" loading="lazy" width="600" height="375">
+                </div>
+                <div class="blog-card__body">
+                  <span class="blog-card__category">Recipes</span>
+                  <h2 class="blog-card__title">
+                    <a href="blog-details.html">How to Make the Perfect Smash Burger at Home</a>
+                  </h2>
+                  <p class="blog-card__excerpt">
+                    Sofia Rossi breaks down the technique behind our legendary smash burger — the exact griddle temperature, patty thickness, cheese timing, and sauce ratio that makes it extraordinary.
+                  </p>
+                  <div class="blog-card__footer">
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                      <span class="blog-card__meta"><i class="fa-solid fa-user" aria-hidden="true"></i> Sofia Rossi</span>
+                      <span class="blog-card__meta"><i class="fa-regular fa-calendar" aria-hidden="true"></i> July 5, 2024</span>
+                      <span class="blog-card__meta"><i class="fa-regular fa-clock" aria-hidden="true"></i> 6 min read</span>
+                    </div>
+                    <a href="blog-details.html" class="blog-card__read-more" aria-label="Read full post: How to Make the Perfect Smash Burger at Home">
+                      Read More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Post 2 -->
+              <article class="blog-card" data-animate="slide-up" data-animate-delay="2" data-category="behind-scenes">
+                <div class="blog-card__image-wrap">
+                  <img class="blog-card__image" src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="YUMZ kitchen staff preparing food service" loading="lazy" width="600" height="375">
+                </div>
+                <div class="blog-card__body">
+                  <span class="blog-card__category">Behind the Scenes</span>
+                  <h2 class="blog-card__title">
+                    <a href="blog-details.html">A Day in the YUMZ Kitchen: 6AM to Midnight</a>
+                  </h2>
+                  <p class="blog-card__excerpt">
+                    We followed Head Chef Sofia through a full Friday service — from early morning prep to the last order at 11pm. The adrenaline, the teamwork, the controlled chaos of a busy kitchen.
+                  </p>
+                  <div class="blog-card__footer">
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                      <span class="blog-card__meta"><i class="fa-solid fa-user" aria-hidden="true"></i> James Chen</span>
+                      <span class="blog-card__meta"><i class="fa-regular fa-calendar" aria-hidden="true"></i> June 28, 2024</span>
+                      <span class="blog-card__meta"><i class="fa-regular fa-clock" aria-hidden="true"></i> 10 min read</span>
+                    </div>
+                    <a href="blog-details.html" class="blog-card__read-more">
+                      Read More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Post 3 -->
+              <article class="blog-card" data-animate="slide-up" data-animate-delay="1" data-category="tips">
+                <div class="blog-card__image-wrap">
+                  <img class="blog-card__image" src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80" alt="Fresh ingredients and vegetables for cooking" loading="lazy" width="600" height="375">
+                </div>
+                <div class="blog-card__body">
+                  <span class="blog-card__category">Food Tips</span>
+                  <h2 class="blog-card__title">
+                    <a href="blog-details.html">5 Ways to Spot a Truly Fresh Ingredient at the Market</a>
+                  </h2>
+                  <p class="blog-card__excerpt">
+                    Our head chef shares the tricks she uses to select only the best produce every morning — from tomatoes and herbs to mozzarella and peppers. Your food starts at the market.
+                  </p>
+                  <div class="blog-card__footer">
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                      <span class="blog-card__meta"><i class="fa-solid fa-user" aria-hidden="true"></i> Sofia Rossi</span>
+                      <span class="blog-card__meta"><i class="fa-regular fa-calendar" aria-hidden="true"></i> June 18, 2024</span>
+                      <span class="blog-card__meta"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                    </div>
+                    <a href="blog-details.html" class="blog-card__read-more">
+                      Read More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Post 4 -->
+              <article class="blog-card" data-animate="slide-up" data-animate-delay="2" data-category="news">
+                <div class="blog-card__image-wrap">
+                  <img class="blog-card__image" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" alt="New YUMZ restaurant interior — second location" loading="lazy" width="600" height="375">
+                </div>
+                <div class="blog-card__body">
+                  <span class="blog-card__category">News</span>
+                  <h2 class="blog-card__title">
+                    <a href="blog-details.html">We're Opening a Second Location — Here's Everything You Need to Know</a>
+                  </h2>
+                  <p class="blog-card__excerpt">
+                    After 15 years on Flavor Street, YUMZ is expanding. Our second location opens next month across town — same kitchen standards, same team values, more YUMZ for Foodville.
+                  </p>
+                  <div class="blog-card__footer">
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                      <span class="blog-card__meta"><i class="fa-solid fa-user" aria-hidden="true"></i> Marco Rossi</span>
+                      <span class="blog-card__meta"><i class="fa-regular fa-calendar" aria-hidden="true"></i> June 10, 2024</span>
+                      <span class="blog-card__meta"><i class="fa-regular fa-clock" aria-hidden="true"></i> 4 min read</span>
+                    </div>
+                    <a href="blog-details.html" class="blog-card__read-more">
+                      Read More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Post 5 -->
+              <article class="blog-card" data-animate="slide-up" data-animate-delay="1" data-category="recipes">
+                <div class="blog-card__image-wrap">
+                  <img class="blog-card__image" src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=600&q=80" alt="Homemade pasta carbonara" loading="lazy" width="600" height="375">
+                </div>
+                <div class="blog-card__body">
+                  <span class="blog-card__category">Recipes</span>
+                  <h2 class="blog-card__title">
+                    <a href="blog-details.html">Our Authentic Carbonara Recipe — And Why There's No Cream</a>
+                  </h2>
+                  <p class="blog-card__excerpt">
+                    The most debated pasta dish in the world — and we have strong opinions. Here's the original Roman recipe we follow at YUMZ, step by step, with the science behind why cream ruins it.
+                  </p>
+                  <div class="blog-card__footer">
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                      <span class="blog-card__meta"><i class="fa-solid fa-user" aria-hidden="true"></i> Sofia Rossi</span>
+                      <span class="blog-card__meta"><i class="fa-regular fa-calendar" aria-hidden="true"></i> May 30, 2024</span>
+                      <span class="blog-card__meta"><i class="fa-regular fa-clock" aria-hidden="true"></i> 7 min read</span>
+                    </div>
+                    <a href="blog-details.html" class="blog-card__read-more">
+                      Read More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Post 6 -->
+              <article class="blog-card" data-animate="slide-up" data-animate-delay="2" data-category="news">
+                <div class="blog-card__image-wrap">
+                  <img class="blog-card__image" src="https://images.unsplash.com/photo-1501959915551-4e8d30928317?auto=format&fit=crop&w=600&q=80" alt="YUMZ Pizza for Heroes community initiative" loading="lazy" width="600" height="375">
+                </div>
+                <div class="blog-card__body">
+                  <span class="blog-card__category">News</span>
+                  <h2 class="blog-card__title">
+                    <a href="blog-details.html">Pizza for Heroes: How We Fed 5,000 Frontline Workers</a>
+                  </h2>
+                  <p class="blog-card__excerpt">
+                    During the toughest period of the pandemic, YUMZ rallied its community to donate over 5,000 meals to healthcare workers across Foodville. Here's the story of that incredible month.
+                  </p>
+                  <div class="blog-card__footer">
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                      <span class="blog-card__meta"><i class="fa-solid fa-user" aria-hidden="true"></i> James Chen</span>
+                      <span class="blog-card__meta"><i class="fa-regular fa-calendar" aria-hidden="true"></i> May 14, 2024</span>
+                      <span class="blog-card__meta"><i class="fa-regular fa-clock" aria-hidden="true"></i> 9 min read</span>
+                    </div>
+                    <a href="blog-details.html" class="blog-card__read-more">
+                      Read More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+
+            <!-- Pagination -->
+            <nav class="pagination" aria-label="Blog pagination">
+              <a href="#" class="pagination__btn" aria-label="Previous page">
+                <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+              </a>
+              <a href="#" class="pagination__btn active" aria-label="Page 1" aria-current="page">1</a>
+              <a href="#" class="pagination__btn" aria-label="Page 2">2</a>
+              <a href="#" class="pagination__btn" aria-label="Page 3">3</a>
+              <span class="pagination__btn pagination__btn--dots">...</span>
+              <a href="#" class="pagination__btn" aria-label="Page 8">8</a>
+              <a href="#" class="pagination__btn" aria-label="Next page">
+                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+              </a>
+            </nav>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="sidebar" aria-label="Blog sidebar">
+
+            <!-- Search -->
+            <div class="sidebar__widget">
+              <h3 class="sidebar__widget-title">Search Posts</h3>
+              <form class="blog-search" role="search" action="#" method="get">
+                <div style="display:flex;gap:8px;">
+                  <input
+                    type="search"
+                    name="q"
+                    class="form__input"
+                    placeholder="Search articles..."
+                    aria-label="Search blog posts"
+                    style="flex:1;"
+                  >
+                  <button type="submit" class="btn btn--primary" style="padding:10px 16px;" aria-label="Submit search">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Popular Posts -->
+            <div class="sidebar__widget">
+              <h3 class="sidebar__widget-title">Popular Posts</h3>
+              <div role="list">
+                <a href="blog-details.html" class="popular-post" role="listitem">
+                  <img class="popular-post__img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=136&q=80" alt="Pizza sourdough dough article" loading="lazy" width="68" height="52">
+                  <div>
+                    <div class="popular-post__title">The Secret Behind Our 48-Hour Sourdough Dough</div>
+                    <div class="popular-post__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> July 10, 2024</div>
+                  </div>
+                </a>
+                <a href="blog-details.html" class="popular-post" role="listitem">
+                  <img class="popular-post__img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=136&q=80" alt="Smash burger recipe article" loading="lazy" width="68" height="52">
+                  <div>
+                    <div class="popular-post__title">How to Make the Perfect Smash Burger at Home</div>
+                    <div class="popular-post__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> July 5, 2024</div>
+                  </div>
+                </a>
+                <a href="blog-details.html" class="popular-post" role="listitem">
+                  <img class="popular-post__img" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=136&q=80" alt="YUMZ second location news" loading="lazy" width="68" height="52">
+                  <div>
+                    <div class="popular-post__title">We're Opening a Second Location — What You Need to Know</div>
+                    <div class="popular-post__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> June 10, 2024</div>
+                  </div>
+                </a>
+                <a href="blog-details.html" class="popular-post" role="listitem">
+                  <img class="popular-post__img" src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=136&q=80" alt="Authentic carbonara recipe" loading="lazy" width="68" height="52">
+                  <div>
+                    <div class="popular-post__title">Our Authentic Carbonara — Why There's No Cream</div>
+                    <div class="popular-post__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> May 30, 2024</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="sidebar__widget">
+              <h3 class="sidebar__widget-title">Categories</h3>
+              <nav class="category-list" aria-label="Blog categories">
+                <a href="#" class="category-item">
+                  <span><i class="fa-solid fa-book-open" aria-hidden="true" style="margin-right:8px;color:var(--clr-primary);"></i>Recipes</span>
+                  <span class="category-item__count">14</span>
+                </a>
+                <a href="#" class="category-item">
+                  <span><i class="fa-solid fa-kitchen-set" aria-hidden="true" style="margin-right:8px;color:var(--clr-primary);"></i>Behind the Scenes</span>
+                  <span class="category-item__count">9</span>
+                </a>
+                <a href="#" class="category-item">
+                  <span><i class="fa-solid fa-lightbulb" aria-hidden="true" style="margin-right:8px;color:var(--clr-primary);"></i>Food Tips</span>
+                  <span class="category-item__count">11</span>
+                </a>
+                <a href="#" class="category-item">
+                  <span><i class="fa-solid fa-newspaper" aria-hidden="true" style="margin-right:8px;color:var(--clr-primary);"></i>News &amp; Events</span>
+                  <span class="category-item__count">6</span>
+                </a>
+                <a href="#" class="category-item">
+                  <span><i class="fa-solid fa-people-group" aria-hidden="true" style="margin-right:8px;color:var(--clr-primary);"></i>Community</span>
+                  <span class="category-item__count">5</span>
+                </a>
+              </nav>
+            </div>
+
+            <!-- Newsletter widget -->
+            <div class="sidebar__widget" style="background: linear-gradient(135deg, rgba(214,40,40,0.06), rgba(247,127,0,0.04)); border-color: rgba(214,40,40,0.15);">
+              <h3 class="sidebar__widget-title">Get New Posts</h3>
+              <p style="font-size:0.875rem;color:var(--clr-text-sub);margin-bottom:16px;">Subscribe and we'll email you the latest YUMZ food stories every week.</p>
+              <form class="newsletter-form" data-form-type="newsletter" novalidate style="flex-direction: column;">
+                <input
+                  type="email"
+                  name="email"
+                  class="form__input"
+                  placeholder="Your email address"
+                  aria-label="Email for newsletter"
+                  required
+                  style="margin-bottom:10px;"
+                >
+                <button type="submit" class="btn btn--primary btn--full">
+                  <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Subscribe Now
+                </button>
+              </form>
+            </div>
+
+            <!-- Tags -->
+            <div class="sidebar__widget">
+              <h3 class="sidebar__widget-title">Popular Tags</h3>
+              <div class="tag-cloud" aria-label="Blog post tags">
+                <a href="#" class="tag-item">pizza</a>
+                <a href="#" class="tag-item">recipe</a>
+                <a href="#" class="tag-item">burger</a>
+                <a href="#" class="tag-item">sourdough</a>
+                <a href="#" class="tag-item">pasta</a>
+                <a href="#" class="tag-item">kitchen</a>
+                <a href="#" class="tag-item">fresh</a>
+                <a href="#" class="tag-item">delivery</a>
+                <a href="#" class="tag-item">family</a>
+                <a href="#" class="tag-item">carbonara</a>
+                <a href="#" class="tag-item">smash</a>
+                <a href="#" class="tag-item">cheese</a>
+                <a href="#" class="tag-item">tips</a>
+                <a href="#" class="tag-item">Foodville</a>
+              </div>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand-wrap">
+          <a href="index.html" class="footer__logo" aria-label="YUMZ — Return to homepage">
+            <svg class="footer__logo-svg" width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="20" cy="20" r="20" fill="#D62828"/>
+              <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+            </svg>
+            <span class="footer__brand-name">YUMZ</span>
+          </a>
+          <p class="footer__tagline">Fresh. Fast. Flavorful.</p>
+        </div>
+      </div>
+      <div class="footer__columns">
+        <div class="footer__col">
+          <h4 class="footer__heading">Quick Links</h4>
+          <ul class="footer__list">
+            <li><a href="index.html" class="footer__link">Home</a></li>
+            <li><a href="about.html" class="footer__link">About</a></li>
+            <li><a href="services.html" class="footer__link">Services</a></li>
+            <li><a href="pricing.html" class="footer__link">Pricing</a></li>
+            <li><a href="blog.html" class="footer__link">Blog</a></li>
+            <li><a href="contact.html" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Contact Info</h4>
+          <ul class="footer__list">
+            <li><a href="tel:+15559863" class="footer__link"><i class="fa-solid fa-phone" aria-hidden="true"></i> +1-555-YUMZ</a></li>
+            <li><a href="mailto:hello@yumz.com" class="footer__link"><i class="fa-solid fa-envelope" aria-hidden="true"></i> hello@yumz.com</a></li>
+            <li><span class="footer__link"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> 123 Flavor Street, Foodville, NY</span></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Opening Hours</h4>
+          <ul class="footer__list">
+            <li><span class="footer__link">Mon–Thu: 11:00 AM – 10:00 PM</span></li>
+            <li><span class="footer__link">Fri–Sat: 11:00 AM – 11:00 PM</span></li>
+            <li><span class="footer__link">Sunday: 12:00 PM – 9:00 PM</span></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Legal</h4>
+          <ul class="footer__list">
+            <li><a href="#" class="footer__link">Privacy Policy</a></li>
+            <li><a href="#" class="footer__link">Terms of Service</a></li>
+            <li><a href="sitemap.xml" class="footer__link">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__social">
+        <a href="#" class="footer__social-btn footer__social-btn--facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--instagram" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--twitter" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="footerYear">2024</span> YUMZ Restaurant. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ORDER MODAL -->
+  <div class="order-modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle" aria-hidden="true">
+    <div class="order-modal__overlay" id="orderModalOverlay"></div>
+    <div class="order-modal__content">
+      <button class="order-modal__close" id="orderModalClose" aria-label="Close order options">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <h2 class="order-modal__title" id="orderModalTitle">How Would You Like to Order?</h2>
+      <div class="order-modal__actions">
+        <a href="tel:+15559863" class="order-modal__action-btn">
+          <i class="fa-solid fa-phone" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">Call Now</span><span class="order-modal__action-sub">+1-555-YUMZ</span></div>
+        </a>
+        <a href="contact.html#map-section" class="order-modal__action-btn">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">Find Our Location</span><span class="order-modal__action-sub">123 Flavor Street, Foodville</span></div>
+        </a>
+        <a href="services.html" class="order-modal__action-btn">
+          <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">View Full Menu</span><span class="order-modal__action-sub">Browse all dishes</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Close image viewer">
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="">
+  </div>
+
+  <script>
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    // Category filter
+    const filterBtns = document.querySelectorAll('.blog-filter__btn');
+    const posts       = document.querySelectorAll('#postsGrid article[data-category]');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.getAttribute('data-filter');
+        posts.forEach(post => {
+          const cat = post.getAttribute('data-category');
+          const show = filter === 'all' || cat === filter;
+          post.style.display    = show ? '' : 'none';
+          post.style.opacity    = show ? '' : '0';
+          post.style.transform  = show ? '' : 'scale(0.96)';
+        });
+      });
+    });
+  </script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/validation.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='12' fill='%23222222'/%3E%3Ctext y='.9em' font-size='70' font-family='sans-serif' font-weight='700' fill='%23FACC15' x='50%25' text-anchor='middle' dominant-baseline='middle' dy='.1em'%3EA%3C/text%3E%3C/svg%3E">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AXLE - Admin Dashboard</title>
+  <meta name="description" content="AXLE Admin Dashboard - Manage appointments, users, services, and view analytics.">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+</head>
+<body>
+<div class="dashboard">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none" width="32" height="32"><rect width="36" height="36" rx="8" fill="var(--secondary)"/><path d="M8 12h6v12H8zM14 12h3l3 6-3 6h-3l3-6-3-6zM22 12h6v3h-6v3h5v3h-5v3h6v3h-6v-12z" fill="var(--primary)"/></svg>
+      <span>AXLE</span>
+    </div>
+    <button class="sidebar-toggle" id="sidebarToggle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20"/></svg>
+      <span>Collapse</span>
+    </button>
+    <nav class="sidebar-menu">
+      <button class="sidebar-item active"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Overview</span></button>
+      <button class="sidebar-item"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Users</span></button>
+      <button class="sidebar-item"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Appointments</span></button>
+      <button class="sidebar-item"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span>Services</span></button>
+      <button class="sidebar-item"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg><span>Reports</span></button>
+      <button class="sidebar-item"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Settings</span></button>
+    </nav>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- MAIN CONTENT -->
+  <div class="dashboard-main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="nav-toggle sidebar-toggle-dash" id="mobileSidebar" aria-label="Toggle sidebar"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        <div class="topbar-search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search..."></div>
+      </div>
+      <div class="topbar-right">
+        <button class="toggle-btn theme-toggle" aria-label="Theme"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        <button class="toggle-btn rtl-toggle" aria-label="RTL"><span class="toggle-label">LTR</span></button>
+        <button class="topbar-icon" aria-label="Notifications"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></button>
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&q=80" alt="Admin" class="topbar-avatar">
+      </div>
+    </div>
+
+    <div class="dashboard-content">
+      <!-- STATS -->
+      <div class="dash-stats">
+        <div class="dash-stat">
+          <div class="dash-stat-icon" style="background:rgba(245,158,11,0.15);color:var(--secondary);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="dash-stat-info"><h4>Total Revenue</h4><div class="stat-val">$124,563</div><div class="stat-trend up"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg> +12.5%</div></div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-icon" style="background:rgba(16,185,129,0.15);color:var(--success);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="dash-stat-info"><h4>Active Appointments</h4><div class="stat-val">48</div><div class="stat-trend up"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg> +8.2%</div></div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-icon" style="background:rgba(99,102,241,0.15);color:#6366f1;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="dash-stat-info"><h4>New Customers</h4><div class="stat-val">156</div><div class="stat-trend up"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg> +23.1%</div></div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-icon" style="background:rgba(239,68,68,0.15);color:var(--error);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="dash-stat-info"><h4>Pending Jobs</h4><div class="stat-val">12</div><div class="stat-trend down"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/></svg> -4.3%</div></div>
+        </div>
+      </div>
+
+      <!-- GRAPHS ROW 1 -->
+      <div class="dash-graphs">
+        <div class="dash-graph"><h3>Monthly Revenue Trend</h3><canvas id="revenueChart"></canvas></div>
+        <div class="dash-graph"><h3>Service Distribution</h3><canvas id="serviceChart"></canvas></div>
+      </div>
+
+      <!-- GRAPHS ROW 2 -->
+      <div class="dash-graphs">
+        <div class="dash-graph"><h3>Customer Sources</h3><canvas id="sourceChart"></canvas></div>
+        <div class="dash-graph"><h3>Daily Appointment Load</h3><canvas id="appointmentChart"></canvas></div>
+      </div>
+
+      <!-- RECENT ACTIVITY -->
+      <div class="dash-table">
+        <h3>Recent Activity</h3>
+        <div style="margin-top:16px;">
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Customer</th><th>Service</th><th>Date</th><th>Status</th><th>Amount</th></tr></thead>
+              <tbody>
+                <tr><td>David Thompson</td><td>Oil Change + Inspection</td><td>Jul 18, 2025</td><td><span class="status-badge status-completed">Completed</span></td><td>$89</td></tr>
+                <tr><td>Rachel Adams</td><td>Brake Pad Replacement</td><td>Jul 17, 2025</td><td><span class="status-badge status-progress">In Progress</span></td><td>$149</td></tr>
+                <tr><td>Michael Torres</td><td>AC Service + Recharge</td><td>Jul 17, 2025</td><td><span class="status-badge status-completed">Completed</span></td><td>$99</td></tr>
+                <tr><td>Emily Park</td><td>Tyre Rotation + Balance</td><td>Jul 16, 2025</td><td><span class="status-badge status-pending">Pending</span></td><td>$49</td></tr>
+                <tr><td>James Mitchell</td><td>Engine Diagnostics</td><td>Jul 16, 2025</td><td><span class="status-badge status-completed">Completed</span></td><td>$120</td></tr>
+                <tr><td>Sarah Chen</td><td>Full Service Package</td><td>Jul 15, 2025</td><td><span class="status-badge status-completed">Completed</span></td><td>$349</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/dashboard.js"></script>
+</body>
+</html>

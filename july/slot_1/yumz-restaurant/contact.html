@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact YUMZ — Find Us, Call Us, Reach Out</title>
+  <meta name="description" content="Get in touch with YUMZ restaurant — visit us at 123 Flavor Street, Foodville NY, call +1-555-YUMZ, or send us a message for catering enquiries and reservations.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+  <style>
+    /* Contact info cards */
+    .contact-info-card {
+      background-color: var(--clr-card-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-xl);
+      padding: var(--sp-3);
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+    .contact-info-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .contact-info-card__icon {
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, rgba(214,40,40,0.1), rgba(247,127,0,0.08));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.375rem;
+      color: var(--clr-primary);
+    }
+    .contact-info-card__label {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--clr-text-sub);
+      margin-bottom: 4px;
+    }
+    .contact-info-card__value {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--clr-text);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .contact-info-card__value:hover { color: var(--clr-primary); }
+    .contact-info-card__sub { font-size: 0.8125rem; color: var(--clr-text-sub); margin-top: 3px; }
+    [data-theme="dark"] .contact-info-card { background-color: #1E1E1E; border-color: #2E2E2E; }
+    [data-theme="dark"] .contact-info-card__value { color: #fff; }
+
+    /* Contact form layout */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 0.85fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    /* Contact form card */
+    .contact-form-card {
+      background-color: var(--clr-card-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-xl);
+      padding: var(--sp-4);
+    }
+    .contact-form-card__title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--clr-text);
+      margin-bottom: 6px;
+    }
+    .contact-form-card__sub { font-size: 0.9rem; color: var(--clr-text-sub); margin-bottom: 28px; }
+    [data-theme="dark"] .contact-form-card { background-color: #1E1E1E; border-color: #2E2E2E; }
+    [data-theme="dark"] .contact-form-card__title { color: #fff; }
+
+    /* Hours table */
+    .hours-table { width: 100%; }
+    .hours-table tr { border-bottom: 1px solid var(--clr-border); }
+    .hours-table tr:last-child { border-bottom: none; }
+    .hours-table td { padding: 10px 0; font-size: 0.9rem; }
+    .hours-table td:first-child { color: var(--clr-text); font-weight: 500; }
+    .hours-table td:last-child  { color: var(--clr-text-sub); text-align: right; }
+    .hours-table .today-row td  { color: var(--clr-primary); font-weight: 700; }
+    .hours-table .today-row td:last-child { color: var(--clr-primary); }
+    [data-theme="dark"] .hours-table td:first-child { color: #E5E5E5; }
+    [data-theme="dark"] .hours-table tr { border-bottom-color: #2E2E2E; }
+
+    /* Map embed */
+    .map-container {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      height: 420px;
+      border: 1px solid var(--clr-border);
+      position: relative;
+    }
+    .map-container__placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1E1E1E 0%, #2A2A2A 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      gap: 16px;
+    }
+    .map-container__placeholder i { font-size: 3rem; color: var(--clr-primary); }
+    .map-container__placeholder h3 { font-family: var(--font-heading); font-size: 1.25rem; color: #fff; }
+    .map-container__placeholder p { font-size: 0.9rem; color: rgba(255,255,255,0.65); text-align: center; max-width: 280px; }
+    .map-container__directions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--clr-primary);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity var(--transition-fast);
+    }
+    .map-container__directions:hover { opacity: 0.88; }
+
+    /* Social links big */
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .social-card {
+      border-radius: var(--radius-lg);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+    .social-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .social-card i { font-size: 1.75rem; color: #fff; }
+    .social-card__name { font-family: var(--font-heading); font-size: 0.875rem; font-weight: 600; color: #fff; }
+    .social-card__handle { font-size: 0.75rem; color: rgba(255,255,255,0.75); }
+    .social-card--facebook  { background: #1877F2; }
+    .social-card--instagram { background: linear-gradient(135deg, #E4405F, #833AB4); }
+    .social-card--tiktok    { background: #000; }
+    .social-card--whatsapp  { background: #25D366; }
+
+    @media (max-width: 1023px) {
+      .contact-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 767px) {
+      .social-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 479px) {
+      .social-grid { grid-template-columns: repeat(4, 1fr); }
+      .social-card i { font-size: 1.375rem; }
+      .social-card__name { display: none; }
+      .social-card__handle { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <button class="navbar__hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+      </button>
+      <a href="index.html" class="navbar__logo" aria-label="YUMZ — Return to homepage">
+        <svg class="navbar__logo-svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="20" fill="#D62828"/>
+          <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+        </svg>
+        <span class="navbar__brand">YUMZ</span>
+      </a>
+      <nav class="navbar__nav" id="navMenu" role="navigation" aria-label="Main navigation">
+        <ul class="navbar__links" role="list">
+          <li class="navbar__item navbar__item--dropdown">
+            <a href="#" class="navbar__link navbar__link--has-dropdown" aria-haspopup="true">
+              Home <i class="fa-solid fa-chevron-down navbar__dropdown-icon" aria-hidden="true"></i>
+            </a>
+            <ul class="navbar__dropdown" role="list">
+              <li><a href="index.html" class="navbar__dropdown-link">Home 1</a></li>
+              <li><a href="home-2.html" class="navbar__dropdown-link">Home 2</a></li>
+            </ul>
+          </li>
+          <li class="navbar__item"><a href="about.html" class="navbar__link">About</a></li>
+          <li class="navbar__item"><a href="services.html" class="navbar__link">Services</a></li>
+          <li class="navbar__item"><a href="pricing.html" class="navbar__link">Pricing</a></li>
+          <li class="navbar__item"><a href="blog.html" class="navbar__link">Blog</a></li>
+          <li class="navbar__item"><a href="contact.html" class="navbar__link active">Contact</a></li>
+        </ul>
+        <div class="navbar__toggles-mobile">
+          <button class="navbar__theme-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">
+            <i class="fa-solid fa-moon" id="themeIconMobile" aria-hidden="true"></i>
+          </button>
+          <button class="navbar__rtl-toggle" id="rtlToggleMobile" aria-label="Toggle text direction">LTR</button>
+        </div>
+      </nav>
+      <div class="navbar__actions">
+        <button class="navbar__theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon" id="themeIcon" aria-hidden="true"></i>
+        </button>
+        <button class="navbar__rtl-toggle" id="rtlToggle" aria-label="Toggle text direction">LTR</button>
+        <button class="btn btn--primary navbar__order-btn" id="orderBtn" aria-haspopup="dialog">ORDER</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ===== PAGE HERO ===== -->
+    <section class="page-hero" aria-labelledby="contact-hero-title">
+      <img class="page-hero__bg" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80" alt="Warm welcoming exterior of YUMZ restaurant at night" fetchpriority="high">
+      <div class="page-hero__overlay" aria-hidden="true"></div>
+      <div class="container page-hero__content">
+        <nav class="page-hero__breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          <span aria-current="page">Contact</span>
+        </nav>
+        <h1 class="page-hero__title" id="contact-hero-title" data-animate="slide-up">Get in Touch</h1>
+        <p style="color:rgba(255,255,255,0.8);font-size:1.0625rem;margin-top:12px;" data-animate="slide-up" data-animate-delay="1">We'd love to hear from you — whether it's an order, an enquiry, or a compliment.</p>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: QUICK CONTACT INFO CARDS ===== -->
+    <section class="section" id="contact-info" aria-labelledby="contact-info-heading">
+      <div class="container">
+        <h2 id="contact-info-heading" class="sr-only">Contact information</h2>
+        <div class="grid grid--4" data-stagger>
+          <article class="contact-info-card" data-animate="slide-up" data-animate-delay="1">
+            <div class="contact-info-card__icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <div class="contact-info-card__label">Our Location</div>
+              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="contact-info-card__value">123 Flavor Street</a>
+              <div class="contact-info-card__sub">Foodville, NY 10001, USA</div>
+            </div>
+          </article>
+
+          <article class="contact-info-card" data-animate="slide-up" data-animate-delay="2">
+            <div class="contact-info-card__icon" aria-hidden="true"><i class="fa-solid fa-phone"></i></div>
+            <div>
+              <div class="contact-info-card__label">Call Us</div>
+              <a href="tel:+15559863" class="contact-info-card__value">+1-555-YUMZ</a>
+              <div class="contact-info-card__sub">Orders &amp; general enquiries</div>
+            </div>
+          </article>
+
+          <article class="contact-info-card" data-animate="slide-up" data-animate-delay="3">
+            <div class="contact-info-card__icon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></div>
+            <div>
+              <div class="contact-info-card__label">Email Us</div>
+              <a href="mailto:hello@yumz.com" class="contact-info-card__value">hello@yumz.com</a>
+              <div class="contact-info-card__sub">Replies within 24 hours</div>
+            </div>
+          </article>
+
+          <article class="contact-info-card" data-animate="slide-up" data-animate-delay="4">
+            <div class="contact-info-card__icon" aria-hidden="true"><i class="fa-brands fa-whatsapp"></i></div>
+            <div>
+              <div class="contact-info-card__label">WhatsApp</div>
+              <a href="https://wa.me/15559863" target="_blank" rel="noopener" class="contact-info-card__value">Chat on WhatsApp</a>
+              <div class="contact-info-card__sub">Quick responses, Mon–Sat</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: CONTACT FORM + SIDEBAR ===== -->
+    <section class="section section--alt" id="contact-form-section" aria-labelledby="form-heading">
+      <div class="container">
+        <div class="contact-layout">
+
+          <!-- Contact Form -->
+          <div data-animate="slide-right">
+            <div class="contact-form-card">
+              <h2 class="contact-form-card__title" id="form-heading">Send Us a Message</h2>
+              <p class="contact-form-card__sub">Fill in the form and we'll get back to you within 24 hours. For urgent orders, please call us directly.</p>
+
+              <form
+                class="contact-form"
+                data-validate="true"
+                data-form-type="contact"
+                novalidate
+              >
+                <div class="grid grid--2" style="gap: 16px; margin-bottom: 16px;">
+                  <div class="form__group">
+                    <label class="form__label" for="contact-name">Full Name <span aria-hidden="true">*</span></label>
+                    <input type="text" id="contact-name" name="name" class="form__input" placeholder="Your full name" required minlength="2" autocomplete="name">
+                  </div>
+                  <div class="form__group">
+                    <label class="form__label" for="contact-email">Email Address <span aria-hidden="true">*</span></label>
+                    <input type="email" id="contact-email" name="email" class="form__input" placeholder="your@email.com" required autocomplete="email">
+                  </div>
+                </div>
+
+                <div class="grid grid--2" style="gap: 16px; margin-bottom: 16px;">
+                  <div class="form__group">
+                    <label class="form__label" for="contact-phone">Phone Number <span style="font-weight:400;color:var(--clr-text-sub);">(optional)</span></label>
+                    <input type="tel" id="contact-phone" name="phone" class="form__input" placeholder="+1 555 000 0000" autocomplete="tel">
+                  </div>
+                  <div class="form__group">
+                    <label class="form__label" for="contact-subject">Subject <span aria-hidden="true">*</span></label>
+                    <select id="contact-subject" name="subject" class="form__input" required>
+                      <option value="">— Select a topic —</option>
+                      <option value="general">General Enquiry</option>
+                      <option value="reservation">Reservation / Booking</option>
+                      <option value="catering">Catering Request</option>
+                      <option value="order">Order Issue</option>
+                      <option value="feedback">Feedback or Complaint</option>
+                      <option value="careers">Careers</option>
+                      <option value="press">Press &amp; Media</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form__group" style="margin-bottom: 16px;">
+                  <label class="form__label" for="contact-message">Message <span aria-hidden="true">*</span></label>
+                  <textarea id="contact-message" name="message" class="form__input form__textarea" rows="6" placeholder="Tell us how we can help — the more detail the better..." required minlength="20"></textarea>
+                </div>
+
+                <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:22px;">
+                  <input type="checkbox" id="privacy-agree" name="privacy" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;" required>
+                  <label for="privacy-agree" style="font-size:0.875rem;color:var(--clr-text-sub);">
+                    I agree to the <a href="#" style="color:var(--clr-primary);">Privacy Policy</a> and consent to YUMZ processing my data to respond to this enquiry.
+                  </label>
+                </div>
+
+                <button type="submit" class="btn btn--primary form__submit" style="min-width: 200px;">
+                  <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Sidebar: hours + social -->
+          <div data-animate="slide-left">
+
+            <!-- Opening Hours -->
+            <div class="contact-form-card" style="margin-bottom: 24px;">
+              <h3 style="font-family:var(--font-heading);font-size:1.125rem;font-weight:700;color:var(--clr-text);margin-bottom:20px;">
+                <i class="fa-regular fa-clock" style="color:var(--clr-primary);" aria-hidden="true"></i> Opening Hours
+              </h3>
+              <table class="hours-table" aria-label="Restaurant opening hours">
+                <tbody>
+                  <tr id="hours-mon">
+                    <td>Monday</td>
+                    <td>11:00 AM – 10:00 PM</td>
+                  </tr>
+                  <tr id="hours-tue">
+                    <td>Tuesday</td>
+                    <td>11:00 AM – 10:00 PM</td>
+                  </tr>
+                  <tr id="hours-wed">
+                    <td>Wednesday</td>
+                    <td>11:00 AM – 10:00 PM</td>
+                  </tr>
+                  <tr id="hours-thu">
+                    <td>Thursday</td>
+                    <td>11:00 AM – 10:00 PM</td>
+                  </tr>
+                  <tr id="hours-fri">
+                    <td>Friday</td>
+                    <td>11:00 AM – 11:00 PM</td>
+                  </tr>
+                  <tr id="hours-sat">
+                    <td>Saturday</td>
+                    <td>11:00 AM – 11:00 PM</td>
+                  </tr>
+                  <tr id="hours-sun">
+                    <td>Sunday</td>
+                    <td>12:00 PM – 9:00 PM</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div id="open-status" style="margin-top: 16px; padding: 10px 14px; border-radius: var(--radius-md); font-family: var(--font-heading); font-size: 0.875rem; font-weight: 600;">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <!-- Delivery Info -->
+            <div class="contact-form-card" style="margin-bottom: 24px;">
+              <h3 style="font-family:var(--font-heading);font-size:1.125rem;font-weight:700;color:var(--clr-text);margin-bottom:14px;">
+                <i class="fa-solid fa-motorcycle" style="color:var(--clr-primary);" aria-hidden="true"></i> Delivery Information
+              </h3>
+              <ul style="display:flex;flex-direction:column;gap:10px;">
+                <li style="display:flex;gap:10px;font-size:0.9rem;color:var(--clr-text-sub);">
+                  <i class="fa-solid fa-check-circle" style="color:var(--clr-accent);margin-top:2px;flex-shrink:0;" aria-hidden="true"></i>
+                  Delivery available within a 5-mile radius of Foodville centre
+                </li>
+                <li style="display:flex;gap:10px;font-size:0.9rem;color:var(--clr-text-sub);">
+                  <i class="fa-solid fa-check-circle" style="color:var(--clr-accent);margin-top:2px;flex-shrink:0;" aria-hidden="true"></i>
+                  Average delivery time: 25–35 minutes
+                </li>
+                <li style="display:flex;gap:10px;font-size:0.9rem;color:var(--clr-text-sub);">
+                  <i class="fa-solid fa-check-circle" style="color:var(--clr-accent);margin-top:2px;flex-shrink:0;" aria-hidden="true"></i>
+                  Minimum order: $15.00
+                </li>
+                <li style="display:flex;gap:10px;font-size:0.9rem;color:var(--clr-text-sub);">
+                  <i class="fa-solid fa-check-circle" style="color:var(--clr-accent);margin-top:2px;flex-shrink:0;" aria-hidden="true"></i>
+                  Free delivery on Family Feast orders
+                </li>
+              </ul>
+              <div class="btn-group mt-3">
+                <a href="tel:+15559863" class="btn btn--primary btn--full">
+                  <i class="fa-solid fa-phone" aria-hidden="true"></i> Order by Phone
+                </a>
+              </div>
+            </div>
+
+            <!-- Social media -->
+            <div class="contact-form-card">
+              <h3 style="font-family:var(--font-heading);font-size:1.125rem;font-weight:700;color:var(--clr-text);margin-bottom:16px;">
+                <i class="fa-solid fa-share-nodes" style="color:var(--clr-primary);" aria-hidden="true"></i> Follow YUMZ
+              </h3>
+              <div class="social-grid">
+                <a href="#" class="social-card social-card--facebook" aria-label="Follow YUMZ on Facebook">
+                  <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+                  <span class="social-card__name">Facebook</span>
+                  <span class="social-card__handle">@yumzfoodville</span>
+                </a>
+                <a href="#" class="social-card social-card--instagram" aria-label="Follow YUMZ on Instagram">
+                  <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                  <span class="social-card__name">Instagram</span>
+                  <span class="social-card__handle">@yumzeats</span>
+                </a>
+                <a href="#" class="social-card social-card--tiktok" aria-label="Follow YUMZ on TikTok">
+                  <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+                  <span class="social-card__name">TikTok</span>
+                  <span class="social-card__handle">@yumzeats</span>
+                </a>
+                <a href="https://wa.me/15559863" target="_blank" rel="noopener" class="social-card social-card--whatsapp" aria-label="Chat with YUMZ on WhatsApp">
+                  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                  <span class="social-card__name">WhatsApp</span>
+                  <span class="social-card__handle">Quick chat</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: MAP ===== -->
+    <section class="section" id="map-section" aria-labelledby="map-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">Find Us</span>
+          <h2 id="map-heading">We're Right in the Heart of Foodville</h2>
+          <p>Conveniently located on Flavor Street — free parking available on weekends.</p>
+        </header>
+
+        <div class="map-container" data-animate="fade-in">
+          <!-- Real embed: Replace src with your actual Google Maps embed URL -->
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2590059526116!2d-73.98811808459374!3d40.75628537932709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259abb135cc31%3A0xc3196c8d7e98a39e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1689269550882!5m2!1sen!2sus" width="100%" height="420" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map showing YUMZ Restaurant location"></iframe>
+        </div>
+
+        <!-- Nearby landmarks -->
+        <div class="grid grid--3" style="margin-top: 32px;" data-stagger>
+          <article class="contact-info-card" data-animate="slide-up" data-animate-delay="1">
+            <div class="contact-info-card__icon" aria-hidden="true"><i class="fa-solid fa-train"></i></div>
+            <div>
+              <div class="contact-info-card__label">Nearest Station</div>
+              <div class="contact-info-card__value">Foodville Central</div>
+              <div class="contact-info-card__sub">5-minute walk from us</div>
+            </div>
+          </article>
+          <article class="contact-info-card" data-animate="slide-up" data-animate-delay="2">
+            <div class="contact-info-card__icon" aria-hidden="true"><i class="fa-solid fa-square-parking"></i></div>
+            <div>
+              <div class="contact-info-card__label">Parking</div>
+              <div class="contact-info-card__value">Market Street Car Park</div>
+              <div class="contact-info-card__sub">Free after 6PM &amp; weekends</div>
+            </div>
+          </article>
+          <article class="contact-info-card" data-animate="slide-up" data-animate-delay="3">
+            <div class="contact-info-card__icon" aria-hidden="true"><i class="fa-solid fa-bus"></i></div>
+            <div>
+              <div class="contact-info-card__label">Bus Routes</div>
+              <div class="contact-info-card__value">Routes 12, 47, 88A</div>
+              <div class="contact-info-card__sub">Stop on Flavor Street directly</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: FAQ ===== -->
+    <section class="section section--alt" id="contact-faq" aria-labelledby="contact-faq-heading">
+      <div class="container" style="max-width: 800px;">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">Quick Answers</span>
+          <h2 id="contact-faq-heading">Common Questions</h2>
+        </header>
+
+        <div class="accordion" data-animate="fade-in">
+          <div class="accordion__item">
+            <button class="accordion__header" aria-expanded="false">
+              <span class="accordion__question">Do you take reservations?</span>
+              <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="accordion__content">
+              <p class="accordion__answer">Yes! We recommend booking for groups of 5 or more. Call us at +1-555-YUMZ or send a message through the form above. Walk-ins are always welcome for smaller groups.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__header" aria-expanded="false">
+              <span class="accordion__question">How far in advance do I need to book catering?</span>
+              <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="accordion__content">
+              <p class="accordion__answer">We ask for a minimum of 48 hours notice for corporate and small event catering. For large events (wedding, parties of 80+), we recommend booking at least 2 weeks in advance so we can plan ingredients and staffing appropriately.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__header" aria-expanded="false">
+              <span class="accordion__question">What is your delivery radius?</span>
+              <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="accordion__content">
+              <p class="accordion__answer">We currently deliver within a 5-mile radius of our restaurant on Flavor Street. If you're unsure whether we deliver to your area, give us a call and we'll confirm. We're working on expanding our radius soon.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__header" aria-expanded="false">
+              <span class="accordion__question">Is the restaurant wheelchair accessible?</span>
+              <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="accordion__content">
+              <p class="accordion__answer">Absolutely. Our restaurant is fully wheelchair accessible — we have step-free entrance, accessible restrooms, and staff trained to assist. Please let us know in advance if you have any specific accessibility requirements.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__header" aria-expanded="false">
+              <span class="accordion__question">Do you have options for allergies and dietary requirements?</span>
+              <span class="accordion__icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="accordion__content">
+              <p class="accordion__answer">Yes! We offer gluten-free crust (+ $2.50), vegan cheese substitution (+ $1.50), and can omit or adjust most ingredients on request. Please always mention dietary requirements clearly when ordering. Our kitchen handles all major allergens — see individual menu items for allergen details.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand-wrap">
+          <a href="index.html" class="footer__logo" aria-label="YUMZ — Return to homepage">
+            <svg class="footer__logo-svg" width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="20" cy="20" r="20" fill="#D62828"/>
+              <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+            </svg>
+            <span class="footer__brand-name">YUMZ</span>
+          </a>
+          <p class="footer__tagline">Fresh. Fast. Flavorful.</p>
+        </div>
+      </div>
+      <div class="footer__columns">
+        <div class="footer__col">
+          <h4 class="footer__heading">Quick Links</h4>
+          <ul class="footer__list">
+            <li><a href="index.html" class="footer__link">Home</a></li>
+            <li><a href="about.html" class="footer__link">About</a></li>
+            <li><a href="services.html" class="footer__link">Services</a></li>
+            <li><a href="pricing.html" class="footer__link">Pricing</a></li>
+            <li><a href="blog.html" class="footer__link">Blog</a></li>
+            <li><a href="contact.html" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Contact Info</h4>
+          <ul class="footer__list">
+            <li><a href="tel:+15559863" class="footer__link"><i class="fa-solid fa-phone" aria-hidden="true"></i> +1-555-YUMZ</a></li>
+            <li><a href="mailto:hello@yumz.com" class="footer__link"><i class="fa-solid fa-envelope" aria-hidden="true"></i> hello@yumz.com</a></li>
+            <li><span class="footer__link"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> 123 Flavor Street, Foodville, NY</span></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Opening Hours</h4>
+          <ul class="footer__list">
+            <li><span class="footer__link">Mon–Thu: 11:00 AM – 10:00 PM</span></li>
+            <li><span class="footer__link">Fri–Sat: 11:00 AM – 11:00 PM</span></li>
+            <li><span class="footer__link">Sunday: 12:00 PM – 9:00 PM</span></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Legal</h4>
+          <ul class="footer__list">
+            <li><a href="#" class="footer__link">Privacy Policy</a></li>
+            <li><a href="#" class="footer__link">Terms of Service</a></li>
+            <li><a href="sitemap.xml" class="footer__link">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__social">
+        <a href="#" class="footer__social-btn footer__social-btn--facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--instagram" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--twitter" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="footerYear">2024</span> YUMZ Restaurant. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ORDER MODAL -->
+  <div class="order-modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle" aria-hidden="true">
+    <div class="order-modal__overlay" id="orderModalOverlay"></div>
+    <div class="order-modal__content">
+      <button class="order-modal__close" id="orderModalClose" aria-label="Close order options">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <h2 class="order-modal__title" id="orderModalTitle">How Would You Like to Order?</h2>
+      <div class="order-modal__actions">
+        <a href="tel:+15559863" class="order-modal__action-btn">
+          <i class="fa-solid fa-phone" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">Call Now</span><span class="order-modal__action-sub">+1-555-YUMZ</span></div>
+        </a>
+        <a href="#map-section" class="order-modal__action-btn">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">Find Our Location</span><span class="order-modal__action-sub">123 Flavor Street, Foodville</span></div>
+        </a>
+        <a href="services.html" class="order-modal__action-btn">
+          <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">View Full Menu</span><span class="order-modal__action-sub">Browse all dishes</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Close image viewer">
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="">
+  </div>
+
+  <script>
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    // Highlight today's opening hours row
+    const days = ['sun','mon','tue','wed','thu','fri','sat'];
+    const today = days[new Date().getDay()];
+    const todayRow = document.getElementById('hours-' + today);
+    if (todayRow) todayRow.classList.add('today-row');
+
+    // Live open/closed status
+    const now = new Date();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const timeMin = hour * 60 + minute;
+    const dayOfWeek = now.getDay();
+    const statusEl = document.getElementById('open-status');
+
+    let isOpen = false;
+    let closeTime = '';
+
+    if (dayOfWeek >= 1 && dayOfWeek <= 4) {
+      // Mon–Thu: 11am–10pm
+      isOpen = timeMin >= 660 && timeMin < 1320;
+      closeTime = '10:00 PM';
+    } else if (dayOfWeek === 5 || dayOfWeek === 6) {
+      // Fri–Sat: 11am–11pm
+      isOpen = timeMin >= 660 && timeMin < 1380;
+      closeTime = '11:00 PM';
+    } else {
+      // Sun: 12pm–9pm
+      isOpen = timeMin >= 720 && timeMin < 1260;
+      closeTime = '9:00 PM';
+    }
+
+    if (statusEl) {
+      statusEl.style.backgroundColor = isOpen ? 'rgba(42,157,143,0.1)' : 'rgba(214,40,40,0.08)';
+      statusEl.style.color = isOpen ? 'var(--clr-accent-dark)' : 'var(--clr-primary)';
+      statusEl.innerHTML = isOpen
+        ? '<i class="fa-solid fa-circle" style="font-size:0.5rem;vertical-align:middle;margin-right:6px;color:var(--clr-accent);"></i> We are OPEN right now — closes at ' + closeTime
+        : '<i class="fa-solid fa-circle" style="font-size:0.5rem;vertical-align:middle;margin-right:6px;color:var(--clr-primary);"></i> We are currently CLOSED — see hours above';
+    }
+  </script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/validation.js"></script>
+</body>
+</html>

@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu &amp; Services — YUMZ Restaurant</title>
+  <meta name="description" content="Explore the full YUMZ menu — artisan pizzas, smash burgers, pasta, sides, desserts, drinks, and catering services. Dine-in, takeaway, and delivery available.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+  <style>
+    /* Menu item card */
+    .menu-item {
+      background-color: var(--clr-card-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      display: flex;
+      gap: 0;
+      overflow: hidden;
+      position: relative;
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+    .menu-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .menu-item__image-wrap {
+      flex: 0 0 130px;
+      overflow: hidden;
+    }
+    .menu-item__image {
+      width: 130px;
+      height: 100%;
+      min-height: 120px;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+    .menu-item:hover .menu-item__image { transform: scale(1.06); }
+    .menu-item__body {
+      flex: 1;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .menu-item__top { margin-bottom: 8px; }
+    .menu-item__name {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--clr-text);
+      margin-bottom: 4px;
+    }
+    .menu-item__desc {
+      font-size: 0.8375rem;
+      color: var(--clr-text-sub);
+      line-height: 1.5;
+    }
+    .menu-item__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .menu-item__price {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--clr-primary);
+    }
+    .menu-item__badges {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      z-index: 2;
+    }
+    @media (min-width: 1024px) {
+      .menu-item__badges {
+        width: calc(100% - 32px);
+        pointer-events: none;
+      }
+      .menu-item__badges > * {
+        pointer-events: auto;
+      }
+      .badge--veg, .badge--popular, .badge--sale {
+        position: absolute;
+        right: 0;
+        top: 4px;
+      }
+      [dir="rtl"] .badge--veg, 
+      [dir="rtl"] .badge--popular, 
+      [dir="rtl"] .badge--sale {
+        right: auto;
+        left: 0;
+      }
+      .menu-item__name {
+        padding-right: 110px;
+      }
+      [dir="rtl"] .menu-item__name {
+        padding-right: 0;
+        padding-left: 110px;
+      }
+    }
+    .menu-item__add-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: var(--clr-primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      transition: background-color var(--transition-fast), transform var(--transition-fast);
+      flex-shrink: 0;
+    }
+    .menu-item__add-btn:hover {
+      background-color: var(--clr-primary-dark);
+      transform: scale(1.1);
+    }
+
+    /* Service card (dine-in / delivery / catering) */
+    .service-card {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+      min-height: 320px;
+      display: flex;
+      align-items: flex-end;
+    }
+    .service-card__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+    .service-card:hover .service-card__bg { transform: scale(1.06); }
+    .service-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%);
+      transition: background var(--transition-base);
+    }
+    .service-card:hover .service-card__overlay {
+      background: linear-gradient(to top, rgba(214,40,40,0.85) 0%, rgba(0,0,0,0.3) 70%);
+    }
+    .service-card__content {
+      position: relative;
+      z-index: 2;
+      padding: 28px;
+      color: #fff;
+      width: 100%;
+    }
+    .service-card__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+    .service-card__title {
+      font-family: var(--font-heading);
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .service-card__desc {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .service-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.875rem;
+      border-bottom: 2px solid rgba(255,255,255,0.5);
+      padding-bottom: 2px;
+      transition: border-color var(--transition-fast);
+    }
+    .service-card__link:hover { border-color: #fff; }
+
+    /* Tabs filter bar */
+    .menu-tabs {
+      position: sticky;
+      top: var(--navbar-h);
+      z-index: var(--z-sticky);
+      background-color: var(--clr-bg);
+      border-bottom: 2px solid var(--clr-border);
+      padding-block: 12px;
+      transition: background-color var(--transition-base), border-color var(--transition-base);
+    }
+    .menu-tabs__inner {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .menu-tabs__inner::-webkit-scrollbar { display: none; }
+    .menu-tabs__btn {
+      flex-shrink: 0;
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--clr-text-sub);
+      background-color: var(--clr-bg-alt);
+      border: 2px solid var(--clr-border);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .menu-tabs__btn:hover, .menu-tabs__btn.active {
+      color: var(--clr-primary);
+      background-color: rgba(214,40,40,0.08);
+      border-color: var(--clr-primary);
+    }
+    .menu-tabs__btn i { font-size: 0.9rem; }
+    [data-theme="dark"] .menu-tabs {
+      background-color: #121212;
+      border-bottom-color: #2E2E2E;
+    }
+    [data-theme="dark"] .menu-tabs__btn {
+      background-color: #2A2A2A;
+      border-color: #3A3A3A;
+      color: #9CA3AF;
+    }
+    [data-theme="dark"] .menu-tabs__btn:hover,
+    [data-theme="dark"] .menu-tabs__btn.active {
+      color: var(--clr-primary);
+      background-color: rgba(214,40,40,0.12);
+      border-color: var(--clr-primary);
+    }
+    [data-theme="dark"] .menu-item {
+      background-color: #1E1E1E;
+      border-color: #2E2E2E;
+    }
+    [data-theme="dark"] .menu-item__name { color: #fff; }
+    [data-theme="dark"] .menu-item__desc { color: #9CA3AF; }
+
+    /* Build-your-own pizza teaser */
+    .build-cta {
+      background: linear-gradient(135deg, #D62828, #F77F00);
+      border-radius: var(--radius-xl);
+      padding: 48px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .build-cta__text h2 { color: #fff; margin-bottom: 8px; }
+    .build-cta__text p  { color: rgba(255,255,255,0.88); max-width: 520px; }
+
+    @media (max-width: 991px) {
+      .build-cta {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+      }
+      .build-cta .btn-group {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 639px) {
+      .menu-item__image-wrap { flex: 0 0 100px; }
+      .menu-item__image      { width: 100px; }
+      .build-cta             { padding: 32px 24px; }
+    }
+    @media (max-width: 479px) {
+      .menu-item {
+        flex-direction: column;
+        text-align: center;
+      }
+      .menu-item__image-wrap {
+        flex: 0 0 auto;
+        width: 100%;
+      }
+      .menu-item__image {
+        width: 100%;
+        height: 180px;
+        min-height: unset;
+      }
+      .menu-item__footer {
+        justify-content: center;
+      }
+      .service-card {
+        min-height: 280px;
+      }
+      .service-card__content {
+        text-align: center;
+        padding: 24px 16px;
+      }
+      .service-card__icon {
+        margin-inline: auto;
+      }
+      .build-cta {
+        text-align: center;
+      }
+      .build-cta .hero__cta-group {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <button class="navbar__hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+      </button>
+      <a href="index.html" class="navbar__logo" aria-label="YUMZ — Return to homepage">
+        <svg class="navbar__logo-svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="20" fill="#D62828"/>
+          <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+        </svg>
+        <span class="navbar__brand">YUMZ</span>
+      </a>
+      <nav class="navbar__nav" id="navMenu" role="navigation" aria-label="Main navigation">
+        <ul class="navbar__links" role="list">
+          <li class="navbar__item navbar__item--dropdown">
+            <a href="#" class="navbar__link navbar__link--has-dropdown" aria-haspopup="true">
+              Home <i class="fa-solid fa-chevron-down navbar__dropdown-icon" aria-hidden="true"></i>
+            </a>
+            <ul class="navbar__dropdown" role="list">
+              <li><a href="index.html" class="navbar__dropdown-link">Home 1</a></li>
+              <li><a href="home-2.html" class="navbar__dropdown-link">Home 2</a></li>
+            </ul>
+          </li>
+          <li class="navbar__item"><a href="about.html" class="navbar__link">About</a></li>
+          <li class="navbar__item"><a href="services.html" class="navbar__link active">Services</a></li>
+          <li class="navbar__item"><a href="pricing.html" class="navbar__link">Pricing</a></li>
+          <li class="navbar__item"><a href="blog.html" class="navbar__link">Blog</a></li>
+          <li class="navbar__item"><a href="contact.html" class="navbar__link">Contact</a></li>
+        </ul>
+        <div class="navbar__toggles-mobile">
+          <button class="navbar__theme-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">
+            <i class="fa-solid fa-moon" id="themeIconMobile" aria-hidden="true"></i>
+          </button>
+          <button class="navbar__rtl-toggle" id="rtlToggleMobile" aria-label="Toggle text direction">LTR</button>
+        </div>
+      </nav>
+      <div class="navbar__actions">
+        <button class="navbar__theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon" id="themeIcon" aria-hidden="true"></i>
+        </button>
+        <button class="navbar__rtl-toggle" id="rtlToggle" aria-label="Toggle text direction">LTR</button>
+        <button class="btn btn--primary navbar__order-btn" id="orderBtn" aria-haspopup="dialog">ORDER</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ===== SECTION 1: PAGE HERO ===== -->
+    <section class="page-hero" aria-labelledby="services-hero-title">
+      <img class="page-hero__bg" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80" alt="Vibrant YUMZ restaurant dining area with food spread across tables" fetchpriority="high">
+      <div class="page-hero__overlay" aria-hidden="true"></div>
+      <div class="container page-hero__content">
+        <nav class="page-hero__breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          <span aria-current="page">Services &amp; Menu</span>
+        </nav>
+        <h1 class="page-hero__title" id="services-hero-title" data-animate="slide-up">Our Menu &amp; Services</h1>
+        <p style="color: rgba(255,255,255,0.8); font-size: 1.0625rem; margin-top: 12px;" data-animate="slide-up" data-animate-delay="1">
+          Every dish made fresh. Every order handled with care.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== STICKY CATEGORY TABS ===== -->
+    <div class="menu-tabs" id="menuTabs" aria-label="Jump to menu category">
+      <div class="container">
+        <div class="menu-tabs__inner">
+          <button class="menu-tabs__btn active" data-menu-tab="pizzas">
+            <i class="fa-solid fa-pizza-slice" aria-hidden="true"></i> Pizzas
+          </button>
+          <button class="menu-tabs__btn" data-menu-tab="burgers">
+            <i class="fa-solid fa-burger" aria-hidden="true"></i> Burgers
+          </button>
+          <button class="menu-tabs__btn" data-menu-tab="pasta">
+            <i class="fa-solid fa-bowl-food" aria-hidden="true"></i> Pasta
+          </button>
+          <button class="menu-tabs__btn" data-menu-tab="sides">
+            <i class="fa-solid fa-plate-wheat" aria-hidden="true"></i> Sides
+          </button>
+          <button class="menu-tabs__btn" data-menu-tab="desserts">
+            <i class="fa-solid fa-ice-cream" aria-hidden="true"></i> Desserts
+          </button>
+          <button class="menu-tabs__btn" data-menu-tab="drinks">
+            <i class="fa-solid fa-glass-water" aria-hidden="true"></i> Drinks
+          </button>
+          <button class="menu-tabs__btn" data-menu-tab="services">
+            <i class="fa-solid fa-star" aria-hidden="true"></i> Our Services
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 2: PIZZAS ===== -->
+    <section class="section" id="pizzas" aria-labelledby="pizzas-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">
+            <i class="fa-solid fa-pizza-slice" aria-hidden="true"></i> Stone-Baked
+          </span>
+          <h2 id="pizzas-heading">Artisan Pizzas</h2>
+          <p>Hand-stretched sourdough base, slow-cooked tomato sauce, and premium toppings. Available in Medium (10") and Large (14").</p>
+        </header>
+
+        <div class="grid grid--2" data-stagger>
+          <!-- Pizza 1 -->
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="1">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=260&q=80" alt="Classic Margherita pizza with fresh basil" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Margherita Classica</a></h3>
+                <p class="menu-item__desc">San Marzano tomato sauce, buffalo mozzarella, fresh basil, extra virgin olive oil.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges">
+                  <span class="badge badge--veg">Vegetarian</span>
+                </div>
+                <span class="menu-item__price">from $11.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Margherita Classica to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Pizza 2 -->
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="2">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=260&q=80" alt="Pepperoni Supreme pizza loaded with toppings" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Pepperoni Supreme</a></h3>
+                <p class="menu-item__desc">Double pepperoni, extra mozzarella, roasted peppers, chilli flakes, honey drizzle.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges">
+                  <span class="badge badge--popular">Fan Favourite</span>
+                </div>
+                <span class="menu-item__price">from $14.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Pepperoni Supreme to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Pizza 3 -->
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="3">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?auto=format&fit=crop&w=260&q=80" alt="BBQ Loaded pizza with chicken and onions" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">BBQ Chicken Loaded</a></h3>
+                <p class="menu-item__desc">Smoky BBQ base, pulled chicken, red onion, mozzarella, jalapeños, coriander.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges">
+                  <span class="badge badge--sale">Best Seller</span>
+                </div>
+                <span class="menu-item__price">from $15.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add BBQ Chicken Loaded to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Pizza 4 -->
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="4">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=260&q=80" alt="Four cheese white pizza" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Quattro Formaggi</a></h3>
+                <p class="menu-item__desc">White sauce base, mozzarella, gorgonzola, parmesan, taleggio, black pepper.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges">
+                  <span class="badge badge--veg">Vegetarian</span>
+                  <span class="badge badge--new">New</span>
+                </div>
+                <span class="menu-item__price">from $15.49</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Quattro Formaggi to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Pizza 5 -->
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="1">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=260&q=80" alt="Truffle mushroom pizza with arugula" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Truffle Mushroom</a></h3>
+                <p class="menu-item__desc">Truffle oil base, wild mushrooms, mozzarella, parmesan, fresh arugula, sea salt.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges">
+                  <span class="badge badge--veg">Vegetarian</span>
+                </div>
+                <span class="menu-item__price">from $16.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Truffle Mushroom to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Pizza 6 -->
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="2">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=260&q=80" alt="Meat feast pizza with multiple meats" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">The Meat Feast</a></h3>
+                <p class="menu-item__desc">Pepperoni, Italian sausage, bacon rashers, pulled pork, extra mozzarella, BBQ drizzle.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges">
+                  <span class="badge badge--popular">Most Ordered</span>
+                </div>
+                <span class="menu-item__price">from $17.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add The Meat Feast to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="text-center mt-3" data-animate="fade-in">
+          <a href="service-details.html" class="btn btn--outline">
+            <i class="fa-solid fa-circle-info" aria-hidden="true"></i> View Full Pizza Menu with Nutritional Info
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: BURGERS ===== -->
+    <section class="section section--alt" id="burgers" aria-labelledby="burgers-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">
+            <i class="fa-solid fa-burger" aria-hidden="true"></i> Smash-Style
+          </span>
+          <h2 id="burgers-heading">Smash Burgers</h2>
+          <p>Grass-fed beef patties, smashed to crispy perfection on a flat-top griddle. Served on toasted brioche with hand-cut fries.</p>
+        </header>
+
+        <div class="grid grid--2" data-stagger>
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="1">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=260&q=80" alt="The YUMZ Classic smash burger" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">The YUMZ Classic</a></h3>
+                <p class="menu-item__desc">Single smash patty, American cheese, YUMZ secret sauce, pickles, shredded lettuce.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges"></div>
+                <span class="menu-item__price">$10.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add YUMZ Classic to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="2">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=260&q=80" alt="The Double Down burger with two patties" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">The Double Down</a></h3>
+                <p class="menu-item__desc">Double smash patties, cheddar and American cheese, caramelised onions, YUMZ sauce.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges">
+                  <span class="badge badge--popular">Best Seller</span>
+                </div>
+                <span class="menu-item__price">$13.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add The Double Down to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="3">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=260&q=80" alt="Crispy chicken burger with coleslaw" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Crispy Chicken Stack</a></h3>
+                <p class="menu-item__desc">Buttermilk-fried chicken breast, house coleslaw, pickled jalapeño, garlic mayo.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges">
+                  <span class="badge badge--new">New</span>
+                </div>
+                <span class="menu-item__price">$12.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Crispy Chicken Stack to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="4">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=260&q=80" alt="The Mushroom Swiss gourmet burger" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Mushroom Swiss</a></h3>
+                <p class="menu-item__desc">Smash patty, Swiss cheese, sautéed wild mushrooms, Dijon mayo, baby spinach.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges"></div>
+                <span class="menu-item__price">$13.49</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Mushroom Swiss to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: PASTA ===== -->
+    <section class="section" id="pasta" aria-labelledby="pasta-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">
+            <i class="fa-solid fa-bowl-food" aria-hidden="true"></i> Hand-Made
+          </span>
+          <h2 id="pasta-heading">Pasta Dishes</h2>
+          <p>Fresh pasta made in-house daily. Rich sauces crafted from scratch. Comfort food elevated.</p>
+        </header>
+
+        <div class="grid grid--2" data-stagger>
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="1">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=260&q=80" alt="Spaghetti Carbonara with guanciale and egg" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Spaghetti Carbonara</a></h3>
+                <p class="menu-item__desc">Spaghetti, crispy guanciale, egg yolk, pecorino romano, black pepper. Strictly no cream.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges">
+                  <span class="badge badge--popular">Fan Favourite</span>
+                </div>
+                <span class="menu-item__price">$14.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Spaghetti Carbonara to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="2">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=260&q=80" alt="Penne Arrabbiata with chilli and garlic" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Penne Arrabbiata</a></h3>
+                <p class="menu-item__desc">Penne, spicy tomato sauce, garlic, red chilli, fresh parsley, parmesan shavings.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges">
+                  <span class="badge badge--veg">Vegetarian</span>
+                </div>
+                <span class="menu-item__price">$12.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Penne Arrabbiata to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="3">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=260&q=80" alt="Tagliatelle Bolognese with rich meat sauce" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Tagliatelle Bolognese</a></h3>
+                <p class="menu-item__desc">Slow-braised beef ragù, San Marzano tomatoes, fresh tagliatelle, parmesan.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges">
+                  <span class="badge badge--sale">House Special</span>
+                </div>
+                <span class="menu-item__price">$15.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Tagliatelle Bolognese to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-item" data-animate="slide-up" data-animate-delay="4">
+            <div class="menu-item__image-wrap">
+              <img class="menu-item__image" src="https://images.unsplash.com/photo-1611270629569-8b357cb88da9?auto=format&fit=crop&w=260&q=80" alt="Creamy rosé pasta with prawns" loading="lazy" width="260" height="200">
+            </div>
+            <div class="menu-item__body">
+              <div class="menu-item__top">
+                <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Prawn Rosé Linguine</a></h3>
+                <p class="menu-item__desc">Tiger prawns, linguine, tomato cream rosé sauce, garlic, white wine, basil.</p>
+              </div>
+              <div class="menu-item__footer">
+                <div class="menu-item__badges">
+                  <span class="badge badge--new">New</span>
+                </div>
+                <span class="menu-item__price">$17.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Prawn Rosé Linguine to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: SIDES ===== -->
+    <section class="section section--alt" id="sides" aria-labelledby="sides-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">
+            <i class="fa-solid fa-plate-wheat" aria-hidden="true"></i> All the Good Stuff
+          </span>
+          <h2 id="sides-heading">Crispy Sides</h2>
+          <p>The supporting cast that steals the show. Every side is made with the same care as our mains.</p>
+        </header>
+
+        <div class="grid grid--4" data-stagger>
+          <article class="menu-item" style="flex-direction: column;" data-animate="slide-up" data-animate-delay="1">
+            <div class="card__image-wrap">
+              <img class="card__image" src="https://images.unsplash.com/photo-1518013431117-eb1465fa5752?auto=format&fit=crop&w=400&q=80" alt="Golden crispy hand-cut fries" loading="lazy" width="400" height="300">
+            </div>
+            <div class="menu-item__body" style="padding: 16px;">
+              <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Hand-Cut Fries</a></h3>
+              <p class="menu-item__desc">Skin-on, seasoned with sea salt and rosemary.</p>
+              <div class="menu-item__footer" style="margin-top: 10px;">
+                <span class="menu-item__price">$4.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Hand-Cut Fries to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-item" style="flex-direction: column;" data-animate="slide-up" data-animate-delay="2">
+            <div class="card__image-wrap">
+              <img class="card__image" src="https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=400&q=80" alt="Crispy onion rings with dipping sauce" loading="lazy" width="400" height="300">
+            </div>
+            <div class="menu-item__body" style="padding: 16px;">
+              <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Crispy Onion Rings</a></h3>
+              <p class="menu-item__desc">Beer-battered jumbo rings, chipotle dipping sauce.</p>
+              <div class="menu-item__footer" style="margin-top: 10px;">
+                <span class="menu-item__price">$5.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Onion Rings to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-item" style="flex-direction: column;" data-animate="slide-up" data-animate-delay="3">
+            <div class="card__image-wrap">
+              <img class="card__image" src="https://images.unsplash.com/photo-1585325701956-60dd9c8553bc?auto=format&fit=crop&w=400&q=80" alt="Buffalo chicken wings with celery sticks" loading="lazy" width="400" height="300">
+            </div>
+            <div class="menu-item__body" style="padding: 16px;">
+              <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Buffalo Wings (8pc)</a></h3>
+              <p class="menu-item__desc">Crispy wings tossed in spicy buffalo sauce, blue cheese dip.</p>
+              <div class="menu-item__footer" style="margin-top: 10px;">
+                <span class="menu-item__price">$9.99</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Buffalo Wings to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-item" style="flex-direction: column;" data-animate="slide-up" data-animate-delay="4">
+            <div class="card__image-wrap">
+              <img class="card__image" src="https://images.unsplash.com/photo-1541014741259-de529411b96a?auto=format&fit=crop&w=400&q=80" alt="Garlic cheese bread with herbs" loading="lazy" width="400" height="300">
+            </div>
+            <div class="menu-item__body" style="padding: 16px;">
+              <h3 class="menu-item__name"><a href="service-details.html" style="color: inherit; text-decoration: none;">Garlic Cheese Bread</a></h3>
+              <p class="menu-item__desc">Toasted sourdough, roasted garlic butter, mozzarella, herbs.</p>
+              <div class="menu-item__footer" style="margin-top: 10px;">
+                <span class="badge badge--veg" style="font-size: 0.7rem;">Veg</span>
+                <span class="menu-item__price">$5.49</span>
+                <button class="menu-item__add-btn" onclick="document.getElementById('orderBtn').click()" aria-label="Add Garlic Cheese Bread to order">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: DESSERTS ===== -->
+    <section class="section" id="desserts" aria-labelledby="desserts-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">
+            <i class="fa-solid fa-ice-cream" aria-hidden="true"></i> Sweet Endings
+          </span>
+          <h2 id="desserts-heading">Desserts</h2>
+          <p>Because no YUMZ meal is complete without something sweet to finish.</p>
+        </header>
+
+        <div class="grid grid--3" data-stagger>
+          <article class="card" data-animate="slide-up" data-animate-delay="1">
+            <div class="card__image-wrap">
+              <img class="card__image" src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80" alt="Warm Nutella brownie with vanilla ice cream" loading="lazy" width="600" height="450">
+            </div>
+            <div class="card__body">
+              <span class="card__tag">Desserts</span>
+              <h3 class="card__title"><a href="service-details.html" style="color: inherit; text-decoration: none;">Nutella Lava Brownie</a></h3>
+              <p class="card__text">Warm chocolate brownie with molten Nutella centre, served with vanilla gelato.</p>
+              <div class="d-flex align-center" style="justify-content: space-between; margin-top: 12px;">
+                <span class="card__price">$7.99</span>
+                <button class="btn btn--primary" style="padding: 8px 16px; font-size: 0.8125rem;" onclick="document.getElementById('orderBtn').click()">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i> Order
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card" data-animate="slide-up" data-animate-delay="2">
+            <div class="card__image-wrap">
+              <img class="card__image" src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80" alt="New York style cheesecake slice" loading="lazy" width="600" height="450">
+            </div>
+            <div class="card__body">
+              <span class="card__tag">Desserts</span>
+              <h3 class="card__title"><a href="service-details.html" style="color: inherit; text-decoration: none;">NY Baked Cheesecake</a></h3>
+              <p class="card__text">Classic New York baked cheesecake, berry coulis, fresh strawberries, cream.</p>
+              <div class="d-flex align-center" style="justify-content: space-between; margin-top: 12px;">
+                <span class="card__price">$8.49</span>
+                <button class="btn btn--primary" style="padding: 8px 16px; font-size: 0.8125rem;" onclick="document.getElementById('orderBtn').click()">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i> Order
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card" data-animate="slide-up" data-animate-delay="3">
+            <div class="card__image-wrap">
+              <img class="card__image" src="https://images.unsplash.com/photo-1611270629569-8b357cb88da9?auto=format&fit=crop&w=600&q=80" alt="Fresh tiramisu with espresso and mascarpone" loading="lazy" width="600" height="450">
+            </div>
+            <div class="card__body">
+              <span class="card__tag">Desserts</span>
+              <h3 class="card__title"><a href="service-details.html" style="color: inherit; text-decoration: none;">Classic Tiramisu</a></h3>
+              <p class="card__text">Espresso-soaked sponge fingers, mascarpone cream, Dutch cocoa, served chilled.</p>
+              <div class="d-flex align-center" style="justify-content: space-between; margin-top: 12px;">
+                <span class="card__price">$8.99</span>
+                <button class="btn btn--primary" style="padding: 8px 16px; font-size: 0.8125rem;" onclick="document.getElementById('orderBtn').click()">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i> Order
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: DRINKS ===== -->
+    <section class="section section--alt" id="drinks" aria-labelledby="drinks-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">
+            <i class="fa-solid fa-glass-water" aria-hidden="true"></i> Thirst Quenchers
+          </span>
+          <h2 id="drinks-heading">Drinks &amp; Shakes</h2>
+          <p>From fresh-blended milkshakes to hand-crafted lemonades and classic sodas.</p>
+        </header>
+
+        <div class="grid grid--4" data-stagger>
+          <article class="card" data-animate="slide-up" data-animate-delay="1">
+            <div class="card__image-wrap">
+              <img class="card__image" src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=400&q=80" alt="Classic vanilla milkshake with whipped cream" loading="lazy" width="400" height="300">
+            </div>
+            <div class="card__body">
+              <h3 class="card__title"><a href="service-details.html" style="color: inherit; text-decoration: none;">Classic Milkshakes</a></h3>
+              <p class="card__text">Vanilla, chocolate, strawberry, or Oreo. Thick &amp; hand-blended.</p>
+              <span class="card__price">$5.99</span>
+            </div>
+          </article>
+
+          <article class="card" data-animate="slide-up" data-animate-delay="2">
+            <div class="card__image-wrap">
+              <img class="card__image" src="https://images.unsplash.com/photo-1507281549113-040fcfef650e?auto=format&fit=crop&w=400&q=80" alt="Fresh lemonade with mint and ice" loading="lazy" width="400" height="300">
+            </div>
+            <div class="card__body">
+              <h3 class="card__title"><a href="service-details.html" style="color: inherit; text-decoration: none;">Fresh Lemonade</a></h3>
+              <p class="card__text">Freshly squeezed lemons, mint, honey, sparkling or still water.</p>
+              <span class="card__price">$3.99</span>
+            </div>
+          </article>
+
+          <article class="card" data-animate="slide-up" data-animate-delay="3">
+            <div class="card__image-wrap">
+              <img class="card__image" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=400&q=80" alt="Cold brew iced coffee" loading="lazy" width="400" height="300">
+            </div>
+            <div class="card__body">
+              <h3 class="card__title"><a href="service-details.html" style="color: inherit; text-decoration: none;">Cold Brew Coffee</a></h3>
+              <p class="card__text">Slow-steeped 12-hour cold brew, served over ice. Add oat milk on request.</p>
+              <span class="card__price">$4.49</span>
+            </div>
+          </article>
+
+          <article class="card" data-animate="slide-up" data-animate-delay="4">
+            <div class="card__image-wrap">
+              <img class="card__image" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=400&q=80" alt="Sparkling Italian craft sodas selection" loading="lazy" width="400" height="300">
+            </div>
+            <div class="card__body">
+              <h3 class="card__title"><a href="service-details.html" style="color: inherit; text-decoration: none;">Italian Craft Sodas</a></h3>
+              <p class="card__text">Blood orange, elderflower, pomegranate, or classic cola. All natural.</p>
+              <span class="card__price">$3.49</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: ORDERING SERVICES ===== -->
+    <section class="section" id="services" aria-labelledby="services-modes-heading">
+      <div class="container">
+        <header class="section-header text-center" data-animate="slide-up">
+          <span class="section-label">How We Serve You</span>
+          <h2 id="services-modes-heading">Our Service Options</h2>
+          <p>Whether you're dining with us, collecting on your way, or staying home — YUMZ delivers the same exceptional experience.</p>
+        </header>
+
+        <div class="grid grid--3" data-stagger>
+          <article class="service-card" data-animate="slide-up" data-animate-delay="1">
+            <img class="service-card__bg" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=700&q=80" alt="Elegant restaurant dining experience" loading="lazy" width="700" height="500">
+            <div class="service-card__overlay" aria-hidden="true"></div>
+            <div class="service-card__content">
+              <div class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-utensils"></i></div>
+              <h3 class="service-card__title">Dine-In</h3>
+              <p class="service-card__desc">Experience YUMZ fully — comfortable seating, attentive service, and our complete menu including chef's daily specials.</p>
+              <a href="contact.html" class="service-card__link">
+                Get Directions <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="service-card" data-animate="slide-up" data-animate-delay="2">
+            <img class="service-card__bg" src="https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=700&q=80" alt="Fast food delivery on a motorbike" loading="lazy" width="700" height="500">
+            <div class="service-card__overlay" aria-hidden="true"></div>
+            <div class="service-card__content">
+              <div class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-motorcycle"></i></div>
+              <h3 class="service-card__title">Delivery</h3>
+              <p class="service-card__desc">Hot, fresh food delivered to your door in 30 minutes or less. Available within a 5-mile radius of Foodville centre.</p>
+              <a href="tel:+15559863" class="service-card__link">
+                Call to Order <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="service-card" data-animate="slide-up" data-animate-delay="3">
+            <img class="service-card__bg" src="https://images.unsplash.com/photo-1501959915551-4e8d30928317?auto=format&fit=crop&w=700&q=80" alt="Catering setup for a large event" loading="lazy" width="700" height="500">
+            <div class="service-card__overlay" aria-hidden="true"></div>
+            <div class="service-card__content">
+              <div class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-people-group"></i></div>
+              <h3 class="service-card__title">Catering</h3>
+              <p class="service-card__desc">Feeding a crowd? We cater for corporate events, birthdays, weddings, and private parties. Custom menus available.</p>
+              <a href="contact.html" class="service-card__link">
+                Get a Quote <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: BUILD YOUR OWN PIZZA CTA ===== -->
+    <section class="section section--alt" id="build-your-own" aria-labelledby="build-heading">
+      <div class="container">
+        <div class="build-cta" data-animate="fade-in">
+          <div class="build-cta__text">
+            <h2 id="build-heading">Build Your Own Pizza</h2>
+            <p>Can't find exactly what you want? No problem. Call us and speak to our team — we'll build your dream pizza from scratch with any combination of bases, sauces, and toppings you choose.</p>
+            <div class="btn-group mt-3">
+              <a href="tel:+15559863" class="btn btn--outline-white btn--large">
+                <i class="fa-solid fa-phone" aria-hidden="true"></i> Call to Customise
+              </a>
+              <a href="service-details.html" class="btn btn--outline-white">
+                <i class="fa-solid fa-list" aria-hidden="true"></i> View All Toppings
+              </a>
+            </div>
+          </div>
+          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=500&q=80" alt="Chef building a custom pizza with fresh toppings" loading="lazy" width="500" height="360" style="width: 280px; height: 200px; object-fit: cover; border-radius: 16px; flex-shrink: 0;">
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand-wrap">
+          <a href="index.html" class="footer__logo" aria-label="YUMZ — Return to homepage">
+            <svg class="footer__logo-svg" width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="20" cy="20" r="20" fill="#D62828"/>
+              <path d="M12 28V14h3l5 8 5-8h3v14h-3V19l-5 8-5-8v9h-3z" fill="#FFFFFF"/>
+            </svg>
+            <span class="footer__brand-name">YUMZ</span>
+          </a>
+          <p class="footer__tagline">Fresh. Fast. Flavorful.</p>
+        </div>
+      </div>
+      <div class="footer__columns">
+        <div class="footer__col">
+          <h4 class="footer__heading">Quick Links</h4>
+          <ul class="footer__list">
+            <li><a href="index.html" class="footer__link">Home</a></li>
+            <li><a href="about.html" class="footer__link">About</a></li>
+            <li><a href="services.html" class="footer__link">Services</a></li>
+            <li><a href="pricing.html" class="footer__link">Pricing</a></li>
+            <li><a href="blog.html" class="footer__link">Blog</a></li>
+            <li><a href="contact.html" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Contact Info</h4>
+          <ul class="footer__list">
+            <li><a href="tel:+15559863" class="footer__link"><i class="fa-solid fa-phone" aria-hidden="true"></i> +1-555-YUMZ</a></li>
+            <li><a href="mailto:hello@yumz.com" class="footer__link"><i class="fa-solid fa-envelope" aria-hidden="true"></i> hello@yumz.com</a></li>
+            <li><span class="footer__link"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> 123 Flavor Street, Foodville, NY 10001</span></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Opening Hours</h4>
+          <ul class="footer__list">
+            <li><span class="footer__link">Mon–Thu: 11:00 AM – 10:00 PM</span></li>
+            <li><span class="footer__link">Fri–Sat: 11:00 AM – 11:00 PM</span></li>
+            <li><span class="footer__link">Sunday: 12:00 PM – 9:00 PM</span></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Legal</h4>
+          <ul class="footer__list">
+            <li><a href="#" class="footer__link">Privacy Policy</a></li>
+            <li><a href="#" class="footer__link">Terms of Service</a></li>
+            <li><a href="sitemap.xml" class="footer__link">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__social">
+        <a href="#" class="footer__social-btn footer__social-btn--facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--instagram" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--twitter" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn footer__social-btn--whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="footerYear">2024</span> YUMZ Restaurant. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ORDER MODAL -->
+  <div class="order-modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle" aria-hidden="true">
+    <div class="order-modal__overlay" id="orderModalOverlay"></div>
+    <div class="order-modal__content">
+      <button class="order-modal__close" id="orderModalClose" aria-label="Close order options">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <h2 class="order-modal__title" id="orderModalTitle">How Would You Like to Order?</h2>
+      <div class="order-modal__actions">
+        <a href="tel:+15559863" class="order-modal__action-btn">
+          <i class="fa-solid fa-phone" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">Call Now</span><span class="order-modal__action-sub">+1-555-YUMZ</span></div>
+        </a>
+        <a href="contact.html#map-section" class="order-modal__action-btn">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">Find Our Location</span><span class="order-modal__action-sub">123 Flavor Street, Foodville</span></div>
+        </a>
+        <a href="services.html" class="order-modal__action-btn">
+          <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+          <div><span class="order-modal__action-label">View Full Menu</span><span class="order-modal__action-sub">Browse all dishes &amp; combos</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Close image viewer">
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="">
+  </div>
+
+  <script>
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    // Sticky menu tabs — scroll to section on click
+    document.querySelectorAll('.menu-tabs__btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabId = btn.getAttribute('data-menu-tab');
+        const target = document.getElementById(tabId);
+        if (!target) return;
+
+        document.querySelectorAll('.menu-tabs__btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const navbarH   = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navbar-h'), 10) || 72;
+        const tabsH     = document.getElementById('menuTabs').offsetHeight || 64;
+        const top       = target.getBoundingClientRect().top + window.scrollY - navbarH - tabsH - 16;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+
+    // Highlight active tab on scroll
+    const sections   = ['pizzas','burgers','pasta','sides','desserts','drinks','services'].map(id => document.getElementById(id));
+    const tabButtons = document.querySelectorAll('.menu-tabs__btn');
+
+    window.addEventListener('scroll', () => {
+      const navbarH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navbar-h'), 10) || 72;
+      const tabsH   = document.getElementById('menuTabs')?.offsetHeight || 64;
+      const scrollY = window.scrollY + navbarH + tabsH + 40;
+
+      let current = 0;
+      sections.forEach((sec, i) => {
+        if (sec && sec.offsetTop <= scrollY) current = i;
+      });
+
+      tabButtons.forEach(b => b.classList.remove('active'));
+      if (tabButtons[current]) tabButtons[current].classList.add('active');
+    }, { passive: true });
+  </script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/validation.js"></script>
+</body>
+</html>
