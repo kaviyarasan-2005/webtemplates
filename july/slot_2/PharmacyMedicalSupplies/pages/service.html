@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MediCare Plus Services — Home delivery, prescription filling, health consultations, medical equipment rental, baby care and vaccination services.">
+    <title>Services | MediCare Plus Pharmacy</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .service-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: all var(--transition-normal);
+        }
+        .service-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-xl); border-color: var(--primary); }
+        .service-card-img { height: 200px; overflow: hidden; }
+        .service-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .service-card:hover .service-card-img img { transform: scale(1.07); }
+        .service-card-body { padding: 28px; }
+        .service-card-icon {
+            width: 52px; height: 52px;
+            border-radius: var(--radius-md);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 32px 24px;
+            position: relative;
+        }
+        .process-step-num {
+            width: 64px; height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: var(--shadow-green);
+        }
+        .process-connector {
+            position: absolute;
+            top: 64px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: 0;
+        }
+
+        .spec-table { width: 100%; border-collapse: collapse; }
+        .spec-table th {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            padding: 14px 20px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .spec-table td {
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .spec-table td:first-child { font-weight: 600; color: var(--text-primary); }
+
+        @media (max-width: 1024px) {
+            .process-connector { display: none; }
+        }
+        @media (max-width: 640px) {
+            .service-card-body { padding: 20px; }
+            .service-card-img { height: 170px; }
+            .process-step { padding: 24px 16px; }
+            .spec-table th, .spec-table td { padding: 10px 12px; font-size: 0.82rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header" role="banner">
+        <div class="container header-container">
+            <a href="../index.html" class="logo" aria-label="MediCare Plus Home">
+                <div class="logo-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></div>
+                <div>
+                    <div class="logo-text"><span>Medi</span><span>Care</span></div>
+                    <span class="logo-tagline">Pharmacy &amp; Medical Supplies</span>
+                </div>
+            </a>
+            <nav class="nav-menu" id="nav-menu" role="navigation" aria-label="Main Navigation">
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link" aria-haspopup="true">Home <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></a>
+                    <div class="dropdown-menu" role="menu">
+                        <a href="../index.html" class="dropdown-item" role="menuitem">Home 1</a>
+                        <a href="home2.html" class="dropdown-item" role="menuitem">Home 2</a>
+                    </div>
+                </div>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="service.html" class="nav-link active">Service</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="pricing.html" class="nav-link">Pricing</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark/Light Mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+                <button id="dir-toggle" class="icon-btn" aria-label="Toggle RTL/LTR"><span class="dir-badge">RTL</span></button>
+                <button id="mobile-menu-btn" class="icon-btn mobile-toggle" aria-label="Toggle Menu" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO HEADER -->
+    <section class="hero-page-header" style="background-image:url('../assets/images/service-hero.png');" aria-labelledby="service-hero-title">
+        <div class="container">
+            <h1 id="service-hero-title">Our Pharmacy Services</h1>
+            <p>Comprehensive healthcare services designed to make your health journey easier, safer, and more convenient.</p>
+            <nav class="hero-breadcrumb" aria-label="Breadcrumb">
+                <a href="../index.html">Home</a>
+                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                <span aria-current="page">Service</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- SERVICES GRID -->
+    <section aria-labelledby="services-title">
+        <div class="container">
+            <div class="section-title reveal">
+                <div class="eyebrow"><i class="fa-solid fa-grid-2" aria-hidden="true"></i> What We Offer</div>
+                <h2 id="services-title">All Pharmacy Services</h2>
+                <p>From filling your prescription to delivering medical devices at home — we provide end-to-end healthcare solutions.</p>
+            </div>
+            <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:28px;">
+                <!-- Service 1 -->
+                <div class="service-card reveal">
+                    <div class="service-card-img">
+                        <img src="../assets/images/medicines.png" alt="Prescription Medicine Service" loading="lazy">
+                    </div>
+                    <div class="service-card-body">
+                        <div class="service-card-icon feature-icon-green"><i class="fa-solid fa-pills" aria-hidden="true"></i></div>
+                        <h3 class="card-title">Prescription Dispensing</h3>
+                        <p style="font-size:0.9rem; margin-bottom:16px;">Upload your doctor's prescription and receive precisely dispensed, verified medicines. Our pharmacists check every order for drug interactions and correct dosage.</p>
+                        <ul style="margin-bottom:20px;">
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);margin-bottom:8px;"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Licensed pharmacist verification</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);margin-bottom:8px;"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Drug interaction check</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Digital prescription record keeping</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-outline" style="width:100%;">
+                            <i class="fa-solid fa-file-medical" aria-hidden="true"></i> Upload Prescription
+                        </a>
+                    </div>
+                </div>
+                <!-- Service 2 -->
+                <div class="service-card reveal">
+                    <div class="service-card-img">
+                        <img src="https://images.unsplash.com/photo-1609587312208-cea54be969e7?auto=format&fit=crop&w=600&q=80" alt="Home Delivery Service" loading="lazy">
+                    </div>
+                    <div class="service-card-body">
+                        <div class="service-card-icon feature-icon-blue"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i></div>
+                        <h3 class="card-title">Home Delivery</h3>
+                        <p style="font-size:0.9rem; margin-bottom:16px;">Express 2-hour delivery within city limits. Cold chain maintained for insulin, biologics, and temperature-sensitive medicines. 200+ cities covered.</p>
+                        <ul style="margin-bottom:20px;">
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);margin-bottom:8px;"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> 2-hour express delivery</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);margin-bottom:8px;"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> WHO cold chain certified</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Real-time SMS tracking</li>
+                        </ul>
+                        <a href="pricing.html" class="btn btn-outline" style="width:100%;">
+                            <i class="fa-solid fa-tags" aria-hidden="true"></i> View Delivery Plans
+                        </a>
+                    </div>
+                </div>
+                <!-- Service 3 -->
+                <div class="service-card reveal">
+                    <div class="service-card-img">
+                        <img src="https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?auto=format&fit=crop&w=600&q=80" alt="Health Consultation" loading="lazy">
+                    </div>
+                    <div class="service-card-body">
+                        <div class="service-card-icon" style="background:#FEF3C7;color:#D97706;"><i class="fa-solid fa-user-doctor" aria-hidden="true"></i></div>
+                        <h3 class="card-title">Pharmacist Consultation</h3>
+                        <p style="font-size:0.9rem; margin-bottom:16px;">Chat or video call with our licensed pharmacists for medication queries, dosage guidance, drug interaction checks, and over-the-counter recommendations.</p>
+                        <ul style="margin-bottom:20px;">
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);margin-bottom:8px;"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Available 24/7</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);margin-bottom:8px;"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Chat, call, or video session</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Free for Premium members</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-outline" style="width:100%;">
+                            <i class="fa-solid fa-headset" aria-hidden="true"></i> Book Consultation
+                        </a>
+                    </div>
+                </div>
+                <!-- Service 4 -->
+                <div class="service-card reveal">
+                    <div class="service-card-img">
+                        <img src="../assets/images/medical-devices.png" alt="Medical Equipment Rental" loading="lazy">
+                    </div>
+                    <div class="service-card-body">
+                        <div class="service-card-icon" style="background:#EDE9FE;color:#7C3AED;"><i class="fa-solid fa-stethoscope" aria-hidden="true"></i></div>
+                        <h3 class="card-title">Medical Equipment Rental</h3>
+                        <p style="font-size:0.9rem; margin-bottom:16px;">Rent medical equipment like oxygen concentrators, nebulizers, hospital beds, and wheelchairs for short-term recovery and home care needs.</p>
+                        <ul style="margin-bottom:20px;">
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);margin-bottom:8px;"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Sanitized equipment</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);margin-bottom:8px;"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Weekly, monthly rental plans</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Home setup included</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-outline" style="width:100%;">
+                            <i class="fa-solid fa-phone" aria-hidden="true"></i> Enquire Now
+                        </a>
+                    </div>
+                </div>
+                <!-- Service 5 -->
+                <div class="service-card reveal">
+                    <div class="service-card-img">
+                        <img src="../assets/images/baby-care.png" alt="Baby Care Service" loading="lazy">
+                    </div>
+                    <div class="service-card-body">
+                        <div class="service-card-icon" style="background:#FEF3C7;color:#D97706;"><i class="fa-solid fa-baby" aria-hidden="true"></i></div>
+                        <h3 class="card-title">Pediatric &amp; Baby Care</h3>
+                        <p style="font-size:0.9rem; margin-bottom:16px;">Specialized pediatric medicine dispensing, infant formula, baby vitamins, diaper care, and parenting health products curated by certified pediatric pharmacists.</p>
+                        <ul style="margin-bottom:20px;">
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);margin-bottom:8px;"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Pediatric dosing expertise</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);margin-bottom:8px;"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Formula &amp; nutrition guidance</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Age-appropriate product matching</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-outline" style="width:100%;">
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+                <!-- Service 6 -->
+                <div class="service-card reveal">
+                    <div class="service-card-img">
+                        <img src="../assets/images/vitamins.png" alt="Vaccination Service" loading="lazy">
+                    </div>
+                    <div class="service-card-body">
+                        <div class="service-card-icon" style="background:#FFE4E6;color:#E11D48;"><i class="fa-solid fa-syringe" aria-hidden="true"></i></div>
+                        <h3 class="card-title">Vaccination &amp; Immunization</h3>
+                        <p style="font-size:0.9rem; margin-bottom:16px;">Schedule flu shots, travel vaccines, COVID boosters, and routine immunizations at our pharmacy. Walk-ins welcome; appointments available online.</p>
+                        <ul style="margin-bottom:20px;">
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);margin-bottom:8px;"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> WHO-approved vaccines only</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);margin-bottom:8px;"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Digital vaccination certificate</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-secondary);"><i class="fa-solid fa-check" style="color:var(--primary);" aria-hidden="true"></i> Walk-in or appointment</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-outline" style="width:100%;">
+                            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Book Appointment
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DELIVERY SPECS TABLE -->
+    <section style="background:var(--bg-surface); border-top:1px solid var(--border-color);" aria-labelledby="delivery-specs-title">
+        <div class="container">
+            <div class="section-title reveal">
+                <div class="eyebrow"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i> Delivery Details</div>
+                <h2 id="delivery-specs-title">Delivery Plans &amp; Coverage</h2>
+                <p>Compare our delivery tiers to find what works best for your healthcare needs.</p>
+            </div>
+            <div style="overflow-x:auto; border-radius:var(--radius-lg); box-shadow:var(--shadow-md); border:1px solid var(--border-color);" class="reveal">
+                <table class="spec-table" aria-label="Delivery Plans Comparison">
+                    <thead>
+                        <tr>
+                            <th scope="col">Feature</th>
+                            <th scope="col">Standard Delivery</th>
+                            <th scope="col">Express Delivery</th>
+                            <th scope="col">Emergency / 24hr</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Delivery Time</td>
+                            <td>4–6 Hours</td>
+                            <td>2 Hours</td>
+                            <td>45–90 Minutes</td>
+                        </tr>
+                        <tr>
+                            <td>Coverage</td>
+                            <td>200+ Cities</td>
+                            <td>50+ Cities</td>
+                            <td>10+ Metro Areas</td>
+                        </tr>
+                        <tr>
+                            <td>Cold Chain</td>
+                            <td>Selected items</td>
+                            <td>All sensitive medicines</td>
+                            <td>Full cold chain</td>
+                        </tr>
+                        <tr>
+                            <td>Order Minimum</td>
+                            <td>$10</td>
+                            <td>$15</td>
+                            <td>$25</td>
+                        </tr>
+                        <tr>
+                            <td>Delivery Fee</td>
+                            <td>Free above $50</td>
+                            <td>$2.99</td>
+                            <td>$5.99</td>
+                        </tr>
+                        <tr>
+                            <td>Pharmacist Call</td>
+                            <td>On request</td>
+                            <td>On request</td>
+                            <td>Proactive call included</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section aria-labelledby="hiw-service-title">
+        <div class="container">
+            <div class="section-title reveal">
+                <div class="eyebrow"><i class="fa-solid fa-list-ol" aria-hidden="true"></i> The Process</div>
+                <h2 id="hiw-service-title">How Our Services Work</h2>
+                <p>Getting healthcare delivered is simple. Follow these steps for a seamless experience.</p>
+            </div>
+            <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:24px;">
+                <div class="process-step reveal">
+                    <div class="process-step-num" aria-label="Step 1">1</div>
+                    <h4 style="margin-bottom:8px;">Search Products</h4>
+                    <p style="font-size:0.875rem;">Browse or search our catalog of 15,000+ healthcare products by name, condition, or category.</p>
+                </div>
+                <div class="process-step reveal">
+                    <div class="process-step-num" aria-label="Step 2">2</div>
+                    <h4 style="margin-bottom:8px;">Upload Prescription</h4>
+                    <p style="font-size:0.875rem;">For Rx medicines, upload your prescription photo. Our pharmacist verifies it within minutes.</p>
+                </div>
+                <div class="process-step reveal">
+                    <div class="process-step-num" aria-label="Step 3">3</div>
+                    <h4 style="margin-bottom:8px;">Secure Payment</h4>
+                    <p style="font-size:0.875rem;">Pay via card, UPI, or cash on delivery. All transactions are encrypted and secure.</p>
+                </div>
+                <div class="process-step reveal">
+                    <div class="process-step-num" aria-label="Step 4">4</div>
+                    <h4 style="margin-bottom:8px;">Track &amp; Receive</h4>
+                    <p style="font-size:0.875rem;">Track your order live on the app. Receive medicines in tamper-proof packaging at your door.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section style="background:var(--bg-surface); border-top:1px solid var(--border-color);" aria-labelledby="faq-service-title">
+        <div class="container">
+            <div class="section-title reveal">
+                <div class="eyebrow"><i class="fa-solid fa-circle-question" aria-hidden="true"></i> FAQ</div>
+                <h2 id="faq-service-title">Frequently Asked Questions</h2>
+                <p>Have questions about our services? Find quick answers below.</p>
+            </div>
+            <div style="max-width:800px; margin:0 auto;">
+                <div class="faq-item reveal">
+                    <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+                        How do I upload a prescription?
+                        <div class="faq-icon" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer" role="region">Take a clear photo of your doctor's prescription showing the doctor's name, date, patient details, and medicine names. Upload it during checkout or use our Contact page's prescription form. Our pharmacist verifies it within 15–30 minutes.</div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+                        Are all medicines genuine and FDA-approved?
+                        <div class="faq-icon" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer" role="region">Yes. Every product in our inventory is sourced directly from licensed manufacturers and authorized distributors. We are an FDA-licensed pharmacy and conduct regular audits to ensure 100% authenticity of all medicines.</div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+                        Can I rent medical equipment for home use?
+                        <div class="faq-icon" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer" role="region">Absolutely. We offer weekly and monthly rental plans for oxygen concentrators, nebulizers, hospital beds, wheelchairs, crutches, and more. Equipment is sanitized and delivered with setup included. Call us to check availability in your area.</div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+                        How does the cold chain delivery work for insulin?
+                        <div class="faq-icon" aria-hidden="true"></i><i class="fa-solid fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer" role="region">Temperature-sensitive medicines like insulin are stored in our WHO-GDP certified cold storage at 2–8°C. During delivery, they are placed in insulated pouches with gel packs to maintain the correct temperature throughout transit. You'll receive a temperature log with your delivery.</div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+                        Can I get a vaccine at the pharmacy walk-in?
+                        <div class="faq-icon" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer" role="region">Yes, walk-ins are welcome at our physical pharmacy location during store hours. You can also book an appointment online for flu shots, COVID boosters, travel vaccines, and routine immunizations. A digital vaccination certificate is issued immediately after.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="background:linear-gradient(135deg,var(--primary),var(--accent)); padding:72px 0; text-align:center;" aria-labelledby="service-cta-title">
+        <div class="container reveal">
+            <h2 id="service-cta-title" style="color:#fff; margin-bottom:12px;">Ready to Get Started?</h2>
+            <p style="color:rgba(255,255,255,0.85); margin-bottom:32px; max-width:560px; margin-inline:auto;">Order medicines online or upload your prescription. Our pharmacists are standing by to help.</p>
+            <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                <a href="contact.html" class="btn btn-outline-white btn-lg">
+                    <i class="fa-solid fa-file-medical" aria-hidden="true"></i> Upload Prescription
+                </a>
+                <a href="contact.html" class="btn btn-lg" style="background:#fff; color:var(--primary);">
+                    <i class="fa-solid fa-phone" aria-hidden="true"></i> Call a Pharmacist
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="../index.html" class="logo footer-logo" aria-label="MediCare Plus Home">
+                        <div class="logo-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></div>
+                        <div>
+                            <div class="logo-text"><span>Medi</span><span>Care</span></div>
+                            <span class="logo-tagline" style="color:rgba(255,255,255,0.45);">Pharmacy &amp; Medical Supplies</span>
+                        </div>
+                    </a>
+                    <p class="footer-desc">Your government-licensed online pharmacy. Delivering genuine medicines and healthcare products since 2005.</p>
+                    <div class="footer-social" aria-label="Social Media Links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+                        <a href="#" class="social-link" aria-label="YouTube"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> About Us</a></li>
+                        <li><a href="service.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Our Services</a></li>
+                        <li><a href="pricing.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Pricing Plans</a></li>
+                        <li><a href="blog.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Health Blog</a></li>
+                        <li><a href="contact.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Categories</h4>
+                    <ul class="footer-links">
+                        <li><a href="service.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Prescription Medicines</a></li>
+                        <li><a href="service.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Vitamins &amp; Supplements</a></li>
+                        <li><a href="service.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Baby Care</a></li>
+                        <li><a href="service.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Medical Devices</a></li>
+                        <li><a href="service.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Personal Care</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact Info</h4>
+                    <div class="footer-contact-item"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>123 Health Avenue, Medical District, New York, NY 10001</span></div>
+                    <div class="footer-contact-item"><i class="fa-solid fa-phone" aria-hidden="true"></i><a href="tel:+18005554334" style="color:#94A3B8;">+1 (800) 555-MEDI</a></div>
+                    <div class="footer-contact-item"><i class="fa-solid fa-envelope" aria-hidden="true"></i><a href="mailto:care@medicareplus.com" style="color:#94A3B8;">care@medicareplus.com</a></div>
+                    <div class="footer-contact-item"><i class="fa-solid fa-clock" aria-hidden="true"></i><span>Mon–Fri: 8AM–10PM</span></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MediCare Plus. All rights reserved. | Licensed Pharmacy #NY-PHARM-2005 | <a href="#" style="color:var(--primary);">Privacy Policy</a> | <a href="#" style="color:var(--primary);">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

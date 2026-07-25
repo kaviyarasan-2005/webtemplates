@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MediCare Plus — Your trusted pharmacy & medical supplies store. Order medicines, vitamins, baby care & medical devices online with home delivery.">
+    <meta name="keywords" content="pharmacy, medical supplies, medicines, vitamins, baby care, home delivery, prescription">
+    <title>MediCare Plus | Pharmacy & Medical Supplies</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ---- Hero Section ---- */
+        .hero {
+            min-height: 92vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 40%, #0B2A1A 100%);
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('assets/images/hero.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.22;
+            transition: opacity 0.3s;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(22,163,74,0.18) 60%, rgba(37,99,235,0.1) 100%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+        }
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(22,163,74,0.15);
+            border: 1px solid rgba(22,163,74,0.35);
+            color: #4ADE80;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: clamp(2.2rem, 6vw, 3.6rem);
+            line-height: 1.15;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .hero h1 .highlight { color: #4ADE80; }
+        .hero p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.75;
+            margin-bottom: 36px;
+            max-width: 580px;
+        }
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-stats {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            margin-top: 56px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .hero-stat-num {
+            font-family: 'Nunito', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #4ADE80;
+            line-height: 1;
+        }
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 4px;
+        }
+
+        /* ---- Trust Bar ---- */
+        .trust-bar {
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+        }
+        .trust-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        .trust-item i { color: var(--primary); font-size: 1.1rem; }
+
+        /* ---- Category Cards ---- */
+        .category-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+        .category-card-img {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+        .category-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .category-card:hover .category-card-img img { transform: scale(1.07); }
+        .category-card-body { padding: 24px; }
+        .category-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 14px;
+        }
+        .category-count { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+
+        /* ---- Delivery Section ---- */
+        .delivery-card {
+            background: linear-gradient(135deg, var(--primary), var(--clr-green-700));
+            color: #fff;
+            border-radius: var(--radius-xl);
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        .delivery-card::before {
+            content: '';
+            position: absolute;
+            right: -60px; top: -60px;
+            width: 280px; height: 280px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+        }
+        .delivery-card::after {
+            content: '';
+            position: absolute;
+            right: 60px; bottom: -80px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+        }
+        .delivery-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .delivery-feature-icon {
+            width: 44px; height: 44px;
+            background: rgba(255,255,255,0.15);
+            border-radius: var(--radius-md);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        /* ---- Prescription Upload ---- */
+        .rx-banner {
+            background: linear-gradient(135deg, var(--clr-slate-900) 0%, #1a2744 100%);
+            border-radius: var(--radius-xl);
+            padding: 56px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .rx-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('assets/images/hero.png') center/cover no-repeat;
+            opacity: 0.08;
+        }
+
+        /* ---- Store Timings ---- */
+        .timing-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+        .timing-row:last-child { border-bottom: none; }
+        .timing-day { font-weight: 600; color: var(--text-primary); }
+        .timing-hours { color: var(--text-secondary); }
+        .timing-badge-open {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 9999px;
+        }
+        .timing-badge-closed {
+            background: #FEE2E2;
+            color: #DC2626;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 9999px;
+        }
+        [data-theme="dark"] .timing-badge-closed { background: rgba(220,38,38,0.15); }
+
+        /* ---- Testimonials ---- */
+        .testimonial-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            position: relative;
+        }
+        .testimonial-quote-icon {
+            position: absolute;
+            top: 20px; right: 24px;
+            font-size: 3rem;
+            color: var(--primary-light);
+            line-height: 1;
+        }
+        [dir="rtl"] .testimonial-quote-icon { right: auto; left: 24px; }
+        .stars { color: #F59E0B; font-size: 0.9rem; margin-bottom: 12px; }
+        .reviewer-avatar {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
+        /* ---- Products ---- */
+        .product-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+        .product-img { height: 200px; overflow: hidden; position: relative; }
+        .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .product-card:hover .product-img img { transform: scale(1.06); }
+        .product-body { padding: 20px; }
+        .product-price {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        .product-old-price {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-left: 6px;
+        }
+        .product-tag {
+            position: absolute;
+            top: 12px; left: 12px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 9999px;
+        }
+
+        /* ---- Newsletter ---- */
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: #fff;
+            padding: 72px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .delivery-card { padding: 32px 20px; }
+            .rx-banner { padding: 36px 20px; }
+            .hero-content { max-width: 100%; }
+            .hero p { max-width: 100%; }
+            .category-card-img { height: 180px; }
+        }
+        @media (max-width: 640px) {
+            .hero { min-height: auto; padding: 100px 0 60px; }
+            .hero-stats { gap: 16px; flex-wrap: wrap; }
+            .hero-stat-num { font-size: 1.4rem; }
+            .hero-actions { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .hero-actions .btn { width: 100%; max-width: 300px; justify-content: center; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 0.95rem; }
+            .trust-items { justify-content: flex-start; gap: 8px; }
+            .trust-item { font-size: 0.78rem; }
+            .delivery-card { padding: 24px 16px; }
+            .rx-banner { padding: 28px 16px; }
+            .category-card-img { height: 160px; }
+            .testimonial-card { padding: 20px; }
+            .timing-row { flex-wrap: wrap; gap: 4px; }
+        }
+        @media (max-width: 400px) {
+            .hero h1 { font-size: 1.5rem; }
+            .hero-actions .btn { max-width: 100%; }
+            .hero-stat-num { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===================== HEADER ===================== -->
+    <header class="header" role="banner">
+        <div class="container header-container">
+            <a href="index.html" class="logo" aria-label="MediCare Plus Home">
+                <div class="logo-icon" aria-hidden="true">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <div>
+                    <div class="logo-text">
+                        <span>Medi</span><span>Care</span>
+                    </div>
+                    <span class="logo-tagline">Pharmacy &amp; Medical Supplies</span>
+                </div>
+            </a>
+
+            <nav class="nav-menu" id="nav-menu" role="navigation" aria-label="Main Navigation">
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link active" aria-haspopup="true" aria-expanded="false">
+                        Home <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu" role="menu">
+                        <a href="index.html" class="dropdown-item" role="menuitem">Home 1</a>
+                        <a href="pages/home2.html" class="dropdown-item" role="menuitem">Home 2</a>
+                    </div>
+                </div>
+                <a href="pages/about.html" class="nav-link">About</a>
+                <a href="pages/service.html" class="nav-link">Service</a>
+                <a href="pages/blog.html" class="nav-link">Blog</a>
+                <a href="pages/pricing.html" class="nav-link">Pricing</a>
+                <a href="pages/contact.html" class="nav-link">Contact</a>
+            </nav>
+
+            <div class="header-actions">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark/Light Mode">
+                    <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                </button>
+                <button id="dir-toggle" class="icon-btn" aria-label="Toggle RTL/LTR">
+                    <span class="dir-badge">RTL</span>
+                </button>
+                <button id="mobile-menu-btn" class="icon-btn mobile-toggle" aria-label="Toggle Menu" aria-expanded="false" aria-controls="nav-menu">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" aria-label="Hero">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <div class="container">
+            <div class="hero-content reveal">
+                <div class="hero-eyebrow">
+                    <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                    Trusted by 50,000+ Patients
+                </div>
+                <h1>Your Health Is Our <span class="highlight">Priority</span></h1>
+                <p>MediCare Plus delivers genuine medicines, vitamins, baby care essentials, and medical devices right to your door. Fast, reliable, and government-licensed.</p>
+                <div class="hero-actions">
+                    <a href="pages/service.html" class="btn btn-primary btn-lg">
+                        <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+                        Shop Products
+                    </a>
+                    <a href="pages/contact.html" class="btn btn-outline-white btn-lg">
+                        <i class="fa-solid fa-file-medical" aria-hidden="true"></i>
+                        Upload Prescription
+                    </a>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="reveal">
+                    <div class="hero-stat-num">15K+</div>
+                    <div class="hero-stat-label">Products Available</div>
+                </div>
+                <div class="reveal">
+                    <div class="hero-stat-num">50K+</div>
+                    <div class="hero-stat-label">Happy Patients</div>
+                </div>
+                <div class="reveal">
+                    <div class="hero-stat-num">2 Hrs</div>
+                    <div class="hero-stat-label">Express Delivery</div>
+                </div>
+                <div class="reveal">
+                    <div class="hero-stat-num">100%</div>
+                    <div class="hero-stat-label">Genuine Medicines</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== TRUST BAR ===================== -->
+    <div class="trust-bar" role="complementary" aria-label="Certifications">
+        <div class="container">
+            <div class="trust-items">
+                <div class="trust-item">
+                    <i class="fa-solid fa-certificate" aria-hidden="true"></i>
+                    <span>FDA Approved Store</span>
+                </div>
+                <div class="trust-item">
+                    <i class="fa-solid fa-award" aria-hidden="true"></i>
+                    <span>ISO 9001:2015 Certified</span>
+                </div>
+                <div class="trust-item">
+                    <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                    <span>Secure Online Payments</span>
+                </div>
+                <div class="trust-item">
+                    <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+                    <span>Free Delivery Above $50</span>
+                </div>
+                <div class="trust-item">
+                    <i class="fa-solid fa-headset" aria-hidden="true"></i>
+                    <span>24/7 Pharmacist Support</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== PRODUCT CATEGORIES ===================== -->
+    <section aria-labelledby="categories-title">
+        <div class="container">
+            <div class="section-title reveal">
+                <div class="eyebrow"><i class="fa-solid fa-grid-2" aria-hidden="true"></i> Product Range</div>
+                <h2 id="categories-title">Explore Our Categories</h2>
+                <p>From prescription medicines to wellness essentials, we stock everything your family needs under one roof.</p>
+            </div>
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px;">
+                <a href="pages/service.html" class="category-card reveal" aria-label="Medicines category">
+                    <div class="category-card-img">
+                        <img src="assets/images/medicines.png" alt="Prescription and OTC medicines" loading="lazy">
+                    </div>
+                    <div class="category-card-body">
+                        <div class="category-card-icon feature-icon-green">
+                            <i class="fa-solid fa-pills" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title">Medicines</h3>
+                        <p style="font-size:0.9rem; margin-bottom:8px;">Prescription, OTC, and generic medicines with full quality assurance.</p>
+                        <span class="category-count">4,200+ Products</span>
+                    </div>
+                </a>
+
+                <a href="pages/service.html" class="category-card reveal" aria-label="Vitamins & Supplements category">
+                    <div class="category-card-img">
+                        <img src="assets/images/vitamins.png" alt="Vitamins and nutritional supplements" loading="lazy">
+                    </div>
+                    <div class="category-card-body">
+                        <div class="category-card-icon feature-icon-blue">
+                            <i class="fa-solid fa-leaf" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title">Vitamins &amp; Supplements</h3>
+                        <p style="font-size:0.9rem; margin-bottom:8px;">Nutritional supplements, multivitamins, and herbal wellness products.</p>
+                        <span class="category-count">3,800+ Products</span>
+                    </div>
+                </a>
+
+                <a href="pages/service.html" class="category-card reveal" aria-label="Baby Care category">
+                    <div class="category-card-img">
+                        <img src="assets/images/baby-care.png" alt="Baby care and infant products" loading="lazy">
+                    </div>
+                    <div class="category-card-body">
+                        <div class="category-card-icon" style="background:#FEF3C7; color:#D97706;">
+                            <i class="fa-solid fa-baby" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title">Baby Care</h3>
+                        <p style="font-size:0.9rem; margin-bottom:8px;">Pediatric medicines, baby food, diapers, and infant care essentials.</p>
+                        <span class="category-count">2,100+ Products</span>
+                    </div>
+                </a>
+
+                <a href="pages/service.html" class="category-card reveal" aria-label="Medical Devices category">
+                    <div class="category-card-img">
+                        <img src="assets/images/medical-devices.png" alt="Medical devices and monitoring equipment" loading="lazy">
+                    </div>
+                    <div class="category-card-body">
+                        <div class="category-card-icon" style="background:#EDE9FE; color:#7C3AED;">
+                            <i class="fa-solid fa-stethoscope" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title">Medical Devices</h3>
+                        <p style="font-size:0.9rem; margin-bottom:8px;">BP monitors, glucometers, oximeters, nebulizers, and more.</p>
+                        <span class="category-count">1,500+ Products</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== HOME DELIVERY INFO ===================== -->
+    <section style="background-color: var(--bg-surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);" aria-labelledby="delivery-title">
+        <div class="container">
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: center; gap: 56px;">
+                <div class="reveal">
+                    <div class="section-title" style="text-align:left; margin-bottom: var(--space-8);">
+                        <div class="eyebrow"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i> Doorstep Delivery</div>
+                        <h2 id="delivery-title" style="text-align:left;">Medicine Delivered to Your Home</h2>
+                        <p style="text-align:left;">Skip the pharmacy queue. Order online and receive your medicines fast — cold-chain maintained for temperature-sensitive products.</p>
+                    </div>
+                    <div class="delivery-feature">
+                        <div class="delivery-feature-icon" style="background:var(--primary-light); color:var(--primary);">
+                            <i class="fa-solid fa-clock" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom:4px;">Express 2-Hour Delivery</h4>
+                            <p style="font-size:0.9rem;">Available within city limits. Order before 4 PM for same-day delivery.</p>
+                        </div>
+                    </div>
+                    <div class="delivery-feature">
+                        <div class="delivery-feature-icon" style="background:var(--accent-light); color:var(--accent);">
+                            <i class="fa-solid fa-snowflake" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom:4px;">Cold Chain Packaging</h4>
+                            <p style="font-size:0.9rem;">Insulin, biologics, and refrigerated medicines delivered in temperature-controlled bags.</p>
+                        </div>
+                    </div>
+                    <div class="delivery-feature">
+                        <div class="delivery-feature-icon" style="background:#FEF3C7; color:#D97706;">
+                            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom:4px;">Real-Time Tracking</h4>
+                            <p style="font-size:0.9rem;">Track your order live. Receive SMS and email updates at every stage.</p>
+                        </div>
+                    </div>
+                    <a href="pages/service.html" class="btn btn-primary" style="margin-top:16px;">
+                        <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+                        Learn About Delivery
+                    </a>
+                </div>
+
+                <div class="delivery-card reveal">
+                    <h3 style="color:#fff; margin-bottom: 24px; font-size:1.5rem;">Delivery Coverage</h3>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; position:relative; z-index:1;">
+                        <div style="background:rgba(255,255,255,0.1); border-radius:12px; padding:20px; text-align:center;">
+                            <div style="font-size:1.75rem; font-weight:800; color:#fff; font-family:'Nunito',sans-serif;">2 hrs</div>
+                            <div style="font-size:0.8rem; color:rgba(255,255,255,0.7); margin-top:4px;">Express Delivery</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.1); border-radius:12px; padding:20px; text-align:center;">
+                            <div style="font-size:1.75rem; font-weight:800; color:#fff; font-family:'Nunito',sans-serif;">Free</div>
+                            <div style="font-size:0.8rem; color:rgba(255,255,255,0.7); margin-top:4px;">Orders above $50</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.1); border-radius:12px; padding:20px; text-align:center;">
+                            <div style="font-size:1.75rem; font-weight:800; color:#fff; font-family:'Nunito',sans-serif;">200+</div>
+                            <div style="font-size:0.8rem; color:rgba(255,255,255,0.7); margin-top:4px;">Cities Covered</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.1); border-radius:12px; padding:20px; text-align:center;">
+                            <div style="font-size:1.75rem; font-weight:800; color:#fff; font-family:'Nunito',sans-serif;">24/7</div>
+                            <div style="font-size:0.8rem; color:rgba(255,255,255,0.7); margin-top:4px;">Emergency Orders</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:28px; padding:16px; background:rgba(255,255,255,0.1); border-radius:10px; position:relative; z-index:1;">
+                        <p style="color:rgba(255,255,255,0.85); font-size:0.9rem; margin:0; text-align:center;">
+                            <i class="fa-solid fa-circle-info" style="margin-right:8px;" aria-hidden="true"></i>
+                            Upload prescription and get medicines delivered within 2 hours
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== PRESCRIPTION UPLOAD CTA ===================== -->
+    <section aria-labelledby="rx-title">
+        <div class="container">
+            <div class="rx-banner reveal">
+                <div style="position:relative; z-index:1;">
+                    <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(37,99,235,0.2); border:1px solid rgba(37,99,235,0.4); color:#93C5FD; font-size:0.8rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:6px 16px; border-radius:9999px; margin-bottom:20px;">
+                        <i class="fa-solid fa-file-medical" aria-hidden="true"></i>
+                        Prescription Service
+                    </span>
+                    <h2 id="rx-title" style="color:#fff; margin-bottom:16px;">Upload Your Prescription</h2>
+                    <p style="color:rgba(255,255,255,0.75); max-width:560px; margin:0 auto 32px; font-size:1.05rem;">
+                        Share your doctor's prescription and our licensed pharmacists will prepare your order with the exact medicines prescribed. Safe. Verified. Fast.
+                    </p>
+                    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                        <a href="pages/contact.html#prescription-form" class="btn btn-accent btn-lg">
+                            <i class="fa-solid fa-upload" aria-hidden="true"></i>
+                            Upload Prescription Now
+                        </a>
+                        <a href="pages/contact.html" class="btn btn-outline-white btn-lg">
+                            <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                            Call Pharmacist
+                        </a>
+                    </div>
+                    <div style="margin-top:32px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap;">
+                        <div style="display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.7); font-size:0.875rem;">
+                            <i class="fa-solid fa-check-circle" style="color:#4ADE80;" aria-hidden="true"></i>
+                            JPG, PNG, PDF accepted
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.7); font-size:0.875rem;">
+                            <i class="fa-solid fa-check-circle" style="color:#4ADE80;" aria-hidden="true"></i>
+                            Verified by pharmacist
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.7); font-size:0.875rem;">
+                            <i class="fa-solid fa-check-circle" style="color:#4ADE80;" aria-hidden="true"></i>
+                            Privacy protected
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FEATURED PRODUCTS ===================== -->
+    <section style="background-color: var(--bg-surface); border-top: 1px solid var(--border-color);" aria-labelledby="products-title">
+        <div class="container">
+            <div class="section-title reveal">
+                <div class="eyebrow"><i class="fa-solid fa-star" aria-hidden="true"></i> Top Picks</div>
+                <h2 id="products-title">Featured Products</h2>
+                <p>Handpicked bestsellers trusted by thousands of our customers every day.</p>
+            </div>
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px;">
+                <!-- Product 1 -->
+                <div class="product-card reveal">
+                    <div class="product-img">
+                        <img src="assets/images/vitamins.png" alt="Vitamin D3 + K2 Supplement" loading="lazy">
+                        <span class="product-tag">Bestseller</span>
+                    </div>
+                    <div class="product-body">
+                        <span class="card-badge badge-green" style="margin-bottom:8px;"><i class="fa-solid fa-leaf" aria-hidden="true"></i> Vitamins</span>
+                        <h4 style="margin:8px 0 4px; font-size:1rem;">Vitamin D3 + K2 Combo</h4>
+                        <p style="font-size:0.85rem; margin-bottom:12px;">60 capsules — Bone &amp; Immunity support</p>
+                        <div style="display:flex; align-items:center; justify-content:space-between;">
+                            <div>
+                                <span class="product-price">$18.99</span>
+                                <span class="product-old-price">$24.99</span>
+                            </div>
+                            <button class="btn btn-outline btn-sm" aria-label="Add Vitamin D3 to cart">
+                                <i class="fa-solid fa-cart-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="product-card reveal">
+                    <div class="product-img">
+                        <img src="assets/images/medical-devices.png" alt="Digital Blood Pressure Monitor" loading="lazy">
+                        <span class="product-tag" style="background:var(--accent);">New</span>
+                    </div>
+                    <div class="product-body">
+                        <span class="card-badge badge-blue" style="margin-bottom:8px;"><i class="fa-solid fa-stethoscope" aria-hidden="true"></i> Devices</span>
+                        <h4 style="margin:8px 0 4px; font-size:1rem;">Digital BP Monitor</h4>
+                        <p style="font-size:0.85rem; margin-bottom:12px;">Wrist-type, memory storage, irregular heartbeat alert</p>
+                        <div style="display:flex; align-items:center; justify-content:space-between;">
+                            <div>
+                                <span class="product-price">$42.00</span>
+                            </div>
+                            <button class="btn btn-outline btn-sm" aria-label="Add BP Monitor to cart">
+                                <i class="fa-solid fa-cart-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="product-card reveal">
+                    <div class="product-img">
+                        <img src="assets/images/baby-care.png" alt="Baby Fever Relief Kit" loading="lazy">
+                    </div>
+                    <div class="product-body">
+                        <span class="card-badge" style="background:#FEF3C7; color:#D97706; margin-bottom:8px;"><i class="fa-solid fa-baby" aria-hidden="true"></i> Baby Care</span>
+                        <h4 style="margin:8px 0 4px; font-size:1rem;">Baby Fever Relief Kit</h4>
+                        <p style="font-size:0.85rem; margin-bottom:12px;">Thermometer + infant paracetamol drops included</p>
+                        <div style="display:flex; align-items:center; justify-content:space-between;">
+                            <div>
+                                <span class="product-price">$14.50</span>
+                                <span class="product-old-price">$18.00</span>
+                            </div>
+                            <button class="btn btn-outline btn-sm" aria-label="Add Baby Fever Kit to cart">
+                                <i class="fa-solid fa-cart-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 4 -->
+                <div class="product-card reveal">
+                    <div class="product-img">
+                        <img src="assets/images/medicines.png" alt="Omega-3 Fish Oil Capsules" loading="lazy">
+                        <span class="product-tag">20% Off</span>
+                    </div>
+                    <div class="product-body">
+                        <span class="card-badge badge-green" style="margin-bottom:8px;"><i class="fa-solid fa-capsules" aria-hidden="true"></i> Supplement</span>
+                        <h4 style="margin:8px 0 4px; font-size:1rem;">Omega-3 Fish Oil 1000mg</h4>
+                        <p style="font-size:0.85rem; margin-bottom:12px;">90 softgels — Heart &amp; Brain health support</p>
+                        <div style="display:flex; align-items:center; justify-content:space-between;">
+                            <div>
+                                <span class="product-price">$15.99</span>
+                                <span class="product-old-price">$19.99</span>
+                            </div>
+                            <button class="btn btn-outline btn-sm" aria-label="Add Omega-3 to cart">
+                                <i class="fa-solid fa-cart-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center; margin-top:40px;">
+                <a href="pages/service.html" class="btn btn-outline">
+                    <i class="fa-solid fa-grid-2" aria-hidden="true"></i>
+                    View All Products
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== STORE TIMINGS ===================== -->
+    <section aria-labelledby="timings-title">
+        <div class="container">
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 56px; align-items:center;">
+                <div class="reveal">
+                    <div class="section-title" style="text-align:left; margin-bottom:var(--space-6);">
+                        <div class="eyebrow"><i class="fa-solid fa-clock" aria-hidden="true"></i> Opening Hours</div>
+                        <h2 id="timings-title" style="text-align:left;">Store Timings</h2>
+                        <p style="text-align:left;">Visit us in-store or order online. Our team is available 7 days a week to serve you.</p>
+                    </div>
+                    <div style="background:var(--bg-surface); border:1px solid var(--border-color); border-radius:var(--radius-xl); padding:32px; box-shadow:var(--shadow-sm);">
+                        <div class="timing-row">
+                            <span class="timing-day">Monday – Friday</span>
+                            <span class="timing-hours">8:00 AM – 10:00 PM</span>
+                            <span class="timing-badge-open">Open</span>
+                        </div>
+                        <div class="timing-row">
+                            <span class="timing-day">Saturday</span>
+                            <span class="timing-hours">9:00 AM – 9:00 PM</span>
+                            <span class="timing-badge-open">Open</span>
+                        </div>
+                        <div class="timing-row">
+                            <span class="timing-day">Sunday</span>
+                            <span class="timing-hours">10:00 AM – 6:00 PM</span>
+                            <span class="timing-badge-open">Open</span>
+                        </div>
+                        <div class="timing-row">
+                            <span class="timing-day">Public Holidays</span>
+                            <span class="timing-hours">11:00 AM – 4:00 PM</span>
+                            <span class="timing-badge-closed">Limited</span>
+                        </div>
+                    </div>
+                    <div style="margin-top:20px; padding:16px 20px; background:var(--primary-light); border-radius:var(--radius-md); border:1px solid rgba(22,163,74,0.2); display:flex; align-items:center; gap:12px;">
+                        <i class="fa-solid fa-phone-volume" style="color:var(--primary); font-size:1.2rem;" aria-hidden="true"></i>
+                        <div>
+                            <div style="font-weight:700; font-size:0.9rem; color:var(--text-primary);">Emergency 24/7 Helpline</div>
+                            <div style="font-size:1.1rem; font-weight:800; color:var(--primary); font-family:'Nunito',sans-serif;">+1 (800) 555-MEDI</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal">
+                    <img src="https://images.unsplash.com/photo-1576671081837-49000212a370?auto=format&fit=crop&w=800&q=80"
+                         alt="MediCare Plus pharmacy store interior"
+                         style="border-radius:var(--radius-xl); width:100%; height:420px; object-fit:cover; box-shadow:var(--shadow-lg); border:1px solid var(--border-color);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== TESTIMONIALS ===================== -->
+    <section style="background-color:var(--bg-surface); border-top:1px solid var(--border-color);" aria-labelledby="testimonials-title">
+        <div class="container">
+            <div class="section-title reveal">
+                <div class="eyebrow"><i class="fa-solid fa-comments" aria-hidden="true"></i> Patient Reviews</div>
+                <h2 id="testimonials-title">What Our Customers Say</h2>
+                <p>Trusted by families across the country for genuine medicines and outstanding service.</p>
+            </div>
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-quote-icon" aria-hidden="true"><i class="fa-solid fa-quote-right"></i></div>
+                    <div class="stars" aria-label="5 stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p style="margin-bottom:20px; font-size:0.95rem; line-height:1.7;">"MediCare Plus delivered my father's insulin within 90 minutes — with proper cold packaging! Their pharmacist even called to confirm the dosage. Absolutely trustworthy."</p>
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=100&q=80" alt="Sarah Mitchell" class="reviewer-avatar">
+                        <div>
+                            <div style="font-weight:700; font-size:0.9rem;">Sarah Mitchell</div>
+                            <div style="font-size:0.8rem; color:var(--text-muted);">Diabetes Caregiver</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-quote-icon" aria-hidden="true"><i class="fa-solid fa-quote-right"></i></div>
+                    <div class="stars" aria-label="5 stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p style="margin-bottom:20px; font-size:0.95rem; line-height:1.7;">"I use MediCare Plus for all our baby's supplies. The baby care section is incredible — quality products, competitive prices, and the app is so easy to use."</p>
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="James Wilson" class="reviewer-avatar">
+                        <div>
+                            <div style="font-weight:700; font-size:0.9rem;">James Wilson</div>
+                            <div style="font-size:0.8rem; color:var(--text-muted);">Parent of 2</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-quote-icon" aria-hidden="true"><i class="fa-solid fa-quote-right"></i></div>
+                    <div class="stars" aria-label="5 stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p style="margin-bottom:20px; font-size:0.95rem; line-height:1.7;">"The prescription upload feature saved me so much time. I photographed my prescription, uploaded it, and received verified medicines the same afternoon. Brilliant service!"</p>
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80" alt="Dr. Priya Sharma" class="reviewer-avatar">
+                        <div>
+                            <div style="font-weight:700; font-size:0.9rem;">Dr. Priya Sharma</div>
+                            <div style="font-size:0.8rem; color:var(--text-muted);">General Physician</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== NEWSLETTER ===================== -->
+    <section class="newsletter-section" aria-labelledby="newsletter-title">
+        <div class="container">
+            <div class="reveal" style="max-width:600px; margin:0 auto;">
+                <h2 id="newsletter-title" style="color:#fff; margin-bottom:12px;">Stay Updated on Health &amp; Wellness</h2>
+                <p style="color:rgba(255,255,255,0.8); margin-bottom:32px; font-size:1.05rem;">Subscribe for exclusive discounts, new product launches, and expert health tips from our pharmacists.</p>
+                <form id="newsletter-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate style="display:flex; gap:12px; flex-wrap:wrap;" aria-label="Newsletter Signup">
+                    <div style="flex:1; min-width:220px;" class="form-group" style="margin-bottom:0;">
+                        <label for="newsletter-email" class="sr-only">Email Address</label>
+                        <input type="email" id="newsletter-email" name="email" class="form-control" placeholder="Enter your email address" required aria-required="true" style="background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.3); color:#fff;">
+                        <span class="form-error" aria-live="polite"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> <span></span></span>
+                    </div>
+                    <button type="submit" class="btn btn-outline-white">
+                        <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                        Subscribe
+                    </button>
+                </form>
+                <p style="color:rgba(255,255,255,0.55); font-size:0.8rem; margin-top:12px;">No spam. Unsubscribe at any time. We respect your privacy.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="index.html" class="logo footer-logo" aria-label="MediCare Plus Home">
+                        <div class="logo-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></div>
+                        <div>
+                            <div class="logo-text"><span>Medi</span><span>Care</span></div>
+                            <span class="logo-tagline" style="color:rgba(255,255,255,0.45);">Pharmacy &amp; Medical Supplies</span>
+                        </div>
+                    </a>
+                    <p class="footer-desc">Your government-licensed online pharmacy. Delivering genuine medicines and healthcare products since 2005.</p>
+                    <div class="footer-social" aria-label="Social Media Links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+                        <a href="#" class="social-link" aria-label="YouTube"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="pages/about.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> About Us</a></li>
+                        <li><a href="pages/service.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Our Services</a></li>
+                        <li><a href="pages/pricing.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Pricing Plans</a></li>
+                        <li><a href="pages/blog.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Health Blog</a></li>
+                        <li><a href="pages/contact.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Categories</h4>
+                    <ul class="footer-links">
+                        <li><a href="pages/service.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Prescription Medicines</a></li>
+                        <li><a href="pages/service.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Vitamins &amp; Supplements</a></li>
+                        <li><a href="pages/service.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Baby Care</a></li>
+                        <li><a href="pages/service.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Medical Devices</a></li>
+                        <li><a href="pages/service.html"><i class="fa-solid fa-angle-right" aria-hidden="true"></i> Personal Care</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact Info</h4>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                        <span>123 Health Avenue, Medical District, New York, NY 10001</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                        <a href="tel:+18005554334" style="color:#94A3B8;">+1 (800) 555-MEDI</a>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                        <a href="mailto:care@medicareplus.com" style="color:#94A3B8;">care@medicareplus.com</a>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-clock" aria-hidden="true"></i>
+                        <span>Mon–Fri: 8AM–10PM</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MediCare Plus. All rights reserved. | Licensed Pharmacy #NY-PHARM-2005 | <a href="#" style="color:var(--primary);">Privacy Policy</a> | <a href="#" style="color:var(--primary);">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
