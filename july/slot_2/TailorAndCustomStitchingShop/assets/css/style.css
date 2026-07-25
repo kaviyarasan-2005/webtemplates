@@ -1512,20 +1512,22 @@ p {
    17. GALLERY
    =================== */
 .gallery-masonry {
-  columns: 3;
-  column-gap: var(--space-3);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
 }
 
 .gallery-masonry__item {
-  break-inside: avoid;
-  margin-bottom: var(--space-3);
   border-radius: var(--radius-lg);
   overflow: hidden;
   position: relative;
+  aspect-ratio: 4 / 5;
 }
 
 .gallery-masonry__item img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
   transition: transform var(--transition-base);
 }
@@ -3009,6 +3011,16 @@ textarea:focus-visible {
 
   .split {
     gap: var(--space-4);
+    align-items: stretch;
+  }
+
+  .split__image {
+    height: 100%;
+  }
+
+  .split__image img {
+    height: 100%;
+    aspect-ratio: auto;
   }
 
   .counter-grid {
@@ -3226,6 +3238,16 @@ textarea:focus-visible {
   .split {
     grid-template-columns: 1fr;
     gap: var(--space-4);
+    align-items: center;
+  }
+
+  .split__image {
+    height: auto;
+  }
+
+  .split__image img {
+    height: auto;
+    aspect-ratio: 4/3;
   }
 
   .split--reverse > :first-child {
@@ -3297,12 +3319,8 @@ textarea:focus-visible {
   }
 
   .gallery-masonry {
-    columns: 2;
-    column-gap: var(--space-2);
-  }
-
-  .gallery-masonry__item {
-    margin-bottom: var(--space-2);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
   }
 
   .configurator__options {
