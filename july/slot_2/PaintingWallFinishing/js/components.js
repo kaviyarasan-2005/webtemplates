@@ -171,13 +171,6 @@ function buildFooter() {
         <p class="footer__copyright">
           &copy; ${currentYear} Pulse. All rights reserved.
         </p>
-        <nav class="footer__legal" aria-label="Legal links">
-          <a href="#" class="footer__legal-link">Privacy Policy</a>
-          <a href="#" class="footer__legal-link">Terms of Service</a>
-          <a href="#" class="footer__legal-link">Cookie Policy</a>
-          <a href="#" class="footer__legal-link">Disclaimer</a>
-          <a href="${BASE}pages/404.html" class="footer__legal-link">Sitemap</a>
-        </nav>
       </div>
     </div>
   </div>
