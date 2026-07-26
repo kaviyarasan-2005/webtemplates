@@ -30,7 +30,7 @@
     <div class="page-loader" id="pageLoader" aria-hidden="true">
       <div class="page-loader-logo">
         <div class="page-loader-icon">
-          <i class="fa-solid fa-eye"></i>
+          <img src="${base}assets/images/favicon.png" alt="Optic Logo" class="logo-icon-img">
         </div>
         <span class="page-loader-text">Optic</span>
       </div>
@@ -46,7 +46,7 @@
         <!-- Brand -->
         <a href="${base}index.html" class="nav-brand" aria-label="Optic - Home">
           <div class="nav-logo" aria-hidden="true">
-            <i class="fa-solid fa-eye"></i>
+            <img src="${base}assets/images/favicon.png" alt="Optic Logo" class="logo-icon-img">
           </div>
           <div class="nav-brand-text">
             <span class="nav-brand-name">Optic</span>
@@ -219,7 +219,7 @@
           <div class="footer-brand-col">
             <a href="${base}index.html" class="footer-logo" aria-label="Optic">
               <div class="footer-logo-icon" aria-hidden="true">
-                <i class="fa-solid fa-eye"></i>
+                <img src="${base}assets/images/favicon.png" alt="Optic Logo" class="logo-icon-img">
               </div>
               <div>
                 <div class="footer-brand-name">Optic</div>
@@ -330,11 +330,6 @@
           <p class="footer-copyright">
             &copy; <span id="footerYear"></span> Optic. All rights reserved.
           </p>
-          <nav class="footer-legal" aria-label="Legal links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Cookie Policy</a>
-          </nav>
         </div>
       </div>
     </footer>
