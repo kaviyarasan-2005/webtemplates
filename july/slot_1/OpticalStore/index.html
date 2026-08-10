@@ -320,6 +320,35 @@
       color: var(--text-secondary);
       line-height: var(--leading-relaxed);
     }
+
+    /* ── Offers ── */
+    .offers-grid { display: grid; gap: var(--space-6); grid-template-columns: 1fr; margin-bottom: var(--space-12); }
+    @media (min-width: 768px) { .offers-grid { grid-template-columns: repeat(2,1fr); } }
+    .offer-card { background: var(--bg-card); border-radius: var(--radius-2xl); padding: var(--space-8); display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; border: 1px solid var(--border-color); }
+    .offer-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--color-primary-subtle) 0%, transparent 100%); opacity: 0.5; z-index: 0; }
+    .offer-card:nth-child(2) .offer-bg { background: linear-gradient(135deg, var(--color-secondary-subtle) 0%, transparent 100%); }
+    .offer-content { position: relative; z-index: 1; }
+
+    /* ── Categories Grid (4 cols) ── */
+    .categories-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-6); }
+    @media (min-width: 480px) { .categories-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (min-width: 1024px) { .categories-grid { grid-template-columns: repeat(4,1fr); } }
+
+    /* ── Brands ── */
+    .brand-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: var(--space-8); align-items: center; justify-items: center; opacity: 0.7; }
+    @media (min-width: 640px) { .brand-grid { grid-template-columns: repeat(3,1fr); } }
+    @media (min-width: 1024px) { .brand-grid { grid-template-columns: repeat(5,1fr); } }
+    .brand-logo-item { max-width: 120px; transition: opacity var(--transition-fast), filter var(--transition-fast); filter: grayscale(100%); }
+    .brand-logo-item:hover { filter: grayscale(0%); opacity: 1; }
+    [data-theme="dark"] .brand-logo-item { filter: grayscale(100%) brightness(200%); }
+    [data-theme="dark"] .brand-logo-item:hover { filter: grayscale(0%) brightness(100%); }
+
+    /* ── Locations Grid ── */
+    .locations-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-6); margin-top: var(--space-8); }
+    @media (min-width: 768px) { .locations-grid { grid-template-columns: repeat(2,1fr); } }
+    .location-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-xl); padding: var(--space-6); }
+    .location-card h4 { font-size: var(--text-lg); font-weight: var(--font-bold); margin-bottom: var(--space-2); color: var(--text-primary); }
+    .location-card p { font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-4); line-height: 1.5; }
   </style>
 </head>
 <body>
@@ -422,6 +451,34 @@
   </section>
 
   <!-- ══════════════════════
+       OFFERS SECTION
+       ══════════════════════ -->
+  <section class="section" aria-label="Current Offers">
+    <div class="container">
+      <div class="offers-grid">
+        <div class="offer-card reveal">
+          <div class="offer-bg"></div>
+          <div class="offer-content">
+            <div class="badge badge-primary" style="margin-bottom:var(--space-4); display:inline-block;">Special Offer</div>
+            <h3 style="font-size:var(--text-2xl); font-weight:var(--font-bold); margin-bottom:var(--space-2);">Buy 1 Get 1 Free</h3>
+            <p style="color:var(--text-secondary); margin-bottom:var(--space-4);">On all premium designer frames with prescription lenses.</p>
+            <a href="pages/service.html#frames" class="btn btn-primary btn-sm">Shop Now</a>
+          </div>
+        </div>
+        <div class="offer-card reveal delay-100">
+          <div class="offer-bg"></div>
+          <div class="offer-content">
+            <div class="badge badge-secondary" style="margin-bottom:var(--space-4); display:inline-block;">Summer Sale</div>
+            <h3 style="font-size:var(--text-2xl); font-weight:var(--font-bold); margin-bottom:var(--space-2);">20% Off Sunglasses</h3>
+            <p style="color:var(--text-secondary); margin-bottom:var(--space-4);">Protect your eyes in style. Includes polarised options.</p>
+            <a href="pages/service.html#frames" class="btn btn-primary btn-sm">Shop Sunglasses</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
        STATS SECTION
        ══════════════════════ -->
   <section class="stats-section" aria-label="Our achievements">
@@ -515,72 +572,92 @@
   </section>
 
   <!-- ══════════════════════
-       FRAME CATEGORIES
+       CATEGORIES
        ══════════════════════ -->
-  <section class="section" aria-labelledby="frames-title">
+  <section class="section" aria-labelledby="categories-title">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-eyebrow">Frame Collections</div>
-        <h2 class="section-title" id="frames-title">
-          Find Your <span>Perfect Frame</span>
+        <div class="section-eyebrow">Shop by Category</div>
+        <h2 class="section-title" id="categories-title">
+          Explore Our <span>Collections</span>
         </h2>
         <p class="section-subtitle">
-          Three distinct collections for every vision need and personal style.
+          Find the perfect eyewear for every member of the family.
         </p>
       </div>
 
-      <div class="frames-grid">
-        <!-- Reading Glasses -->
+      <div class="categories-grid">
+        <!-- Men -->
         <div class="frame-card reveal delay-100">
-          <img
-            src="assets/images/frames-reading.jpg"
-            alt="Premium reading glasses collection – lightweight metal and acetate frames"
-            class="frame-card-img"
-            loading="lazy"
-            width="400"
-            height="260">
+          <img src="assets/images/frames-reading.jpg" alt="Men's Glasses" class="frame-card-img" loading="lazy" width="400" height="260">
           <div class="frame-card-overlay">
-            <h3 class="frame-card-name">Reading Glasses</h3>
-            <a href="pages/service.html#frames" class="frame-card-btn">
-              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-              Explore
-            </a>
+            <h3 class="frame-card-name">Men</h3>
+            <a href="pages/service.html#frames" class="frame-card-btn">Shop Men's</a>
+          </div>
+        </div>
+
+        <!-- Women -->
+        <div class="frame-card reveal delay-200">
+          <img src="assets/images/lens-types.jpg" alt="Women's Glasses" class="frame-card-img" loading="lazy" width="400" height="260">
+          <div class="frame-card-overlay">
+            <h3 class="frame-card-name">Women</h3>
+            <a href="pages/service.html#frames" class="frame-card-btn">Shop Women's</a>
+          </div>
+        </div>
+
+        <!-- Kids -->
+        <div class="frame-card reveal delay-300">
+          <img src="assets/images/frames-kids.jpg" alt="Kids Glasses" class="frame-card-img" loading="lazy" width="400" height="260">
+          <div class="frame-card-overlay">
+            <h3 class="frame-card-name">Kids</h3>
+            <a href="pages/service.html#kids" class="frame-card-btn">Shop Kids'</a>
           </div>
         </div>
 
         <!-- Sunglasses -->
-        <div class="frame-card reveal delay-200">
-          <img
-            src="assets/images/frames-sunglasses.jpg"
-            alt="Designer sunglasses collection – UV400 protection in trendy styles"
-            class="frame-card-img"
-            loading="lazy"
-            width="400"
-            height="260">
+        <div class="frame-card reveal delay-400">
+          <img src="assets/images/frames-sunglasses.jpg" alt="Sunglasses" class="frame-card-img" loading="lazy" width="400" height="260">
           <div class="frame-card-overlay">
             <h3 class="frame-card-name">Sunglasses</h3>
-            <a href="pages/service.html#frames" class="frame-card-btn">
-              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-              Explore
-            </a>
+            <a href="pages/service.html#frames" class="frame-card-btn">Shop Sunglasses</a>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- Kids Glasses -->
-        <div class="frame-card reveal delay-300">
-          <img
-            src="assets/images/frames-kids.jpg"
-            alt="Children's glasses collection – durable, flexible, and colourful frames"
-            class="frame-card-img"
-            loading="lazy"
-            width="400"
-            height="260">
+  <!-- ══════════════════════
+       FEATURED COLLECTIONS (STYLES)
+       ══════════════════════ -->
+  <section class="section bg-section" aria-labelledby="styles-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Featured Styles</div>
+        <h2 class="section-title" id="styles-title">
+          Trending <span>Frame Shapes</span>
+        </h2>
+      </div>
+
+      <div class="frames-grid">
+        <div class="frame-card reveal delay-100">
+          <img src="assets/images/frames-reading.jpg" alt="Aviator Frames" class="frame-card-img" loading="lazy" width="400" height="260">
           <div class="frame-card-overlay">
-            <h3 class="frame-card-name">Kids Glasses</h3>
-            <a href="pages/service.html#kids" class="frame-card-btn">
-              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-              Explore
-            </a>
+            <h3 class="frame-card-name">Aviators</h3>
+            <a href="pages/service.html#frames" class="frame-card-btn">View Styles</a>
+          </div>
+        </div>
+        <div class="frame-card reveal delay-200">
+          <img src="assets/images/frames-sunglasses.jpg" alt="Wayfarer Frames" class="frame-card-img" loading="lazy" width="400" height="260">
+          <div class="frame-card-overlay">
+            <h3 class="frame-card-name">Wayfarers</h3>
+            <a href="pages/service.html#frames" class="frame-card-btn">View Styles</a>
+          </div>
+        </div>
+        <div class="frame-card reveal delay-300">
+          <img src="assets/images/frames-kids.jpg" alt="Round Frames" class="frame-card-img" loading="lazy" width="400" height="260">
+          <div class="frame-card-overlay">
+            <h3 class="frame-card-name">Round</h3>
+            <a href="pages/service.html#frames" class="frame-card-btn">View Styles</a>
           </div>
         </div>
       </div>
@@ -660,150 +737,6 @@
     </div>
   </section>
 
-  <!-- ══════════════════════
-       APPOINTMENT BOOKING
-       ══════════════════════ -->
-  <section class="section" id="appointment" aria-labelledby="appt-title">
-    <div class="container">
-      <div class="appt-layout">
-        <!-- Left Info -->
-        <div class="reveal-left">
-          <div class="section-eyebrow">Book Online</div>
-          <h2 class="section-title" id="appt-title">
-            Schedule Your <span>Eye Test</span>
-          </h2>
-          <p style="color:var(--text-secondary);margin-bottom:var(--space-8);line-height:var(--leading-relaxed);">
-            A comprehensive eye examination takes 45–60 minutes and covers visual acuity,
-            eye pressure, retinal health, and prescription assessment.
-          </p>
-
-          <div style="display:flex;flex-direction:column;gap:var(--space-5);">
-            <div style="display:flex;align-items:center;gap:var(--space-4);">
-              <div style="width:48px;height:48px;background:var(--color-primary-subtle);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:var(--color-primary);flex-shrink:0;">
-                <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              </div>
-              <div>
-                <div style="font-weight:var(--font-semibold);color:var(--text-primary);">Opening Hours</div>
-                <div style="font-size:var(--text-sm);color:var(--text-secondary);">Mon – Sat: 9:00 AM – 8:00 PM<br>Sun: 10:00 AM – 5:00 PM</div>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:var(--space-4);">
-              <div style="width:48px;height:48px;background:var(--color-secondary-subtle);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:var(--color-secondary);flex-shrink:0;">
-                <i class="fa-solid fa-phone" aria-hidden="true"></i>
-              </div>
-              <div>
-                <div style="font-weight:var(--font-semibold);color:var(--text-primary);">Call Us</div>
-                <div style="font-size:var(--text-sm);color:var(--text-secondary);">+91 44 2822 1234<br>+91 98765 43210</div>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:var(--space-4);">
-              <div style="width:48px;height:48px;background:var(--color-primary-subtle);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:var(--color-primary);flex-shrink:0;">
-                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-              </div>
-              <div>
-                <div style="font-weight:var(--font-semibold);color:var(--text-primary);">Visit Us</div>
-                <div style="font-size:var(--text-sm);color:var(--text-secondary);">42, Anna Salai, T. Nagar<br>Chennai – 600017</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Booking Form -->
-        <div class="booking-card reveal-right">
-          <h3 style="font-family:var(--font-display);font-size:var(--text-2xl);margin-bottom:var(--space-6);color:var(--text-primary);">
-            Book an Appointment
-          </h3>
-          <form data-validate-form data-form-type="appointment" novalidate>
-            <div class="grid-2" style="gap:var(--space-4);">
-              <div class="form-group">
-                <label class="form-label required" for="appt-name">Full Name</label>
-                <div class="form-control-wrap">
-                  <i class="fa-solid fa-user form-control-icon" aria-hidden="true"></i>
-                  <input type="text" id="appt-name" name="name"
-                    class="form-control"
-                    placeholder="Your full name"
-                    data-validate="required"
-                    aria-required="true"
-                    autocomplete="name">
-                </div>
-                <span class="form-error" id="appt-name-error" role="alert">
-                  <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-                </span>
-              </div>
-              <div class="form-group">
-                <label class="form-label required" for="appt-phone">Phone Number</label>
-                <div class="form-control-wrap">
-                  <i class="fa-solid fa-phone form-control-icon" aria-hidden="true"></i>
-                  <input type="tel" id="appt-phone" name="phone"
-                    class="form-control"
-                    placeholder="+91 00000 00000"
-                    data-validate="required|phone"
-                    aria-required="true"
-                    autocomplete="tel">
-                </div>
-                <span class="form-error" id="appt-phone-error" role="alert">
-                  <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-                </span>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label required" for="appt-service">Service Type</label>
-              <select id="appt-service" name="service"
-                class="form-control"
-                data-validate="required"
-                aria-required="true">
-                <option value="">Select a service</option>
-                <option value="eye-test">Comprehensive Eye Test</option>
-                <option value="frames">Frame Fitting &amp; Selection</option>
-                <option value="contact-lenses">Contact Lens Fitting</option>
-                <option value="kids">Children's Eye Exam</option>
-                <option value="followup">Follow-up Consultation</option>
-              </select>
-              <span class="form-error" id="appt-service-error" role="alert">
-                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-              </span>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label required" for="appt-date">Preferred Date</label>
-              <div class="form-control-wrap">
-                <i class="fa-solid fa-calendar form-control-icon" aria-hidden="true"></i>
-                <input type="date" id="appt-date" name="date"
-                  class="form-control"
-                  data-validate="required"
-                  aria-required="true">
-              </div>
-              <span class="form-error" id="appt-date-error" role="alert">
-                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-              </span>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Preferred Time</label>
-              <div class="time-slot-grid" role="group" aria-label="Available time slots">
-                <button type="button" class="time-slot">09:00 AM</button>
-                <button type="button" class="time-slot">10:00 AM</button>
-                <button type="button" class="time-slot">11:00 AM</button>
-                <button type="button" class="time-slot">12:00 PM</button>
-                <button type="button" class="time-slot unavailable">01:00 PM</button>
-                <button type="button" class="time-slot">02:00 PM</button>
-                <button type="button" class="time-slot">03:00 PM</button>
-                <button type="button" class="time-slot unavailable">04:00 PM</button>
-                <button type="button" class="time-slot">05:00 PM</button>
-              </div>
-              <input type="hidden" name="appointment_time" value="">
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-full" style="margin-top:var(--space-4);">
-              <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
-              Confirm Appointment
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ══════════════════════
        TESTIMONIALS
