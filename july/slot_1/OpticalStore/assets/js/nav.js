@@ -80,7 +80,7 @@
           </li>
           <li class="nav-item">
             <a href="${base}pages/service.html"
-               class="nav-link ${active(isService)}">Services</a>
+               class="nav-link ${active(isService)}">Lenses</a>
           </li>
           <li class="nav-item">
             <a href="${base}pages/blog.html"
@@ -88,7 +88,7 @@
           </li>
           <li class="nav-item">
             <a href="${base}pages/pricing.html"
-               class="nav-link ${active(isPricing)}">Pricing</a>
+               class="nav-link ${active(isPricing)}">Eye Care</a>
           </li>
           <li class="nav-item">
             <a href="${base}pages/contact.html"
@@ -171,7 +171,7 @@
         </li>
         <li class="mobile-nav-item">
           <a href="${base}pages/service.html" class="mobile-nav-link">
-            Services
+            Lenses
           </a>
         </li>
         <li class="mobile-nav-item">
@@ -181,7 +181,7 @@
         </li>
         <li class="mobile-nav-item">
           <a href="${base}pages/pricing.html" class="mobile-nav-link">
-            Pricing
+            Eye Care
           </a>
         </li>
         <li class="mobile-nav-item">
