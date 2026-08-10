@@ -56,7 +56,7 @@
         <!-- Desktop Menu -->
         <ul class="nav-menu" role="list">
           <li class="nav-item">
-            <a href="${base}index.html"
+            <a href="javascript:void(0);"
                class="nav-link ${active(isHome1 || isHome2)}"
                aria-haspopup="true"
                aria-expanded="false">

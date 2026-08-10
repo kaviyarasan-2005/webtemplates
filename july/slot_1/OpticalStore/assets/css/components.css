@@ -569,6 +569,16 @@
   z-index: var(--z-dropdown);
 }
 
+/* Invisible bridge to prevent hover loss */
+.nav-dropdown::before {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--space-2));
+  left: 0;
+  right: 0;
+  height: var(--space-2);
+}
+
 [dir="rtl"] .nav-dropdown {
   left: auto;
   right: 0;
@@ -1645,3 +1655,10 @@ select.form-control {
 [dir="rtl"] .toast.success { border-left: none; border-right: 3px solid var(--color-secondary); }
 [dir="rtl"] .toast.error   { border-left: none; border-right: 3px solid var(--color-error); }
 [dir="rtl"] .toast.info    { border-left: none; border-right: 3px solid var(--color-primary); }
+
+/* Fix native calendar picker contrast in dark mode */
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) opacity(0.7);
+}
