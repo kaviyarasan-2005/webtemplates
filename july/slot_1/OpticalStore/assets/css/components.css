@@ -335,6 +335,9 @@
   border-radius: var(--radius-xl);
   overflow: hidden;
   transition: all var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .blog-card:hover {
@@ -359,6 +362,14 @@
 
 .blog-card-body {
   padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.blog-card-body .btn {
+  margin-top: auto !important;
+  align-self: flex-start;
 }
 
 .blog-meta {
@@ -463,11 +474,13 @@
 .auth-mobile-logo-icon img,
 .coming-logo-icon img,
 .logo-icon-img {
-  max-width: 65%;
-  max-height: 65%;
+  max-width: 100%;
+  max-height: 100%;
   width: auto;
   height: auto;
   object-fit: contain;
+  filter: invert(1) hue-rotate(180deg);
+  mix-blend-mode: screen;
 }
 
 .nav-brand:hover .nav-logo {
@@ -556,6 +569,16 @@
   z-index: var(--z-dropdown);
 }
 
+/* Invisible bridge to prevent hover loss */
+.nav-dropdown::before {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--space-2));
+  left: 0;
+  right: 0;
+  height: var(--space-2);
+}
+
 [dir="rtl"] .nav-dropdown {
   left: auto;
   right: 0;
@@ -584,6 +607,13 @@
 .nav-dropdown-item:hover {
   background: var(--color-primary-subtle);
   color: var(--color-primary);
+}
+
+/* Dark mode contrast fixes for nav active/hover */
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active,
+[data-theme="dark"] .nav-dropdown-item:hover {
+  color: #93C5FD;
 }
 
 .nav-dropdown-item i {
@@ -1632,3 +1662,10 @@ select.form-control {
 [dir="rtl"] .toast.success { border-left: none; border-right: 3px solid var(--color-secondary); }
 [dir="rtl"] .toast.error   { border-left: none; border-right: 3px solid var(--color-error); }
 [dir="rtl"] .toast.info    { border-left: none; border-right: 3px solid var(--color-primary); }
+
+/* Fix native calendar picker contrast in dark mode */
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) opacity(0.7);
+}
