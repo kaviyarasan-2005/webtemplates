@@ -294,7 +294,7 @@ const AccordionManager = {
 
 // ============================================================
 // FLAVOR PILLS
-// Toggle selected state on catering page flavor selections.
+// Toggle selected state on bulk-orders page flavor selections.
 // ============================================================
 const FlavorPills = {
   init() {

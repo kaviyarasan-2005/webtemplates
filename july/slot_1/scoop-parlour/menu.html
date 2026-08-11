@@ -1,0 +1,609 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Menu | SCOOP Ice Cream & Dessert Parlour</title>
+  <meta name="description" content="Explore SCOOP's full dessert menu — scoops, sundaes, waffles, cakes and drinks with prices. Find something delicious for everyone." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/dark-mode.css" />
+  <link rel="stylesheet" href="assets/css/rtl.css" />
+  
+  <style>
+    @media (max-width: 768px) {
+      #menu-sidenav {
+        display: none !important;
+      }
+    }
+    
+    .menu-category-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px dashed rgba(244, 162, 97, 0.3);
+    }
+    .menu-category-header__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    
+    .menu-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    
+    .menu-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .menu-item__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .menu-item__title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .menu-item__dots {
+      flex: 1;
+      border-bottom: 1px dotted var(--text-secondary);
+      opacity: 0.5;
+    }
+    .menu-item__price {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.125rem;
+    }
+    .menu-item__desc {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .menu-item__tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    
+    .badge {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge--vegan {
+      background: #DCFCE7;
+      color: #166534;
+      border-color: #86EFAC;
+    }
+    .badge--new {
+      background: #E0F2FE;
+      color: #0369A1;
+      border-color: #7DD3FC;
+    }
+    .badge--limited {
+      background: #FEF3C7;
+      color: #92400E;
+      border-color: #FDE68A;
+    }
+    .badge--bestseller {
+      background: #FEF08A;
+      color: #854D0E;
+      border-color: #FDE047;
+    }
+    
+    .section-alt {
+      background-color: var(--bg-alt, #fdfbf7); /* Fallback to a slightly off-white */
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+</head>
+<body>>
+
+  <!-- Navbar -->
+    <!-- Standard Navbar -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar__container container">
+      <button class="navbar__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+      </button>
+      <a href="index.html" class="navbar__logo" aria-label="SCOOP - Go to homepage">
+        <svg class="navbar__logo-icon" width="36" height="44" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="coneGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#E6C280"/>
+              <stop offset="100%" stop-color="#C69248"/>
+            </linearGradient>
+            <linearGradient id="scoop1GradNav" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#FFB77D"/>
+              <stop offset="100%" stop-color="#F4A261"/>
+            </linearGradient>
+            <linearGradient id="scoop2GradNav" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#38B2AC"/>
+              <stop offset="100%" stop-color="#2A9D8F"/>
+            </linearGradient>
+            <linearGradient id="scoop3GradNav" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#FF8A75"/>
+              <stop offset="100%" stop-color="#E76F51"/>
+            </linearGradient>
+          </defs>
+          <path d="M 32 68 L 50 112 L 68 68 Z" fill="url(#coneGradNav)"/>
+          <path d="M 38 76 L 58 100 M 44 86 L 54 105 M 62 76 L 42 100 M 56 86 L 46 105" stroke="#A87532" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          <circle cx="50" cy="62" r="22" fill="url(#scoop1GradNav)"/>
+          <path d="M 30 64 Q 50 74 70 64 Q 50 68 30 64 Z" fill="#E89248" opacity="0.6"/>
+          <circle cx="50" cy="42" r="18" fill="url(#scoop2GradNav)"/>
+          <path d="M 34 44 Q 50 52 66 44 Q 50 48 34 44 Z" fill="#207E73" opacity="0.6"/>
+          <circle cx="50" cy="24" r="14" fill="url(#scoop3GradNav)"/>
+          <ellipse cx="43" cy="18" rx="4" ry="2.5" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 43 18)"/>
+          <ellipse cx="42" cy="36" rx="5" ry="3" fill="#FFFFFF" opacity="0.4" transform="rotate(-30 42 36)"/>
+          <path d="M 50 12 C 54 4 60 2 64 2" stroke="#6B3E2E" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <circle cx="50" cy="12" r="5.5" fill="#C0392B"/>
+          <circle cx="48.5" cy="10.5" r="1.5" fill="#FFFFFF" opacity="0.7"/>
+          <path d="M 74 18 L 76 22 L 80 24 L 76 26 L 74 30 L 72 26 L 68 24 L 72 22 Z" fill="#FFD700"/>
+        </svg>
+        <span class="navbar__logo-text">SCOOP</span>
+      </a>
+      <ul class="navbar__nav" role="list">
+        <li class="navbar__dropdown-wrapper" role="listitem">
+          <a href="index.html" class="navbar__link" aria-haspopup="true">Home <i class="fa-solid fa-chevron-down" style="font-size:10px;margin-inline-start:4px"></i></a>
+          <div class="navbar__dropdown" role="menu">
+            <a href="index.html" class="navbar__dropdown-item" role="menuitem">Home 1</a>
+            <a href="home-2.html" class="navbar__dropdown-item" role="menuitem">Home 2</a>
+          </div>
+        </li>
+        <li role="listitem"><a href="flavors.html" class="navbar__link">Flavors</a></li>
+        <li role="listitem"><a href="menu.html" class="navbar__link active">Menu</a></li>
+        <li role="listitem"><a href="bulk-orders.html" class="navbar__link">Bulk Orders</a></li>
+        <li role="listitem"><a href="about.html" class="navbar__link">About</a></li>
+        <li role="listitem"><a href="blog.html" class="navbar__link">Blog</a></li>
+        <li role="listitem"><a href="contact.html" class="navbar__link">Contact</a></li>
+      </ul>
+      <div class="navbar__controls">
+        <button class="navbar__toggle-btn" data-dir-toggle aria-label="Switch layout direction">LTR</button>
+        <button class="navbar__toggle-btn" data-theme-toggle aria-label="Switch theme"><i class="fa-solid fa-moon"></i></button>
+        <a href="flavors.html" class="btn btn-primary navbar__cta">Order Now</a>
+      </div>
+    </div>
+    <div class="navbar__mobile-drawer" id="mobile-drawer" role="dialog" aria-label="Mobile navigation">
+      <div class="navbar__mobile-drawer-inner">
+        <ul class="navbar__mobile-nav" role="list">
+          <li><span class="navbar__mobile-group-label">Home</span>
+            <a href="index.html" class="navbar__mobile-link">Home 1</a>
+            <a href="home-2.html" class="navbar__mobile-link">Home 2</a>
+          </li>
+          <li><a href="flavors.html" class="navbar__mobile-link">Flavors</a></li>
+          <li><a href="menu.html" class="navbar__mobile-link active">Menu</a></li>
+          <li><a href="bulk-orders.html" class="navbar__mobile-link">Bulk Orders</a></li>
+          <li><a href="about.html" class="navbar__mobile-link">About</a></li>
+          <li><a href="blog.html" class="navbar__mobile-link">Blog</a></li>
+          <li><a href="contact.html" class="navbar__mobile-link">Contact</a></li>
+          <li><a href="flavors.html" class="navbar__mobile-link navbar__mobile-cta">Order Now</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="navbar__overlay" aria-hidden="true"></div>
+  </nav>
+
+  <!-- sticky menu nav - place after navbar -->
+  <div class="menu-sidenav" style="position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:8px" id="menu-sidenav">
+    <a href="#scoops" class="menu-sidenav__link" title="Scoops" style="width:44px;height:44px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,0.12);color:var(--primary);font-size:1.1rem;text-decoration:none;transition:all 0.3s ease" onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='var(--primary)'"><i class="fa-solid fa-ice-cream"></i></a>
+    <a href="#sundaes" class="menu-sidenav__link" title="Sundaes" style="width:44px;height:44px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,0.12);color:var(--primary);font-size:1.1rem;text-decoration:none;transition:all 0.3s ease" onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='var(--primary)'"><i class="fa-solid fa-bowl-food"></i></a>
+    <a href="#waffles" class="menu-sidenav__link" title="Waffles" style="width:44px;height:44px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,0.12);color:var(--primary);font-size:1.1rem;text-decoration:none;transition:all 0.3s ease" onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='var(--primary)'"><i class="fa-solid fa-cookie-bite"></i></a>
+    <a href="#cakes" class="menu-sidenav__link" title="Cakes" style="width:44px;height:44px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,0.12);color:var(--primary);font-size:1.1rem;text-decoration:none;transition:all 0.3s ease" onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='var(--primary)'"><i class="fa-solid fa-cake-candles"></i></a>
+    <a href="#drinks" class="menu-sidenav__link" title="Drinks" style="width:44px;height:44px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,0.12);color:var(--primary);font-size:1.1rem;text-decoration:none;transition:all 0.3s ease" onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='var(--primary)'"><i class="fa-solid fa-mug-hot"></i></a>
+  </div>
+
+  <main>
+    <!-- SECTION 1 — Hero Banner -->
+    <header class="hero hero--subpage" aria-label="Menu Hero">
+      <div class="hero__bg-img parallax" style="background-image: url('https://images.unsplash.com/photo-1516746924755-babd21844370?auto=format&fit=crop&w=1920&h=800&q=80&crop=center');"></div>
+      <div class="hero__overlay"></div>
+      <div class="container hero__content reveal">
+        <span class="hero__brand"><i class="fa-solid fa-ice-cream"></i> SCOOP Menu</span>
+        <h1 class="hero__title" style="color: #ffffff !important;">Everything on Our Menu</h1>
+        <p class="hero__subtitle" style="color: rgba(255, 255, 255, 0.92) !important;">Made fresh daily. Every item crafted with care and the finest ingredients.</p>
+        <div class="hero__ctas" style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+          <a href="#scoops" class="btn btn-primary btn-lg"><i class="fa-solid fa-book-open"></i> Browse Menu</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 2 — Dietary Tags Legend -->
+    <section class="section" style="padding-block:32px;background:var(--bg-alt)">
+      <div class="container">
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center">
+          <strong style="font-size:0.875rem">Key:</strong>
+          <span class="badge badge--vegan">🌿 Vegan</span>
+          <span class="badge badge--new">🌾 Gluten-Free</span>
+          <span class="badge badge--limited">🥜 Contains Nuts</span>
+          <span class="badge badge--bestseller">⭐ Best Seller</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3 — Scoops & Cones -->
+    <section class="section" id="scoops" style="padding:80px 0;">
+      <div class="container">
+        <div class="menu-category-header">
+          <div class="menu-category-header__icon"><i class="fa-solid fa-ice-cream"></i></div>
+          <div>
+            <h2 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:4px;">Scoops &amp; Cones</h2>
+            <p style="color:var(--text-secondary);font-size:0.9375rem">Fresh-churned daily. Mix &amp; match any flavors.</p>
+          </div>
+        </div>
+        
+        <div class="menu-list">
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Single Scoop</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$4.50</span>
+            </div>
+            <p class="menu-item__desc">Cup or waffle cone</p>
+            <div class="menu-item__tags"><span class="badge badge--vegan">🌿 Vegan Option</span></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Double Scoop</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$7.00</span>
+            </div>
+            <p class="menu-item__desc">Choose 2 flavors</p>
+            <div class="menu-item__tags"><span class="badge badge--bestseller">⭐ Best Seller</span></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Triple Scoop</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$9.50</span>
+            </div>
+            <p class="menu-item__desc">Waffle cone only, choose 3 flavors</p>
+            <div class="menu-item__tags"><span class="badge badge--bestseller">⭐ Best Seller</span></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Kids Scoop</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$3.00</span>
+            </div>
+            <p class="menu-item__desc">Mini cup, 1 flavor</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Waffle Cone Add-on</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">+$1.50</span>
+            </div>
+            <p class="menu-item__desc">House-made classic waffle cone</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Sugar Cone Add-on</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">+$0.75</span>
+            </div>
+            <p class="menu-item__desc">Crispy classic sugar cone</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4 — Signature Sundaes -->
+    <section class="section section-alt" id="sundaes" style="padding:80px 0;">
+      <div class="container">
+        <div class="menu-category-header">
+          <div class="menu-category-header__icon"><i class="fa-solid fa-bowl-food"></i></div>
+          <div>
+            <h2 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:4px;">Signature Sundaes</h2>
+            <p style="color:var(--text-secondary);font-size:0.9375rem">Decadent creations to satisfy your sweet tooth.</p>
+          </div>
+        </div>
+        
+        <div class="menu-list">
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Classic Banana Split</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$8.50</span>
+            </div>
+            <p class="menu-item__desc">2 scoops, banana, whipped cream, cherry</p>
+            <div class="menu-item__tags"><span class="badge badge--bestseller">⭐ Best Seller</span></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Brownie Sundae Supreme</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$10.50</span>
+            </div>
+            <p class="menu-item__desc">Warm brownie, 2 scoops, fudge, nuts</p>
+            <div class="menu-item__tags"><span class="badge badge--bestseller">⭐ Best Seller</span> <span class="badge badge--limited">🥜 Contains Nuts</span></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Mango Float</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$9.00</span>
+            </div>
+            <p class="menu-item__desc">Mango sorbet, coconut cream, wafer</p>
+            <div class="menu-item__tags"><span class="badge badge--vegan">🌿 Vegan</span></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Strawberry Shortcake Sundae</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$9.50</span>
+            </div>
+            <p class="menu-item__desc">Vanilla scoop, shortcake crumble, strawberry coulis</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Chocolate Volcano</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$12.00</span>
+            </div>
+            <p class="menu-item__desc">3 scoops, hot fudge, brownie base</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5 — Waffle Creations -->
+    <section class="section" id="waffles" style="padding:80px 0;">
+      <div class="container">
+        <div class="menu-category-header">
+          <div class="menu-category-header__icon"><i class="fa-solid fa-cookie-bite"></i></div>
+          <div>
+            <h2 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:4px;">Waffle Creations</h2>
+            <p style="color:var(--text-secondary);font-size:0.9375rem">Warm waffles paired perfectly with our ice cream.</p>
+          </div>
+        </div>
+        
+        <div class="menu-list">
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Waffle Cone Tower</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$9.00</span>
+            </div>
+            <p class="menu-item__desc">3 scoops, rainbow sprinkles, fudge drizzle</p>
+            <div class="menu-item__tags"><span class="badge badge--bestseller">⭐ Best Seller</span> <span class="badge badge--new" style="background:#E0F2FE;color:#0369A1;border-color:#7DD3FC">✨ New</span></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Belgian Waffle Stack</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$11.00</span>
+            </div>
+            <p class="menu-item__desc">2 scoops, fresh berries, whipped cream</p>
+            <div class="menu-item__tags"><span class="badge badge--limited">⏳ Limited Time</span></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Waffle &amp; Syrup</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$6.00</span>
+            </div>
+            <p class="menu-item__desc">Plain waffle with maple syrup</p>
+            <div class="menu-item__tags"><span class="badge badge--vegan">🌿 Vegan Option</span></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Churro Waffle Twist</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$10.00</span>
+            </div>
+            <p class="menu-item__desc">Cinnamon sugar waffle, caramel dip, 1 scoop</p>
+            <div class="menu-item__tags"><span class="badge badge--new" style="background:#E0F2FE;color:#0369A1;border-color:#7DD3FC">✨ New</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6 — Custom Cakes -->
+    <section class="section section-alt" id="cakes" style="padding:80px 0;">
+      <div class="container">
+        <div class="menu-category-header">
+          <div class="menu-category-header__icon"><i class="fa-solid fa-cake-candles"></i></div>
+          <div>
+            <h2 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:4px;">Custom Cakes</h2>
+            <p style="color:var(--text-secondary);font-size:0.9375rem">Custom cakes require 48hr advance notice. Call or email to order.</p>
+          </div>
+        </div>
+        
+        <div class="menu-list">
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Ice Cream Cake (1kg)</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$32.00</span>
+            </div>
+            <p class="menu-item__desc">Serves 6–8, choose 2 flavors</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Ice Cream Cake (2kg)</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$55.00</span>
+            </div>
+            <p class="menu-item__desc">Serves 12–15, choose 3 flavors</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Birthday Sundae Cake</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$45.00</span>
+            </div>
+            <p class="menu-item__desc">Custom design, message on top</p>
+            <div class="menu-item__tags"><span class="badge badge--bestseller">⭐ Best Seller</span></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Vegan Fruit Cake</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$38.00</span>
+            </div>
+            <p class="menu-item__desc">Sorbet layers, berry compote</p>
+            <div class="menu-item__tags"><span class="badge badge--vegan">🌿 Vegan</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7 — Drinks & Shakes -->
+    <section class="section" id="drinks" style="padding:80px 0;">
+      <div class="container">
+        <div class="menu-category-header">
+          <div class="menu-category-header__icon"><i class="fa-solid fa-mug-hot"></i></div>
+          <div>
+            <h2 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:4px;">Drinks &amp; Shakes</h2>
+            <p style="color:var(--text-secondary);font-size:0.9375rem">Refreshing beverages to complement your dessert.</p>
+          </div>
+        </div>
+        
+        <div class="menu-list">
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Classic Milkshake</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$6.50</span>
+            </div>
+            <p class="menu-item__desc">Made with any flavor of your choice</p>
+            <div class="menu-item__tags"><span class="badge badge--bestseller">⭐ Best Seller</span></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Thick Shake</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$8.50</span>
+            </div>
+            <p class="menu-item__desc">Double scoop, extra thick and creamy</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Ice Cream Float</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$7.00</span>
+            </div>
+            <p class="menu-item__desc">Your choice of soda + 1 scoop</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Hot Chocolate Fudge</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$4.50</span>
+            </div>
+            <p class="menu-item__desc">Rich, hot cocoa drink</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item__header">
+              <span class="menu-item__title">Fresh Lemonade</span>
+              <span class="menu-item__dots"></span>
+              <span class="menu-item__price">$3.50</span>
+            </div>
+            <p class="menu-item__desc">House-made refreshing lemonade</p>
+            <div class="menu-item__tags"><span class="badge badge--vegan">🌿 Vegan</span> <span class="badge badge--new">🌾 Gluten-Free</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8 — CTA Strip -->
+    <section class="section" style="background:var(--secondary);text-align:center;padding:60px 0;">
+      <div class="container">
+        <h2 style="color:#fff;font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.5rem);margin-bottom:12px">Need a Large Order?</h2>
+        <p style="color:rgba(255,255,255,0.85);margin-bottom:28px;font-size:1.0625rem">Birthdays, weddings, corporate events — we bring the scoop to you.</p>
+        <a href="bulk-orders.html" class="btn btn-white" style="color:var(--secondary);background:#fff;border-radius:9999px;padding:12px 24px;font-weight:600;display:inline-flex;align-items:center;gap:8px;text-decoration:none;"><i class="fa-solid fa-box-open"></i> View Bulk Order Packages</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo-link" aria-label="SCOOP - Go to homepage" style="display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;text-decoration:none">
+            <svg class="footer__logo-icon" width="28" height="35" viewBox="0 0 80 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M30 55 L50 95 L70 55 Z" fill="#D4A373"/>
+              <circle cx="50" cy="45" r="22" fill="#C97A5E"/>
+              <circle cx="50" cy="25" r="18" fill="#2A5B52"/>
+              <circle cx="50" cy="8" r="5" fill="#BE5A38"/>
+              <circle cx="43" cy="19" r="4" fill="rgba(255,255,255,0.3)"/>
+            </svg>
+            <span class="footer__logo-text">SCOOP</span>
+          </a>
+          <p class="footer__desc">Handcrafted ice cream and desserts made with love, natural ingredients, and a generous scoop of happiness since 2010.</p>
+          <div class="footer__social" aria-label="Social media links">
+            <a href="#" class="footer__social-link footer__social-link--facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="footer__social-link footer__social-link--instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="footer__social-link footer__social-link--twitter" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="footer__social-link footer__social-link--tiktok" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="footer__column">
+          <h3 class="footer__heading">Quick Links</h3>
+          <ul class="footer__links">
+            <li><a href="index.html" class="footer__link">Home</a></li>
+            <li><a href="about.html" class="footer__link">About Us</a></li>
+            <li><a href="flavors.html" class="footer__link">Flavors</a></li>
+            <li><a href="menu.html" class="footer__link">Menu</a></li>
+            <li><a href="blog.html" class="footer__link">Blog</a></li>
+            <li><a href="contact.html" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer__column">
+          <h3 class="footer__heading">Our Offerings</h3>
+          <ul class="footer__links">
+            <li><a href="menu.html" class="footer__link">Ice Cream Scoops</a></li>
+            <li><a href="menu.html" class="footer__link">Signature Sundaes</a></li>
+            <li><a href="menu.html" class="footer__link">Waffle Creations</a></li>
+            <li><a href="bulk-orders.html" class="footer__link">Bulk Orders</a></li>
+            <li><a href="menu.html" class="footer__link">Custom Cakes</a></li>
+          </ul>
+        </div>
+        <div class="footer__column">
+          <h3 class="footer__heading">Get in Touch</h3>
+          <div class="footer__contact">
+            <div class="footer__contact-item"><i class="fa-solid fa-location-dot"></i><p>42 Sweet Lane, Dessert District, CA 90210</p></div>
+            <div class="footer__contact-item"><i class="fa-solid fa-phone"></i><p><a href="tel:+15554267283">+1 (555) 426-7283</a></p></div>
+            <div class="footer__contact-item"><i class="fa-solid fa-envelope"></i><p><a href="mailto:hello@scoop-parlour.com">hello@scoop-parlour.com</a></p></div>
+            <div class="footer__contact-item"><i class="fa-solid fa-clock"></i><p>Mon-Fri: 10am - 10pm<br>Sat-Sun: 9am - 11pm</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2025 SCOOP Ice Cream &amp; Dessert Parlour. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/forms.js"></script>
+</bo🍦
+</html>

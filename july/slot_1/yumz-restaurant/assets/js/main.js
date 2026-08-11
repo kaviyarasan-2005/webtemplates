@@ -578,7 +578,32 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ============================================================
-   16. UTILITY FUNCTIONS
+   16. PROMO CODE COPY
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  const copyBtn = document.getElementById('copyPromoBtn');
+  const codeText = document.getElementById('promoCodeText');
+  const label = document.getElementById('copyBtnLabel');
+
+  if (!copyBtn || !codeText) return;
+
+  copyBtn.addEventListener('click', () => {
+    const code = codeText.textContent.trim();
+    navigator.clipboard.writeText(code).then(() => {
+      if (label) label.textContent = 'Copied!';
+      copyBtn.style.backgroundColor = '#2A9D8F';
+      setTimeout(() => {
+        if (label) label.textContent = 'Copy';
+        copyBtn.style.backgroundColor = '';
+      }, 2000);
+    }).catch(() => {
+      if (label) label.textContent = 'Copied!';
+    });
+  });
+});
+
+/* ============================================================
+   17. UTILITY FUNCTIONS
    ============================================================ */
 function throttle(fn, limit) {
   let inThrottle = false;
