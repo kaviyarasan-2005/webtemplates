@@ -4,25 +4,6 @@
 'use strict';
 
 const LoaderManager = (() => {
-  // ─── Page Loader ──────────────────────────────────────
-  function initPageLoader() {
-    const loader = document.getElementById('pageLoader');
-    if (!loader) return;
-
-    const hide = () => {
-      loader.classList.add('loaded');
-      setTimeout(() => {
-        loader.style.display = 'none';
-      }, 600);
-    };
-
-    if (document.readyState === 'complete') {
-      setTimeout(hide, 400);
-    } else {
-      window.addEventListener('load', () => setTimeout(hide, 400));
-    }
-  }
-
   // ─── Skeleton Loaders for dynamic content ─────────────
   function createSkeletonCard() {
     return `
@@ -67,7 +48,6 @@ const LoaderManager = (() => {
   }
 
   function init() {
-    initPageLoader();
     initLazyImages();
   }
 
