@@ -11,13 +11,19 @@
 const ThemeManager = {
   init() {
     const saved = localStorage.getItem('wash-theme') || 'light';
-    this.set(saved);
     document.querySelectorAll('.theme-toggle').forEach(btn => {
+      if (!btn.querySelector('.icon-moon') && !btn.querySelector('.icon-sun')) {
+        btn.innerHTML = `
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2m-3.34-5.66 1.41-1.41M6.34 17.66l-1.41 1.41"/></svg>
+        `;
+      }
       btn.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme');
         this.set(current === 'dark' ? 'light' : 'dark');
       });
     });
+    this.set(saved);
   },
 
   set(theme) {
