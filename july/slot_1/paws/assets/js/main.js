@@ -378,19 +378,51 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================================
   // 14. BRANDS A-Z FILTER
   // ============================================================
-  const alphaPills = document.querySelectorAll('.alpha-pill');
-  const brandItems = document.querySelectorAll('.brand-item-filterable');
-  
-  if (alphaPills.length && brandItems.length) {
-    alphaPills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        alphaPills.forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        const letter = pill.getAttribute('data-alpha');
-        brandItems.forEach(item => {
-          const name = item.getAttribute('data-brand') || '';
-          item.style.display = (letter === 'All' || name.toUpperCase().startsWith(letter)) ? '' : 'none';
+  // 12. MOBILE FILTER DRAWER & COLLAPSIBLE GROUPS
+  // ============================================================
+  const mobileFilterBtn = document.querySelector('.mobile-filter-btn');
+  const filterSidebar = document.querySelector('.filter-sidebar');
+
+  if (mobileFilterBtn && filterSidebar) {
+    mobileFilterBtn.addEventListener('click', () => {
+      filterSidebar.classList.toggle('open');
+      mobileFilterBtn.classList.toggle('active');
+    });
+  }
+
+  document.querySelectorAll('.filter-group-title').forEach(title => {
+    title.addEventListener('click', () => {
+      const group = title.closest('.filter-group');
+      if (group) {
+        group.classList.toggle('collapsed');
+      }
+    });
+  });
+
+  // ============================================================
+  // 15. PRODUCT DETAILS TAB SWITCHER
+  // ============================================================
+  const tabBtns = document.querySelectorAll('.details-tabs-nav .tab-btn');
+  const tabPanels = document.querySelectorAll('.details-tabs .tab-panel');
+  if (tabBtns.length && tabPanels.length) {
+    tabBtns.forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => {
+          b.classList.remove('active');
+          b.style.color = 'var(--color-text-muted)';
+          b.style.borderBottom = 'none';
         });
+        tabPanels.forEach(p => {
+          p.classList.remove('active');
+          p.style.display = 'none';
+        });
+        btn.classList.add('active');
+        btn.style.color = 'var(--color-primary)';
+        btn.style.borderBottom = '2px solid var(--color-primary)';
+        if (tabPanels[idx]) {
+          tabPanels[idx].classList.add('active');
+          tabPanels[idx].style.display = 'block';
+        }
       });
     });
   }
