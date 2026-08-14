@@ -19,61 +19,92 @@
     
     <style>
         .pricing-card {
-            border: 1px solid var(--clr-border);
-            border-radius: var(--radius-lg);
-            padding: var(--space-8);
-            background-color: var(--clr-surface);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 150px 150px 0 0; /* Arched top */
+            padding: var(--space-12) var(--space-8);
+            background-color: var(--clr-bg-alt);
             display: flex;
             flex-direction: column;
-            transition: var(--trans-default);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            text-align: center;
         }
         .pricing-card:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-5px);
+            border-color: var(--clr-honey-gold);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
         .pricing-card.popular {
-            border-color: var(--clr-lavender);
-            box-shadow: var(--shadow-md);
+            background-color: #0F172A; /* Dark Navy */
+            border: 2px solid var(--clr-honey-gold);
+            color: white;
+            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.15); /* Gold glow */
+            transform: scale(1.05);
+            z-index: 2;
+        }
+        .pricing-card.popular:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 25px 60px rgba(212, 175, 55, 0.25);
         }
         .pricing-badge {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: var(--clr-lavender);
+            background-color: var(--clr-honey-gold);
             color: white;
-            padding: var(--space-1) var(--space-4);
-            border-radius: var(--radius-full);
-            font-size: 0.875rem;
+            padding: var(--space-1) var(--space-6);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             font-weight: 600;
         }
         .price {
-            font-size: 3rem;
-            font-family: var(--font-secondary);
-            font-weight: 700;
+            font-size: 3.5rem;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
             color: var(--clr-text-main);
             margin-bottom: var(--space-2);
+            line-height: 1;
+        }
+        .pricing-card.popular .price {
+            color: white;
         }
         .price span {
-            font-size: 1rem;
+            font-size: 0.875rem;
+            font-family: var(--font-primary);
+            font-style: normal;
             color: var(--clr-text-muted);
-            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .pricing-card.popular .price span {
+            color: rgba(255,255,255,0.7);
         }
         .features-list {
-            margin: var(--space-6) 0;
+            margin: var(--space-8) 0;
             flex-grow: 1;
+            padding-top: var(--space-6);
+            border-top: 1px solid var(--clr-border);
+        }
+        .pricing-card.popular .features-list {
+            border-color: rgba(255,255,255,0.1);
         }
         .features-list li {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: var(--space-3);
-            margin-bottom: var(--space-3);
+            margin-bottom: var(--space-4);
             color: var(--clr-text-muted);
+            font-size: 0.95rem;
+        }
+        .pricing-card.popular .features-list li {
+            color: rgba(255,255,255,0.8);
         }
         .features-list i {
-            color: var(--clr-lavender);
-            font-size: 1.25rem;
+            color: var(--clr-honey-gold);
+            font-size: 1rem;
         }
         @media (max-width: 1024px) {
             .pricing-card {
@@ -93,11 +124,11 @@
 </head>
 <body>
 
-    <!-- Header -->
+                <!-- Header -->
     <header class="header">
         <div class="container navbar">
-            <a href="../index.html" class="logo">
-                <span class="logo-icon"><i class="ph-fill ph-gift"></i></span> Kado
+            <a href="../index.html" class="logo" style="font-family: 'Playfair Display', serif; display: flex; align-items: center; gap: 8px;">
+                <i class="ph-fill ph-gift" style="color: var(--clr-honey-gold); font-size: 1.5rem;"></i> Kado
             </a>
             
             <nav class="nav-links">
@@ -116,10 +147,10 @@
             </nav>
 
             <div class="nav-actions">
-                <button id="dir-toggle" class="btn-icon" aria-label="Toggle RTL/LTR">
+                <button id="dir-toggle" class="btn-icon" aria-label="Toggle RTL/LTR" title="Toggle RTL/LTR">
                     <span class="dir-text" style="font-weight: 700; font-size: 0.8rem;">RTL</span>
                 </button>
-                <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark/Light Mode">
+                <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark/Light Mode" title="Toggle Theme">
                     <i class="ph ph-moon"></i>
                 </button>
                 <a href="#" class="btn btn-primary nav-cta">Shop Now</a>
@@ -152,61 +183,152 @@
     </div>
 
     <main>
-        <!-- Page Header (Gradient SaaS Style) -->
-        <section style="background: linear-gradient(135deg, var(--clr-lavender) 0%, var(--clr-honey-gold) 100%); color: white; text-align: center; padding: var(--space-24) 0 calc(var(--space-24) + 100px) 0;">
-            <div class="container">
-                <h1 style="color: white; font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: var(--space-4); line-height: 1.2;">Simple, Transparent Pricing</h1>
-                <p style="max-width: 600px; margin: 0 auto; font-size: 1.125rem; opacity: 0.9;">Whether you need a single gift or corporate volume, we have a plan for you.</p>
+        <!-- Page Header (Luxury Editorial Style) -->
+        <section style="background-image: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.95)), url('../assets/images/pricing_hero.jpg'); background-size: cover; background-position: center; position: relative; color: white; text-align: center; padding: 160px 0 100px 0;">
+            
+            <div class="container relative" style="z-index: 2;">
+                <span style="color: var(--clr-honey-gold); text-transform: uppercase; letter-spacing: 4px; font-size: 0.85rem; margin-bottom: 20px; display: block;">The Art of Giving</span>
+                <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(3rem, 6vw, 5rem); margin-bottom: var(--space-6); font-style: italic; line-height: 1.1; color: white;">Curated Pricing</h1>
+                <p style="max-width: 500px; margin: 0 auto; font-size: 1.1rem; color: #94A3B8; font-weight: 300; line-height: 1.8;">Whether you are seeking a single unforgettable presentation or orchestrating a corporate volume, discover a tier tailored for your needs.</p>
             </div>
         </section>
 
-        <!-- Pricing Cards Section (Overlapping) -->
-        <section class="section container p-responsive" style="margin-top: -120px; position: relative; z-index: 10;">
-            <div class="grid grid-cols-1 grid-cols-3 gap-8">
+        <!-- Pricing Cards Section -->
+        <section class="section container p-responsive" style="margin-top: 0; position: relative; z-index: 10;">
+            <div class="grid grid-cols-1 grid-cols-3 gap-8" style="align-items: center; max-width: 1100px; margin: 0 auto;">
                 <!-- Basic Tier -->
                 <div class="pricing-card">
-                    <h3 style="margin-bottom: var(--space-2);">Standard Joy</h3>
-                    <p class="text-muted" style="margin-bottom: var(--space-4);">Perfect for single, simple gifts.</p>
-                    <div class="price">$5<span>/item</span></div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: var(--space-2);">Standard Joy</h3>
+                    <p style="color: var(--clr-text-muted); font-size: 0.9rem; margin-bottom: var(--space-6);">Perfect for single, elegant gifts.</p>
+                    <div class="price">$5<br><span>per item</span></div>
                     <ul class="features-list">
                         <li><i class="ph-fill ph-check-circle"></i> Standard Gift Box</li>
-                        <li><i class="ph-fill ph-check-circle"></i> Printed Gift Message</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Printed Message</li>
                         <li><i class="ph-fill ph-check-circle"></i> Standard Ribbon</li>
-                        <li style="opacity: 0.5;"><i class="ph ph-x-circle"></i> No Engraving</li>
-                        <li style="opacity: 0.5;"><i class="ph ph-x-circle"></i> Standard Shipping</li>
                     </ul>
-                    <a href="#" class="btn btn-outline" style="width: 100%;">Select Standard</a>
+                    <a href="#" class="btn btn-outline" style="width: 100%; text-transform: uppercase; letter-spacing: 1px; border-radius: 0;">Select Standard</a>
                 </div>
 
                 <!-- Premium Tier -->
-                <div class="pricing-card popular">
-                    <div class="pricing-badge">Most Popular</div>
-                    <h3 style="margin-bottom: var(--space-2);">Premium Magic</h3>
-                    <p class="text-muted" style="margin-bottom: var(--space-4);">For when you want to make a lasting impression.</p>
-                    <div class="price">$15<span>/item</span></div>
+                <div class="pricing-card popular" style="padding-top: var(--space-12); padding-bottom: var(--space-12);">
+                    <div class="pricing-badge">The Signature</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: white; margin-bottom: var(--space-2);">Premium Magic</h3>
+                    <p style="color: #94A3B8; font-size: 0.9rem; margin-bottom: var(--space-6);">For a truly unforgettable impression.</p>
+                    <div class="price">$15<br><span>per item</span></div>
                     <ul class="features-list">
                         <li><i class="ph-fill ph-check-circle"></i> Luxury Magnetic Box</li>
                         <li><i class="ph-fill ph-check-circle"></i> Handwritten Card</li>
-                        <li><i class="ph-fill ph-check-circle"></i> Premium Silk Ribbon</li>
-                        <li><i class="ph-fill ph-check-circle"></i> Basic Engraving/Monogramming</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Italian Silk Ribbon</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Basic Engraving</li>
                         <li><i class="ph-fill ph-check-circle"></i> Priority Processing</li>
                     </ul>
-                    <a href="#" class="btn btn-primary" style="width: 100%;">Select Premium</a>
+                    <a href="#" class="btn" style="width: 100%; background-color: var(--clr-honey-gold); color: white; text-transform: uppercase; letter-spacing: 1px; border-radius: 0;">Select Premium</a>
                 </div>
 
                 <!-- Corporate Tier -->
                 <div class="pricing-card">
-                    <h3 style="margin-bottom: var(--space-2);">Corporate Elite</h3>
-                    <p class="text-muted" style="margin-bottom: var(--space-4);">Bulk gifting with full brand customization.</p>
-                    <div class="price">Custom</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: var(--space-2);">Corporate Elite</h3>
+                    <p style="color: var(--clr-text-muted); font-size: 0.9rem; margin-bottom: var(--space-6);">Bespoke gifting with full branding.</p>
+                    <div class="price" style="font-size: 2.5rem; padding: 10px 0;">Custom<br><span>bespoke</span></div>
                     <ul class="features-list">
                         <li><i class="ph-fill ph-check-circle"></i> Custom Branded Boxes</li>
-                        <li><i class="ph-fill ph-check-circle"></i> Company Logo Engraving</li>
-                        <li><i class="ph-fill ph-check-circle"></i> Dedicated Account Manager</li>
-                        <li><i class="ph-fill ph-check-circle"></i> Bulk Shipping Discounts</li>
-                        <li><i class="ph-fill ph-check-circle"></i> Flexible Invoicing</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Logo Engraving</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Dedicated Concierge</li>
                     </ul>
-                    <a href="contact.html" class="btn btn-outline" style="width: 100%;">Contact Sales</a>
+                    <a href="contact.html" class="btn btn-outline" style="width: 100%; text-transform: uppercase; letter-spacing: 1px; border-radius: 0;">Inquire Now</a>
+                </div>
+            </div>
+        </section>
+        <!-- Section: The Signature Kado Experience -->
+        <section class="section" style="background-color: var(--clr-bg-alt); padding: 80px 0;">
+            <div class="container text-center">
+                <span style="color: var(--clr-honey-gold); text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; display: block; margin-bottom: 10px;">The Standard</span>
+                <h2 style="margin-bottom: var(--space-12); color: var(--clr-lavender-dark);">The Signature Kado Experience</h2>
+                
+                <div class="grid grid-cols-1 grid-cols-3 gap-8 text-center">
+                    <div class="card" style="background-color: transparent; border: none; box-shadow: none;">
+                        <div style="width: 80px; height: 80px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-6); box-shadow: var(--shadow-sm); border: 1px solid var(--clr-border);">
+                            <i class="ph ph-scissors" style="font-size: 2rem; color: var(--clr-honey-gold);"></i>
+                        </div>
+                        <h4 style="margin-bottom: var(--space-4);">Artisan Wrapping</h4>
+                        <p class="text-muted">Every gift is enclosed in thick, textured luxury paper and bound with hand-tied Italian silk ribbon.</p>
+                    </div>
+                    
+                    <div class="card" style="background-color: transparent; border: none; box-shadow: none;">
+                        <div style="width: 80px; height: 80px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-6); box-shadow: var(--shadow-sm); border: 1px solid var(--clr-border);">
+                            <i class="ph ph-magnifying-glass" style="font-size: 2rem; color: var(--clr-honey-gold);"></i>
+                        </div>
+                        <h4 style="margin-bottom: var(--space-4);">Meticulous Inspection</h4>
+                        <p class="text-muted">A dedicated concierge inspects every item for flawless quality before it ever reaches the box.</p>
+                    </div>
+                    
+                    <div class="card" style="background-color: transparent; border: none; box-shadow: none;">
+                        <div style="width: 80px; height: 80px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-6); box-shadow: var(--shadow-sm); border: 1px solid var(--clr-border);">
+                            <i class="ph ph-magic-wand" style="font-size: 2rem; color: var(--clr-honey-gold);"></i>
+                        </div>
+                        <h4 style="margin-bottom: var(--space-4);">The Reveal</h4>
+                        <p class="text-muted">We design the unboxing process to be a cinematic, unforgettable experience for the recipient.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: À La Carte Enhancements -->
+        <section class="section">
+            <div class="container">
+                <div class="text-center" style="margin-bottom: var(--space-12);">
+                    <h2 style="color: var(--clr-text-main);">À La Carte Enhancements</h2>
+                    <p class="text-muted" style="max-width: 600px; margin: 0 auto;">Personalize your gift with optional premium upgrades.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 grid-cols-2 gap-8" style="max-width: 900px; margin: 0 auto;">
+                    <!-- Enhancement 1 -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: var(--space-4); border-bottom: 1px dashed var(--clr-border);">
+                        <div style="display: flex; align-items: center; gap: var(--space-4);">
+                            <i class="ph ph-stamp" style="font-size: 1.5rem; color: var(--clr-lavender);"></i>
+                            <div>
+                                <h5 style="margin: 0; font-weight: 600;">Custom Wax Seal</h5>
+                                <span style="font-size: 0.85rem; color: var(--clr-text-muted);">Hand-pressed gold or navy</span>
+                            </div>
+                        </div>
+                        <div style="font-family: var(--font-secondary); font-weight: 700; color: var(--clr-text-main);">+$5 <span style="font-weight: 400; font-size: 0.85rem; color: var(--clr-text-muted);">/ea</span></div>
+                    </div>
+                    
+                    <!-- Enhancement 2 -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: var(--space-4); border-bottom: 1px dashed var(--clr-border);">
+                        <div style="display: flex; align-items: center; gap: var(--space-4);">
+                            <i class="ph ph-pen-nib" style="font-size: 1.5rem; color: var(--clr-lavender);"></i>
+                            <div>
+                                <h5 style="margin: 0; font-weight: 600;">Calligraphy Tags</h5>
+                                <span style="font-size: 0.85rem; color: var(--clr-text-muted);">Penned by a master calligrapher</span>
+                            </div>
+                        </div>
+                        <div style="font-family: var(--font-secondary); font-weight: 700; color: var(--clr-text-main);">+$10 <span style="font-weight: 400; font-size: 0.85rem; color: var(--clr-text-muted);">/ea</span></div>
+                    </div>
+                    
+                    <!-- Enhancement 3 -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: var(--space-4); border-bottom: 1px dashed var(--clr-border);">
+                        <div style="display: flex; align-items: center; gap: var(--space-4);">
+                            <i class="ph ph-paper-plane-tilt" style="font-size: 1.5rem; color: var(--clr-lavender);"></i>
+                            <div>
+                                <h5 style="margin: 0; font-weight: 600;">Premium Courier</h5>
+                                <span style="font-size: 0.85rem; color: var(--clr-text-muted);">Same-day white glove delivery</span>
+                            </div>
+                        </div>
+                        <div style="font-family: var(--font-secondary); font-weight: 700; color: var(--clr-text-main);">+$25</div>
+                    </div>
+                    
+                    <!-- Enhancement 4 -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: var(--space-4); border-bottom: 1px dashed var(--clr-border);">
+                        <div style="display: flex; align-items: center; gap: var(--space-4);">
+                            <i class="ph ph-text-t" style="font-size: 1.5rem; color: var(--clr-lavender);"></i>
+                            <div>
+                                <h5 style="margin: 0; font-weight: 600;">Monogramming</h5>
+                                <span style="font-size: 0.85rem; color: var(--clr-text-muted);">Initials on leather goods</span>
+                            </div>
+                        </div>
+                        <div style="font-family: var(--font-secondary); font-weight: 700; color: var(--clr-text-main);">+$15 <span style="font-weight: 400; font-size: 0.85rem; color: var(--clr-text-muted);">/ea</span></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -259,8 +381,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <a href="../index.html" class="logo" style="margin-bottom: var(--space-4);">
-                        <span class="logo-icon"><i class="ph-fill ph-gift"></i></span> Kado
+                    <a href="../index.html" class="logo" style="margin-bottom: var(--space-4); font-family: 'Playfair Display', serif; display: flex; align-items: center; gap: 8px;">
+                        <i class="ph-fill ph-gift" style="color: var(--clr-honey-gold); font-size: 1.5rem;"></i> Kado
                     </a>
                     <p class="text-muted" style="margin-bottom: var(--space-4);">Bringing happiness to every occasion with thoughtfully curated gifts and unforgettable souvenirs.</p>
                     <div class="social-links">

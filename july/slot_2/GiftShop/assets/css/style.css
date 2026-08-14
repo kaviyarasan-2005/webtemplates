@@ -1,15 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
 /* ==========================================================================
    Base Variables & Theming
    ========================================================================== */
 :root {
   /* Brand Colors */
-  --clr-lavender: #8B5CF6;
-  --clr-lavender-light: #A78BFA;
-  --clr-lavender-dark: #7C3AED;
+  --clr-lavender: #0F172A; /* Deep Navy */
+  --clr-lavender-light: #1E293B;
+  --clr-lavender-dark: #020617;
   
-  --clr-honey-gold: #FBBF24;
-  --clr-honey-gold-light: #FCD34D;
-  --clr-honey-gold-dark: #D97706;
+  --clr-honey-gold: #D4AF37; /* Elegant Gold */
+  --clr-honey-gold-light: #FDE68A;
+  --clr-honey-gold-dark: #B45309;
 
   /* Light Theme Colors */
   --clr-bg: #FFFCF5; /* Ivory */
@@ -21,7 +23,7 @@
   
   /* Typography */
   --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-secondary: 'Outfit', sans-serif; /* For headings to add character */
+  --font-secondary: 'Playfair Display', serif; /* For elegant headings */
   
   /* Spacing Scale (8px base) */
   --space-1: 0.25rem; /* 4px */
@@ -83,7 +85,10 @@ html {
 
 body {
   font-family: var(--font-primary);
-  background-color: var(--clr-bg);
+  background-color: #FAFAFA;
+  background-image: radial-gradient(#E5E7EB 2px, transparent 2px), radial-gradient(#E5E7EB 2px, transparent 2px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
   color: var(--clr-text-main);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -137,6 +142,17 @@ html[dir="rtl"] {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 var(--space-4);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+.card-occasion:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
 }
 
 .section {
@@ -208,6 +224,27 @@ html[dir="rtl"] {
   color: #fff;
 }
 
+html.dark .btn-outline {
+  border-color: var(--clr-text-main);
+  color: var(--clr-text-main);
+}
+
+html.dark .btn-outline:hover {
+  background-color: var(--clr-text-main);
+  color: var(--clr-bg);
+}
+
+.btn-outline-dark {
+  background-color: transparent;
+  border: 2px solid var(--clr-text-main);
+  color: var(--clr-text-main);
+}
+
+.btn-outline-dark:hover {
+  background-color: var(--clr-text-main);
+  color: #fff;
+}
+
 .btn-icon {
   width: 44px;
   height: 44px;
@@ -228,12 +265,20 @@ html[dir="rtl"] {
 
 /* Header & Navbar */
 .header {
-  background-color: var(--clr-surface);
+  background: var(--clr-surface);
   border-bottom: 1px solid var(--clr-border);
-  position: sticky;
-  top: 0;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border-radius: 0;
   z-index: 50;
   transition: var(--trans-default);
+}
+
+.dark-mode .header {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .navbar {
@@ -589,7 +634,7 @@ html[dir="rtl"] .mobile-menu {
   border-top: 1px solid var(--clr-border);
   padding-top: var(--space-16);
   padding-bottom: var(--space-8);
-  margin-top: var(--space-16);
+  margin-top: 0;
 }
 
 .footer-grid {
@@ -775,7 +820,13 @@ html.dark .hero::after {
   .mobile-menu { display: none; }
   
   .hero h1 { font-size: 4rem; }
-  .hero { padding: var(--space-24) 0; }
+  .hero { 
+    padding: var(--space-24) 0; 
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 /* Large Desktop: > 1280px */
