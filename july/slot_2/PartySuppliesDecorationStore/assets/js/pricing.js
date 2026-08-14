@@ -80,4 +80,19 @@
   addonToggles.forEach(t => t.addEventListener('change', updateAddonTotal));
   updateAddonTotal();
 
+  /* ══════════════════════════════════════════
+     3. INTERACTIVE SLIDER CALCULATOR
+  ══════════════════════════════════════════ */
+  window.updateGuestCalc = function (val) {
+    const guestCountVal = document.getElementById('guestCountVal');
+    const btnGuestVal   = document.getElementById('btnGuestVal');
+    const sliderPrice   = document.getElementById('sliderPrice');
+    if (guestCountVal) guestCountVal.textContent = val;
+    if (btnGuestVal)   btnGuestVal.textContent   = val;
+    if (sliderPrice) {
+      const price = Math.round(val * 9);
+      sliderPrice.textContent = '$' + price.toLocaleString();
+    }
+  };
+
 })();
