@@ -42,6 +42,10 @@
             padding: 3px 10px;
             border-radius: var(--radius-full);
         }
+        [data-theme="dark"] .save-badge {
+            background: linear-gradient(135deg, var(--clr-green-500), var(--clr-green-600));
+            color: #fff;
+        }
         
         /* Dark Mode Overrides for Billing Toggle */
         [data-theme="dark"] .toggle-billing {
@@ -52,7 +56,7 @@
             color: var(--text-primary);
         }
         [data-theme="dark"] .billing-option.active {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--clr-green-500), var(--clr-green-600));
             color: #fff;
             box-shadow: none;
         }
@@ -100,6 +104,39 @@
             .toggle-billing { flex-wrap: wrap; justify-content: center; padding: 6px; }
             .billing-option { padding: 6px 14px; font-size: 0.8rem; }
             .addon-card { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px; }
+        }
+
+        /* Pricing Cards Layout Fixes */
+        .pricing-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: stretch;
+            gap: 24px;
+        }
+        .pricing-card-side, .pricing-card-main {
+            flex: 1 1 300px;
+            max-width: 400px;
+            border-radius: var(--radius-xl);
+        }
+        .pricing-card-main {
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
+            border: 2px solid var(--primary);
+        }
+        
+        [data-theme="dark"] .pricing-card-main {
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.15), var(--bg-surface));
+            border-color: #22c55e;
+        }
+        [data-theme="dark"] .pricing-card-main .feature-icon,
+        [data-theme="dark"] .pricing-badge {
+            background: linear-gradient(135deg, #4ade80, #22c55e) !important;
+        }
+
+        @media (min-width: 1024px) {
+            .pricing-card-side, .pricing-card-main {
+                max-width: none;
+            }
         }
     </style>
 </head>
@@ -163,9 +200,9 @@
                 </div>
             </div>
 
-            <div style="display:flex; flex-wrap:wrap; justify-content:center; align-items:center;">
+            <div class="pricing-cards-container">
                 <!-- Basic Plan -->
-                <div class="pricing-card reveal" style="flex:1; min-width:300px; z-index:1; margin:10px -15px; border-radius:var(--radius-xl);">
+                <div class="pricing-card pricing-card-side reveal">
                     <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
                         <div class="feature-icon feature-icon-green" style="width:48px;height:48px;"><i class="fa-solid fa-seedling" aria-hidden="true"></i></div>
                         <div>
@@ -191,7 +228,7 @@
                 </div>
 
                 <!-- Standard Plan -->
-                <div class="pricing-card featured reveal" style="flex:1.1; min-width:320px; z-index:2; box-shadow:0 25px 50px -12px rgba(0,0,0,0.3); padding:48px; border:2px solid var(--primary);">
+                <div class="pricing-card featured pricing-card-main reveal">
                     <div class="pricing-badge">Most Popular</div>
                     <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
                         <div class="feature-icon" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;width:48px;height:48px;"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
@@ -218,7 +255,7 @@
                 </div>
 
                 <!-- Premium Plan -->
-                <div class="pricing-card reveal" style="flex:1; min-width:300px; z-index:1; margin:10px -15px; border-radius:var(--radius-xl);">
+                <div class="pricing-card pricing-card-side reveal">
                     <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
                         <div class="feature-icon feature-icon-blue" style="width:48px;height:48px;"><i class="fa-solid fa-crown" aria-hidden="true"></i></div>
                         <div>
