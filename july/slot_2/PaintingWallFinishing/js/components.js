@@ -67,7 +67,7 @@ function buildNavbar() {
         </button>
 
         <!-- Get Quote CTA -->
-        <a href="${BASE}pages/contact.html" class="btn btn--primary" aria-label="Get Quote">Get Quote</a>
+        <a href="${BASE}index.html#store-hours" class="btn btn--primary" aria-label="Get Quote">Get Quote</a>
 
         <!-- Mobile hamburger -->
         <button class="navbar__hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
