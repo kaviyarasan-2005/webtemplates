@@ -1,5 +1,5 @@
 /* ============================================================
-   Pulse — Navigation Controller
+   ColorCraft — Navigation Controller
    ============================================================ */
 
 'use strict';

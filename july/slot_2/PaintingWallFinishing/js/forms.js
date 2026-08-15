@@ -1,5 +1,5 @@
 /**
- * Pulse — forms.js
+ * ColorCraft — forms.js
  * Client-side form validation, file upload, and form submission handling.
  */
 
@@ -95,8 +95,8 @@ function initFileUpload(container) {
   const input   = container.querySelector('.file-upload__input');
   const text    = container.querySelector('.file-upload__text');
   const hint    = container.querySelector('.file-upload__hint');
-  const preview = document.getElementById('prescriptionUploadPreview');
-  const status  = document.getElementById('prescriptionUploadStatus');
+  const preview = document.getElementById('projectUploadPreview');
+  const status  = document.getElementById('projectUploadStatus');
 
   if (!input) return;
 
@@ -121,7 +121,7 @@ function initFileUpload(container) {
       const reader = new FileReader();
       reader.onload = (e) => {
         preview.style.display = 'block';
-        preview.innerHTML = `<img src="${e.target.result}" alt="Prescription preview" style="max-width:100%;max-height:200px;border-radius:var(--radius-lg);border:2px solid var(--clr-secondary);">`;
+        preview.innerHTML = `<img src="${e.target.result}" alt="project preview" style="max-width:100%;max-height:200px;border-radius:var(--radius-lg);border:2px solid var(--clr-secondary);">`;
       };
       reader.readAsDataURL(file);
     } else if (preview) {

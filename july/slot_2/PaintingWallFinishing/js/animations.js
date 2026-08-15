@@ -1,5 +1,5 @@
 /**
- * Pulse — animations.js
+ * ColorCraft — animations.js
  * Scroll-triggered animations using IntersectionObserver.
  * Also handles: counter animation, hero parallax, skeleton loaders.
  */
