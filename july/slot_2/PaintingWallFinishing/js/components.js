@@ -19,11 +19,11 @@ function buildNavbar() {
     <div class="navbar__inner">
 
       <!-- Logo -->
-      <a href="${BASE}index.html" class="navbar__logo" aria-label="Pulse - Go to homepage">
+      <a href="${BASE}index.html" class="navbar__logo" aria-label="ColorCraft - Go to homepage">
         <div class="navbar__logo-icon" aria-hidden="true">
-          <i class="fas fa-cross"></i>
+          <i class="fas fa-paint-roller"></i>
         </div>
-        <span class="navbar__logo-text">Pulse</span>
+        <span class="navbar__logo-text">ColorCraft</span>
       </a>
 
       <!-- Desktop & Mobile Nav -->
@@ -66,7 +66,8 @@ function buildNavbar() {
           <i class="fas fa-moon" id="themeIcon" aria-hidden="true"></i>
         </button>
 
-
+        <!-- Get Quote CTA -->
+        <a href="${BASE}pages/contact.html" class="btn btn--primary" aria-label="Get Quote">Get Quote</a>
 
         <!-- Mobile hamburger -->
         <button class="navbar__hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -91,12 +92,12 @@ function buildFooter() {
 
         <!-- Brand -->
         <div class="footer__brand">
-          <a href="${BASE}index.html" class="footer__brand-logo" aria-label="Pulse - Home">
-            <div class="footer__brand-icon" aria-hidden="true"><i class="fas fa-cross"></i></div>
-            <span class="footer__brand-name">Pulse</span>
+          <a href="${BASE}index.html" class="footer__brand-logo" aria-label="ColorCraft - Home">
+            <div class="footer__brand-icon" aria-hidden="true"><i class="fas fa-paint-roller"></i></div>
+            <span class="footer__brand-name">ColorCraft</span>
           </a>
           <p class="footer__brand-desc">
-            India's most trusted pharmacy delivering genuine medicines, vitamins, baby care, and medical devices to your doorstep since 2009.
+            Your trusted painting and wall finishing experts, delivering flawless interiors and stunning exteriors to your home or business since 2009.
           </p>
           <div class="footer__social" role="list" aria-label="Social media links">
             <a href="#" class="footer__social-link" role="listitem" aria-label="Pulse on Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
@@ -114,8 +115,8 @@ function buildFooter() {
             <li role="listitem"><a href="${BASE}index.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Home</a></li>
             <li role="listitem"><a href="${BASE}pages/about.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>About Us</a></li>
             <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Services</a></li>
-            <li role="listitem"><a href="${BASE}pages/pricing.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Pricing</a></li>
-            <li role="listitem"><a href="${BASE}pages/blog.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Health Blog</a></li>
+            <li role="listitem"><a href="${BASE}pages/pricing.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Pricing & Packages</a></li>
+            <li role="listitem"><a href="${BASE}pages/blog.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Our Gallery</a></li>
             <li role="listitem"><a href="${BASE}pages/contact.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Contact</a></li>
             <li role="listitem"><a href="${BASE}pages/coming-soon.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Coming Soon</a></li>
           </ul>
@@ -125,20 +126,20 @@ function buildFooter() {
         <div class="footer__col">
           <h3 class="footer__col-title">Our Services</h3>
           <ul class="footer__links" role="list">
-            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Prescription Medicines</a></li>
-            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Home Delivery</a></li>
-            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Doctor Consultation</a></li>
-            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Lab Test Booking</a></li>
-            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Vitamins & Supplements</a></li>
-            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Baby & Mother Care</a></li>
-            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Medical Devices</a></li>
+            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Interior Painting</a></li>
+            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Exterior Painting</a></li>
+            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Cabinet Refinishing</a></li>
+            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Wallpaper Installation</a></li>
+            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Drywall Repair</a></li>
+            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Color Consultation</a></li>
+            <li role="listitem"><a href="${BASE}pages/service.html" class="footer__link"><i class="fas fa-chevron-right footer__link-icon" aria-hidden="true"></i>Commercial Painting</a></li>
           </ul>
         </div>
 
         <!-- Newsletter + Contact -->
         <div class="footer__col">
-          <h3 class="footer__col-title">Stay Healthy</h3>
-          <p style="color:rgba(255,255,255,0.6);font-size:var(--fs-sm);margin-bottom:var(--sp-4);">Get weekly health tips, medicine alerts, and exclusive member offers.</p>
+          <h3 class="footer__col-title">Stay Inspired</h3>
+          <p style="color:rgba(255,255,255,0.6);font-size:var(--fs-sm);margin-bottom:var(--sp-4);">Get seasonal painting tips, color trends, and exclusive offers.</p>
           <form class="footer__newsletter" aria-label="Newsletter subscription" data-newsletter>
             <input type="email" name="email" class="footer__newsletter-input" placeholder="Enter your email..." aria-label="Email address for newsletter" required>
           </form>
@@ -149,12 +150,12 @@ function buildFooter() {
               <a href="tel:+911800123456" class="footer__link" style="display:flex;gap:var(--sp-2);align-items:center;">
                 <i class="fas fa-phone" style="width:14px;" aria-hidden="true"></i> +91 1800-123-456
               </a>
-              <a href="mailto:care@Pulse.in" class="footer__link" style="display:flex;gap:var(--sp-2);align-items:center;">
-                <i class="fas fa-envelope" style="width:14px;" aria-hidden="true"></i> care@Pulse.in
+              <a href="mailto:hello@colorcraft.com" class="footer__link" style="display:flex;gap:var(--sp-2);align-items:center;">
+                <i class="fas fa-envelope" style="width:14px;" aria-hidden="true"></i> hello@colorcraft.com
               </a>
               <span class="footer__link" style="display:flex;gap:var(--sp-2);align-items:flex-start;cursor:default;">
                 <i class="fas fa-location-dot" style="width:14px;margin-top:2px;" aria-hidden="true"></i>
-                123 Health Avenue, Connaught Place,<br>New Delhi – 110001
+                123 Paintbrush Lane, Connaught Place,<br>New Delhi – 110001
               </span>
             </div>
           </div>
@@ -169,7 +170,7 @@ function buildFooter() {
     <div class="container">
       <div class="footer__bottom-inner">
         <p class="footer__copyright">
-          &copy; ${currentYear} Pulse. All rights reserved.
+          &copy; ${currentYear} ColorCraft Painting. All rights reserved.
         </p>
       </div>
     </div>
