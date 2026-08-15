@@ -302,3 +302,74 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => RTLManager.toggle());
   });
 });
+
+// ─── VELOX Services Page JS Helpers ────────────────────────
+window.switchServiceTab = function(idx) {
+  for (let i = 1; i <= 4; i++) {
+    const btn   = document.getElementById(`stab-${i}`);
+    const panel = document.getElementById(`spanel-${i}`);
+    if (btn) {
+      btn.classList.toggle('vx-active', i === idx);
+      btn.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+    }
+    if (panel) panel.classList.toggle('vx-active', i === idx);
+  }
+};
+
+window.calculateEstimate = function() {
+  const tuneVal  = parseInt(document.getElementById('tune-slider')?.value || 1);
+  const brakeVal = parseInt(document.getElementById('brake-slider')?.value || 0);
+  const cleanVal = parseInt(document.getElementById('clean-slider')?.value || 0);
+
+  const tuneRates  = { 1: 60, 2: 120, 3: 220 };
+  const tuneNames  = { 1: 'Basic ($60)', 2: 'Pro ($120)', 3: 'Master ($220)' };
+  const brakeRates = { 0: 0, 1: 30, 2: 60 };
+  const brakeNames = { 0: 'None ($0)', 1: '1 Wheel ($30)', 2: 'Both Wheels ($60)' };
+  const cleanRates = { 0: 0, 1: 45 };
+  const cleanNames = { 0: 'No ($0)', 1: 'Ultrasonic ($45)' };
+
+  const tuneElem = document.getElementById('tune-val');
+  const brakeElem = document.getElementById('brake-val');
+  const cleanElem = document.getElementById('clean-val');
+  if (tuneElem) tuneElem.textContent  = tuneNames[tuneVal];
+  if (brakeElem) brakeElem.textContent = brakeNames[brakeVal];
+  if (cleanElem) cleanElem.textContent = cleanNames[cleanVal];
+
+  const total = tuneRates[tuneVal] + brakeRates[brakeVal] + cleanRates[cleanVal];
+  const estTotal = document.getElementById('est-total');
+  if (estTotal) estTotal.textContent = `$${total}`;
+};
+
+window.filterCatalog = function(cat, btn) {
+  const buttons = document.querySelectorAll('.filter-bar .filter-btn');
+  buttons.forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+
+  const items = document.querySelectorAll('#catalog-grid .acc-item-price');
+  items.forEach(item => {
+    const itemCat = item.getAttribute('data-cat');
+    if (cat === 'all' || itemCat === cat) {
+      item.style.display = 'flex';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+};
+
+window.filterBlog = function(cat, btn) {
+  const buttons = document.querySelectorAll('.vx-pill-rail .vx-pill-btn');
+  buttons.forEach(b => b.classList.remove('vx-active'));
+  if (btn) btn.classList.add('vx-active');
+
+  const cards = document.querySelectorAll('#blog-stream-grid .vx-masonry-card');
+  cards.forEach(card => {
+    const cardCat = card.getAttribute('data-bcat');
+    if (cat === 'all' || cardCat === cat) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+};
+
+
