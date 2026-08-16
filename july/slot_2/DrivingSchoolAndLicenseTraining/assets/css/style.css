@@ -352,17 +352,44 @@ p {
   left: 0;
   right: 0;
   height: var(--navbar-height);
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+  z-index: var(--z-navbar);
+  transition: background var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base), backdrop-filter var(--transition-base);
+}
+
+.navbar.scrolled {
   background: var(--bg-navbar);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border-bottom: 1px solid var(--border-color);
-  z-index: var(--z-navbar);
-  transition: background var(--transition-base), box-shadow var(--transition-base);
-}
-
-.navbar.scrolled {
   box-shadow: var(--shadow-md);
 }
+
+.navbar:not(.scrolled) .navbar__link {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar:not(.scrolled) .navbar__link:hover,
+.navbar:not(.scrolled) .navbar__link.active {
+  color: var(--color-primary);
+}
+
+.navbar:not(.scrolled) .navbar__toggle-btn {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar:not(.scrolled) .navbar__rtl-btn {
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.navbar:not(.scrolled) .navbar__hamburger span {
+  background: #FFFFFF;
+}
+
 
 .navbar__inner {
   display: flex;
@@ -857,19 +884,30 @@ p {
   padding: var(--space-8);
   text-align: center;
   position: relative;
-  overflow: visible;
+  overflow: visible !important;
   display: flex;
   flex-direction: column;
 }
 
 .card--pricing.popular {
   border-color: var(--color-primary);
-  transform: scale(1.05);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 12px 32px rgba(var(--color-primary-rgb), 0.25);
+  position: relative;
+  overflow: visible !important;
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-4);
 }
 
-.card--pricing.popular:hover {
-  transform: scale(1.05) translateY(-4px);
+@media (min-width: 993px) {
+  .card--pricing.popular {
+    transform: scale(1.05);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .card--pricing.popular:hover {
+    transform: scale(1.05) translateY(-4px);
+  }
 }
 
 .card--pricing .pricing__badge {
@@ -880,10 +918,12 @@ p {
   background: var(--color-primary);
   color: var(--text-on-primary);
   font-size: var(--fs-xs);
-  font-weight: var(--fw-semibold);
-  padding: var(--space-1) var(--space-4);
+  font-weight: var(--fw-bold);
+  padding: var(--space-2) var(--space-6);
   border-radius: var(--border-radius-full);
   letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.4);
+  z-index: 10;
 }
 
 .card--pricing .pricing__plan {
@@ -3019,23 +3059,35 @@ select.form-control {
     left: 0;
     right: 0;
     height: calc(100vh - var(--navbar-height));
-    background: var(--bg-card);
+    background: #1A1A24 !important;
+    color: #FFFFFF !important;
     padding: var(--space-6);
-    z-index: var(--z-overlay);
+    z-index: 9999 !important;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--space-3);
     overflow-y: auto;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   }
 
   .navbar__mobile-menu.open {
-    display: flex;
+    display: flex !important;
   }
 
   .navbar__mobile-menu .navbar__link {
     display: block;
     padding: var(--space-3) var(--space-4);
-    font-size: var(--fs-body);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #FFFFFF !important;
+    border-radius: var(--border-radius-md);
+    transition: all 0.2s ease;
+  }
+
+  .navbar__mobile-menu .navbar__link:hover,
+  .navbar__mobile-menu .navbar__link.active {
+    background: rgba(var(--color-primary-rgb), 0.18);
+    color: var(--color-primary) !important;
   }
 
   .navbar__mobile-menu .navbar__dropdown-menu {
@@ -3044,14 +3096,28 @@ select.form-control {
     box-shadow: none;
     border: none;
     padding-left: var(--space-6);
+    background: transparent !important;
     opacity: 1 !important;
     visibility: visible !important;
     display: none;
   }
 
   .navbar__mobile-menu .navbar__dropdown.open .navbar__dropdown-menu {
-    display: block;
+    display: block !important;
     transform: none !important;
+  }
+
+  .navbar__mobile-menu .navbar__dropdown-menu a {
+    display: block;
+    padding: var(--space-2) var(--space-4);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8) !important;
+    border-radius: var(--border-radius-sm);
+  }
+
+  .navbar__mobile-menu .navbar__dropdown-menu a:hover {
+    color: var(--color-primary) !important;
   }
 
   .container {
@@ -3422,4 +3488,1778 @@ textarea:focus-visible {
 
 .skip-link:focus {
   top: 0;
+}
+
+/* ============================================
+   54 UNIQUE SECTION LAYOUT PATTERNS & UTILITIES
+   ============================================ */
+
+/* --- Page 1: Index (Home 1) Patterns --- */
+.cockpit-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: var(--bg-footer);
+  color: var(--color-white);
+  overflow: hidden;
+  padding: calc(var(--navbar-height) + var(--space-8)) 0 var(--space-8);
+}
+.cockpit-hero__bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.70;
+}
+.cockpit-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(15,15,22,0.52) 0%, rgba(10,10,14,0.62) 100%);
+}
+.cockpit-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+.telemetry-widget {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-8);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+.speedometer-gauge {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 8px solid var(--color-primary);
+  border-bottom-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-4);
+  position: relative;
+  background: rgba(0,0,0,0.3);
+}
+.speedometer-needle {
+  width: 4px;
+  height: 50px;
+  background: var(--color-primary);
+  position: absolute;
+  bottom: 50%;
+  transform-origin: bottom center;
+  transform: rotate(45deg);
+  transition: transform 1.5s ease-out;
+  border-radius: 2px;
+}
+.slot-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(46, 204, 113, 0.15);
+  border: 1px solid #2ECC71;
+  color: #2ECC71;
+  border-radius: var(--border-radius-full);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+}
+
+.roadway-stepper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+  position: relative;
+  margin-top: var(--space-8);
+}
+.roadway-stepper::before {
+  content: '';
+  position: absolute;
+  top: 36px;
+  left: 10%;
+  right: 10%;
+  height: 4px;
+  background: dashed 2px var(--color-primary);
+  background: linear-gradient(90deg, var(--color-primary) 50%, var(--border-color) 50%);
+  background-size: 16px 4px;
+  z-index: 1;
+}
+.stepper-node {
+  position: relative;
+  z-index: 2;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.stepper-node:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+/* --- Section 4: Enterprise Fleet Safety Compliance Runway --- */
+.fleet-compliance-runway {
+  background: linear-gradient(135deg, #1A1A24 0%, #252530 50%, #0F0F14 100%);
+  color: var(--color-white);
+  padding: var(--space-16) 0;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.runway-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+  position: relative;
+}
+
+.runway-stage-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-6);
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.runway-stage-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.runway-stage-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--color-primary);
+  box-shadow: 0 20px 40px rgba(var(--color-primary-rgb), 0.18);
+}
+
+.runway-stage-card:hover::before {
+  opacity: 1;
+}
+
+.node-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h4);
+  margin: 0 auto var(--space-4);
+  box-shadow: 0 0 16px rgba(var(--color-primary-rgb), 0.4);
+}
+
+.speed-card-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-8);
+}
+.speed-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.speed-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-primary);
+}
+
+.odometer-stat-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+  background: var(--color-secondary);
+  color: var(--color-white);
+  padding: var(--space-10) var(--space-8);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-xl);
+}
+
+/* --- Section 4: Telemetry Dashboard Metric Radar Console --- */
+.telemetry-radar-console {
+  background: linear-gradient(135deg, #1A1A24 0%, #252530 50%, #0F0F14 100%);
+  padding: var(--space-16) 0;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.telemetry-radar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.telemetry-pod {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-6);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.telemetry-pod::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.telemetry-pod:hover {
+  transform: translateY(-8px);
+  border-color: var(--color-primary);
+  box-shadow: 0 20px 40px rgba(var(--color-primary-rgb), 0.18);
+}
+
+.telemetry-pod:hover::before {
+  opacity: 1;
+}
+
+.odometer-dial {
+  text-align: center;
+  padding: var(--space-4);
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+.odometer-dial:last-child { border-right: none; }
+.odometer-number {
+  font-family: var(--font-heading);
+  font-size: 2.75rem;
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  line-height: 1.1;
+}
+
+.license-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+.license-id-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-6);
+  position: relative;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease;
+}
+.license-id-card::before {
+  content: 'DRIVER PERMIT RECORD';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 24px;
+  background: var(--color-secondary);
+  color: var(--color-white);
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-4);
+  border-top-left-radius: var(--border-radius-sm);
+  border-top-right-radius: var(--border-radius-sm);
+}
+.license-id-card { padding-top: calc(var(--space-6) + 20px); }
+.license-stamp {
+  position: absolute;
+  bottom: 12px; right: 12px;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transform: rotate(-12deg);
+  text-transform: uppercase;
+}
+
+.ignition-speed-pass-dock {
+  background: linear-gradient(135deg, #1A1A24 0%, #252530 50%, #0F0F14 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-10) var(--space-8);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+}
+
+.ignition-speed-pass-dock::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+}
+
+.ignition-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.pass-meter-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+  box-shadow: var(--shadow-xl);
+}
+
+.pulse-dot {
+  width: 10px; height: 10px;
+  background: #2ECC71;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 10px #2ECC71;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+}
+
+/* --- Page 2: Home 2 Patterns --- */
+.fleet-command-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: #1A1A24;
+  color: var(--color-white);
+  overflow: hidden;
+  padding: calc(var(--navbar-height) + var(--space-8)) 0 var(--space-8);
+}
+
+.fleet-command-hero h1,
+.fleet-command-hero p {
+  color: var(--color-white);
+}
+
+.fleet-command-hero p {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.risk-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+}
+.risk-matrix-tile {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: var(--space-8);
+  border-radius: var(--border-radius-lg);
+  border-top: 4px solid var(--color-primary);
+  transition: transform 0.3s ease;
+}
+.risk-matrix-tile:hover { transform: translateY(-4px); }
+
+.fleet-spec-reel {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  padding-bottom: var(--space-4);
+  scrollbar-width: thin;
+}
+.spec-card {
+  min-width: 300px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-6);
+  flex-shrink: 0;
+}
+
+/* --- Section 4 (home-2.html): Enterprise Fleet Safety Compliance Runway --- */
+.fleet-compliance-runway {
+  background: linear-gradient(135deg, #1A1A24 0%, #252530 50%, #0F0F14 100%);
+  color: var(--color-white);
+  padding: var(--space-16) 0;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.runway-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.runway-stage-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.runway-stage-card > span:last-child {
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: block;
+}
+
+.runway-stage-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--color-primary);
+  box-shadow: 0 20px 40px rgba(var(--color-primary-rgb), 0.18);
+}
+
+.contract-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+  align-items: center;
+}
+.contract-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-8);
+  position: relative;
+  transition: transform 0.3s ease;
+}
+.contract-card.featured {
+  border: 2px solid var(--color-primary);
+  transform: scale(1.04);
+  box-shadow: var(--shadow-xl);
+}
+
+.road-sign-ticker {
+  background: var(--color-secondary);
+  color: var(--color-white);
+  padding: var(--space-5) 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 22s linear infinite;
+}
+
+.road-sign-ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+.ticker-content {
+  display: flex;
+  white-space: nowrap;
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+html[dir="rtl"] .ticker-track {
+  animation: marqueeScrollRTL 22s linear infinite;
+}
+
+@keyframes marqueeScrollRTL {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
+
+.ticker-sign-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-6);
+  background: rgba(255,255,255,0.05);
+  border-radius: var(--border-radius-full);
+  margin-right: var(--space-6);
+  font-weight: var(--fw-semibold);
+}
+
+.audit-intake-dock {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-10);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+}
+
+/* --- Page 3: About Patterns --- */
+.milestone-hero-header {
+  text-align: center;
+  padding: var(--space-16) 0 var(--space-10);
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+}
+
+.heritage-timeline-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+.year-selector-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.year-btn {
+  padding: var(--space-4) var(--space-6);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  text-align: left;
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.year-btn.active, .year-btn:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+.mirror-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+}
+.mirror-frame-card {
+  background: var(--color-secondary);
+  color: var(--color-white);
+  border-radius: 40px / 20px;
+  padding: var(--space-10) var(--space-8);
+  border: 4px solid var(--color-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.instructor-permit-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+}
+.permit-avatar {
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto var(--space-4);
+  border: 3px solid var(--color-primary);
+}
+
+.safety-hotspot-container {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-8);
+}
+
+.safety-hotspot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.magazine-spotlight-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-8);
+}
+
+/* --- Section 2 (blog.html): Full-Width Editorial Spotlight Strip --- */
+.editorial-spotlight-strip {
+  padding: var(--space-4) 0 var(--space-8);
+}
+
+.editorial-banner-frame {
+  position: relative;
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  height: 420px;
+  margin-top: var(--space-6);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+}
+
+.editorial-banner-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.editorial-banner-frame:hover img {
+  transform: scale(1.03);
+}
+
+.editorial-floating-bar {
+  position: absolute;
+  bottom: var(--space-6);
+  left: var(--space-6);
+  right: var(--space-6);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(16px);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 768px) {
+  .editorial-banner-frame {
+    height: 240px;
+  }
+  .editorial-floating-bar {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin-top: var(--space-4);
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: stretch;
+  }
+}
+
+
+.wall-of-fame-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+/* --- Section 6 (about.html): DMV Official Graduate Permit Registry --- */
+.graduate-permit-registry {
+  background: linear-gradient(135deg, #1A1A24 0%, #252530 50%, #0F0F14 100%);
+  color: var(--color-white);
+  padding: var(--space-12) var(--space-8);
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+}
+
+.graduate-permit-registry::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+}
+
+.registry-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.permit-credential-pod {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(16px);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-6);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.permit-credential-pod::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.permit-credential-pod:hover {
+  transform: translateY(-8px);
+  border-color: var(--color-primary);
+  box-shadow: 0 20px 40px rgba(var(--color-primary-rgb), 0.18);
+}
+
+.permit-credential-pod:hover::before {
+  opacity: 1;
+}
+
+
+/* ============================================
+   PREMIUM INNER PAGE HEROES & LUXURY DESIGN SYSTEM
+   ============================================ */
+
+.directory-hero,
+.curriculum-hero,
+.pricing-hero,
+.editorial-hero,
+.article-masthead,
+.contact-desk-hero,
+.milestone-hero-header {
+  position: relative;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--navbar-height) + var(--space-8)) 0 var(--space-12);
+  background: #1A1A24;
+  color: var(--color-white);
+  text-align: center;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 -20px 40px rgba(0,0,0,0.3);
+}
+
+.hero-bg,
+.hero__bg,
+.cockpit-hero__bg,
+.fleet-hero__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.70;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-overlay,
+.hero__overlay,
+.cockpit-hero__overlay,
+.fleet-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(15,15,22,0.52) 0%, rgba(25,25,35,0.42) 50%, rgba(10,10,14,0.62) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+
+.directory-hero .container,
+.curriculum-hero .container,
+.pricing-hero .container,
+.editorial-hero .container,
+.article-masthead .container,
+.contact-desk-hero .container,
+.milestone-hero-header .container,
+.cockpit-hero .container,
+.fleet-command-hero .container {
+  position: relative;
+  z-index: 3;
+}
+
+
+.directory-hero::before,
+.curriculum-hero::before,
+.pricing-hero::before,
+.editorial-hero::before,
+.article-masthead::before,
+.contact-desk-hero::before,
+.milestone-hero-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(var(--color-primary-rgb), 0.18) 0%, transparent 65%),
+              radial-gradient(circle at 80% 80%, rgba(204, 80, 32, 0.12) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.directory-hero h1,
+.curriculum-hero h1,
+.pricing-hero h1,
+.editorial-hero h1,
+.article-masthead h1,
+.contact-desk-hero h1,
+.milestone-hero-header h1 {
+  color: var(--color-white);
+  text-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  letter-spacing: -0.5px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.directory-hero .breadcrumb a,
+.curriculum-hero .breadcrumb a,
+.pricing-hero .breadcrumb a,
+.editorial-hero .breadcrumb a,
+.article-masthead .breadcrumb a,
+.contact-desk-hero .breadcrumb a,
+.milestone-hero-header .breadcrumb a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.directory-hero .breadcrumb span,
+.curriculum-hero .breadcrumb span,
+.pricing-hero .breadcrumb span,
+.editorial-hero .breadcrumb span,
+.article-masthead .breadcrumb span,
+.contact-desk-hero .breadcrumb span,
+.milestone-hero-header .breadcrumb span {
+  color: var(--color-primary);
+  font-weight: var(--fw-semibold);
+}
+
+.directory-hero p,
+.curriculum-hero p,
+.pricing-hero p,
+.editorial-hero p,
+.article-masthead p,
+.contact-desk-hero p,
+.milestone-hero-header p {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Card Luxury Elevation Effects */
+.card,
+.contact-card,
+.author-card,
+.instructor-bio-card,
+.hex-skill-tile,
+.waypoint-card,
+.comment,
+.accordion__item {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.card:hover,
+.contact-card:hover,
+.author-card:hover,
+.instructor-bio-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-primary);
+  box-shadow: 0 16px 36px rgba(var(--color-primary-rgb), 0.12);
+}
+
+
+/* --- Page 4: Services Patterns --- */
+.hex-skill-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+.hex-skill-tile {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-xl);
+  padding: 0;
+  text-align: center;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.hex-skill-tile img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--border-color);
+  transition: transform 0.4s ease;
+}
+.hex-skill-tile:hover img {
+  transform: scale(1.05);
+}
+.hex-skill-body {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: center;
+}
+.hex-skill-body .btn {
+  margin-top: auto;
+}
+.hex-skill-tile::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+.hex-skill-tile:hover {
+  transform: translateY(-8px);
+  border-color: var(--color-primary);
+  box-shadow: 0 16px 32px rgba(var(--color-primary-rgb), 0.12);
+}
+.hex-skill-tile:hover::before {
+  opacity: 1;
+}
+
+.road-trip-pathway {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: var(--space-10) 0;
+}
+.waypoint-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-6);
+  width: 23%;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+.waypoint-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.shift-stick-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+}
+
+.quality-seal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.readiness-quiz-container {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-10);
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: 0 12px 36px rgba(var(--color-primary-rgb), 0.15);
+}
+
+/* --- Section 6 (blog.html): Lead Instructor Q&A Workflow Ticker --- */
+.instructor-qa-ticker-deck {
+  padding: var(--space-6) 0;
+  text-align: center;
+}
+
+.qa-workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.qa-workflow-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-6);
+  text-align: left;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.qa-workflow-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+
+/* --- Section 6 (services.html): Diagnostic Telemetry Console --- */
+.diagnostic-telemetry-console {
+  background: linear-gradient(135deg, #1A1A24 0%, #252530 50%, #0F0F14 100%);
+  color: var(--color-white);
+  padding: var(--space-12) var(--space-8);
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+}
+
+.diagnostic-telemetry-console::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+}
+
+.diagnostic-console-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.diagnostic-selector-tile {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: left;
+  color: var(--color-white);
+}
+
+.diagnostic-selector-tile:hover,
+.diagnostic-selector-tile.active {
+  background: rgba(var(--color-primary-rgb), 0.18);
+  border-color: var(--color-primary);
+  transform: translateX(4px);
+}
+
+
+/* --- Page 5: Service Details Patterns --- */
+.rate-tier-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+  overflow: visible !important;
+  align-items: stretch;
+  padding-top: var(--space-4);
+}
+
+.dual-view-split {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-8);
+}
+
+.milestone-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.rate-matrix-wrapper,
+.pricing-matrix-wrapper,
+.table-responsive {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-xl);
+  border: 1px solid var(--border-color);
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: var(--shadow-md);
+  max-width: 100%;
+  position: relative;
+}
+
+.rate-matrix-wrapper table,
+.pricing-matrix-wrapper table,
+.table-responsive table {
+  min-width: 600px;
+  width: 100%;
+}
+
+.rate-matrix-wrapper::-webkit-scrollbar,
+.pricing-matrix-wrapper::-webkit-scrollbar,
+.table-responsive::-webkit-scrollbar {
+  height: 6px;
+}
+
+.rate-matrix-wrapper::-webkit-scrollbar-thumb,
+.pricing-matrix-wrapper::-webkit-scrollbar-thumb,
+.table-responsive::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 3px;
+}
+
+.addon-service-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.policy-help-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+}
+
+.corporate-calculator-dock {
+  background: linear-gradient(135deg, #252530 0%, #1A1A24 100%);
+  color: var(--color-white);
+  padding: var(--space-10);
+  border-radius: var(--border-radius-xl);
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-8);
+  align-items: center;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* --- Page 7: Blog Patterns --- */
+.magazine-spotlight-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+  align-items: center;
+}
+
+.article-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+/* --- Section 3 (blog.html): Telemetry Knowledge Vault Strip --- */
+.telemetry-knowledge-vault-strip {
+  background: linear-gradient(135deg, #1A1A24 0%, #252530 50%, #0F0F14 100%);
+  color: var(--color-white);
+  padding: var(--space-16) 0;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vault-dossier-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.telemetry-dossier-pod {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-5);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.telemetry-dossier-pod::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.telemetry-dossier-pod:hover {
+  transform: translateY(-8px);
+  border-color: var(--color-primary);
+  box-shadow: 0 20px 40px rgba(var(--color-primary-rgb), 0.18);
+}
+
+.telemetry-dossier-pod:hover::before {
+  opacity: 1;
+}
+
+
+.digest-signup-dock {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-10);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+  box-shadow: var(--shadow-md);
+}
+
+.radar-tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.ask-instructor-box {
+  background: linear-gradient(135deg, #252530 0%, #1A1A24 100%);
+  color: var(--color-white);
+  padding: var(--space-10);
+  border-radius: var(--border-radius-xl);
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* --- Page 8: Blog Details Patterns --- */
+.prose-content {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.instructor-bio-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: var(--space-6);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.filmstrip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.community-qa-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.article-quiz-box {
+  background: var(--bg-card);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-8);
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(var(--color-primary-rgb), 0.12);
+}
+
+/* --- Page 9: Contact Patterns --- */
+.support-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.split-booking-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+}
+
+.coverage-zone-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.social-reel-hub {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.emergency-booking-dock {
+  background: linear-gradient(135deg, #252530 0%, #1A1A24 100%);
+  color: var(--color-white);
+  padding: var(--space-10);
+  border-radius: var(--border-radius-xl);
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+
+.zone-coverage-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.social-reel-hub {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.corporate-calculator-dock {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-8);
+  align-items: center;
+  background: var(--color-secondary);
+  color: var(--color-white);
+  padding: var(--space-10);
+  border-radius: var(--border-radius-xl);
+}
+
+/* --- Section 6 (pricing.html): Corporate ROI Calculator Console --- */
+.corporate-roi-calculator-console {
+  background: linear-gradient(135deg, #1A1A24 0%, #252530 50%, #0F0F14 100%);
+  color: var(--color-white);
+  padding: var(--space-12) var(--space-8);
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+}
+
+.corporate-roi-calculator-console::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+}
+
+.corporate-roi-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.fleet-volume-tier-tile {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: left;
+  color: var(--color-white);
+}
+
+.fleet-volume-tier-tile:hover,
+.fleet-volume-tier-tile.active {
+  background: rgba(var(--color-primary-rgb), 0.18);
+  border-color: var(--color-primary);
+  transform: translateX(4px);
+}
+/* --- Section 6 (pricing.html): Corporate Group Rate ROI Matrix --- */
+.corporate-roi-matrix {
+  padding: var(--space-6) 0;
+  text-align: center;
+}
+
+.roi-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.roi-matrix-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-6);
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.roi-matrix-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+/* --- Section 6 (contact.html): Fast-Track Emergency Dispatch Ticker --- */
+.fast-track-dispatch-ticker {
+  padding: var(--space-4) 0 var(--space-6);
+  text-align: center;
+}
+
+.dispatch-step-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.dispatch-step-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-6);
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dispatch-step-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.film-strip-grid,
+.filmstrip-grid,
+.zone-coverage-grid,
+.coverage-zone-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.split-booking-container,
+.booking-split-container {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+/* Responsiveness for all new sections */
+@media (max-width: 992px) {
+  .cockpit-grid,
+  .fleet-command-hero,
+  .heritage-timeline-split,
+  .mirror-card-grid,
+  .shift-stick-split,
+  .dual-view-split,
+  .magazine-hero-card,
+  .booking-split-container,
+  .split-booking-container,
+  .audit-intake-dock,
+  .ignition-grid,
+  .instructor-qa-grid,
+  .diagnostic-console-grid,
+  .corporate-roi-grid,
+  .roi-matrix-grid,
+  .qa-workflow-grid,
+  .dispatch-step-grid,
+  .runway-grid,
+  .vault-dossier-grid,
+  .safety-hotspot-grid,
+  .magazine-spotlight-layout {
+    grid-template-columns: 1fr;
+  }
+  .roadway-stepper,
+  .odometer-stat-bar,
+  .license-card-grid,
+  .contract-stack-grid,
+  .wall-of-fame-grid,
+  .hex-skill-grid,
+  .quality-seal-grid,
+  .next-step-strip,
+  .addon-service-grid,
+  .addon-cart-grid,
+  .dynamic-article-grid,
+  .film-strip-grid,
+  .filmstrip-grid,
+  .support-hub-grid,
+  .zone-coverage-grid,
+  .coverage-zone-grid,
+  .rate-tier-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .roadway-stepper,
+  .odometer-stat-bar,
+  .license-card-grid,
+  .contract-stack-grid,
+  .wall-of-fame-grid,
+  .hex-skill-grid,
+  .quality-seal-grid,
+  .next-step-strip,
+  .addon-service-grid,
+  .addon-cart-grid,
+  .dynamic-article-grid,
+  .film-strip-grid,
+  .filmstrip-grid,
+  .support-hub-grid,
+  .zone-coverage-grid,
+  .coverage-zone-grid,
+  .risk-matrix-grid,
+  .billing-faq-grid,
+  .telemetry-radar-grid,
+  .roi-matrix-grid,
+  .qa-workflow-grid,
+  .dispatch-step-grid,
+  .vault-dossier-grid,
+  .runway-grid,
+  .registry-card-grid,
+  .diagnostic-console-grid,
+  .corporate-roi-grid,
+  .ignition-grid,
+  .audit-intake-grid,
+  .policy-help-grid,
+  .rate-tier-grid,
+  .magazine-spotlight-layout,
+  .booking-split-container,
+  .split-booking-container,
+  .mirror-card-grid,
+  .safety-hotspot-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .roadway-stepper,
+  .odometer-stat-bar,
+  .license-card-grid,
+  .contract-stack-grid,
+  .wall-of-fame-grid,
+  .hex-skill-grid,
+  .quality-seal-grid,
+  .next-step-strip,
+  .addon-service-grid,
+  .addon-cart-grid,
+  .dynamic-article-grid,
+  .film-strip-grid,
+  .filmstrip-grid,
+  .support-hub-grid,
+  .zone-coverage-grid,
+  .coverage-zone-grid,
+  .risk-matrix-grid,
+  .billing-faq-grid,
+  .telemetry-radar-grid,
+  .roi-matrix-grid,
+  .qa-workflow-grid,
+  .dispatch-step-grid,
+  .vault-dossier-grid,
+  .runway-grid,
+  .registry-card-grid,
+  .diagnostic-console-grid,
+  .corporate-roi-grid,
+  .ignition-grid,
+  .audit-intake-grid,
+  .policy-help-grid,
+  .rate-tier-grid,
+  .magazine-spotlight-layout,
+  .booking-split-container,
+  .split-booking-container,
+  .mirror-card-grid,
+  .safety-hotspot-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ignition-speed-pass-dock,
+  .instructor-qa-dispatch-terminal,
+  .diagnostic-telemetry-console,
+  .corporate-roi-calculator-console,
+  .graduate-permit-registry,
+  .audit-intake-dock,
+  .emergency-concierge-dock,
+  .safety-hotspot-container,
+  .fleet-compliance-runway,
+  .telemetry-radar-console,
+  .editorial-spotlight-strip,
+  .magazine-spotlight-layout {
+    padding: var(--space-5) var(--space-3) !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .ignition-speed-pass-dock h2,
+  .instructor-qa-dispatch-terminal h2,
+  .diagnostic-telemetry-console h2,
+  .corporate-roi-calculator-console h2,
+  .graduate-permit-registry h2,
+  .audit-intake-dock h2,
+  .emergency-concierge-dock h2,
+  .fleet-compliance-runway h2 {
+    font-size: 1.3rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .diagnostic-selector-tile,
+  .fleet-volume-tier-tile {
+    flex-wrap: wrap !important;
+    padding: var(--space-3) var(--space-3) !important;
+    gap: var(--space-2) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .btn,
+  .btn--lg,
+  .btn--md {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  .ignition-btn-group {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+  }
+
+  .pass-meter-card {
+    padding: var(--space-4) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .slot-status-pill {
+    max-width: 100% !important;
+    white-space: normal !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .ignition-speed-pass-dock h2,
+  .instructor-qa-dispatch-terminal h2,
+  .diagnostic-telemetry-console h2,
+  .corporate-roi-calculator-console h2,
+  .graduate-permit-registry h2,
+  .audit-intake-dock h2 {
+    font-size: 1.15rem !important;
+  }
+
+  .ignition-speed-pass-dock p,
+  .instructor-qa-dispatch-terminal p,
+  .diagnostic-telemetry-console p,
+  .corporate-roi-calculator-console p,
+  .ignition-speed-pass-dock ul li {
+    font-size: 0.8rem !important;
+  }
+
+  .pass-meter-card div[style*="3.5rem"] {
+    font-size: 2.1rem !important;
+  }
+}
+
+/* ============================================
+   RTL (Right-to-Left) Styles & Alignment Overrides
+   ============================================ */
+html[dir="rtl"],
+html[dir="rtl"] body {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="rtl"] .year-btn,
+html[dir="rtl"] .qa-workflow-card,
+html[dir="rtl"] .telemetry-dossier-pod,
+html[dir="rtl"] .hex-skill-body,
+html[dir="rtl"] .hex-skill-tile,
+html[dir="rtl"] .dispatch-step-card,
+html[dir="rtl"] .roi-matrix-card,
+html[dir="rtl"] .runway-stage-card,
+html[dir="rtl"] .diagnostic-selector-tile,
+html[dir="rtl"] .fleet-volume-tier-tile,
+html[dir="rtl"] .card,
+html[dir="rtl"] .card__body,
+html[dir="rtl"] .contact-card,
+html[dir="rtl"] .instructor-bio-card,
+html[dir="rtl"] .accordion__header,
+html[dir="rtl"] .accordion__content,
+html[dir="rtl"] .footer,
+html[dir="rtl"] .footer__brand,
+html[dir="rtl"] .footer__links,
+html[dir="rtl"] .heritage-timeline-split,
+html[dir="rtl"] .mirror-card-grid,
+html[dir="rtl"] .shift-stick-split,
+html[dir="rtl"] .risk-matrix-tile,
+html[dir="rtl"] .spec-card,
+html[dir="rtl"] .contract-card,
+html[dir="rtl"] .waypoint-card,
+html[dir="rtl"] .prose-content {
+  text-align: right !important;
+}
+
+html[dir="rtl"] .section__header.text-center {
+  text-align: center;
+}
+
+html[dir="rtl"] .text-center .qa-workflow-card,
+html[dir="rtl"] .text-center .card,
+html[dir="rtl"] .text-center .telemetry-dossier-pod,
+html[dir="rtl"] .text-center .dispatch-step-card,
+html[dir="rtl"] .text-center .roi-matrix-card,
+html[dir="rtl"] .text-center [class*="card"],
+html[dir="rtl"] .text-center [class*="tile"],
+html[dir="rtl"] .text-center [class*="pod"] {
+  text-align: right !important;
+}
+
+html[dir="rtl"] input,
+html[dir="rtl"] select,
+html[dir="rtl"] textarea,
+html[dir="rtl"] .form-control,
+html[dir="rtl"] .form-group,
+html[dir="rtl"] .form-group label,
+html[dir="rtl"] label {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+html[dir="rtl"] input::placeholder,
+html[dir="rtl"] textarea::placeholder,
+html[dir="rtl"] .form-control::placeholder {
+  text-align: right !important;
+  direction: rtl !important;
 }
