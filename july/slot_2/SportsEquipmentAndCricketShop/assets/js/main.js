@@ -1,5 +1,5 @@
 /* ============================================
-   PLAY — Global JavaScript
+   APEX — Global JavaScript
    Navigation, Theme, RTL, Scroll Animations
    ============================================ */
 
@@ -21,8 +21,8 @@
 
   // ─── Constants ──────────────────────────────
   const STORAGE_KEYS = {
-    theme: 'play-theme',
-    direction: 'play-direction'
+    theme: 'apex-theme',
+    direction: 'apex-direction'
   };
 
   // ─── Theme System ───────────────────────────

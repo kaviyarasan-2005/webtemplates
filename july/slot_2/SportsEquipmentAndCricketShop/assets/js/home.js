@@ -1,5 +1,5 @@
 /* ============================================
-   PLAY — Home Page Interactions
+   APEX — Home Page Interactions
    Kit Configurator, Gallery, Form Validation
    ============================================ */
 

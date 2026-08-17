@@ -1,5 +1,5 @@
 /* ============================================
-   PLAY — Pricing Page Interactions
+   APEX — Pricing Page Interactions
    Category Filters, Interactive Elements
    ============================================ */
 

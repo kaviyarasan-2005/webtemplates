@@ -1,5 +1,5 @@
 /* ============================================
-   PLAY — Contact Page Interactions
+   APEX — Contact Page Interactions
    Form Validation, Current Day Highlight
    ============================================ */
 

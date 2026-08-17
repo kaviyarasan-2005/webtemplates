@@ -1,6 +1,6 @@
-# PLAY — Sports Equipment & Cricket Shop
+# APEX — Sports Equipment & Cricket Shop
 
-PLAY is a premium multi-page static website designed with a championship-winning aesthetic, tailored for professional team custom kit orders, retail catalog browsing, and sports guide reviews.
+APEX is a premium multi-page static website designed with a championship-winning aesthetic, tailored for professional team custom kit orders, retail catalog browsing, and sports guide reviews.
 
 ## Vibe & Design System
 - **Theme Color Palette (Obsidian & Gold):**
