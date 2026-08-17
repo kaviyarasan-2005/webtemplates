@@ -98,6 +98,10 @@
         }
       });
 
+      // Scroll behavior
+      window.addEventListener('scroll', () => this.onScroll());
+      this.onScroll();
+
       // Set active nav link
       this.setActive();
     },
@@ -397,6 +401,50 @@
     }
   };
 
+  // ---- Interactive Speedometer & Telemetry ----
+  const Speedometer = {
+    init() {
+      const needle = document.querySelector('.speedometer-needle');
+      if (!needle) return;
+      setTimeout(() => {
+        needle.style.transform = 'rotate(135deg)';
+      }, 500);
+    }
+  };
+
+  // ---- Reading Progress Bar ----
+  const ReadingProgress = {
+    init() {
+      const bar = document.querySelector('.reading-bar');
+      if (!bar) return;
+      window.addEventListener('scroll', () => {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (window.scrollY / total) * 100;
+        bar.style.width = Math.min(progress, 100) + '%';
+      });
+    }
+  };
+
+  // ---- Diagnostic Readiness Quiz Engine ----
+  const DiagnosticQuiz = {
+    init() {
+      const container = document.querySelector('.readiness-quiz-container');
+      if (!container) return;
+      const btns = container.querySelectorAll('.quiz-option-btn');
+      const resultBox = container.querySelector('.quiz-result-box');
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          if (resultBox) {
+            resultBox.style.display = 'block';
+            resultBox.textContent = 'Recommended Program: ' + (btn.getAttribute('data-recommendation') || 'Beginner Driving Lessons (10-Hour Block)');
+          }
+        });
+      });
+    }
+  };
+
   // ---- Initialize Everything ----
   function init() {
     ThemeManager.init();
@@ -413,6 +461,9 @@
     Lightbox.init();
     Marquee.init();
     NewsletterForm.init();
+    Speedometer.init();
+    ReadingProgress.init();
+    DiagnosticQuiz.init();
 
     // Only add back-to-top on pages with footer (not auth/error pages)
     if (document.querySelector('.footer')) BackToTop.init();
@@ -428,3 +479,4 @@
     init();
   }
 })();
+

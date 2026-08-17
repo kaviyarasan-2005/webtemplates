@@ -1,5 +1,5 @@
 /* ============================================
-   PLAY — Blog Interactions
+   APEX — Blog Interactions
    Category Filters, Search, Pagination
    ============================================ */
 
