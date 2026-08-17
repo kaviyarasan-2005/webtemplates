@@ -1,5 +1,5 @@
 /**
- * Pulse — theme.js
+ * ColorCraft — theme.js
  * Handles dark/light mode and RTL/LTR toggle.
  */
 

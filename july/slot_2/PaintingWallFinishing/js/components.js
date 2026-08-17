@@ -1,5 +1,5 @@
 /**
- * Pulse — Components.js
+ * ColorCraft — Components.js
  * Injects shared Navbar and Footer into every page.
  * Detects page depth (root vs pages/) automatically.
  */
@@ -67,7 +67,7 @@ function buildNavbar() {
         </button>
 
         <!-- Get Quote CTA -->
-        <a href="${BASE}pages/contact.html" class="btn btn--primary" aria-label="Get Quote">Get Quote</a>
+        <a href="${BASE}index.html#store-hours" class="btn btn--primary" aria-label="Get Quote">Get Quote</a>
 
         <!-- Mobile hamburger -->
         <button class="navbar__hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -85,7 +85,7 @@ function buildNavbar() {
 function buildFooter() {
   const currentYear = new Date().getFullYear();
   return `
-<footer class="footer" role="contentinfo" aria-label="Pulse footer">
+<footer class="footer" role="contentinfo" aria-label="ColorCraft footer">
   <div class="footer__main">
     <div class="container">
       <div class="footer__grid">
@@ -100,11 +100,11 @@ function buildFooter() {
             Your trusted painting and wall finishing experts, delivering flawless interiors and stunning exteriors to your home or business since 2009.
           </p>
           <div class="footer__social" role="list" aria-label="Social media links">
-            <a href="#" class="footer__social-link" role="listitem" aria-label="Pulse on Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" role="listitem" aria-label="Pulse on Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" role="listitem" aria-label="Pulse on X/Twitter"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" role="listitem" aria-label="Pulse on WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" role="listitem" aria-label="Pulse on YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" role="listitem" aria-label="ColorCraft on Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" role="listitem" aria-label="ColorCraft on Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" role="listitem" aria-label="ColorCraft on X/Twitter"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" role="listitem" aria-label="ColorCraft on WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" role="listitem" aria-label="ColorCraft on YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
           </div>
         </div>
 
