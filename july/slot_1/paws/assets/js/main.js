@@ -148,14 +148,25 @@ document.addEventListener('DOMContentLoaded', () => {
     onScroll();
   }
 
-  // ============================================================
-  // 6. ACTIVE NAV LINK
-  // ============================================================
-  const currentFile = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-link, .mobile-links a').forEach(link => {
-    const href = link.getAttribute('href');
-    if (href && href !== '#' && currentFile === href) {
-      link.classList.add('active');
+  // Dropdown Click & Touch Toggle
+  document.querySelectorAll('.nav-dropdown-wrapper > a').forEach(trigger => {
+    trigger.addEventListener('click', e => {
+      const wrapper = trigger.closest('.nav-dropdown-wrapper');
+      if (wrapper && window.innerWidth >= 1024) {
+        // Toggle dropdown open state on click/tap
+        const isAlreadyOpen = wrapper.classList.contains('open');
+        document.querySelectorAll('.nav-dropdown-wrapper.open').forEach(w => w.classList.remove('open'));
+        if (!isAlreadyOpen) {
+          e.preventDefault();
+          wrapper.classList.add('open');
+        }
+      }
+    });
+  });
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.nav-dropdown-wrapper')) {
+      document.querySelectorAll('.nav-dropdown-wrapper.open').forEach(w => w.classList.remove('open'));
     }
   });
 

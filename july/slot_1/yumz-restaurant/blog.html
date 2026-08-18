@@ -371,15 +371,22 @@
     .pagination__btn--dots:hover { background: none; color: var(--clr-text-sub); }
     [data-theme="dark"] .pagination__btn { background-color: #2A2A2A; border-color: #3A3A3A; color: #9CA3AF; }
 
+    .blog-search-wrap {
+      display: none;
+      margin-bottom: 24px;
+    }
+
     @media (max-width: 1023px) {
       .blog-layout {
         grid-template-columns: 1fr;
-        grid-template-areas:
-          "main"
-          "sidebar";
+        gap: 32px;
       }
-      .blog-layout > :first-child { grid-area: main; }
-      .sidebar { grid-area: sidebar; }
+      .blog-search-wrap {
+        display: block;
+      }
+      .sidebar__widget--search {
+        display: none;
+      }
     }
     @media (max-width: 767px) {
       .featured-post { min-height: 300px; }
@@ -509,6 +516,25 @@
               <button class="blog-filter__btn" data-filter="news" role="listitem">
                 <i class="fa-solid fa-newspaper" aria-hidden="true"></i> News
               </button>
+            </div>
+
+            <!-- Blog Search Bar (Mobile/Tablet: displayed below category filters and above posts grid) -->
+            <div class="blog-search-wrap">
+              <form class="blog-search" role="search" action="#" method="get">
+                <div style="display:flex;gap:8px;">
+                  <input
+                    type="search"
+                    name="q"
+                    class="form__input"
+                    placeholder="Search articles..."
+                    aria-label="Search blog posts"
+                    style="flex:1;"
+                  >
+                  <button type="submit" class="btn btn--primary" style="padding:10px 16px;" aria-label="Submit search">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </form>
             </div>
 
             <!-- Posts grid -->
@@ -692,7 +718,7 @@
           <aside class="sidebar" aria-label="Blog sidebar">
 
             <!-- Search -->
-            <div class="sidebar__widget">
+            <div class="sidebar__widget sidebar__widget--search">
               <h3 class="sidebar__widget-title">Search Posts</h3>
               <form class="blog-search" role="search" action="#" method="get">
                 <div style="display:flex;gap:8px;">
@@ -922,7 +948,7 @@
 
     // Category filter
     const filterBtns = document.querySelectorAll('.blog-filter__btn');
-    const posts       = document.querySelectorAll('#postsGrid article[data-category]');
+    const posts      = document.querySelectorAll('#postsGrid article[data-category]');
 
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -933,11 +959,33 @@
         posts.forEach(post => {
           const cat = post.getAttribute('data-category');
           const show = filter === 'all' || cat === filter;
-          post.style.display    = show ? '' : 'none';
-          post.style.opacity    = show ? '' : '0';
-          post.style.transform  = show ? '' : 'scale(0.96)';
+          post.style.display   = show ? '' : 'none';
+          post.style.opacity   = show ? '' : '0';
+          post.style.transform = show ? '' : 'scale(0.96)';
         });
       });
+    });
+
+    // Overall Blog Live Search
+    const searchInputs = document.querySelectorAll('.blog-search input[name="q"]');
+    searchInputs.forEach(searchInput => {
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase().trim();
+        posts.forEach(post => {
+          const title    = post.querySelector('.blog-card__title')?.textContent.toLowerCase() || '';
+          const excerpt  = post.querySelector('.blog-card__excerpt')?.textContent.toLowerCase() || '';
+          const category = post.querySelector('.blog-card__category')?.textContent.toLowerCase() || '';
+          const matches  = !query || title.includes(query) || excerpt.includes(query) || category.includes(query);
+
+          post.style.display   = matches ? '' : 'none';
+          post.style.opacity   = matches ? '1' : '0';
+          post.style.transform = matches ? 'scale(1)' : 'scale(0.96)';
+        });
+      });
+    });
+
+    document.querySelectorAll('.blog-search').forEach(form => {
+      form.addEventListener('submit', e => e.preventDefault());
     });
   </script>
   <script src="assets/js/main.js"></script>
