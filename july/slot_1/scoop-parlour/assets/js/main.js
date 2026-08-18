@@ -144,26 +144,35 @@ const NavbarManager = {
       });
     }
 
-    // Desktop dropdowns — hover behaviour
+    // Dropdowns — smooth hover & click behavior
     this.dropdownWrappers.forEach(wrapper => {
       const trigger  = wrapper.querySelector('.navbar__link');
       const dropdown = wrapper.querySelector('.navbar__dropdown');
       if (!trigger || !dropdown) return;
 
-      // Desktop: open on hover
+      let leaveTimer = null;
+
+      // Smooth hover with 150ms buffer delay on mouseleave
       wrapper.addEventListener('mouseenter', () => {
-        if (window.innerWidth >= 1024) dropdown.classList.add('open');
-      });
-      wrapper.addEventListener('mouseleave', () => {
-        if (window.innerWidth >= 1024) dropdown.classList.remove('open');
+        if (window.innerWidth >= 1024) {
+          clearTimeout(leaveTimer);
+          dropdown.classList.add('open');
+        }
       });
 
-      // Mobile: toggle on click
+      wrapper.addEventListener('mouseleave', () => {
+        if (window.innerWidth >= 1024) {
+          leaveTimer = setTimeout(() => {
+            dropdown.classList.remove('open');
+          }, 150);
+        }
+      });
+
+      // Mobile & Desktop toggle on click
       trigger.addEventListener('click', e => {
         if (window.innerWidth < 1024) {
           e.preventDefault();
           const isOpen = dropdown.classList.contains('open');
-          // Close all other dropdowns first
           document.querySelectorAll('.navbar__dropdown.open').forEach(d => {
             if (d !== dropdown) d.classList.remove('open');
           });

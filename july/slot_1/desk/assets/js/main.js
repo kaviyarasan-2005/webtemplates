@@ -322,13 +322,22 @@
      ACTIVE LINK HIGHLIGHTING
      ========================================== */
   function initActiveLink() {
-    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    // Get current page filename — fall back to index.html for root path
+    var rawPath = window.location.pathname.split('/').pop();
+    var currentPath = (rawPath === '' || rawPath === undefined) ? 'index.html' : rawPath;
 
-    const allLinks = document.querySelectorAll('.header__nav-link, .mobile-menu__link, .nav-dropdown__link');
+    var allLinks = document.querySelectorAll('.header__nav-link, .mobile-menu__link, .nav-dropdown__link');
+
+    // First pass: clear any leftover active classes
     allLinks.forEach(function (link) {
-      const href = link.getAttribute('href');
-      if (!href) return;
-      const linkPath = href.split('/').pop();
+      link.classList.remove('active');
+    });
+
+    // Second pass: apply active only to exact match
+    allLinks.forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('tel')) return;
+      var linkPath = href.split('/').pop().split('?')[0].split('#')[0];
       if (linkPath === currentPath) {
         link.classList.add('active');
       }
