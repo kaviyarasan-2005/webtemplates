@@ -13,31 +13,28 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initBlogFilter() {
-  const filterBar = document.getElementById('blog-filters');
-  const grid = document.getElementById('blog-grid');
-  if (!filterBar || !grid) return;
+  const categoryPills = document.querySelectorAll('.sidebar-pill');
+  const cards = document.querySelectorAll('.masonry-main-feed .card');
+  if (!categoryPills.length) return;
 
-  const buttons = filterBar.querySelectorAll('.filter-btn');
-  const cards = grid.querySelectorAll('.blog-card');
+  categoryPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      categoryPills.forEach(p => p.classList.remove('sidebar-pill--active'));
+      pill.classList.add('sidebar-pill--active');
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.getAttribute('data-filter');
-      buttons.forEach(b => b.classList.remove('filter-btn--active'));
-      btn.classList.add('filter-btn--active');
+      const categoryText = pill.textContent.split('(')[0].trim().toLowerCase();
 
       cards.forEach(card => {
-        const category = card.getAttribute('data-category');
-        const show = filter === 'all' || category === filter;
-        card.style.display = show ? '' : 'none';
-        if (show) {
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(12px)';
-          requestAnimationFrame(() => {
-            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-          });
+        if (categoryText === 'all articles' || categoryText.includes('all')) {
+          card.style.display = '';
+        } else {
+          const cardTag = (card.querySelector('.card__tag') ? card.querySelector('.card__tag').textContent : '').toLowerCase();
+          const cardTitle = (card.querySelector('h3, h4') ? card.querySelector('h3, h4').textContent : '').toLowerCase();
+          if (cardTag.includes(categoryText) || cardTitle.includes(categoryText) || categoryText.includes(cardTag)) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
         }
       });
     });
@@ -46,37 +43,49 @@ function initBlogFilter() {
 
 function initBlogSearch() {
   const searchInput = document.getElementById('blog-search');
-  const grid = document.getElementById('blog-grid');
-  if (!searchInput || !grid) return;
-
-  const cards = grid.querySelectorAll('.blog-card');
+  const cards = document.querySelectorAll('.masonry-main-feed .card');
+  if (!searchInput || !cards.length) return;
 
   searchInput.addEventListener('input', () => {
     const query = searchInput.value.toLowerCase().trim();
-
     cards.forEach(card => {
-      const title = (card.getAttribute('data-title') || '').toLowerCase();
       const text = card.textContent.toLowerCase();
-      const match = !query || title.includes(query) || text.includes(query);
-      card.style.display = match ? '' : 'none';
+      card.style.display = (!query || text.includes(query)) ? '' : 'none';
     });
-
-    // Reset category filters
-    const filterBtns = document.querySelectorAll('#blog-filters .filter-btn');
-    filterBtns.forEach(b => b.classList.remove('filter-btn--active'));
-    const allBtn = document.querySelector('#blog-filters [data-filter="all"]');
-    if (allBtn) allBtn.classList.add('filter-btn--active');
   });
 }
 
 function initBlogPagination() {
-  const paginationBtns = document.querySelectorAll('.pagination__btn');
-  paginationBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Only handle number buttons (not prev/next arrows)
-      if (btn.querySelector('i')) return;
-      paginationBtns.forEach(b => b.classList.remove('pagination__btn--active'));
-      btn.classList.add('pagination__btn--active');
+  const navBtns = document.querySelectorAll('.nav-arrow-btn');
+  const currentPageEl = document.querySelector('.current-page');
+  const volumePills = document.querySelectorAll('.volume-pill');
+
+  let currentPage = 1;
+  const maxPages = 4;
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      navBtns.forEach(b => b.classList.remove('nav-arrow-btn--active'));
+
+      if (btn.textContent.includes('Prev')) {
+        currentPage = Math.max(1, currentPage - 1);
+      } else if (btn.textContent.includes('Next')) {
+        currentPage = Math.min(maxPages, currentPage + 1);
+      }
+      btn.classList.add('nav-arrow-btn--active');
+
+      if (currentPageEl) {
+        currentPageEl.textContent = currentPage < 10 ? '0' + currentPage : currentPage;
+      }
+    });
+  });
+
+  volumePills.forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.preventDefault();
+      volumePills.forEach(p => p.classList.remove('volume-pill--active'));
+      pill.classList.add('volume-pill--active');
     });
   });
 }
@@ -84,12 +93,23 @@ function initBlogPagination() {
 function initBlogNewsletter() {
   const form = document.getElementById('blog-newsletter-form');
   if (!form) return;
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const input = form.querySelector('input[type="email"]');
     if (input && input.value) {
       input.value = '';
-      alert('Thank you for subscribing! You\'ll receive weekly tips every Wednesday.');
+      let successMsg = form.parentNode.querySelector('.form-success-msg');
+      if (!successMsg) {
+        successMsg = document.createElement('div');
+        successMsg.className = 'form-success-msg';
+        successMsg.style.cssText = 'color: #D4956A; font-weight: 700; margin-top: 0.75rem; font-size: 0.9rem;';
+        form.parentNode.appendChild(successMsg);
+      }
+      successMsg.textContent = '✓ Thank you for subscribing to the Sartorial Journal!';
+      setTimeout(() => {
+        if (successMsg) successMsg.textContent = '';
+      }, 5000);
     }
   });
 }
