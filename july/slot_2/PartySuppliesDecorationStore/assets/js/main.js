@@ -144,6 +144,8 @@
   /* ══════════════════════════════════════════
      6. SCROLL REVEAL (Intersection Observer)
   ══════════════════════════════════════════ */
+  document.documentElement.classList.add('js-ready');
+
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -152,9 +154,16 @@
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.05, rootMargin: '50px 0px' });
 
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        el.classList.add('revealed');
+      } else {
+        revealObserver.observe(el);
+      }
+    });
   } else {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('revealed'));
   }
