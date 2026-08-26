@@ -63,28 +63,81 @@
         .map-placeholder-content { position: relative; z-index: 1; text-align: center; }
 
         .upload-area {
-            border: 2px dashed var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 40px;
+            border: 2px dashed rgba(22, 163, 74, 0.4);
+            border-radius: var(--radius-xl);
+            padding: 48px 24px;
             text-align: center;
             cursor: pointer;
-            transition: all var(--transition-fast);
-            background: var(--bg-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, var(--bg-surface), var(--bg-surface-2));
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        .upload-area:hover {
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--primary-light);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+        .upload-area > * {
+            position: relative;
+            z-index: 1;
+        }
+        .upload-area:hover, .upload-area.drag-active {
             border-color: var(--primary);
-            background: var(--primary-light);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
         }
-        .upload-area input[type="file"] { display: none; }
+        .upload-area:hover::before, .upload-area.drag-active::before {
+            opacity: 0.5;
+        }
+        .upload-area.file-selected {
+            border-style: solid;
+            border-color: var(--primary);
+            background: rgba(22, 163, 74, 0.05);
+        }
+        
         .upload-icon {
-            width: 64px; height: 64px;
+            width: 72px; height: 72px;
             border-radius: 50%;
-            background: var(--primary-light);
+            background: #fff;
             color: var(--primary);
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
-            margin: 0 auto 16px;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        .upload-area:hover .upload-icon, .upload-area.drag-active .upload-icon {
+            transform: scale(1.1);
+        }
+        .upload-area.file-selected .upload-icon {
+            background: var(--primary);
+            color: #fff;
+        }
+        
+        [data-theme="dark"] .upload-area {
+            background: linear-gradient(145deg, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+            border-color: rgba(255,255,255,0.15);
+        }
+        [data-theme="dark"] .upload-area:hover, [data-theme="dark"] .upload-area.drag-active {
+            border-color: var(--primary);
+        }
+        [data-theme="dark"] .upload-icon {
+            background: var(--bg-surface-2);
+        }
+        [data-theme="dark"] .upload-area.file-selected .upload-icon {
+            background: var(--primary);
+        }
+        .upload-area input[type="file"] { display: none; }
 
         /* Tab System */
         .tab-nav {
@@ -352,11 +405,22 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Prescription File <span style="color:var(--error);" aria-hidden="true">*</span></label>
-                                <label for="prescription-file" class="upload-area" tabindex="0" role="button" aria-label="Upload prescription file">
-                                    <input type="file" id="prescription-file" name="prescription" accept=".jpg,.jpeg,.png,.pdf" aria-required="true">
-                                    <div class="upload-icon"><i class="fa-solid fa-upload" aria-hidden="true"></i></div>
-                                    <h4 id="file-label" style="margin-bottom:8px;">Click to upload or drag &amp; drop</h4>
-                                    <p style="font-size:0.8rem;">Accepts JPG, PNG, PDF — Max 5MB</p>
+                                <label for="prescription-file" class="upload-area" id="upload-dropzone" tabindex="0" role="button" aria-label="Upload prescription file">
+                                    <input type="file" id="prescription-file" name="prescription" accept=".jpg,.jpeg,.png,.pdf" aria-required="true" style="display:none;">
+                                    
+                                    <div class="upload-state-default" id="upload-default-ui" style="display:flex; flex-direction:column; align-items:center;">
+                                        <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></div>
+                                        <h4 style="margin-bottom:8px; font-size:1.2rem;">Drag &amp; drop prescription</h4>
+                                        <p style="font-size:0.85rem; margin-bottom:20px; color:var(--text-muted);">Supports JPG, PNG, PDF (Max 5MB)</p>
+                                        <span class="btn btn-primary" style="pointer-events:none; border-radius:var(--radius-full);">Browse Files</span>
+                                    </div>
+                                    
+                                    <div class="upload-state-success" id="upload-success-ui" style="display:none; flex-direction:column; align-items:center;">
+                                        <div class="upload-icon"><i class="fa-solid fa-check" aria-hidden="true"></i></div>
+                                        <h4 style="margin-bottom:8px; font-size:1.2rem; color:var(--primary);">File Selected</h4>
+                                        <p id="file-name-display" style="font-size:0.9rem; margin-bottom:20px; font-weight:600;"></p>
+                                        <span class="btn btn-outline" style="pointer-events:none; border-radius:var(--radius-full);"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Replace File</span>
+                                    </div>
                                 </label>
                             </div>
                             <div class="form-group">
