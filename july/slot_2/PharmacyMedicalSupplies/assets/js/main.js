@@ -281,12 +281,57 @@ document.addEventListener('DOMContentLoaded', () => {
     // 9. PRESCRIPTION UPLOAD — File name display
     // =========================================================
     const fileInput = document.getElementById('prescription-file');
-    const fileLabel = document.getElementById('file-label');
-    if (fileInput && fileLabel) {
+    const dropzone = document.getElementById('upload-dropzone');
+    const defaultUi = document.getElementById('upload-default-ui');
+    const successUi = document.getElementById('upload-success-ui');
+    const fileNameDisplay = document.getElementById('file-name-display');
+
+    if (fileInput && dropzone && defaultUi && successUi) {
+        
+        const handleFile = (file) => {
+            if (file) {
+                fileNameDisplay.textContent = file.name;
+                dropzone.classList.add('file-selected');
+                defaultUi.style.display = 'none';
+                successUi.style.display = 'flex';
+            } else {
+                dropzone.classList.remove('file-selected');
+                defaultUi.style.display = 'flex';
+                successUi.style.display = 'none';
+            }
+        };
+
         fileInput.addEventListener('change', () => {
-            const file = fileInput.files[0];
-            fileLabel.textContent = file ? file.name : 'Choose file (JPG, PNG, PDF — max 5MB)';
+            handleFile(fileInput.files[0]);
         });
+
+        // Drag & Drop events
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, () => dropzone.classList.add('drag-active'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, () => dropzone.classList.remove('drag-active'), false);
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                fileInput.files = files; // Update file input
+                handleFile(files[0]);
+            }
+        }, false);
     }
 
     // =========================================================

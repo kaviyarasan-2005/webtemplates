@@ -83,7 +83,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close menu when clicking links on mobile
     const navLinks = navMenu.querySelectorAll('a');
     navLinks.forEach(link => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (e) => {
+        // Don't close the menu if clicking a dropdown toggle
+        if (link.nextElementSibling && link.nextElementSibling.classList.contains('dropdown-menu')) {
+          e.preventDefault();
+          return;
+        }
+
         if (window.innerWidth <= 1024) {
           navMenu.classList.remove('active');
           const icon = mobileToggle.querySelector('i');

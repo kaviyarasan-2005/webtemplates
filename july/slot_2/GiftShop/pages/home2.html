@@ -22,16 +22,16 @@
     <style>
         /* Home 2 Specific Overrides */
         body {
-            background-color: #FAFAFA;
+            background-color: var(--clr-bg);
             font-family: 'Inter', sans-serif;
             background-image: none; /* Override Home 1 pattern */
         }
         .premium-heading {
             font-family: 'Playfair Display', serif;
-            color: #0F172A;
+            color: var(--clr-text-main);
         }
         .premium-gold { color: #D4AF37; }
-        .premium-bg-dark { background-color: #0F172A; color: white; }
+        .premium-bg-dark { background-color: var(--clr-text-main); color: white; }
         
         .luxury-card {
             transition: all 0.4s ease;
@@ -50,6 +50,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             font-size: 0.85rem;
+            border-radius: var(--radius-full);
             transition: all 0.3s ease;
             text-decoration: none;
             background: transparent;
@@ -62,12 +63,13 @@
         .elegant-btn-solid {
             display: inline-block;
             padding: 12px 32px;
-            border: 1px solid #0F172A;
-            background: #0F172A;
-            color: white;
+            border: 1px solid var(--clr-text-main);
+            background: var(--clr-text-main);
+            color: var(--clr-bg);
             text-transform: uppercase;
             letter-spacing: 2px;
             font-size: 0.85rem;
+            border-radius: var(--radius-full);
             transition: all 0.3s ease;
             text-decoration: none;
         }
@@ -83,7 +85,13 @@
     <header class="header">
         <div class="container navbar">
             <a href="../index.html" class="logo" style="font-family: 'Playfair Display', serif; display: flex; align-items: center; gap: 8px;">
-                <i class="ph-fill ph-gift" style="color: var(--clr-honey-gold); font-size: 1.5rem;"></i> Kado
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: var(--clr-honey-gold); flex-shrink: 0;">
+  <path d="M12 8.5C12 8.5 8 2 4.5 5C1.5 7.5 8 11.5 12 8.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 8.5C12 8.5 16 2 19.5 5C22.5 7.5 16 11.5 12 8.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="3" y="11.5" width="18" height="10.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M12 11.5V22" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M3 11.5H21" stroke="currentColor" stroke-width="1.5"/>
+</svg> Kado
             </a>
             
             <nav class="nav-links">
@@ -108,7 +116,7 @@
                 <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark/Light Mode" title="Toggle Theme">
                     <i class="ph ph-moon"></i>
                 </button>
-                <a href="#" class="btn btn-primary nav-cta">Shop Now</a>
+                <a href="service.html" class="btn btn-primary nav-cta">Shop Now</a>
                 <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Open Mobile Menu">
                     <i class="ph ph-list"></i>
                 </button>
@@ -137,52 +145,69 @@
 
     <main>
         <!-- 1. Hero Section: "The Luxury of Giving" -->
-        <section style="position: relative; height: 90vh; min-height: 600px; display: flex; align-items: center; overflow: hidden; background-color: #0F172A;">
-            <div style="position: absolute; top: 0; right: 0; bottom: 0; width: 60%; background-image: url('https://loremflickr.com/1200/1000/luxury,gift/all?random=11'); background-size: cover; background-position: center; clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%); opacity: 0.8;"></div>
+        <section style="position: relative; height: 100vh; min-height: 700px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+            <!-- Immersive Full-width Background -->
+            <div style="position: absolute; inset: 0; background-image: url('../assets/images/luxury_gift_wrapping.jpg'); background-size: cover; background-position: center; transform: scale(1.05); animation: slowZoom 20s infinite alternate;"></div>
+            <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(15, 23, 42, 0.7), rgba(0, 0, 0, 0.4));"></div>
             
-            <div class="container relative z-10">
-                <div style="max-width: 500px; padding: 40px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); border-left: 4px solid #D4AF37;">
-                    <span style="color: #D4AF37; text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; display: block; margin-bottom: 20px;">The Boutique Collection</span>
-                    <h1 class="premium-heading" style="color: white; font-size: 4rem; line-height: 1.1; margin-bottom: 30px; font-style: italic;">The Luxury of Giving</h1>
-                    <p style="color: #CBD5E1; font-size: 1.1rem; line-height: 1.8; margin-bottom: 40px; font-weight: 300;">Discover an exquisitely curated selection of artisan crafts, fine jewelry, and timeless keepsakes designed for life's most precious moments.</p>
-                    <a href="#collection" class="elegant-btn" style="color: white; border-color: white;">Explore The Edit</a>
+            <!-- Floating Glassmorphism Centerpiece -->
+            <div class="container relative z-10 text-center" style="display: flex; flex-direction: column; align-items: center; animation: fadeUp 1s ease-out forwards;">
+                <div style="max-width: 700px; padding: 60px 40px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.3);">
+                    <span style="color: #D4AF37; text-transform: uppercase; letter-spacing: 4px; font-size: 0.9rem; display: inline-block; margin-bottom: 25px; border-bottom: 1px solid rgba(212, 175, 55, 0.5); padding-bottom: 10px;">The Boutique Collection</span>
+                    <h1 class="premium-heading" style="color: white; font-size: clamp(3rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 30px; font-style: italic; text-shadow: 0 4px 15px rgba(0,0,0,0.2);">The Luxury of Giving</h1>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 1.15rem; line-height: 1.8; margin-bottom: 45px; font-weight: 300; max-width: 550px; margin-left: auto; margin-right: auto;">Discover an exquisitely curated selection of artisan crafts, fine jewelry, and timeless keepsakes designed for life's most precious moments.</p>
+                    <a href="#collection" class="elegant-btn-solid" style="background-color: #D4AF37; color: #0F172A; border-color: #D4AF37; font-weight: 600;">Explore The Edit</a>
                 </div>
             </div>
+            <style>
+                @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
+                @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+            </style>
         </section>
 
         <!-- 2. "The Curator's Edit" (Featured Categories) -->
-        <section id="collection" class="section container" style="padding: 100px 20px;">
-            <div class="text-center" style="margin-bottom: 60px;">
-                <h2 class="premium-heading" style="font-size: 2.5rem; margin-bottom: 10px;">The Curator's Edit</h2>
-                <div style="width: 40px; height: 2px; background-color: #D4AF37; margin: 0 auto 20px auto;"></div>
-                <p style="color: #64748B; font-weight: 300;">Hand-selected pieces of unparalleled quality.</p>
+        <section id="collection" class="section container" style="padding: 100px 40px 120px 40px;">
+            <style>
+                .luxury-card { overflow: hidden; border-radius: 8px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+                .luxury-card img { transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+                .luxury-card:hover img { transform: scale(1.08); }
+                .luxury-card-overlay { transition: opacity 0.5s ease; opacity: 0.8; }
+                .luxury-card:hover .luxury-card-overlay { opacity: 1; }
+                .discover-link { transform: translateY(10px); opacity: 0; transition: all 0.4s ease; }
+                .luxury-card:hover .discover-link { transform: translateY(0); opacity: 1; }
+            </style>
+            
+            <div class="text-center" style="margin-bottom: 80px;">
+                <h2 class="premium-heading" style="font-size: 2.75rem; margin-bottom: 15px; letter-spacing: 1px;">The Curator's Edit</h2>
+                <div style="width: 50px; height: 1px; background-color: #D4AF37; margin: 0 auto 20px auto;"></div>
+                <p style="color: var(--clr-text-main); opacity: 0.85; font-weight: 400; font-size: 1.15rem; max-width: 500px; margin: 0 auto;">Hand-selected pieces of unparalleled quality, sourced from master artisans around the globe.</p>
             </div>
             
-            <div class="grid grid-cols-1 grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 grid-cols-3 gap-8" style="align-items: center;">
                 <!-- Category 1 -->
-                <a href="#" class="luxury-card" style="position: relative; display: block; height: 450px;">
-                    <img src="../assets/images/fine_jewelry_card.jpg" alt="Fine Jewelry" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
-                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,23,42,0.9) 0%, transparent 50%); display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;">
-                        <h3 class="premium-heading" style="color: white; font-size: 1.75rem; margin-bottom: 5px;">Fine Jewelry</h3>
-                        <span style="color: #D4AF37; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px;">Discover More &rarr;</span>
+                <a href="#" class="luxury-card" style="position: relative; display: block; height: 480px; transform: translateY(30px);">
+                    <img src="../assets/images/fine_jewelry_card.jpg" alt="Fine Jewelry" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="luxury-card-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.2) 60%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px;">
+                        <h3 class="premium-heading" style="color: white; font-size: 2rem; margin-bottom: 10px;">Fine Jewelry</h3>
+                        <span class="discover-link" style="color: #D4AF37; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 3px;">Discover More &rarr;</span>
                     </div>
                 </a>
                 
                 <!-- Category 2 -->
-                <a href="#" class="luxury-card" style="position: relative; display: block; height: 450px; transform: translateY(40px);">
-                    <img src="../assets/images/executive_gifts_card.jpg" alt="Executive Gifts" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
-                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,23,42,0.9) 0%, transparent 50%); display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;">
-                        <h3 class="premium-heading" style="color: white; font-size: 1.75rem; margin-bottom: 5px;">Executive Gifts</h3>
-                        <span style="color: #D4AF37; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px;">Discover More &rarr;</span>
+                <a href="#" class="luxury-card" style="position: relative; display: block; height: 550px; transform: translateY(-30px); z-index: 2;">
+                    <img src="../assets/images/executive_gifts_card.jpg" alt="Executive Gifts" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="luxury-card-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.2) 60%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px;">
+                        <h3 class="premium-heading" style="color: white; font-size: 2rem; margin-bottom: 10px;">Executive Gifts</h3>
+                        <span class="discover-link" style="color: #D4AF37; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 3px;">Discover More &rarr;</span>
                     </div>
                 </a>
                 
                 <!-- Category 3 -->
-                <a href="#" class="luxury-card" style="position: relative; display: block; height: 450px;">
-                    <img src="../assets/images/artisan_home_card.jpg" alt="Artisan Home" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
-                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,23,42,0.9) 0%, transparent 50%); display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;">
-                        <h3 class="premium-heading" style="color: white; font-size: 1.75rem; margin-bottom: 5px;">Artisan Home</h3>
-                        <span style="color: #D4AF37; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px;">Discover More &rarr;</span>
+                <a href="#" class="luxury-card" style="position: relative; display: block; height: 480px; transform: translateY(30px);">
+                    <img src="../assets/images/artisan_home_card.jpg" alt="Artisan Home" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="luxury-card-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.2) 60%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px;">
+                        <h3 class="premium-heading" style="color: white; font-size: 2rem; margin-bottom: 10px;">Artisan Home</h3>
+                        <span class="discover-link" style="color: #D4AF37; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 3px;">Discover More &rarr;</span>
                     </div>
                 </a>
             </div>
@@ -190,38 +215,38 @@
 
 
         <!-- 4. "Corporate & Event Gifting" (B2B Focus) -->
-        <section style="padding: 120px 0; background: var(--clr-surface);">
+        <section style="padding: 120px 0; background-color: var(--clr-surface);">
             <div class="container text-center" style="max-width: 800px;">
-                <span style="color: #64748B; text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; display: block; margin-bottom: 20px;">Business & Events</span>
-                <h2 class="premium-heading" style="font-size: 3rem; margin-bottom: 30px;">Corporate & Volume Gifting</h2>
-                <p style="color: #475569; font-weight: 300; line-height: 1.8; margin-bottom: 40px; font-size: 1.1rem;">Whether you are celebrating a company milestone, thanking premium clients, or curating gifts for a luxury wedding, our dedicated team provides unparalleled service for volume orders.</p>
-                <div style="display: flex; justify-content: center; gap: 20px;">
+                <span style="color: #D4AF37; text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; display: block; margin-bottom: 20px; font-weight: 600;">Business & Events</span>
+                <h2 class="premium-heading" style="font-size: 3rem; margin-bottom: 30px; color: var(--clr-text-main);">Corporate & Volume Gifting</h2>
+                <p style="color: var(--clr-text-muted); font-weight: 300; line-height: 1.8; margin-bottom: 40px; font-size: 1.1rem;">Whether you are celebrating a company milestone, thanking premium clients, or curating gifts for a luxury wedding, our dedicated team provides unparalleled service for volume orders.</p>
+                <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
                     <a href="contact.html" class="elegant-btn-solid">Inquire Now</a>
-                    <a href="#" class="elegant-btn" style="color: #0F172A; border-color: #0F172A;">Download Brochure</a>
+                    <a href="#" class="elegant-btn" style="color: var(--clr-text-main); border-color: var(--clr-text-main);">Download Brochure</a>
                 </div>
             </div>
-            
-            <div style="width: 100%; height: 300px; margin-top: 60px; background-image: url('https://loremflickr.com/1920/600/luxury,gift/all?random=16'); background-size: cover; background-position: center; background-attachment: fixed;"></div>
         </section>
 
         <!-- 5. "Client Praise" (Testimonials) -->
-        <section style="padding: 100px 0 0 0; background-color: #F8FAFC;">
-            <div class="container">
-                <div class="text-center" style="margin-bottom: 60px;">
-                    <h2 class="premium-heading" style="font-size: 2.5rem; margin-bottom: 10px;">Words of Praise</h2>
-                    <div style="width: 40px; height: 2px; background-color: #D4AF37; margin: 0 auto;"></div>
-                </div>
-                
-                <div class="grid grid-cols-1 grid-cols-2 gap-12">
-                    <div style="padding: 40px; background: var(--clr-surface); border-top: 2px solid #D4AF37; box-shadow: 0 10px 30px rgba(0,0,0,0.02);">
-                        <i class="ph-fill ph-quotes" style="color: #E2E8F0; font-size: 3rem; margin-bottom: 20px; display: block;"></i>
-                        <p style="font-family: 'Playfair Display', serif; font-size: 1.35rem; font-style: italic; color: #334155; line-height: 1.6; margin-bottom: 30px;">"The attention to detail is simply unmatched. The bespoke leather folio I ordered for my partner was wrapped so beautifully it felt like a shame to open it."</p>
-                        <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; color: #0F172A; font-weight: 600;">— Eleanor Vance, New York</span>
+        <section style="padding: 120px 0; background-color: var(--clr-bg-alt); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 10%; right: -5%; font-size: 20rem; color: var(--clr-surface); opacity: 0.5; z-index: 0; line-height: 1;"><i class="ph-fill ph-quotes"></i></div>
+            <div class="container relative z-10">
+                <div class="grid grid-cols-1 grid-cols-2 gap-12" style="align-items: center;">
+                    <div style="padding-right: 40px;">
+                        <h2 class="premium-heading" style="font-size: 3rem; margin-bottom: 20px;">Words of Praise</h2>
+                        <div style="width: 50px; height: 2px; background-color: #D4AF37; margin-bottom: 30px;"></div>
+                        <p style="color: var(--clr-text-muted); font-size: 1.15rem; line-height: 1.8;">Our clientele expects nothing short of perfection. Read what they have to say about the Boutique Experience.</p>
                     </div>
-                    <div style="padding: 40px; background: var(--clr-surface); border-top: 2px solid #D4AF37; box-shadow: 0 10px 30px rgba(0,0,0,0.02);">
-                        <i class="ph-fill ph-quotes" style="color: #E2E8F0; font-size: 3rem; margin-bottom: 20px; display: block;"></i>
-                        <p style="font-family: 'Playfair Display', serif; font-size: 1.35rem; font-style: italic; color: #334155; line-height: 1.6; margin-bottom: 30px;">"Kado Boutique handled our annual partner gifts effortlessly. The quality of the products and the seamless white-glove delivery left a lasting impression."</p>
-                        <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; color: #0F172A; font-weight: 600;">— David Chen, CEO</span>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 40px;">
+                        <div style="padding: 40px; background: var(--clr-surface); border-left: 4px solid #D4AF37; box-shadow: 0 20px 50px rgba(0,0,0,0.05); transform: translateX(-40px);">
+                            <p style="font-family: 'Playfair Display', serif; font-size: 1.35rem; font-style: italic; color: var(--clr-text-main); line-height: 1.6; margin-bottom: 25px;">"The attention to detail is simply unmatched. The bespoke leather folio I ordered for my partner was wrapped so beautifully it felt like a shame to open it."</p>
+                            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; color: var(--clr-text-main); font-weight: 600; display: flex; align-items: center; gap: 10px;"><div style="width: 20px; height: 1px; background-color: #D4AF37;"></div> Eleanor Vance, NY</span>
+                        </div>
+                        <div style="padding: 40px; background: var(--clr-surface); border-left: 4px solid #D4AF37; box-shadow: 0 20px 50px rgba(0,0,0,0.05); transform: translateX(20px);">
+                            <p style="font-family: 'Playfair Display', serif; font-size: 1.35rem; font-style: italic; color: var(--clr-text-main); line-height: 1.6; margin-bottom: 25px;">"Kado Boutique handled our annual partner gifts effortlessly. The quality of the products and the seamless white-glove delivery left a lasting impression."</p>
+                            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; color: var(--clr-text-main); font-weight: 600; display: flex; align-items: center; gap: 10px;"><div style="width: 20px; height: 1px; background-color: #D4AF37;"></div> David Chen, CEO</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -260,9 +285,20 @@
                 <!-- Brand -->
                 <div style="grid-column: span 1;">
                     <a href="../index.html" class="logo" style="color: white; margin-bottom: var(--space-4); font-family: 'Playfair Display', serif; display: flex; align-items: center; gap: 8px;">
-                        <i class="ph-fill ph-gift" style="color: var(--clr-honey-gold); font-size: 1.5rem;"></i> Kado
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: var(--clr-honey-gold); flex-shrink: 0;">
+  <path d="M12 8.5C12 8.5 8 2 4.5 5C1.5 7.5 8 11.5 12 8.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 8.5C12 8.5 16 2 19.5 5C22.5 7.5 16 11.5 12 8.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="3" y="11.5" width="18" height="10.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M12 11.5V22" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M3 11.5H21" stroke="currentColor" stroke-width="1.5"/>
+</svg> Kado
                     </a>
-                    <p style="color: #64748B; font-weight: 300; font-size: 0.95rem;">Curating the world's most exquisite gifts for life's rare moments.</p>
+                    <p style="color: var(--clr-text-muted); font-weight: 300; font-size: 0.95rem;">Curating the world's most exquisite gifts for life's rare moments.</p>
+                    <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+                        <a href="mailto:concierge@kado.com" style="color: #94A3B8; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;"><i class="ph-fill ph-envelope-simple"></i> concierge@kado.com</a>
+                        <a href="tel:+15559876543" style="color: #94A3B8; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;"><i class="ph-fill ph-phone"></i> +1 (555) 987-6543</a>
+                        <span style="color: #94A3B8; font-size: 0.95rem; display: flex; align-items: flex-start; gap: 8px;"><i class="ph-fill ph-map-pin" style="margin-top: 3px;"></i> 450 Luxury Avenue, NY 10021</span>
+                    </div>
                 </div>
                 
                 <!-- Links -->
@@ -288,7 +324,7 @@
                 <!-- VIP Newsletter -->
                 <div style="grid-column: span 1;">
                     <h4 style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; color: white; margin-bottom: 20px;">The Inner Circle</h4>
-                    <p style="color: #64748B; font-weight: 300; font-size: 0.95rem; margin-bottom: 20px;">Subscribe for exclusive access to limited collections and private events.</p>
+                    <p style="color: var(--clr-text-muted); font-weight: 300; font-size: 0.95rem; margin-bottom: 20px;">Subscribe for exclusive access to limited collections and private events.</p>
                     <form style="display: flex; border-bottom: 1px solid #475569; padding-bottom: 5px;">
                         <input type="email" placeholder="Email Address" style="background: transparent; border: none; color: white; width: 100%; outline: none; font-weight: 300; font-size: 0.95rem;" required>
                         <button type="submit" style="background: transparent; border: none; color: #D4AF37; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Join</button>
@@ -297,10 +333,10 @@
             </div>
             
             <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                <p style="color: #475569; font-size: 0.85rem;">&copy; 2026 Kado Boutique. All rights reserved.</p>
+                <p style="color: var(--clr-text-muted); font-size: 0.85rem;">&copy; 2026 Kado Boutique. All rights reserved.</p>
                 <div style="display: flex; gap: 20px;">
-                    <a href="#" style="color: #475569; font-size: 1.2rem; transition: color 0.3s;"><i class="ph-fill ph-instagram-logo"></i></a>
-                    <a href="#" style="color: #475569; font-size: 1.2rem; transition: color 0.3s;"><i class="ph-fill ph-pinterest-logo"></i></a>
+                    <a href="#" style="color: var(--clr-text-muted); font-size: 1.2rem; transition: color 0.3s;"><i class="ph-fill ph-instagram-logo"></i></a>
+                    <a href="#" style="color: var(--clr-text-muted); font-size: 1.2rem; transition: color 0.3s;"><i class="ph-fill ph-pinterest-logo"></i></a>
                 </div>
             </div>
         </div>
