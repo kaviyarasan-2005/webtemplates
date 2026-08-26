@@ -74,6 +74,92 @@
             flex-shrink: 0;
         }
 
+        /* Premium Timeline Redesign */
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            position: relative;
+            padding-bottom: 32px;
+        }
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+        .timeline-marker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+            width: 24px;
+        }
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--clr-green-500), var(--clr-blue-500));
+            box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.15);
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .timeline-item:hover .timeline-dot {
+            transform: scale(1.25);
+            box-shadow: 0 0 0 6px rgba(22, 163, 74, 0.25);
+        }
+        .timeline-line {
+            width: 2px;
+            flex-grow: 1;
+            background: linear-gradient(to bottom, var(--clr-green-500), rgba(22,163,74,0.1));
+            margin-top: 8px;
+            border-radius: 2px;
+        }
+        .timeline-item:last-child .timeline-line {
+            display: none;
+        }
+        .timeline-content {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 20px 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            flex: 1;
+            margin-top: -6px;
+        }
+        .timeline-item:hover .timeline-content {
+            transform: translateX(8px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--clr-green-500);
+        }
+        [dir="rtl"] .timeline-item:hover .timeline-content {
+            transform: translateX(-8px);
+        }
+        .timeline-year {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(22, 163, 74, 0.1);
+            color: var(--clr-green-600);
+            font-size: 0.8rem;
+            font-weight: 800;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        [data-theme="dark"] .timeline-year {
+            background: rgba(22, 163, 74, 0.2);
+            color: var(--clr-green-400);
+        }
+        .timeline-title {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+
         @media (max-width: 640px) {
             .value-card { flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px; }
             .cert-badge { flex-direction: column; align-items: flex-start; gap: 12px; padding: 18px; text-align: left; }
@@ -123,11 +209,6 @@
             <div class="eyebrow" style="margin-bottom:16px;"><i class="fa-solid fa-building" aria-hidden="true"></i> Who We Are</div>
             <h1 id="about-hero-title" class="page-hero-title" style="font-size:clamp(2rem, 5vw, 3.5rem); margin-bottom:20px; line-height:1.2;">About <span class="highlight">MediCare Plus</span></h1>
             <p style="font-size:1.1rem; color:var(--text-secondary); margin-bottom:32px;">Two decades of commitment to genuine healthcare — trusted by over 50,000 families across the nation.</p>
-            <nav class="page-breadcrumb" aria-label="Breadcrumb">
-                <a href="../index.html">Home</a>
-                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-                <span aria-current="page">About</span>
-            </nav>
         </div>
         <div class="split-hero-img" style="background-image:url('../assets/images/hero_about.png');" aria-label="Pharmacy store front"></div>
     </section>
@@ -186,12 +267,12 @@
                 <h2 id="mission-title">Mission &amp; Vision</h2>
             </div>
             <div class="grid" style="grid-template-columns:1fr 1fr; gap:32px;">
-                <div style="background:linear-gradient(135deg,var(--primary),var(--clr-green-700)); border-radius:var(--radius-xl); padding:40px; color:#fff;" class="reveal">
+                <div style="background:linear-gradient(135deg,var(--clr-green-600),var(--clr-green-700)); border-radius:var(--radius-xl); padding:40px; color:#fff;" class="reveal">
                     <div style="width:52px;height:52px;background:rgba(255,255,255,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:20px;"><i class="fa-solid fa-rocket" aria-hidden="true"></i></div>
                     <h3 style="color:#fff; margin-bottom:12px;">Our Mission</h3>
                     <p style="color:rgba(255,255,255,0.85); line-height:1.8;">To make quality healthcare accessible to every family through technology, genuine products, and expert pharmacist guidance — delivered with speed, safety, and compassion.</p>
                 </div>
-                <div style="background:linear-gradient(135deg,var(--accent),var(--clr-blue-600)); border-radius:var(--radius-xl); padding:40px; color:#fff;" class="reveal">
+                <div style="background:linear-gradient(135deg,var(--clr-blue-500),var(--clr-blue-600)); border-radius:var(--radius-xl); padding:40px; color:#fff;" class="reveal">
                     <div style="width:52px;height:52px;background:rgba(255,255,255,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:20px;"><i class="fa-solid fa-eye" aria-hidden="true"></i></div>
                     <h3 style="color:#fff; margin-bottom:12px;">Our Vision</h3>
                     <p style="color:rgba(255,255,255,0.85); line-height:1.8;">To be the most trusted healthcare companion for every household — a platform where patients, caregivers, and healthcare professionals collaborate to improve health outcomes nationwide.</p>
@@ -249,6 +330,20 @@
                     <div>
                         <h4 style="margin-bottom:8px;">Community</h4>
                         <p style="font-size:0.9rem;">Free health camps, medication assistance programs, and pharmacist workshops for underserved communities.</p>
+                    </div>
+                </div>
+                <div class="value-card reveal">
+                    <div class="feature-icon feature-icon-green" style="flex-shrink:0;"><i class="fa-solid fa-medal" aria-hidden="true"></i></div>
+                    <div>
+                        <h4 style="margin-bottom:8px;">Quality Assurance</h4>
+                        <p style="font-size:0.9rem;">Rigorous, multi-step quality control checks to guarantee the efficacy and safety of every product.</p>
+                    </div>
+                </div>
+                <div class="value-card reveal">
+                    <div class="feature-icon feature-icon-blue" style="flex-shrink:0;"><i class="fa-solid fa-universal-access" aria-hidden="true"></i></div>
+                    <div>
+                        <h4 style="margin-bottom:8px;">Accessibility</h4>
+                        <p style="font-size:0.9rem;">Breaking down barriers to healthcare by making vital medications affordable and easy to reach.</p>
                     </div>
                 </div>
             </div>
@@ -355,43 +450,48 @@
                         <h2 style="text-align:left;">Our Journey</h2>
                     </div>
                     <div style="display:flex; flex-direction:column; gap:0;">
-                        <div style="display:flex; gap:20px; padding-bottom:28px; position:relative;">
-                            <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
-                                <div style="width:40px;height:40px;border-radius:50%;background:var(--bg-surface); border:2px solid var(--primary); color:var(--primary); display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:800;">05</div>
-                                <div style="width:2px;flex:1;background:var(--border-color);margin-top:8px;"></div>
+                        <div class="timeline-item reveal">
+                            <div class="timeline-marker">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-line"></div>
                             </div>
-                            <div class="reveal" style="padding-bottom:8px;">
-                                <h5 style="margin-bottom:4px; color:var(--primary);">2005 — Founded</h5>
-                                <p style="font-size:0.875rem;">Opened first neighborhood pharmacy in New York with a team of 5 pharmacists.</p>
-                            </div>
-                        </div>
-                        <div style="display:flex; gap:20px; padding-bottom:28px;">
-                            <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
-                                <div style="width:40px;height:40px;border-radius:50%;background:var(--bg-surface); border:2px solid var(--accent); color:var(--accent); display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:800;">12</div>
-                                <div style="width:2px;flex:1;background:var(--border-color);margin-top:8px;"></div>
-                            </div>
-                            <div class="reveal">
-                                <h5 style="margin-bottom:4px; color:var(--accent);">2012 — Online Launch</h5>
-                                <p style="font-size:0.875rem;">Launched our online pharmacy platform with home delivery in 10 cities.</p>
+                            <div class="timeline-content">
+                                <div class="timeline-year">2005</div>
+                                <h5 class="timeline-title">Founded</h5>
+                                <p class="timeline-desc">Opened first neighborhood pharmacy in New York with a team of 5 pharmacists.</p>
                             </div>
                         </div>
-                        <div style="display:flex; gap:20px; padding-bottom:28px;">
-                            <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
-                                <div style="width:40px;height:40px;border-radius:50%;background:var(--bg-surface); border:2px solid var(--primary); color:var(--primary); display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:800;">18</div>
-                                <div style="width:2px;flex:1;background:var(--border-color);margin-top:8px;"></div>
+                        <div class="timeline-item reveal" style="animation-delay: 0.1s;">
+                            <div class="timeline-marker">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-line"></div>
                             </div>
-                            <div class="reveal">
-                                <h5 style="margin-bottom:4px; color:var(--primary);">2018 — Cold Chain</h5>
-                                <p style="font-size:0.875rem;">Introduced WHO-certified cold chain delivery for temperature-sensitive medications.</p>
+                            <div class="timeline-content">
+                                <div class="timeline-year">2012</div>
+                                <h5 class="timeline-title">Online Launch</h5>
+                                <p class="timeline-desc">Launched our online pharmacy platform with home delivery in 10 cities.</p>
                             </div>
                         </div>
-                        <div style="display:flex; gap:20px;">
-                            <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
-                                <div style="width:40px;height:40px;border-radius:50%;background:var(--bg-surface); border:2px solid var(--primary); color:var(--primary); display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:800;">26</div>
+                        <div class="timeline-item reveal" style="animation-delay: 0.2s;">
+                            <div class="timeline-marker">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-line"></div>
                             </div>
-                            <div class="reveal">
-                                <h5 style="margin-bottom:4px; color:var(--primary);">2026 — 200+ Cities</h5>
-                                <p style="font-size:0.875rem;">Now serving 200+ cities with 50,000+ patients and a team of 150+ pharmacists.</p>
+                            <div class="timeline-content">
+                                <div class="timeline-year">2018</div>
+                                <h5 class="timeline-title">Cold Chain</h5>
+                                <p class="timeline-desc">Introduced WHO-certified cold chain delivery for temperature-sensitive medications.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item reveal" style="animation-delay: 0.3s;">
+                            <div class="timeline-marker">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-line"></div>
+                            </div>
+                            <div class="timeline-content">
+                                <div class="timeline-year">2026</div>
+                                <h5 class="timeline-title">200+ Cities</h5>
+                                <p class="timeline-desc">Now serving 200+ cities with 50,000+ patients and a team of 150+ pharmacists.</p>
                             </div>
                         </div>
                     </div>
@@ -409,7 +509,7 @@
         
         <div class="container" style="position:relative; z-index:2;">
             <div class="reveal" style="background:rgba(255, 255, 255, 0.08); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.15); border-radius:var(--radius-xl); padding:48px; max-width:800px; margin:0 auto; color:#fff; box-shadow:0 25px 50px -12px rgba(0, 0, 0, 0.5); text-align:center;">
-                <div class="eyebrow" style="color:var(--primary-light); justify-content:center;"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Find Us Locally</div>
+                <div class="eyebrow" style="color:var(--clr-green-400); justify-content:center;"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Find Us Locally</div>
                 <h2 id="locations-title" style="font-size:2.5rem; margin-bottom:16px; color:#fff; line-height:1.2;">Community Pharmacy Hubs</h2>
                 <p style="font-size:1.1rem; color:rgba(255,255,255,0.85); margin-bottom:40px; line-height:1.6; max-width:600px; margin-inline:auto;">
                     Visit one of our physical locations for in-person pharmacist consultations, immediate prescription fills, and free health screenings.
@@ -418,13 +518,13 @@
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px; text-align:left;">
                     <!-- Location 1 -->
                     <div style="display:flex; gap:16px; align-items:flex-start; padding:24px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:var(--radius-lg);">
-                        <div style="width:44px; height:44px; background:var(--primary); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 15px rgba(22,163,74,0.4);">
+                        <div style="width:44px; height:44px; background:var(--clr-green-600); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 15px rgba(22,163,74,0.4);">
                             <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
                         </div>
                         <div>
                             <h4 style="font-size:1.15rem; margin-bottom:4px; color:#fff;">Downtown Flagship</h4>
                             <p style="font-size:0.95rem; color:rgba(255,255,255,0.7); margin-bottom:12px;">123 Healthcare Ave, Medical District, NY</p>
-                            <a href="contact.html" style="color:var(--primary-light); font-size:0.9rem; text-decoration:none; font-weight:700; transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--primary-light)'">Get Directions &rarr;</a>
+                            <a href="contact.html" style="color:var(--clr-green-400); font-size:0.9rem; text-decoration:none; font-weight:700; transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--clr-green-400)'">Get Directions &rarr;</a>
                         </div>
                     </div>
                     <!-- Location 2 -->
@@ -435,7 +535,7 @@
                         <div>
                             <h4 style="font-size:1.15rem; margin-bottom:4px; color:#fff;">Westside Hub</h4>
                             <p style="font-size:0.95rem; color:rgba(255,255,255,0.7); margin-bottom:12px;">890 Wellness Blvd, Suite 200, NY</p>
-                            <a href="contact.html" style="color:var(--primary-light); font-size:0.9rem; text-decoration:none; font-weight:700; transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--primary-light)'">Get Directions &rarr;</a>
+                            <a href="contact.html" style="color:var(--clr-green-400); font-size:0.9rem; text-decoration:none; font-weight:700; transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--clr-green-400)'">Get Directions &rarr;</a>
                         </div>
                     </div>
                 </div>
