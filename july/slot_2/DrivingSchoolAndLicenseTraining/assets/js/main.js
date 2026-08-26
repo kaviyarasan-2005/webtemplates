@@ -19,12 +19,11 @@
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('driv-theme', theme);
       document.querySelectorAll('.theme-toggle').forEach(btn => {
-        const icon = btn.querySelector('i');
-        if (icon) {
-          icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
-          if (typeof lucide !== 'undefined') lucide.createIcons();
-        }
+        btn.innerHTML = `<i data-lucide="${theme === 'dark' ? 'sun' : 'moon'}"></i>`;
+        btn.setAttribute('title', theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+        btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode');
       });
+      if (typeof lucide !== 'undefined') lucide.createIcons();
     },
     toggle() {
       const current = document.documentElement.getAttribute('data-theme');
