@@ -159,12 +159,116 @@
             line-height: 1.6;
             margin: 0;
         }
+        
+        /* Story Section Redesign */
+        .story-section {
+            padding: 80px 0;
+            overflow: hidden;
+        }
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 64px;
+            align-items: center;
+        }
+        .story-images {
+            position: relative;
+        }
+        .story-main-img {
+            width: 100%;
+            height: 540px;
+            object-fit: cover;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-color);
+            position: relative;
+            z-index: 2;
+        }
+        .story-decoration {
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            width: 100%;
+            height: 100%;
+            border-radius: var(--radius-xl);
+            background: linear-gradient(135deg, var(--clr-green-500) 0%, var(--clr-blue-500) 100%);
+            opacity: 0.15;
+            z-index: 1;
+        }
+        .story-floating-card {
+            position: absolute;
+            bottom: 40px;
+            right: -30px;
+            background: var(--bg-surface);
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            max-width: 240px;
+        }
+        [data-theme="dark"] .story-floating-card {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: rgba(15,23,42,0.95);
+            backdrop-filter: blur(10px);
+        }
+        .story-floating-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--clr-green-500), var(--clr-blue-500));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .story-stats-container {
+            display: flex;
+            gap: 40px;
+            margin: 32px 0 40px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-color);
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .stat-number {
+            font-family: 'Nunito', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--clr-green-600), var(--clr-blue-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
+        @media (max-width: 992px) {
+            .story-grid { grid-template-columns: 1fr; gap: 48px; }
+            .story-floating-card { right: 20px; }
+            .story-main-img { height: 400px; }
+        }
         @media (max-width: 640px) {
             .value-card { flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px; }
             .cert-badge { flex-direction: column; align-items: flex-start; gap: 12px; padding: 18px; text-align: left; }
             .team-card { padding: 24px 16px; }
             .team-avatar { width: 90px; height: 90px; }
+            .story-stats-container { gap: 24px; flex-wrap: wrap; }
+            .story-floating-card { display: none; }
+            .story-decoration { top: -15px; left: -15px; }
         }
     </style>
 </head>
@@ -214,46 +318,53 @@
     </section>
 
     <!-- OUR STORY -->
-    <section aria-labelledby="story-title">
+    <section class="story-section" aria-labelledby="story-title">
         <div class="container">
-            <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); align-items:center; gap:56px;">
-                <div class="reveal">
-                    <div class="collage-wrapper">
-                        <img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=600&q=80" alt="Pharmacist at work" class="collage-img collage-1">
-                        <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&w=600&q=80" alt="Pharmacy shelves" class="collage-img collage-2">
+            <div class="story-grid">
+                <!-- Left side: Images -->
+                <div class="reveal story-images">
+                    <div class="story-decoration" aria-hidden="true"></div>
+                    <img src="../assets/images/about_story.png" alt="Pharmacists at MediCare Plus" class="story-main-img">
+                    <div class="story-floating-card">
+                        <div class="story-floating-icon">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight:800; color:var(--text-primary); font-size:1.1rem; margin-bottom:2px;">#1 Rated</div>
+                            <div style="font-size:0.75rem; color:var(--text-secondary); line-height:1.3;">Pharmacy Service<br>2026 Awards</div>
+                        </div>
                     </div>
                 </div>
+                
+                <!-- Right side: Content -->
                 <div class="reveal">
                     <div class="section-title" style="text-align:left; margin-bottom:var(--space-6);">
                         <div class="eyebrow"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Our Story</div>
-                        <h2 id="story-title" style="text-align:left;">Two Decades of Trusted Care</h2>
+                        <h2 id="story-title" style="text-align:left; font-size:clamp(2rem, 4vw, 2.8rem); line-height:1.15;">Two Decades of Trusted Care</h2>
                     </div>
-                    <p style="margin-bottom:16px;">Founded in 2005 by Dr. David Patel, a clinical pharmacist with 20 years of hospital experience, MediCare Plus began as a single neighborhood pharmacy committed to one principle: every patient deserves access to genuine, affordable medicines.</p>
-                    <p style="margin-bottom:16px;">Today, we operate a state-of-the-art licensed pharmacy with an online platform serving 200+ cities, a team of 150+ certified pharmacists, and a catalog of over 15,000 products spanning medicines, nutraceuticals, baby care, and medical devices.</p>
-                    <p style="margin-bottom:28px;">Our cold-chain logistics, prescription verification system, and 24/7 pharmacist helpline set us apart as India's most trusted healthcare delivery platform.</p>
-                    <div style="display:flex; gap:32px; flex-wrap:wrap; margin-bottom:28px;">
-                        <div>
+                    <p style="margin-bottom:16px; font-size:1.05rem; line-height:1.75; color:var(--text-secondary);">Founded in 2005 by Dr. David Patel, a clinical pharmacist with 20 years of hospital experience, MediCare Plus began as a single neighborhood pharmacy committed to one principle: <strong style="color:var(--text-primary);">every patient deserves access to genuine, affordable medicines.</strong></p>
+                    <p style="margin-bottom:16px; font-size:1.05rem; line-height:1.75; color:var(--text-secondary);">Today, we operate a state-of-the-art licensed pharmacy with an online platform serving 200+ cities, a team of 150+ certified pharmacists, and a catalog of over 15,000 products spanning medicines, nutraceuticals, baby care, and medical devices.</p>
+                    <p style="font-size:1.05rem; line-height:1.75; color:var(--text-secondary);">Our cold-chain logistics, prescription verification system, and 24/7 pharmacist helpline set us apart as India's most trusted healthcare delivery platform.</p>
+                    
+                    <div class="story-stats-container">
+                        <div class="stat-item">
                             <div class="stat-number">21+</div>
                             <div class="stat-label">Years of Service</div>
                         </div>
-                        <div>
+                        <div class="stat-item">
                             <div class="stat-number">150+</div>
-                            <div class="stat-label">Certified Pharmacists</div>
+                            <div class="stat-label">Pharmacists</div>
                         </div>
-                        <div>
+                        <div class="stat-item">
                             <div class="stat-number">200+</div>
                             <div class="stat-label">Cities Served</div>
                         </div>
                     </div>
-                    <a href="contact.html" class="btn btn-primary">
-                        <i class="fa-solid fa-phone" aria-hidden="true"></i>
-                        Get in Touch
+                    
+                    <a href="contact.html" class="btn btn-primary btn-lg" style="padding: 14px 32px; border-radius: 9999px;">
+                        <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
+                        Experience The Difference
                     </a>
-                </div>
-                <div class="reveal">
-                    <img src="../assets/images/about_story.png"
-                         alt="About MediCare Plus"
-                         style="border-radius:var(--radius-xl); height:500px; width:100%; object-fit:cover; box-shadow:var(--shadow-lg); border:1px solid var(--border-color);">
                 </div>
             </div>
         </div>
