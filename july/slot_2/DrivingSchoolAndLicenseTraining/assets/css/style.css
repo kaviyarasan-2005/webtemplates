@@ -72,8 +72,9 @@
   --font-body: 'Inter', sans-serif;
   --fw-regular: 400;
   --fw-medium: 500;
+  --fw-subheading: 500;
   --fw-semibold: 600;
-  --fw-bold: 700;
+  --fw-bold: 600;
   --lh-heading: 1.2;
   --lh-body: 1.6;
 
@@ -102,7 +103,7 @@
 
   /* Layout */
   --container-max: 1280px;
-  --navbar-height: 72px;
+  --navbar-height: 60px;
   --sidebar-width: 260px;
   --sidebar-collapsed: 72px;
 
@@ -201,33 +202,45 @@ table {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
   font-family: var(--font-heading);
   line-height: var(--lh-heading);
   color: var(--text-primary);
-  font-weight: var(--fw-bold);
+  font-weight: 600;
 }
 
-h1 {
+h1, .h1 {
   font-size: var(--fs-h1);
+  font-weight: 600;
 }
 
-h2 {
+h2, .h2 {
   font-size: var(--fs-h2);
+  font-weight: 600;
 }
 
-h3 {
+h3, .h3 {
   font-size: var(--fs-h3);
+  font-weight: 600;
 }
 
-h4 {
+h4, .h4 {
   font-size: var(--fs-h4);
-  font-weight: var(--fw-semibold);
+  font-weight: 600;
 }
 
 p {
   margin-bottom: var(--space-4);
   color: var(--text-secondary);
+  font-weight: 400;
 }
 
 .text-primary {
@@ -271,17 +284,26 @@ p {
 
 .section__header h2 {
   margin-bottom: var(--space-4);
+  font-weight: 600;
 }
 
 .section__header p {
   color: var(--text-muted);
   font-size: var(--fs-body);
+  font-weight: 500;
 }
 
-.section__subtitle {
+.section__subtitle,
+.subtitle,
+.subheading,
+.hero-subtitle,
+.card__subtitle,
+.modal__subtitle,
+p.lead,
+.lead {
   display: inline-block;
   color: var(--color-primary);
-  font-weight: var(--fw-semibold);
+  font-weight: 500;
   font-size: var(--fs-small);
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -425,17 +447,17 @@ p {
 }
 
 .navbar__logo svg {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   color: var(--color-primary);
 }
 
 .navbar__logo-text {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
-  font-weight: var(--fw-bold);
+  font-size: 1.35rem;
+  font-weight: 600;
   color: var(--color-primary);
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .navbar__nav {
@@ -3404,7 +3426,7 @@ select.form-control {
     --fs-h1: 2rem;
     --fs-h2: 1.5rem;
     --fs-h3: 1.25rem;
-    --navbar-height: 60px;
+    --navbar-height: 52px;
   }
 
   .container {
@@ -3773,6 +3795,17 @@ textarea:focus-visible {
   border-radius: var(--border-radius-full);
   font-size: var(--fs-small);
   font-weight: var(--fw-semibold);
+}
+
+.slot-status-pill svg,
+.slot-status-pill i {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .roadway-stepper {
@@ -4627,6 +4660,17 @@ html[dir="rtl"] .ticker-track {
   gap: var(--space-2);
 }
 
+.breadcrumb svg,
+.breadcrumb i {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  min-height: 14px;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .directory-hero .breadcrumb a,
 .curriculum-hero .breadcrumb a,
 .pricing-hero .breadcrumb a,
@@ -4644,7 +4688,7 @@ html[dir="rtl"] .ticker-track {
 .article-masthead .breadcrumb span,
 .contact-desk-hero .breadcrumb span,
 .milestone-hero-header .breadcrumb span {
-  color: var(--color-primary);
+  color: #FFA07A;
   font-weight: var(--fw-semibold);
 }
 
@@ -4655,7 +4699,43 @@ html[dir="rtl"] .ticker-track {
 .article-masthead p,
 .contact-desk-hero p,
 .milestone-hero-header p {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Hero Status Pill High Contrast & Proper Alignment */
+.contact-desk-hero .slot-status-pill,
+[class*="-hero"] .slot-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0.45rem 1.25rem;
+  background: rgba(255, 107, 53, 0.22) !important;
+  border: 1px solid #FF8C5A !important;
+  color: #FFA07A !important;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  border-radius: var(--border-radius-full);
+  box-shadow: 0 2px 12px rgba(255, 107, 53, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  margin: 0 auto;
+  line-height: 1.4;
+  vertical-align: middle;
+}
+
+.contact-desk-hero .slot-status-pill svg,
+[class*="-hero"] .slot-status-pill svg,
+.contact-desk-hero .slot-status-pill i,
+[class*="-hero"] .slot-status-pill i {
+  color: #FF8C5A !important;
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px;
+  min-height: 16px;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /* Card Luxury Elevation Effects */
