@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Book an axe throwing lane at Axe Forge. Choose your lane, date, group size, and extras. Easy online booking with secure payment." />
+  <title>Book a Lane — Axe Forge Throwing Venue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <style>
+    /* ── BOOK A LANE PAGE ── */
+    .booking-wrap {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: var(--sp-8);
+      align-items: start;
+    }
+    .booking-panel {
+      background: var(--clr-surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--clr-border);
+      overflow: hidden;
+    }
+    .booking-panel__header {
+      padding: var(--sp-6) var(--sp-8);
+      border-bottom: 1px solid var(--clr-border);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+    }
+    .booking-panel__step-num {
+      width: 36px;
+      height: 36px;
+      background: var(--clr-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: white;
+      font-size: 0.875rem;
+      flex-shrink: 0;
+    }
+    .booking-panel__body { padding: var(--sp-8); }
+
+    /* Lane Cards Grid */
+    .lanes-select-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-4);
+    }
+
+    /* Time Slots */
+    .time-slots-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--sp-3);
+    }
+    .time-slot {
+      padding: var(--sp-3) var(--sp-2);
+      border: 2px solid var(--clr-border);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-size: 0.875rem;
+      font-weight: 600;
+      background: var(--clr-surface);
+    }
+    .time-slot:hover:not(.disabled) { border-color: var(--clr-primary); color: var(--clr-primary); }
+    .time-slot.selected { background: var(--clr-primary); border-color: var(--clr-primary); color: white; }
+    .time-slot.disabled { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; }
+
+    /* Extras */
+    .extras-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-4); }
+    .extra-card {
+      border: 2px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: var(--sp-5);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    .extra-card:hover { border-color: var(--clr-primary); }
+    .extra-card input[type="checkbox"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; margin: 0; }
+    .extra-card.checked { border-color: var(--clr-primary); background: rgba(200,64,27,0.05); }
+    .extra-card__icon { width: 44px; height: 44px; background: rgba(200,64,27,0.1); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: var(--clr-primary); margin-bottom: var(--sp-3); }
+    .extra-card__name { font-weight: 700; font-size: 0.9375rem; margin-bottom: var(--sp-1); }
+    .extra-card__price { color: var(--clr-primary); font-weight: 700; font-size: 0.875rem; }
+    .extra-card__check {
+      position: absolute;
+      top: var(--sp-3);
+      inset-inline-end: var(--sp-3);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--clr-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-fast);
+      background: var(--clr-surface);
+      color: transparent;
+    }
+    .extra-card.checked .extra-card__check { background: var(--clr-primary); border-color: var(--clr-primary); color: white; }
+
+    /* Summary Card */
+    .summary-card {
+      background: var(--clr-surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--clr-border);
+      padding: var(--sp-6);
+      position: sticky;
+      top: calc(var(--nav-height) + var(--sp-6));
+    }
+    .summary-card__title { font-weight: 800; font-size: 1.125rem; margin-bottom: var(--sp-5); display: flex; align-items: center; gap: var(--sp-3); }
+    .summary-row { display: flex; justify-content: space-between; align-items: center; padding-block: var(--sp-3); border-bottom: 1px solid var(--clr-border); font-size: 0.9375rem; }
+    .summary-row:last-of-type { border-bottom: none; }
+    .summary-row.total { font-weight: 800; font-size: 1.125rem; color: var(--clr-primary); padding-top: var(--sp-4); border-top: 2px solid var(--clr-border); margin-top: var(--sp-3); }
+    .summary-label { color: var(--clr-text-secondary); }
+
+    /* Payment */
+    .payment-methods { display: flex; gap: var(--sp-3); margin-bottom: var(--sp-6); }
+    .payment-method-btn {
+      flex: 1;
+      padding: var(--sp-4);
+      border: 2px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      background: var(--clr-surface);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--sp-2);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--clr-text-secondary);
+      transition: all var(--transition-fast);
+    }
+    .payment-method-btn:hover, .payment-method-btn.active { border-color: var(--clr-primary); color: var(--clr-primary); background: rgba(200,64,27,0.05); }
+
+    /* FAQ */
+    .faq-section { background: var(--clr-surface-alt); }
+
+    /* Policy banner */
+    .policy-banner {
+      background: rgba(200,64,27,0.08);
+      border: 1px solid rgba(200,64,27,0.2);
+      border-radius: var(--radius-md);
+      padding: var(--sp-4) var(--sp-5);
+      display: flex;
+      gap: var(--sp-3);
+      align-items: flex-start;
+      margin-top: var(--sp-5);
+      font-size: 0.875rem;
+      color: var(--clr-text-secondary);
+    }
+    .policy-banner svg { color: var(--clr-primary); flex-shrink: 0; margin-top: 2px; }
+
+    @media (max-width: 1023px) {
+      .booking-wrap { grid-template-columns: 1fr; }
+      .summary-card { position: static; }
+      .lanes-select-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 639px) {
+      .time-slots-grid { grid-template-columns: repeat(3, 1fr); }
+      .extras-grid { grid-template-columns: 1fr; }
+      .booking-panel__body { padding: var(--sp-5); }
+      .payment-methods { flex-direction: column; }
+    }
+  </style>
+</head>
+<body class="page-top">
+
+<div id="nav-placeholder"></div>
+
+<!-- ================================================================
+     SECTION 1: PAGE HERO / STEP PROGRESS
+     ================================================================ -->
+<section class="page-hero" id="booking-hero" aria-labelledby="booking-hero-heading">
+  <div class="container">
+    <div class="page-hero__content text-center">
+      <div class="page-hero__eyebrow">Online Booking</div>
+      <h1 class="page-hero__title" id="booking-hero-heading">Book Your <span>Lane</span></h1>
+      <p class="page-hero__desc" style="margin-inline:auto;">Reserve your axe throwing session in just a few steps. Choose your lane, time, group size, and extras — then secure your booking.</p>
+    </div>
+
+    <!-- Step Progress -->
+    <nav class="steps" style="margin-top:var(--sp-10);" aria-label="Booking steps">
+      <div class="step active" aria-current="step">
+        <div class="step__num">1</div>
+        <span class="step__label">Select Lane</span>
+      </div>
+      <div class="step">
+        <div class="step__num">2</div>
+        <span class="step__label">Date &amp; Time</span>
+      </div>
+      <div class="step">
+        <div class="step__num">3</div>
+        <span class="step__label">Group Size</span>
+      </div>
+      <div class="step">
+        <div class="step__num">4</div>
+        <span class="step__label">Extras</span>
+      </div>
+      <div class="step">
+        <div class="step__num">5</div>
+        <span class="step__label">Payment</span>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 2: LANE SELECTION
+     ================================================================ -->
+<section class="section-pad bg-surface-alt" id="lane-selection" aria-labelledby="lane-select-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Step 1
+      </span>
+      <h2 id="lane-select-heading">Choose Your Lane</h2>
+      <p class="text-lead">Select the lane that best fits your group size and experience level. Green = Available, Red = Booked.</p>
+    </div>
+
+    <p aria-live="polite" id="selected-lane-display" style="display:none;"></p>
+
+    <div class="lanes-select-grid" role="list" aria-label="Available lanes">
+      <!-- Lane Cards -->
+      <div class="lane-card" data-lane="1" tabindex="0" role="button" aria-label="Select Lane 1 — Champion Lane" aria-pressed="false">
+        <div class="lane-card__header">
+          <span class="lane-card__num" aria-hidden="true">01</span>
+          <span class="badge badge--accent">VIP</span>
+        </div>
+        <div class="lane-card__body">
+          <h3 style="font-weight:700;margin-bottom:var(--sp-2);">Champion Lane</h3>
+          <p style="font-size:0.875rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-3);">Full competition setup, digital scoring, VIP seating. Up to 6 throwers.</p>
+          <div class="lane-card__status lane-card__status--available">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+            Available
+          </div>
+          <p style="font-size:1.25rem;font-weight:800;color:var(--clr-primary);margin-top:var(--sp-3);">$35<span style="font-size:0.8125rem;font-weight:500;color:var(--clr-text-muted);">/person/hr</span></p>
+        </div>
+      </div>
+
+      <div class="lane-card" data-lane="2" tabindex="0" role="button" aria-label="Select Lane 2 — Rookie Range" aria-pressed="false">
+        <div class="lane-card__header">
+          <span class="lane-card__num" aria-hidden="true">02</span>
+          <span class="badge badge--success">Beginner</span>
+        </div>
+        <div class="lane-card__body">
+          <h3 style="font-weight:700;margin-bottom:var(--sp-2);">Rookie Range</h3>
+          <p style="font-size:0.875rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-3);">Guided coaching, lighter axes, closer targets. Perfect for first-timers.</p>
+          <div class="lane-card__status lane-card__status--available">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+            Available
+          </div>
+          <p style="font-size:1.25rem;font-weight:800;color:var(--clr-primary);margin-top:var(--sp-3);">$25<span style="font-size:0.8125rem;font-weight:500;color:var(--clr-text-muted);">/person/hr</span></p>
+        </div>
+      </div>
+
+      <div class="lane-card busy" data-lane="3" tabindex="0" role="button" aria-label="Lane 3 — Group Forge — Currently booked" aria-disabled="true" style="opacity:0.6;cursor:not-allowed;">
+        <div class="lane-card__header">
+          <span class="lane-card__num" aria-hidden="true">03</span>
+          <span class="badge badge--ghost">Booked</span>
+        </div>
+        <div class="lane-card__body">
+          <h3 style="font-weight:700;margin-bottom:var(--sp-2);">Group Forge</h3>
+          <p style="font-size:0.875rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-3);">Dual side-by-side lanes with private lounge. Up to 20 guests.</p>
+          <div class="lane-card__status lane-card__status--busy">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+            Currently Booked
+          </div>
+          <p style="font-size:1.25rem;font-weight:800;color:var(--clr-text-muted);margin-top:var(--sp-3);">$28<span style="font-size:0.8125rem;font-weight:500;color:var(--clr-text-muted);">/person/hr</span></p>
+        </div>
+      </div>
+
+      <div class="lane-card" data-lane="4" tabindex="0" role="button" aria-label="Select Lane 4 — Elite Circuit" aria-pressed="false">
+        <div class="lane-card__header">
+          <span class="lane-card__num" aria-hidden="true">04</span>
+          <span class="badge badge--primary">Pro</span>
+        </div>
+        <div class="lane-card__body">
+          <h3 style="font-weight:700;margin-bottom:var(--sp-2);">Elite Circuit</h3>
+          <p style="font-size:0.875rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-3);">Regulation distance, auto digital scoring. For competitive players.</p>
+          <div class="lane-card__status lane-card__status--available">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+            Available
+          </div>
+          <p style="font-size:1.25rem;font-weight:800;color:var(--clr-primary);margin-top:var(--sp-3);">$30<span style="font-size:0.8125rem;font-weight:500;color:var(--clr-text-muted);">/person/hr</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 3: DATE & TIME PICKER
+     ================================================================ -->
+<section class="section-pad" id="date-time" aria-labelledby="datetime-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Step 2
+      </span>
+      <h2 id="datetime-heading">Pick Your Date &amp; Time</h2>
+      <p class="text-lead">Select an available date and your preferred time slot.</p>
+    </div>
+
+    <div class="booking-wrap">
+      <div>
+        <!-- Calendar -->
+        <div class="booking-panel reveal" id="booking-calendar" aria-label="Session date picker">
+          <div class="booking-panel__header">
+            <div class="booking-panel__step-num" aria-hidden="true">2</div>
+            <div>
+              <h3 style="font-weight:700;">Select Date</h3>
+              <p id="selected-date-display" style="font-size:0.875rem;color:var(--clr-primary);margin-top:2px;" aria-live="polite">No date selected</p>
+            </div>
+            <div style="margin-inline-start:auto;display:flex;gap:var(--sp-2);">
+              <button class="ctrl-btn" data-cal="prev" aria-label="Previous month" title="Previous month">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button class="ctrl-btn" data-cal="next" aria-label="Next month" title="Next month">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="booking-panel__body">
+            <h4 class="cal-month-title" style="text-align:center;font-weight:700;margin-bottom:var(--sp-4);" aria-live="polite"></h4>
+            <div class="calendar-grid" role="grid" aria-label="Date selection calendar"></div>
+          </div>
+        </div>
+
+        <!-- Time Slots -->
+        <div class="booking-panel reveal" style="margin-top:var(--sp-5);" aria-label="Time slot selection">
+          <div class="booking-panel__header">
+            <div class="booking-panel__step-num" aria-hidden="true">2</div>
+            <h3 style="font-weight:700;">Select Time Slot</h3>
+          </div>
+          <div class="booking-panel__body">
+            <div class="time-slots-grid" role="group" aria-label="Available time slots">
+              <button class="time-slot" aria-pressed="false">2:00 PM</button>
+              <button class="time-slot" aria-pressed="false">3:00 PM</button>
+              <button class="time-slot disabled" disabled aria-disabled="true">4:00 PM</button>
+              <button class="time-slot" aria-pressed="false">5:00 PM</button>
+              <button class="time-slot" aria-pressed="false">6:00 PM</button>
+              <button class="time-slot disabled" disabled aria-disabled="true">7:00 PM</button>
+              <button class="time-slot" aria-pressed="false">8:00 PM</button>
+              <button class="time-slot" aria-pressed="false">9:00 PM</button>
+              <button class="time-slot" aria-pressed="false">10:00 PM</button>
+              <button class="time-slot disabled" disabled aria-disabled="true">11:00 PM</button>
+            </div>
+            <p style="font-size:0.8rem;color:var(--clr-text-muted);margin-top:var(--sp-4);display:flex;gap:var(--sp-3);">
+              <span style="display:flex;align-items:center;gap:var(--sp-2);">
+                <span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:var(--clr-primary);"></span>
+                Selected
+              </span>
+              <span style="display:flex;align-items:center;gap:var(--sp-2);">
+                <span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:var(--clr-border);opacity:0.4;"></span>
+                Booked
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Sidebar -->
+      <aside class="summary-card" aria-label="Booking summary">
+        <h3 class="summary-card__title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--clr-primary)" stroke-width="2.2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Booking Summary
+        </h3>
+        <div class="summary-row">
+          <span class="summary-label">Lane</span>
+          <strong id="sum-lane">Not selected</strong>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Date</span>
+          <strong id="sum-date">Not selected</strong>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Time</span>
+          <strong id="sum-time">Not selected</strong>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Group Size</span>
+          <strong id="sum-group">1 person</strong>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Duration</span>
+          <strong id="sum-duration">1 hour</strong>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Extras</span>
+          <strong id="sum-extras">None</strong>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Subtotal</span>
+          <strong id="price-subtotal">$25.00</strong>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Tax (13%)</span>
+          <strong id="price-tax">$3.25</strong>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <strong id="price-total">$28.25</strong>
+        </div>
+        <button class="btn btn--primary btn--full" style="margin-top:var(--sp-5);" onclick="document.getElementById('payment-section').scrollIntoView({behavior:'smooth'})" aria-label="Proceed to payment">
+          Proceed to Payment
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <p style="font-size:0.8125rem;text-align:center;color:var(--clr-text-muted);margin-top:var(--sp-3);">Free cancellation up to 24 hours before session</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 4: GROUP SIZE SELECTOR
+     ================================================================ -->
+<section class="section-pad bg-surface-alt" id="group-size" aria-labelledby="group-size-heading">
+  <div class="container" style="max-width:720px;">
+    <div class="section-header reveal">
+      <span class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Step 3
+      </span>
+      <h2 id="group-size-heading">Group Size &amp; Duration</h2>
+      <p class="text-lead">Tell us how many are in your party and how long you'd like to throw.</p>
+    </div>
+
+    <div class="booking-panel reveal">
+      <div class="booking-panel__body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);align-items:center;">
+          <div>
+            <p style="font-weight:700;margin-bottom:var(--sp-4);">Number of Throwers</p>
+            <div class="qty-control" data-min="1" data-max="20" aria-label="Group size control">
+              <button class="qty-btn" data-qty="minus" aria-label="Decrease group size">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+              <span class="qty-value" id="group-size-value" aria-live="polite" aria-atomic="true">1</span>
+              <button class="qty-btn" data-qty="plus" aria-label="Increase group size">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+            <p style="font-size:0.8rem;color:var(--clr-text-muted);margin-top:var(--sp-3);">Max 20 per lane. For larger groups, contact us for a custom package.</p>
+          </div>
+          <div>
+            <div class="form-group">
+              <label for="duration-select" class="form-label">Session Duration</label>
+              <select class="form-select" id="duration-select" name="duration" aria-label="Select session duration">
+                <option value="1">1 Hour</option>
+                <option value="2">2 Hours</option>
+                <option value="3">3 Hours (Best Value)</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-top:var(--sp-4);">
+              <label for="skill-level" class="form-label">Skill Level</label>
+              <select class="form-select" id="skill-level" name="skill" aria-label="Select your skill level">
+                <option value="beginner">Beginner — First time ever</option>
+                <option value="intermediate">Intermediate — A few sessions</option>
+                <option value="advanced">Advanced — League / competition</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="policy-banner">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>All participants under 18 must have a parent or guardian sign a waiver. Participants must wear closed-toe shoes — no exceptions.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 5: UPGRADES & EXTRAS
+     ================================================================ -->
+<section class="section-pad" id="extras" aria-labelledby="extras-heading">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <span class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Step 4
+      </span>
+      <h2 id="extras-heading">Upgrades &amp; Add-Ons</h2>
+      <div class="divider divider-center"></div>
+      <p class="text-lead">Enhance your session with premium extras. All prices are per booking.</p>
+    </div>
+
+    <div class="extras-grid reveal" role="group" aria-label="Optional upgrades">
+      <label class="extra-card" for="extra-coaching" role="checkbox" aria-checked="false">
+        <input type="checkbox" id="extra-coaching" name="extras" data-extra="coaching" value="coaching" aria-label="Private coaching session — $30" />
+        <div class="extra-card__check" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="extra-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <p class="extra-card__name">Private Coaching</p>
+        <p style="font-size:0.8125rem;color:var(--clr-text-secondary);margin-block:var(--sp-1) var(--sp-2);">30-minute 1-on-1 session with a certified coach before your main throw.</p>
+        <p class="extra-card__price">+$30</p>
+      </label>
+
+      <label class="extra-card" for="extra-drinks" role="checkbox" aria-checked="false">
+        <input type="checkbox" id="extra-drinks" name="extras" data-extra="drinks" value="drinks" aria-label="Drinks package — $20 per person" />
+        <div class="extra-card__check" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="extra-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <p class="extra-card__name">Drinks Package</p>
+        <p style="font-size:0.8125rem;color:var(--clr-text-secondary);margin-block:var(--sp-1) var(--sp-2);">Craft beer, mocktails, and soft drinks for your entire group. Per-person pricing.</p>
+        <p class="extra-card__price">+$20/person</p>
+      </label>
+
+      <label class="extra-card" for="extra-photo" role="checkbox" aria-checked="false">
+        <input type="checkbox" id="extra-photo" name="extras" data-extra="photo" value="photo" aria-label="Photo package — $15" />
+        <div class="extra-card__check" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="extra-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
+        <p class="extra-card__name">Photo Package</p>
+        <p style="font-size:0.8125rem;color:var(--clr-text-secondary);margin-block:var(--sp-1) var(--sp-2);">Professional action shots of your session. Digital gallery delivered by email.</p>
+        <p class="extra-card__price">+$15</p>
+      </label>
+
+      <div class="extra-card" style="cursor:default;opacity:0.6;">
+        <div class="extra-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+        </div>
+        <p class="extra-card__name">Trophy Engraving</p>
+        <p style="font-size:0.8125rem;color:var(--clr-text-secondary);margin-block:var(--sp-1) var(--sp-2);">Personalized trophy with your name and high score. Pick up at venue after session.</p>
+        <p style="font-size:0.8125rem;font-weight:700;color:var(--clr-text-muted);">Coming Soon</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 6: BOOKING SUMMARY (Full Detail)
+     ================================================================ -->
+<section class="section-pad bg-surface-alt" id="booking-summary" aria-labelledby="summary-heading">
+  <div class="container" style="max-width:720px;">
+    <div class="section-header reveal">
+      <span class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+        Review
+      </span>
+      <h2 id="summary-heading">Order Summary</h2>
+      <p class="text-lead">Review your booking details before proceeding to payment.</p>
+    </div>
+
+    <div class="booking-panel reveal">
+      <div class="booking-panel__body">
+        <div style="display:flex;flex-direction:column;gap:var(--sp-4);">
+          <div style="display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-4);background:rgba(200,64,27,0.06);border-radius:var(--radius-md);">
+            <div style="width:56px;height:56px;background:var(--clr-primary);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </div>
+            <div>
+              <p style="font-weight:800;font-size:1.125rem;">Champion Lane</p>
+              <p style="font-size:0.875rem;color:var(--clr-text-muted);">2 Throwers · 2 Hours · Saturday, Sep 20, 2026</p>
+            </div>
+            <p style="font-size:1.375rem;font-weight:800;color:var(--clr-primary);margin-inline-start:auto;">$70.00</p>
+          </div>
+
+          <div style="background:var(--clr-surface-alt);padding:var(--sp-4);border-radius:var(--radius-md);">
+            <p style="font-size:0.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--clr-text-muted);margin-bottom:var(--sp-3);">Add-Ons</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-block:var(--sp-2);">
+              <p style="font-size:0.9375rem;color:var(--clr-text-secondary);">Private Coaching</p>
+              <p style="font-weight:700;">$30.00</p>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:var(--sp-2);padding:var(--sp-4);">
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--clr-text-muted);">Subtotal</span><strong>$100.00</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--clr-text-muted);">HST (13%)</span><strong>$13.00</strong></div>
+            <div style="display:flex;justify-content:space-between;padding-top:var(--sp-3);border-top:2px solid var(--clr-border);margin-top:var(--sp-2);"><span style="font-size:1.125rem;font-weight:800;">Total</span><strong style="font-size:1.375rem;color:var(--clr-primary);">$113.00</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 7: PAYMENT FORM
+     ================================================================ -->
+<section class="section-pad" id="payment-section" aria-labelledby="payment-heading">
+  <div class="container" style="max-width:720px;">
+    <div class="section-header reveal">
+      <span class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Step 5
+      </span>
+      <h2 id="payment-heading">Secure Payment</h2>
+      <p class="text-lead">Your transaction is protected with 256-bit SSL encryption.</p>
+    </div>
+
+    <div class="booking-panel reveal">
+      <div class="booking-panel__body">
+        <!-- Payment Method Selector -->
+        <div class="payment-methods" role="group" aria-label="Payment method selection">
+          <button class="payment-method-btn active" type="button" aria-pressed="true" aria-label="Pay with credit or debit card">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Card
+          </button>
+          <button class="payment-method-btn" type="button" aria-pressed="false" aria-label="Pay with PayPal">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7.5 7H12c3.3 0 5.5 1.5 5 5-0.5 3.5-3 5-6.5 5H9l-1 4H5L7.5 7Z"/></svg>
+            PayPal
+          </button>
+          <button class="payment-method-btn" type="button" aria-pressed="false" aria-label="Pay with gift card">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Gift Card
+          </button>
+        </div>
+
+        <form data-form-validate action="#" method="post" aria-label="Payment form">
+          <div class="form-group">
+            <label for="card-name" class="form-label">Cardholder Name <span class="required" aria-label="required">*</span></label>
+            <div class="input-icon-wrap has-left">
+              <svg class="icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" id="card-name" class="form-input" placeholder="Jane Doe" data-validate="required" autocomplete="cc-name" aria-required="true" />
+            </div>
+            <span class="form-error-msg" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="card-number" class="form-label">Card Number <span class="required" aria-label="required">*</span></label>
+            <div class="input-icon-wrap has-left has-right">
+              <svg class="icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              <input type="text" id="card-number" class="form-input" placeholder="1234 5678 9012 3456" data-validate="required" autocomplete="cc-number" inputmode="numeric" maxlength="19" aria-required="true" aria-describedby="card-number-hint" />
+              <svg class="icon-right" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events:none;" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <span id="card-number-hint" class="form-hint">16-digit card number</span>
+            <span class="form-error-msg" role="alert"></span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);">
+            <div class="form-group">
+              <label for="card-expiry" class="form-label">Expiry Date <span class="required" aria-label="required">*</span></label>
+              <input type="text" id="card-expiry" class="form-input" placeholder="MM / YY" data-validate="required" autocomplete="cc-exp" maxlength="7" aria-required="true" />
+              <span class="form-error-msg" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label for="card-cvv" class="form-label">CVV <span class="required" aria-label="required">*</span></label>
+              <div class="input-icon-wrap has-right">
+                <input type="text" id="card-cvv" class="form-input" placeholder="123" data-validate="required" autocomplete="cc-csc" maxlength="4" aria-required="true" data-tooltip="3-4 digit security code on back of card" />
+                <svg class="icon-right" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events:none;" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+              <span class="form-error-msg" role="alert"></span>
+            </div>
+          </div>
+
+          <div class="form-check">
+            <input type="checkbox" id="save-card" name="save_card" />
+            <label for="save-card" class="form-check__label">Save card securely for future bookings</label>
+          </div>
+
+          <div class="form-check" style="margin-top:var(--sp-3);">
+            <input type="checkbox" id="accept-terms" name="terms" required data-validate="required" aria-required="true" />
+            <label for="accept-terms" class="form-check__label">I have read and agree to the <a href="#" style="color:var(--clr-primary);text-decoration:underline;">Terms of Service</a>, <a href="#" style="color:var(--clr-primary);text-decoration:underline;">Safety Waiver</a>, and <a href="#" style="color:var(--clr-primary);text-decoration:underline;">Cancellation Policy</a>.</label>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--full" style="margin-top:var(--sp-6);" aria-label="Confirm and pay $113.00">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Confirm &amp; Pay — $113.00
+          </button>
+
+          <div style="display:flex;align-items:center;justify-content:center;gap:var(--sp-4);margin-top:var(--sp-5);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--clr-text-muted)" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span style="font-size:0.8125rem;color:var(--clr-text-muted);">Secured by Stripe. 256-bit SSL encryption.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 8: BOOKING FAQ
+     ================================================================ -->
+<section class="faq-section section-pad" id="booking-faq" aria-labelledby="faq-heading">
+  <div class="container" style="max-width:800px;">
+    <div class="section-header centered reveal">
+      <span class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Common Questions
+      </span>
+      <h2 id="faq-heading">Booking FAQ</h2>
+      <div class="divider divider-center"></div>
+    </div>
+
+    <div class="accordion reveal" role="list">
+      <div class="accordion__item" role="listitem">
+        <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq1">
+          How far in advance should I book?
+          <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion__content" id="faq1" role="region">
+          <div class="accordion__body">We recommend booking at least 48 hours in advance, especially for weekends. Walk-ins are welcome based on availability, but pre-booking guarantees your preferred lane and time.</div>
+        </div>
+      </div>
+      <div class="accordion__item" role="listitem">
+        <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq2">
+          What is your cancellation policy?
+          <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion__content" id="faq2" role="region">
+          <div class="accordion__body">Full refunds are available for cancellations made more than 24 hours before your session. Cancellations within 24 hours receive a credit toward a future booking. No-shows forfeit their payment.</div>
+        </div>
+      </div>
+      <div class="accordion__item" role="listitem">
+        <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq3">
+          Can I add more people after booking?
+          <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion__content" id="faq3" role="region">
+          <div class="accordion__body">Yes! You can modify your group size up to 12 hours before your session through your dashboard, or call us directly. Additional charges will apply based on the per-person rate.</div>
+        </div>
+      </div>
+      <div class="accordion__item" role="listitem">
+        <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq4">
+          What should I wear?
+          <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion__content" id="faq4" role="region">
+          <div class="accordion__body">Wear comfortable, casual clothing you can move freely in. Closed-toe shoes are mandatory — sandals, heels, and open-toed footwear will not be permitted in the throwing area.</div>
+        </div>
+      </div>
+      <div class="accordion__item" role="listitem">
+        <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq5">
+          Do you offer group discounts?
+          <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion__content" id="faq5" role="region">
+          <div class="accordion__body">Groups of 10+ receive a 10% discount automatically applied at checkout. For groups of 20+, contact our events team for a custom corporate package with additional perks.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}</style>
+
+<script>
+  // Time Slot Selection
+  document.querySelectorAll('.time-slot:not(.disabled)').forEach(slot => {
+    slot.addEventListener('click', () => {
+      document.querySelectorAll('.time-slot').forEach(s => { s.classList.remove('selected'); s.setAttribute('aria-pressed', 'false'); });
+      slot.classList.add('selected');
+      slot.setAttribute('aria-pressed', 'true');
+      const sumTime = document.getElementById('sum-time');
+      if (sumTime) sumTime.textContent = slot.textContent.trim();
+    });
+  });
+
+  // Extra Card checkbox toggle
+  document.querySelectorAll('.extra-card input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      cb.closest('.extra-card').classList.toggle('checked', cb.checked);
+      cb.closest('.extra-card').setAttribute('aria-checked', cb.checked);
+    });
+  });
+
+  // Payment method toggle
+  document.querySelectorAll('.payment-method-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.payment-method-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+    });
+  });
+</script>
+
+<script src="../js/nav-footer.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

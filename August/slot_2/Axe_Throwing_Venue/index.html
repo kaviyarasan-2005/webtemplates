@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Axe Forge — Toronto's premier axe throwing venue. Book lanes, join leagues, and host unforgettable corporate events. Safe, thrilling, and professionally coached." />
+  <meta name="keywords" content="axe throwing, Toronto, lane booking, leagues, team building, corporate events" />
+  <meta property="og:title" content="Axe Forge — Premier Axe Throwing Venue" />
+  <meta property="og:description" content="Book your lane, compete in leagues, and forge unforgettable memories at Axe Forge." />
+  <meta property="og:type" content="website" />
+  <title>Axe Forge — Premier Axe Throwing Venue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <style>
+    /* ── HOME PAGE SPECIFIC ── */
+
+    /* Hero */
+    .hero-home {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: #0a0a0b;
+    }
+    .hero-home__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-home__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+    }
+    .hero-home__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, rgba(10,10,11,0.95) 0%, rgba(10,10,11,0.7) 55%, rgba(200,64,27,0.08) 100%);
+      z-index: 1;
+    }
+    .hero-home__particle {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--clr-primary);
+      opacity: 0.08;
+      animation: float-particle 8s ease-in-out infinite;
+    }
+    @keyframes float-particle {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.1); }
+    }
+    .hero-home__content {
+      position: relative;
+      z-index: 2;
+      padding-top: var(--nav-height);
+      padding-block: var(--sp-32);
+    }
+    .hero-home__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-3);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--clr-primary);
+      margin-bottom: var(--sp-6);
+      padding: var(--sp-2) var(--sp-4);
+      border: 1px solid rgba(200,64,27,0.35);
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(8px);
+      background: rgba(200,64,27,0.08);
+    }
+    .hero-home__title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      color: white;
+      line-height: 0.95;
+      letter-spacing: 0.03em;
+      margin-bottom: var(--sp-6);
+    }
+    .hero-home__title em {
+      color: var(--clr-primary);
+      font-style: normal;
+      display: block;
+    }
+    .hero-home__desc {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: rgba(255,255,255,0.7);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: var(--sp-10);
+    }
+    .hero-home__actions {
+      display: flex;
+      gap: var(--sp-4);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .hero-home__badge {
+      position: absolute;
+      inset-inline-end: var(--sp-12);
+      bottom: var(--sp-16);
+      z-index: 2;
+      background: rgba(200,64,27,0.15);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(200,64,27,0.3);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-6);
+      text-align: center;
+      color: white;
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    .hero-home__badge-num {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      color: var(--clr-primary);
+      line-height: 1;
+      display: block;
+    }
+    .hero-home__badge-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: block;
+      margin-top: var(--sp-1);
+    }
+    .hero-home__scroll {
+      position: absolute;
+      bottom: var(--sp-8);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--sp-2);
+      color: rgba(255,255,255,0.4);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .hero-home__scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(180deg, var(--clr-primary), transparent);
+      animation: scroll-line 1.8s ease-in-out infinite;
+    }
+    @keyframes scroll-line {
+      0%, 100% { transform: scaleY(1); opacity: 1; }
+      50% { transform: scaleY(0.6); opacity: 0.4; }
+    }
+
+    /* ── About Section ── */
+    .about-section { background: var(--clr-bg); }
+    .about-image-wrap {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+    .about-image-wrap img { width: 100%; height: 480px; object-fit: cover; display: block; }
+    .about-image-badge {
+      position: absolute;
+      bottom: var(--sp-6);
+      inset-inline-start: var(--sp-6);
+      background: var(--clr-primary);
+      color: white;
+      padding: var(--sp-4) var(--sp-6);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-primary);
+    }
+    .about-image-badge strong { display: block; font-family: var(--font-display); font-size: 2.5rem; line-height: 1; }
+    .about-image-badge span { font-size: 0.875rem; font-weight: 600; opacity: 0.85; }
+    .about-features { display: flex; flex-direction: column; gap: var(--sp-5); margin-top: var(--sp-6); }
+    .about-feature {
+      display: flex;
+      gap: var(--sp-4);
+      align-items: flex-start;
+      padding: var(--sp-5);
+      background: var(--clr-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--clr-border);
+      transition: all var(--transition-base);
+    }
+    .about-feature:hover { border-color: var(--clr-primary); transform: translateX(4px); box-shadow: var(--shadow-md); }
+    [dir="rtl"] .about-feature:hover { transform: translateX(-4px); }
+    .about-feature__icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(200,64,27,0.1);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--clr-primary);
+      flex-shrink: 0;
+    }
+    .about-feature__text h4 { font-size: 1rem; font-weight: 700; margin-bottom: var(--sp-1); }
+    .about-feature__text p { font-size: 0.875rem; color: var(--clr-text-secondary); }
+
+    /* ── Stats Counter ── */
+    .stats-section {
+      background: linear-gradient(135deg, var(--clr-secondary) 0%, #1c1016 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .stats-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(200,64,27,0.15) 0%, transparent 70%);
+    }
+    .stats-section .container { position: relative; z-index: 1; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-6); }
+    .stat-item { text-align: center; padding: var(--sp-8); }
+    .stat-item__value {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5rem);
+      color: white;
+      line-height: 1;
+      display: block;
+    }
+    .stat-item__value span { color: var(--clr-primary); }
+    .stat-item__label { color: rgba(255,255,255,0.5); font-size: 0.9rem; font-weight: 500; margin-top: var(--sp-2); letter-spacing: 0.05em; }
+    .stat-divider { width: 1px; background: rgba(255,255,255,0.08); margin-block: var(--sp-4); }
+
+    /* ── Featured Lanes ── */
+    .lanes-section { background: var(--clr-surface-alt); }
+    .lanes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-6); }
+    .featured-lane-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 3/4;
+    }
+    .featured-lane-card img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-slow); }
+    .featured-lane-card:hover img { transform: scale(1.06); }
+    .featured-lane-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,11,0.92) 0%, rgba(10,10,11,0.2) 60%, transparent 100%);
+    }
+    .featured-lane-card__content {
+      position: absolute;
+      bottom: 0;
+      inset-inline: 0;
+      padding: var(--sp-6);
+      z-index: 2;
+    }
+    .featured-lane-card__num {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      color: rgba(255,255,255,0.1);
+      line-height: 1;
+      position: absolute;
+      top: var(--sp-4);
+      inset-inline-end: var(--sp-6);
+    }
+    .featured-lane-card__tag { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clr-primary); margin-bottom: var(--sp-2); }
+    .featured-lane-card__title { font-size: 1.375rem; font-weight: 700; color: white; margin-bottom: var(--sp-3); }
+    .featured-lane-card__desc { font-size: 0.875rem; color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: var(--sp-5); }
+    .featured-lane-card.large { grid-row: span 2; aspect-ratio: auto; }
+
+    /* ── Safety ── */
+    .safety-section { background: var(--clr-bg); }
+    .safety-bg {
+      background: linear-gradient(135deg, var(--clr-secondary), #1c1016);
+      border-radius: var(--radius-xl);
+      padding: var(--sp-16);
+      position: relative;
+      overflow: hidden;
+    }
+    .safety-bg::before {
+      content: '';
+      position: absolute;
+      inset-inline-end: -60px;
+      top: -60px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,64,27,0.15), transparent);
+    }
+    .safety-rules { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-5); margin-top: var(--sp-10); }
+    .safety-rule {
+      display: flex;
+      gap: var(--sp-4);
+      align-items: flex-start;
+      padding: var(--sp-5);
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all var(--transition-base);
+    }
+    .safety-rule:hover { background: rgba(200,64,27,0.08); border-color: rgba(200,64,27,0.25); }
+    .safety-rule__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      background: rgba(200,64,27,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--clr-primary);
+      flex-shrink: 0;
+    }
+    .safety-rule__title { font-size: 0.9375rem; font-weight: 700; color: white; margin-bottom: var(--sp-1); }
+    .safety-rule__desc { font-size: 0.8125rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+    /* ── Hall of Fame ── */
+    .hof-section { background: var(--clr-surface-alt); }
+    .hof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-5); }
+    .hof-card {
+      background: var(--clr-surface);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-6);
+      border: 1px solid var(--clr-border);
+      display: flex;
+      gap: var(--sp-4);
+      align-items: center;
+      transition: all var(--transition-base);
+      position: relative;
+      overflow: hidden;
+    }
+    .hof-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      inset-inline-start: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--clr-primary);
+      transform: scaleY(0);
+      transition: transform var(--transition-base);
+    }
+    .hof-card:hover { border-color: var(--clr-primary); box-shadow: var(--shadow-md); transform: translateY(-4px); }
+    .hof-card:hover::before { transform: scaleY(1); }
+    .hof-card__rank {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--clr-border);
+      line-height: 1;
+      min-width: 50px;
+      text-align: center;
+    }
+    .hof-card:nth-child(1) .hof-card__rank { color: #FFD700; }
+    .hof-card:nth-child(2) .hof-card__rank { color: #C0C0C0; }
+    .hof-card:nth-child(3) .hof-card__rank { color: #CD7F32; }
+    .hof-card__info { flex: 1; min-width: 0; }
+    .hof-card__name { font-weight: 700; margin-bottom: var(--sp-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hof-card__score { color: var(--clr-primary); font-family: var(--font-display); font-size: 1.5rem; line-height: 1; }
+    .hof-card__meta { font-size: 0.75rem; color: var(--clr-text-muted); margin-top: var(--sp-1); }
+
+    /* ── Axe 101 ── */
+    .axe101-section {
+      background: var(--clr-bg);
+      position: relative;
+    }
+    .steps-101 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .steps-101::before {
+      content: '';
+      position: absolute;
+      top: 64px;
+      inset-inline-start: calc(33.33% / 2);
+      width: calc(100% - 33.33%);
+      height: 2px;
+      background: linear-gradient(90deg, var(--clr-primary), var(--clr-accent), var(--clr-primary));
+      z-index: 0;
+    }
+    .step-101 {
+      text-align: center;
+      padding: var(--sp-8);
+      position: relative;
+      z-index: 1;
+      transition: all var(--transition-base);
+    }
+    .step-101:hover { transform: translateY(-8px); }
+    .step-101__icon-wrap {
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      background: var(--clr-surface);
+      border: 3px solid var(--clr-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--sp-6);
+      position: relative;
+      transition: all var(--transition-base);
+    }
+    .step-101:hover .step-101__icon-wrap {
+      border-color: var(--clr-primary);
+      box-shadow: var(--shadow-primary);
+    }
+    .step-101__icon-wrap img { width: 72px; height: 72px; object-fit: contain; }
+    .step-101__num {
+      position: absolute;
+      top: -6px;
+      inset-inline-end: -6px;
+      width: 32px;
+      height: 32px;
+      background: var(--clr-primary);
+      color: white;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-101__title { font-size: 1.25rem; font-weight: 700; margin-bottom: var(--sp-3); }
+    .step-101__desc { font-size: 0.9rem; color: var(--clr-text-secondary); line-height: 1.65; }
+
+    /* ── Newsletter ── */
+    .newsletter-section {
+      background: linear-gradient(135deg, #1c0a06 0%, var(--clr-secondary) 50%, #0a0a0b 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter-section::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,64,27,0.2) 0%, transparent 70%);
+      top: -200px;
+      inset-inline-end: -100px;
+    }
+    .newsletter-content { position: relative; z-index: 1; text-align: center; max-width: 600px; margin-inline: auto; }
+    .newsletter-form {
+      display: flex;
+      gap: var(--sp-3);
+      margin-top: var(--sp-8);
+    }
+    .newsletter-form .form-input { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: white; flex: 1; }
+    .newsletter-form .form-input::placeholder { color: rgba(255,255,255,0.4); }
+    .newsletter-form .form-input:focus { border-color: var(--clr-primary); background: rgba(255,255,255,0.12); }
+    .newsletter-notice { font-size: 0.8125rem; color: rgba(255,255,255,0.4); margin-top: var(--sp-4); }
+
+    @media (max-width: 1023px) {
+      .lanes-grid { grid-template-columns: 1fr 1fr; }
+      .featured-lane-card.large { grid-column: span 2; aspect-ratio: 16/9; }
+    }
+    @media (max-width: 639px) {
+      .hero-home__title { font-size: 3.5rem; }
+      .hero-home__badge { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .lanes-grid { grid-template-columns: 1fr; }
+      .featured-lane-card.large { grid-column: span 1; aspect-ratio: 3/4; }
+      .hof-grid { grid-template-columns: 1fr; }
+      .steps-101 { grid-template-columns: 1fr; }
+      .steps-101::before { display: none; }
+      .safety-rules { grid-template-columns: 1fr; }
+      .safety-bg { padding: var(--sp-8); }
+      .newsletter-form { flex-direction: column; }
+      .hero-home__scroll { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav Placeholder -->
+<div id="nav-placeholder"></div>
+
+<!-- ================================================================
+     SECTION 1: HERO
+     ================================================================ -->
+<section class="hero-home" id="hero" aria-label="Hero banner">
+  <div class="hero-home__bg">
+    <img src="assets/images/hero-bg.jpg" alt="Axe thrower in action at Axe Forge venue" id="hero-bg-img" />
+  </div>
+  <div class="hero-home__overlay" aria-hidden="true"></div>
+
+  <!-- Decorative particles -->
+  <div class="hero-home__particle" style="width:300px;height:300px;top:-100px;right:-80px;" aria-hidden="true"></div>
+  <div class="hero-home__particle" style="width:180px;height:180px;bottom:10%;left:-60px;animation-delay:2s;" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="hero-home__content">
+      <div class="hero-home__eyebrow animate-fadeInUp" aria-label="Badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.4 2.4-7.4L2 9.4h7.6z"/></svg>
+        Toronto's #1 Axe Throwing Venue
+      </div>
+
+      <h1 class="hero-home__title animate-fadeInUp animate-delay-1">
+        Throw.<br />
+        <em>Compete.</em>
+        Conquer.
+      </h1>
+
+      <p class="hero-home__desc animate-fadeInUp animate-delay-2">
+        Step up, grip the axe, and let it fly. From beginners to seasoned competitors, Axe Forge is where legends are forged and scores are settled.
+      </p>
+
+      <div class="hero-home__actions animate-fadeInUp animate-delay-3">
+        <a href="pages/book-a-lane.html" class="btn btn--primary btn--xl" aria-label="Book a lane now">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book a Lane
+        </a>
+        <a href="pages/leagues.html" class="btn btn--ghost btn--xl" aria-label="View leagues">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+          View Leagues
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Stats Badge -->
+  <div class="hero-home__badge animate-scaleIn animate-delay-4" aria-label="Satisfaction rate">
+    <span class="hero-home__badge-num" data-counter data-target="98" data-suffix="%">98%</span>
+    <span class="hero-home__badge-label">Satisfaction Rate</span>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="hero-home__scroll" aria-hidden="true">
+    <div class="hero-home__scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 2: ABOUT / WELCOME
+     ================================================================ -->
+<section class="about-section section-pad" id="about" aria-labelledby="about-heading">
+  <div class="container">
+    <div class="split-section">
+      <div class="split-section__media reveal">
+        <div class="about-image-wrap">
+          <img src="assets/images/about-venue.jpg" alt="Inside Axe Forge venue showing multiple throwing lanes" id="about-img" loading="lazy" />
+          <div class="about-image-badge">
+            <strong>10+</strong>
+            <span>Professional Lanes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="split-section__content reveal">
+        <span class="section-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          About Axe Forge
+        </span>
+        <h2 id="about-heading">Toronto's Most Thrilling Axe Throwing Experience</h2>
+        <div class="divider"></div>
+        <p class="text-lead">Founded by champion throwers, Axe Forge is more than a venue — it's a community. Whether you're a first-timer or a seasoned competitor, our certified coaches and world-class facilities ensure every session is unforgettable.</p>
+
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="about-feature__icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="about-feature__text">
+              <h4>Certified Safety Instructors</h4>
+              <p>All sessions guided by NATF-certified coaches with full safety briefings before you throw.</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature__icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="about-feature__text">
+              <h4>Groups of All Sizes Welcome</h4>
+              <p>Flexible lane packages for 2–100+ guests. Perfect for parties, date nights, and corporate retreats.</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature__icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="about-feature__text">
+              <h4>Competitive League Nights</h4>
+              <p>Join our weekly leagues and seasonal tournaments. Track scores, climb the leaderboard, win prizes.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="pages/book-a-lane.html" class="btn btn--primary" style="margin-top:var(--sp-8);" aria-label="Reserve your session">
+          Reserve Your Session
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 3: STATS COUNTER
+     ================================================================ -->
+<section class="stats-section section-pad" id="stats" aria-labelledby="stats-heading">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:var(--sp-12); position:relative; z-index:1;">
+      <span class="section-label" style="margin-inline:auto;" id="stats-heading">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        By the Numbers
+      </span>
+      <h2 style="color:white;margin-top:var(--sp-4);">Forging Legends Since 2018</h2>
+    </div>
+
+    <div class="stats-grid" role="list">
+      <div class="stat-item reveal" role="listitem">
+        <span class="stat-item__value" data-counter data-target="48000" data-suffix="+" aria-label="48,000+ axes thrown">48,000<span>+</span></span>
+        <p class="stat-item__label">Axes Thrown</p>
+      </div>
+      <div class="stat-item reveal animate-delay-1" role="listitem">
+        <span class="stat-item__value" data-counter data-target="12500" data-suffix="+" aria-label="12,500+ happy guests">12,500<span>+</span></span>
+        <p class="stat-item__label">Happy Guests</p>
+      </div>
+      <div class="stat-item reveal animate-delay-2" role="listitem">
+        <span class="stat-item__value" data-counter data-target="350" data-suffix="+" aria-label="350+ corporate events">350<span>+</span></span>
+        <p class="stat-item__label">Corporate Events</p>
+      </div>
+      <div class="stat-item reveal animate-delay-3" role="listitem">
+        <span class="stat-item__value" data-counter data-target="10" aria-label="10 premium lanes">10</span>
+        <p class="stat-item__label">Premium Lanes</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 4: FEATURED LANES
+     ================================================================ -->
+<section class="lanes-section section-pad" id="lanes" aria-labelledby="lanes-heading">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <span class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Our Lanes
+      </span>
+      <h2 id="lanes-heading">World-Class Throwing Lanes</h2>
+      <div class="divider divider-center"></div>
+      <p class="text-lead">Choose from our range of specially designed lanes — each offering a unique experience from casual recreation to serious competition.</p>
+    </div>
+
+    <div class="lanes-grid" role="list">
+      <!-- Featured Large Lane -->
+      <article class="featured-lane-card large reveal" role="listitem">
+        <img src="assets/images/lane-champion.jpg" alt="Champion Lane — Axe Forge's premium competitive throwing lane" id="lane-champion-img" loading="lazy" />
+        <div class="featured-lane-card__overlay" aria-hidden="true"></div>
+        <div class="featured-lane-card__content">
+          <span class="featured-lane-card__num" aria-hidden="true">01</span>
+          <p class="featured-lane-card__tag">Featured</p>
+          <h3 class="featured-lane-card__title">The Champion Lane</h3>
+          <p class="featured-lane-card__desc">Full competition setup with professional-grade targets, score tracking screens, and VIP seating for spectators.</p>
+          <a href="pages/book-a-lane.html" class="btn btn--primary btn--sm" aria-label="Book The Champion Lane">Book This Lane</a>
+        </div>
+      </article>
+
+      <!-- Standard Lanes -->
+      <article class="featured-lane-card reveal animate-delay-1" role="listitem">
+        <img src="assets/images/lane-rookie.jpg" alt="Rookie Range — beginner-friendly axe throwing lane" id="lane-rookie-img" loading="lazy" />
+        <div class="featured-lane-card__overlay" aria-hidden="true"></div>
+        <div class="featured-lane-card__content">
+          <span class="featured-lane-card__num" aria-hidden="true">02</span>
+          <p class="featured-lane-card__tag">Beginner Friendly</p>
+          <h3 class="featured-lane-card__title">Rookie Range</h3>
+          <p class="featured-lane-card__desc">Perfect for first-timers. Closer targets, guided coaching, and lightweight axes to build confidence.</p>
+          <a href="pages/book-a-lane.html" class="btn btn--primary btn--sm" aria-label="Book Rookie Range">Book This Lane</a>
+        </div>
+      </article>
+
+      <article class="featured-lane-card reveal animate-delay-2" role="listitem">
+        <img src="assets/images/lane-group.jpg" alt="Group Forge — large group axe throwing lane" id="lane-group-img" loading="lazy" />
+        <div class="featured-lane-card__overlay" aria-hidden="true"></div>
+        <div class="featured-lane-card__content">
+          <span class="featured-lane-card__num" aria-hidden="true">03</span>
+          <p class="featured-lane-card__tag">Groups Up to 20</p>
+          <h3 class="featured-lane-card__title">Group Forge</h3>
+          <p class="featured-lane-card__desc">Two side-by-side lanes with a private lounge area. Ideal for team events and celebrations.</p>
+          <a href="pages/book-a-lane.html" class="btn btn--primary btn--sm" aria-label="Book Group Forge">Book This Lane</a>
+        </div>
+      </article>
+
+      <article class="featured-lane-card reveal animate-delay-3" role="listitem">
+        <img src="assets/images/lane-elite.jpg" alt="Elite Circuit — high-level axe throwing competition lane" id="lane-elite-img" loading="lazy" />
+        <div class="featured-lane-card__overlay" aria-hidden="true"></div>
+        <div class="featured-lane-card__content">
+          <span class="featured-lane-card__num" aria-hidden="true">04</span>
+          <p class="featured-lane-card__tag">Competitive</p>
+          <h3 class="featured-lane-card__title">Elite Circuit</h3>
+          <p class="featured-lane-card__desc">Regulation distance targets and automated digital scoring for players ready to compete.</p>
+          <a href="pages/book-a-lane.html" class="btn btn--primary btn--sm" aria-label="Book Elite Circuit">Book This Lane</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="text-center" style="margin-top:var(--sp-10);">
+      <a href="pages/book-a-lane.html" class="btn btn--secondary btn--lg" aria-label="View all lanes and book">View All Lanes &amp; Book</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 5: SAFETY BRIEFING
+     ================================================================ -->
+<section class="safety-section section-pad" id="safety" aria-labelledby="safety-heading">
+  <div class="container">
+    <div class="safety-bg">
+      <div class="section-header centered" style="margin-bottom:0;">
+        <span class="section-label" style="margin-inline:auto; background:rgba(200,64,27,0.15);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Safety First
+        </span>
+        <h2 id="safety-heading" style="color:white;margin-top:var(--sp-4);">Your Safety Is Our Priority</h2>
+        <div class="divider divider-center"></div>
+        <p class="text-lead" style="color:rgba(255,255,255,0.65);">Before every session, our certified coaches walk all participants through a comprehensive safety briefing. All rules must be acknowledged before stepping to the throwing line.</p>
+      </div>
+
+      <div class="safety-rules" role="list">
+        <div class="safety-rule reveal" role="listitem">
+          <div class="safety-rule__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+          </div>
+          <div>
+            <p class="safety-rule__title">Closed-Toe Shoes Required</p>
+            <p class="safety-rule__desc">All participants must wear closed-toe shoes at all times within the throwing area.</p>
+          </div>
+        </div>
+        <div class="safety-rule reveal animate-delay-1" role="listitem">
+          <div class="safety-rule__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div>
+            <p class="safety-rule__title">Eyes on the Lane</p>
+            <p class="safety-rule__desc">Keep your focus on your lane. Never walk forward to retrieve axes without coach clearance.</p>
+          </div>
+        </div>
+        <div class="safety-rule reveal animate-delay-2" role="listitem">
+          <div class="safety-rule__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="21" y1="8" x2="21" y2="14"/><line x1="24" y1="11" x2="18" y2="11"/></svg>
+          </div>
+          <div>
+            <p class="safety-rule__title">Throw One at a Time</p>
+            <p class="safety-rule__desc">Only one person throws at a time. All others remain behind the marked waiting line.</p>
+          </div>
+        </div>
+        <div class="safety-rule reveal animate-delay-3" role="listitem">
+          <div class="safety-rule__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div>
+            <p class="safety-rule__title">Alcohol Policy</p>
+            <p class="safety-rule__desc">Participants showing signs of intoxication will be removed from the throwing area. Safety first, always.</p>
+          </div>
+        </div>
+        <div class="safety-rule reveal animate-delay-1" role="listitem">
+          <div class="safety-rule__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <div>
+            <p class="safety-rule__title">No Horseplay</p>
+            <p class="safety-rule__desc">Axes are sharp tools. Running, roughhousing, or misuse of equipment is strictly prohibited.</p>
+          </div>
+        </div>
+        <div class="safety-rule reveal animate-delay-2" role="listitem">
+          <div class="safety-rule__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.84h3a2 2 0 0 1 2 1.72"/></svg>
+          </div>
+          <div>
+            <p class="safety-rule__title">Report Incidents Immediately</p>
+            <p class="safety-rule__desc">Any injury or equipment concern must be reported to staff immediately. Our team is fully first-aid certified.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 6: HALL OF FAME
+     ================================================================ -->
+<section class="hof-section section-pad" id="hall-of-fame" aria-labelledby="hof-heading">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <span class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+        Leaderboard
+      </span>
+      <h2 id="hof-heading">Hall of Fame — All-Time Scorers</h2>
+      <div class="divider divider-center"></div>
+      <p class="text-lead">The best of the best. These axe-smiths have set records on our lanes. Can you beat them?</p>
+    </div>
+
+    <div class="hof-grid" role="list" aria-label="Top scorers leaderboard">
+      <article class="hof-card reveal" role="listitem">
+        <div class="hof-card__rank" aria-label="Rank 1">01</div>
+        <div class="hof-card__info">
+          <p class="hof-card__name">Marcus "Iron Wrist" Vane</p>
+          <p class="hof-card__score">642 pts</p>
+          <p class="hof-card__meta">Set on Aug 12, 2025 — Champion Lane</p>
+        </div>
+      </article>
+      <article class="hof-card reveal animate-delay-1" role="listitem">
+        <div class="hof-card__rank" aria-label="Rank 2">02</div>
+        <div class="hof-card__info">
+          <p class="hof-card__name">Priya "Bullseye" Nair</p>
+          <p class="hof-card__score">618 pts</p>
+          <p class="hof-card__meta">Set on Jul 30, 2025 — Elite Circuit</p>
+        </div>
+      </article>
+      <article class="hof-card reveal animate-delay-2" role="listitem">
+        <div class="hof-card__rank" aria-label="Rank 3">03</div>
+        <div class="hof-card__info">
+          <p class="hof-card__name">Tyler "The Hawk" Okafor</p>
+          <p class="hof-card__score">597 pts</p>
+          <p class="hof-card__meta">Set on Jun 19, 2025 — Champion Lane</p>
+        </div>
+      </article>
+      <article class="hof-card reveal" role="listitem">
+        <div class="hof-card__rank" aria-label="Rank 4">04</div>
+        <div class="hof-card__info">
+          <p class="hof-card__name">Sarah "Dead-Eye" Mullins</p>
+          <p class="hof-card__score">581 pts</p>
+          <p class="hof-card__meta">Set on May 05, 2025 — Elite Circuit</p>
+        </div>
+      </article>
+      <article class="hof-card reveal animate-delay-1" role="listitem">
+        <div class="hof-card__rank" aria-label="Rank 5">05</div>
+        <div class="hof-card__info">
+          <p class="hof-card__name">Amir "The Forge" Hassan</p>
+          <p class="hof-card__score">566 pts</p>
+          <p class="hof-card__meta">Set on Apr 20, 2025 — Champion Lane</p>
+        </div>
+      </article>
+      <article class="hof-card reveal animate-delay-2" role="listitem">
+        <div class="hof-card__rank" aria-label="Rank 6">06</div>
+        <div class="hof-card__info">
+          <p class="hof-card__name">Chloe "Ember" Johansson</p>
+          <p class="hof-card__score">554 pts</p>
+          <p class="hof-card__meta">Set on Mar 14, 2025 — Elite Circuit</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="text-center" style="margin-top:var(--sp-10);">
+      <a href="pages/leagues.html" class="btn btn--secondary btn--lg" aria-label="Join a league to compete">Join a League &amp; Compete</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 7: AXE THROWING 101
+     ================================================================ -->
+<section class="axe101-section section-pad" id="axe-101" aria-labelledby="axe101-heading">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <span class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Getting Started
+      </span>
+      <h2 id="axe101-heading">Axe Throwing 101</h2>
+      <div class="divider divider-center"></div>
+      <p class="text-lead">Never thrown an axe before? No problem. It takes about 3 minutes to get your first bullseye. Here's how it works:</p>
+    </div>
+
+    <div class="steps-101" role="list">
+      <div class="step-101 reveal" role="listitem">
+        <div class="step-101__icon-wrap">
+          <img src="assets/images/step-grip.jpg" alt="Proper axe grip technique" id="step1-img" loading="lazy" />
+          <span class="step-101__num" aria-label="Step 1">1</span>
+        </div>
+        <h3 class="step-101__title">Grip & Stance</h3>
+        <p class="step-101__desc">Your coach demonstrates the two-handed grip and shows you the correct throwing stance — feet shoulder-width apart, dominant foot slightly back.</p>
+      </div>
+
+      <div class="step-101 reveal animate-delay-1" role="listitem">
+        <div class="step-101__icon-wrap">
+          <img src="assets/images/step-throw.jpg" alt="Axe throwing motion technique" id="step2-img" loading="lazy" />
+          <span class="step-101__num" aria-label="Step 2">2</span>
+        </div>
+        <h3 class="step-101__title">Wind-Up & Release</h3>
+        <p class="step-101__desc">Bring the axe over your head with controlled motion. Release at the point where your arms are fully extended — let the axe rotate naturally.</p>
+      </div>
+
+      <div class="step-101 reveal animate-delay-2" role="listitem">
+        <div class="step-101__icon-wrap">
+          <img src="assets/images/step-score.jpg" alt="Scoring an axe on a target" id="step3-img" loading="lazy" />
+          <span class="step-101__num" aria-label="Step 3">3</span>
+        </div>
+        <h3 class="step-101__title">Score &amp; Improve</h3>
+        <p class="step-101__desc">Watch the axe stick and score! Our digital tracking records every throw. Get real-time coaching tips and work toward that perfect bullseye.</p>
+      </div>
+    </div>
+
+    <div class="text-center" style="margin-top:var(--sp-12);">
+      <a href="pages/book-a-lane.html" class="btn btn--accent btn--lg" aria-label="Start throwing today">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Start Throwing Today
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 8: NEWSLETTER
+     ================================================================ -->
+<section class="newsletter-section section-pad" id="newsletter" aria-labelledby="newsletter-heading">
+  <div class="container">
+    <div class="newsletter-content reveal">
+      <span class="section-label" style="margin-inline:auto; background:rgba(200,64,27,0.15);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Newsletter
+      </span>
+      <h2 style="color:white;margin-top:var(--sp-4);" id="newsletter-heading">Stay in the Forge Loop</h2>
+      <div class="divider divider-center"></div>
+      <p style="color:rgba(255,255,255,0.6);font-size:1.125rem;line-height:1.7;">
+        Get first access to league sign-ups, exclusive events, and special offers. Join over <strong style="color:var(--clr-accent);">2,400+</strong> throwers already subscribed.
+      </p>
+
+      <form class="newsletter-form" action="#" method="post" aria-label="Newsletter subscription form" novalidate>
+        <label for="nl-email" class="sr-only">Email address</label>
+        <input
+          type="email"
+          id="nl-email"
+          name="email"
+          class="form-input"
+          placeholder="Enter your email address"
+          autocomplete="email"
+          required
+          aria-required="true"
+          aria-label="Your email address"
+        />
+        <button type="submit" class="btn btn--primary" aria-label="Subscribe to newsletter">
+          Subscribe
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </form>
+
+      <p class="newsletter-notice">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;vertical-align:middle;margin-inline-end:4px;" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        We respect your privacy. Unsubscribe at any time. No spam, ever.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Placeholder -->
+<div id="footer-placeholder"></div>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<script src="js/nav-footer.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
