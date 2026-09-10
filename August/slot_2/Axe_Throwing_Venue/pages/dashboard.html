@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Your Axe Forge dashboard. Manage your bookings, track your throwing stats, view league standings, and update your account details." />
+  <title>My Dashboard — Axe Forge Throwing Venue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <style>
+    /* Dashboard specific layout */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: calc(100vh - var(--nav-height));
+      background: var(--clr-bg);
+    }
+
+    /* SECTION 1: SIDEBAR */
+    .dash-sidebar {
+      background: var(--clr-surface);
+      border-right: 1px solid var(--clr-border);
+      padding: var(--sp-6) 0;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: var(--nav-height);
+      height: calc(100vh - var(--nav-height));
+      overflow-y: auto;
+    }
+    .dash-user {
+      padding: 0 var(--sp-6) var(--sp-6);
+      border-bottom: 1px solid var(--clr-border);
+      text-align: center;
+      margin-bottom: var(--sp-6);
+    }
+    .dash-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--clr-primary);
+      color: white;
+      font-size: 2rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--sp-3);
+      position: relative;
+    }
+    .dash-avatar::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 16px;
+      height: 16px;
+      background: var(--clr-success);
+      border: 3px solid var(--clr-surface);
+      border-radius: 50%;
+    }
+    .dash-nav { display: flex; flex-direction: column; gap: var(--sp-1); padding-inline: var(--sp-4); }
+    .dash-nav-link {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: var(--sp-3) var(--sp-4);
+      border-radius: var(--radius-md);
+      color: var(--clr-text-secondary);
+      font-weight: 600;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+    }
+    .dash-nav-link svg { flex-shrink: 0; }
+    .dash-nav-link:hover, .dash-nav-link.active {
+      background: rgba(200,64,27,0.1);
+      color: var(--clr-primary);
+    }
+    .dash-logout {
+      margin-top: auto;
+      padding: var(--sp-6) var(--sp-6) 0;
+      border-top: 1px solid var(--clr-border);
+    }
+
+    /* Main Content Area */
+    .dash-main {
+      padding: var(--sp-8);
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .dash-panel { display: none; animation: fadeIn var(--transition-base); }
+    .dash-panel.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* SECTION 2: OVERVIEW */
+    .stat-cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-4); margin-bottom: var(--sp-8); }
+    .dash-stat-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-5);
+      display: flex;
+      flex-direction: column;
+    }
+    .dash-stat-card__icon { width: 40px; height: 40px; background: rgba(200,64,27,0.1); color: var(--clr-primary); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; margin-bottom: var(--sp-3); }
+
+    /* Layout Grids */
+    .dash-grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--sp-6); margin-bottom: var(--sp-6); }
+    .dash-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+    
+    .dash-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-6);
+      height: 100%;
+    }
+    .dash-card__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-5); }
+    .dash-card__title { font-weight: 800; font-size: 1.125rem; display: flex; align-items: center; gap: var(--sp-2); }
+
+    /* SECTION 3: UPCOMING BOOKINGS */
+    .booking-list { display: flex; flex-direction: column; gap: var(--sp-3); }
+    .booking-item {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+      padding: var(--sp-4);
+      background: var(--clr-surface-alt);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--clr-border);
+    }
+    .booking-item__date { text-align: center; background: var(--clr-surface); border-radius: var(--radius-sm); padding: var(--sp-2); border: 1px solid var(--clr-border); min-width: 64px; }
+    .booking-item__date span { display: block; }
+
+    /* SECTION 4: ACTIVITY & SCORES */
+    .score-bar { height: 8px; background: var(--clr-border); border-radius: var(--radius-full); overflow: hidden; margin-top: var(--sp-2); }
+    .score-bar__fill { height: 100%; background: var(--clr-primary); border-radius: var(--radius-full); }
+
+    /* SECTION 5: LEAGUE STATUS */
+    .league-widget { text-align: center; padding-block: var(--sp-4); }
+    .league-rank { font-family: var(--font-display); font-size: 4rem; color: var(--clr-primary); line-height: 1; }
+
+    /* SECTION 6: HISTORY TABLE */
+    .history-table th { background: var(--clr-surface-alt); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    
+    /* SECTION 7: PAYMENT METHODS */
+    .payment-card-ui {
+      background: linear-gradient(135deg, #1f1a1c 0%, #0a0a0b 100%);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-5);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: var(--sp-4);
+    }
+    .payment-card-ui::before { content: ''; position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(200,64,27,0.2) 0%, transparent 70%); }
+    
+    /* SECTION 8: SETTINGS */
+    .settings-form-wrap { max-width: 600px; }
+
+    @media (max-width: 1023px) {
+      .dashboard-layout { grid-template-columns: 1fr; }
+      .dash-sidebar { height: auto; position: static; border-right: none; border-bottom: 1px solid var(--clr-border); padding: var(--sp-4); }
+      .dash-nav { flex-direction: row; overflow-x: auto; padding-bottom: var(--sp-2); }
+      .dash-nav-link { white-space: nowrap; }
+      .dash-user { display: none; }
+      .dash-logout { display: none; }
+      .stat-cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .dash-grid-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 639px) {
+      .stat-cards-grid { grid-template-columns: 1fr; }
+      .dash-main { padding: var(--sp-4); }
+    }
+  </style>
+</head>
+<body class="page-top">
+
+<div id="nav-placeholder"></div>
+
+<div class="dashboard-layout">
+  
+  <!-- ================================================================
+       SECTION 1: SIDEBAR NAVIGATION
+       ================================================================ -->
+  <aside class="dash-sidebar" aria-label="Dashboard navigation">
+    <div class="dash-user">
+      <div class="dash-avatar" aria-hidden="true">JD</div>
+      <p style="font-weight:800;font-size:1.125rem;">John Doe</p>
+      <p style="font-size:0.875rem;color:var(--clr-text-muted);">Elite Division Thrower</p>
+    </div>
+    
+    <nav class="dash-nav" role="tablist" aria-label="Dashboard sections">
+      <button class="dash-nav-link active" role="tab" aria-selected="true" aria-controls="panel-overview" onclick="switchDashTab('overview')" id="tab-overview">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Overview
+      </button>
+      <button class="dash-nav-link" role="tab" aria-selected="false" aria-controls="panel-bookings" onclick="switchDashTab('bookings')" id="tab-bookings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        My Bookings
+      </button>
+      <button class="dash-nav-link" role="tab" aria-selected="false" aria-controls="panel-scores" onclick="switchDashTab('scores')" id="tab-scores">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Scores &amp; Stats
+      </button>
+      <button class="dash-nav-link" role="tab" aria-selected="false" aria-controls="panel-league" onclick="switchDashTab('league')" id="tab-league">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        League Status
+      </button>
+      <button class="dash-nav-link" role="tab" aria-selected="false" aria-controls="panel-payment" onclick="switchDashTab('payment')" id="tab-payment">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Payment Methods
+      </button>
+      <button class="dash-nav-link" role="tab" aria-selected="false" aria-controls="panel-settings" onclick="switchDashTab('settings')" id="tab-settings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </button>
+    </nav>
+    
+    <div class="dash-logout">
+      <a href="login.html" class="btn btn--ghost btn--full" aria-label="Sign out of account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </a>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+    
+    <!-- ================================================================
+         SECTION 2: OVERVIEW PANEL
+         ================================================================ -->
+    <div class="dash-panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+      <div style="margin-bottom:var(--sp-8);">
+        <h1 style="font-size:2rem;margin-bottom:var(--sp-1);">Welcome back, John! 🪓</h1>
+        <p style="color:var(--clr-text-secondary);">Here's a quick overview of your throwing stats and upcoming sessions.</p>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="stat-cards-grid" aria-label="Quick statistics">
+        <div class="dash-stat-card">
+          <div class="dash-stat-card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+          </div>
+          <p style="font-size:0.875rem;color:var(--clr-text-muted);font-weight:600;">Total Sessions</p>
+          <p style="font-size:1.75rem;font-weight:800;margin-top:auto;">12</p>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <p style="font-size:0.875rem;color:var(--clr-text-muted);font-weight:600;">Bullseyes</p>
+          <p style="font-size:1.75rem;font-weight:800;margin-top:auto;">48</p>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <p style="font-size:0.875rem;color:var(--clr-text-muted);font-weight:600;">Highest Score</p>
+          <p style="font-size:1.75rem;font-weight:800;color:var(--clr-primary);margin-top:auto;">54</p>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p style="font-size:0.875rem;color:var(--clr-text-muted);font-weight:600;">League Rank</p>
+          <p style="font-size:1.75rem;font-weight:800;margin-top:auto;">#4 <span style="font-size:0.875rem;font-weight:500;color:var(--clr-success);">▲ 2</span></p>
+        </div>
+      </div>
+
+      <div class="dash-grid-2">
+        <!-- SECTION 3 (Mini): NEXT BOOKING -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h2 class="dash-card__title">Next Upcoming Session</h2>
+            <a href="#" onclick="switchDashTab('bookings');return false;" style="color:var(--clr-primary);font-size:0.875rem;font-weight:600;">View All</a>
+          </div>
+          <div style="background:var(--clr-surface-alt);border:1px solid var(--clr-primary);border-radius:var(--radius-md);padding:var(--sp-5);position:relative;overflow:hidden;">
+            <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:var(--clr-primary);"></div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:var(--sp-4);">
+              <div>
+                <span class="badge badge--primary" style="margin-bottom:var(--sp-2);">Confirmed</span>
+                <h3 style="font-weight:800;font-size:1.25rem;">League Match: Week 5</h3>
+                <p style="color:var(--clr-text-secondary);font-size:0.9375rem;margin-top:var(--sp-1);">Elite Division • Lane 4</p>
+              </div>
+              <div style="text-align:right;">
+                <p style="font-weight:800;font-size:1.125rem;">Sat, Oct 14</p>
+                <p style="color:var(--clr-primary);font-weight:700;">7:00 PM</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:var(--sp-3);margin-top:var(--sp-5);">
+              <a href="#" class="btn btn--outline btn--sm" aria-label="Reschedule booking">Reschedule</a>
+              <a href="#" class="btn btn--ghost btn--sm" aria-label="Cancel booking">Cancel</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 5 (Mini): LEAGUE STATUS -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h2 class="dash-card__title">League Status</h2>
+          </div>
+          <div class="league-widget">
+            <p style="font-size:0.875rem;color:var(--clr-text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--sp-2);">Current Rank</p>
+            <div class="league-rank">4<span style="font-size:1.5rem;color:var(--clr-text-secondary);">/32</span></div>
+            <p style="font-weight:700;margin-top:var(--sp-2);">Elite Division</p>
+            <div class="divider" style="margin-block:var(--sp-4);"></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.875rem;">
+              <span style="color:var(--clr-text-muted);">Points:</span>
+              <span style="font-weight:700;">84 pts</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-top:var(--sp-1);">
+              <span style="color:var(--clr-text-muted);">Win/Loss:</span>
+              <span style="font-weight:700;">10 - 6</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================
+         SECTION 3: MY BOOKINGS
+         ================================================================ -->
+    <div class="dash-panel" id="panel-bookings" role="tabpanel" aria-labelledby="tab-bookings">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:var(--sp-6);">
+        <div>
+          <h1 style="font-size:2rem;margin-bottom:var(--sp-1);">My Bookings</h1>
+          <p style="color:var(--clr-text-secondary);">Manage your upcoming and past reservations.</p>
+        </div>
+        <a href="book-a-lane.html" class="btn btn--primary" aria-label="Book a new lane">New Booking</a>
+      </div>
+
+      <div class="dash-card">
+        <h2 style="font-weight:800;margin-bottom:var(--sp-4);">Upcoming</h2>
+        <div class="booking-list">
+          <!-- Item 1 -->
+          <div class="booking-item">
+            <div class="booking-item__date">
+              <span style="font-size:0.8125rem;text-transform:uppercase;color:var(--clr-primary);font-weight:700;">Oct</span>
+              <span style="font-size:1.5rem;font-weight:800;">14</span>
+            </div>
+            <div style="flex:1;">
+              <h3 style="font-weight:700;">League Match: Week 5</h3>
+              <p style="font-size:0.875rem;color:var(--clr-text-secondary);">Elite Division • Lane 4 • 1 Guest</p>
+            </div>
+            <div style="text-align:right;">
+              <p style="font-weight:700;">7:00 PM</p>
+              <span class="badge badge--primary" style="font-size:0.75rem;">Confirmed</span>
+            </div>
+            <div style="margin-left:var(--sp-4);">
+              <button class="btn btn--ghost btn--sm" aria-label="Manage booking Oct 14">Manage</button>
+            </div>
+          </div>
+          <!-- Item 2 -->
+          <div class="booking-item">
+            <div class="booking-item__date">
+              <span style="font-size:0.8125rem;text-transform:uppercase;color:var(--clr-primary);font-weight:700;">Oct</span>
+              <span style="font-size:1.5rem;font-weight:800;">21</span>
+            </div>
+            <div style="flex:1;">
+              <h3 style="font-weight:700;">Group Session</h3>
+              <p style="font-size:0.875rem;color:var(--clr-text-secondary);">Group Forge • Lane 3 &amp; 4 • 8 Guests</p>
+            </div>
+            <div style="text-align:right;">
+              <p style="font-weight:700;">8:00 PM</p>
+              <span class="badge badge--success" style="font-size:0.75rem;">Paid</span>
+            </div>
+            <div style="margin-left:var(--sp-4);">
+              <button class="btn btn--ghost btn--sm" aria-label="Manage booking Oct 21">Manage</button>
+            </div>
+          </div>
+        </div>
+
+        <h2 style="font-weight:800;margin-block:var(--sp-8) var(--sp-4);">Past Bookings</h2>
+        <!-- SECTION 6: BOOKING HISTORY TABLE -->
+        <div class="table-wrap">
+          <table class="data-table history-table" aria-label="Past booking history">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Session Type</th>
+                <th scope="col">Lane</th>
+                <th scope="col">Guests</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sep 30, 2026</td>
+                <td>League Match</td>
+                <td>Lane 2</td>
+                <td>1</td>
+                <td>Included</td>
+                <td><span style="color:var(--clr-text-muted);">Completed</span></td>
+                <td><a href="#" style="color:var(--clr-primary);font-size:0.875rem;">View Score</a></td>
+              </tr>
+              <tr>
+                <td>Sep 23, 2026</td>
+                <td>League Match</td>
+                <td>Lane 1</td>
+                <td>1</td>
+                <td>Included</td>
+                <td><span style="color:var(--clr-text-muted);">Completed</span></td>
+                <td><a href="#" style="color:var(--clr-primary);font-size:0.875rem;">View Score</a></td>
+              </tr>
+              <tr>
+                <td>Aug 15, 2026</td>
+                <td>Casual Throw</td>
+                <td>Rookie Range</td>
+                <td>4</td>
+                <td>$113.00</td>
+                <td><span style="color:var(--clr-text-muted);">Completed</span></td>
+                <td><a href="#" style="color:var(--clr-primary);font-size:0.875rem;">Receipt</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================
+         SECTION 4: SCORES & STATS
+         ================================================================ -->
+    <div class="dash-panel" id="panel-scores" role="tabpanel" aria-labelledby="tab-scores">
+      <div style="margin-bottom:var(--sp-6);">
+        <h1 style="font-size:2rem;margin-bottom:var(--sp-1);">Scores &amp; Stats</h1>
+        <p style="color:var(--clr-text-secondary);">Analyze your throwing performance and track personal bests.</p>
+      </div>
+
+      <div class="dash-grid-2">
+        <div class="dash-card">
+          <h2 class="dash-card__title" style="margin-bottom:var(--sp-6);">Performance Trend</h2>
+          <!-- Fake Chart -->
+          <div style="height:240px;display:flex;align-items:flex-end;gap:var(--sp-2);padding-bottom:var(--sp-6);border-bottom:1px solid var(--clr-border);position:relative;" aria-label="Bar chart showing score trends over last 8 sessions">
+            <div style="position:absolute;left:0;top:0;width:100%;height:1px;background:rgba(255,255,255,0.05);"><span style="position:absolute;right:0;top:-10px;font-size:0.75rem;color:var(--clr-text-muted);">Max: 60</span></div>
+            <div style="flex:1;background:var(--clr-surface-alt);height:60%;border-radius:4px 4px 0 0;position:relative;" title="Score: 36"><span style="position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:0.75rem;color:var(--clr-text-muted);">W1</span></div>
+            <div style="flex:1;background:var(--clr-surface-alt);height:65%;border-radius:4px 4px 0 0;position:relative;" title="Score: 39"><span style="position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:0.75rem;color:var(--clr-text-muted);">W2</span></div>
+            <div style="flex:1;background:var(--clr-surface-alt);height:50%;border-radius:4px 4px 0 0;position:relative;" title="Score: 30"><span style="position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:0.75rem;color:var(--clr-text-muted);">W3</span></div>
+            <div style="flex:1;background:var(--clr-surface-alt);height:75%;border-radius:4px 4px 0 0;position:relative;" title="Score: 45"><span style="position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:0.75rem;color:var(--clr-text-muted);">W4</span></div>
+            <div style="flex:1;background:var(--clr-surface-alt);height:70%;border-radius:4px 4px 0 0;position:relative;" title="Score: 42"><span style="position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:0.75rem;color:var(--clr-text-muted);">W5</span></div>
+            <div style="flex:1;background:var(--clr-primary);height:90%;border-radius:4px 4px 0 0;position:relative;" title="Score: 54 (PB)"><span style="position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:0.75rem;color:var(--clr-primary);font-weight:700;">W6</span></div>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <h2 class="dash-card__title" style="margin-bottom:var(--sp-6);">Target Accuracy</h2>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-4);">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:4px;">
+                <span style="font-weight:600;">Bullseye (6 pts)</span><span>28%</span>
+              </div>
+              <div class="score-bar"><div class="score-bar__fill" style="width:28%;background:var(--clr-primary);"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:4px;">
+                <span style="font-weight:600;">Inner Ring (4 pts)</span><span>45%</span>
+              </div>
+              <div class="score-bar"><div class="score-bar__fill" style="width:45%;background:var(--clr-success);"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:4px;">
+                <span style="font-weight:600;">Outer Rings (1-3 pts)</span><span>20%</span>
+              </div>
+              <div class="score-bar"><div class="score-bar__fill" style="width:20%;background:var(--clr-warning);"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:4px;">
+                <span style="font-weight:600;">Misses (0 pts)</span><span>7%</span>
+              </div>
+              <div class="score-bar"><div class="score-bar__fill" style="width:7%;background:var(--clr-error);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================
+         SECTION 5: LEAGUE STATUS (Full panel)
+         ================================================================ -->
+    <div class="dash-panel" id="panel-league" role="tabpanel" aria-labelledby="tab-league">
+      <div style="margin-bottom:var(--sp-6);">
+        <h1 style="font-size:2rem;margin-bottom:var(--sp-1);">League Hub</h1>
+        <p style="color:var(--clr-text-secondary);">Season 12 • Fall 2026 • Elite Division</p>
+      </div>
+
+      <div class="dash-card">
+        <div style="display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-4);background:rgba(200,64,27,0.05);border:1px solid var(--clr-primary);border-radius:var(--radius-md);margin-bottom:var(--sp-6);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--clr-primary)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div>
+            <p style="font-weight:700;">Registration Open for Next Season</p>
+            <p style="font-size:0.875rem;color:var(--clr-text-secondary);">Secure your spot for Season 13 before it sells out.</p>
+          </div>
+          <a href="leagues.html#register" class="btn btn--primary btn--sm" style="margin-left:auto;">Register Now</a>
+        </div>
+
+        <h2 style="font-weight:800;margin-bottom:var(--sp-4);">My Standings</h2>
+        <div class="table-wrap">
+          <table class="data-table" aria-label="Personal league standings context">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>W</th>
+                <th>L</th>
+                <th>Score</th>
+                <th>Pts</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>3</td><td>Tyler Okafor</td><td>11</td><td>5</td><td>597</td><td>88</td></tr>
+              <tr style="background:rgba(255,255,255,0.05);border-left:3px solid var(--clr-primary);">
+                <td style="font-weight:800;color:var(--clr-primary);">4</td>
+                <td style="font-weight:700;">John Doe (You)</td>
+                <td>10</td><td>6</td><td>581</td><td>84</td>
+              </tr>
+              <tr><td>5</td><td>Amir Hassan</td><td>9</td><td>7</td><td>566</td><td>80</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="text-align:right;margin-top:var(--sp-3);"><a href="leagues.html#standings" style="color:var(--clr-primary);font-size:0.875rem;font-weight:600;">View Full Leaderboard &rarr;</a></p>
+      </div>
+    </div>
+
+    <!-- ================================================================
+         SECTION 7: PAYMENT METHODS
+         ================================================================ -->
+    <div class="dash-panel" id="panel-payment" role="tabpanel" aria-labelledby="tab-payment">
+      <div style="margin-bottom:var(--sp-6);">
+        <h1 style="font-size:2rem;margin-bottom:var(--sp-1);">Payment Methods</h1>
+        <p style="color:var(--clr-text-secondary);">Manage your saved cards and billing history securely.</p>
+      </div>
+
+      <div class="dash-grid-2">
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h2 class="dash-card__title">Saved Cards</h2>
+            <button class="btn btn--primary btn--sm" aria-label="Add a new payment method">+ Add Card</button>
+          </div>
+          
+          <div class="payment-card-ui" aria-label="Saved Visa card ending in 4242">
+            <div style="display:flex;justify-content:space-between;margin-bottom:var(--sp-6);">
+              <svg width="40" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              <span class="badge badge--primary" style="background:rgba(255,255,255,0.2);color:white;border:none;">Default</span>
+            </div>
+            <p style="font-family:monospace;font-size:1.25rem;letter-spacing:2px;color:white;margin-bottom:var(--sp-4);">**** **** **** 4242</p>
+            <div style="display:flex;justify-content:space-between;color:rgba(255,255,255,0.7);font-size:0.875rem;">
+              <span>JOHN DOE</span>
+              <span>Expires 12/28</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:var(--sp-3);justify-content:flex-end;">
+            <button class="btn btn--ghost btn--sm" style="color:var(--clr-error);">Remove</button>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <h2 class="dash-card__title" style="margin-bottom:var(--sp-4);">Axe Forge Wallet</h2>
+          <div style="text-align:center;padding:var(--sp-6);background:var(--clr-surface-alt);border-radius:var(--radius-md);">
+            <p style="font-size:0.875rem;color:var(--clr-text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--sp-2);">Current Balance</p>
+            <p style="font-family:var(--font-display);font-size:3rem;color:var(--clr-success);line-height:1;">$0.00</p>
+            <p style="font-size:0.8125rem;color:var(--clr-text-secondary);margin-top:var(--sp-2);">Use wallet funds for bookings and venue drinks.</p>
+          </div>
+          <button class="btn btn--outline btn--full" style="margin-top:var(--sp-4);">Add Funds</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================
+         SECTION 8: ACCOUNT SETTINGS
+         ================================================================ -->
+    <div class="dash-panel" id="panel-settings" role="tabpanel" aria-labelledby="tab-settings">
+      <div style="margin-bottom:var(--sp-6);">
+        <h1 style="font-size:2rem;margin-bottom:var(--sp-1);">Account Settings</h1>
+        <p style="color:var(--clr-text-secondary);">Update your profile information and preferences.</p>
+      </div>
+
+      <div class="dash-card settings-form-wrap">
+        <form data-form-validate action="#" method="post" aria-label="Profile update form">
+          <h2 style="font-weight:800;margin-bottom:var(--sp-4);font-size:1.125rem;">Personal Information</h2>
+          <div style="display:flex;align-items:center;gap:var(--sp-4);margin-bottom:var(--sp-6);">
+            <div class="dash-avatar" style="margin:0;" aria-hidden="true">JD</div>
+            <button type="button" class="btn btn--outline btn--sm">Change Avatar</button>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);">
+            <div class="form-group">
+              <label for="set-first" class="form-label">First Name</label>
+              <input type="text" id="set-first" class="form-input" value="John" data-validate="required" />
+              <span class="form-error-msg" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label for="set-last" class="form-label">Last Name</label>
+              <input type="text" id="set-last" class="form-input" value="Doe" data-validate="required" />
+              <span class="form-error-msg" role="alert"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="set-email" class="form-label">Email Address</label>
+            <input type="email" id="set-email" class="form-input" value="john.doe@email.com" data-validate="required,email" />
+            <span class="form-error-msg" role="alert"></span>
+          </div>
+          <div class="form-group">
+            <label for="set-phone" class="form-label">Phone Number</label>
+            <input type="tel" id="set-phone" class="form-input" value="+1 (416) 555-0198" data-validate="phone" />
+            <span class="form-error-msg" role="alert"></span>
+          </div>
+
+          <div class="divider" style="margin-block:var(--sp-6);"></div>
+          
+          <h2 style="font-weight:800;margin-bottom:var(--sp-4);font-size:1.125rem;">Preferences</h2>
+          <div class="form-check" style="margin-bottom:var(--sp-3);">
+            <input type="checkbox" id="pref-newsletter" checked />
+            <label for="pref-newsletter" class="form-check__label">Receive monthly newsletter and offers</label>
+          </div>
+          <div class="form-check" style="margin-bottom:var(--sp-6);">
+            <input type="checkbox" id="pref-sms" checked />
+            <label for="pref-sms" class="form-check__label">Receive booking reminders via SMS</label>
+          </div>
+
+          <button type="submit" class="btn btn--primary" aria-label="Save account changes">Save Changes</button>
+        </form>
+
+        <div class="divider" style="margin-block:var(--sp-6);"></div>
+
+        <h2 style="font-weight:800;margin-bottom:var(--sp-4);font-size:1.125rem;color:var(--clr-error);">Danger Zone</h2>
+        <p style="font-size:0.875rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-3);">Once you delete your account, there is no going back. Please be certain.</p>
+        <button type="button" class="btn btn--outline" style="border-color:var(--clr-error);color:var(--clr-error);" aria-label="Delete your account">Delete Account</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="footer-placeholder"></div>
+<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}</style>
+
+<script>
+  function switchDashTab(tabId) {
+    // Hide all panels
+    document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+    // Unset all active tabs
+    document.querySelectorAll('.dash-nav-link').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+    
+    // Show active panel
+    document.getElementById('panel-' + tabId).classList.add('active');
+    // Set active tab
+    const tabEl = document.getElementById('tab-' + tabId);
+    if(tabEl) {
+      tabEl.classList.add('active');
+      tabEl.setAttribute('aria-selected', 'true');
+    }
+  }
+</script>
+
+<script src="../js/nav-footer.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>
