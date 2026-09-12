@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/layout.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     /* Dashboard specific layout */
     .dashboard-layout {
@@ -189,7 +190,7 @@
   <aside class="dash-sidebar" aria-label="Dashboard navigation">
     <div style="padding:0 var(--sp-6) var(--sp-6); display:flex; align-items:center; gap:var(--sp-3);">
       <div style="width:36px;height:36px;background:var(--clr-primary);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(200,64,27,0.3);">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="11" y2="17"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9"/><path d="M15 13 9 7l4-4 6 6h3a8 8 0 0 1-7 7z"/></svg>
       </div>
       <a href="../index.html" style="font-family:var(--font-display);font-size:1.75rem;line-height:1;color:var(--clr-text-primary);text-decoration:none;letter-spacing:0.02em;">Axe</a>
     </div>
@@ -325,6 +326,115 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+      <!-- Analytics Dashboards (Infographics) -->
+      <h2 style="font-size:1.25rem;margin-bottom:var(--sp-4);margin-top:var(--sp-8);">Personal Analytics</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(350px, 1fr));gap:var(--sp-6);">
+        <div class="dash-card">
+          <h3 class="dash-card__title">Accuracy History</h3>
+          <canvas id="userChart1" style="width:100%;max-height:240px;"></canvas>
+        </div>
+        <div class="dash-card">
+          <h3 class="dash-card__title">Preferred Axe Types</h3>
+          <canvas id="userChart2" style="width:100%;max-height:240px;"></canvas>
+        </div>
+        <div class="dash-card">
+          <h3 class="dash-card__title">Win/Loss Record</h3>
+          <canvas id="userChart3" style="width:100%;max-height:240px;"></canvas>
+        </div>
+        <div class="dash-card">
+          <h3 class="dash-card__title">Monthly Activity (Hours)</h3>
+          <canvas id="userChart4" style="width:100%;max-height:240px;"></canvas>
+        </div>
+      </div>
+
+      <!-- User Gamification & Social Grid -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(350px, 1fr));gap:var(--sp-6);margin-top:var(--sp-8);">
+        
+        <!-- Achievements & Badges -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Achievements</h3>
+            <a href="#" style="color:var(--clr-primary);font-size:0.875rem;font-weight:600;">View All</a>
+          </div>
+          <div style="display:flex;gap:var(--sp-4);flex-wrap:wrap;margin-top:var(--sp-2);">
+            <div style="text-align:center;width:70px;">
+              <div style="width:60px;height:60px;margin:0 auto;border-radius:50%;background:linear-gradient(135deg, #F0A500, #C8401B);display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 4px 10px rgba(240,165,0,0.3);"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
+              <p style="font-size:0.75rem;font-weight:700;margin-top:var(--sp-2);line-height:1.2;">First<br>Bullseye</p>
+            </div>
+            <div style="text-align:center;width:70px;">
+              <div style="width:60px;height:60px;margin:0 auto;border-radius:50%;background:linear-gradient(135deg, #3b82f6, #1d4ed8);display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 4px 10px rgba(59,130,246,0.3);"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+              <p style="font-size:0.75rem;font-weight:700;margin-top:var(--sp-2);line-height:1.2;">Big<br>Spender</p>
+            </div>
+            <div style="text-align:center;width:70px;opacity:0.4;filter:grayscale(1);">
+              <div style="width:60px;height:60px;margin:0 auto;border-radius:50%;background:var(--clr-surface-alt);border:2px dashed var(--clr-border);display:flex;align-items:center;justify-content:center;color:var(--clr-text-muted);"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+              <p style="font-size:0.75rem;font-weight:700;margin-top:var(--sp-2);line-height:1.2;">Perfect<br>Game</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Friend Leaderboard -->
+        <div class="dash-card">
+          <h3 class="dash-card__title" style="margin-bottom:var(--sp-4);">Crew Leaderboard</h3>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-3);">
+            <div style="display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2);background:rgba(200,64,27,0.1);border-radius:var(--radius-md);border:1px solid rgba(200,64,27,0.2);">
+              <span style="font-weight:800;color:var(--clr-primary);width:20px;text-align:center;">1</span>
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--clr-surface-alt);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;">MJ</div>
+              <div style="flex:1;"><p style="font-weight:700;font-size:0.9rem;">Mike J.</p></div>
+              <span style="font-weight:800;">142 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2);">
+              <span style="font-weight:800;color:var(--clr-text-muted);width:20px;text-align:center;">2</span>
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--clr-primary);color:white;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;">You</div>
+              <div style="flex:1;"><p style="font-weight:700;font-size:0.9rem;">John (You)</p></div>
+              <span style="font-weight:800;">128 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2);">
+              <span style="font-weight:800;color:var(--clr-text-muted);width:20px;text-align:center;">3</span>
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--clr-surface-alt);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;">SL</div>
+              <div style="flex:1;"><p style="font-weight:700;font-size:0.9rem;">Sarah L.</p></div>
+              <span style="font-weight:800;">94 pts</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity Timeline -->
+        <div class="dash-card">
+          <h3 class="dash-card__title" style="margin-bottom:var(--sp-4);">Your Journey</h3>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-4);border-left:2px solid var(--clr-border);padding-left:var(--sp-4);margin-left:var(--sp-2);">
+            <div style="position:relative;">
+              <div style="position:absolute;left:-25px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--clr-primary);border:2px solid var(--clr-surface);"></div>
+              <p style="font-size:0.9rem;font-weight:700;">Scored a Personal Best</p>
+              <p style="font-size:0.8rem;color:var(--clr-text-muted);">Hit 54 points in Week 5 &bull; 2 days ago</p>
+            </div>
+            <div style="position:relative;">
+              <div style="position:absolute;left:-25px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--clr-text-muted);border:2px solid var(--clr-surface);"></div>
+              <p style="font-size:0.9rem;font-weight:700;">Booked Elite Package</p>
+              <p style="font-size:0.8rem;color:var(--clr-text-muted);">Group of 15 for Oct 14 &bull; 1 week ago</p>
+            </div>
+            <div style="position:relative;">
+              <div style="position:absolute;left:-25px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--clr-text-muted);border:2px solid var(--clr-surface);"></div>
+              <p style="font-size:0.9rem;font-weight:700;">Joined Elite Division</p>
+              <p style="font-size:0.8rem;color:var(--clr-text-muted);">Registered for Fall 2026 &bull; 2 months ago</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIP Perks & Offers -->
+        <div class="dash-card" style="background:linear-gradient(135deg, rgba(200,64,27,0.1), rgba(0,0,0,0));border:1px solid rgba(200,64,27,0.3);">
+          <div style="display:flex;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-3);">
+            <svg width="20" height="20" fill="none" stroke="var(--clr-primary)" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <h3 class="dash-card__title" style="margin:0;color:var(--clr-primary);">VIP Perks</h3>
+          </div>
+          <h4 style="font-size:1.1rem;font-weight:800;margin-bottom:var(--sp-1);">15% Off All Merch</h4>
+          <p style="font-size:0.875rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-4);">Show this code at the front desk to claim your League Member discount on apparel.</p>
+          <div style="background:var(--clr-surface-alt);padding:var(--sp-3);border-radius:var(--radius-md);border:1px dashed var(--clr-primary);text-align:center;">
+            <span style="font-family:var(--font-display);font-size:1.5rem;letter-spacing:0.1em;color:var(--clr-text-primary);">AXE-ELITE-15</span>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -665,5 +775,106 @@
 
 <script src="../js/nav-footer.js"></script>
 <script src="../js/app.js"></script>
+
+<script>
+  // Chart.js Global Config
+  Chart.defaults.color = '#7A7A7C';
+  Chart.defaults.font.family = "'Outfit', sans-serif";
+  const gridColor = 'rgba(255, 255, 255, 0.05)';
+
+  // 1. Accuracy History (Line)
+  new Chart(document.getElementById('userChart1'), {
+    type: 'line',
+    data: {
+      labels: ['Wk 1', 'Wk 2', 'Wk 3', 'Wk 4', 'Wk 5', 'Wk 6'],
+      datasets: [{
+        label: 'Bullseye %',
+        data: [42, 45, 50, 48, 55, 62],
+        borderColor: '#C8401B',
+        backgroundColor: 'rgba(200, 64, 27, 0.1)',
+        borderWidth: 3,
+        tension: 0.3,
+        fill: true,
+        pointBackgroundColor: '#C8401B'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { grid: { color: gridColor }, min: 0, max: 100 },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // 2. Preferred Axe Types (Polar Area)
+  new Chart(document.getElementById('userChart2'), {
+    type: 'polarArea',
+    data: {
+      labels: ['Hatchet', 'Big Axe', 'Dual', 'Tomahawk'],
+      datasets: [{
+        data: [60, 20, 15, 5],
+        backgroundColor: [
+          'rgba(200, 64, 27, 0.8)',
+          'rgba(240, 165, 0, 0.8)',
+          'rgba(46, 139, 90, 0.8)',
+          'rgba(37, 99, 235, 0.8)'
+        ],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: { r: { grid: { color: gridColor }, ticks: { display: false } } },
+      plugins: { legend: { position: 'right', labels: { boxWidth: 12 } } }
+    }
+  });
+
+  // 3. Win/Loss Record (Doughnut)
+  new Chart(document.getElementById('userChart3'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Wins', 'Losses', 'Ties'],
+      datasets: [{
+        data: [10, 6, 2],
+        backgroundColor: ['#2E8B5A', '#DC2626', '#F0A500'],
+        borderWidth: 0,
+        hoverOffset: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '70%',
+      plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } }
+    }
+  });
+
+  // 4. Monthly Activity (Bar)
+  new Chart(document.getElementById('userChart4'), {
+    type: 'bar',
+    data: {
+      labels: ['Jul', 'Aug', 'Sep', 'Oct'],
+      datasets: [{
+        label: 'Hours Thrown',
+        data: [4, 6, 8, 12],
+        backgroundColor: '#C8401B',
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { grid: { color: gridColor }, beginAtZero: true },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+</script>
 </body>
 </html>

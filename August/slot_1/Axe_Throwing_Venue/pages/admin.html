@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/layout.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     /* Admin specific layout */
     .dashboard-layout {
@@ -212,7 +213,7 @@
   <aside class="dash-sidebar" aria-label="Admin navigation">
     <div style="padding:0 var(--sp-6) var(--sp-6); display:flex; align-items:center; gap:var(--sp-3);">
       <div style="width:36px;height:36px;background:var(--clr-primary);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(200,64,27,0.3);">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="11" y2="17"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9"/><path d="M15 13 9 7l4-4 6 6h3a8 8 0 0 1-7 7z"/></svg>
       </div>
       <a href="../index.html" style="font-family:var(--font-display);font-size:1.75rem;line-height:1;color:var(--clr-text-primary);text-decoration:none;letter-spacing:0.02em;">Axe</a>
     </div>
@@ -311,6 +312,27 @@
         </div>
       </div>
 
+      <!-- Analytics Dashboards (Infographics) -->
+      <h2 style="font-size:1.25rem;margin-bottom:var(--sp-4);">Analytics &amp; Insights</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(400px, 1fr));gap:var(--sp-6);margin-bottom:var(--sp-8);">
+        <div style="background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-xl);padding:var(--sp-6);">
+          <h3 style="font-weight:700;margin-bottom:var(--sp-4);font-size:1rem;color:var(--clr-text-secondary);">Revenue Trend (6 Months)</h3>
+          <canvas id="adminChart1" style="width:100%;max-height:240px;"></canvas>
+        </div>
+        <div style="background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-xl);padding:var(--sp-6);">
+          <h3 style="font-weight:700;margin-bottom:var(--sp-4);font-size:1rem;color:var(--clr-text-secondary);">Bookings by Package</h3>
+          <canvas id="adminChart2" style="width:100%;max-height:240px;"></canvas>
+        </div>
+        <div style="background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-xl);padding:var(--sp-6);">
+          <h3 style="font-weight:700;margin-bottom:var(--sp-4);font-size:1rem;color:var(--clr-text-secondary);">Peak Hours Activity</h3>
+          <canvas id="adminChart3" style="width:100%;max-height:240px;"></canvas>
+        </div>
+        <div style="background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-xl);padding:var(--sp-6);">
+          <h3 style="font-weight:700;margin-bottom:var(--sp-4);font-size:1rem;color:var(--clr-text-secondary);">Waiver Completion Status</h3>
+          <canvas id="adminChart4" style="width:100%;max-height:240px;"></canvas>
+        </div>
+      </div>
+
       <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:var(--sp-6);">
         <!-- Upcoming Bookings -->
         <div>
@@ -390,6 +412,90 @@
               </div>
             </div>
             <a href="#" style="display:block;text-align:center;font-size:0.875rem;color:var(--clr-primary);margin-top:var(--sp-4);text-decoration:none;font-weight:600;">View All Activity &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- Admin Content Expansion Grid -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:var(--sp-6);margin-top:var(--sp-6);">
+        <!-- Staff On-Duty Roster -->
+        <div style="background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-xl);padding:var(--sp-6);">
+          <h2 style="font-size:1.25rem;margin-bottom:var(--sp-4);">Staff On-Duty</h2>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-4);">
+            <div style="display:flex;align-items:center;gap:var(--sp-3);">
+              <div style="width:40px;height:40px;border-radius:50%;background:var(--clr-primary);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;">MT</div>
+              <div style="flex:1;">
+                <p style="font-weight:700;font-size:0.95rem;">Mike T.</p>
+                <p style="font-size:0.8rem;color:var(--clr-text-muted);">Lead Coach • Lanes 1-4</p>
+              </div>
+              <span class="status-badge status-badge--success">Clocked In</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--sp-3);">
+              <div style="width:40px;height:40px;border-radius:50%;background:#F0A500;display:flex;align-items:center;justify-content:center;color:black;font-weight:700;">SJ</div>
+              <div style="flex:1;">
+                <p style="font-weight:700;font-size:0.95rem;">Sarah J.</p>
+                <p style="font-size:0.8rem;color:var(--clr-text-muted);">Event Host • Lanes 5-8</p>
+              </div>
+              <span class="status-badge status-badge--success">Clocked In</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--sp-3);">
+              <div style="width:40px;height:40px;border-radius:50%;background:#2563EB;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;">RJ</div>
+              <div style="flex:1;">
+                <p style="font-weight:700;font-size:0.95rem;">Ryan J.</p>
+                <p style="font-size:0.8rem;color:var(--clr-text-muted);">Manager</p>
+              </div>
+              <span class="status-badge status-badge--success">Clocked In</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inventory & Maintenance -->
+        <div style="background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-xl);padding:var(--sp-6);">
+          <h2 style="font-size:1.25rem;margin-bottom:var(--sp-4);">Inventory & Maintenance</h2>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-3);">
+            <div style="background:rgba(239, 68, 68, 0.1);border-left:4px solid #ef4444;padding:var(--sp-3) var(--sp-4);border-radius:0 var(--radius-md) var(--radius-md) 0;">
+              <p style="font-weight:700;color:#ef4444;font-size:0.9rem;">Urgent: Hatchet Sharpening</p>
+              <p style="font-size:0.8rem;color:var(--clr-text-secondary);margin-top:2px;">3 hatchets from Lane 2 are dull.</p>
+            </div>
+            <div style="background:rgba(245, 158, 11, 0.1);border-left:4px solid #f59e0b;padding:var(--sp-3) var(--sp-4);border-radius:0 var(--radius-md) var(--radius-md) 0;">
+              <p style="font-weight:700;color:#f59e0b;font-size:0.9rem;">Low Stock: Target Boards</p>
+              <p style="font-size:0.8rem;color:var(--clr-text-secondary);margin-top:2px;">Only 4 replacement boards remain.</p>
+            </div>
+            <div style="background:rgba(59, 130, 246, 0.1);border-left:4px solid #3b82f6;padding:var(--sp-3) var(--sp-4);border-radius:0 var(--radius-md) var(--radius-md) 0;">
+              <p style="font-weight:700;color:#3b82f6;font-size:0.9rem;">Reminder: System Update</p>
+              <p style="font-size:0.8rem;color:var(--clr-text-secondary);margin-top:2px;">POS system update scheduled for 11 PM.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Feedback -->
+        <div style="background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-xl);padding:var(--sp-6);">
+          <h2 style="font-size:1.25rem;margin-bottom:var(--sp-4);">Recent Feedback</h2>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-4);">
+            <div>
+              <div style="display:flex;gap:2px;color:#facc15;margin-bottom:4px;">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <p style="font-size:0.9rem;font-style:italic;">"Mike was an amazing coach! Our team had a blast."</p>
+              <p style="font-size:0.75rem;color:var(--clr-text-muted);text-align:right;margin-top:2px;">- Alex D.</p>
+            </div>
+            <div class="divider" style="margin-block:var(--sp-2);"></div>
+            <div>
+              <div style="display:flex;gap:2px;color:#facc15;margin-bottom:4px;">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <p style="font-size:0.9rem;font-style:italic;">"Great venue, loved the VIP lounge setup."</p>
+              <p style="font-size:0.75rem;color:var(--clr-text-muted);text-align:right;margin-top:2px;">- Brian K.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -635,5 +741,104 @@
 </script>
 <script src="../js/app.js"></script>
 <script src="../js/nav-footer.js"></script>
+
+<script>
+  // Chart.js Global Config for Dark/Light Theme Support
+  Chart.defaults.color = '#7A7A7C';
+  Chart.defaults.font.family = "'Outfit', sans-serif";
+  const gridColor = 'rgba(255, 255, 255, 0.05)';
+
+  // 1. Revenue Trend (Line)
+  new Chart(document.getElementById('adminChart1'), {
+    type: 'line',
+    data: {
+      labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+      datasets: [{
+        label: 'Revenue ($)',
+        data: [12400, 15300, 14200, 18500, 17200, 22400],
+        borderColor: '#C8401B',
+        backgroundColor: 'rgba(200, 64, 27, 0.1)',
+        borderWidth: 3,
+        tension: 0.4,
+        fill: true,
+        pointBackgroundColor: '#C8401B'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { grid: { color: gridColor }, beginAtZero: true },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // 2. Bookings by Package (Doughnut)
+  new Chart(document.getElementById('adminChart2'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Champion', 'Elite', 'Rookie', 'Group'],
+      datasets: [{
+        data: [45, 25, 20, 10],
+        backgroundColor: ['#C8401B', '#F0A500', '#2E8B5A', '#2563EB'],
+        borderWidth: 0,
+        hoverOffset: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '75%',
+      plugins: {
+        legend: { position: 'right', labels: { boxWidth: 12, padding: 20 } }
+      }
+    }
+  });
+
+  // 3. Peak Hours Activity (Bar)
+  new Chart(document.getElementById('adminChart3'), {
+    type: 'bar',
+    data: {
+      labels: ['4 PM', '5 PM', '6 PM', '7 PM', '8 PM', '9 PM', '10 PM'],
+      datasets: [{
+        label: 'Active Players',
+        data: [12, 25, 45, 60, 55, 40, 20],
+        backgroundColor: '#F0A500',
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { grid: { color: gridColor } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // 4. Waiver Status (Pie)
+  new Chart(document.getElementById('adminChart4'), {
+    type: 'pie',
+    data: {
+      labels: ['Signed', 'Pending'],
+      datasets: [{
+        data: [112, 12],
+        backgroundColor: ['#2E8B5A', '#DC2626'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 20 } }
+      }
+    }
+  });
+</script>
 </body>
 </html>

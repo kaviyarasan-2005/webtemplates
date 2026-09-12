@@ -360,7 +360,73 @@
      SECTION 5: EVENT INQUIRY FORM
      ================================================================ -->
 <section class="section-pad bg-surface-alt" id="inquiry" aria-labelledby="inquiry-heading">
-  <div class="container" style="max-width:780px;">
+  <style>
+    .premium-form-card {
+      background: linear-gradient(135deg, #18181A 0%, #111111 100%);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: var(--sp-10);
+      box-shadow: var(--shadow-xl), inset 0 1px 0 rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+      margin-top: var(--sp-8);
+    }
+    .premium-form-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(200,64,27,0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .premium-form-card .form-label {
+      color: rgba(255,255,255,0.85);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .premium-form-card .form-input,
+    .premium-form-card .form-select,
+    .premium-form-card .form-textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white;
+      transition: all 0.3s;
+      border-radius: var(--radius-md);
+    }
+    .premium-form-card .form-input:focus,
+    .premium-form-card .form-select:focus,
+    .premium-form-card .form-textarea:focus {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--clr-primary);
+      box-shadow: 0 0 0 4px rgba(200,64,27,0.15);
+    }
+    .premium-form-card .form-input::placeholder,
+    .premium-form-card .form-textarea::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+    .premium-form-card .icon-left {
+      color: rgba(255,255,255,0.4);
+    }
+    .premium-form-card .form-check__label {
+      color: rgba(255,255,255,0.7);
+    }
+    .premium-form-card .btn--submit {
+      background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-dark) 100%);
+      border: none;
+      box-shadow: var(--shadow-primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 800;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .premium-form-card .btn--submit:hover {
+      box-shadow: var(--shadow-glow);
+      transform: translateY(-2px);
+    }
+  </style>
+  <div class="container" style="max-width:880px;">
     <div class="section-header centered reveal">
       <span class="section-label">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/></svg>
@@ -371,9 +437,9 @@
       <p class="text-lead">Tell us about your event and we'll put together a tailored package within 24 hours. No commitment required.</p>
     </div>
 
-    <div style="background:var(--clr-surface);border-radius:var(--radius-xl);border:1px solid var(--clr-border);padding:var(--sp-8);" class="reveal">
-      <form data-form-validate action="#" method="post" aria-label="Corporate event inquiry form" novalidate>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);">
+    <div class="premium-form-card reveal">
+      <form data-form-validate action="#" method="post" aria-label="Corporate event inquiry form" novalidate style="position:relative;z-index:1;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:var(--sp-4);">
           <div class="form-group">
             <label for="inq-name" class="form-label">Your Name <span class="required" aria-label="required">*</span></label>
             <input type="text" id="inq-name" class="form-input" placeholder="Jane Smith" data-validate="required" autocomplete="name" aria-required="true" />
@@ -385,7 +451,8 @@
             <span class="form-error-msg" role="alert"></span>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);">
+        
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:var(--sp-4);">
           <div class="form-group">
             <label for="inq-email" class="form-label">Email <span class="required" aria-label="required">*</span></label>
             <div class="input-icon-wrap has-left">
@@ -403,7 +470,8 @@
             <span class="form-error-msg" role="alert"></span>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-4);">
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:var(--sp-4);">
           <div class="form-group">
             <label for="inq-date" class="form-label">Preferred Date <span class="required" aria-label="required">*</span></label>
             <input type="date" id="inq-date" class="form-input" data-validate="required" aria-required="true" />
@@ -412,32 +480,34 @@
           <div class="form-group">
             <label for="inq-guests" class="form-label">Number of Guests <span class="required" aria-label="required">*</span></label>
             <select id="inq-guests" class="form-select" data-validate="required" aria-required="true" aria-label="Number of guests">
-              <option value="">Select…</option>
-              <option value="2-10">2–10 guests</option>
-              <option value="10-30">10–30 guests</option>
-              <option value="30-60">30–60 guests</option>
-              <option value="60+">60+ guests</option>
+              <option value="" style="color:black;">Select…</option>
+              <option value="2-10" style="color:black;">2–10 guests</option>
+              <option value="10-30" style="color:black;">10–30 guests</option>
+              <option value="30-60" style="color:black;">30–60 guests</option>
+              <option value="60+" style="color:black;">60+ guests</option>
             </select>
             <span class="form-error-msg" role="alert"></span>
           </div>
           <div class="form-group">
             <label for="inq-type" class="form-label">Event Type <span class="required" aria-label="required">*</span></label>
             <select id="inq-type" class="form-select" data-validate="required" aria-required="true" aria-label="Event type">
-              <option value="">Select…</option>
-              <option value="corporate">Corporate Team Building</option>
-              <option value="birthday">Birthday Party</option>
-              <option value="bachelor">Bachelor / Bachelorette</option>
-              <option value="charity">Charity / Fundraiser</option>
-              <option value="other">Other</option>
+              <option value="" style="color:black;">Select…</option>
+              <option value="corporate" style="color:black;">Corporate Team Building</option>
+              <option value="birthday" style="color:black;">Birthday Party</option>
+              <option value="bachelor" style="color:black;">Bachelor / Bachelorette</option>
+              <option value="charity" style="color:black;">Charity / Fundraiser</option>
+              <option value="other" style="color:black;">Other</option>
             </select>
             <span class="form-error-msg" role="alert"></span>
           </div>
         </div>
+
         <div class="form-group">
           <label for="inq-message" class="form-label">Tell Us About Your Event</label>
           <textarea id="inq-message" class="form-textarea" placeholder="Any special requirements, themes, dietary restrictions, or questions…" rows="4"></textarea>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);margin-bottom:var(--sp-5);">
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:var(--sp-4);margin-top:var(--sp-6);margin-bottom:var(--sp-8);">
           <div class="form-check">
             <input type="checkbox" id="inq-catering" name="catering" />
             <label for="inq-catering" class="form-check__label">Interested in catering</label>
@@ -455,9 +525,10 @@
             <label for="inq-coaching" class="form-check__label">Interested in coaching session</label>
           </div>
         </div>
-        <button type="submit" class="btn btn--primary btn--full" aria-label="Submit event inquiry">
-          Send Inquiry — We'll Reply Within 24 Hours
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+
+        <button type="submit" class="btn btn--xl btn--full btn--submit" aria-label="Submit event inquiry">
+          Request Custom Quote
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
       </form>
     </div>
