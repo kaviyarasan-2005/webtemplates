@@ -19,29 +19,53 @@
     <div class="container">
       <div class="navbar__inner">
         <!-- Logo -->
-        <a href="${root}index.html" class="navbar__logo" aria-label="Axe Forge — Home">
+        <a href="${root}index.html" class="navbar__logo" aria-label="Axe — Home">
           <div class="navbar__logo-icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14 2 14 8 20 8"/>
               <line x1="9" y1="13" x2="15" y2="13"/>
               <line x1="9" y1="17" x2="11" y2="17"/>
             </svg>
           </div>
-          <div>
-            <span class="navbar__logo-text">Axe Forge</span>
-            <span class="navbar__logo-sub">Throwing Venue</span>
-          </div>
+          <span class="navbar__logo-text">Axe</span>
         </a>
 
         <!-- Desktop Links -->
         <ul class="navbar__links" role="list">
-          <li><a href="${root}index.html" class="nav-link" aria-current="auto">Home</a></li>
+          <li class="nav-dropdown">
+            <button class="nav-link nav-dropdown__trigger" aria-expanded="false" aria-haspopup="true" id="home-dropdown-btn">
+              Home
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="margin-inline-start:4px;transition:transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu" aria-labelledby="home-dropdown-btn">
+              <a href="${root}index.html" class="nav-dropdown__item" role="menuitem">
+                <span class="nav-dropdown__item-title">Home 1</span>
+              </a>
+              <a href="${root}index2.html" class="nav-dropdown__item" role="menuitem">
+                <span class="nav-dropdown__item-title">Home 2</span>
+              </a>
+            </div>
+          </li>
           <li><a href="${root}pages/book-a-lane.html" class="nav-link">Book a Lane</a></li>
           <li><a href="${root}pages/leagues.html" class="nav-link">Leagues</a></li>
           <li><a href="${root}pages/events.html" class="nav-link">Events</a></li>
-          <li><a href="${root}pages/login.html" class="nav-link">Login</a></li>
+          <li class="nav-dropdown">
+            <button class="nav-link nav-dropdown__trigger" aria-expanded="false" aria-haspopup="true" id="dashboard-dropdown-btn">
+              Dashboard
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="margin-inline-start:4px;transition:transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown__menu" role="menu" aria-labelledby="dashboard-dropdown-btn">
+              <a href="${root}pages/dashboard.html" class="nav-dropdown__item" role="menuitem">
+                <span class="nav-dropdown__item-title">User</span>
+              </a>
+              <a href="${root}pages/admin.html" class="nav-dropdown__item" role="menuitem">
+                <span class="nav-dropdown__item-title">Admin</span>
+              </a>
+            </div>
+          </li>
         </ul>
+
 
         <!-- Controls -->
         <div class="navbar__controls" aria-label="Display controls">
@@ -50,9 +74,9 @@
           <button class="ctrl-btn" data-rtl-toggle data-dir-label title="Toggle RTL" aria-label="Toggle RTL/LTR">
             RTL
           </button>
-          <a href="${root}pages/dashboard.html" class="btn btn--primary btn--sm" aria-label="My Dashboard">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            Dashboard
+          <a href="${root}pages/login.html" class="btn btn--primary btn--sm" aria-label="Login">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            Login
           </a>
         </div>
 
@@ -67,12 +91,20 @@
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
     <ul role="list">
-      <li><a href="${root}index.html" class="nav-link">Home</a></li>
+      <li class="mobile-nav-group">
+        <span class="mobile-nav-group__label">Home</span>
+        <a href="${root}index.html" class="nav-link">↳ Home 1</a>
+        <a href="${root}index2.html" class="nav-link">↳ Home 2</a>
+      </li>
       <li><a href="${root}pages/book-a-lane.html" class="nav-link">Book a Lane</a></li>
       <li><a href="${root}pages/leagues.html" class="nav-link">Leagues</a></li>
       <li><a href="${root}pages/events.html" class="nav-link">Events</a></li>
+      <li class="mobile-nav-group">
+        <span class="mobile-nav-group__label">Dashboard</span>
+        <a href="${root}pages/dashboard.html" class="nav-link">↳ User</a>
+        <a href="${root}pages/admin.html" class="nav-link">↳ Admin</a>
+      </li>
       <li><a href="${root}pages/login.html" class="nav-link">Login</a></li>
-      <li><a href="${root}pages/dashboard.html" class="nav-link">Dashboard</a></li>
     </ul>
     <div class="mobile-menu__controls">
       <button class="ctrl-btn" data-theme-toggle data-theme-icon title="Toggle Theme" aria-label="Toggle Theme">
@@ -88,19 +120,16 @@
       <div class="footer__top">
         <!-- Brand -->
         <div>
-          <a href="${root}index.html" class="navbar__logo" aria-label="Axe Forge — Home">
+          <a href="${root}index.html" class="navbar__logo" aria-label="Axe — Home">
             <div class="navbar__logo-icon" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                 <polyline points="14 2 14 8 20 8"/>
                 <line x1="9" y1="13" x2="15" y2="13"/>
                 <line x1="9" y1="17" x2="11" y2="17"/>
               </svg>
             </div>
-            <div>
-              <span class="navbar__logo-text" style="color:white;">Axe Forge</span>
-              <span class="navbar__logo-sub">Throwing Venue</span>
-            </div>
+            <span class="navbar__logo-text" style="color:white;">Axe</span>
           </a>
           <p class="footer__brand-text">
             The premier axe throwing venue for thrill-seekers, team builders, and competitive athletes. Book your lane, compete in leagues, and forge unforgettable memories.

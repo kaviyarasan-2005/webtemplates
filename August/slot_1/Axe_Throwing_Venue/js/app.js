@@ -29,8 +29,10 @@ const ThemeManager = (() => {
   }
 
   function updateIcons(theme) {
+    const sunSVG = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+    const moonSVG = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
     document.querySelectorAll('[data-theme-icon]').forEach(el => {
-      el.textContent = theme === 'dark' ? '' : '';
+      el.innerHTML = theme === 'dark' ? sunSVG : moonSVG;
       el.title = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
       el.setAttribute('aria-label', el.title);
     });
@@ -90,10 +92,32 @@ const NavbarManager = (() => {
 
     if (!navbar) return;
 
-    // Scroll effect
+    // Hide on scroll down, reveal on scroll up
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
     const handleScroll = () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 40);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const scrollingDown = currentScrollY > lastScrollY;
+
+          // Always show when near top
+          if (currentScrollY < 80) {
+            navbar.classList.remove('navbar--hidden');
+          } else if (scrollingDown) {
+            navbar.classList.add('navbar--hidden');
+          } else {
+            navbar.classList.remove('navbar--hidden');
+          }
+
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
@@ -131,6 +155,30 @@ const NavbarManager = (() => {
         mobileMenu.classList.remove('open');
         document.body.style.overflow = '';
       }
+      // Close dropdowns on outside click
+      document.querySelectorAll('.nav-dropdown.open').forEach(dd => {
+        if (!dd.contains(e.target)) {
+          dd.classList.remove('open');
+          dd.querySelector('.nav-dropdown__trigger')?.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Dropdown toggle
+    document.querySelectorAll('.nav-dropdown__trigger').forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const dropdown = trigger.closest('.nav-dropdown');
+        const isOpen = dropdown.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', isOpen);
+        // Close other dropdowns
+        document.querySelectorAll('.nav-dropdown').forEach(dd => {
+          if (dd !== dropdown) {
+            dd.classList.remove('open');
+            dd.querySelector('.nav-dropdown__trigger')?.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
     });
   }
 
