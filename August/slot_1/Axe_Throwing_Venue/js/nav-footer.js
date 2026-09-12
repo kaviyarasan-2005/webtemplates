@@ -207,13 +207,8 @@
         </div>
       </div>
 
-      <div class="footer__bottom">
+      <div class="footer__bottom" style="justify-content: center; text-align: center;">
         <p>&copy; <span id="footer-year"></span> Axe Forge Throwing Venue. All rights reserved.</p>
-        <nav class="footer__bottom-links" aria-label="Legal links">
-          <a href="#" class="footer__bottom-link">Privacy Policy</a>
-          <a href="#" class="footer__bottom-link">Terms of Service</a>
-          <a href="#" class="footer__bottom-link">Cookie Policy</a>
-        </nav>
       </div>
     </div>
 

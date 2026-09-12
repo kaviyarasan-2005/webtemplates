@@ -65,24 +65,17 @@
     .h2-price-feature svg{color:var(--clr-primary);flex-shrink:0;}
     /* ── TESTIMONIALS ── */
     .h2-testimonials{background:var(--clr-bg);padding:var(--sp-24) 0;}
-    .h2-testi-grid{columns:3;column-gap:var(--sp-5);margin-top:var(--sp-12);}
-    .h2-testi-card{break-inside:avoid;background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-lg);padding:var(--sp-6);margin-bottom:var(--sp-5);transition:all var(--transition-base);}
+    .h2-testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5);margin-top:var(--sp-12);}
+    .h2-testi-card{background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-lg);padding:var(--sp-6);transition:all var(--transition-base);display:flex;flex-direction:column;}
     .h2-testi-card:hover{border-color:var(--clr-primary);box-shadow:var(--shadow-md);}
     .h2-testi-stars{display:flex;gap:3px;margin-bottom:var(--sp-4);}
     .h2-testi-stars svg{color:#f59e0b;}
     .h2-testi-text{font-size:.9375rem;color:var(--clr-text-secondary);line-height:1.7;margin-bottom:var(--sp-5);font-style:italic;}
-    .h2-testi-author{display:flex;align-items:center;gap:var(--sp-3);}
+    .h2-testi-author{display:flex;align-items:center;gap:var(--sp-3);margin-top:auto;}
     .h2-testi-avatar{width:40px;height:40px;border-radius:50%;background:var(--clr-primary);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.1rem;color:white;flex-shrink:0;}
     .h2-testi-name{font-weight:700;font-size:.9rem;}
     .h2-testi-meta{font-size:.8rem;color:var(--clr-text-muted);}
-    /* ── GALLERY ── */
-    .h2-gallery{background:var(--clr-secondary);padding:var(--sp-24) 0;}
-    .h2-gallery-mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:240px 240px;gap:var(--sp-3);margin-top:var(--sp-12);}
-    .h2-gallery-cell{overflow:hidden;border-radius:var(--radius-lg);position:relative;cursor:zoom-in;}
-    .h2-gallery-cell img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease,filter .3s;filter:brightness(.75) saturate(.9);}
-    .h2-gallery-cell:hover img{transform:scale(1.06);filter:brightness(1) saturate(1.1);}
-    .h2-gallery-cell:nth-child(1){grid-column:span 2;grid-row:span 2;}
-    .h2-gallery-cell:nth-child(4){grid-column:span 2;}
+
     .h2-gallery-overlay{position:absolute;inset:0;background:rgba(200,64,27,0);transition:background .3s;display:flex;align-items:center;justify-content:center;}
     .h2-gallery-cell:hover .h2-gallery-overlay{background:rgba(200,64,27,.12);}
     /* ── FAQ ── */
@@ -120,7 +113,7 @@
       .h2-hero__left::after{display:none;}
       .h2-hero__right{height:50vw;}
       .h2-pricing-grid{grid-template-columns:1fr;}
-      .h2-testi-grid{columns:2;}
+      .h2-testi-grid{grid-template-columns:repeat(2,1fr);}
       .h2-gallery-mosaic{grid-template-columns:1fr 1fr;}
       .h2-gallery-cell:nth-child(1){grid-column:span 2;}
       .h2-faq-grid{grid-template-columns:1fr;}
@@ -129,7 +122,7 @@
     @media(max-width:639px){
       .h2-hero__left{padding:calc(var(--nav-height) + var(--sp-12)) var(--sp-5) var(--sp-10);}
       .h2-hero__stats{flex-wrap:wrap;gap:var(--sp-5);}
-      .h2-testi-grid{columns:1;}
+      .h2-testi-grid{grid-template-columns:1fr;}
       .h2-gallery-mosaic{grid-template-columns:1fr;}
       .h2-gallery-cell:nth-child(1),.h2-gallery-cell:nth-child(4){grid-column:span 1;}
     }
@@ -175,10 +168,10 @@
 <!-- EXPERIENCE STRIP -->
 <section class="h2-experience" id="experience" aria-labelledby="exp-heading">
   <div class="container">
-    <div class="section-header reveal">
+    <div class="section-header centered reveal">
       <span class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>What We Offer</span>
       <h2 id="exp-heading">The Full Axe Experience</h2>
-      <div class="divider"></div>
+      <div class="divider divider-center"></div>
     </div>
   </div>
   <div class="h2-exp-track">
@@ -218,6 +211,14 @@
       <p class="h2-exp-card__desc">Reserve an entire lane for your crew. No strangers, full privacy, and a dedicated coach just for you.</p>
       <span class="h2-exp-card__tag">2hr Min</span>
     </div>
+  </div>
+  <div class="h2-exp-nav" style="display: flex; justify-content: center; gap: var(--sp-4); margin-top: var(--sp-8);">
+    <button id="exp-prev" class="btn btn--secondary" style="width: 48px; height: 48px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;" aria-label="Scroll left">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <button id="exp-next" class="btn btn--secondary" style="width: 48px; height: 48px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;" aria-label="Scroll right">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
   </div>
 </section>
 
@@ -320,23 +321,6 @@
   </div>
 </section>
 
-<!-- GALLERY -->
-<section class="h2-gallery" id="gallery" aria-labelledby="gallery-heading">
-  <div class="container">
-    <div class="section-header centered reveal" style="text-align:center;">
-      <span class="section-label" style="margin-inline:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Gallery</span>
-      <h2 id="gallery-heading" style="color:white;margin-top:var(--sp-4);">Inside the Forge</h2>
-      <div class="divider divider-center"></div>
-    </div>
-    <div class="h2-gallery-mosaic reveal">
-      <div class="h2-gallery-cell"><img src="assets/images/hero-bg.jpg" alt="Axe thrower in full swing" loading="lazy"/><div class="h2-gallery-overlay"></div></div>
-      <div class="h2-gallery-cell"><img src="assets/images/events-hero.jpg" alt="Large group event" loading="lazy"/><div class="h2-gallery-overlay"></div></div>
-      <div class="h2-gallery-cell"><img src="assets/images/league-action.jpg" alt="League night" loading="lazy"/><div class="h2-gallery-overlay"></div></div>
-      <div class="h2-gallery-cell"><img src="assets/images/hero-bg.jpg" alt="Bullseye hit" loading="lazy" style="object-position:right center;"/><div class="h2-gallery-overlay"></div></div>
-      <div class="h2-gallery-cell"><img src="assets/images/events-hero.jpg" alt="Celebrating throwers" loading="lazy" style="object-position:center top;"/><div class="h2-gallery-overlay"></div></div>
-    </div>
-  </div>
-</section>
 
 <!-- FAQ -->
 <section class="h2-faq" id="faq" aria-labelledby="faq-heading">
@@ -360,10 +344,10 @@
 <!-- LOCATION -->
 <section class="h2-location" id="location" aria-labelledby="location-heading">
   <div class="container">
-    <div class="section-header reveal">
-      <span class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Find Us</span>
+    <div class="section-header centered reveal" style="text-align:center;">
+      <span class="section-label" style="margin-inline:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Find Us</span>
       <h2 id="location-heading" style="color:white;margin-top:var(--sp-4);">Visit the Forge</h2>
-      <div class="divider"></div>
+      <div class="divider divider-center"></div>
     </div>
     <div class="h2-location-grid">
       <div class="h2-map-frame reveal">
@@ -402,6 +386,20 @@
     const item = el.closest('.h2-faq-item');
     const isOpen = item.classList.toggle('open');
     el.setAttribute('aria-expanded', isOpen);
+  }
+
+  // Experience Strip Scrolling
+  const expTrack = document.querySelector('.h2-exp-track');
+  const expPrev = document.getElementById('exp-prev');
+  const expNext = document.getElementById('exp-next');
+  if (expTrack && expPrev && expNext) {
+    const scrollAmount = 300;
+    expPrev.addEventListener('click', () => {
+      expTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+    expNext.addEventListener('click', () => {
+      expTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
   }
 </script>
 <script src="js/app.js"></script>
