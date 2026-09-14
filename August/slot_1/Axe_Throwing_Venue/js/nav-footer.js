@@ -113,6 +113,22 @@
         </div>
       </li>
     </ul>
+
+    <!-- Injected Mobile Controls -->
+    <div class="mobile-menu__controls" style="display:flex; flex-direction:column; gap:var(--sp-4); margin-top:var(--sp-6); padding-top:var(--sp-6); border-top:1px solid rgba(255,255,255,0.1);">
+      <div style="display:flex; gap:var(--sp-4);">
+        <button class="ctrl-btn" data-theme-toggle data-theme-icon title="Toggle Theme" aria-label="Toggle Theme" style="flex:1; justify-content:center; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:var(--radius-md); padding:var(--sp-2);">
+          Theme
+        </button>
+        <button class="ctrl-btn" data-rtl-toggle data-dir-label title="Toggle RTL" aria-label="Toggle RTL/LTR" style="flex:1; justify-content:center; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:var(--radius-md); padding:var(--sp-2);">
+          RTL
+        </button>
+      </div>
+      <a href="${root}pages/login.html" class="btn btn--primary" aria-label="Login" style="width:100%; justify-content:center;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        Login
+      </a>
+    </div>
   </div>`;
 
   /* ─── FOOTER HTML ─────────────────────────────────────────── */

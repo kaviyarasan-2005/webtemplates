@@ -71,14 +71,22 @@
     .venue-floor-wrap { background: var(--clr-surface); border-radius: var(--radius-xl); border: 1px solid var(--clr-border); overflow: hidden; }
     .venue-floor-map { width: 100%; background: var(--clr-surface-alt); position: relative; min-height: 420px; display: flex; align-items: center; justify-content: center; }
 
+    .event-features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-4); }
+    .event-upgrades-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--sp-4); }
+    .event-details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--sp-4); margin-top: var(--sp-6); margin-bottom: var(--sp-8); }
+    .venue-map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-8); }
+    .venue-stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); }
+
     @media (max-width: 1023px) {
       .benefits-grid { grid-template-columns: repeat(2, 1fr); }
       .addons-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 639px) {
-      .benefits-grid { grid-template-columns: 1fr; }
-      .menu-grid { grid-template-columns: 1fr; }
-      .addons-grid { grid-template-columns: 1fr 1fr; }
+      .benefits-grid { grid-template-columns: minmax(0, 1fr); }
+      .menu-grid { grid-template-columns: minmax(0, 1fr); }
+      .addons-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .venue-map-grid { grid-template-columns: minmax(0, 1fr); gap: var(--sp-6); }
+      .event-features-grid, .event-upgrades-grid, .event-details-grid { grid-template-columns: minmax(0, 1fr); }
     }
   </style>
 </head>
@@ -439,7 +447,7 @@
 
     <div class="premium-form-card reveal">
       <form data-form-validate action="#" method="post" aria-label="Corporate event inquiry form" novalidate style="position:relative;z-index:1;">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:var(--sp-4);">
+        <div class="event-features-grid">
           <div class="form-group">
             <label for="inq-name" class="form-label">Your Name <span class="required" aria-label="required">*</span></label>
             <input type="text" id="inq-name" class="form-input" placeholder="Jane Smith" data-validate="required" autocomplete="name" aria-required="true" />
@@ -452,7 +460,7 @@
           </div>
         </div>
         
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:var(--sp-4);">
+        <div class="event-features-grid">
           <div class="form-group">
             <label for="inq-email" class="form-label">Email <span class="required" aria-label="required">*</span></label>
             <div class="input-icon-wrap has-left">
@@ -471,7 +479,7 @@
           </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:var(--sp-4);">
+        <div class="event-upgrades-grid">
           <div class="form-group">
             <label for="inq-date" class="form-label">Preferred Date <span class="required" aria-label="required">*</span></label>
             <input type="date" id="inq-date" class="form-input" data-validate="required" aria-required="true" />
@@ -507,7 +515,7 @@
           <textarea id="inq-message" class="form-textarea" placeholder="Any special requirements, themes, dietary restrictions, or questions…" rows="4"></textarea>
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:var(--sp-4);margin-top:var(--sp-6);margin-bottom:var(--sp-8);">
+        <div class="event-details-grid">
           <div class="form-check">
             <input type="checkbox" id="inq-catering" name="catering" />
             <label for="inq-catering" class="form-check__label">Interested in catering</label>
@@ -527,7 +535,7 @@
         </div>
 
         <button type="submit" class="btn btn--xl btn--full btn--submit" aria-label="Submit event inquiry">
-          Request Custom Quote
+          Custom Quote
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
       </form>
@@ -637,7 +645,7 @@
       <p class="text-lead">Located in the heart of Toronto's Industrial District. Ample parking, accessible entrance, and steps from public transit.</p>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);" class="reveal">
+    <div class="venue-map-grid reveal">
       <!-- Map Placeholder -->
       <div class="map-container" aria-label="Axe Forge location map">
         <div class="map-placeholder">
@@ -653,7 +661,7 @@
       <div style="display:flex;flex-direction:column;gap:var(--sp-5);">
         <div style="background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-lg);padding:var(--sp-6);">
           <h3 style="font-weight:700;margin-bottom:var(--sp-4);">Venue Capacity</h3>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);">
+          <div class="venue-stats-grid">
             <div style="text-align:center;padding:var(--sp-4);background:var(--clr-surface-alt);border-radius:var(--radius-md);">
               <p style="font-family:var(--font-display);font-size:2.5rem;color:var(--clr-primary);line-height:1;">10</p>
               <p style="font-size:0.8125rem;color:var(--clr-text-muted);margin-top:var(--sp-1);">Throwing Lanes</p>
