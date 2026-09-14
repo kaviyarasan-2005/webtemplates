@@ -18,12 +18,31 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      background: linear-gradient(to bottom, rgba(8, 11, 20, 0.2), var(--clr-bg)), url('src/assets/images/hero-bg-1.jpg') center/cover;
+      background: linear-gradient(to right, rgba(8, 11, 20, 0.9) 0%, rgba(8, 11, 20, 0.4) 100%), url('src/assets/images/hero-bg-1.jpg') center/cover;
       position: relative;
     }
+    
+    /* Force text to remain light in the hero section even in light mode */
+    [data-theme="light"] .hero-home1 h1 {
+      color: #ffffff;
+    }
+    [data-theme="light"] .hero-home1 p {
+      color: #e5e7eb;
+    }
+    
     .hero-content {
       position: relative;
       z-index: 2;
+    }
+
+    /* Smooth fade into the next section regardless of theme */
+    .hero-home1::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 150px;
+      background: linear-gradient(to bottom, transparent, var(--clr-bg));
+      z-index: 1;
     }
   </style>
   <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon.svg">
@@ -96,69 +115,17 @@
 
   <main>
     <!-- Section 1: Hero -->
-    <style>
-      @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-        40% { transform: translateY(-10px) translateX(-50%); }
-        60% { transform: translateY(-5px) translateX(-50%); }
-      }
-    </style>
-    <section class="hero-home1" style="position: relative;">
-      <div class="container hero-content animate-on-scroll grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <!-- Text Content -->
-        <div style="max-width: 650px;">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="badge" style="background: rgba(34, 211, 238, 0.1); color: var(--clr-secondary); border: 1px solid var(--clr-secondary);">
-              <i class="ph-fill ph-sparkle"></i> Nexus Arcade v2.0
-            </span>
-          </div>
-          <h1 class="mt-2" style="font-size: clamp(3rem, 6vw, 4.5rem); line-height: 1.1;">
-            Step Beyond <br>
-            <span class="text-gradient" style="text-shadow: 0 0 40px rgba(139,92,246,0.3);">Reality.</span>
-          </h1>
-          <p class="text-large mt-6 mb-8" style="color: var(--clr-text-muted); font-size: 1.25rem;">
-            Experience the most immersive virtual reality pods in the city. Leave the real world behind and dive into heart-pounding action or serene exploration.
-          </p>
-          <div class="flex gap-4">
-            <a href="dashboard.html" class="btn btn-primary flex items-center gap-2">Book Your Pod <i class="ph ph-arrow-right"></i></a>
-            <a href="games.html" class="btn btn-secondary flex items-center gap-2"><i class="ph ph-game-controller"></i> Browse Games</a>
+    <section class="hero-home1">
+      <div class="container hero-content animate-on-scroll">
+        <div style="max-width: 600px;">
+          <span class="badge mb-4">Next-Gen VR Lounge</span>
+          <h1 class="mt-2">Step Beyond <br><span class="text-gradient">Reality.</span></h1>
+          <p class="text-large">Experience the most immersive virtual reality pods in the city. From heart-pounding action to serene exploration.</p>
+          <div class="flex gap-4 mt-6">
+            <a href="dashboard.html" class="btn btn-primary">Book Your Pod</a>
+            <a href="games.html" class="btn btn-secondary">Browse Games</a>
           </div>
         </div>
-
-        <!-- Floating Glassmorphism Cards -->
-        <div class="hidden lg:flex flex-col gap-6" style="align-items: flex-end; position: relative;">
-          <!-- Card 1 -->
-          <div class="card" style="backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); width: 280px; transform: translateX(-40px); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-            <div class="flex items-center gap-4">
-              <div class="btn-icon" style="background: rgba(139, 92, 246, 0.2); color: var(--clr-primary);">
-                <i class="ph-fill ph-users-three" style="font-size: 1.5rem;"></i>
-              </div>
-              <div>
-                <div class="text-large" style="font-weight: 800;">10,000+</div>
-                <div class="text-small text-muted">Happy Gamers</div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Card 2 -->
-          <div class="card" style="backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-            <div class="flex items-center gap-4">
-              <div class="btn-icon" style="background: rgba(34, 211, 238, 0.2); color: var(--clr-secondary);">
-                <i class="ph-fill ph-star" style="font-size: 1.5rem;"></i>
-              </div>
-              <div>
-                <div class="text-large" style="font-weight: 800;">4.9 / 5.0</div>
-                <div class="text-small text-muted">Average Rating</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Scroll Indicator -->
-      <div style="position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; opacity: 0.7; animation: bounce 2s infinite;">
-        <span class="text-small mb-2" style="letter-spacing: 2px; text-transform: uppercase;">Scroll</span>
-        <i class="ph ph-caret-down" style="font-size: 1.5rem;"></i>
       </div>
     </section>
 
