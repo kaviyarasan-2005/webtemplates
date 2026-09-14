@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus VR | Login</title>
+  <meta name="description" content="Login to your Nexus VR account to manage bookings, view stats, and buy bundles.">
+  
+  <link rel="stylesheet" href="src/css/main.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    .split-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+    .split-image {
+      display: none;
+      flex: 1;
+      background: url('src/assets/images/login-bg.jpg') center/cover;
+      position: relative;
+    }
+    @media(min-width: 1024px) {
+      .split-image { display: block; }
+    }
+    .split-form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-8);
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid var(--clr-surface-alt);
+      padding: var(--space-4);
+      color: var(--clr-text-muted);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all var(--transition-fast);
+    }
+    .tab-btn.active {
+      color: var(--clr-primary);
+      border-bottom-color: var(--clr-primary);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon.svg">
+</head>
+<body>
+
+  <!-- Navbar (Fixed) -->
+  <nav class="navbar">
+    <div class="container flex justify-between items-center">
+      <a href="home1.html" class="flex items-center gap-2" aria-label="Nexus VR Home">
+        <i class="ph ph-hexagon text-gradient" style="font-size: 2rem;"></i>
+        <span class="text-large" style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+      </a>
+
+      <div class="nav-links items-center">
+        <div class="dropdown">
+          <a href="#" class="nav-link flex items-center gap-1">Home <i class="ph ph-caret-down"></i></a>
+          <div class="dropdown-menu">
+            <a href="home1.html" class="dropdown-item">Home 1 (Immersive)</a>
+            <a href="home2.html" class="dropdown-item">Home 2 (Dynamic)</a>
+          </div>
+        </div>
+        <a href="games.html" class="nav-link">Games Library</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="groups.html" class="nav-link">Parties & Groups</a>
+        <div class="dropdown">
+          <a href="#" class="nav-link flex items-center gap-1">Dashboards <i class="ph ph-caret-down"></i></a>
+          <div class="dropdown-menu">
+            <a href="dashboard.html" class="dropdown-item">Player Dashboard</a>
+            <a href="admin.html" class="dropdown-item">Admin Dashboard</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" class="btn-icon hidden lg:flex items-center justify-center" aria-label="Toggle Theme">
+          <i class="ph ph-moon"></i>
+        </button>
+        <button id="rtl-toggle" class="badge" style="border: none; cursor: pointer;">RTL</button>
+        <a href="login.html" class="nav-link hidden lg:block" style="color: var(--clr-primary);">Login</a>
+        <a href="dashboard.html" class="btn btn-primary hidden lg:flex">Book Now</a>
+        <button id="mobile-menu-btn" class="btn-icon lg:hidden flex items-center justify-center">
+          <i class="ph ph-list" style="font-size: 1.5rem;"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu flex-col gap-6">
+    <a href="home1.html" class="nav-link text-large">Home 1</a>
+    <a href="home2.html" class="nav-link text-large">Home 2</a>
+    <a href="games.html" class="nav-link text-large">Games Library</a>
+    <a href="pricing.html" class="nav-link text-large">Pricing</a>
+    <a href="groups.html" class="nav-link text-large">Parties & Groups</a>
+    <a href="dashboard.html" class="nav-link text-large">Player Dashboard</a>
+    <a href="admin.html" class="nav-link text-large">Admin Dashboard</a>
+    <hr style="border-color: rgba(255,255,255,0.1);">
+    <a href="login.html" class="nav-link text-large" style="color: var(--clr-primary);">Login</a>
+    <a href="dashboard.html" class="btn btn-primary justify-center">Book Now</a>
+  </div>
+
+  <div class="split-layout">
+    <div class="split-image">
+      <div style="position: absolute; bottom: var(--space-8); left: var(--space-8); right: var(--space-8); background: rgba(8,11,20,0.8); padding: var(--space-6); border-radius: var(--radius-md); backdrop-filter: blur(10px);">
+        <h3 class="mb-2">"Nexus VR completely changed how I look at gaming."</h3>
+        <p class="m-0 text-muted">- IGN Review</p>
+      </div>
+    </div>
+    
+    <div class="split-form" style="padding-top: 100px;"> <!-- Offset for fixed nav -->
+      <div class="text-center mb-8">
+        <h2 class="mb-2">Welcome Back</h2>
+        <p>Access your dashboard, manage bookings, and view stats.</p>
+      </div>
+      
+      <div class="card p-0 mb-6">
+        <div class="flex">
+          <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+          <button class="tab-btn" onclick="switchTab('register')">Register</button>
+        </div>
+        
+        <div class="p-6">
+          <!-- Login Form -->
+          <div id="login" class="tab-content active">
+            <form data-validate action="dashboard.html">
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" required placeholder="name@example.com">
+                <div class="form-error"></div>
+              </div>
+              <div class="form-group mb-2">
+                <div class="flex justify-between items-center mb-2">
+                  <label class="form-label m-0">Password</label>
+                  <a href="#" class="text-small text-primary">Forgot Password?</a>
+                </div>
+                <input type="password" class="form-input" required placeholder="••••••••">
+                <div class="form-error"></div>
+              </div>
+              <button type="submit" class="btn btn-primary w-full mt-4" style="width: 100%;">Sign In</button>
+            </form>
+          </div>
+          
+          <!-- Register Form -->
+          <div id="register" class="tab-content">
+            <form data-validate action="dashboard.html">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" required placeholder="John Doe">
+                <div class="form-error"></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" required placeholder="name@example.com">
+                <div class="form-error"></div>
+              </div>
+              <div class="form-group mb-2">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" required placeholder="••••••••">
+                <div class="form-error"></div>
+              </div>
+              <p class="text-small text-muted mt-2">By registering, you agree to our Terms of Service and Privacy Policy.</p>
+              <button type="submit" class="btn btn-secondary w-full mt-4" style="width: 100%;">Create Account</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center text-muted mb-4">Or continue with</div>
+      <div class="grid grid-cols-2 gap-4">
+        <button class="btn" style="background: var(--clr-surface-alt); color: var(--clr-text);">
+          <i class="ph ph-google-logo text-large"></i> Google
+        </button>
+        <button class="btn" style="background: var(--clr-surface-alt); color: var(--clr-text);">
+          <i class="ph ph-discord-logo text-large" style="color: #5865F2;"></i> Discord
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      event.target.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+  </script>
+  <script src="src/js/main.js"></script>
+  <script src="src/js/forms.js"></script>
+</body>
+</html>
+
