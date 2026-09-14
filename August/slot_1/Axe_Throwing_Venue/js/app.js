@@ -146,6 +146,28 @@ const NavbarManager = (() => {
           document.body.style.overflow = '';
         });
       });
+
+      // Mobile accordion logic
+      const mobileNavGroups = mobileMenu.querySelectorAll('.mobile-nav-group');
+      mobileNavGroups.forEach(group => {
+        const btn = group.querySelector('.mobile-nav-group__btn');
+        if (btn) {
+          btn.addEventListener('click', () => {
+            const isOpen = group.classList.contains('is-open');
+            // Close all others
+            mobileNavGroups.forEach(g => {
+              g.classList.remove('is-open');
+              const b = g.querySelector('.mobile-nav-group__btn');
+              if(b) b.setAttribute('aria-expanded', 'false');
+            });
+            // Toggle current
+            if (!isOpen) {
+              group.classList.add('is-open');
+              btn.setAttribute('aria-expanded', 'true');
+            }
+          });
+        }
+      });
     }
 
     // Click outside

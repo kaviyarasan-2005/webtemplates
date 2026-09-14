@@ -423,15 +423,41 @@
   gap: 2px;
 }
 
-.mobile-nav-group__label {
-  font-size: 0.75rem;
+.mobile-nav-group__btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 1.125rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--clr-primary);
-  padding: var(--sp-2) var(--sp-4);
+  color: var(--clr-text-primary);
+  padding: var(--sp-3) var(--sp-4);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
 }
 
+.mobile-nav-group__btn:hover { background: rgba(255, 255, 255, 0.05); }
+[data-theme="light"] .mobile-nav-group__btn:hover { background: rgba(0, 0, 0, 0.05); }
+
+.mobile-nav-group__btn svg { transition: transform var(--transition-fast); }
+.mobile-nav-group.is-open .mobile-nav-group__btn svg { transform: rotate(180deg); }
+.mobile-nav-group.is-open .mobile-nav-group__btn { color: var(--clr-primary); }
+
+.mobile-nav-group__content {
+  display: none;
+  flex-direction: column;
+  padding-left: var(--sp-4);
+  gap: 2px;
+  margin-top: 2px;
+}
+.mobile-nav-group.is-open .mobile-nav-group__content {
+  display: flex;
+}
 
 /* Page top offset */
 .page-top {
@@ -811,8 +837,8 @@
 
 @media (max-width: 639px) {
   .navbar__links { display: none; }
-  .hamburger { display: flex; }
-  .navbar__controls { display: none; }
+  .hamburger { display: flex; margin-inline-start: var(--sp-2); }
+  .navbar__controls { margin-inline-start: auto; }
   .footer__top { grid-template-columns: 1fr; gap: var(--sp-8); }
   .footer__bottom { flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
   .split-section { grid-template-columns: 1fr; gap: var(--sp-8); }
@@ -826,7 +852,8 @@
 
 @media (min-width: 640px) and (max-width: 1023px) {
   .navbar__links { display: none; }
-  .hamburger { display: flex; }
+  .hamburger { display: flex; margin-inline-start: var(--sp-2); }
+  .navbar__controls { margin-inline-start: auto; }
   .split-section { grid-template-columns: 1fr; gap: var(--sp-10); }
 }
 

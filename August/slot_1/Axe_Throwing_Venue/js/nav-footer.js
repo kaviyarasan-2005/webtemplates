@@ -90,25 +90,29 @@
   <div class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
     <ul role="list">
       <li class="mobile-nav-group">
-        <span class="mobile-nav-group__label">Home</span>
-        <a href="${root}index.html" class="nav-link">↳ Home 1</a>
-        <a href="${root}index2.html" class="nav-link">↳ Home 2</a>
+        <button class="mobile-nav-group__btn" aria-expanded="false">
+          Home
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="mobile-nav-group__content">
+          <a href="${root}index.html" class="nav-link">Home 1</a>
+          <a href="${root}index2.html" class="nav-link">Home 2</a>
+        </div>
       </li>
       <li><a href="${root}pages/book-a-lane.html" class="nav-link">Book a Lane</a></li>
       <li><a href="${root}pages/leagues.html" class="nav-link">Leagues</a></li>
       <li><a href="${root}pages/events.html" class="nav-link">Events</a></li>
       <li class="mobile-nav-group">
-        <span class="mobile-nav-group__label">Dashboard</span>
-        <a href="${root}pages/dashboard.html" class="nav-link">↳ User</a>
-        <a href="${root}pages/admin.html" class="nav-link">↳ Admin</a>
+        <button class="mobile-nav-group__btn" aria-expanded="false">
+          Dashboard
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="mobile-nav-group__content">
+          <a href="${root}pages/dashboard.html" class="nav-link">User</a>
+          <a href="${root}pages/admin.html" class="nav-link">Admin</a>
+        </div>
       </li>
-      <li><a href="${root}pages/login.html" class="nav-link">Login</a></li>
     </ul>
-    <div class="mobile-menu__controls">
-      <button class="ctrl-btn" data-theme-toggle data-theme-icon title="Toggle Theme" aria-label="Toggle Theme">
-      </button>
-      <button class="ctrl-btn" data-rtl-toggle data-dir-label title="Toggle RTL/LTR" aria-label="Toggle RTL/LTR">RTL</button>
-    </div>
   </div>`;
 
   /* ─── FOOTER HTML ─────────────────────────────────────────── */

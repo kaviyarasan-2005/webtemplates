@@ -193,12 +193,14 @@
 
     @media (max-width: 1023px) {
       .dashboard-layout { display: block; }
-      .dash-sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--clr-border); padding: var(--sp-4) 0; }
+      .dash-sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--clr-border); padding: var(--sp-4); display: grid; grid-template-columns: 1fr auto; grid-template-areas: "logo logout" "nav nav"; gap: var(--sp-4); align-items: center; }
+      .dash-logo-wrap { grid-area: logo; padding: 0 !important; }
       .dash-user { display: none; }
-      .dash-nav { flex-direction: row; overflow-x: auto; padding-bottom: var(--sp-2); scrollbar-width: none; }
+      .dash-nav { grid-area: nav; flex-direction: row; overflow-x: auto; padding-bottom: 0; margin-inline: calc(var(--sp-4) * -1); padding-inline: var(--sp-4); scrollbar-width: none; }
       .dash-nav::-webkit-scrollbar { display: none; }
       .dash-nav-link { white-space: nowrap; width: auto; }
-      .dash-logout { display: none; }
+      .dash-logout { grid-area: logout; margin-top: 0; display: block; }
+      .dash-logout .btn { padding: var(--sp-2) var(--sp-4); font-size: 0.8125rem; width: auto; }
       .dash-main { padding: var(--sp-4); }
     }
   </style>
@@ -211,7 +213,7 @@
        SECTION 1: SIDEBAR
        ================================================================ -->
   <aside class="dash-sidebar" aria-label="Admin navigation">
-    <div style="padding:0 var(--sp-6) var(--sp-6); display:flex; align-items:center; gap:var(--sp-3);">
+    <div class="dash-logo-wrap" style="padding:0 var(--sp-6) var(--sp-6); display:flex; align-items:center; gap:var(--sp-3);">
       <div style="width:36px;height:36px;background:var(--clr-primary);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(200,64,27,0.3);">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9"/><path d="M15 13 9 7l4-4 6 6h3a8 8 0 0 1-7 7z"/></svg>
       </div>
