@@ -18,10 +18,37 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      background: linear-gradient(to right, rgba(8, 11, 20, 0.9) 0%, rgba(8, 11, 20, 0.4) 100%), url('src/assets/images/hero-bg-1.jpg') center/cover;
+      background: linear-gradient(135deg, rgba(18, 24, 40, 0.95) 0%, rgba(8, 11, 20, 0.8) 100%), url('src/assets/images/hero-bg-1.jpg') center/cover;
       position: relative;
+      overflow: hidden;
     }
     
+    .hero-home1::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    .hero-home1::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      right: -10%;
+      width: 40vw;
+      height: 40vw;
+      background: radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
     /* Force text to remain light in the hero section even in light mode */
     [data-theme="light"] .hero-home1 h1 {
       color: #ffffff;
@@ -33,6 +60,51 @@
     .hero-content {
       position: relative;
       z-index: 2;
+    }
+
+    .hero-badge-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      backdrop-filter: blur(10px);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .hero-badge-container i {
+      color: var(--clr-secondary);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.6; transform: scale(0.95); }
+      50% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 0.6; transform: scale(0.95); }
+    }
+    
+    .glass-card-hero {
+      background: rgba(18, 24, 40, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 4rem 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .glass-card-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
     }
   </style>
   <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon.svg">
@@ -107,13 +179,16 @@
     <!-- Section 1: Hero -->
     <section class="hero-home1" style="text-align: center; justify-content: center;">
       <div class="container hero-content animate-on-scroll" style="display: flex; justify-content: center;">
-        <div style="max-width: 700px;">
-          <span class="badge mb-4">Next-Gen VR Lounge</span>
-          <h1 class="mt-2">Step Beyond <br><span class="text-gradient">Reality.</span></h1>
-          <p class="text-large">Experience the most immersive virtual reality pods in the city. From heart-pounding action to serene exploration.</p>
-          <div class="flex justify-center gap-4 mt-6">
-            <a href="dashboard.html" class="btn btn-primary">Book Your Pod</a>
-            <a href="games.html" class="btn btn-secondary">Browse Games</a>
+        <div class="glass-card-hero" style="max-width: 800px; transform: translateY(5%); width: 100%;">
+          <div class="hero-badge-container">
+            <i class="ph-fill ph-sparkle"></i>
+            <span class="text-small" style="font-weight: 600; letter-spacing: 0.5px; color: #e5e7eb;">NEXT-GEN VR LOUNGE</span>
+          </div>
+          <h1 class="mt-2" style="font-size: clamp(3rem, 5vw, 5rem); line-height: 1.1; margin-bottom: 1.5rem;">Step Beyond <br><span class="text-gradient">Reality.</span></h1>
+          <p class="text-large" style="color: #9CA3AF; margin-bottom: 2.5rem; max-width: 600px; margin-inline: auto;">Experience the most immersive virtual reality pods in the city. From heart-pounding action to serene exploration, your new reality awaits.</p>
+          <div class="flex justify-center gap-4 mt-6 flex-wrap">
+            <a href="dashboard.html" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem; box-shadow: var(--shadow-glow);">Book Your Pod <i class="ph ph-arrow-right"></i></a>
+            <a href="games.html" class="btn btn-secondary" style="padding: 1rem 2rem; font-size: 1.1rem; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);">Browse Games</a>
           </div>
         </div>
       </div>
