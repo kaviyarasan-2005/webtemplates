@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products — Trophies, Plaques, Medals & Badges | GoldCrest Engravings</title>
+  <meta name="description" content="Browse GoldCrest Engravings' full product catalog — crystal and metal trophies, recognition plaques, sports medals, and professional name badges. Filter by category and order online." />
+  <link rel="canonical" href="products.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/nav.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/theme.js"></script>
+  <script src="js/rtl.js"></script>
+
+  <style>
+    /* Products page specific */
+    .products-hero {
+      background: linear-gradient(135deg, #1A1508 0%, #252010 50%, #1A1508 100%);
+      padding-block: var(--space-24);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .products-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(232,211,154,0.08) 0%, transparent 60%);
+    }
+    .products-hero__content { position: relative; z-index: 1; }
+
+    /* Product grid with filter */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      transition: all var(--transition-base);
+    }
+    .product-grid [data-category] {
+      transition: opacity var(--transition-base), transform var(--transition-base);
+    }
+    .product-grid [data-category].visible { opacity: 1; }
+
+    @media (max-width: 1280px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px)  { .product-grid { grid-template-columns: 1fr; } }
+
+    /* Featured Collection */
+    .featured-collection {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: var(--space-5);
+    }
+    .featured-collection .product-card:first-child .product-card__img-wrap { aspect-ratio: 4/5; }
+    @media (max-width: 1024px) { .featured-collection { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px)  { .featured-collection { grid-template-columns: 1fr; } }
+
+    /* Material Comparison Table */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .compare-table th {
+      background: var(--bg-dark-section);
+      color: var(--color-gold);
+      font-family: var(--font-accent);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: var(--space-4) var(--space-5);
+      text-align: start;
+    }
+    .compare-table td {
+      padding: var(--space-4) var(--space-5);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+    }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table tr:nth-child(even) td { background: var(--bg-surface-2); }
+    .compare-table td:first-child { font-weight: 700; color: var(--text-primary); }
+    .compare-dot { width: 10px; height: 10px; border-radius: var(--radius-full); display: inline-block; }
+    .compare-dot--yes { background: #4ade80; }
+    .compare-dot--no  { background: var(--border-color-2); }
+    .compare-dot--partial { background: var(--color-gold-dark); }
+
+    /* Custom CTA Banner */
+    .custom-cta {
+      background: linear-gradient(135deg, var(--color-gold-darker) 0%, var(--color-gold-dark) 50%, var(--color-gold) 100%);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-12) var(--space-10);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-8);
+      align-items: center;
+    }
+    .custom-cta__title { font-size: var(--text-3xl); font-weight: 900; color: var(--color-charcoal); margin-bottom: var(--space-2); }
+    .custom-cta__text { font-size: var(--text-base); color: rgba(37,37,37,0.75); line-height: 1.65; }
+    .custom-cta .btn--dark { background: var(--color-charcoal); color: var(--color-white); min-width: 200px; }
+    @media (max-width: 1024px) { .custom-cta { grid-template-columns: 1fr; } .custom-cta .btn { width: 100%; justify-content: center; } }
+    @media (max-width: 640px)  { .custom-cta { padding: var(--space-8) var(--space-6); } .custom-cta__title { font-size: var(--text-2xl); } }
+
+    /* Skeleton loading state */
+    .products-loading { display: none; }
+    .products-loading.active {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+    @media (max-width: 1280px) { .products-loading.active { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px)  { .products-loading.active { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- NAV -->
+<header class="site-header scrolled" id="site-header" role="banner">
+  <nav class="nav container" aria-label="Main navigation">
+    <a href="index.html" class="nav__brand" id="brand-logo" aria-label="GoldCrest Engravings — Home">
+      <div class="nav__brand-logo" aria-hidden="true"><i class="fa-solid fa-trophy"></i></div>
+      <div class="nav__brand-text">
+        <span class="nav__brand-name">GoldCrest <em>Engravings</em></span>
+        <span class="nav__brand-tagline">Crafted Excellence</span>
+      </div>
+    </a>
+    <ul class="nav__menu" id="nav-menu" role="menubar">
+      <li class="nav__item nav__item--dropdown" role="none">
+        <a href="#" class="nav__link nav__link--dropdown" role="menuitem" aria-haspopup="true" aria-expanded="false" id="home-menu-btn">
+          Home <i class="fa-solid fa-chevron-down nav__caret"></i>
+        </a>
+        <ul class="nav__dropdown" role="menu">
+          <li role="none"><a href="index.html" class="nav__dropdown-link" role="menuitem"><i class="fa-solid fa-star"></i> Home Classic</a></li>
+          <li role="none"><a href="home2.html" class="nav__dropdown-link" role="menuitem"><i class="fa-solid fa-gem"></i> Home Legacy</a></li>
+        </ul>
+      </li>
+      <li class="nav__item" role="none"><a href="products.html" class="nav__link active" role="menuitem" aria-current="page">Products</a></li>
+      <li class="nav__item" role="none"><a href="custom-engraving.html" class="nav__link" role="menuitem">Custom Engraving</a></li>
+      <li class="nav__item" role="none"><a href="bulk-orders.html" class="nav__link" role="menuitem">Bulk Orders</a></li>
+      <li class="nav__item" role="none"><a href="contact.html" class="nav__link" role="menuitem">Contact</a></li>
+    </ul>
+    <div class="nav__controls">
+      <button class="btn-icon" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false"><i class="fa-solid fa-moon" id="theme-icon"></i></button>
+      <button class="btn-icon" id="rtl-toggle" aria-label="Switch to RTL layout" aria-pressed="false">
+        <i class="fa-solid fa-arrows-left-right"></i><span class="rtl-label" id="rtl-label">RTL</span>
+      </button>
+      <a href="contact.html" class="btn btn--primary"><i class="fa-solid fa-pen-nib"></i> Get Quote</a>
+    </div>
+    <button class="nav__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+      <span class="hamburger__line"></span><span class="hamburger__line"></span><span class="hamburger__line"></span>
+    </button>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- SECTION 1: HERO -->
+  <section class="products-hero" aria-label="Products page hero">
+    <img src="images/products-hero.jpg" alt="Display of multiple award types including trophies, plaques and medals" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.25;" loading="eager" />
+    <div class="container" style="position:relative;z-index:1;">
+      <nav aria-label="Breadcrumb" class="breadcrumb" style="justify-content:center;">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb__sep" aria-hidden="true"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem"></i></span>
+        <span aria-current="page">Products</span>
+      </nav>
+      <span class="section-label hero-animate-1">Our Collection</span>
+      <h1 class="section-title section-title--light hero-animate-2" style="margin-bottom:var(--space-4);">
+        Award-Winning <em>Products</em>
+      </h1>
+      <p class="section-subtitle section-subtitle--light hero-animate-3">
+        Browse 163+ award designs across 4 categories. Every product is customizable with your text, logo, and engraving style.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION 2: FILTER + PRODUCT GRID -->
+  <section class="section" id="products-catalog" aria-labelledby="catalog-heading">
+    <div class="container">
+      <div class="section-header" data-reveal style="margin-bottom:var(--space-6);">
+        <span class="section-label">Browse by Category</span>
+        <h2 class="section-title" id="catalog-heading">Our <em>Full Catalog</em></h2>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar" role="group" aria-label="Filter products by category" data-reveal>
+        <button class="filter-pill active" data-filter="all" aria-pressed="true">
+          <i class="fa-solid fa-border-all"></i> All Products
+        </button>
+        <button class="filter-pill" data-filter="trophies" aria-pressed="false">
+          <i class="fa-solid fa-trophy"></i> Trophies
+        </button>
+        <button class="filter-pill" data-filter="plaques" aria-pressed="false">
+          <i class="fa-solid fa-rectangle-list"></i> Plaques
+        </button>
+        <button class="filter-pill" data-filter="medals" aria-pressed="false">
+          <i class="fa-solid fa-medal"></i> Medals
+        </button>
+        <button class="filter-pill" data-filter="badges" aria-pressed="false">
+          <i class="fa-solid fa-id-badge"></i> Name Badges
+        </button>
+      </div>
+
+      <!-- Skeleton (shown briefly on page load) -->
+      <div class="products-loading" id="products-skeleton" aria-hidden="true">
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text skeleton-text--short"></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text skeleton-text--short"></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text skeleton-text--short"></div></div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="product-grid" role="list" aria-label="Products list">
+
+        <!-- TROPHIES -->
+        <article class="product-card" data-category="trophies" role="listitem" data-reveal>
+          <div class="product-card__img-wrap">
+            <img src="images/prod-crystal-star.jpg" alt="Crystal star trophy with laser-engraved text base, 25cm height" class="product-card__img" loading="lazy" />
+            <span class="product-card__badge">Bestseller</span>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Trophies</span>
+            <h3 class="product-card__title">Crystal Star Trophy</h3>
+            <p class="product-card__desc">Optical crystal star design. Laser-engraved base plate. Available in 3 sizes.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$48</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="trophies" role="listitem" data-reveal data-reveal-delay="1">
+          <div class="product-card__img-wrap">
+            <img src="images/prod-pillar-trophy.jpg" alt="Tall marble-base column trophy with golden figure on top" class="product-card__img" loading="lazy" />
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Trophies</span>
+            <h3 class="product-card__title">Marble Pillar Trophy</h3>
+            <p class="product-card__desc">Solid marble base with brass column and customizable sports figure topper.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$75</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="trophies" role="listitem" data-reveal data-reveal-delay="2">
+          <div class="product-card__img-wrap">
+            <img src="images/prod-acrylic-color.jpg" alt="Acrylic award with full-color logo print and chrome base" class="product-card__img" loading="lazy" />
+            <span class="product-card__badge">New</span>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Trophies</span>
+            <h3 class="product-card__title">Acrylic Color Award</h3>
+            <p class="product-card__desc">Full-color UV printing on premium acrylic. Custom shapes available.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$32</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PLAQUES -->
+        <article class="product-card" data-category="plaques" role="listitem" data-reveal>
+          <div class="product-card__img-wrap">
+            <img src="images/prod-rosewood-plaque.jpg" alt="Rosewood plaque with brushed silver metal plate and engraved text" class="product-card__img" loading="lazy" />
+            <span class="product-card__badge">Popular</span>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Plaques</span>
+            <h3 class="product-card__title">Executive Rosewood Plaque</h3>
+            <p class="product-card__desc">Premium rosewood backing with brushed aluminum nameplate. Classic executive styling.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$35</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="plaques" role="listitem" data-reveal data-reveal-delay="1">
+          <div class="product-card__img-wrap">
+            <img src="images/prod-brass-plaque.jpg" alt="Solid brass wall plaque with ornate border and engraved organization name" class="product-card__img" loading="lazy" />
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Plaques</span>
+            <h3 class="product-card__title">Heritage Brass Plaque</h3>
+            <p class="product-card__desc">Cast brass plaques with ornate border designs. Lacquered for permanent outdoor display.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$89</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="plaques" role="listitem" data-reveal data-reveal-delay="2">
+          <div class="product-card__img-wrap">
+            <img src="images/prod-acrylic-plaque.jpg" alt="Modern clear acrylic floating plaque with printed color logo" class="product-card__img" loading="lazy" />
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Plaques</span>
+            <h3 class="product-card__title">Modern Acrylic Plaque</h3>
+            <p class="product-card__desc">Floating acrylic design with polished chrome standoffs. Contemporary and lightweight.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$42</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- MEDALS -->
+        <article class="product-card" data-category="medals" role="listitem" data-reveal>
+          <div class="product-card__img-wrap">
+            <img src="images/prod-sports-medal.jpg" alt="Heavy antique gold sports medal with custom ribbon in school colors" class="product-card__img" loading="lazy" />
+            <span class="product-card__badge">Top Rated</span>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Medals</span>
+            <h3 class="product-card__title">Championship Sports Medal</h3>
+            <p class="product-card__desc">65mm diameter zinc alloy. Antique finish. Custom ribbon in your organization's colors.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$12</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="medals" role="listitem" data-reveal data-reveal-delay="1">
+          <div class="product-card__img-wrap">
+            <img src="images/prod-academic-medal.jpg" alt="Academic achievement medal with graduation cap embossed design" class="product-card__img" loading="lazy" />
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Medals</span>
+            <h3 class="product-card__title">Academic Achievement Medal</h3>
+            <p class="product-card__desc">Designed for school award ceremonies. Graduation cap embossing with custom text reverse.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$9</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="medals" role="listitem" data-reveal data-reveal-delay="2">
+          <div class="product-card__img-wrap">
+            <img src="images/prod-finisher-medal.jpg" alt="Race finisher medal with full color enamel fill and custom year" class="product-card__img" loading="lazy" />
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Medals</span>
+            <h3 class="product-card__title">Event Finisher Medal</h3>
+            <p class="product-card__desc">Full-color soft enamel fill. Perfect for marathons, cycling events, and community races.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$14</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- BADGES -->
+        <article class="product-card" data-category="badges" role="listitem" data-reveal>
+          <div class="product-card__img-wrap">
+            <img src="images/prod-brass-badge.jpg" alt="Engraved brass name badge with magnetic backing and logo area" class="product-card__img" loading="lazy" />
+            <span class="product-card__badge">Classic</span>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Name Badges</span>
+            <h3 class="product-card__title">Professional Brass Badge</h3>
+            <p class="product-card__desc">Engraved brass with logo area. Magnetic or pin backing options. Durable and elegant.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$8</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="badges" role="listitem" data-reveal data-reveal-delay="1">
+          <div class="product-card__img-wrap">
+            <img src="images/prod-plastic-badge.jpg" alt="Full color printed plastic name badge with clip backing on lanyard" class="product-card__img" loading="lazy" />
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Name Badges</span>
+            <h3 class="product-card__title">Color-Printed Event Badge</h3>
+            <p class="product-card__desc">Full-color sublimation on durable plastic. Ideal for conferences and large events.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$4</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="badges" role="listitem" data-reveal data-reveal-delay="2">
+          <div class="product-card__img-wrap">
+            <img src="images/prod-anodized-badge.jpg" alt="Anodized aluminum name badge with black laser engraving" class="product-card__img" loading="lazy" />
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Name Badges</span>
+            <h3 class="product-card__title">Anodized Aluminum Badge</h3>
+            <p class="product-card__desc">High-contrast black laser engraving on anodized aluminum. Lightweight and durable.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$6</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: FEATURED COLLECTION -->
+  <section class="section section--surface" id="featured-collection" aria-labelledby="featured-col-heading">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-label">Editor's Pick</span>
+        <div class="ornament"><span class="ornament__line"></span><span class="ornament__diamond"></span><span class="ornament__line ornament__line--rev"></span></div>
+        <h2 class="section-title" id="featured-col-heading">Featured <em>Collection</em></h2>
+        <p class="section-subtitle">Our team's curated selection of the most requested designs this season.</p>
+      </div>
+
+      <div class="featured-collection">
+        <article class="product-card" data-category="trophies" role="listitem" data-reveal>
+          <div class="product-card__img-wrap" style="aspect-ratio:4/5;">
+            <img src="images/featured-prestige-trophy.jpg" alt="Prestige Series crystal tower trophy with gold base and internal 3D engraving" class="product-card__img" loading="lazy" />
+            <span class="product-card__badge">Prestige Series</span>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Trophies — Flagship</span>
+            <h3 class="product-card__title">Crystal Tower Trophy</h3>
+            <p class="product-card__desc">Our most prestigious award. 40cm optical crystal with 3D internal engraving and illuminated LED base. For your most special recognition.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$185</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="plaques" role="listitem" data-reveal data-reveal-delay="1">
+          <div class="product-card__img-wrap">
+            <img src="images/featured-century-plaque.jpg" alt="Century series solid walnut plaque with gold embossed border and engraved text" class="product-card__img" loading="lazy" />
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Plaques — Premium</span>
+            <h3 class="product-card__title">Century Walnut Plaque</h3>
+            <p class="product-card__desc">Solid walnut with gold embossed border. The definitive retirement or long-service award.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$95</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="medals" role="listitem" data-reveal data-reveal-delay="2">
+          <div class="product-card__img-wrap">
+            <img src="images/featured-grand-medal.jpg" alt="Grand Prix medal with colored enamel and heavy antique bronze finish" class="product-card__img" loading="lazy" />
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Medals — Premium</span>
+            <h3 class="product-card__title">Grand Prix Medal</h3>
+            <p class="product-card__desc">80mm heavyweight medal with full-color enamel. For the grandest of competitions.</p>
+            <div class="product-card__footer">
+              <div><span class="product-card__price-from">From</span><span class="product-card__price">$28</span></div>
+              <a href="contact.html" class="btn btn--primary btn--sm">Order</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: MATERIAL GUIDE TABLE -->
+  <section class="section" id="material-guide" aria-labelledby="material-guide-heading">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-label">Buying Guide</span>
+        <div class="ornament"><span class="ornament__line"></span><span class="ornament__diamond"></span><span class="ornament__line ornament__line--rev"></span></div>
+        <h2 class="section-title" id="material-guide-heading">Choosing the Right <em>Material</em></h2>
+        <p class="section-subtitle">Compare our material options to find the best fit for your award's purpose, budget, and setting.</p>
+      </div>
+
+      <div style="overflow-x:auto;" data-reveal>
+        <table class="compare-table" role="table" aria-label="Material comparison guide">
+          <thead>
+            <tr>
+              <th scope="col">Material</th>
+              <th scope="col">Best For</th>
+              <th scope="col">Engraving Type</th>
+              <th scope="col">Outdoor Use</th>
+              <th scope="col">Bulk Pricing</th>
+              <th scope="col">Starting Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Crystal / Glass</td>
+              <td>Corporate, Prestige</td>
+              <td>Laser (3D subsurface)</td>
+              <td><span class="compare-dot compare-dot--no" title="Not suitable" aria-label="No"></span></td>
+              <td><span class="compare-dot compare-dot--partial" title="Moderate discounts" aria-label="Moderate"></span></td>
+              <td>From $48</td>
+            </tr>
+            <tr>
+              <td>Brass / Metal</td>
+              <td>Plaques, Memorials</td>
+              <td>Rotary / Diamond-drag</td>
+              <td><span class="compare-dot compare-dot--yes" title="Yes, lacquered" aria-label="Yes"></span></td>
+              <td><span class="compare-dot compare-dot--yes" title="Good bulk discounts" aria-label="Yes"></span></td>
+              <td>From $35</td>
+            </tr>
+            <tr>
+              <td>Zinc Alloy</td>
+              <td>Medals, Bulk Events</td>
+              <td>Die-cast + enamel</td>
+              <td><span class="compare-dot compare-dot--partial" title="Limited" aria-label="Partial"></span></td>
+              <td><span class="compare-dot compare-dot--yes" title="Excellent bulk discounts" aria-label="Yes"></span></td>
+              <td>From $9</td>
+            </tr>
+            <tr>
+              <td>Acrylic</td>
+              <td>Creative, Modern</td>
+              <td>Laser + UV print</td>
+              <td><span class="compare-dot compare-dot--no" title="Not suitable" aria-label="No"></span></td>
+              <td><span class="compare-dot compare-dot--yes" title="Good bulk discounts" aria-label="Yes"></span></td>
+              <td>From $22</td>
+            </tr>
+            <tr>
+              <td>Natural Wood</td>
+              <td>Plaques, Natural Feel</td>
+              <td>Laser burn</td>
+              <td><span class="compare-dot compare-dot--partial" title="Sealed only" aria-label="Partial"></span></td>
+              <td><span class="compare-dot compare-dot--partial" title="Moderate discounts" aria-label="Moderate"></span></td>
+              <td>From $45</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: CUSTOM OPTIONS CTA -->
+  <section class="section--sm" aria-label="Custom order call to action">
+    <div class="container">
+      <div class="custom-cta" data-reveal>
+        <div>
+          <h2 class="custom-cta__title">Can't Find What You Need?</h2>
+          <p class="custom-cta__text">Our design team can create a completely custom award from scratch. Share your vision and we'll bring it to life — no design too complex.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+          <a href="custom-engraving.html" class="btn btn--dark btn--lg">
+            <i class="fa-solid fa-pen-nib"></i> Custom Design
+          </a>
+          <a href="contact.html" class="btn btn--ghost btn--lg" style="color:var(--color-charcoal);border-color:rgba(37,37,37,0.35);">
+            <i class="fa-solid fa-phone"></i> Call Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: FAQ -->
+  <section class="section section--surface" id="products-faq" aria-labelledby="faq-heading">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-label">Common Questions</span>
+        <div class="ornament"><span class="ornament__line"></span><span class="ornament__diamond"></span><span class="ornament__line ornament__line--rev"></span></div>
+        <h2 class="section-title" id="faq-heading">Products <em>FAQ</em></h2>
+      </div>
+
+      <div class="accordion" data-reveal style="max-width:760px;margin-inline:auto;">
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            Can I customize any product with my own text and logo?
+            <span class="accordion-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+          </button>
+          <div class="accordion-body" role="region"><p class="accordion-content">Yes — every product in our catalog is fully customizable. You can add your own text, logo, date, and any personal message. Simply select a product and contact us or use our custom engraving form to send your requirements.</p></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            What file formats do you accept for logos?
+            <span class="accordion-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+          </button>
+          <div class="accordion-body" role="region"><p class="accordion-content">We accept vector files (AI, EPS, SVG, PDF) for the best engraving results. High-resolution raster files (PNG, JPG at 300dpi or higher) are also accepted. Our design team will prepare your artwork for engraving at no extra charge.</p></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            What is the minimum order quantity?
+            <span class="accordion-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+          </button>
+          <div class="accordion-body" role="region"><p class="accordion-content">There is no minimum for single custom orders. For bulk orders (10+ units), you qualify for volume pricing discounts starting at 15%. For schools and corporations ordering 50+ units, discounts reach up to 35%. Contact us for a personalized quote.</p></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            How long does production take?
+            <span class="accordion-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+          </button>
+          <div class="accordion-body" role="region"><p class="accordion-content">Standard orders are completed in 5–7 business days. Rush service (48-hour turnaround) is available for most products at an additional charge. Large bulk orders of 100+ units typically require 10–14 business days. We'll confirm exact timelines when you submit your order.</p></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            Do you provide a proof before production?
+            <span class="accordion-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+          </button>
+          <div class="accordion-body" role="region"><p class="accordion-content">Absolutely. Every order receives a digital proof within 24 hours of submission. Production does not begin until you give written approval. We allow unlimited revisions on your proof at no extra cost — your satisfaction is our guarantee.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: RELATED SERVICES -->
+  <section class="section" id="related-services" aria-labelledby="related-heading">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-label">Related Services</span>
+        <div class="ornament"><span class="ornament__line"></span><span class="ornament__diamond"></span><span class="ornament__line ornament__line--rev"></span></div>
+        <h2 class="section-title" id="related-heading">Complete Your <em>Order</em></h2>
+      </div>
+
+      <div class="grid-3" style="max-width:960px;margin-inline:auto;">
+        <a href="custom-engraving.html" class="feature-card" data-reveal data-reveal-delay="1" style="text-decoration:none;">
+          <div class="feature-card__icon"><i class="fa-solid fa-pen-nib"></i></div>
+          <h3 class="feature-card__title">Custom Engraving</h3>
+          <p class="feature-card__text">Design something completely unique. Our team creates custom designs from scratch with no template limitations.</p>
+        </a>
+        <a href="bulk-orders.html" class="feature-card" data-reveal data-reveal-delay="2" style="text-decoration:none;">
+          <div class="feature-card__icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+          <h3 class="feature-card__title">Bulk Orders</h3>
+          <p class="feature-card__text">Order 10+ units and unlock volume discounts of up to 35%. Perfect for schools, sports events, and corporate ceremonies.</p>
+        </a>
+        <a href="contact.html" class="feature-card" data-reveal data-reveal-delay="3" style="text-decoration:none;">
+          <div class="feature-card__icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+          <h3 class="feature-card__title">Free Quote</h3>
+          <p class="feature-card__text">Not sure on pricing? Get a no-obligation quote in under 24 hours. We'll find the best solution for your budget.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: NEWSLETTER CTA STRIP -->
+  <section class="section--sm" style="background:var(--bg-dark-section);" aria-label="Stay updated">
+    <div class="container" style="text-align:center;">
+      <div data-reveal>
+        <h2 class="section-title section-title--light" style="font-size:var(--text-2xl);margin-bottom:var(--space-2);">
+          New Designs Every Month
+        </h2>
+        <p style="color:rgba(255,255,255,0.55);margin-bottom:var(--space-6);">Subscribe to be notified of new collections and seasonal discounts.</p>
+        <form class="newsletter-form" action="https://formspree.io/f/placeholder" method="POST" aria-label="Newsletter subscribe">
+          <label for="news-email-products" class="sr-only">Email address</label>
+          <input type="email" id="news-email-products" name="email" class="form-control" placeholder="Your email address" required />
+          <button type="submit" class="btn btn--primary">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="footer__top container">
+    <div>
+      <a href="index.html" class="footer__brand-link" aria-label="GoldCrest Engravings — Home">
+        <div class="footer__brand-logo-icon" aria-hidden="true"><i class="fa-solid fa-trophy"></i></div>
+        <div><div class="footer__brand-name">GoldCrest <em>Engravings</em></div><div class="footer__brand-sub">Crafted Excellence</div></div>
+      </a>
+      <p class="footer__tagline">Crafting premium trophies, plaques, medals, and custom engravings since 1998.</p>
+      <div class="footer__social" role="list" aria-label="Social media links">
+        <a href="#" class="footer__social-link" aria-label="Facebook" role="listitem"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" class="footer__social-link" aria-label="Instagram" role="listitem"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="footer__social-link" aria-label="LinkedIn" role="listitem"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="#" class="footer__social-link" aria-label="YouTube" role="listitem"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+    <div>
+      <h3 class="footer__col-title">Quick Links</h3>
+      <ul class="footer__links-list">
+        <li><a href="index.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Home Classic</a></li>
+        <li><a href="home2.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Home Legacy</a></li>
+        <li><a href="products.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Products</a></li>
+        <li><a href="custom-engraving.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Custom Engraving</a></li>
+        <li><a href="bulk-orders.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Bulk Orders</a></li>
+        <li><a href="contact.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="footer__col-title">Our Services</h3>
+      <ul class="footer__links-list">
+        <li><a href="products.html?category=trophies" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Trophy Engraving</a></li>
+        <li><a href="products.html?category=plaques" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Plaque Customization</a></li>
+        <li><a href="products.html?category=medals" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Medal Production</a></li>
+        <li><a href="products.html?category=badges" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Name Badges</a></li>
+        <li><a href="bulk-orders.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Corporate Awards</a></li>
+        <li><a href="bulk-orders.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> School Awards</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="footer__col-title">Get In Touch</h3>
+      <ul class="footer__contact-list">
+        <li class="footer__contact-item"><div class="footer__contact-icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></div><span>123 Trophy Lane, Award District,<br/>New York, NY 10001</span></li>
+        <li class="footer__contact-item"><div class="footer__contact-icon" aria-hidden="true"><i class="fa-solid fa-phone"></i></div><a href="tel:+15551234567">+1 (555) 123-4567</a></li>
+        <li class="footer__contact-item"><div class="footer__contact-icon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></div><a href="mailto:info@goldcrestengravings.com">info@goldcrestengravings.com</a></li>
+        <li class="footer__contact-item"><div class="footer__contact-icon" aria-hidden="true"><i class="fa-solid fa-clock"></i></div><span>Mon–Sat: 9:00 AM – 6:00 PM</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom container">
+    <p class="footer__copy">&copy; 2025 <a href="index.html">GoldCrest Engravings</a>. All rights reserved.</p>
+    <nav class="footer__bottom-links" aria-label="Legal links">
+      <a href="#" class="footer__bottom-link">Privacy Policy</a>
+      <a href="#" class="footer__bottom-link">Terms of Service</a>
+      <a href="#" class="footer__bottom-link">Sitemap</a>
+    </nav>
+  </div>
+</footer>
+
+<button id="scroll-top" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script src="js/nav.js"></script>
+<script src="js/form-validation.js"></script>
+<script>
+  // Show skeleton briefly then reveal products
+  const skeleton = document.getElementById('products-skeleton');
+  const grid = document.getElementById('product-grid');
+  if (skeleton && grid) {
+    skeleton.classList.add('active');
+    grid.style.display = 'none';
+    setTimeout(() => {
+      skeleton.classList.remove('active');
+      grid.style.display = '';
+    }, 600);
+  }
+
+  // Filter active state visual feedback
+  document.querySelectorAll('[data-filter]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('[data-filter]').forEach(b => {
+        b.setAttribute('aria-pressed', 'false');
+      });
+      this.setAttribute('aria-pressed', 'true');
+    });
+  });
+</script>
+</body>
+</html>

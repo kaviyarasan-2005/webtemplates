@@ -1,0 +1,222 @@
+/* ============================================================
+   ANIMATIONS — GOLDCREST ENGRAVINGS
+   Keyframes · Skeleton · Hover FX · Page Transitions
+   ============================================================ */
+
+/* ══════════════════════════════════════
+   KEYFRAMES
+══════════════════════════════════════ */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes goldGlow {
+  0%, 100% { box-shadow: 0 0 12px rgba(201,168,76,0.3); }
+  50%       { box-shadow: 0 0 28px rgba(201,168,76,0.65); }
+}
+
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ══════════════════════════════════════
+   HERO ANIMATIONS
+══════════════════════════════════════ */
+
+.hero-animate-1 {
+  animation: fadeInUp 0.9s ease 0.1s both;
+}
+.hero-animate-2 {
+  animation: fadeInUp 0.9s ease 0.25s both;
+}
+.hero-animate-3 {
+  animation: fadeInUp 0.9s ease 0.4s both;
+}
+.hero-animate-4 {
+  animation: fadeInUp 0.9s ease 0.55s both;
+}
+
+.hero-image-animate {
+  animation: scaleIn 1.1s ease 0.2s both;
+}
+
+/* ══════════════════════════════════════
+   FLOATING ELEMENTS
+══════════════════════════════════════ */
+.float-anim {
+  animation: floatY 4s ease-in-out infinite;
+}
+.float-anim--slow {
+  animation: floatY 6s ease-in-out infinite;
+}
+.float-anim--delay {
+  animation: floatY 4s ease-in-out 1.5s infinite;
+}
+
+/* ══════════════════════════════════════
+   GOLD GLOW PULSE
+══════════════════════════════════════ */
+.gold-glow-anim {
+  animation: goldGlow 3s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════
+   GRADIENT TEXT
+══════════════════════════════════════ */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-gold-dark) 0%, var(--color-gold) 50%, var(--color-gold-darker) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 4s ease infinite;
+}
+
+/* ══════════════════════════════════════
+   SKELETON LOADER
+══════════════════════════════════════ */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface-2) 25%,
+    var(--border-color) 50%,
+    var(--bg-surface-2) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+/* ══════════════════════════════════════
+   RIPPLE BUTTON EFFECT
+══════════════════════════════════════ */
+.btn .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  transform: scale(0);
+  animation: ripple 0.55s linear;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════
+   HOVER UNDERLINE (anchor links)
+══════════════════════════════════════ */
+.hover-underline {
+  position: relative;
+}
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  inset-inline-start: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-gold-dark);
+  transition: width var(--transition-base);
+}
+.hover-underline:hover::after { width: 100%; }
+
+/* ══════════════════════════════════════
+   SCROLL REVEAL CLASSES (JS driven)
+══════════════════════════════════════ */
+/* Base states already in base.css [data-reveal] */
+
+/* ══════════════════════════════════════
+   CARD TILT EFFECT (mild 3D on hover)
+══════════════════════════════════════ */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform var(--transition-base);
+}
+/* Applied via JS for smooth tracking */
+
+/* ══════════════════════════════════════
+   PAGE TRANSITION OVERLAY
+══════════════════════════════════════ */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  background: var(--color-gold-dark);
+  z-index: 9999;
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════
+   MOBILE: REDUCE ANIMATIONS
+══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .float-anim,
+  .float-anim--slow,
+  .float-anim--delay { animation: none; }
+  .gradient-text { animation: none; }
+}
+
+@media (max-width: 640px) {
+  .hero-animate-1,
+  .hero-animate-2,
+  .hero-animate-3,
+  .hero-animate-4 {
+    animation-duration: 0.5s;
+  }
+  .float-anim,
+  .float-anim--slow { animation: none; }
+}
