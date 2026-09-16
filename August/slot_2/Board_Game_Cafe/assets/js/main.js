@@ -61,10 +61,18 @@ function initRTLToggle() {
   const toggleBtn = document.getElementById('rtl-toggle');
   if (!toggleBtn) return;
 
+  const updateBtnText = (dir) => {
+    const textSpan = toggleBtn.querySelector('.rtl-btn-text');
+    if (textSpan) {
+      textSpan.textContent = dir === 'rtl' ? 'LTR' : 'RTL';
+    }
+  };
+
   const savedDir = localStorage.getItem('dir');
   if (savedDir === 'rtl') {
     document.documentElement.setAttribute('dir', 'rtl');
   }
+  updateBtnText(savedDir || 'ltr');
 
   toggleBtn.addEventListener('click', () => {
     const currentDir = document.documentElement.getAttribute('dir');
@@ -72,6 +80,7 @@ function initRTLToggle() {
     
     document.documentElement.setAttribute('dir', newDir);
     localStorage.setItem('dir', newDir);
+    updateBtnText(newDir);
   });
 }
 
