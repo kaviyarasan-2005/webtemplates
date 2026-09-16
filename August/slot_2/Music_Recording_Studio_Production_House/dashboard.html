@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoundForge Studios — Artist Dashboard</title>
+  <meta name="theme-color" content="#0B0910">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <!-- Note: Dashboard forces dark theme visually by default, but respects data-theme logic -->
+</head>
+<body class="dashboard-body">
+
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Mobile Sidebar Overlay -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sidebar" id="dashboard-sidebar">
+  <div class="sidebar__header">
+    <a href="index.html" class="sidebar__logo">
+      <svg width="24" height="24" viewBox="0 0 36 36" fill="none"><rect x="6" y="18" width="4" height="12" rx="2" fill="white" opacity="0.9"/><rect x="12" y="10" width="4" height="20" rx="2" fill="white"/><rect x="18" y="6" width="4" height="24" rx="2" fill="white"/><rect x="24" y="12" width="4" height="16" rx="2" fill="white" opacity="0.9"/><rect x="30" y="20" width="4" height="8" rx="2" fill="white" opacity="0.7"/><rect x="0" y="22" width="4" height="6" rx="2" fill="white" opacity="0.7"/></svg>
+      <span>SoundForge</span>
+    </a>
+  </div>
+
+  <div class="sidebar__user">
+    <div class="sidebar__user-avatar"><img src="img/artist-roster-1.jpg" alt="Lyra Sinclair"></div>
+    <div class="sidebar__user-info">
+      <div class="sidebar__user-name">Lyra Sinclair</div>
+      <div class="sidebar__user-type">Pop Artist</div>
+    </div>
+  </div>
+
+  <nav class="sidebar__nav">
+    <ul class="sidebar__menu">
+      <li class="sidebar__menu-label">Main Menu</li>
+      <li><a href="#" class="sidebar__link is-active" data-panel="panel-overview"><i class="ri-dashboard-line"></i> Overview</a></li>
+      <li><a href="#" class="sidebar__link" data-panel="panel-projects"><i class="ri-folder-music-line"></i> My Projects</a></li>
+      <li><a href="#" class="sidebar__link" data-panel="panel-booking"><i class="ri-calendar-event-line"></i> Book Session</a></li>
+      <li><a href="#" class="sidebar__link" data-panel="panel-files"><i class="ri-file-cloud-line"></i> Files & Mixes</a></li>
+      <li><a href="#" class="sidebar__link" data-panel="panel-billing"><i class="ri-bank-card-line"></i> Billing & Invoices</a></li>
+    </ul>
+
+    <ul class="sidebar__menu">
+      <li class="sidebar__menu-label">Settings</li>
+      <li><a href="#" class="sidebar__link"><i class="ri-user-settings-line"></i> Profile Settings</a></li>
+      <li><button class="sidebar__link" data-theme-toggle style="width:100%;text-align:left;background:none;border:none;cursor:pointer;"><i class="ri-moon-line"></i> Toggle Theme</button></li>
+      <li><a href="index.html" class="sidebar__link"><i class="ri-logout-box-line"></i> Log Out</a></li>
+    </ul>
+  </nav>
+
+  <div class="sidebar__footer">
+    <div class="storage-widget">
+      <div class="storage-widget__title">Storage Used</div>
+      <div class="storage-widget__bar">
+        <div class="storage-widget__fill" style="width: 65%;"></div>
+      </div>
+      <div class="storage-widget__text">6.5 GB of 10 GB</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main class="dashboard-main">
+  
+  <!-- Dashboard Topbar -->
+  <header class="dash-topbar">
+    <button class="btn btn--icon" id="sidebar-toggle" style="background:none;border:none;color:var(--color-text-primary);font-size:1.5rem;display:none;">
+      <i class="ri-menu-line"></i>
+    </button>
+    <style>@media(max-width:1024px){#sidebar-toggle{display:block !important;}}</style>
+
+    <div class="dash-topbar__search">
+      <i class="ri-search-line"></i>
+      <input type="text" placeholder="Search projects, files...">
+    </div>
+
+    <div class="dash-topbar__actions">
+      <button class="dash-btn-icon"><i class="ri-notification-3-line"></i><span class="dash-btn-badge">3</span></button>
+      <button class="dash-btn-icon"><i class="ri-message-3-line"></i></button>
+    </div>
+  </header>
+
+  <div class="dash-content">
+    
+    <!-- PANEL: OVERVIEW -->
+    <div class="dash-section animate-fade-in-up" id="panel-overview">
+      <div class="dash-header">
+        <div>
+          <h1 class="dash-title">Welcome back, Lyra</h1>
+          <p class="dash-desc">Here's what's happening with your projects today.</p>
+        </div>
+        <button class="btn btn--primary btn--sm" onclick="document.querySelector('[data-panel=\'panel-booking\']').click()"><i class="ri-add-line"></i> New Session</button>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-card__icon"><i class="ri-folder-music-fill"></i></div>
+          <div class="stat-card__value">2</div>
+          <div class="stat-card__label">Active Projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon" style="background:rgba(212,168,79,0.1);color:var(--color-champagne-gold)"><i class="ri-time-fill"></i></div>
+          <div class="stat-card__value">14</div>
+          <div class="stat-card__label">Studio Hours Booked</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon"><i class="ri-file-download-fill"></i></div>
+          <div class="stat-card__value">5</div>
+          <div class="stat-card__label">New Mixes Ready</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon" style="background:rgba(239,68,68,0.1);color:#ef4444;"><i class="ri-bill-fill"></i></div>
+          <div class="stat-card__value">$450</div>
+          <div class="stat-card__label">Outstanding Balance</div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 2fr 1fr; gap: var(--space-6); margin-top: var(--space-8);">
+        <!-- Active Project Timeline -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Current Project: "Neon Hearts EP"</h3>
+            <span class="badge badge--violet">In Progress</span>
+          </div>
+          
+          <div class="kanban-board" style="display:flex; flex-direction:column; gap:var(--space-4);">
+            <div class="kanban-col" style="background:none; border:1px solid var(--color-border); padding:var(--space-4);">
+              <h4 class="kanban-title"><i class="ri-mic-2-line"></i> Track 1: "Neon Hearts"</h4>
+              <div class="progress" style="margin:var(--space-2) 0;"><div class="progress__bar" style="width:100%"></div></div>
+              <p style="font-size:0.8rem;color:var(--color-text-muted);">Status: Mixed. Waiting on mastering.</p>
+            </div>
+            
+            <div class="kanban-col" style="background:none; border:1px solid var(--color-border); padding:var(--space-4); border-left:3px solid var(--color-electric-violet);">
+              <h4 class="kanban-title"><i class="ri-equalizer-line"></i> Track 2: "Midnight Drive"</h4>
+              <div class="progress" style="margin:var(--space-2) 0;"><div class="progress__bar" style="width:60%"></div></div>
+              <p style="font-size:0.8rem;color:var(--color-text-muted);">Status: Tracking vocals. Next session: Sep 24.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Recent Activity</h3>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:var(--space-3);">
+            <div class="notif-item">
+              <div class="notif-item__icon"><i class="ri-file-music-fill"></i></div>
+              <div class="notif-item__content">
+                <div class="notif-item__text"><strong>Maya Chen</strong> uploaded "Neon_Hearts_Mix_v2.wav"</div>
+                <div class="notif-item__time">2 hours ago</div>
+              </div>
+              <button class="notif-item__dismiss" data-dismiss-notif><i class="ri-close-line"></i></button>
+            </div>
+            <div class="notif-item">
+              <div class="notif-item__icon" style="background:rgba(212,168,79,0.1);color:var(--color-champagne-gold)"><i class="ri-calendar-check-fill"></i></div>
+              <div class="notif-item__content">
+                <div class="notif-item__text">Session confirmed for <strong>Sep 24, 10:00 AM</strong></div>
+                <div class="notif-item__time">Yesterday</div>
+              </div>
+              <button class="notif-item__dismiss" data-dismiss-notif><i class="ri-close-line"></i></button>
+            </div>
+            <div class="notif-item">
+              <div class="notif-item__icon" style="background:rgba(239,68,68,0.1);color:#ef4444;"><i class="ri-file-list-3-fill"></i></div>
+              <div class="notif-item__content">
+                <div class="notif-item__text">New invoice generated: <strong>INV-2023-089</strong></div>
+                <div class="notif-item__time">3 days ago</div>
+              </div>
+              <button class="notif-item__dismiss" data-dismiss-notif><i class="ri-close-line"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <style>@media(max-width:1024px){ [id="panel-overview"] > div:last-child { grid-template-columns: 1fr !important; } }</style>
+    </div>
+
+    <!-- PANEL: PROJECTS (Kanban) -->
+    <div class="dash-section animate-fade-in-up" id="panel-projects" style="display:none;">
+      <div class="dash-header">
+        <h1 class="dash-title">Project Pipeline</h1>
+        <button class="btn btn--primary btn--sm"><i class="ri-add-line"></i> Create Project</button>
+      </div>
+
+      <div class="kanban-board">
+        <!-- Pre-Production -->
+        <div class="kanban-col">
+          <div class="kanban-title">Pre-Production (1)</div>
+          <div class="kanban-card">
+            <span class="badge badge--gold" style="margin-bottom:8px;display:inline-block;">Single</span>
+            <div class="kanban-card__title">"Echoes"</div>
+            <div class="kanban-card__meta">
+              <span><i class="ri-time-line"></i> Starts: Oct 12</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recording -->
+        <div class="kanban-col">
+          <div class="kanban-title">Recording (1)</div>
+          <div class="kanban-card">
+            <span class="badge badge--violet" style="margin-bottom:8px;display:inline-block;">EP</span>
+            <div class="kanban-card__title">"Neon Hearts" - Track 2</div>
+            <div class="progress" style="margin-top:8px;"><div class="progress__bar" style="width:60%"></div></div>
+            <div class="kanban-card__meta" style="margin-top:8px;">
+              <span><i class="ri-user-line"></i> Marcus W.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mixing -->
+        <div class="kanban-col">
+          <div class="kanban-title">Mixing (1)</div>
+          <div class="kanban-card">
+            <span class="badge badge--violet" style="margin-bottom:8px;display:inline-block;">EP</span>
+            <div class="kanban-card__title">"Neon Hearts" - Track 1</div>
+            <div class="progress" style="margin-top:8px;"><div class="progress__bar" style="width:90%"></div></div>
+            <div class="kanban-card__meta" style="margin-top:8px;">
+              <span><i class="ri-user-line"></i> Maya C.</span>
+              <span><i class="ri-chat-3-line"></i> Needs Feedback</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mastered/Done -->
+        <div class="kanban-col">
+          <div class="kanban-title">Mastered (0)</div>
+          <!-- Empty state -->
+          <div style="text-align:center; padding:var(--space-6) 0; color:var(--color-text-muted); font-size:0.85rem;">
+            No tracks in mastering.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL: BOOKING -->
+    <div class="dash-section animate-fade-in-up" id="panel-booking" style="display:none;">
+      <div class="dash-header">
+        <h1 class="dash-title">Book a Session</h1>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-card__header"><h3 class="dash-card__title">Select Date & Time</h3></div>
+        
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:var(--space-8);">
+          <!-- Calendar -->
+          <div class="cal-widget" id="booking-calendar">
+            <div class="cal-widget__header">
+              <button class="cal-widget__btn" data-cal-prev><i class="ri-arrow-left-s-line"></i></button>
+              <div class="cal-widget__month">September 2026</div>
+              <button class="cal-widget__btn" data-cal-next><i class="ri-arrow-right-s-line"></i></button>
+            </div>
+            <div class="cal-grid"></div>
+            <div style="display:flex;gap:var(--space-4);margin-top:var(--space-4);font-size:0.8rem;color:var(--color-text-muted);">
+              <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:var(--color-bg-secondary);border-radius:2px;"></span> Available</span>
+              <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:var(--color-electric-violet);opacity:0.2;border-radius:2px;"></span> Booked</span>
+            </div>
+          </div>
+
+          <!-- Booking Form -->
+          <div>
+            <form class="form">
+              <div class="form__group">
+                <label class="form__label">Selected Date</label>
+                <div class="form__input" style="background:var(--color-bg-secondary); color:var(--color-text-primary);" id="selected-date">Select a date from calendar</div>
+              </div>
+              <div class="form__group">
+                <label class="form__label">Room & Service</label>
+                <div class="form__select-wrap">
+                  <select class="form__select">
+                    <option>Room A (Vocal Tracking) - $85/hr</option>
+                    <option>SSL Suite (Mixing) - $110/hr</option>
+                    <option>Mastering Suite - $95/hr</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form__group">
+                <label class="form__label">Duration</label>
+                <div class="form__select-wrap">
+                  <select class="form__select">
+                    <option>2 Hours (Minimum)</option>
+                    <option>4 Hours (Half Day)</option>
+                    <option>8 Hours (Full Day)</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn btn--primary" style="width:100%;" onclick="FormValidator.showToast('Session request submitted for approval.', 'success')">Request Booking</button>
+            </form>
+          </div>
+        </div>
+        <style>@media(max-width:768px){ #panel-booking .dash-card > div { grid-template-columns:1fr !important; } }</style>
+      </div>
+    </div>
+
+    <!-- PANEL: FILES -->
+    <div class="dash-section animate-fade-in-up" id="panel-files" style="display:none;">
+      <div class="dash-header">
+        <h1 class="dash-title">Files & Mixes</h1>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-card__header"><h3 class="dash-card__title">Upload Reference Tracks / Stems</h3></div>
+        
+        <div class="upload-zone" id="upload-zone">
+          <i class="ri-cloud-upload-line upload-zone__icon"></i>
+          <h4 style="margin-bottom:var(--space-2); color:var(--color-text-primary);">Drag & Drop files here</h4>
+          <p style="color:var(--color-text-muted); font-size:0.85rem; margin-bottom:var(--space-4);">Supports WAV, MP3, ZIP up to 2GB</p>
+          <button class="btn btn--secondary btn--sm">Browse Files</button>
+          <input type="file" id="file-input" multiple style="display:none;">
+        </div>
+
+        <div class="file-list" id="file-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <h3 style="margin:var(--space-8) 0 var(--space-4); color:var(--color-text-primary);">Mixes Ready for Review</h3>
+      
+      <div class="file-item">
+        <div class="file-item__icon"><i class="ri-music-fill"></i></div>
+        <div class="file-item__info">
+          <div class="file-item__name">Neon_Hearts_Mix_v2.wav</div>
+          <div class="file-item__meta">45.2 MB &middot; Uploaded by Maya C. &middot; Today, 2:30 PM</div>
+        </div>
+        <div style="display:flex; gap:var(--space-2);">
+          <button class="btn btn--secondary btn--sm"><i class="ri-play-fill"></i> Play</button>
+          <button class="btn btn--primary btn--sm"><i class="ri-download-2-line"></i> DL</button>
+        </div>
+      </div>
+      
+      <div class="file-item">
+        <div class="file-item__icon"><i class="ri-music-fill"></i></div>
+        <div class="file-item__info">
+          <div class="file-item__name">Neon_Hearts_Mix_v1.wav</div>
+          <div class="file-item__meta">45.1 MB &middot; Uploaded by Maya C. &middot; Oct 10</div>
+        </div>
+        <div style="display:flex; gap:var(--space-2);">
+          <button class="btn btn--secondary btn--sm"><i class="ri-play-fill"></i> Play</button>
+          <button class="btn btn--primary btn--sm"><i class="ri-download-2-line"></i> DL</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL: BILLING -->
+    <div class="dash-section animate-fade-in-up" id="panel-billing" style="display:none;">
+      <div class="dash-header">
+        <h1 class="dash-title">Billing & Invoices</h1>
+      </div>
+
+      <div class="dash-card">
+        <div class="invoice-table-wrap">
+          <table class="invoice-table">
+            <thead>
+              <tr>
+                <th>Invoice ID</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-family:var(--font-mono);">INV-2023-089</td>
+                <td>Oct 12, 2026</td>
+                <td>4hrs Vocal Tracking</td>
+                <td>$340.00</td>
+                <td><span class="badge badge--gold">Unpaid</span></td>
+                <td><button class="btn btn--primary btn--sm" data-pay-invoice="INV-2023-089">Pay Now</button></td>
+              </tr>
+              <tr>
+                <td style="font-family:var(--font-mono);">INV-2023-042</td>
+                <td>Sep 15, 2026</td>
+                <td>Mix - "Echoes"</td>
+                <td>$450.00</td>
+                <td><span class="badge badge--success">Paid</span></td>
+                <td><button class="btn btn--secondary btn--sm"><i class="ri-download-line"></i> PDF</button></td>
+              </tr>
+              <tr>
+                <td style="font-family:var(--font-mono);">INV-2023-018</td>
+                <td>Aug 02, 2026</td>
+                <td>Deposit - EP Prod.</td>
+                <td>$1,200.00</td>
+                <td><span class="badge badge--success">Paid</span></td>
+                <td><button class="btn btn--secondary btn--sm"><i class="ri-download-line"></i> PDF</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="js/theme.js"></script>
+<script src="js/form-validation.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+/* ============================================================
+   SoundForge Studios — Base Styles
+   Imports Google Fonts, reset, typography, layout utilities
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('variables.css');
+
+/* ── Reset ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.65;
+  min-height: 100vh;
+  transition: background-color var(--transition-base), color var(--transition-base);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  color: var(--color-electric-violet);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-violet-hover);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-electric-violet);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-electric-violet);
+  outline-offset: 3px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ── Typography ─────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: clamp(2.25rem, 5vw, 4.5rem);  font-weight: 800; }
+h2 { font-size: clamp(1.75rem, 3.5vw, 3rem);  font-weight: 700; }
+h3 { font-size: clamp(1.35rem, 2.5vw, 2rem);  font-weight: 700; }
+h4 { font-size: clamp(1.1rem, 2vw, 1.5rem);   font-weight: 600; }
+h5 { font-size: 1.125rem;                       font-weight: 600; }
+h6 { font-size: 1rem;                           font-weight: 600; }
+
+p {
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.text-muted   { color: var(--color-text-muted); }
+.text-primary { color: var(--color-text-primary); }
+.text-violet  { color: var(--color-electric-violet); }
+.text-gold    { color: var(--color-champagne-gold); }
+
+.text-gradient {
+  background: var(--gradient-violet-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-violet {
+  background: var(--gradient-violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+@media (max-width: 640px) {
+  .container { padding-inline: var(--space-4); }
+}
+
+.section {
+  padding-block: var(--space-20);
+}
+
+@media (max-width: 1024px) {
+  .section { padding-block: var(--space-16); }
+}
+
+@media (max-width: 640px) {
+  .section { padding-block: var(--space-12); }
+}
+
+.section--dark {
+  background-color: var(--color-studio-black);
+  color: var(--color-text-inverse);
+}
+
+.section--alt {
+  background-color: var(--color-bg-secondary);
+}
+
+/* ── Section Header ─────────────────────────────────────────── */
+.section__header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+  max-width: 720px;
+  margin-inline: auto;
+  margin-bottom: var(--space-12);
+}
+
+.section__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-secondary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-champagne-gold);
+  padding: var(--space-1) var(--space-4);
+  border: 1px solid var(--color-champagne-gold);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
+}
+
+.section__title {
+  margin-bottom: var(--space-4);
+}
+
+.section__desc {
+  font-size: 1.05rem;
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+/* ── Grid Utilities ─────────────────────────────────────────── */
+.grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-5 { grid-template-columns: repeat(5, 1fr); }
+
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-5 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-5 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .grid-5 { grid-template-columns: 1fr; }
+}
+
+/* ── Flex Utilities ─────────────────────────────────────────── */
+.flex         { display: flex; }
+.flex-col     { display: flex; flex-direction: column; }
+.flex-center  { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-wrap    { flex-wrap: wrap; }
+.gap-2        { gap: var(--space-2); }
+.gap-3        { gap: var(--space-3); }
+.gap-4        { gap: var(--space-4); }
+.gap-6        { gap: var(--space-6); }
+.gap-8        { gap: var(--space-8); }
+
+/* ── Accessibility ──────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: var(--space-4);
+  z-index: var(--z-overlay);
+  background: var(--color-electric-violet);
+  color: #fff;
+  padding: var(--space-3) var(--space-6);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 0;
+  color: #fff;
+}
+
+/* ── Divider ─────────────────────────────────────────────────── */
+.divider {
+  width: 60px;
+  height: 3px;
+  background: var(--gradient-violet-gold);
+  border-radius: var(--radius-full);
+  margin: var(--space-4) auto;
+}
+
+.divider--left {
+  margin-inline-start: 0;
+}
+
+/* ── Highlight Box ───────────────────────────────────────────── */
+.highlight-box {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-violet-light);
+  color: var(--color-electric-violet);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-secondary);
+}
+
+/* ── Noise overlay texture ───────────────────────────────────── */
+.noise-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+}
+
+/* ── Scroll margin for anchors ───────────────────────────────── */
+[id] {
+  scroll-margin-top: calc(var(--navbar-height) + 16px);
+}
+
+/* ── Selection color ─────────────────────────────────────────── */
+::selection {
+  background: var(--color-electric-violet);
+  color: #fff;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-bg-secondary); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-electric-violet);
+}
+
+/* ── Page padding for fixed navbar ──────────────────────────── */
+main {
+  padding-top: var(--navbar-height);
+}

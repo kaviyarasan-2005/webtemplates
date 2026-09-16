@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoundForge Studios — Portfolio | Past Projects</title>
+  <meta name="description" content="Explore our portfolio of past music projects, including albums, singles, and film scores produced at SoundForge Studios.">
+  <meta name="theme-color" content="#F7F5F9">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/rtl.css">
+  <style>
+    .page-header {
+      padding: calc(var(--navbar-height) + var(--space-12)) 0 var(--space-10);
+      text-align: center;
+      background: var(--color-bg-secondary);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .page-header__title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: var(--space-4); }
+    .page-header__desc { max-width: 600px; margin: 0 auto; color: var(--color-text-secondary); font-size: 1.1rem; }
+
+    /* Portfolio Filters */
+    .portfolio-filters {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-10);
+    }
+    .filter-btn {
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      font-family: var(--font-secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .filter-btn:hover, .filter-btn.is-active {
+      background: var(--color-electric-violet);
+      color: #fff;
+      border-color: var(--color-electric-violet);
+    }
+
+    /* Portfolio Grid */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-8);
+      padding-bottom: var(--space-16);
+    }
+    .portfolio-item {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 1;
+      cursor: pointer;
+    }
+    .portfolio-item__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+    .portfolio-item:hover .portfolio-item__img { transform: scale(1.05); }
+    
+    .portfolio-item__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(17,14,24,0.95) 0%, rgba(17,14,24,0.4) 50%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--space-6);
+      opacity: 0;
+      transition: opacity var(--transition-base);
+    }
+    .portfolio-item:hover .portfolio-item__overlay { opacity: 1; }
+    @media (max-width: 768px) {
+      .portfolio-item__overlay { opacity: 1; background: linear-gradient(0deg, rgba(17,14,24,0.95) 0%, transparent 80%); }
+    }
+    
+    .portfolio-item__genre { font-family: var(--font-secondary); font-size: 0.75rem; font-weight: 700; color: var(--color-champagne-gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-1); transform: translateY(10px); transition: transform var(--transition-base); }
+    .portfolio-item__title { color: #F5F2FA; font-size: 1.25rem; font-weight: 800; margin-bottom: var(--space-1); transform: translateY(10px); transition: transform var(--transition-base) 0.05s; }
+    .portfolio-item__artist { color: rgba(245,242,250,0.7); font-size: 0.9rem; font-family: var(--font-secondary); transform: translateY(10px); transition: transform var(--transition-base) 0.1s; margin-bottom: var(--space-3); }
+    
+    .portfolio-item:hover .portfolio-item__genre,
+    .portfolio-item:hover .portfolio-item__title,
+    .portfolio-item:hover .portfolio-item__artist { transform: translateY(0); }
+    
+    .portfolio-item__play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      width: 56px;
+      height: 56px;
+      background: rgba(124,58,237,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.5rem;
+      opacity: 0;
+      transition: all var(--transition-base);
+      backdrop-filter: blur(4px);
+    }
+    .portfolio-item:hover .portfolio-item__play { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+    /* Audio Player Sticky */
+    .audio-player-sticky {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(23,21,28,0.98);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(245,242,250,0.1);
+      padding: var(--space-3) var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      z-index: 100;
+      transform: translateY(100%);
+      transition: transform var(--transition-base);
+    }
+    .audio-player-sticky.is-active { transform: translateY(0); }
+    
+    .player-track-info { display: flex; align-items: center; gap: var(--space-4); min-width: 200px; }
+    .player-track-img { width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover; }
+    .player-track-text__title { color: #F5F2FA; font-weight: 600; font-size: 0.95rem; }
+    .player-track-text__artist { color: rgba(245,242,250,0.6); font-size: 0.8rem; font-family: var(--font-secondary); }
+    
+    .player-controls { display: flex; align-items: center; gap: var(--space-4); }
+    .player-btn { background: none; border: none; color: #F5F2FA; font-size: 1.2rem; cursor: pointer; opacity: 0.8; transition: opacity var(--transition-fast); }
+    .player-btn:hover { opacity: 1; color: var(--color-electric-violet); }
+    .player-btn--play { width: 40px; height: 40px; background: var(--color-electric-violet); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 1; }
+    .player-btn--play:hover { background: #6D28D9; color: #fff; }
+    
+    .player-timeline { flex: 1; display: flex; align-items: center; gap: var(--space-3); }
+    .player-time { color: rgba(245,242,250,0.6); font-family: var(--font-mono); font-size: 0.75rem; }
+    .player-progress-bar { flex: 1; height: 4px; background: rgba(245,242,250,0.2); border-radius: 2px; cursor: pointer; position: relative; }
+    .player-progress-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--color-champagne-gold); border-radius: 2px; width: 30%; }
+    
+    .player-close { color: rgba(245,242,250,0.5); cursor: pointer; padding: var(--space-2); }
+    .player-close:hover { color: #fff; }
+
+    @media (max-width: 768px) {
+      .audio-player-sticky { flex-wrap: wrap; padding: var(--space-3); gap: var(--space-3); }
+      .player-track-info { width: 100%; }
+      .player-timeline { width: 100%; order: 3; }
+      .player-controls { margin: 0 auto; }
+      .player-close { position: absolute; top: var(--space-2); right: var(--space-2); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-loader" id="page-loader" aria-hidden="true">
+  <div class="page-loader__logo">
+    <svg width="32" height="32" viewBox="0 0 36 36" fill="none"><rect x="6" y="18" width="4" height="12" rx="2" fill="white" opacity="0.9"/><rect x="12" y="10" width="4" height="20" rx="2" fill="white"/><rect x="18" y="6" width="4" height="24" rx="2" fill="white"/><rect x="24" y="12" width="4" height="16" rx="2" fill="white" opacity="0.9"/><rect x="30" y="20" width="4" height="8" rx="2" fill="white" opacity="0.7"/></svg>
+  </div>
+  <div class="page-loader__bar"><div class="page-loader__bar-fill"></div></div>
+</div>
+
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__brand">
+        <div class="navbar__logo"><svg width="22" height="22" viewBox="0 0 36 36" fill="none"><rect x="6" y="18" width="4" height="12" rx="2" fill="white" opacity="0.9"/><rect x="12" y="10" width="4" height="20" rx="2" fill="white"/><rect x="18" y="6" width="4" height="24" rx="2" fill="white"/><rect x="24" y="12" width="4" height="16" rx="2" fill="white" opacity="0.9"/><rect x="30" y="20" width="4" height="8" rx="2" fill="white" opacity="0.7"/><rect x="0" y="22" width="4" height="6" rx="2" fill="white" opacity="0.7"/></svg></div>
+        <span class="navbar__brand-name">SoundForge<span class="navbar__brand-accent">Studios</span></span>
+      </a>
+      <ul class="navbar__links">
+        <li class="navbar__item navbar__item--dropdown">
+          <button class="navbar__link navbar__link--dropdown">Home <i class="ri-arrow-down-s-line"></i></button>
+          <ul class="navbar__dropdown">
+            <li><a href="home1.html" class="navbar__dropdown-link">Studio Showcase</a></li>
+            <li><a href="home2.html" class="navbar__dropdown-link">Production House</a></li>
+          </ul>
+        </li>
+        <li class="navbar__item"><a href="services.html" class="navbar__link">Services</a></li>
+        <li class="navbar__item"><a href="engineers.html" class="navbar__link">Engineers</a></li>
+        <li class="navbar__item"><a href="portfolio.html" class="navbar__link is-active" aria-current="page">Portfolio</a></li>
+        <li class="navbar__item"><a href="contact.html" class="navbar__link">Contact</a></li>
+      </ul>
+      <div class="navbar__controls">
+        <button class="navbar__control-btn" data-theme-toggle><i class="ri-moon-fill"></i></button>
+        <button class="navbar__control-btn" data-dir-toggle><i class="ri-text-direction-r"></i></button>
+        <a href="login.html" class="btn btn--primary btn--sm navbar__login-btn">Artist Login</a>
+        <button class="navbar__hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+  <header class="page-header reveal">
+    <div class="container">
+      <span class="section__label"><i class="ri-album-fill"></i> Our Work</span>
+      <h1 class="page-header__title">Sonic Portfolio</h1>
+      <p class="page-header__desc">A curated selection of albums, singles, and scores that have passed through our consoles. Filter by genre to explore our sonic diversity.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: var(--space-8);">
+    <div class="container">
+      
+      <!-- Filters -->
+      <div class="portfolio-filters reveal" id="portfolio-filters">
+        <button class="filter-btn is-active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="pop">Pop</button>
+        <button class="filter-btn" data-filter="hiphop">Hip-Hop / R&B</button>
+        <button class="filter-btn" data-filter="electronic">Electronic</button>
+        <button class="filter-btn" data-filter="jazz">Jazz / Acoustic</button>
+      </div>
+
+      <!-- Grid -->
+      <div class="portfolio-grid reveal" id="portfolio-grid">
+        
+        <div class="portfolio-item" data-category="jazz" onclick="playSample('Midnight Frequencies', 'The Voss Quartet', 'img/project-jazz.jpg')">
+          <img src="img/project-jazz.jpg" alt="Midnight Frequencies" class="portfolio-item__img" loading="lazy">
+          <div class="portfolio-item__play"><i class="ri-play-fill"></i></div>
+          <div class="portfolio-item__overlay">
+            <span class="portfolio-item__genre">Jazz</span>
+            <h3 class="portfolio-item__title">Midnight Frequencies</h3>
+            <span class="portfolio-item__artist">The Voss Quartet</span>
+            <div><span class="badge badge--violet">Mixed & Mastered</span></div>
+          </div>
+        </div>
+
+        <div class="portfolio-item" data-category="hiphop" onclick="playSample('Neon Pavement', 'Darius Rael', 'img/project-hiphop.jpg')">
+          <img src="img/project-hiphop.jpg" alt="Neon Pavement" class="portfolio-item__img" loading="lazy">
+          <div class="portfolio-item__play"><i class="ri-play-fill"></i></div>
+          <div class="portfolio-item__overlay">
+            <span class="portfolio-item__genre">Hip-Hop</span>
+            <h3 class="portfolio-item__title">Neon Pavement</h3>
+            <span class="portfolio-item__artist">Darius Rael</span>
+            <div><span class="badge badge--violet">Full Production</span></div>
+          </div>
+        </div>
+
+        <div class="portfolio-item" data-category="pop" onclick="playSample('Echo Chamber', 'Lyra Sinclair', 'img/project-pop.jpg')">
+          <img src="img/project-pop.jpg" alt="Echo Chamber" class="portfolio-item__img" loading="lazy">
+          <div class="portfolio-item__play"><i class="ri-play-fill"></i></div>
+          <div class="portfolio-item__overlay">
+            <span class="portfolio-item__genre">Pop</span>
+            <h3 class="portfolio-item__title">Echo Chamber</h3>
+            <span class="portfolio-item__artist">Lyra Sinclair</span>
+            <div><span class="badge badge--violet">Recorded & Mixed</span></div>
+          </div>
+        </div>
+        
+        <div class="portfolio-item" data-category="hiphop" onclick="playSample('Velvet Underground', 'Candace Monroe', 'img/portfolio-rnb.jpg')">
+          <img src="img/portfolio-rnb.jpg" alt="Velvet Underground" class="portfolio-item__img" loading="lazy">
+          <div class="portfolio-item__play"><i class="ri-play-fill"></i></div>
+          <div class="portfolio-item__overlay">
+            <span class="portfolio-item__genre">R&B</span>
+            <h3 class="portfolio-item__title">Velvet Underground</h3>
+            <span class="portfolio-item__artist">Candace Monroe</span>
+            <div><span class="badge badge--violet">Mixed</span></div>
+          </div>
+        </div>
+        
+        <div class="portfolio-item" data-category="electronic" onclick="playSample('Synthetic Dreams', 'Axiom', 'img/portfolio-electronic.jpg')">
+          <img src="img/portfolio-electronic.jpg" alt="Synthetic Dreams" class="portfolio-item__img" loading="lazy">
+          <div class="portfolio-item__play"><i class="ri-play-fill"></i></div>
+          <div class="portfolio-item__overlay">
+            <span class="portfolio-item__genre">Electronic</span>
+            <h3 class="portfolio-item__title">Synthetic Dreams</h3>
+            <span class="portfolio-item__artist">Axiom</span>
+            <div><span class="badge badge--violet">Mastered</span></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- Sticky Audio Player (Hidden by default) -->
+<div class="audio-player-sticky" id="audio-player">
+  <div class="player-track-info">
+    <img src="" alt="" class="player-track-img" id="player-img">
+    <div class="player-track-text">
+      <div class="player-track-text__title" id="player-title">Track Title</div>
+      <div class="player-track-text__artist" id="player-artist">Artist Name</div>
+    </div>
+  </div>
+  
+  <div class="player-controls">
+    <button class="player-btn"><i class="ri-skip-back-fill"></i></button>
+    <button class="player-btn player-btn--play" id="player-play-btn"><i class="ri-pause-fill"></i></button>
+    <button class="player-btn"><i class="ri-skip-forward-fill"></i></button>
+  </div>
+  
+  <div class="player-timeline">
+    <span class="player-time">0:12</span>
+    <div class="player-progress-bar">
+      <div class="player-progress-fill"></div>
+    </div>
+    <span class="player-time">3:45</span>
+  </div>
+  
+  <div class="player-close" onclick="closePlayer()"><i class="ri-close-line"></i></div>
+</div>
+
+<footer class="footer">
+  <div class="footer__main">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo-link">
+            <div class="footer__logo"><svg width="20" height="20" viewBox="0 0 36 36" fill="none"><rect x="6" y="18" width="4" height="12" rx="2" fill="white" opacity="0.9"/><rect x="12" y="10" width="4" height="20" rx="2" fill="white"/><rect x="18" y="6" width="4" height="24" rx="2" fill="white"/><rect x="24" y="12" width="4" height="16" rx="2" fill="white" opacity="0.9"/><rect x="30" y="20" width="4" height="8" rx="2" fill="white" opacity="0.7"/><rect x="0" y="22" width="4" height="6" rx="2" fill="white" opacity="0.7"/></svg></div>
+            <span class="footer__brand-name">SoundForge<span class="footer__brand-accent">Studios</span></span>
+          </a>
+          <p class="footer__tagline">Where Sound Becomes Art</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container">
+      <div class="footer__bottom-inner">
+        <p class="footer__copyright">&copy; 2025 SoundForge Studios.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/theme.js"></script>
+<script src="js/rtl.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/animations.js"></script>
+<script>
+  // Simple filtering logic
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const items = document.querySelectorAll('.portfolio-item');
+  
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Active state
+      filterBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      
+      const filter = btn.getAttribute('data-filter');
+      
+      items.forEach(item => {
+        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+          item.style.display = 'block';
+          // trigger reflow for animation
+          setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'scale(1)'; }, 10);
+        } else {
+          item.style.opacity = '0';
+          item.style.transform = 'scale(0.9)';
+          setTimeout(() => { item.style.display = 'none'; }, 300);
+        }
+      });
+    });
+  });
+
+  // Simple Audio Player logic
+  const player = document.getElementById('audio-player');
+  const playBtn = document.getElementById('player-play-btn');
+  let isPlaying = false;
+
+  function playSample(title, artist, imgUrl) {
+    document.getElementById('player-title').textContent = title;
+    document.getElementById('player-artist').textContent = artist;
+    document.getElementById('player-img').src = imgUrl;
+    
+    player.classList.add('is-active');
+    isPlaying = true;
+    playBtn.innerHTML = '<i class="ri-pause-fill"></i>';
+  }
+
+  function closePlayer() {
+    player.classList.remove('is-active');
+    isPlaying = false;
+  }
+
+  playBtn.addEventListener('click', () => {
+    isPlaying = !isPlaying;
+    playBtn.innerHTML = isPlaying ? '<i class="ri-pause-fill"></i>' : '<i class="ri-play-fill"></i>';
+  });
+</script>
+</body>
+</html>
