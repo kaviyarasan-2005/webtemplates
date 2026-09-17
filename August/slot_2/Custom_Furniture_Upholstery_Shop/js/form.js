@@ -94,7 +94,7 @@ async function handleFormSubmit(form, resultId, validator) {
       resultEl.innerHTML = `
         <div class="form-success" role="alert" aria-live="polite">
           ${CHECK_ICON}
-          <div><strong>Sent successfully!</strong> We will respond within one business day. Thank you for reaching out to ReVox Upholstery.</div>
+          <div><strong>Sent successfully!</strong> We will respond within one business day. Thank you for reaching out to ReVox.</div>
         </div>`;
     } else {
       throw new Error('Server error');

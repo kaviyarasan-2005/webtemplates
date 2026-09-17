@@ -64,10 +64,10 @@ function getNavbarHTML(activePage = '') {
   <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
     <div class="nav-container">
       <!-- Brand -->
-      <a href="home1.html" class="nav-brand" id="nav-brand" aria-label="ReVox Upholstery - Go to Home">
-        <img src="assets/images/logo.png" alt="ReVox Upholstery logo" class="nav-logo" id="nav-logo-img" />
+      <a href="home1.html" class="nav-brand" id="nav-brand" aria-label="ReVox - Go to Home">
+        <img src="assets/images/logo.png" alt="ReVox logo" class="nav-logo" id="nav-logo-img" />
         <div class="nav-brand-text">
-          <span class="nav-brand-name">ReVox Upholstery</span>
+          <span class="nav-brand-name">ReVox</span>
 
         </div>
       </a>
@@ -179,10 +179,10 @@ function getFooterHTML() {
       <div class="footer-grid">
         <!-- Brand & Heritage -->
         <div class="footer-brand">
-          <a href="home1.html" class="nav-brand" aria-label="ReVox Upholstery - Go to Home">
-            <img src="assets/images/logo.png" alt="ReVox Upholstery logo" class="nav-logo" />
+          <a href="home1.html" class="nav-brand" aria-label="ReVox - Go to Home">
+            <img src="assets/images/logo.png" alt="ReVox logo" class="nav-logo" />
             <div class="nav-brand-text">
-              <span class="nav-brand-name">ReVox Upholstery</span>
+              <span class="nav-brand-name">ReVox</span>
 
             </div>
           </a>
@@ -267,7 +267,7 @@ function getFooterHTML() {
       <!-- Bottom Bar -->
       <div class="footer-bottom">
         <div class="footer-bottom-left">
-          <p>&copy; <span id="footer-year"></span> ReVox Upholstery. All rights reserved.</p>
+          <p>&copy; <span id="footer-year"></span> ReVox. All rights reserved.</p>
           <span class="footer-bottom-divider" aria-hidden="true">•</span>
           <p class="footer-craft-note">Handcrafted with passion &amp; precision</p>
         </div>
