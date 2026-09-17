@@ -184,7 +184,7 @@ async function run() {
         keywords = 'furniture,interior';
       }
       
-      const url = `https://loremflickr.com/${p.w}/${p.h}/${keywords}/all?lock=${i}`;
+      const url = `https://picsum.photos/seed/${i}/${p.w}/${p.h}`;
       await downloadImage(url, filePath);
       created++;
       process.stdout.write(`\r  Downloaded ${created} images... (${p.name})`);
