@@ -65,7 +65,15 @@ function getNavbarHTML(activePage = '') {
     <div class="nav-container">
       <!-- Brand -->
       <a href="home1.html" class="nav-brand" id="nav-brand" aria-label="ReVox - Go to Home">
-        <img src="assets/images/logo.png" alt="ReVox logo" class="nav-logo" id="nav-logo-img" />
+        <div class="premium-logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6" />
+            <path d="M19 12v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-4" />
+            <path d="M7 18v2" />
+            <path d="M17 18v2" />
+            <path d="M3 10h18v4H3z" fill="currentColor" fill-opacity="0.15" />
+          </svg>
+        </div>
         <div class="nav-brand-text">
           <span class="nav-brand-name">ReVox</span>
 
@@ -180,7 +188,15 @@ function getFooterHTML() {
         <!-- Brand & Heritage -->
         <div class="footer-brand">
           <a href="home1.html" class="nav-brand" aria-label="ReVox - Go to Home">
-            <img src="assets/images/logo.png" alt="ReVox logo" class="nav-logo" />
+            <div class="premium-logo-icon footer-logo-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6" />
+                <path d="M19 12v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-4" />
+                <path d="M7 18v2" />
+                <path d="M17 18v2" />
+                <path d="M3 10h18v4H3z" fill="currentColor" fill-opacity="0.15" />
+              </svg>
+            </div>
             <div class="nav-brand-text">
               <span class="nav-brand-name">ReVox</span>
 
