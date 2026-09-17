@@ -1,10 +1,11 @@
 /**
  * generate-placeholders.js
- * Creates SVG placeholder images for all missing assets
+ * Fetches realistic placeholder images from LoremFlickr for missing assets
  * Run with: node generate-placeholders.js
  */
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 
 const assetsDir = path.join(__dirname, 'assets', 'images');
 if (!fs.existsSync(assetsDir)) fs.mkdirSync(assetsDir, { recursive: true });
@@ -128,62 +129,75 @@ const placeholders = [
   { name: 'newsletter-contact.jpg', w: 600, h: 800, color: '#3A2418', label: 'Newsletter Mood Board' },
 ];
 
-function hexToRgb(hex) {
-  const r = parseInt(hex.slice(1,3),16);
-  const g = parseInt(hex.slice(3,5),16);
-  const b = parseInt(hex.slice(5,7),16);
-  return `rgb(${r},${g},${b})`;
+function downloadImage(url, dest) {
+  return new Promise((resolve, reject) => {
+    https.get(url, (response) => {
+      if (response.statusCode === 301 || response.statusCode === 302) {
+        return downloadImage(response.headers.location, dest).then(resolve).catch(reject);
+      }
+      
+      if (response.statusCode !== 200) {
+        return reject(new Error(`Failed to download image: ${response.statusCode}`));
+      }
+
+      const file = fs.createWriteStream(dest);
+      response.pipe(file);
+      file.on('finish', () => {
+        file.close(resolve);
+      });
+    }).on('error', (err) => {
+      fs.unlink(dest, () => reject(err));
+    });
+  });
 }
 
-function luminance(hex) {
-  const r = parseInt(hex.slice(1,3),16)/255;
-  const g = parseInt(hex.slice(3,5),16)/255;
-  const b = parseInt(hex.slice(5,7),16)/255;
-  return 0.299*r + 0.587*g + 0.114*b;
-}
+async function run() {
+  let created = 0;
+  let skipped = 0;
 
-function makeSvg(w, h, bg, label) {
-  const textColor = luminance(bg) > 0.45 ? '#4A3025' : '#F4EBDD';
-  const accentColor = luminance(bg) > 0.45 ? '#B86F52' : '#E8A87C';
-  const lines = label.split(' — ');
-  const fs1 = Math.min(18, Math.max(10, Math.round(w/30)));
-  const fs2 = Math.min(14, Math.max(8, Math.round(w/40)));
+  for (let i = 0; i < placeholders.length; i++) {
+    const p = placeholders[i];
+    const filePath = path.join(assetsDir, p.name);
+    
+    let isSvg = false;
+    if (fs.existsSync(filePath)) {
+      const stats = fs.statSync(filePath);
+      // If it's less than 2KB, it's likely our old SVG placeholder. We will replace it.
+      if (stats.size < 2000) {
+        isSvg = true;
+      } else {
+        skipped++;
+        continue;
+      }
+    }
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
-  <defs>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="${textColor}" stroke-width="0.4" opacity="0.08"/>
-    </pattern>
-  </defs>
-  <rect width="${w}" height="${h}" fill="${bg}"/>
-  <rect width="${w}" height="${h}" fill="url(#grid)"/>
-  <rect x="${w*0.05}" y="${h*0.05}" width="${w*0.9}" height="${h*0.9}" fill="none" stroke="${accentColor}" stroke-width="1.5" rx="4" opacity="0.3"/>
-  <circle cx="${w/2}" cy="${h*0.38}" r="${Math.min(w,h)*0.08}" fill="${accentColor}" opacity="0.25"/>
-  <text x="${w/2}" y="${h*0.38 + Math.min(w,h)*0.03}" text-anchor="middle" font-family="Georgia, serif" font-size="${fs1}" fill="${accentColor}" font-weight="bold">RV</text>
-  <text x="${w/2}" y="${h*0.56}" text-anchor="middle" font-family="Georgia, serif" font-size="${fs1}" fill="${textColor}" font-weight="bold">${lines[0] || label}</text>
-  ${lines[1] ? `<text x="${w/2}" y="${h*0.56 + fs1*1.4}" text-anchor="middle" font-family="sans-serif" font-size="${fs2}" fill="${textColor}" opacity="0.65">${lines[1]}</text>` : ''}
-  <text x="${w/2}" y="${h*0.88}" text-anchor="middle" font-family="sans-serif" font-size="${Math.max(8,fs2-2)}" fill="${textColor}" opacity="0.35">Image placeholder — ReVox Upholstery</text>
-</svg>`;
-}
-
-let created = 0;
-let skipped = 0;
-
-for (const p of placeholders) {
-  const filePath = path.join(assetsDir, p.name);
-  if (fs.existsSync(filePath)) {
-    skipped++;
-    continue;
+    try {
+      // Determine keywords based on the label/name
+      let keywords = 'furniture,upholstery';
+      if (p.name.includes('fabric') || p.name.includes('fab-') || p.name.includes('swatch')) {
+        keywords = 'fabric,texture';
+      } else if (p.name.includes('artisan') || p.name.includes('client') || p.name.includes('testimonial') || p.name.includes('story-a') || p.name.includes('story-d')) {
+        keywords = 'portrait,person';
+      } else if (p.name.includes('workshop')) {
+        keywords = 'workshop,tools';
+      } else if (p.name.includes('sofa') || p.name.includes('chair') || p.name.includes('headboard')) {
+        keywords = 'furniture,interior';
+      }
+      
+      const url = `https://loremflickr.com/${p.w}/${p.h}/${keywords}/all?lock=${i}`;
+      await downloadImage(url, filePath);
+      created++;
+      process.stdout.write(`\r  Downloaded ${created} images... (${p.name})`);
+    } catch (err) {
+      console.error(`\nError downloading ${p.name}: ${err.message}`);
+    }
+    
+    // Add a small delay to avoid rate limiting
+    await new Promise(res => setTimeout(res, 500));
   }
-  // Write SVG as a .jpg-named file (browsers will still render SVG content)
-  // Better: write actual SVG with .svg extension and reference it — but since HTML uses .jpg,
-  // we write the SVG content to the .jpg path (browsers parse by content, not extension for <img>)
-  // Actually for <img> tags, let's write a tiny JPG-compatible base64 embedded SVG as a data URI wrapper.
-  // Simplest approach: write the SVG directly — most browsers will render SVG even with .jpg extension
-  fs.writeFileSync(filePath, makeSvg(p.w, p.h, p.color, p.label), 'utf8');
-  created++;
-  process.stdout.write(`\r  Created ${created} placeholders...`);
+
+  console.log(`\n\nDone! Downloaded ${created} images, skipped ${skipped} existing files.`);
+  console.log(`Total images in assets/images: ${fs.readdirSync(assetsDir).length}`);
 }
 
-console.log(`\n\nDone! Created ${created} placeholders, skipped ${skipped} existing files.`);
-console.log(`Total images in assets/images: ${fs.readdirSync(assetsDir).length}`);
+run();
