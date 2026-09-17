@@ -68,7 +68,7 @@ function getNavbarHTML(activePage = '') {
         <img src="assets/images/logo.png" alt="ReVox Upholstery logo" class="nav-logo" id="nav-logo-img" />
         <div class="nav-brand-text">
           <span class="nav-brand-name">ReVox Upholstery</span>
-          <span class="nav-brand-tagline">Craftsmanship Since 1998</span>
+
         </div>
       </a>
 
@@ -183,7 +183,7 @@ function getFooterHTML() {
             <img src="assets/images/logo.png" alt="ReVox Upholstery logo" class="nav-logo" />
             <div class="nav-brand-text">
               <span class="nav-brand-name">ReVox Upholstery</span>
-              <span class="nav-brand-tagline">Craftsmanship Since 1998</span>
+
             </div>
           </a>
           <p class="footer-brand-desc">Master artisans dedicated to revitalizing beloved furniture through traditional hand-upholstery, 8-way hand-tied springs, and curated luxury textiles.</p>
