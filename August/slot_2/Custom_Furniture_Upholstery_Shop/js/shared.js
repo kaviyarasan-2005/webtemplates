@@ -45,6 +45,7 @@ const Icons = {
   sofa: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z"/><path d="M4 18v2"/><path d="M20 18v2"/><path d="M12 4v9"/></svg>`,
   calendar: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>`,
   creditCard: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>`,
+  arrowUp: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>`,
 };
 
 /* ── Navbar HTML ── */
@@ -127,7 +128,7 @@ function getNavbarHTML(activePage = '') {
 
     <!-- Mobile Menu -->
     <div class="nav-mobile" id="nav-mobile" role="menu" aria-label="Mobile navigation">
-      <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.1em;color:rgba(244,235,221,0.4);padding:8px 16px 4px;text-transform:uppercase">Home</div>
+      <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.1em;color:rgba(244,235,221,0.78);padding:8px 16px 4px;text-transform:uppercase">Home</div>
       <div class="mobile-sub">
         <a href="home1.html" id="mob-home1">${Icons.home} <span>Home Classic</span></a>
         <a href="home2.html" id="mob-home2">${Icons.layers} <span>Home Artisan</span></a>
@@ -150,8 +151,33 @@ function getFooterHTML() {
   return `
   <footer class="site-footer" role="contentinfo">
     <div class="container">
+      <!-- Newsletter Banner -->
+      <div class="footer-newsletter-banner reveal">
+        <div class="footer-nb-content">
+          <div class="footer-nb-text">
+            <span class="eyebrow" style="color:var(--terracotta-light)">Stay Connected</span>
+            <h3 class="footer-nb-title">Bespoke Stories &amp; Seasonal Textiles</h3>
+            <p class="footer-nb-desc">Join over 3,200 design enthusiasts for fabric arrivals, restoration insights, and care tips.</p>
+          </div>
+          <div class="footer-nb-form-wrap">
+            <form class="footer-newsletter-form" id="footer-newsletter-form" novalidate>
+              <div class="footer-nl-input-group">
+                <input type="email" class="footer-nl-input" placeholder="Enter your email address" aria-label="Newsletter email" id="footer-newsletter-email" required />
+                <button type="submit" class="btn btn-primary footer-nl-btn" id="footer-newsletter-btn">
+                  <span>Subscribe</span>
+                  ${Icons.send}
+                </button>
+              </div>
+              <div id="footer-newsletter-status" class="footer-nl-status" aria-live="polite"></div>
+              <p class="footer-nl-note">No spam. Unsubscribe with a single click anytime.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Footer Grid -->
       <div class="footer-grid">
-        <!-- Brand -->
+        <!-- Brand & Heritage -->
         <div class="footer-brand">
           <a href="home1.html" class="nav-brand" aria-label="ReVox Upholstery - Go to Home">
             <img src="assets/images/logo.png" alt="ReVox Upholstery logo" class="nav-logo" />
@@ -160,18 +186,22 @@ function getFooterHTML() {
               <span class="nav-brand-tagline">Craftsmanship Since 1998</span>
             </div>
           </a>
-          <p>We breathe new life into your beloved furniture with meticulous hand-crafted upholstery, premium fabrics, and over two decades of artisan expertise.</p>
+          <p class="footer-brand-desc">Master artisans dedicated to revitalizing beloved furniture through traditional hand-upholstery, 8-way hand-tied springs, and curated luxury textiles.</p>
+          <div class="footer-badges">
+            <span class="footer-pill">${Icons.award} 25+ Yrs Mastery</span>
+            <span class="footer-pill">${Icons.shield} Lifetime Warranty</span>
+          </div>
           <div class="footer-social" aria-label="Social media links">
-            <a href="#" class="social-link" aria-label="Follow us on Instagram" id="footer-instagram">${Icons.instagram}</a>
-            <a href="#" class="social-link" aria-label="Follow us on Facebook" id="footer-facebook">${Icons.facebook}</a>
-            <a href="#" class="social-link" aria-label="Follow us on Pinterest" id="footer-pinterest">${Icons.pinterest}</a>
-            <a href="#" class="social-link" aria-label="Subscribe on YouTube" id="footer-youtube">${Icons.youtube}</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Follow us on Instagram" id="footer-instagram">${Icons.instagram}</a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Follow us on Facebook" id="footer-facebook">${Icons.facebook}</a>
+            <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Follow us on Pinterest" id="footer-pinterest">${Icons.pinterest}</a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Subscribe on YouTube" id="footer-youtube">${Icons.youtube}</a>
           </div>
         </div>
 
         <!-- Quick Links -->
         <div class="footer-col">
-          <h4>Quick Links</h4>
+          <h4 class="footer-heading">Explore</h4>
           <nav class="footer-links" aria-label="Footer quick links">
             <a href="home1.html" id="footer-home1-link">${Icons.chevronRight} Home Classic</a>
             <a href="home2.html" id="footer-home2-link">${Icons.chevronRight} Home Artisan</a>
@@ -184,59 +214,73 @@ function getFooterHTML() {
 
         <!-- Services -->
         <div class="footer-col">
-          <h4>Services</h4>
+          <h4 class="footer-heading">Our Services</h4>
           <nav class="footer-links" aria-label="Footer services links">
-            <a href="services.html#sofa" id="footer-sofa">${Icons.chevronRight} Sofa Upholstery</a>
+            <a href="services.html#sofa" id="footer-sofa">${Icons.chevronRight} Sofa &amp; Sectionals</a>
             <a href="services.html#chair" id="footer-chair">${Icons.chevronRight} Chair Reupholstery</a>
-            <a href="services.html#headboard" id="footer-headboard">${Icons.chevronRight} Headboard Upholstery</a>
-            <a href="services.html#ottoman" id="footer-ottoman">${Icons.chevronRight} Ottoman &amp; Bench</a>
-            <a href="services.html#dining" id="footer-dining">${Icons.chevronRight} Dining Chairs</a>
+            <a href="services.html#headboard" id="footer-headboard">${Icons.chevronRight} Bespoke Headboards</a>
+            <a href="services.html#ottoman" id="footer-ottoman">${Icons.chevronRight} Ottoman &amp; Benches</a>
+            <a href="services.html#dining" id="footer-dining">${Icons.chevronRight} Dining Chair Sets</a>
             <a href="contact.html#quote" id="footer-quote">${Icons.chevronRight} Request a Quote</a>
           </nav>
         </div>
 
-        <!-- Contact -->
+        <!-- Workshop & Contact -->
         <div class="footer-col">
-          <h4>Contact Us</h4>
-          <div class="footer-contact-item">
-            <span class="footer-contact-icon">${Icons.mapPin}</span>
-            <div class="footer-contact-text">
-              <strong>Workshop Address</strong>
-              142 Artisan Lane, Design District<br>Chennai, Tamil Nadu 600001
+          <h4 class="footer-heading">Visit Workshop</h4>
+          <div class="footer-contact-list">
+            <div class="footer-contact-item">
+              <span class="footer-contact-icon">${Icons.mapPin}</span>
+              <div class="footer-contact-text">
+                <strong>Showroom &amp; Atelier</strong>
+                <span>142 Artisan Lane, Design District<br>Chennai, TN 600001</span>
+              </div>
+            </div>
+            <div class="footer-contact-item">
+              <span class="footer-contact-icon">${Icons.phone}</span>
+              <div class="footer-contact-text">
+                <strong>Direct Line</strong>
+                <a href="tel:+914412345678" id="footer-phone">+91 44 1234 5678</a>
+              </div>
+            </div>
+            <div class="footer-contact-item">
+              <span class="footer-contact-icon">${Icons.mail}</span>
+              <div class="footer-contact-text">
+                <strong>Inquiries</strong>
+                <a href="mailto:hello@revoxupholstery.com" id="footer-email">hello@revoxupholstery.com</a>
+              </div>
+            </div>
+            <div class="footer-contact-item">
+              <span class="footer-contact-icon">${Icons.clock}</span>
+              <div class="footer-contact-text">
+                <strong>Workshop Hours</strong>
+                <span>Mon – Sat: 9:00 AM – 6:00 PM</span>
+              </div>
             </div>
           </div>
-          <div class="footer-contact-item">
-            <span class="footer-contact-icon">${Icons.phone}</span>
-            <div class="footer-contact-text">
-              <strong>Phone</strong>
-              <a href="tel:+914412345678" id="footer-phone">+91 44 1234 5678</a>
-            </div>
-          </div>
-          <div class="footer-contact-item">
-            <span class="footer-contact-icon">${Icons.mail}</span>
-            <div class="footer-contact-text">
-              <strong>Email</strong>
-              <a href="mailto:hello@revoxupholstery.com" id="footer-email">hello@revoxupholstery.com</a>
-            </div>
-          </div>
-          <div class="footer-newsletter">
-            <p>Get design tips &amp; exclusive offers</p>
-            <form class="newsletter-form" id="footer-newsletter-form" novalidate>
-              <input type="email" class="newsletter-input" placeholder="Your email address" aria-label="Newsletter email" id="footer-newsletter-email" required />
-              <button type="submit" class="btn btn-primary btn-sm" aria-label="Subscribe to newsletter">${Icons.send}</button>
-            </form>
+          <div class="footer-col-action">
+            <a href="contact.html" class="btn btn-outline btn-sm footer-book-btn">${Icons.calendar} Book Showroom Visit</a>
           </div>
         </div>
       </div>
 
       <!-- Bottom Bar -->
       <div class="footer-bottom">
-        <p>&copy; <span id="footer-year"></span> ReVox Upholstery. All rights reserved.</p>
+        <div class="footer-bottom-left">
+          <p>&copy; <span id="footer-year"></span> ReVox Upholstery. All rights reserved.</p>
+          <span class="footer-bottom-divider" aria-hidden="true">•</span>
+          <p class="footer-craft-note">Handcrafted with passion &amp; precision</p>
+        </div>
         <nav class="footer-bottom-links" aria-label="Footer legal links">
+          <a href="contact.html#faq" id="footer-faq">FAQ</a>
           <a href="#" id="footer-privacy">Privacy Policy</a>
           <a href="#" id="footer-terms">Terms of Service</a>
           <a href="#" id="footer-sitemap">Sitemap</a>
         </nav>
+        <button class="footer-back-top" id="footer-back-top" aria-label="Back to top of page">
+          <span>Top</span>
+          ${Icons.arrowUp}
+        </button>
       </div>
     </div>
   </footer>`;
@@ -396,17 +440,42 @@ function initNewsletterForm() {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const input = document.getElementById('footer-newsletter-email');
+    const statusEl = document.getElementById('footer-newsletter-status');
     if (!input.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
       input.classList.add('error');
       input.setAttribute('aria-invalid', 'true');
+      if (statusEl) {
+        statusEl.innerHTML = `<span style="color:#FF8A80;font-size:0.8125rem">Please enter a valid email address.</span>`;
+      }
       return;
     }
     input.classList.remove('error');
     input.value = '';
-    const btn = form.querySelector('button');
-    btn.innerHTML = Icons.check;
-    btn.style.background = '#4CAF50';
-    setTimeout(() => { btn.innerHTML = Icons.send; btn.style.background = ''; }, 3000);
+    const btn = form.querySelector('button[type="submit"]');
+    const origHTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = `${Icons.check} <span>Subscribed!</span>`;
+    btn.style.background = '#2E7D32';
+    btn.style.borderColor = '#2E7D32';
+    if (statusEl) {
+      statusEl.innerHTML = `<span style="color:#81C784;font-size:0.8125rem">Thank you for subscribing! Welcome to ReVox.</span>`;
+    }
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.innerHTML = origHTML;
+      btn.style.background = '';
+      btn.style.borderColor = '';
+      if (statusEl) statusEl.innerHTML = '';
+    }, 4000);
+  });
+}
+
+/* ── Back to Top ── */
+function initBackToTop() {
+  const btn = document.getElementById('footer-back-top');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }
 
@@ -446,6 +515,7 @@ function initShared(activePage = '') {
   initPageLoader();
   initCounters();
   initNewsletterForm();
+  initBackToTop();
 }
 
 export { initShared, Icons, ThemeManager, RTLManager };

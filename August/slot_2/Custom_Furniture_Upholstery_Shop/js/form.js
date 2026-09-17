@@ -174,7 +174,7 @@ function initPageNewsletter(formId, resultId) {
     emailInput.classList.remove('error');
     const resultEl = document.getElementById(resultId);
     if (resultEl) {
-      resultEl.innerHTML = `<p style="color:rgba(244,235,221,0.7);font-size:0.8125rem;margin-top:8px">${CHECK_ICON} You are subscribed! Welcome to the ReVox community.</p>`;
+      resultEl.innerHTML = `<p style="color:rgba(244,235,221,0.92);font-size:0.8125rem;margin-top:8px">${CHECK_ICON} You are subscribed! Welcome to the ReVox community.</p>`;
     }
     setTimeout(() => { btn.disabled = false; btn.innerHTML = orig; btn.style.background = ''; btn.style.borderColor = ''; }, 4000);
   });
