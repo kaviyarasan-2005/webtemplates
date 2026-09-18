@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bulk Orders for Schools & Companies | GoldCrest Engravings</title>
+  <meta name="description" content="Bulk trophy and award orders for schools, colleges, sports clubs, and corporations. Volume discounts up to 35%. Fast turnaround, dedicated account management, and free samples." />
+  <link rel="canonical" href="bulk-orders.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/nav.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/theme.js"></script>
+  <script src="js/rtl.js"></script>
+
+  <style>
+    /* Bulk Orders Page */
+    .bulk-hero {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .bulk-hero__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .bulk-hero__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(15,13,10,0.92) 0%, rgba(25,21,14,0.75) 60%, rgba(15,13,10,0.50) 100%);
+    }
+    .bulk-hero__content { position: relative; z-index: 2; max-width: 640px; }
+    .bulk-hero__badge {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      background: rgba(232,211,154,0.12);
+      border: 1px solid rgba(232,211,154,0.3);
+      border-radius: var(--radius-full);
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      margin-bottom: var(--space-5);
+    }
+
+    /* Who We Serve */
+    .serve-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-5);
+    }
+    .serve-card {
+      position: relative;
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 3/4;
+    }
+    .serve-card__img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-slow); }
+    .serve-card:hover .serve-card__img { transform: scale(1.06); }
+    .serve-card__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(15,13,10,0.92) 0%, rgba(15,13,10,0.2) 50%, transparent 100%);
+    }
+    .serve-card__content { position: absolute; bottom: 0; inset-inline: 0; padding: var(--space-5); }
+    .serve-card__icon { font-size: 1.5rem; color: var(--color-gold); margin-bottom: var(--space-3); }
+    .serve-card__title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-white); margin-bottom: var(--space-2); }
+    .serve-card__text { font-size: var(--text-xs); color: rgba(255,255,255,0.65); line-height: 1.55; }
+    @media (max-width: 1024px) { .serve-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px)  { .serve-grid { grid-template-columns: 1fr 1fr; } }
+
+    /* Benefits */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+    }
+    .benefits-list { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+    .benefit-item {
+      padding: var(--space-6);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      transition: all var(--transition-base);
+    }
+    .benefit-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--color-gold); }
+    .benefit-item__icon { font-size: 1.5rem; color: var(--color-gold-dark); margin-bottom: var(--space-3); }
+    .benefit-item__title { font-weight: 700; font-size: var(--text-base); margin-bottom: var(--space-2); color: var(--text-primary); }
+    .benefit-item__text { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6; }
+    .benefits-image { border-radius: var(--radius-2xl); overflow: hidden; }
+    .benefits-image img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    @media (max-width: 1024px) { .benefits-grid { grid-template-columns: 1fr; } .benefits-image { display: none; } }
+    @media (max-width: 640px)  { .benefits-list { grid-template-columns: 1fr; } }
+
+    /* Volume Pricing Table */
+    .volume-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .volume-table thead tr { background: linear-gradient(135deg, #1A1508, #2A2418); }
+    .volume-table th {
+      color: var(--color-gold);
+      font-family: var(--font-accent);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: var(--space-5);
+      text-align: center;
+    }
+    .volume-table th:first-child { text-align: start; padding-inline-start: var(--space-6); }
+    .volume-table td {
+      padding: var(--space-4) var(--space-5);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      text-align: center;
+      transition: background var(--transition-fast);
+    }
+    .volume-table tbody tr:hover td { background: var(--bg-surface-2); }
+    .volume-table td:first-child { text-align: start; padding-inline-start: var(--space-6); font-weight: 700; color: var(--text-primary); }
+    .volume-table tbody tr:last-child td { border-bottom: none; }
+    .volume-table .highlight { color: var(--color-gold-darker); font-weight: 800; font-size: var(--text-base); }
+    .volume-table .best-value {
+      background: rgba(232,211,154,0.06) !important;
+      border-inline-start: 3px solid var(--color-gold-dark);
+    }
+    .volume-table .best-value td:first-child { border-inline-start: 3px solid var(--color-gold-dark); }
+
+    /* Case Studies */
+    .case-study-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+    .case-study {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--space-5);
+      align-items: start;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: all var(--transition-base);
+    }
+    .case-study:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--color-gold); }
+    .case-study__img { width: 100%; height: 100%; min-height: 180px; object-fit: cover; }
+    .case-study__body { padding: var(--space-5) var(--space-5) var(--space-5) 0; }
+    .case-study__tag { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--color-gold-dark); display: block; margin-bottom: var(--space-2); }
+    .case-study__title { font-size: var(--text-lg); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-2); line-height: 1.3; }
+    .case-study__quote { font-size: var(--text-sm); color: var(--text-secondary); font-style: italic; line-height: 1.65; margin-bottom: var(--space-3); }
+    .case-study__stats { display: flex; gap: var(--space-5); flex-wrap: wrap; }
+    .case-study__stat { text-align: start; }
+    .case-study__stat-num { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-gold-dark); display: block; }
+    .case-study__stat-label { font-size: var(--text-xs); color: var(--text-muted); }
+    @media (max-width: 1280px) { .case-study { grid-template-columns: 160px 1fr; } }
+    @media (max-width: 1024px) { .case-study-grid { grid-template-columns: 1fr; } .case-study { grid-template-columns: 180px 1fr; } }
+    @media (max-width: 640px) { .case-study { grid-template-columns: 1fr; } .case-study__img { height: 180px; } }
+
+    /* Bulk Order Form */
+    .bulk-form-section {
+      background: linear-gradient(135deg, #0E0C08 0%, #1C1A12 50%, #2A2418 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .bulk-form-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(232,211,154,0.07) 0%, transparent 50%);
+    }
+    .bulk-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: var(--space-12);
+      align-items: start;
+      position: relative;
+      z-index: 1;
+    }
+    @media (max-width: 1024px) { .bulk-form-grid { grid-template-columns: 1fr; } }
+
+    .bulk-guarantee {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+    }
+    .bulk-guarantee__item {
+      display: flex; align-items: flex-start; gap: var(--space-3);
+      font-size: var(--text-sm); color: rgba(255,255,255,0.65);
+    }
+    .bulk-guarantee__item i { color: var(--color-gold-dark); flex-shrink: 0; margin-top: 2px; }
+    @media (max-width: 640px) { .bulk-guarantee { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- NAV -->
+<header class="site-header" id="site-header" role="banner">
+  <nav class="nav container" aria-label="Main navigation">
+    <a href="index.html" class="nav__brand" id="brand-logo" aria-label="GoldCrest Engravings — Home">
+      <div class="nav__brand-logo" aria-hidden="true"><i class="fa-solid fa-trophy"></i></div>
+      <div class="nav__brand-text">
+        <span class="nav__brand-name">GoldCrest <em>Engravings</em></span>
+        <span class="nav__brand-tagline">Crafted Excellence</span>
+      </div>
+    </a>
+    <ul class="nav__menu" id="nav-menu" role="menubar">
+      <li class="nav__item nav__item--dropdown" role="none">
+        <a href="#" class="nav__link nav__link--dropdown" role="menuitem" aria-haspopup="true" aria-expanded="false" id="home-menu-btn">
+          Home <i class="fa-solid fa-chevron-down nav__caret"></i>
+        </a>
+        <ul class="nav__dropdown" role="menu">
+          <li role="none"><a href="index.html" class="nav__dropdown-link" role="menuitem"><i class="fa-solid fa-star"></i> Home Classic</a></li>
+          <li role="none"><a href="home2.html" class="nav__dropdown-link" role="menuitem"><i class="fa-solid fa-gem"></i> Home Legacy</a></li>
+        </ul>
+      </li>
+      <li class="nav__item" role="none"><a href="products.html" class="nav__link" role="menuitem">Products</a></li>
+      <li class="nav__item" role="none"><a href="custom-engraving.html" class="nav__link" role="menuitem">Custom Engraving</a></li>
+      <li class="nav__item" role="none"><a href="bulk-orders.html" class="nav__link active" role="menuitem" aria-current="page">Bulk Orders</a></li>
+      <li class="nav__item" role="none"><a href="contact.html" class="nav__link" role="menuitem">Contact</a></li>
+    </ul>
+    <div class="nav__controls">
+      <button class="btn-icon" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false"><i class="fa-solid fa-moon" id="theme-icon"></i></button>
+      <button class="btn-icon" id="rtl-toggle" aria-label="Switch to RTL" aria-pressed="false">
+        <i class="fa-solid fa-arrows-left-right"></i><span class="rtl-label" id="rtl-label">RTL</span>
+      </button>
+      <a href="contact.html" class="btn btn--primary"><i class="fa-solid fa-pen-nib"></i> Get Quote</a>
+    </div>
+    <button class="nav__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+      <span class="hamburger__line"></span><span class="hamburger__line"></span><span class="hamburger__line"></span>
+    </button>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- SECTION 1: HERO -->
+  <section class="bulk-hero" aria-label="Bulk Orders hero">
+    <img src="images/bulk-orders-hero.jpg" alt="Large batch of identical trophies displayed in rows ready for corporate event distribution" class="bulk-hero__bg" loading="eager" />
+    <div class="bulk-hero__overlay" aria-hidden="true"></div>
+    <div class="container">
+      <div class="bulk-hero__content">
+        <nav aria-label="Breadcrumb" class="breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb__sep" aria-hidden="true"><i class="fa-solid fa-chevron-right" style="font-size:.6rem"></i></span>
+          <span aria-current="page">Bulk Orders</span>
+        </nav>
+        <div class="bulk-hero__badge hero-animate-1">
+          <i class="fa-solid fa-boxes-stacked"></i> Volume Discounts Up to 35%
+        </div>
+        <h1 class="section-title section-title--light hero-animate-2" style="margin-bottom:var(--space-5);">
+          Bulk Awards for <em>Schools & Companies</em>
+        </h1>
+        <p class="section-subtitle section-subtitle--light hero-animate-3" style="margin-inline:0;">
+          Whether it's 20 medals for a school sports day or 500 plaques for a corporate
+          recognition program — GoldCrest delivers consistent quality at scale, on time,
+          every time.
+        </p>
+        <div class="flex gap-4 flex-wrap hero-animate-4" style="margin-top:var(--space-8);">
+          <a href="#bulk-quote" class="btn btn--primary btn--lg"><i class="fa-solid fa-file-invoice-dollar"></i> Get Bulk Quote</a>
+          <a href="#volume-pricing" class="btn btn--ghost btn--lg"><i class="fa-solid fa-table"></i> See Pricing</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: WHO WE SERVE -->
+  <section class="section" id="who-we-serve" aria-labelledby="serve-heading">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-label">Our Clients</span>
+        <div class="ornament"><span class="ornament__line"></span><span class="ornament__diamond"></span><span class="ornament__line ornament__line--rev"></span></div>
+        <h2 class="section-title" id="serve-heading">Who We <em>Serve</em></h2>
+        <p class="section-subtitle">From kindergarten prize days to national corporate galas — our bulk service scales to meet your needs.</p>
+      </div>
+
+      <div class="serve-grid">
+        <div class="serve-card" data-reveal data-reveal-delay="1">
+          <img src="images/serve-schools.jpg" alt="School awards ceremony with students receiving trophies and medals on stage" class="serve-card__img" loading="lazy" />
+          <div class="serve-card__overlay" aria-hidden="true"></div>
+          <div class="serve-card__content">
+            <div class="serve-card__icon" aria-hidden="true"><i class="fa-solid fa-school"></i></div>
+            <h3 class="serve-card__title">Schools & Colleges</h3>
+            <p class="serve-card__text">Sports days, academic achievement, graduation — we understand school budgets and deadlines.</p>
+          </div>
+        </div>
+        <div class="serve-card" data-reveal data-reveal-delay="2">
+          <img src="images/serve-corporate.jpg" alt="Corporate award ceremony with employees receiving recognition plaques at company event" class="serve-card__img" loading="lazy" />
+          <div class="serve-card__overlay" aria-hidden="true"></div>
+          <div class="serve-card__content">
+            <div class="serve-card__icon" aria-hidden="true"><i class="fa-solid fa-building"></i></div>
+            <h3 class="serve-card__title">Corporations</h3>
+            <p class="serve-card__text">Employee recognition, long-service awards, sales incentives, and gala ceremonies.</p>
+          </div>
+        </div>
+        <div class="serve-card" data-reveal data-reveal-delay="3">
+          <img src="images/serve-sports.jpg" alt="Sports club with coaches distributing medals to youth athletes after competition" class="serve-card__img" loading="lazy" />
+          <div class="serve-card__overlay" aria-hidden="true"></div>
+          <div class="serve-card__content">
+            <div class="serve-card__icon" aria-hidden="true"><i class="fa-solid fa-futbol"></i></div>
+            <h3 class="serve-card__title">Sports Clubs & Leagues</h3>
+            <p class="serve-card__text">Season-end trophies, league medals, and player-of-the-match awards for any sport.</p>
+          </div>
+        </div>
+        <div class="serve-card" data-reveal data-reveal-delay="4">
+          <img src="images/serve-events.jpg" alt="Event organizers unpacking branded award boxes for conference recognition ceremony" class="serve-card__img" loading="lazy" />
+          <div class="serve-card__overlay" aria-hidden="true"></div>
+          <div class="serve-card__content">
+            <div class="serve-card__icon" aria-hidden="true"><i class="fa-solid fa-calendar-star"></i></div>
+            <h3 class="serve-card__title">Events & Charities</h3>
+            <p class="serve-card__text">Charity galas, community events, conferences, and fundraisers requiring branded awards.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: BULK BENEFITS -->
+  <section class="section section--surface" id="bulk-benefits" aria-labelledby="benefits-heading">
+    <div class="container">
+      <div class="benefits-grid">
+        <div>
+          <div class="section-header section-header--left" data-reveal>
+            <span class="section-label">Why Bulk with GoldCrest</span>
+            <div class="ornament" style="justify-content:flex-start;margin-bottom:var(--space-3)">
+              <span class="ornament__line"></span><span class="ornament__diamond"></span>
+              <span class="ornament__line ornament__line--rev"></span>
+            </div>
+            <h2 class="section-title" id="benefits-heading">The <em>Bulk Order Advantage</em></h2>
+            <p class="section-subtitle" style="margin-inline:0;">More than just lower prices — our bulk clients get a dedicated team, streamlined process, and guaranteed consistency across every single unit.</p>
+          </div>
+
+          <div class="benefits-list">
+            <div class="benefit-item" data-reveal data-reveal-delay="1">
+              <div class="benefit-item__icon"><i class="fa-solid fa-percent"></i></div>
+              <h3 class="benefit-item__title">Up to 35% Discount</h3>
+              <p class="benefit-item__text">Volume pricing starting from 10 units. Greater quantity means greater savings.</p>
+            </div>
+            <div class="benefit-item" data-reveal data-reveal-delay="2">
+              <div class="benefit-item__icon"><i class="fa-solid fa-user-tie"></i></div>
+              <h3 class="benefit-item__title">Dedicated Manager</h3>
+              <p class="benefit-item__text">A single point of contact manages your entire order from artwork to delivery.</p>
+            </div>
+            <div class="benefit-item" data-reveal data-reveal-delay="3">
+              <div class="benefit-item__icon"><i class="fa-solid fa-medal"></i></div>
+              <h3 class="benefit-item__title">100% Consistency</h3>
+              <p class="benefit-item__text">Every unit in your order is identical in quality — guaranteed. We replace any variance at zero cost.</p>
+            </div>
+            <div class="benefit-item" data-reveal data-reveal-delay="4">
+              <div class="benefit-item__icon"><i class="fa-solid fa-box-open"></i></div>
+              <h3 class="benefit-item__title">Free Sample Unit</h3>
+              <p class="benefit-item__text">For orders of 50+, receive a free physical sample for approval before full production begins.</p>
+            </div>
+            <div class="benefit-item" data-reveal data-reveal-delay="1">
+              <div class="benefit-item__icon"><i class="fa-solid fa-file-invoice"></i></div>
+              <h3 class="benefit-item__title">Invoice & Net-30</h3>
+              <p class="benefit-item__text">Schools and verified businesses can order on invoice with Net-30 payment terms.</p>
+            </div>
+            <div class="benefit-item" data-reveal data-reveal-delay="2">
+              <div class="benefit-item__icon"><i class="fa-solid fa-truck-fast"></i></div>
+              <h3 class="benefit-item__title">Priority Shipping</h3>
+              <p class="benefit-item__text">Bulk orders receive free tracked shipping. Express delivery available for all quantities.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="benefits-image" data-reveal="right">
+          <img src="images/bulk-benefits-img.jpg" alt="Quality control inspection of bulk medal order with technician checking consistency" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: VOLUME PRICING TABLE -->
+  <section class="section" id="volume-pricing" aria-labelledby="pricing-table-heading">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-label">Volume Pricing</span>
+        <div class="ornament"><span class="ornament__line"></span><span class="ornament__diamond"></span><span class="ornament__line ornament__line--rev"></span></div>
+        <h2 class="section-title" id="pricing-table-heading">Transparent Bulk <em>Pricing</em></h2>
+        <p class="section-subtitle">No hidden fees, no surprises. Discounts are applied automatically to your quote based on quantity.</p>
+      </div>
+
+      <div style="overflow-x:auto;" data-reveal>
+        <table class="volume-table" role="table" aria-label="Bulk order volume pricing">
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:start;padding-inline-start:var(--space-6);">Quantity</th>
+              <th scope="col">Discount</th>
+              <th scope="col">Medals (per unit)</th>
+              <th scope="col">Trophies (per unit)</th>
+              <th scope="col">Plaques (per unit)</th>
+              <th scope="col">Badges (per unit)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1–9 units</td>
+              <td>Standard</td>
+              <td>From $12.00</td>
+              <td>From $48.00</td>
+              <td>From $35.00</td>
+              <td>From $8.00</td>
+            </tr>
+            <tr>
+              <td>10–24 units</td>
+              <td class="highlight">–15%</td>
+              <td>From $10.20</td>
+              <td>From $40.80</td>
+              <td>From $29.75</td>
+              <td>From $6.80</td>
+            </tr>
+            <tr>
+              <td>25–49 units</td>
+              <td class="highlight">–20%</td>
+              <td>From $9.60</td>
+              <td>From $38.40</td>
+              <td>From $28.00</td>
+              <td>From $6.40</td>
+            </tr>
+            <tr class="best-value">
+              <td>50–99 units <span style="font-size:.65rem;background:var(--color-gold-dark);color:var(--color-charcoal);padding:2px 8px;border-radius:12px;font-weight:800;margin-inline-start:6px;">Popular</span></td>
+              <td class="highlight">–27%</td>
+              <td>From $8.76</td>
+              <td>From $35.04</td>
+              <td>From $25.55</td>
+              <td>From $5.84</td>
+            </tr>
+            <tr>
+              <td>100–249 units</td>
+              <td class="highlight">–30%</td>
+              <td>From $8.40</td>
+              <td>From $33.60</td>
+              <td>From $24.50</td>
+              <td>From $5.60</td>
+            </tr>
+            <tr>
+              <td>250+ units</td>
+              <td class="highlight">–35%</td>
+              <td>From $7.80</td>
+              <td>From $31.20</td>
+              <td>From $22.75</td>
+              <td>From $5.20</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-center text-muted" style="margin-top:var(--space-5);font-size:var(--text-sm);" data-reveal>
+        Prices are per unit engraving fee. Product costs are separate. <a href="#bulk-quote">Request a full quote</a> for exact pricing including shipping.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION 5: CASE STUDIES -->
+  <section class="section section--surface" id="case-studies" aria-labelledby="cases-heading">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-label">Success Stories</span>
+        <div class="ornament"><span class="ornament__line"></span><span class="ornament__diamond"></span><span class="ornament__line ornament__line--rev"></span></div>
+        <h2 class="section-title" id="cases-heading">Client <em>Case Studies</em></h2>
+        <p class="section-subtitle">Real projects, real results — see how GoldCrest has helped organizations across industries.</p>
+      </div>
+
+      <div class="case-study-grid">
+        <article class="case-study" data-reveal>
+          <img src="images/case-study-school.jpg" alt="Students at Westfield Academy sports day holding medals and trophies" class="case-study__img" loading="lazy" />
+          <div class="case-study__body">
+            <span class="case-study__tag">Education</span>
+            <h3 class="case-study__title">Westfield Academy — Annual Sports Day</h3>
+            <blockquote class="case-study__quote">"280 medals, 15 trophies, all perfectly engraved and delivered 3 days before our event. The students were absolutely delighted."</blockquote>
+            <div class="case-study__stats">
+              <div class="case-study__stat"><span class="case-study__stat-num">295</span><span class="case-study__stat-label">Total Units</span></div>
+              <div class="case-study__stat"><span class="case-study__stat-num">28%</span><span class="case-study__stat-label">Discount Applied</span></div>
+              <div class="case-study__stat"><span class="case-study__stat-num">4 Days</span><span class="case-study__stat-label">Delivery</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-study" data-reveal data-reveal-delay="1">
+          <img src="images/case-study-corp.jpg" alt="Meridian Technologies annual awards gala with crystal trophies displayed at ceremony" class="case-study__img" loading="lazy" />
+          <div class="case-study__body">
+            <span class="case-study__tag">Corporate</span>
+            <h3 class="case-study__title">Meridian Technologies — Annual Gala</h3>
+            <blockquote class="case-study__quote">"60 crystal awards with individual 3D laser portraits. The quality was beyond what we imagined. Our CEO presented them with pride."</blockquote>
+            <div class="case-study__stats">
+              <div class="case-study__stat"><span class="case-study__stat-num">60</span><span class="case-study__stat-label">Crystal Awards</span></div>
+              <div class="case-study__stat"><span class="case-study__stat-num">27%</span><span class="case-study__stat-label">Discount</span></div>
+              <div class="case-study__stat"><span class="case-study__stat-num">10 Days</span><span class="case-study__stat-label">Turnaround</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-study" data-reveal>
+          <img src="images/case-study-sports.jpg" alt="City Youth Soccer League trophy presentation with 150 medals arranged on display table" class="case-study__img" loading="lazy" />
+          <div class="case-study__body">
+            <span class="case-study__tag">Sports</span>
+            <h3 class="case-study__title">City Youth Soccer League — Season Finals</h3>
+            <blockquote class="case-study__quote">"450 medals in club colors across 15 teams. Every single one was perfect and the kids were over the moon. We'll never use another supplier."</blockquote>
+            <div class="case-study__stats">
+              <div class="case-study__stat"><span class="case-study__stat-num">450</span><span class="case-study__stat-label">Medals</span></div>
+              <div class="case-study__stat"><span class="case-study__stat-num">35%</span><span class="case-study__stat-label">Discount</span></div>
+              <div class="case-study__stat"><span class="case-study__stat-num">7 Days</span><span class="case-study__stat-label">Turnaround</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-study" data-reveal data-reveal-delay="1">
+          <img src="images/case-study-hospital.jpg" alt="St Lukes Hospital staff wearing new name badges at hospital entrance" class="case-study__img" loading="lazy" />
+          <div class="case-study__body">
+            <span class="case-study__tag">Healthcare</span>
+            <h3 class="case-study__title">St. Luke's Hospital — Staff Name Badges</h3>
+            <blockquote class="case-study__quote">"All 450 staff name badges individually engraved with department codes. Magnetic backing is brilliant — not a single complaint. Will reorder."</blockquote>
+            <div class="case-study__stats">
+              <div class="case-study__stat"><span class="case-study__stat-num">450</span><span class="case-study__stat-label">Name Badges</span></div>
+              <div class="case-study__stat"><span class="case-study__stat-num">35%</span><span class="case-study__stat-label">Discount</span></div>
+              <div class="case-study__stat"><span class="case-study__stat-num">5 Days</span><span class="case-study__stat-label">Turnaround</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: ORDER PROCESS STEPS -->
+  <section class="section" id="bulk-process" aria-labelledby="bulk-process-heading">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-label">How It Works</span>
+        <div class="ornament"><span class="ornament__line"></span><span class="ornament__diamond"></span><span class="ornament__line ornament__line--rev"></span></div>
+        <h2 class="section-title" id="bulk-process-heading">The Bulk Order <em>Process</em></h2>
+        <p class="section-subtitle">From first enquiry to doorstep delivery — our 5-step process is designed for organizations with tight deadlines.</p>
+      </div>
+
+      <div class="steps-grid" style="grid-template-columns:repeat(5,1fr);" data-reveal>
+        <div class="step" data-reveal-delay="1">
+          <div class="step__icon"><i class="fa-solid fa-paper-plane"></i><span class="step__num">1</span></div>
+          <h3 class="step__title">Submit RFQ</h3>
+          <p class="step__text">Complete our bulk quote form with quantities, product type, and deadline.</p>
+        </div>
+        <div class="step" data-reveal-delay="2">
+          <div class="step__icon"><i class="fa-solid fa-user-tie"></i><span class="step__num">2</span></div>
+          <h3 class="step__title">Account Manager</h3>
+          <p class="step__text">A dedicated manager contacts you within 2 hours with a detailed quote.</p>
+        </div>
+        <div class="step" data-reveal-delay="3">
+          <div class="step__icon"><i class="fa-solid fa-eye"></i><span class="step__num">3</span></div>
+          <h3 class="step__title">Approve Sample</h3>
+          <p class="step__text">Review a free digital proof (and physical sample for 50+ orders) before production.</p>
+        </div>
+        <div class="step" data-reveal-delay="4">
+          <div class="step__icon"><i class="fa-solid fa-industry"></i><span class="step__num">4</span></div>
+          <h3 class="step__title">Production</h3>
+          <p class="step__text">Your entire order is produced with strict quality control on every single unit.</p>
+        </div>
+        <div class="step" data-reveal-delay="5">
+          <div class="step__icon"><i class="fa-solid fa-truck"></i><span class="step__num">5</span></div>
+          <h3 class="step__title">Delivery</h3>
+          <p class="step__text">Packaged and shipped with tracking. We can deliver to multiple locations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: FAQ -->
+  <section class="section section--surface" id="bulk-faq" aria-labelledby="bulk-faq-heading">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-label">Common Questions</span>
+        <div class="ornament"><span class="ornament__line"></span><span class="ornament__diamond"></span><span class="ornament__line ornament__line--rev"></span></div>
+        <h2 class="section-title" id="bulk-faq-heading">Bulk Order <em>FAQ</em></h2>
+      </div>
+      <div class="accordion" data-reveal style="max-width:760px;margin-inline:auto;">
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">What is the minimum quantity for bulk pricing?<span class="accordion-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span></button>
+          <div class="accordion-body" role="region"><p class="accordion-content">Bulk discounts begin at 10 units. There is no minimum order — we accept orders of 1 unit and above — but volume discounts apply from 10 units onward, reaching 35% for orders of 250 or more units.</p></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">Can each award in a bulk order have different names?<span class="accordion-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span></button>
+          <div class="accordion-body" role="region"><p class="accordion-content">Absolutely. This is our most common bulk requirement. Simply send us a spreadsheet with each recipient's name and details, and we'll engrave each award individually with the exact text required. No additional charge per name.</p></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">Do you offer Net-30 invoicing for schools?<span class="accordion-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span></button>
+          <div class="accordion-body" role="region"><p class="accordion-content">Yes. Verified schools, universities, government bodies, and established businesses can apply for Net-30 payment terms. Please mention this in your RFQ and provide your organization's details for our standard credit check process.</p></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">How is consistency maintained across large orders?<span class="accordion-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span></button>
+          <div class="accordion-body" role="region"><p class="accordion-content">All units in a bulk order are produced from the same calibrated machine setup in a single production run. Each item undergoes our 3-point quality inspection before packaging. We guarantee 100% consistency — any unit not meeting standard is reproduced and replaced at zero cost.</p></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">Can you deliver to multiple addresses?<span class="accordion-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span></button>
+          <div class="accordion-body" role="region"><p class="accordion-content">Yes. For multi-location deliveries (e.g. regional offices or multiple school branches), we offer split-shipment delivery with individual tracking numbers for each destination. A small per-location fee applies for orders split across more than 3 addresses.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: BULK QUOTE FORM -->
+  <section class="section bulk-form-section" id="bulk-quote" aria-labelledby="bulk-form-heading">
+    <div class="container">
+      <div class="bulk-form-grid">
+        <div data-reveal>
+          <span class="section-label" style="color:var(--color-gold)">Request a Quote</span>
+          <div class="ornament" style="justify-content:flex-start;margin-bottom:var(--space-3)">
+            <span class="ornament__line"></span><span class="ornament__diamond"></span>
+            <span class="ornament__line ornament__line--rev"></span>
+          </div>
+          <h2 class="section-title section-title--light" id="bulk-form-heading" style="font-size:var(--text-3xl);">
+            Get Your <em>Bulk Quote</em>
+          </h2>
+          <p style="color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:var(--space-6);">
+            Fill in your requirements and receive a detailed quote within 2 hours during
+            business hours. Our bulk team is dedicated to finding the best solution
+            for your budget and deadline.
+          </p>
+          <div class="bulk-guarantee">
+            <div class="bulk-guarantee__item"><i class="fa-solid fa-clock"></i><span>Quote within 2 hours</span></div>
+            <div class="bulk-guarantee__item"><i class="fa-solid fa-percent"></i><span>Volume discounts up to 35%</span></div>
+            <div class="bulk-guarantee__item"><i class="fa-solid fa-handshake"></i><span>Dedicated account manager</span></div>
+            <div class="bulk-guarantee__item"><i class="fa-solid fa-file-invoice"></i><span>Net-30 available for schools</span></div>
+            <div class="bulk-guarantee__item"><i class="fa-solid fa-shield-check"></i><span>100% consistency guarantee</span></div>
+            <div class="bulk-guarantee__item"><i class="fa-solid fa-gift"></i><span>Free sample at 50+ units</span></div>
+          </div>
+        </div>
+
+        <div class="form-card" data-reveal>
+          <form data-validate id="bulk-quote-form" action="https://formspree.io/f/placeholder" method="POST" aria-label="Bulk order quote form" novalidate>
+            <input type="hidden" name="_subject" value="Bulk Order Quote Request — GoldCrest" />
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="bulk-name">Contact Name <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="bulk-name" name="name" class="form-control" placeholder="Jane Williams" required minlength="2" autocomplete="name" />
+                <span class="form-error" role="alert"><i class="fa-solid fa-circle-exclamation"></i></span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bulk-org">Organization <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="bulk-org" name="organization" class="form-control" placeholder="Westfield Academy" required minlength="2" />
+                <span class="form-error" role="alert"><i class="fa-solid fa-circle-exclamation"></i></span>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="bulk-email">Email Address <span class="req" aria-hidden="true">*</span></label>
+                <input type="email" id="bulk-email" name="email" class="form-control" placeholder="jane@school.edu" required autocomplete="email" />
+                <span class="form-error" role="alert"><i class="fa-solid fa-circle-exclamation"></i></span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bulk-phone">Phone Number <span class="req" aria-hidden="true">*</span></label>
+                <input type="tel" id="bulk-phone" name="phone" class="form-control" placeholder="+1 (555) 000-0000" required autocomplete="tel" />
+                <span class="form-error" role="alert"><i class="fa-solid fa-circle-exclamation"></i></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="bulk-org-type">Organization Type <span class="req" aria-hidden="true">*</span></label>
+              <select id="bulk-org-type" name="org_type" class="form-control" required>
+                <option value="" disabled selected>Select your organization type...</option>
+                <option>School / College / University</option>
+                <option>Corporation / Business</option>
+                <option>Sports Club / League</option>
+                <option>Non-Profit / Charity</option>
+                <option>Government / Public Sector</option>
+                <option>Event Organizer</option>
+                <option>Other</option>
+              </select>
+              <span class="form-error" role="alert"><i class="fa-solid fa-circle-exclamation"></i></span>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="bulk-product">Product Type <span class="req" aria-hidden="true">*</span></label>
+                <select id="bulk-product" name="product" class="form-control" required>
+                  <option value="" disabled selected>Select product...</option>
+                  <option>Medals</option>
+                  <option>Trophies</option>
+                  <option>Plaques</option>
+                  <option>Name Badges</option>
+                  <option>Mixed (Multiple Types)</option>
+                </select>
+                <span class="form-error" role="alert"><i class="fa-solid fa-circle-exclamation"></i></span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bulk-qty">Total Quantity <span class="req" aria-hidden="true">*</span></label>
+                <input type="number" id="bulk-qty" name="quantity" class="form-control" placeholder="e.g. 150" min="10" required />
+                <span class="form-error" role="alert"><i class="fa-solid fa-circle-exclamation"></i></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="bulk-deadline">Required By Date</label>
+              <input type="date" id="bulk-deadline" name="deadline" class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="bulk-requirements">Order Requirements <span class="req" aria-hidden="true">*</span></label>
+              <textarea id="bulk-requirements" name="requirements" class="form-control" rows="4" placeholder="Describe your requirements: product specifications, engraving text template, colors, logos, any special instructions or concerns..." required minlength="20"></textarea>
+              <span class="form-error" role="alert"><i class="fa-solid fa-circle-exclamation"></i></span>
+            </div>
+
+            <div class="form-group">
+              <label style="display:flex;align-items:flex-start;gap:var(--space-3);cursor:pointer;">
+                <input type="checkbox" id="net30-request" name="net30" style="margin-top:4px;width:16px;height:16px;flex-shrink:0;" />
+                <span style="font-size:var(--text-sm);color:var(--text-secondary);">I am interested in Net-30 payment terms for my organization.</span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;font-size:var(--text-base);">
+              <i class="fa-solid fa-file-invoice-dollar"></i> Submit Bulk Quote Request
+            </button>
+
+            <p style="text-align:center;font-size:var(--text-xs);color:var(--text-muted);margin-top:var(--space-4);">
+              Stripe & PayPal available at checkout. Purchase orders accepted. <i class="fa-solid fa-lock" style="color:var(--color-gold-dark);"></i> Secure &amp; confidential.
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER (identical) -->
+<footer class="footer" role="contentinfo">
+  <div class="footer__top container">
+    <div>
+      <a href="index.html" class="footer__brand-link" aria-label="GoldCrest Engravings — Home">
+        <div class="footer__brand-logo-icon" aria-hidden="true"><i class="fa-solid fa-trophy"></i></div>
+        <div><div class="footer__brand-name">GoldCrest <em>Engravings</em></div><div class="footer__brand-sub">Crafted Excellence</div></div>
+      </a>
+      <p class="footer__tagline">Crafting premium trophies, plaques, medals, and custom engravings since 1998.</p>
+      <div class="footer__social" role="list">
+        <a href="#" class="footer__social-link" aria-label="Facebook" role="listitem"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" class="footer__social-link" aria-label="Instagram" role="listitem"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="footer__social-link" aria-label="LinkedIn" role="listitem"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="#" class="footer__social-link" aria-label="YouTube" role="listitem"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+    <div>
+      <h3 class="footer__col-title">Quick Links</h3>
+      <ul class="footer__links-list">
+        <li><a href="index.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Home Classic</a></li>
+        <li><a href="home2.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Home Legacy</a></li>
+        <li><a href="products.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Products</a></li>
+        <li><a href="custom-engraving.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Custom Engraving</a></li>
+        <li><a href="bulk-orders.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Bulk Orders</a></li>
+        <li><a href="contact.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="footer__col-title">Our Services</h3>
+      <ul class="footer__links-list">
+        <li><a href="products.html?category=trophies" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Trophy Engraving</a></li>
+        <li><a href="products.html?category=plaques" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Plaque Customization</a></li>
+        <li><a href="products.html?category=medals" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Medal Production</a></li>
+        <li><a href="products.html?category=badges" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Name Badges</a></li>
+        <li><a href="bulk-orders.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> Corporate Awards</a></li>
+        <li><a href="bulk-orders.html" class="footer__link"><i class="fa-solid fa-chevron-right"></i> School Awards</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="footer__col-title">Get In Touch</h3>
+      <ul class="footer__contact-list">
+        <li class="footer__contact-item"><div class="footer__contact-icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></div><span>123 Trophy Lane, Award District,<br/>New York, NY 10001</span></li>
+        <li class="footer__contact-item"><div class="footer__contact-icon" aria-hidden="true"><i class="fa-solid fa-phone"></i></div><a href="tel:+15551234567">+1 (555) 123-4567</a></li>
+        <li class="footer__contact-item"><div class="footer__contact-icon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></div><a href="mailto:info@goldcrestengravings.com">info@goldcrestengravings.com</a></li>
+        <li class="footer__contact-item"><div class="footer__contact-icon" aria-hidden="true"><i class="fa-solid fa-clock"></i></div><span>Mon–Sat: 9:00 AM – 6:00 PM</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom container">
+    <p class="footer__copy">&copy; 2025 <a href="index.html">GoldCrest Engravings</a>. All rights reserved.</p>
+    <nav class="footer__bottom-links" aria-label="Legal links">
+      <a href="#" class="footer__bottom-link">Privacy Policy</a>
+      <a href="#" class="footer__bottom-link">Terms of Service</a>
+      <a href="#" class="footer__bottom-link">Sitemap</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- Success Toast -->
+<div class="success-toast" id="form-success-toast" role="alert" aria-live="polite">
+  <i class="fa-solid fa-circle-check"></i>
+  <span>Quote request received! Our team will contact you within 2 hours.</span>
+</div>
+
+<button id="scroll-top" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script src="js/nav.js"></script>
+<script src="js/form-validation.js"></script>
+</body>
+</html>

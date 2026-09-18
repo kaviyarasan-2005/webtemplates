@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus VR | Dashboard</title>
+  <meta name="description" content="Manage your Nexus VR experience, track stats, and book sessions.">
+  
+  <link rel="stylesheet" href="src/css/main.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon.svg">
+</head>
+<body style="background: var(--clr-bg);">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container flex justify-between items-center">
+      <a href="home1.html" class="flex items-center gap-2" aria-label="Nexus VR Home">
+        <i class="ph ph-hexagon text-gradient" style="font-size: 2rem;"></i>
+        <span class="text-large" style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+      </a>
+
+      <div class="nav-links items-center">
+        <div class="dropdown">
+          <a href="#" class="nav-link flex items-center gap-1">Home <i class="ph ph-caret-down"></i></a>
+          <div class="dropdown-menu">
+            <a href="home1.html" class="dropdown-item">Home 1 (Immersive)</a>
+            <a href="home2.html" class="dropdown-item">Home 2 (Dynamic)</a>
+          </div>
+        </div>
+        <a href="games.html" class="nav-link">Games Library</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="groups.html" class="nav-link">Parties & Groups</a>
+        <div class="dropdown">
+          <a href="#" class="nav-link flex items-center gap-1">Dashboards <i class="ph ph-caret-down"></i></a>
+          <div class="dropdown-menu">
+            <a href="dashboard.html" class="dropdown-item">Player Dashboard</a>
+            <a href="admin.html" class="dropdown-item">Admin Dashboard</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" class="btn-icon hidden lg:flex items-center justify-center" aria-label="Toggle Theme">
+          <i class="ph ph-moon"></i>
+        </button>
+        <button id="rtl-toggle" class="badge" style="border: none; cursor: pointer;">RTL</button>
+        <div class="dropdown hidden lg:block">
+          <div class="flex items-center gap-2 cursor-pointer">
+            <img src="src/assets/images/avatar-1.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+            <i class="ph ph-caret-down text-muted"></i>
+          </div>
+          <div class="dropdown-menu" style="right: 0; left: auto; width: 200px;">
+            <a href="dashboard.html" class="dropdown-item"><i class="ph ph-user"></i> Profile</a>
+            <a href="#" class="dropdown-item"><i class="ph ph-gear"></i> Settings</a>
+            <hr style="border-color: var(--border-glass); margin: 0.5rem 0;">
+            <a href="login.html" class="dropdown-item text-error"><i class="ph ph-sign-out"></i> Logout</a>
+          </div>
+        </div>
+        <button id="mobile-menu-btn" class="btn-icon lg:hidden flex items-center justify-center">
+          <i class="ph ph-list" style="font-size: 1.5rem;"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu flex-col gap-6">
+    <div class="flex items-center gap-4 mb-4">
+      <img src="src/assets/images/avatar-1.jpg" alt="User" style="width: 48px; height: 48px; border-radius: 50%;">
+      <div>
+        <strong>VoidWalker</strong>
+        <div class="text-small text-muted">Gold Member</div>
+      </div>
+    </div>
+    <a href="home1.html" class="nav-link text-large">Home 1</a>
+    <a href="games.html" class="nav-link text-large">Games Library</a>
+    <a href="pricing.html" class="nav-link text-large">Pricing</a>
+    <a href="groups.html" class="nav-link text-large">Parties & Groups</a>
+    <a href="dashboard.html" class="nav-link text-large">Player Dashboard</a>
+    <a href="admin.html" class="nav-link text-large">Admin Dashboard</a>
+    <hr style="border-color: rgba(255,255,255,0.1);">
+    <a href="login.html" class="nav-link text-large text-error">Logout</a>
+  </div>
+
+  <main style="padding-top: 100px; padding-bottom: var(--space-12);" class="container">
+    
+    <!-- User Header & Stats -->
+    <div class="flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 animate-on-scroll">
+      <div class="flex items-center gap-4">
+        <img src="src/assets/images/avatar-1.jpg" alt="Profile" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--clr-primary);">
+        <div>
+          <h2 class="m-0">Welcome, VoidWalker</h2>
+          <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: var(--clr-warning);"><i class="ph-fill ph-crown"></i> Gold Member</span>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <div class="card p-4 text-center" style="min-width: 120px;">
+          <div class="text-muted text-small mb-1">Time Balance</div>
+          <div class="text-large text-primary" style="font-family: var(--font-primary); font-weight: 700;">4.5 hrs</div>
+        </div>
+        <div class="card p-4 text-center" style="min-width: 120px;">
+          <div class="text-muted text-small mb-1">Reward Points</div>
+          <div class="text-large text-secondary" style="font-family: var(--font-primary); font-weight: 700;">1,250</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <!-- Infographic 1: Play Time Trends -->
+      <div class="card animate-on-scroll flex-col h-full">
+        <h3 class="mb-4">Play Time <span class="text-small text-muted font-normal">Last 7 Days</span></h3>
+        <div style="flex-grow: 1; min-height: 250px; position: relative;">
+          <canvas id="userPlayTimeChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Infographic 2: Favorite Genres -->
+      <div class="card animate-on-scroll flex-col h-full">
+        <h3 class="mb-4">Favorite Genres <span class="text-small text-muted font-normal">All Time</span></h3>
+        <div style="flex-grow: 1; min-height: 250px; position: relative; display: flex; justify-content: center;">
+          <canvas id="userGenresChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <!-- Infographic 3: Reward Points History -->
+      <div class="card animate-on-scroll flex-col h-full">
+        <h3 class="mb-4">Reward Points <span class="text-small text-muted font-normal">This Month</span></h3>
+        <div style="flex-grow: 1; min-height: 250px; position: relative;">
+          <canvas id="userPointsChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Infographic 4: Completion Rate -->
+      <div class="card animate-on-scroll flex-col h-full">
+        <h3 class="mb-4">Completion Rate <span class="text-small text-muted font-normal">By Game</span></h3>
+        <div style="flex-grow: 1; min-height: 250px; position: relative; display: flex; justify-content: center;">
+          <canvas id="userCompletionChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Left Column -->
+      <div class="lg:col-span-2 flex-col gap-8">
+        
+        <!-- Active Bookings -->
+        <div class="card animate-on-scroll">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="m-0"><i class="ph ph-calendar-check text-primary"></i> Upcoming Bookings</h3>
+            <button class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem;">Book New Slot</button>
+          </div>
+          
+          <div class="flex-col sm:flex-row gap-4 items-center p-4 rounded-md mb-4" style="background: var(--clr-surface-alt); border-left: 4px solid var(--clr-secondary);">
+            <div style="flex: 0 0 80px; text-align: center;">
+              <div class="text-large font-bold">24</div>
+              <div class="text-small text-muted">OCT</div>
+            </div>
+            <div style="flex: 1;">
+              <h4 class="m-0">Pod 04 - Immersive Suite</h4>
+              <p class="text-small m-0 text-muted"><i class="ph ph-clock"></i> 6:00 PM - 8:00 PM (2 hrs)</p>
+            </div>
+            <div class="flex gap-2">
+              <button class="btn-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--clr-error);" title="Cancel"><i class="ph ph-x"></i></button>
+            </div>
+          </div>
+          
+          <div class="text-center p-4">
+            <p class="text-muted m-0">No other upcoming bookings.</p>
+          </div>
+        </div>
+
+        <!-- Play History & Achievements -->
+        <div class="card animate-on-scroll">
+          <h3 class="mb-6"><i class="ph ph-clock-counter-clockwise text-primary"></i> Recent Activity</h3>
+          
+          <div class="flex-col gap-4">
+            <!-- Item -->
+            <div class="flex gap-4 items-start pb-4" style="border-bottom: var(--border-glass);">
+              <img src="src/assets/images/game-action-1.jpg" style="width: 60px; height: 60px; border-radius: var(--radius-sm); object-fit: cover;">
+              <div style="flex: 1;">
+                <strong>Cyber Ninja VR</strong>
+                <p class="text-small text-muted m-0">Played for 1.5 hours • Earned "Master Swordsman" achievement</p>
+              </div>
+              <div class="text-small text-muted">Oct 12</div>
+            </div>
+            <!-- Item -->
+            <div class="flex gap-4 items-start pb-4" style="border-bottom: var(--border-glass);">
+              <div class="btn-icon flex items-center justify-center" style="width: 60px; height: 60px; background: rgba(34, 211, 238, 0.1); color: var(--clr-secondary); border-radius: var(--radius-sm);">
+                <i class="ph ph-shopping-cart" style="font-size: 1.5rem;"></i>
+              </div>
+              <div style="flex: 1;">
+                <strong>Purchased 5-Hour Bundle</strong>
+                <p class="text-small text-muted m-0">Added 5 hours to wallet balance.</p>
+              </div>
+              <div class="text-small text-muted">Oct 10</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column -->
+      <div class="flex-col gap-8">
+        
+        <!-- Buy Time Bundles -->
+        <div class="card animate-on-scroll" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), transparent);">
+          <h3 class="mb-4">Top Up Balance</h3>
+          <p class="text-small mb-4">You are running low on time. Grab a bundle before your next session.</p>
+          
+          <div class="flex justify-between items-center p-3 mb-2 rounded-md cursor-pointer" style="background: var(--clr-surface-alt); border: 1px solid var(--clr-primary);">
+            <div>
+              <strong>2 Hours</strong>
+              <div class="text-small text-muted">Standard Rate</div>
+            </div>
+            <strong>$60</strong>
+          </div>
+          
+          <div class="flex justify-between items-center p-3 mb-4 rounded-md cursor-pointer hover:bg-surface-alt transition" style="border: 1px solid transparent;">
+            <div>
+              <strong>5 Hours</strong>
+              <div class="text-small text-success">Save $10</div>
+            </div>
+            <strong>$140</strong>
+          </div>
+          
+          <button class="btn btn-primary w-full" style="width: 100%;">Purchase Selected</button>
+        </div>
+
+        <!-- Available Game Titles (Quick Browse) -->
+        <div class="card animate-on-scroll">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="m-0">Recommended</h3>
+            <a href="games.html" class="text-small text-primary">View All</a>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div style="position: relative; border-radius: var(--radius-sm); overflow: hidden;">
+              <img src="src/assets/images/game-top.jpg" style="width: 100%; height: 100px; object-fit: cover;">
+              <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.7); padding: 4px; text-align: center; font-size: 0.75rem;">Alyx</div>
+            </div>
+            <div style="position: relative; border-radius: var(--radius-sm); overflow: hidden;">
+              <img src="src/assets/images/game-horror-1.jpg" style="width: 100%; height: 100px; object-fit: cover;">
+              <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.7); padding: 4px; text-align: center; font-size: 0.75rem;">Dark Asylum</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Payment History (Mini) -->
+        <div class="card animate-on-scroll p-0 overflow-hidden">
+          <div class="p-4 border-b" style="border-bottom: var(--border-glass);">
+            <h3 class="m-0">Recent Invoices</h3>
+          </div>
+          <table style="width: 100%; text-align: left; font-size: 0.875rem;">
+            <tr style="border-bottom: var(--border-glass);">
+              <td style="padding: var(--space-2) var(--space-4);">Oct 10</td>
+              <td style="padding: var(--space-2) var(--space-4);">5h Bundle</td>
+              <td style="padding: var(--space-2) var(--space-4); text-align: right;">$140</td>
+            </tr>
+            <tr>
+              <td style="padding: var(--space-2) var(--space-4);">Sep 01</td>
+              <td style="padding: var(--space-2) var(--space-4);">Gold Mem.</td>
+              <td style="padding: var(--space-2) var(--space-4); text-align: right;">$49</td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer style="background: var(--clr-surface); border-top: var(--border-glass); padding-top: var(--space-12); padding-bottom: var(--space-6);">
+    <div class="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div>
+        <a href="home1.html" class="flex items-center gap-2 mb-4">
+          <i class="ph ph-hexagon text-gradient" style="font-size: 1.5rem;"></i>
+          <span style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+        </a>
+        <p class="text-small">Elevating entertainment through cutting-edge virtual reality experiences.</p>
+        <div class="flex gap-4 mt-4">
+          <a href="#" class="nav-link"><i class="ph ph-twitter-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link"><i class="ph ph-instagram-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link"><i class="ph ph-discord-logo" style="font-size: 1.5rem;"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 style="margin-bottom: var(--space-4);">Explore</h4>
+        <ul class="flex-col gap-2">
+          <li><a href="games.html" class="nav-link text-small">Games Library</a></li>
+          <li><a href="pricing.html" class="nav-link text-small">Pricing & Bundles</a></li>
+          <li><a href="groups.html" class="nav-link text-small">Group Bookings</a></li>
+          <li><a href="dashboard.html" class="nav-link text-small">Player Dashboard</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom: var(--space-4);">Support</h4>
+        <ul class="flex-col gap-2">
+          <li><a href="#" class="nav-link text-small">FAQ</a></li>
+          <li><a href="#" class="nav-link text-small">Contact Us</a></li>
+          <li><a href="#" class="nav-link text-small">Terms of Service</a></li>
+          <li><a href="#" class="nav-link text-small">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom: var(--space-4);">Location</h4>
+        <p class="text-small">123 Cyber Avenue<br>Neon District, NT 45890</p>
+        <p class="text-small mt-2">Mon - Sun: 10:00 AM - 12:00 AM</p>
+      </div>
+    </div>
+    <div class="container text-center text-small" style="color: var(--clr-text-muted); border-top: var(--border-glass); padding-top: var(--space-6);">
+      &copy; 2026 Nexus VR Lounge. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="src/js/main.js"></script>
+  <script src="src/js/charts.js"></script>
+</body>
+</html>
+

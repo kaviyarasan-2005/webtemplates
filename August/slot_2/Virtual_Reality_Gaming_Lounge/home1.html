@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus VR | Home 1 - Futuristic Gaming Lounge</title>
+  <meta name="description" content="Experience the ultimate Virtual Reality gaming at Nexus VR Lounge. Book your pod, play top titles, and immerse yourself in another world.">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="src/css/main.css">
+  
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <style>
+    /* Home 1 Specific Styles */
+    .hero-home1 {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(18, 24, 40, 0.95) 0%, rgba(8, 11, 20, 0.8) 100%), url('src/assets/images/hero-bg-1.jpg') center/cover;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-home1::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    .hero-home1::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      right: -10%;
+      width: 40vw;
+      height: 40vw;
+      background: radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Force text to remain light in the hero section even in light mode */
+    [data-theme="light"] .hero-home1 h1 {
+      color: #ffffff;
+    }
+    [data-theme="light"] .hero-home1 p {
+      color: #e5e7eb;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-badge-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      backdrop-filter: blur(10px);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .hero-badge-container i {
+      color: var(--clr-secondary);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.6; transform: scale(0.95); }
+      50% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 0.6; transform: scale(0.95); }
+    }
+    
+    .glass-card-hero {
+      background: rgba(18, 24, 40, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 4rem 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .glass-card-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon.svg">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container flex justify-between items-center">
+      <!-- Logo -->
+      <a href="home1.html" class="flex items-center gap-2" aria-label="Nexus VR Home">
+        <i class="ph ph-hexagon text-gradient" style="font-size: 2rem;"></i>
+        <span class="text-large" style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="nav-links items-center">
+        <div class="dropdown">
+          <a href="#" class="nav-link flex items-center gap-1">Home <i class="ph ph-caret-down"></i></a>
+          <div class="dropdown-menu">
+            <a href="home1.html" class="dropdown-item">Home 1 (Immersive)</a>
+            <a href="home2.html" class="dropdown-item">Home 2 (Dynamic)</a>
+          </div>
+        </div>
+        <a href="games.html" class="nav-link">Games Library</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="groups.html" class="nav-link">Parties & Groups</a>
+        <div class="dropdown">
+          <a href="#" class="nav-link flex items-center gap-1">Dashboards <i class="ph ph-caret-down"></i></a>
+          <div class="dropdown-menu">
+            <a href="dashboard.html" class="dropdown-item">Player Dashboard</a>
+            <a href="admin.html" class="dropdown-item">Admin Dashboard</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-4">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="btn-icon hidden lg:flex items-center justify-center" aria-label="Toggle Theme">
+          <i class="ph ph-moon"></i>
+        </button>
+        <!-- RTL Toggle -->
+        <button id="rtl-toggle" class="badge" style="border: none; cursor: pointer;">RTL</button>
+        
+        <a href="login.html" class="btn btn-primary hidden lg:flex">Login</a>
+        <a href="dashboard.html" class="btn btn-secondary hidden lg:flex">Book Now</a>
+        
+        <!-- Mobile Menu Btn -->
+        <button id="mobile-menu-btn" class="btn-icon lg:hidden flex items-center justify-center">
+          <i class="ph ph-list" style="font-size: 1.5rem;"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Content -->
+  <div id="mobile-menu" class="mobile-menu flex-col gap-6">
+    <a href="home1.html" class="nav-link text-large">Home 1</a>
+    <a href="home2.html" class="nav-link text-large">Home 2</a>
+    <a href="games.html" class="nav-link text-large">Games Library</a>
+    <a href="pricing.html" class="nav-link text-large">Pricing</a>
+    <a href="groups.html" class="nav-link text-large">Parties & Groups</a>
+    <a href="dashboard.html" class="nav-link text-large">Player Dashboard</a>
+    <a href="admin.html" class="nav-link text-large">Admin Dashboard</a>
+    <hr style="border-color: rgba(255,255,255,0.1);">
+    <a href="login.html" class="btn btn-primary justify-center">Login</a>
+    <a href="dashboard.html" class="btn btn-secondary justify-center">Book Now</a>
+  </div>
+
+  <main>
+    <!-- Section 1: Hero -->
+    <section class="hero-home1" style="text-align: center; justify-content: center;">
+      <div class="container hero-content animate-on-scroll" style="display: flex; justify-content: center;">
+        <div class="glass-card-hero" style="max-width: 800px; transform: translateY(5%); width: 100%;">
+          <div class="hero-badge-container">
+            <i class="ph-fill ph-sparkle"></i>
+            <span class="text-small" style="font-weight: 600; letter-spacing: 0.5px; color: #e5e7eb;">NEXT-GEN VR LOUNGE</span>
+          </div>
+          <h1 class="mt-2" style="font-size: clamp(3rem, 5vw, 5rem); line-height: 1.1; margin-bottom: 1.5rem;">Step Beyond <br><span class="text-gradient">Reality.</span></h1>
+          <p class="text-large" style="color: #9CA3AF; margin-bottom: 2.5rem; max-width: 600px; margin-inline: auto;">Experience the most immersive virtual reality pods in the city. From heart-pounding action to serene exploration, your new reality awaits.</p>
+          <div class="flex justify-center gap-4 mt-6 flex-wrap">
+            <a href="dashboard.html" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem; box-shadow: var(--shadow-glow);">Book Your Pod <i class="ph ph-arrow-right"></i></a>
+            <a href="games.html" class="btn btn-secondary" style="padding: 1rem 2rem; font-size: 1.1rem; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);">Browse Games</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Features -->
+    <section class="section container">
+      <div class="text-center mb-12 animate-on-scroll">
+        <h2>Why Choose Nexus VR?</h2>
+        <p>State-of-the-art technology meets premium lounge comfort.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="card animate-on-scroll">
+          <i class="ph ph-headset text-gradient" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+          <h3>Premium Headsets</h3>
+          <p>4K resolution, 120Hz refresh rate, and crystal clear audio for total immersion without motion sickness.</p>
+        </div>
+        <div class="card animate-on-scroll">
+          <i class="ph ph-armchair text-gradient" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+          <h3>Haptic Pods</h3>
+          <p>Feel every explosion, engine rev, and heartbeat with our full-body haptic feedback stations.</p>
+        </div>
+        <div class="card animate-on-scroll">
+          <i class="ph ph-users-three text-gradient" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+          <h3>Multiplayer Lobbies</h3>
+          <p>Connect instantly with friends in adjacent pods or play globally on our high-speed fiber network.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: How It Works -->
+    <section class="section" style="background: var(--clr-surface);">
+      <div class="container text-center animate-on-scroll">
+        <h2>How It Works</h2>
+        <p class="mb-12">Your journey to another dimension is just 3 steps away.</p>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div class="flex flex-col items-center">
+            <div class="btn-icon flex items-center justify-center mb-4" style="width: 64px; height: 64px; font-size: 1.5rem; background: var(--clr-primary); color: white;">1</div>
+            <h3>Book Online</h3>
+            <p>Reserve your time slot and preferred pod through our secure dashboard.</p>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="btn-icon flex items-center justify-center mb-4" style="width: 64px; height: 64px; font-size: 1.5rem; background: var(--clr-primary); color: white;">2</div>
+            <h3>Arrive & Briefing</h3>
+            <p>Our VR experts will get you fitted and explain the safety protocols.</p>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="btn-icon flex items-center justify-center mb-4" style="width: 64px; height: 64px; font-size: 1.5rem; background: var(--clr-primary); color: white;">3</div>
+            <h3>Dive In</h3>
+            <p>Put on the headset and let the real world fade away.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Host Your Epic Event -->
+    <section class="section container">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center animate-on-scroll">
+        <div class="order-2 lg:order-1 text-center" style="display: flex; flex-direction: column; align-items: center;">
+          <span class="badge mb-4" style="background: rgba(34, 211, 238, 0.2); color: var(--clr-secondary);">Parties &amp; Groups</span>
+          <h2>Host Your Epic Event</h2>
+          <p class="mb-6 text-muted" style="max-width: 480px;">Whether it's a birthday bash, a corporate team-building event, or just a weekend hangout, the Nexus Lounge provides an unforgettable futuristic experience.</p>
+          
+          <ul style="list-style: none; padding: 0; margin-bottom: 2.5rem; width: 100%; max-width: 360px;">
+            <li class="flex items-center gap-4 mb-4">
+              <div class="btn-icon flex items-center justify-center" style="flex-shrink: 0; width: 48px; height: 48px; background: rgba(139, 92, 246, 0.12); color: var(--clr-primary); border-radius: var(--radius-full);"><i class="ph ph-cake" style="font-size: 1.5rem;"></i></div>
+              <span class="text-large" style="font-weight: 500;">Birthday Packages</span>
+            </li>
+            <li class="flex items-center gap-4 mb-4">
+              <div class="btn-icon flex items-center justify-center" style="flex-shrink: 0; width: 48px; height: 48px; background: rgba(139, 92, 246, 0.12); color: var(--clr-primary); border-radius: var(--radius-full);"><i class="ph ph-briefcase" style="font-size: 1.5rem;"></i></div>
+              <span class="text-large" style="font-weight: 500;">Corporate Team Building</span>
+            </li>
+            <li class="flex items-center gap-4">
+              <div class="btn-icon flex items-center justify-center" style="flex-shrink: 0; width: 48px; height: 48px; background: rgba(139, 92, 246, 0.12); color: var(--clr-primary); border-radius: var(--radius-full);"><i class="ph ph-star" style="font-size: 1.5rem;"></i></div>
+              <span class="text-large" style="font-weight: 500;">VIP Lounge Access</span>
+            </li>
+          </ul>
+          
+          <a href="groups.html" class="btn btn-primary" style="margin-bottom: 2.5rem;">View Group Packages <i class="ph ph-arrow-right"></i></a>
+        </div>
+        
+        <div class="order-1 lg:order-2" style="position: relative; display: flex; justify-content: center; align-items: center; padding-bottom: 2rem;">
+          <!-- Decorative glow -->
+          <div style="position: absolute; inset: 0; background: var(--clr-secondary); opacity: 0.12; filter: blur(60px); border-radius: var(--radius-lg); pointer-events: none;"></div>
+          <!-- Centered image -->
+          <div style="position: relative; width: 100%; z-index: 1;">
+            <img src="src/assets/images/hero-bg-2.jpg" alt="VR Group Event" style="width: 100%; height: 360px; object-fit: cover; border-radius: var(--radius-lg); border: 1px solid var(--border-glass); display: block;">
+            <!-- Centered floating stats -->
+            <div style="position: absolute; bottom: -1.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: 1rem; z-index: 2; white-space: nowrap;">
+              <div class="card p-3" style="display: flex; align-items: center; gap: 0.75rem; backdrop-filter: blur(12px); background: rgba(8,11,20,0.85);">
+                <i class="ph ph-users-four" style="font-size: 1.4rem; color: var(--clr-primary);"></i>
+                <div>
+                  <div class="text-small text-muted" style="line-height: 1.2;">Group Size</div>
+                  <div style="font-weight: 700; color: #fff; font-size: 0.9rem;">Up to 20</div>
+                </div>
+              </div>
+              <div class="card p-3" style="display: flex; align-items: center; gap: 0.75rem; backdrop-filter: blur(12px); background: rgba(8,11,20,0.85);">
+                <i class="ph ph-star" style="font-size: 1.4rem; color: var(--clr-warning);"></i>
+                <div>
+                  <div class="text-small text-muted" style="line-height: 1.2;">Rating</div>
+                  <div style="font-weight: 700; color: #fff; font-size: 0.9rem;">4.9 / 5.0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Pod Features (The Apex Station) -->
+    <section class="section" style="background: var(--clr-surface-alt); position: relative; overflow: hidden;">
+      <div class="container grid grid-cols-1 lg:grid-cols-2 gap-12 items-center animate-on-scroll">
+        <div style="position: relative;">
+          <!-- Glowing backdrop -->
+          <div style="position: absolute; inset: 0; background: var(--clr-primary); opacity: 0.2; filter: blur(40px); border-radius: var(--radius-lg);"></div>
+          
+          <img src="src/assets/images/pod-placeholder.jpg" alt="VR Pod" style="position: relative; z-index: 1; border-radius: var(--radius-lg); border: 1px solid var(--border-glass); width: 100%;">
+          
+          <!-- Floating badge -->
+          <div class="card p-4" style="position: absolute; bottom: -1.5rem; left: 2rem; z-index: 2; display: flex; align-items: center; gap: 1rem; backdrop-filter: blur(10px); background: rgba(8, 11, 20, 0.8);">
+            <div class="btn-icon" style="background: rgba(34, 211, 238, 0.2); color: var(--clr-secondary);"><i class="ph ph-cpu" style="font-size: 1.5rem;"></i></div>
+            <div>
+              <div class="text-small text-muted">Latency</div>
+              <div class="text-large" style="font-weight: bold; color: var(--clr-secondary);">Ultra-Low</div>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <span class="badge mb-4" style="background: rgba(139, 92, 246, 0.2); color: var(--clr-primary);">Next-Gen Hardware</span>
+          <h2>The Apex Station</h2>
+          <p class="mb-8 text-muted">Our custom-built haptic VR pods are engineered for total sensory immersion. With complete freedom of movement and acoustic dampening, reality fades away.</p>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            <div class="flex items-center gap-3 p-3 rounded-md" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass);">
+              <i class="ph ph-arrows-out-cardinal text-primary" style="font-size: 1.5rem;"></i>
+              <div>
+                <strong style="display: block; margin-bottom: 0.25rem;">Omni-Treadmills</strong>
+                <span class="text-small text-muted">Run, strafe, and crouch freely.</span>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-3 p-3 rounded-md" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass);">
+              <i class="ph ph-wind text-secondary" style="font-size: 1.5rem;"></i>
+              <div>
+                <strong style="display: block; margin-bottom: 0.25rem;">Climate Control</strong>
+                <span class="text-small text-muted">Dynamic wind & temp effects.</span>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-3 p-3 rounded-md" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass);">
+              <i class="ph ph-shield-check text-success" style="font-size: 1.5rem;"></i>
+              <div>
+                <strong style="display: block; margin-bottom: 0.25rem;">UV Sanitization</strong>
+                <span class="text-small text-muted">Deep cleaned after every run.</span>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-3 p-3 rounded-md" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass);">
+              <i class="ph ph-wifi-high text-primary" style="font-size: 1.5rem;"></i>
+              <div>
+                <strong style="display: block; margin-bottom: 0.25rem;">Zero-Tether</strong>
+                <span class="text-small text-muted">100% wireless tracking.</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex gap-4">
+            <a href="pricing.html" class="btn btn-primary">Book a Pod</a>
+            <a href="games.html" class="btn btn-secondary">Explore Games</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Testimonials -->
+    <section class="section container animate-on-scroll">
+      <h2 class="text-center mb-12">Player Reviews</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card flex-col h-full" style="display: flex;">
+          <div class="flex gap-2 text-warning mb-4">
+            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+          </div>
+          <p style="flex-grow: 1;">"Absolutely mind-blowing. The haptic vests make action games feel incredibly real. Will definitely be coming back!"</p>
+          <div class="flex items-center gap-4 mt-4">
+            <div class="btn-icon" style="background: var(--clr-primary); color: white; display: flex; justify-content: center; align-items: center; flex-shrink: 0;">A</div>
+            <div>
+              <strong style="display: block;">Alex J.</strong>
+              <div class="text-small text-muted">Pro Gamer</div>
+            </div>
+          </div>
+        </div>
+        <div class="card flex-col h-full" style="display: flex;">
+          <div class="flex gap-2 text-warning mb-4">
+            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+          </div>
+          <p style="flex-grow: 1;">"We hosted my son's 16th birthday here. The staff was super helpful and the kids loved the multiplayer zombie survival."</p>
+          <div class="flex items-center gap-4 mt-4">
+            <div class="btn-icon" style="background: var(--clr-secondary); color: var(--clr-bg); display: flex; justify-content: center; align-items: center; flex-shrink: 0;">S</div>
+            <div>
+              <strong style="display: block;">Sarah T.</strong>
+              <div class="text-small text-muted">Parent</div>
+            </div>
+          </div>
+        </div>
+        <div class="card hidden lg:flex flex-col h-full">
+          <div class="flex gap-2 text-warning mb-4">
+            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star-half"></i>
+          </div>
+          <p style="flex-grow: 1;">"Clean, professional, and top-tier equipment. Best VR lounge I've visited in the state."</p>
+          <div class="flex items-center gap-4 mt-4">
+            <div class="btn-icon" style="background: var(--clr-success); color: var(--clr-bg); display: flex; justify-content: center; align-items: center; flex-shrink: 0;">M</div>
+            <div>
+              <strong style="display: block;">Marcus R.</strong>
+              <div class="text-small text-muted">Tech Enthusiast</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: Newsletter/CTA -->
+    <section class="section text-center" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(34, 211, 238, 0.1)); border-top: var(--border-glass);">
+      <div class="container animate-on-scroll" style="max-width: 600px;">
+        <i class="ph ph-envelope-simple-open text-gradient mb-4" style="font-size: 3rem;"></i>
+        <h2>Join the Vanguard</h2>
+        <p>Subscribe for exclusive discounts, new game announcements, and tournament invites.</p>
+        <form class="flex flex-col sm:flex-row gap-4 justify-center mt-6" data-validate>
+          <div class="form-group mb-0" style="flex: 1;">
+            <input type="email" class="form-input" placeholder="Enter your email" required>
+            <div class="form-error text-left"></div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-bottom: 0;">Subscribe</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="background: var(--clr-surface); border-top: var(--border-glass); padding-top: var(--space-12); padding-bottom: var(--space-6);">
+    <div class="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div>
+        <a href="home1.html" class="flex items-center gap-2 mb-4">
+          <i class="ph ph-hexagon text-gradient" style="font-size: 1.5rem;"></i>
+          <span style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+        </a>
+        <p class="text-small">Elevating entertainment through cutting-edge virtual reality experiences.</p>
+        <div class="flex gap-4 mt-4">
+          <a href="#" class="nav-link"><i class="ph ph-twitter-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link"><i class="ph ph-instagram-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link"><i class="ph ph-discord-logo" style="font-size: 1.5rem;"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 style="margin-bottom: var(--space-4);">Explore</h4>
+        <ul class="flex-col gap-2">
+          <li><a href="games.html" class="nav-link text-small">Games Library</a></li>
+          <li><a href="pricing.html" class="nav-link text-small">Pricing & Bundles</a></li>
+          <li><a href="groups.html" class="nav-link text-small">Group Bookings</a></li>
+          <li><a href="dashboard.html" class="nav-link text-small">Player Dashboard</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom: var(--space-4);">Support</h4>
+        <ul class="flex-col gap-2">
+          <li><a href="#" class="nav-link text-small">FAQ</a></li>
+          <li><a href="#" class="nav-link text-small">Contact Us</a></li>
+          <li><a href="#" class="nav-link text-small">Terms of Service</a></li>
+          <li><a href="#" class="nav-link text-small">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom: var(--space-4);">Location</h4>
+        <p class="text-small">123 Cyber Avenue<br>Neon District, NT 45890</p>
+        <p class="text-small mt-2">Mon - Sun: 10:00 AM - 12:00 AM</p>
+      </div>
+    </div>
+    <div class="container text-center text-small" style="color: var(--clr-text-muted); border-top: var(--border-glass); padding-top: var(--space-6);">
+      &copy; 2026 Nexus VR Lounge. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="src/js/main.js"></script>
+  <script src="src/js/forms.js"></script>
+</body>
+</html>
+
