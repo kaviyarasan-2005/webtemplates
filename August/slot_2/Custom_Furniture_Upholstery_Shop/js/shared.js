@@ -128,11 +128,16 @@ function getNavbarHTML(activePage = '') {
 
     <!-- Mobile Menu -->
     <div class="nav-mobile" id="nav-mobile" role="menu" aria-label="Mobile navigation">
-      <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.1em;color:rgba(244,235,221,0.78);padding:8px 16px 4px;text-transform:uppercase">Home</div>
-      <div class="mobile-sub">
-        <a href="home1.html" id="mob-home1"><span>Home 1</span></a>
-        <a href="home2.html" id="mob-home2"><span>Home 2</span></a>
-      </div>
+      <details class="mobile-dropdown">
+        <summary class="nav-link" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer; list-style:none;">
+          Home
+          ${Icons.chevronDown}
+        </summary>
+        <div class="mobile-sub">
+          <a href="home1.html" id="mob-home1"><span>Home 1</span></a>
+          <a href="home2.html" id="mob-home2"><span>Home 2</span></a>
+        </div>
+      </details>
       <a href="services.html" class="nav-link ${isActive('services')}" id="mob-services">Services</a>
       <a href="fabric-gallery.html" class="nav-link ${isActive('fabric')}" id="mob-fabric">Fabric Gallery</a>
       <a href="before-after.html" class="nav-link ${isActive('beforeafter')}" id="mob-ba">Before &amp; After</a>
