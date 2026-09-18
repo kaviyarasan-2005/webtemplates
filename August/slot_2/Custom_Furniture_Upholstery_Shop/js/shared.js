@@ -151,30 +151,6 @@ function getFooterHTML() {
   return `
   <footer class="site-footer" role="contentinfo">
     <div class="container">
-      <!-- Newsletter Banner -->
-      <div class="footer-newsletter-banner reveal">
-        <div class="footer-nb-content">
-          <div class="footer-nb-text">
-            <span class="eyebrow" style="color:var(--terracotta-light)">Stay Connected</span>
-            <h3 class="footer-nb-title">Bespoke Stories &amp; Seasonal Textiles</h3>
-            <p class="footer-nb-desc">Join over 3,200 design enthusiasts for fabric arrivals, restoration insights, and care tips.</p>
-          </div>
-          <div class="footer-nb-form-wrap">
-            <form class="footer-newsletter-form" id="footer-newsletter-form" novalidate>
-              <div class="footer-nl-input-group">
-                <input type="email" class="footer-nl-input" placeholder="Enter your email address" aria-label="Newsletter email" id="footer-newsletter-email" required />
-                <button type="submit" class="btn btn-primary footer-nl-btn" id="footer-newsletter-btn">
-                  <span>Subscribe</span>
-                  ${Icons.send}
-                </button>
-              </div>
-              <div id="footer-newsletter-status" class="footer-nl-status" aria-live="polite"></div>
-              <p class="footer-nl-note">No spam. Unsubscribe with a single click anytime.</p>
-            </form>
-          </div>
-        </div>
-      </div>
-
       <!-- Main Footer Grid -->
       <div class="footer-grid">
         <!-- Brand & Heritage -->
