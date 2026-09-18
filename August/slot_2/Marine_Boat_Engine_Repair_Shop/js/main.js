@@ -586,10 +586,10 @@ const SkeletonLoader = (() => {
       const delay = parseInt(skeleton.getAttribute('data-skeleton-delay') || '1500', 10);
       setTimeout(() => {
         skeleton.classList.add('loaded');
-        const realContent = skeleton.querySelector('.skeleton-real');
-        const skeletonContent = skeleton.querySelector('.skeleton-placeholder');
-        if (realContent) realContent.style.display = '';
-        if (skeletonContent) skeletonContent.style.display = 'none';
+        const realContents = skeleton.querySelectorAll('.skeleton-real');
+        const skeletonContents = skeleton.querySelectorAll('.skeleton-placeholder');
+        realContents.forEach(el => el.style.display = '');
+        skeletonContents.forEach(el => el.style.display = 'none');
       }, delay);
     });
   }
