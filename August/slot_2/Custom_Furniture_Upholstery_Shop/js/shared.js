@@ -243,7 +243,7 @@ function getFooterHTML() {
             </div>
           </div>
           <div class="footer-col-action">
-            <a href="contact.html" class="btn btn-outline btn-sm footer-book-btn">${Icons.calendar} Book Showroom Visit</a>
+            <a href="contact.html" class="btn btn-outline-light btn-sm footer-book-btn">${Icons.calendar} Book Showroom Visit</a>
           </div>
         </div>
       </div>
