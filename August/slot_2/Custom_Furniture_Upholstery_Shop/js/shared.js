@@ -88,18 +88,10 @@ function getNavbarHTML(activePage = '') {
           </a>
           <div class="nav-dropdown" role="menu" aria-label="Home submenu">
             <a href="home1.html" role="menuitem" id="nav-home1-link">
-              <span class="dd-icon">${Icons.home}</span>
-              <span class="dd-label">
-                <strong>Home Classic</strong>
-                <em>Transformation stories</em>
-              </span>
+              <span class="dd-label">Home 1</span>
             </a>
             <a href="home2.html" role="menuitem" id="nav-home2-link">
-              <span class="dd-icon">${Icons.layers}</span>
-              <span class="dd-label">
-                <strong>Home Artisan</strong>
-                <em>Craftsmanship focus</em>
-              </span>
+              <span class="dd-label">Home 2</span>
             </a>
           </div>
         </li>
@@ -138,8 +130,8 @@ function getNavbarHTML(activePage = '') {
     <div class="nav-mobile" id="nav-mobile" role="menu" aria-label="Mobile navigation">
       <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.1em;color:rgba(244,235,221,0.78);padding:8px 16px 4px;text-transform:uppercase">Home</div>
       <div class="mobile-sub">
-        <a href="home1.html" id="mob-home1">${Icons.home} <span>Home Classic</span></a>
-        <a href="home2.html" id="mob-home2">${Icons.layers} <span>Home Artisan</span></a>
+        <a href="home1.html" id="mob-home1"><span>Home 1</span></a>
+        <a href="home2.html" id="mob-home2"><span>Home 2</span></a>
       </div>
       <a href="services.html" class="nav-link ${isActive('services')}" id="mob-services">Services</a>
       <a href="fabric-gallery.html" class="nav-link ${isActive('fabric')}" id="mob-fabric">Fabric Gallery</a>
