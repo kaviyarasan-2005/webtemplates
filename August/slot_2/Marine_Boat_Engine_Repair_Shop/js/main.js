@@ -1,5 +1,5 @@
 /* ========================================================================
-   AnchorPoint Marine — Main JavaScript
+   Helm Marine — Main JavaScript
    Marine & Boat Engine Repair Shop
    ES6+ | Modular Structure
    ======================================================================== */
@@ -10,7 +10,7 @@
    1. THEME MANAGEMENT
    ======================================================================== */
 const ThemeManager = (() => {
-  const STORAGE_KEY = 'anchorpoint-theme';
+  const STORAGE_KEY = 'helm-theme';
   const html = document.documentElement;
 
   function getSystemPreference() {
@@ -61,7 +61,7 @@ const ThemeManager = (() => {
    2. RTL MANAGEMENT
    ======================================================================== */
 const RTLManager = (() => {
-  const STORAGE_KEY = 'anchorpoint-dir';
+  const STORAGE_KEY = 'helm-dir';
   const html = document.documentElement;
 
   function init() {
