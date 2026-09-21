@@ -716,6 +716,10 @@
       padding: var(--space-6);
       position: relative;
       transition: all var(--transition-base);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .pipeline-card:hover {
       transform: translateY(-6px);
@@ -733,7 +737,7 @@
       justify-content: center;
       font-weight: 800;
       font-size: 0.9rem;
-      margin-bottom: var(--space-4);
+      margin: 0 auto var(--space-4);
       box-shadow: var(--shadow-violet);
     }
     .pipeline-card:nth-child(even) .pipeline-step-badge {
@@ -745,12 +749,14 @@
       font-size: 1.2rem;
       font-weight: 700;
       margin-bottom: var(--space-2);
+      text-align: center;
     }
     .pipeline-card__desc {
       font-size: 0.88rem;
       color: var(--color-text-secondary);
       line-height: 1.6;
       margin-bottom: var(--space-4);
+      text-align: center;
     }
     .pipeline-features {
       list-style: none;
@@ -759,11 +765,16 @@
       color: var(--color-text-muted);
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
       gap: 6px;
+      width: 100%;
     }
     .pipeline-features li {
       display: flex;
       align-items: center;
+      justify-content: center;
+      text-align: center;
       gap: var(--space-2);
     }
     .pipeline-features i { color: var(--color-success); }
@@ -886,8 +897,8 @@
 </nav>
 
 <!-- Mobile Menu -->
-<div class="navbar__mobile-menu" id="mobile-menu">
-  <button class="navbar__mobile-link" data-mobile-dropdown-trigger="mob-home">Home <i class="ri-arrow-down-s-line mobile-dropdown-icon"></i></button>
+<div class="navbar__mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+  <button class="navbar__mobile-link" data-mobile-dropdown-trigger="mob-home" aria-expanded="false">Home <i class="ri-arrow-down-s-line mobile-dropdown-icon"></i></button>
   <div class="navbar__mobile-dropdown" id="mob-home">
     <a href="home1.html" class="navbar__mobile-sub-link">Home 1</a>
     <a href="home2.html" class="navbar__mobile-sub-link">Home 2</a>
@@ -896,6 +907,11 @@
   <a href="engineers.html" class="navbar__mobile-link">Engineers</a>
   <a href="portfolio.html" class="navbar__mobile-link is-active">Portfolio</a>
   <a href="contact.html" class="navbar__mobile-link">Contact</a>
+  <div class="navbar__mobile-divider"></div>
+  <div class="navbar__mobile-cta-group">
+    <a href="contact.html" class="btn btn--gold btn--block"><i class="ri-calendar-check-line" aria-hidden="true"></i> Book a Session</a>
+    <a href="login.html" class="btn btn--primary btn--block"><i class="ri-user-3-line" aria-hidden="true"></i> Artist Login</a>
+  </div>
 </div>
 
 <main id="main-content">
@@ -916,7 +932,6 @@
         <button class="filter-btn is-active" data-filter="all">All Projects</button>
         <button class="filter-btn" data-filter="pop">Pop</button>
         <button class="filter-btn" data-filter="hiphop">Hip-Hop / R&B</button>
-        <button class="filter-btn" data-filter="electronic">Electronic</button>
         <button class="filter-btn" data-filter="jazz">Jazz / Acoustic</button>
       </div>
 
@@ -966,17 +981,6 @@
             <div><span class="badge badge--violet">Mixed</span></div>
           </div>
         </div>
-        
-        <div class="portfolio-item" data-category="electronic" onclick="playSample('Synthetic Dreams', 'Axiom', 'img/portfolio-electronic.jpg')">
-          <img src="img/portfolio-electronic.jpg" alt="Synthetic Dreams" class="portfolio-item__img" loading="lazy">
-          <div class="portfolio-item__play"><i class="ri-play-fill"></i></div>
-          <div class="portfolio-item__overlay">
-            <span class="portfolio-item__genre">Electronic</span>
-            <h3 class="portfolio-item__title">Synthetic Dreams</h3>
-            <span class="portfolio-item__artist">Axiom</span>
-            <div><span class="badge badge--violet">Mastered</span></div>
-          </div>
-        </div>
 
       </div>
 
@@ -1005,7 +1009,7 @@
           
           <div class="lab-track-select">
             <button class="lab-track-btn is-active" data-lab-track="rnb" onclick="switchLabTrack('rnb', 'Candace Monroe — Velvet Underground')">R&B Master</button>
-            <button class="lab-track-btn" data-lab-track="electronic" onclick="switchLabTrack('electronic', 'Axiom — Synthetic Dreams')">Electronic Atmos</button>
+            <button class="lab-track-btn" data-lab-track="pop" onclick="switchLabTrack('pop', 'Lyra Sinclair — Echo Chamber')">Pop Master</button>
             <button class="lab-track-btn" data-lab-track="jazz" onclick="switchLabTrack('jazz', 'The Voss Quartet — Midnight')">Acoustic Jazz</button>
           </div>
         </div>
@@ -1494,24 +1498,109 @@
   <div class="player-close" onclick="closePlayer()"><i class="ri-close-line"></i></div>
 </div>
 
-<footer class="footer">
+<!-- ═══════════════════════════════════ FOOTER ═══ -->
+<footer class="footer" role="contentinfo">
   <div class="footer__main">
     <div class="container">
       <div class="footer__grid">
+        <!-- Brand -->
         <div class="footer__brand">
-          <a href="index.html" class="footer__logo-link">
-            <div class="footer__logo"><svg width="20" height="20" viewBox="0 0 36 36" fill="none"><rect x="6" y="18" width="4" height="12" rx="2" fill="white" opacity="0.9"/><rect x="12" y="10" width="4" height="20" rx="2" fill="white"/><rect x="18" y="6" width="4" height="24" rx="2" fill="white"/><rect x="24" y="12" width="4" height="16" rx="2" fill="white" opacity="0.9"/><rect x="30" y="20" width="4" height="8" rx="2" fill="white" opacity="0.7"/><rect x="0" y="22" width="4" height="6" rx="2" fill="white" opacity="0.7"/></svg></div>
+          <a href="index.html" class="footer__logo-link" aria-label="SoundForge Studios — Home">
+            <div class="footer__logo" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 36 36" fill="none">
+                <rect x="6" y="18" width="4" height="12" rx="2" fill="white" opacity="0.9"/>
+                <rect x="12" y="10" width="4" height="20" rx="2" fill="white"/>
+                <rect x="18" y="6" width="4" height="24" rx="2" fill="white"/>
+                <rect x="24" y="12" width="4" height="16" rx="2" fill="white" opacity="0.9"/>
+                <rect x="30" y="20" width="4" height="8" rx="2" fill="white" opacity="0.7"/>
+                <rect x="0" y="22" width="4" height="6" rx="2" fill="white" opacity="0.7"/>
+              </svg>
+            </div>
             <span class="footer__brand-name">SoundForge</span>
           </a>
           <p class="footer__tagline">Where Sound Becomes Art</p>
+          <p class="footer__desc">Premier recording, mixing, and mastering studio serving artists worldwide since 2010. Your vision, perfected.</p>
+          <nav class="footer__social" aria-label="Social media links">
+            <a href="#" class="footer__social-link" aria-label="Follow us on Instagram"><i class="ri-instagram-line" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Follow us on YouTube"><i class="ri-youtube-line" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Listen on Spotify"><i class="ri-spotify-line" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Follow us on SoundCloud"><i class="ri-soundcloud-line" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Follow us on X (Twitter)"><i class="ri-twitter-x-line" aria-hidden="true"></i></a>
+          </nav>
+        </div>
+
+        <!-- Quick Links -->
+        <nav class="footer__col" aria-label="Quick navigation">
+          <h3 class="footer__col-title">Explore</h3>
+          <ul class="footer__links" role="list">
+            <li><a href="home1.html" class="footer__link">Home 1</a></li>
+            <li><a href="home2.html" class="footer__link">Home 2</a></li>
+            <li><a href="services.html" class="footer__link">Our Services</a></li>
+            <li><a href="engineers.html" class="footer__link">Meet Engineers</a></li>
+            <li><a href="portfolio.html" class="footer__link">Portfolio</a></li>
+            <li><a href="contact.html" class="footer__link">Contact Us</a></li>
+          </ul>
+        </nav>
+
+        <!-- Services -->
+        <nav class="footer__col" aria-label="Services navigation">
+          <h3 class="footer__col-title">Services</h3>
+          <ul class="footer__links" role="list">
+            <li><a href="services.html#recording" class="footer__link">Recording Sessions</a></li>
+            <li><a href="services.html#mixing" class="footer__link">Mixing</a></li>
+            <li><a href="services.html#mastering" class="footer__link">Mastering</a></li>
+            <li><a href="services.html#production" class="footer__link">Full Production</a></li>
+            <li><a href="services.html#vocal-coaching" class="footer__link">Vocal Coaching</a></li>
+            <li><a href="services.html#sound-design" class="footer__link">Sound Design</a></li>
+          </ul>
+        </nav>
+
+        <!-- Contact + Newsletter -->
+        <div class="footer__col">
+          <h3 class="footer__col-title">Contact</h3>
+          <address class="footer__contact-list" style="font-style:normal;">
+            <div class="footer__contact-item">
+              <i class="ri-map-pin-line" aria-hidden="true"></i>
+              <span>1284 Harmony Lane, Hollywood, Los Angeles, CA 90028</span>
+            </div>
+            <div class="footer__contact-item">
+              <i class="ri-phone-line" aria-hidden="true"></i>
+              <a href="tel:+13105550182">+1 (310) 555-0182</a>
+            </div>
+            <div class="footer__contact-item">
+              <i class="ri-mail-line" aria-hidden="true"></i>
+              <a href="mailto:studio@soundforgestudios.com">studio@soundforgestudios.com</a>
+            </div>
+            <div class="footer__contact-item">
+              <i class="ri-time-line" aria-hidden="true"></i>
+              <span>Mon–Sun, 8am–2am (by appointment)</span>
+            </div>
+          </address>
+
+          <div class="footer__newsletter">
+            <h4 class="footer__newsletter-title">Stay in the Loop</h4>
+            <form class="footer__newsletter-form" data-newsletter-form aria-label="Footer newsletter signup">
+              <label for="footer-email" class="sr-only">Email address</label>
+              <input type="email" id="footer-email" class="footer__newsletter-input" placeholder="Your email address" required autocomplete="email">
+              <button type="submit" class="footer__newsletter-btn" aria-label="Subscribe to newsletter">
+                <i class="ri-send-plane-fill" aria-hidden="true"></i>
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
   <div class="footer__bottom">
     <div class="container">
       <div class="footer__bottom-inner">
-        <p class="footer__copyright">&copy; 2025 SoundForge Studios.</p>
+        <p class="footer__copyright">&copy; 2025 SoundForge Studios. All rights reserved.</p>
+        <nav class="footer__legal" aria-label="Legal links">
+          <a href="#" class="footer__legal-link">Privacy Policy</a>
+          <a href="#" class="footer__legal-link">Terms of Service</a>
+          <a href="#" class="footer__legal-link">Cookie Policy</a>
+        </nav>
       </div>
     </div>
   </div>
