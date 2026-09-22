@@ -1,10 +1,10 @@
 /**
- * Theme Manager — GoldCrest Engravings
+ * Theme Manager — CREST Engravings
  * Handles dark/light mode with system preference detection
  */
 
 const ThemeManager = (() => {
-  const STORAGE_KEY = 'goldcrest-theme';
+  const STORAGE_KEY = 'crest-theme';
   const DARK = 'dark';
   const LIGHT = 'light';
 

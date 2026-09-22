@@ -1,5 +1,5 @@
 /**
- * Form Validation — GoldCrest Engravings
+ * Form Validation — CREST Engravings
  * Client-side validation with error messages and WCAG 2.1 AA compliance
  */
 

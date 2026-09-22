@@ -1,5 +1,5 @@
 /**
- * nav.js — GoldCrest Engravings
+ * nav.js — CREST Engravings
  * Handles: sticky header, hamburger, dropdowns, scroll-reveal,
  *           counter animation, accordion, tabs, filter pills,
  *           scroll-to-top, lightbox, ripple, count-up numbers
@@ -308,7 +308,7 @@
           <div style="text-align:center;color:var(--color-gold);padding:var(--space-6);">
             <i class="fa-solid fa-circle-check" style="font-size:2rem;margin-bottom:var(--space-3);display:block;"></i>
             <strong>You're subscribed!</strong><br />
-            <span style="font-size:var(--text-sm);opacity:0.75;">Thanks for joining the GoldCrest community.</span>
+            <span style="font-size:var(--text-sm);opacity:0.75;">Thanks for joining the CREST community.</span>
           </div>
         `;
       }, 1200);
