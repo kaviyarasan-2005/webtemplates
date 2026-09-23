@@ -200,10 +200,17 @@
     /* === SPECIALTIES MASONRY === */
     .specialties-masonry {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       grid-template-rows: auto;
       gap: var(--space-5);
     }
+    .specialty-item:nth-child(1), .specialty-item:nth-child(2) {
+      grid-column: span 3;
+    }
+    .specialty-item:nth-child(3), .specialty-item:nth-child(4), .specialty-item:nth-child(5) {
+      grid-column: span 2;
+    }
+    
     .specialty-item {
       position: relative;
       border-radius: var(--radius-xl);
@@ -211,20 +218,14 @@
       cursor: pointer;
       display: block;
     }
-    .specialty-item:nth-child(1) { grid-row: span 2; }
-    .specialty-item:nth-child(5) { grid-column: span 2; }
-
     .specialty-item__img {
       width: 100%;
       height: 100%;
-      min-height: 200px;
+      min-height: 260px;
       object-fit: cover;
       display: block;
       transition: transform var(--transition-slow);
     }
-    .specialty-item:nth-child(1) .specialty-item__img { min-height: 460px; }
-    .specialty-item:nth-child(5) .specialty-item__img { min-height: 220px; }
-
     .specialty-item:hover .specialty-item__img { transform: scale(1.06); }
     .specialty-item__overlay {
       position: absolute;
@@ -252,11 +253,15 @@
     }
     @media (max-width: 1024px) {
       .specialties-masonry { grid-template-columns: repeat(2, 1fr); }
-      .specialty-item:nth-child(1) { grid-row: auto; }
-      .specialty-item:nth-child(5) { grid-column: auto; }
+      .specialty-item:nth-child(1), .specialty-item:nth-child(2), 
+      .specialty-item:nth-child(3), .specialty-item:nth-child(4) {
+        grid-column: span 1;
+      }
+      .specialty-item:nth-child(5) { grid-column: span 2; }
     }
     @media (max-width: 640px) {
       .specialties-masonry { grid-template-columns: 1fr; }
+      .specialty-item:nth-child(5) { grid-column: span 1; }
     }
 
     /* === MATERIALS TABS === */
