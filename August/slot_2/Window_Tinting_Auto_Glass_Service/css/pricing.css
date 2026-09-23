@@ -8,16 +8,30 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--sp-8);
-  align-items: start;
+  align-items: stretch;
 }
 @media (max-width: 1024px) {
   .pricing-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin-inline: auto;
+    gap: var(--sp-8);
   }
 }
+
+.pricing-tabs-nav {
+  justify-content: center;
+  margin-bottom: var(--sp-10);
+}
 @media (max-width: 640px) {
-  .pricing-grid {
-    grid-template-columns: 1fr;
+  .pricing-tabs-nav {
+    margin-bottom: var(--sp-6);
+  }
+  .pricing-tabs-nav .tab-btn {
+    flex: 1 1 140px;
+    text-align: center;
+    padding: var(--sp-2.5) var(--sp-4);
+    font-size: var(--text-xs);
   }
 }
 
@@ -44,9 +58,10 @@
   border-radius: var(--radius-lg);
   padding: var(--sp-6);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--sp-4);
   transition: all var(--transition-base);
+  text-align: start;
 }
 .addon-card:hover {
   transform: translateY(-2px);
@@ -54,8 +69,9 @@
   border-color: var(--clr-accent-border);
 }
 .addon-card__icon {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
   background: var(--clr-accent-light);
   border-radius: var(--radius-md);
   display: flex;
@@ -63,15 +79,21 @@
   justify-content: center;
   color: var(--clr-accent);
   flex-shrink: 0;
+  margin-top: 2px;
 }
 .addon-card__info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: start;
 }
 .addon-card__title {
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: var(--text-base);
-  margin-bottom: 2px;
+  color: var(--clr-text);
+  line-height: var(--leading-snug);
 }
 .addon-card__price {
   font-size: var(--text-sm);
@@ -86,6 +108,13 @@
 @media (max-width: 640px) {
   .addons-grid {
     grid-template-columns: 1fr;
+    gap: var(--sp-4);
+  }
+  .addon-card {
+    padding: var(--sp-4) var(--sp-4);
+  }
+  .addon-card__title {
+    font-size: var(--text-sm);
   }
 }
 
@@ -121,6 +150,7 @@
   display: flex;
   align-items: center;
   gap: var(--sp-2);
+  text-align: start;
 }
 .calc-options-grid {
   display: grid;
@@ -129,7 +159,7 @@
 }
 .calc-option-btn {
   background: var(--clr-bg);
-  border: 1px solid var(--clr-border);
+  border: 1.5px solid var(--clr-border);
   border-radius: var(--radius-lg);
   padding: var(--sp-3) var(--sp-4);
   font-size: var(--text-xs);
@@ -141,7 +171,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 4px;
+  min-height: 56px;
 }
 .calc-option-btn:hover {
   border-color: var(--clr-accent-border);
@@ -151,10 +183,10 @@
   background: var(--clr-accent);
   color: #fff;
   border-color: var(--clr-accent);
-  box-shadow: var(--shadow-glow);
+  box-shadow: var(--shadow-accent);
 }
-.calc-option-btn.active span {
-  color: rgba(255, 255, 255, 0.8);
+.calc-option-btn.active .calc-option-sub {
+  color: rgba(255, 255, 255, 0.85);
 }
 .calc-option-sub {
   font-size: 0.7rem;
@@ -170,6 +202,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 .calc-result-badge {
   font-size: var(--text-xs);
@@ -192,6 +225,9 @@
   margin-bottom: var(--sp-6);
   line-height: var(--leading-relaxed);
 }
+#calc-book-btn {
+  width: 100%;
+}
 
 /* ═══════════ NEW UNIQUE SECTION 2: INSURANCE & $0 DEDUCTIBLE GUIDE ═══════════ */
 .insurance-guide-section {
@@ -202,9 +238,12 @@
 }
 .insurance-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1fr 1fr;
   gap: var(--sp-12);
-  align-items: center;
+  align-items: start;
+}
+.insurance-content {
+  text-align: start;
 }
 .insurance-card-list {
   display: flex;
@@ -220,10 +259,12 @@
   display: flex;
   gap: var(--sp-4);
   align-items: flex-start;
+  text-align: start;
 }
 .insurance-item-icon {
   width: 40px;
   height: 40px;
+  min-width: 40px;
   border-radius: var(--radius-md);
   background: rgba(16, 185, 129, 0.15);
   color: #10B981;
@@ -231,12 +272,14 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 .insurance-item h4 {
   font-size: var(--text-sm);
   font-weight: 700;
   color: var(--clr-text);
-  margin-bottom: 2px;
+  margin-bottom: 3px;
+  line-height: var(--leading-snug);
 }
 .insurance-item p {
   font-size: var(--text-xs);
@@ -254,7 +297,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--sp-3);
+  gap: var(--sp-2.5);
   margin-top: var(--sp-6);
 }
 .insurer-tag {
@@ -276,6 +319,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--sp-8);
+  align-items: stretch;
 }
 .financing-card, .fleet-card {
   background: var(--clr-bg-card);
@@ -285,6 +329,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  text-align: start;
+  height: 100%;
 }
 .tier-perk-list {
   display: flex;
@@ -294,14 +340,20 @@
 }
 .tier-perk {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--sp-3);
   font-size: var(--text-sm);
   color: var(--clr-text);
+  text-align: start;
+  line-height: var(--leading-normal);
 }
 .tier-perk svg {
   color: var(--clr-accent);
   flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  margin-top: 2px;
 }
 
 .payment-section {
@@ -331,19 +383,63 @@
 @media (max-width: 1024px) {
   .calc-grid {
     grid-template-columns: 1fr;
+    gap: var(--sp-8);
   }
   .insurance-grid {
     grid-template-columns: 1fr;
+    gap: var(--sp-8);
   }
   .financing-fleet-grid {
     grid-template-columns: 1fr;
+    gap: var(--sp-8);
   }
 }
 @media (max-width: 640px) {
   .calc-container {
-    padding: var(--sp-6);
+    padding: var(--sp-6) var(--sp-4.5);
   }
   .calc-options-grid {
     grid-template-columns: 1fr;
+    gap: var(--sp-2);
+  }
+  .calc-option-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: start;
+    padding: var(--sp-3) var(--sp-4);
+    width: 100%;
+    min-height: 48px;
+  }
+  .calc-option-btn strong {
+    font-size: var(--text-sm);
+  }
+  .calc-option-sub {
+    font-size: var(--text-xs);
+  }
+  .calc-result-box {
+    padding: var(--sp-6) var(--sp-4);
+  }
+  .insurance-item {
+    padding: var(--sp-4);
+    gap: var(--sp-3);
+  }
+  .insurance-badges-box {
+    padding: var(--sp-6) var(--sp-4);
+  }
+  .insurer-tag {
+    font-size: 0.72rem;
+    padding: var(--sp-1.5) var(--sp-3);
+  }
+  .financing-card, .fleet-card {
+    padding: var(--sp-6) var(--sp-4.5);
+  }
+  .tier-perk {
+    font-size: var(--text-xs);
+  }
+  .payment-logos {
+    gap: var(--sp-3);
   }
 }
+
