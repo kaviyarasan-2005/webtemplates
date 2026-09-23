@@ -1,5 +1,5 @@
-﻿/* ============================================================
-   ClearShield — Animations (Intersection Observer)
+/* ============================================================
+   Tintex — Animations (Intersection Observer)
    ============================================================ */
 const AnimationManager = (() => {
   'use strict';

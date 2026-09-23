@@ -1,5 +1,5 @@
-﻿/* ============================================================
-   ClearShield — Gallery, Slider, Lightbox, Carousel
+/* ============================================================
+   Tintex — Gallery, Slider, Lightbox, Carousel
    ============================================================ */
 const GalleryManager = (() => {
   'use strict';
