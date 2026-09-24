@@ -1,0 +1,552 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 42'><rect width='42' height='42' rx='6' fill='%230D0D0D'/><polyline points='8,31 8,13 15,22 21,11 27,22 34,13 34,31' stroke='%23FFFFFF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' fill='none'/><line x1='12' y1='35' x2='30' y2='35' stroke='%23E8253A' stroke-width='2.5' stroke-linecap='round'/></svg>"/>
+  <title>MUSE — Agency Command &amp; Operations Dashboard</title>
+  <meta name="description" content="Agency operations command center for MUSE directors. Oversee global talent rosters, approve casting breakdowns, monitor production revenue and commissions.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dark-mode.css">
+  <script>(function(){const t=localStorage.getItem('muse-theme')||'light';if(t==='dark')document.documentElement.classList.add('dark');const d=localStorage.getItem('muse-dir')||'ltr';document.documentElement.setAttribute('dir',d);})();</script>
+</head>
+<body class="admin-dash dash-body">
+
+  <div class="dash-shell">
+    <!-- Fixed Left Sidebar -->
+    <aside class="dash-sidebar" aria-label="Admin Navigation">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo" aria-label="MUSE Home">
+          <div class="sidebar-logo-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42" fill="none"><rect class="logo-mark-bg" width="42" height="42" rx="6" fill="#0D0D0D"/><polyline class="logo-mark-m" points="8,31 8,13 15,22 21,11 27,22 34,13 34,31" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><line class="logo-mark-runway" x1="12" y1="35" x2="30" y2="35" stroke="#E8253A" stroke-width="2.5" stroke-linecap="round"/></svg></div><span class="sidebar-logo-word">MUSE</span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-item active" data-view="overview" tabindex="0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span>Overview</span>
+          <div class="sidebar-tooltip">Overview</div>
+        </div>
+
+        <div class="sidebar-nav-item" data-view="talent" tabindex="0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Talent Management</span>
+          <div class="sidebar-tooltip">Talent</div>
+        </div>
+
+        <div class="sidebar-nav-item" data-view="casting" tabindex="0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Casting Management</span>
+          <div class="sidebar-tooltip">Castings</div>
+        </div>
+
+        <div class="sidebar-nav-item" data-view="operations" tabindex="0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          <span>Bookings &amp; Operations</span>
+          <div class="sidebar-tooltip">Operations</div>
+        </div>
+
+        <div class="sidebar-nav-item" data-view="messages" tabindex="0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>Agency Inbox</span>
+          <div class="sidebar-tooltip">Messages</div>
+        </div>
+
+        <div class="sidebar-nav-item" data-view="reports" tabindex="0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span>Reports &amp; Analytics</span>
+          <div class="sidebar-tooltip">Reports</div>
+        </div>
+
+        <div class="sidebar-nav-item" data-view="settings" tabindex="0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Agency Settings</span>
+          <div class="sidebar-tooltip">Settings</div>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button type="button" class="sidebar-nav-item logout-btn" style="width:100%;border:none;background:transparent;text-align:left;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Sign Out</span>
+          <div class="sidebar-tooltip">Sign Out</div>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="dash-main">
+      <!-- Topbar -->
+      <header class="dash-topbar">
+        <button class="topbar-hamburger" aria-label="Toggle sidebar collapse" title="Toggle sidebar">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div class="topbar-search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Global search talent, clients, productions...">
+        </div>
+
+        <div class="topbar-right">
+          <!-- Notification Bell + Badge -->
+          <button class="notif-btn" aria-label="Notifications">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="notif-badge">7</span>
+          </button>
+
+          <!-- Theme & RTL Toggles -->
+          <button class="toggle-theme-btn" aria-label="Toggle dark mode"></button>
+          <button class="toggle-rtl-btn" aria-label="Toggle text direction">RTL</button>
+
+          <!-- Admin Profile Chip -->
+          <div class="profile-chip">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Marcus Vance" class="profile-avatar">
+            <div>
+              <div class="profile-name">Marcus Vance</div>
+              <div class="profile-role">Managing Director · Admin</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Views Container -->
+      <main class="dash-content">
+
+        <!-- VIEW 1: OVERVIEW -->
+        <section id="view-overview" class="dash-view active">
+          <div class="view-skeleton" style="display:none;">
+            <div class="skeleton skeleton-line" style="width:240px;height:32px;margin-bottom:24px;"></div>
+            <div class="stat-tiles">
+              <div class="skeleton skeleton-card"></div>
+              <div class="skeleton skeleton-card"></div>
+              <div class="skeleton skeleton-card"></div>
+              <div class="skeleton skeleton-card"></div>
+            </div>
+            <div class="charts-grid">
+              <div class="skeleton skeleton-card" style="height:240px;"></div>
+              <div class="skeleton skeleton-card" style="height:240px;"></div>
+            </div>
+          </div>
+
+          <div class="view-content">
+            <h1 class="dash-view-title">Executive Operations Overview</h1>
+
+            <!-- Admin Stat Tiles -->
+            <div class="stat-tiles">
+              <div class="stat-tile">
+                <div class="stat-tile-label">Total Talent</div>
+                <div class="stat-tile-value">284</div>
+                <div class="stat-tile-change up">↑ 14 signed this month</div>
+              </div>
+              <div class="stat-tile">
+                <div class="stat-tile-label">Active Bookings</div>
+                <div class="stat-tile-value">48</div>
+                <div class="stat-tile-change up">↑ 8 shoots underway</div>
+              </div>
+              <div class="stat-tile">
+                <div class="stat-tile-label">Monthly Revenue</div>
+                <div class="stat-tile-value">$42,000</div>
+                <div class="stat-tile-change up">↑ 18.5% MoM gross</div>
+              </div>
+              <div class="stat-tile">
+                <div class="stat-tile-label">Open Casting Calls</div>
+                <div class="stat-tile-value">12</div>
+                <div class="stat-tile-change down">3 closing this week</div>
+              </div>
+            </div>
+
+            <!-- Pending Approvals Action Card with Count Badge -->
+            <div class="card" style="padding: 24px; margin-bottom: 24px; border-left: 4px solid var(--clr-accent);">
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+                <div>
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                    <h3 style="font-family:var(--font-display);font-size:1.35rem;margin:0;">Pending Representation Applications</h3>
+                    <span class="pill pill-amber" style="font-weight:700;">6 Pending Review</span>
+                  </div>
+                  <p style="font-size:0.875rem;color:var(--clr-text-muted);">
+                    New international submissions from Paris, London, and Tokyo awaiting senior scout sign-off.
+                  </p>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="demoAction(this,'Queue Opened')">Review Submissions</button>
+              </div>
+            </div>
+
+            <!-- EXACTLY FOUR HAND-BUILT ADMIN CHARTS -->
+            <div class="charts-grid">
+              <!-- 1. Line Chart: Agency Revenue Trend -->
+              <div class="chart-card">
+                <div class="chart-title">Agency Gross Revenue (12 Months)</div>
+                <canvas id="chart-admin-line" height="180"></canvas>
+              </div>
+
+              <!-- 2. Bar Chart: New Applications -->
+              <div class="chart-card">
+                <div class="chart-title">New Talent Applications / Mo</div>
+                <canvas id="chart-admin-bar" height="180"></canvas>
+              </div>
+
+              <!-- 3. Donut Chart: Roster Status Distribution -->
+              <div class="chart-card">
+                <div class="chart-title">Roster Status Distribution</div>
+                <canvas id="chart-admin-donut" height="180"></canvas>
+              </div>
+
+              <!-- 4. Area Chart: Cumulative Commission Growth -->
+              <div class="chart-card">
+                <div class="chart-title">Cumulative Agency Commission Growth</div>
+                <canvas id="chart-admin-area" height="180"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 2: TALENT MANAGEMENT -->
+        <section id="view-talent" class="dash-view">
+          <div class="view-content">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+              <h1 class="dash-view-title" style="margin-bottom:0;">Roster Talent Directory</h1>
+              <button class="btn btn-primary btn-sm" onclick="openAddTalentModal()">+ Add Talent</button>
+            </div>
+
+            <!-- Live Search + Category Filter -->
+            <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+              <div style="flex:1;min-width:240px;">
+                <input type="text" id="talent-search" class="form-control" placeholder="Search by model or artist name...">
+              </div>
+              <div style="width:180px;">
+                <select id="cat-filter" class="form-control">
+                  <option value="">All Categories</option>
+                  <option value="Model">Models</option>
+                  <option value="Actor">Actors</option>
+                  <option value="Influencer">Influencers</option>
+                  <option value="Creator">Creators</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Talent Data Table -->
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Artist / Name</th>
+                    <th>Category</th>
+                    <th>Hub / Base</th>
+                    <th>Status</th>
+                    <th>Signed Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="talent-table-body">
+                  <!-- Populated by dashboard.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 3: CASTING MANAGEMENT -->
+        <section id="view-casting" class="dash-view">
+          <div class="view-content">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+              <h1 class="dash-view-title" style="margin-bottom:0;">Casting Calls &amp; Breakdowns</h1>
+              <button class="btn btn-primary btn-sm" onclick="openNewCastingModal()">+ New Casting Call</button>
+            </div>
+
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Role Designation</th>
+                    <th>Production Company</th>
+                    <th>Status</th>
+                    <th>Applicants</th>
+                    <th>Deadline</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="casting-table-body">
+                  <!-- Populated by dashboard.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 4: BOOKINGS & OPERATIONS -->
+        <section id="view-operations" class="dash-view">
+          <div class="view-content">
+            <h1 class="dash-view-title">Bookings &amp; Operations</h1>
+
+            <!-- Operations Weekly Strip -->
+            <div class="card" style="padding: 20px; margin-bottom: 24px;">
+              <div style="font-weight:600;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--clr-text-muted);margin-bottom:16px;">
+                Weekly Global Operations Strip
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">
+                <div style="background:var(--clr-bg-alt);padding:14px;border-radius:var(--radius);border-top:3px solid var(--clr-accent);">
+                  <div style="font-size:0.72rem;font-weight:700;color:var(--clr-accent);">MILAN HUB</div>
+                  <div style="font-weight:600;font-size:0.85rem;margin:4px 0;">Dior SS25 Shoot</div>
+                  <div style="font-size:0.75rem;color:var(--clr-text-muted);">3 Talents on set</div>
+                </div>
+                <div style="background:var(--clr-bg-alt);padding:14px;border-radius:var(--radius);border-top:3px solid #28a745;">
+                  <div style="font-size:0.72rem;font-weight:700;color:#28a745;">PARIS HUB</div>
+                  <div style="font-weight:600;font-size:0.85rem;margin:4px 0;">Chanel Beauty Campaign</div>
+                  <div style="font-size:0.75rem;color:var(--clr-text-muted);">Contract signed</div>
+                </div>
+                <div style="background:var(--clr-bg-alt);padding:14px;border-radius:var(--radius);border-top:3px solid var(--clr-border);">
+                  <div style="font-size:0.72rem;font-weight:700;color:var(--clr-text-muted);">LONDON HUB</div>
+                  <div style="font-weight:600;font-size:0.85rem;margin:4px 0;">Netflix Feature Film</div>
+                  <div style="font-size:0.75rem;color:var(--clr-text-muted);">Callbacks round 2</div>
+                </div>
+                <div style="background:var(--clr-bg-alt);padding:14px;border-radius:var(--radius);border-top:3px solid var(--clr-accent);">
+                  <div style="font-size:0.72rem;font-weight:700;color:var(--clr-accent);">NEW YORK HUB</div>
+                  <div style="font-weight:600;font-size:0.85rem;margin:4px 0;">Vogue Magazine Shoot</div>
+                  <div style="font-size:0.75rem;color:var(--clr-text-muted);">2 Talents booked</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Master Bookings Table -->
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Talent</th>
+                    <th>Client Entity</th>
+                    <th>Production Name</th>
+                    <th>Call Date</th>
+                    <th>Gross Value</th>
+                    <th>Booking Status</th>
+                  </tr>
+                </thead>
+                <tbody id="bookings-table-body">
+                  <!-- Populated by dashboard.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 5: MESSAGES -->
+        <section id="view-messages" class="dash-view">
+          <div class="view-content">
+            <h1 class="dash-view-title">Agency Operations Inbox</h1>
+
+            <div class="messages-layout">
+              <div class="messages-list">
+                <div class="msg-item active">
+                  <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                    <span class="msg-sender">Dior Global Casting</span>
+                    <span class="pill pill-green" style="font-size:0.65rem;padding:2px 6px;">Client</span>
+                  </div>
+                  <div class="msg-preview">Option confirmed for Sofia Marchetti. Send insurance forms.</div>
+                </div>
+                <div class="msg-item">
+                  <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                    <span class="msg-sender">James Okafor</span>
+                    <span class="pill pill-amber" style="font-size:0.65rem;padding:2px 6px;">Talent</span>
+                  </div>
+                  <div class="msg-preview">Self-tape for Netflix Lead uploaded to my portal drive.</div>
+                </div>
+                <div class="msg-item">
+                  <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                    <span class="msg-sender">Prada Legal Office</span>
+                    <span class="pill pill-green" style="font-size:0.65rem;padding:2px 6px;">Client</span>
+                  </div>
+                  <div class="msg-preview">Countersigned agreement for Milan Fashion Week.</div>
+                </div>
+              </div>
+
+              <div class="messages-thread">
+                <div class="thread-messages">
+                  <div class="thread-msg incoming">
+                    Hello Marcus, we're thrilled with Sofia Marchetti's test shots. We'd like to exercise the option for the 3-day Paris shoot.
+                  </div>
+                  <div class="thread-msg outgoing">
+                    Wonderful news. I've instructed her agent to block the dates on her calendar. Insurance certificates are attached to the contract view.
+                  </div>
+                  <div class="thread-msg incoming">
+                    Received. Our travel desk will handle hotel bookings at Hôtel Plaza Athénée.
+                  </div>
+                </div>
+
+                <form class="compose-form compose-box">
+                  <input type="text" class="form-control" placeholder="Reply to Dior Global Casting..." required>
+                  <button type="submit" class="btn btn-primary">Send Reply</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 6: REPORTS & ANALYTICS -->
+        <section id="view-reports" class="dash-view">
+          <div class="view-content">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+              <h1 class="dash-view-title" style="margin-bottom:0;">Reports &amp; Analytics</h1>
+              <div>
+                <select class="form-control" style="width:180px;" onchange="demoAction(this,'Updated')">
+                  <option>Q4 2024 (Current)</option>
+                  <option>Q3 2024</option>
+                  <option>Q2 2024</option>
+                  <option>Full Year 2024</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Report Cards Container -->
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-bottom:32px;" id="reports-cards">
+              <!-- Populated by dashboard.js -->
+            </div>
+
+            <!-- Top Performing Categories Mini Ranking -->
+            <div class="card" style="padding: 24px;">
+              <h3 style="font-family:var(--font-display);font-size:1.3rem;margin-bottom:16px;">Top Performing Roster Segments</h3>
+              <div style="display:flex;flex-direction:column;gap:14px;">
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:6px;">
+                    <span style="font-weight:600;">1. High Fashion &amp; Runway</span>
+                    <span style="color:var(--clr-accent);font-weight:700;">$184,000 (44%)</span>
+                  </div>
+                  <div style="height:8px;background:var(--clr-bg-alt);border-radius:4px;overflow:hidden;">
+                    <div style="width:44%;height:100%;background:var(--clr-accent);"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:6px;">
+                    <span style="font-weight:600;">2. Film &amp; Television Lead Roles</span>
+                    <span style="color:var(--clr-accent);font-weight:700;">$128,000 (30%)</span>
+                  </div>
+                  <div style="height:8px;background:var(--clr-bg-alt);border-radius:4px;overflow:hidden;">
+                    <div style="width:30%;height:100%;background:var(--clr-accent);"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:6px;">
+                    <span style="font-weight:600;">3. Luxury Creator Partnerships</span>
+                    <span style="color:var(--clr-accent);font-weight:700;">$72,000 (17%)</span>
+                  </div>
+                  <div style="height:8px;background:var(--clr-bg-alt);border-radius:4px;overflow:hidden;">
+                    <div style="width:17%;height:100%;background:var(--clr-accent);"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 7: SETTINGS -->
+        <section id="view-settings" class="dash-view">
+          <div class="view-content">
+            <h1 class="dash-view-title">Agency System Settings</h1>
+
+            <div class="card" style="padding: 32px; max-width: 680px;">
+              <form class="settings-form">
+                <div class="form-group" style="margin-bottom:16px;">
+                  <label class="form-label">Agency Legal Entity Name</label>
+                  <input type="text" class="form-control" value="MUSE Global Talent Management SA">
+                </div>
+
+                <div class="form-group" style="margin-bottom:16px;">
+                  <label class="form-label">Standard Agency Commission Rate (%)</label>
+                  <input type="number" class="form-control" value="15" min="5" max="35">
+                </div>
+
+                <div class="form-group" style="margin-bottom:24px;">
+                  <label class="form-label">Administrative Broadcast Alerts</label>
+                  <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+                    <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;">
+                      <input type="checkbox" checked style="accent-color:var(--clr-accent);"> Real-time alerts for booking payouts exceeding $10,000
+                    </label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;">
+                      <input type="checkbox" checked style="accent-color:var(--clr-accent);"> Automated reminders for expiring talent representation terms
+                    </label>
+                  </div>
+                </div>
+
+                <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--clr-border-light);padding-top:24px;">
+                  <button type="button" class="btn btn-outline logout-btn">
+                    Sign Out Administrator
+                  </button>
+                  <button type="submit" class="btn btn-primary">Save Agency Config</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Add Talent Modal -->
+  <div class="modal-overlay" id="add-talent-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-size:1.25rem;">Sign New Talent to Roster</h3>
+        <button class="modal-close" onclick="closeModal('add-talent-modal')">&times;</button>
+      </div>
+      <form onsubmit="event.preventDefault(); demoAction(document.getElementById('save-talent-btn'),'Saved'); setTimeout(()=>closeModal('add-talent-modal'),1000);">
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label">Full Legal Name</label>
+          <input type="text" class="form-control" placeholder="e.g. Maya Lin" required>
+        </div>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label">Category</label>
+          <select class="form-control">
+            <option>Model</option>
+            <option>Actor</option>
+            <option>Influencer</option>
+            <option>Creator</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label">Home Base / Hub</label>
+          <input type="text" class="form-control" placeholder="e.g. Paris / Milan / Tokyo" required>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+          <button type="button" class="btn btn-outline" onclick="closeModal('add-talent-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="save-talent-btn">Add to Roster</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- New Casting Call Modal -->
+  <div class="modal-overlay" id="new-casting-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-size:1.25rem;">Create New Casting Call Breakdown</h3>
+        <button class="modal-close" onclick="closeModal('new-casting-modal')">&times;</button>
+      </div>
+      <form onsubmit="event.preventDefault(); demoAction(document.getElementById('publish-call-btn'),'Published'); setTimeout(()=>closeModal('new-casting-modal'),1000);">
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label">Role Designation</label>
+          <input type="text" class="form-control" placeholder="e.g. Lead Feature Model" required>
+        </div>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label">Production Company / Client</label>
+          <input type="text" class="form-control" placeholder="e.g. Saint Laurent" required>
+        </div>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label">Shoot Dates / Window</label>
+          <input type="text" class="form-control" placeholder="e.g. Dec 10–14, 2024" required>
+        </div>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label">Pay Band</label>
+          <input type="text" class="form-control" placeholder="e.g. €6,000 / day" required>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+          <button type="button" class="btn btn-outline" onclick="closeModal('new-casting-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="publish-call-btn">Publish Breakdown</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,545 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOVE — Operations &amp; Agency Command Administration</title>
+  <meta name="description" content="Central administrative telemetry for global corporate relocation operations, crew deployments, pipeline kanban, and enterprise revenue management.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dark-mode.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E1713'/%3E%3Cpath d='M6 10L12 6.5V21.5L6 25V10Z' fill='%23E5BE85'/%3E%3Cpath d='M20 6.5L26 10V25L20 21.5V6.5Z' fill='%23C59B63'/%3E%3Cpath d='M12 6.5L16 11L20 6.5L16 17.5L12 6.5Z' fill='%23FFFFFF'/%3E%3Cpath d='M12 21.5L16 25L20 21.5L16 18.5L12 21.5Z' fill='%23C59B63'/%3E%3C/svg%3E">
+</head>
+<body style="background-color: var(--bg-page);">
+
+  <div class="dashboard-layout">
+    <!-- Backdrop overlay for mobile drawer -->
+    <div class="dash-sidebar-overlay" id="dashSidebarOverlay"></div>
+
+    <!-- FIXED LEFT SIDEBAR -->
+    <aside class="dash-sidebar" aria-label="Admin Navigation Sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="brand-logo" style="color:#FFFFFF; font-size:1.25rem;">
+          <span class="brand-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="8" fill="#1E1713" stroke="url(#bl)" stroke-width="1.2"/><path d="M6 10L12 6.5V21.5L6 25V10Z" fill="url(#fl)"/><path d="M20 6.5L26 10V25L20 21.5V6.5Z" fill="url(#fr)"/><path d="M12 6.5L16 11L20 6.5L16 17.5L12 6.5Z" fill="url(#fc)"/><path d="M12 21.5L16 25L20 21.5L16 18.5L12 21.5Z" fill="url(#fb)"/><defs><linearGradient id="bl" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#C59B63" stop-opacity="0.8"/><stop offset="1" stop-color="#8B693A" stop-opacity="0.3"/></linearGradient><linearGradient id="fl" x1="6" y1="6.5" x2="12" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#E5BE85"/><stop offset="1" stop-color="#B38446"/></linearGradient><linearGradient id="fr" x1="20" y1="6.5" x2="26" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#C59B63"/><stop offset="1" stop-color="#8E6631"/></linearGradient><linearGradient id="fc" x1="12" y1="6.5" x2="20" y2="17.5" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#E8D5B5"/></linearGradient><linearGradient id="fb" x1="12" y1="18.5" x2="20" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#D9AB6D"/><stop offset="1" stop-color="#9E7339"/></linearGradient></defs></svg></span>
+          <span class="nav-text">MOVE</span>
+        </a>
+        <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Navigation Sidebar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="dash-nav-item" data-tooltip="Overview">
+          <a href="#" class="dash-nav-link active" data-view="adminOverview">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span class="nav-text">Overview</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="Clients">
+          <a href="#" class="dash-nav-link" data-view="adminClients">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span class="nav-text">Clients</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="Moves Pipeline">
+          <a href="#" class="dash-nav-link" data-view="adminPipeline">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            <span class="nav-text">Moves Pipeline</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="Crews & Partners">
+          <a href="#" class="dash-nav-link" data-view="adminCrews">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10"></circle><polygon points="12 8 8 12 12 16 16 12 12 8"></polygon></svg>
+            <span class="nav-text">Crews &amp; Partners</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="Quotes">
+          <a href="#" class="dash-nav-link" data-view="adminQuotes">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            <span class="nav-text">Quotes</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="Messages">
+          <a href="#" class="dash-nav-link" data-view="adminMessages">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <span class="nav-text">Messages</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="Reports & Analytics">
+          <a href="#" class="dash-nav-link" data-view="adminReports">
+            <svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            <span class="nav-text">Reports &amp; Analytics</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="Settings">
+          <a href="#" class="dash-nav-link" data-view="adminSettings">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <span class="nav-text">Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <div style="padding:1.25rem; border-top:1px solid rgba(255, 255, 255, 0.1);">
+        <a href="login.html" class="dash-nav-link" style="color:#D5C9BC;">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span class="nav-text">Sign Out</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN DISPATCH VIEW -->
+    <main class="dash-main">
+      <header class="dash-topbar">
+        <div class="dash-topbar-left">
+          <button class="dash-topbar-hamburger" id="dashSidebarToggle" aria-label="Toggle Navigation Sidebar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <input type="search" placeholder="Search accounts, lanes, crews..." class="dash-search-input">
+        </div>
+
+        <div class="dash-topbar-right">
+          <div style="position:relative; cursor:pointer;" title="Admin Alerts">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <span style="position:absolute; top:-4px; right:-4px; width:8px; height:8px; background:var(--accent-color); border-radius:50%;"></span>
+          </div>
+
+          <button class="toggle-btn theme-toggle-btn" aria-label="Toggle Color Theme"></button>
+          <button class="toggle-btn rtl-toggle-btn" aria-label="Toggle Reading Direction">RTL</button>
+
+          <div class="profile-chip">
+            <img src="images/avatar-admin.jpg" alt="Marcus Sterling">
+            <div class="profile-info">
+              <h4>Marcus Sterling</h4>
+              <span>Administrator &bull; Global Operations</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Skeleton Loading State -->
+      <div id="dashSkeleton" style="display:none; padding:2rem;">
+        <div class="skeleton-shimmer" style="height:40px; width:240px; margin-bottom:1.5rem;"></div>
+        <div class="skeleton-grid-4" style="margin-bottom:2rem;">
+          <div class="skeleton-shimmer" style="height:100px;"></div>
+          <div class="skeleton-shimmer" style="height:100px;"></div>
+          <div class="skeleton-shimmer" style="height:100px;"></div>
+          <div class="skeleton-shimmer" style="height:100px;"></div>
+        </div>
+        <div class="skeleton-grid-2">
+          <div class="skeleton-shimmer" style="height:260px;"></div>
+          <div class="skeleton-shimmer" style="height:260px;"></div>
+        </div>
+      </div>
+
+      <div class="dash-content">
+        <!-- VIEW 1: OVERVIEW (Default) -->
+        <section id="adminOverview" class="view-panel active">
+          <!-- Admin Stat Tiles -->
+          <div class="stat-tiles-grid">
+            <div class="stat-tile">
+              <span style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Agency Active Moves</span>
+              <div class="stat-val">148</div>
+              <span style="font-size:0.78rem; color:var(--accent-color); font-weight:600;">across 42 global corridors</span>
+            </div>
+
+            <div class="stat-tile">
+              <span style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Corporate Clients</span>
+              <div class="stat-val">62</div>
+              <span style="font-size:0.78rem; color:var(--text-muted);">98.4% annual retention</span>
+            </div>
+
+            <div class="stat-tile">
+              <span style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Monthly Billing Revenue</span>
+              <div class="stat-val">$610k</div>
+              <span style="font-size:0.78rem; color:var(--accent-color); font-weight:600;">+14% MoM agency growth</span>
+            </div>
+
+            <div class="stat-tile">
+              <span style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Surveys This Week</span>
+              <div class="stat-val">38</div>
+              <span style="font-size:0.78rem; color:var(--text-muted);">92% conversion to bound quote</span>
+            </div>
+          </div>
+
+          <!-- EXACTLY FOUR HAND-BUILT CHARTS -->
+          <div class="charts-grid-2x2">
+            <!-- Chart 1: Line Chart -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <div>
+                  <h4>12-Month Agency Revenue Trend</h4>
+                  <p style="font-size:0.8rem; margin:0;">Monthly gross billing turnover</p>
+                </div>
+                <span class="section-badge" style="margin:0; font-size:0.7rem;">Revenue Spline</span>
+              </div>
+              <div class="chart-svg-container" id="adminRevenueLineChart"></div>
+            </div>
+
+            <!-- Chart 2: Bar Chart -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <div>
+                  <h4>Relocations Completed / Mo</h4>
+                  <p style="font-size:0.8rem; margin:0;">Delivered &amp; settled corporate cohorts</p>
+                </div>
+                <span class="section-badge" style="margin:0; font-size:0.7rem;">Throughput Bar</span>
+              </div>
+              <div class="chart-svg-container" id="adminCompletedBarChart"></div>
+            </div>
+
+            <!-- Chart 3: Donut Chart -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <div>
+                  <h4>Service Mix Split</h4>
+                  <p style="font-size:0.8rem; margin:0;">Revenue contribution by department</p>
+                </div>
+                <span class="section-badge" style="margin:0; font-size:0.7rem;">Segmented Donut</span>
+              </div>
+              <div class="chart-svg-container" id="adminServiceMixDonutChart"></div>
+            </div>
+
+            <!-- Chart 4: Area Chart -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <div>
+                  <h4>Cumulative Relocations Coordinated</h4>
+                  <p style="font-size:0.8rem; margin:0;">Quarterly historical volume growth</p>
+                </div>
+                <span class="section-badge" style="margin:0; font-size:0.7rem;">Volume Area</span>
+              </div>
+              <div class="chart-svg-container" id="adminCumulativeAreaChart"></div>
+            </div>
+          </div>
+
+          <!-- Pending Quotes Card -->
+          <div class="review-card" style="padding:1.5rem; flex-direction:row; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <span class="box-label" style="margin-bottom:0.25rem;">CRITICAL ACTION REQUIRED</span>
+              <h4 style="margin:0;">12 Corporate Lane Proposals Awaiting Final Broker Sign-Off</h4>
+              <p style="font-size:0.85rem; margin:0; color:var(--text-muted);">Aggregate proposal value: $148,500. SLA deadlines expiring in under 4 hours.</p>
+            </div>
+            <button class="btn btn-camel" data-demo-toast="Navigating to Quotes Management table...">Review Pending Quotes (12)</button>
+          </div>
+        </section>
+
+        <!-- VIEW 2: CLIENTS TABLE -->
+        <section id="adminClients" class="view-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <h2 style="margin:0;">Corporate Enterprise Accounts</h2>
+              <p style="margin:0; font-size:0.9rem;">Contracted multinational clients under master relocation SLAs.</p>
+            </div>
+            <input type="text" id="clientTableSearch" placeholder="Filter company name..." class="form-control" style="width:240px; padding:0.5rem 0.85rem;">
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:8px;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border-strong); text-align:left; color:var(--text-muted); font-size:0.85rem;">
+                  <th style="padding:1rem;">Company</th>
+                  <th style="padding:1rem;">Primary Contact</th>
+                  <th style="padding:1rem;">Moves Booked</th>
+                  <th style="padding:1rem;">Spend Band</th>
+                  <th style="padding:1rem;">Status</th>
+                  <th style="padding:1rem;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="clientTableBody" style="font-size:0.9rem;">
+                <tr style="border-bottom:1px solid var(--border-subtle);">
+                  <td style="padding:1rem; font-weight:700;">CloudScale Systems Ltd</td>
+                  <td style="padding:1rem;">Sarah Jenkins (VP People)</td>
+                  <td style="padding:1rem;">68 Moves</td>
+                  <td style="padding:1rem; color:var(--accent-color); font-weight:700;">$500k – $1M</td>
+                  <td style="padding:1rem;"><span class="section-badge" style="margin:0; font-size:0.7rem;">Active</span></td>
+                  <td style="padding:1rem;"><button class="btn btn-outline-dark" style="padding:4px 10px; font-size:0.75rem;" data-demo-toast="Opened CloudScale corporate profile.">View Profile</button></td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border-subtle);">
+                  <td style="padding:1rem; font-weight:700;">Aethelgard Financial Partners</td>
+                  <td style="padding:1rem;">Marcus Sterling (Talent Lead)</td>
+                  <td style="padding:1rem;">22 Moves</td>
+                  <td style="padding:1rem; color:var(--accent-color); font-weight:700;">$250k – $500k</td>
+                  <td style="padding:1rem;"><span class="section-badge" style="margin:0; font-size:0.7rem;">Active</span></td>
+                  <td style="padding:1rem;"><button class="btn btn-outline-dark" style="padding:4px 10px; font-size:0.75rem;" data-demo-toast="Opened Aethelgard profile.">View Profile</button></td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border-subtle);">
+                  <td style="padding:1rem; font-weight:700;">BioVanguard Therapeutics</td>
+                  <td style="padding:1rem;">Dr. Alistair Chen (Operations)</td>
+                  <td style="padding:1rem;">14 Moves</td>
+                  <td style="padding:1rem; color:var(--accent-color); font-weight:700;">$100k – $250k</td>
+                  <td style="padding:1rem;"><span class="section-badge" style="margin:0; font-size:0.7rem; background:#EDE6DD;">Onboarding</span></td>
+                  <td style="padding:1rem;"><button class="btn btn-camel" style="padding:4px 10px; font-size:0.75rem;" data-demo-toast="New quote draft created for BioVanguard.">New Quote</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- VIEW 3: MOVES PIPELINE (Stage-Column Kanban Board) -->
+        <section id="adminPipeline" class="view-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <h2 style="margin:0;">Moves Pipeline Kanban</h2>
+              <p style="margin:0; font-size:0.9rem;">Interactive stage tracking across all active relocation dossiers.</p>
+            </div>
+            <button class="btn btn-camel" data-demo-toast="Dispatched lane alert to all coordinators.">+ New Dossier</button>
+          </div>
+
+          <div class="kanban-board">
+            <!-- Stage 1 -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <span>01 SURVEY</span>
+                <span style="color:var(--accent-color); font-weight:800;">8</span>
+              </div>
+              <div class="kanban-card" data-demo-toast="Dossier MV-901: Survey completed in Zurich.">
+                <strong>Dr. Klaus Wagner</strong>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin:4px 0;">ZRH &rarr; BOS &bull; BioVanguard</p>
+                <span class="box-label" style="font-size:0.65rem; margin:0;">AI Scan Done</span>
+              </div>
+              <div class="kanban-card" data-demo-toast="Dossier MV-902: Home walk scheduled tomorrow.">
+                <strong>Rachel Adams</strong>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin:4px 0;">LDN &rarr; DXB &bull; Sovereign</p>
+                <span class="box-label" style="font-size:0.65rem; margin:0;">Survey 10:00</span>
+              </div>
+            </div>
+
+            <!-- Stage 2 -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <span>02 QUOTED</span>
+                <span style="color:var(--accent-color); font-weight:800;">12</span>
+              </div>
+              <div class="kanban-card" data-demo-toast="Dossier MV-882: Bound rate $11,200 sent.">
+                <strong>David Kim</strong>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin:4px 0;">ICN &rarr; LHR &bull; CloudScale</p>
+                <span class="box-label" style="font-size:0.65rem; margin:0;">$11,200 Bound</span>
+              </div>
+            </div>
+
+            <!-- Stage 3 -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <span>03 PACKING</span>
+                <span style="color:var(--accent-color); font-weight:800;">14</span>
+              </div>
+              <div class="kanban-card" data-demo-toast="Dossier MV-850: Master crew packing in Kensington.">
+                <strong>Amara Okafor</strong>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin:4px 0;">BER &rarr; DXB &bull; Helios</p>
+                <span class="box-label" style="font-size:0.65rem; margin:0;">Timber Crating</span>
+              </div>
+            </div>
+
+            <!-- Stage 4 -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <span>04 IN TRANSIT</span>
+                <span style="color:var(--accent-color); font-weight:800;">22</span>
+              </div>
+              <div class="kanban-card" data-demo-toast="Dossier MV-774: Maersk Vessel Pacific Star en route.">
+                <strong>Helena Martins</strong>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin:4px 0;">LIS &rarr; SIN &bull; QuantFin</p>
+                <span class="box-label" style="font-size:0.65rem; margin:0;">Vessel 84% Way</span>
+              </div>
+            </div>
+
+            <!-- Stage 5 -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <span>05 DELIVERED</span>
+                <span style="color:var(--accent-color); font-weight:800;">18</span>
+              </div>
+              <div class="kanban-card" data-demo-toast="Dossier MV-720: Containers arrived at flat.">
+                <strong>Carlos Morales</strong>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin:4px 0;">MAD &rarr; YYZ &bull; TeleMetrics</p>
+                <span class="box-label" style="font-size:0.65rem; margin:0;">Unpacking Active</span>
+              </div>
+            </div>
+
+            <!-- Stage 6 -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <span>06 SETTLED</span>
+                <span style="color:var(--accent-color); font-weight:800;">74</span>
+              </div>
+              <div class="kanban-card" data-demo-toast="Dossier MV-690: Settled-in sign-off completed.">
+                <strong>Sophia Lindqvist</strong>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin:4px 0;">ARN &rarr; ZRH &bull; Nordic</p>
+                <span class="box-label" style="font-size:0.65rem; margin:0;">100% Complete</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 4: CREWS & PARTNERS -->
+        <section id="adminCrews" class="view-panel">
+          <h2 style="margin-bottom:0.5rem;">Crews &amp; Certified Freight Alliances</h2>
+          <p style="margin-bottom:2rem;">Master packing teams, crane rigging specialists, and licensed customs liaisons.</p>
+
+          <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:8px;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border-strong); text-align:left; color:var(--text-muted); font-size:0.85rem;">
+                  <th style="padding:1rem;">Team / Partner Name</th>
+                  <th style="padding:1rem;">Specialty Discipline</th>
+                  <th style="padding:1rem;">Regional Hub</th>
+                  <th style="padding:1rem;">Rating</th>
+                  <th style="padding:1rem;">Status</th>
+                  <th style="padding:1rem;">Action</th>
+                </tr>
+              </thead>
+              <tbody style="font-size:0.9rem;">
+                <tr style="border-bottom:1px solid var(--border-subtle);">
+                  <td style="padding:1rem; font-weight:700;">London Alpha Rigging Crew</td>
+                  <td style="padding:1rem;">Pianos, Fine Art, Hoist Rigging</td>
+                  <td style="padding:1rem;">London (UK)</td>
+                  <td style="padding:1rem; color:var(--accent-color); font-weight:700;">4.98 / 5.0</td>
+                  <td style="padding:1rem;"><span class="section-badge" style="margin:0; font-size:0.7rem;">Assigned</span></td>
+                  <td style="padding:1rem;"><button class="btn btn-outline-dark" style="padding:4px 10px; font-size:0.75rem;" data-demo-toast="Crew dispatch manifest opened.">View Schedule</button></td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border-subtle);">
+                  <td style="padding:1rem; font-weight:700;">SingaPort Freight Logistics</td>
+                  <td style="padding:1rem;">Customs Bonded Terminal Drayage</td>
+                  <td style="padding:1rem;">Singapore (Jurong)</td>
+                  <td style="padding:1rem; color:var(--accent-color); font-weight:700;">4.95 / 5.0</td>
+                  <td style="padding:1rem;"><span class="section-badge" style="margin:0; font-size:0.7rem; background:#EDE6DD;">Available</span></td>
+                  <td style="padding:1rem;"><button class="btn btn-camel" style="padding:4px 10px; font-size:0.75rem;" data-demo-toast="Assigned SingaPort to next incoming sea vessel.">Assign Move</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- VIEW 5: QUOTES -->
+        <section id="adminQuotes" class="view-panel">
+          <h2 style="margin-bottom:0.5rem;">Corporate Proposals &amp; Quotations</h2>
+          <p style="margin-bottom:2rem;">Status telemetry for active rate negotiations and formal RFP tenders.</p>
+
+          <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:8px;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border-strong); text-align:left; color:var(--text-muted); font-size:0.85rem;">
+                  <th style="padding:1rem;">Proposal Ref</th>
+                  <th style="padding:1rem;">Corporate Account</th>
+                  <th style="padding:1rem;">Headcount</th>
+                  <th style="padding:1rem;">Contract Value</th>
+                  <th style="padding:1rem;">Status</th>
+                  <th style="padding:1rem;">Action</th>
+                </tr>
+              </thead>
+              <tbody style="font-size:0.9rem;">
+                <tr style="border-bottom:1px solid var(--border-subtle);">
+                  <td style="padding:1rem; font-family:monospace; font-weight:700;">PROP-2026-88</td>
+                  <td style="padding:1rem;">Nordic Industrials Group</td>
+                  <td style="padding:1rem;">18 Executives</td>
+                  <td style="padding:1rem; font-weight:700; color:var(--accent-color);">$184,200</td>
+                  <td style="padding:1rem;"><span class="section-badge" style="margin:0; font-size:0.7rem;">Sent</span></td>
+                  <td style="padding:1rem;"><button class="btn btn-camel" style="padding:4px 10px; font-size:0.75rem;" data-demo-toast="Reminder dispatched to procurement officer.">Send Reminder</button></td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border-subtle);">
+                  <td style="padding:1rem; font-family:monospace; font-weight:700;">PROP-2026-92</td>
+                  <td style="padding:1rem;">Aethelgard Financial</td>
+                  <td style="padding:1rem;">6 Senior Partners</td>
+                  <td style="padding:1rem; font-weight:700; color:var(--accent-color);">$72,400</td>
+                  <td style="padding:1rem;"><span class="section-badge" style="margin:0; font-size:0.7rem;">Approved</span></td>
+                  <td style="padding:1rem;"><button class="btn btn-outline-dark" style="padding:4px 10px; font-size:0.75rem;" data-demo-toast="Booking confirmed into operations pipeline.">Finalize</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- VIEW 6: MESSAGES -->
+        <section id="adminMessages" class="view-panel">
+          <h2 style="margin-bottom:0.5rem;">Agency Central Communications Hub</h2>
+          <p style="margin-bottom:2rem;">Priority queues for client escalation bridges and customs brokers.</p>
+
+          <div class="chat-thread-box" style="margin-bottom:1.5rem;">
+            <div class="chat-bubble-a" style="align-self:flex-start; border-left:none; border-right:3px solid var(--accent-color);">
+              <div style="font-size:0.75rem; color:var(--accent-color); font-weight:700; margin-bottom:0.25rem;">DISPATCH LEAD &bull; DUBAI HUB</div>
+              Priority notification: Customs approval for BioVanguard bio-refrigeration hardware granted at Al Maktoum Airport. Escort van standing by.
+            </div>
+
+            <div class="chat-bubble-q" style="align-self:flex-end;">
+              Acknowledged. Proceed with temperature log download and escort directly to Dubai Science Park facility.
+            </div>
+          </div>
+
+          <form onsubmit="event.preventDefault(); alert('Directive transmitted to Dubai team.');" style="display:flex; gap:0.75rem;">
+            <input type="text" placeholder="Issue operational directive..." required class="form-control" style="flex:1;">
+            <button type="submit" class="btn btn-camel">Broadcast</button>
+          </form>
+        </section>
+
+        <!-- VIEW 7: REPORTS & ANALYTICS -->
+        <section id="adminReports" class="view-panel">
+          <h2 style="margin-bottom:0.5rem;">Agency Performance Analytics</h2>
+          <p style="margin-bottom:2rem;">Executive visibility into lane margin profitability, customs clearance rates, and crew load.</p>
+
+          <div class="grid-3" style="margin-bottom:2rem;">
+            <div class="stat-tile">
+              <span style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Average Lane Margin</span>
+              <div class="stat-val" style="color:var(--accent-color);">26.4%</div>
+              <span style="font-size:0.78rem; color:var(--text-muted);">+2.1% above target benchmark</span>
+            </div>
+
+            <div class="stat-tile">
+              <span style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Customs Hold Rate</span>
+              <div class="stat-val" style="color:var(--accent-color);">0.2%</div>
+              <span style="font-size:0.78rem; color:var(--text-muted);">Industry average is 4.8%</span>
+            </div>
+
+            <div class="stat-tile">
+              <span style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Fleet Utilization</span>
+              <div class="stat-val" style="color:var(--accent-color);">91.8%</div>
+              <span style="font-size:0.78rem; color:var(--text-muted);">Optimal capacity range</span>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1rem;">
+            <button class="btn btn-camel" data-demo-toast="Exported CSV analytics report.">Export Raw CSV Data</button>
+            <button class="btn btn-outline-dark" data-demo-toast="Executive Board PDF presentation generated.">Generate Board PDF</button>
+          </div>
+        </section>
+
+        <!-- VIEW 8: SETTINGS -->
+        <section id="adminSettings" class="view-panel">
+          <h2 style="margin-bottom:0.5rem;">Agency System Administration</h2>
+          <p style="margin-bottom:2rem;">Configure base lane tariffs, margin thresholds, and global security policies.</p>
+
+          <div style="max-width:640px;">
+            <form onsubmit="event.preventDefault(); alert('Agency configuration saved.');" class="move-request-form">
+              <div class="form-group">
+                <label class="form-label">Agency Operational Name</label>
+                <input type="text" class="form-control" value="MOVE Global Mobility Operations">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Default Target Profit Margin (%)</label>
+                <input type="number" class="form-control" value="25">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Central Dispatch Escalation Email</label>
+                <input type="email" class="form-control" value="escalations@movemobility.com">
+              </div>
+
+              <button type="submit" class="btn btn-camel">Save System Parameters</button>
+            </form>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
