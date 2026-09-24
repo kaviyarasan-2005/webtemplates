@@ -3,321 +3,378 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexus VR | Dashboard</title>
+  <title>Nexus VR | Player Dashboard</title>
   <meta name="description" content="Manage your Nexus VR experience, track stats, and book sessions.">
-  
   <link rel="stylesheet" href="src/css/main.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon.svg">
+  <style>
+    .dash-wrapper{display:flex;flex-direction:column;min-height:100vh;background:var(--clr-bg);}
+    .dash-page-header{display:flex;align-items:center;justify-content:space-between;padding:2rem 2rem 1.5rem;max-width:1400px;width:100%;margin:0 auto;}
+    @media(max-width:768px){.dash-page-header{padding:1.25rem 1rem 1rem;flex-wrap:wrap;gap:1rem;}}
+    .topbar-brand{display:flex;align-items:center;gap:0.625rem;text-decoration:none;flex-shrink:0;}
+    .topbar-brand-icon{font-size:1.75rem;background:linear-gradient(135deg,var(--clr-primary),var(--clr-secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .topbar-brand-name{font-family:var(--font-primary);font-weight:800;font-size:1.2rem;color:var(--clr-text);letter-spacing:-0.01em;}
+    .topbar-center{flex:1;display:flex;align-items:center;justify-content:center;gap:0.25rem;}
+    .topbar-tab{padding:0.375rem 0.875rem;border-radius:99px;font-size:0.85rem;font-weight:500;color:var(--clr-text-muted);text-decoration:none;transition:all 150ms ease;}
+    .topbar-tab:hover{color:var(--clr-text);background:var(--clr-surface-alt);}
+    .topbar-tab.active{background:rgba(139,92,246,0.15);color:var(--clr-primary);}
+    .topbar-actions{display:flex;align-items:center;gap:0.75rem;flex-shrink:0;}
+    .t-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--clr-text-muted);cursor:pointer;transition:all 150ms ease;font-size:1rem;}
+    .t-btn:hover{background:var(--clr-primary);color:#fff;border-color:var(--clr-primary);}
+    [data-theme="light"] .t-btn{border-color:rgba(0,0,0,0.1);background:rgba(0,0,0,0.04);color:var(--clr-text-muted);}
+    .t-rtl{padding:0.25rem 0.75rem;border-radius:99px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:var(--clr-text-muted);font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 150ms ease;font-family:var(--font-primary);}
+    .t-rtl:hover{background:var(--clr-primary);color:#fff;border-color:var(--clr-primary);}
+    [data-theme="light"] .t-rtl{border-color:rgba(0,0,0,0.12);color:var(--clr-text-muted);}
+    .t-avatar{width:34px;height:34px;border-radius:50%;border:2px solid var(--clr-primary);object-fit:cover;cursor:pointer;}
+    .dash-body{padding:0 2rem 4rem;max-width:1400px;width:100%;margin-left:auto;margin-right:auto;box-sizing:border-box;overflow-x:hidden;}
+    @media(max-width:768px){.dash-body{padding:0 0.875rem 3rem;width:100%;max-width:100%;}}
+    .section-lbl{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--clr-text-muted);margin-bottom:0.75rem;margin-top:2rem;}
+    .user-hero{background:linear-gradient(135deg,rgba(139,92,246,0.18) 0%,rgba(34,211,238,0.06) 100%);border:1px solid rgba(139,92,246,0.2);border-radius:20px;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-bottom:0.25rem;width:100%;box-sizing:border-box;overflow:hidden;padding:1.75rem 2rem;}
+    .user-hero-left{display:flex;align-items:center;gap:1rem;flex:1 1 300px;min-width:0;}
+    .user-hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;flex:1 1 350px;}
+    .hero-stat{text-align:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.625rem 0.75rem;box-sizing:border-box;}
+    [data-theme="light"] .hero-stat{background:rgba(0,0,0,0.03);border-color:rgba(0,0,0,0.07);}
+    .hero-stat-lbl{font-size:0.62rem;font-weight:700;color:var(--clr-text-muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.2rem;white-space:nowrap;}
+    .hero-stat-val{font-size:1.25rem;font-weight:800;font-family:var(--font-primary);line-height:1;}
+    .g2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;width:100%;box-sizing:border-box;overflow:hidden;}
+    @media(max-width:768px){.g2{grid-template-columns:1fr;}}
+    .g-main{display:grid;grid-template-columns:2fr 1fr;gap:1.25rem;width:100%;box-sizing:border-box;overflow:hidden;}
+    @media(max-width:768px){.g-main{grid-template-columns:1fr;}}
+    .d-card{background:var(--clr-surface);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:1.5rem;transition:border-color 0.25s,box-shadow 0.25s;width:100%;box-sizing:border-box;}
+    .d-card:hover{border-color:rgba(139,92,246,0.3);box-shadow:0 4px 24px rgba(139,92,246,0.1);}
+    [data-theme="light"] .d-card{border-color:rgba(0,0,0,0.07);}
+    .d-card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+    .d-card-ttl{font-family:var(--font-primary);font-size:0.95rem;font-weight:700;margin:0;display:flex;align-items:center;gap:0.5rem;}
+    .chart-card{background:var(--clr-surface);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:1.5rem;transition:border-color 0.25s,box-shadow 0.25s;width:100%;box-sizing:border-box;overflow:hidden;}
+    .chart-card:hover{border-color:rgba(139,92,246,0.3);box-shadow:0 0 20px rgba(139,92,246,0.1);}
+    [data-theme="light"] .chart-card{border-color:rgba(0,0,0,0.07);}
+    .chart-canvas-wrap{position:relative;width:100%;overflow:hidden;}
+    .chart-ttl{font-family:var(--font-primary);font-size:0.9rem;font-weight:700;margin:0 0 1rem;display:flex;justify-content:space-between;align-items:center;}
+    .act-item{display:flex;align-items:flex-start;gap:1rem;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+    .act-item:last-child{border-bottom:none;}
+    [data-theme="light"] .act-item{border-bottom-color:rgba(0,0,0,0.06);}
+    .bk-row{display:flex;align-items:center;gap:1rem;padding:1rem;border-radius:12px;background:var(--clr-surface-alt);border-left:3px solid var(--clr-secondary);margin-bottom:0.625rem;flex-wrap:wrap;}
+    @media(max-width:480px){.bk-row{flex-direction:column;align-items:flex-start;}}
+    .bundle-opt{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 1rem;border-radius:10px;border:1.5px solid rgba(255,255,255,0.06);background:var(--clr-surface-alt);cursor:pointer;transition:all 150ms ease;margin-bottom:0.5rem;}
+    .bundle-opt.sel{border-color:var(--clr-primary);background:rgba(139,92,246,0.08);}
+    .bundle-opt:hover:not(.sel){border-color:rgba(255,255,255,0.15);}
+    [data-theme="light"] .bundle-opt{border-color:rgba(0,0,0,0.07);}
+    .fr-row{display:flex;align-items:center;gap:0.75rem;padding:0.5rem 0;}
+    .ach-it{display:flex;flex-direction:column;align-items:center;gap:0.25rem;padding:0.875rem 0.5rem;border-radius:12px;background:var(--clr-surface-alt);text-align:center;transition:transform 0.2s;}
+    .ach-it:hover{transform:translateY(-3px);}
+    .ach-it.locked{opacity:0.35;}
+    @media(max-width:480px){.ach-grid{grid-template-columns:repeat(2,1fr) !important;}}
+    .pb-wrap{width:100%;height:6px;background:var(--clr-surface-alt);border-radius:99px;overflow:hidden;}
+    .pb-fill{height:100%;border-radius:99px;}
+    .inv-row{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 1.25rem;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.875rem;}
+    .inv-row:last-child{border-bottom:none;}
+    [data-theme="light"] .inv-row{border-bottom-color:rgba(0,0,0,0.06);}
+
+    /* ── Global Box-Sizing & Overflow Guard ── */
+    .dash-wrapper,.dash-body,.dash-page-header{box-sizing:border-box;}
+    .dash-wrapper{overflow-x:hidden;}
+
+    /* ── Mobile: Uniform Card Alignment & Sizing ── */
+    @media(max-width:768px){
+      /* Ensure body fills width, no overflow */
+      .dash-body{padding:0 0.875rem 3rem;width:100%;max-width:100%;}
+      .dash-page-header{padding:1rem 0.875rem;width:100%;max-width:100%;}
+
+      /* All cards: full-width, uniform padding & radius */
+      .d-card,.chart-card{
+        width:100%;
+        box-sizing:border-box;
+        padding:1rem;
+        border-radius:14px;
+      }
+      .d-card-hdr{flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;}
+      .d-card-ttl{font-size:0.85rem;}
+
+      /* Hero banner */
+      .user-hero{
+        width:100%;
+        box-sizing:border-box;
+        padding:1rem;
+        gap:0.875rem;
+        border-radius:14px;
+      }
+      .user-hero h2{font-size:1.1rem !important;}
+
+      /* Stat pills: 3 equal columns (not scrollable, clean grid) */
+      .hero-stats-row{
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:0.625rem;
+        width:100%;
+        overflow-x:unset;
+        padding-bottom:0;
+      }
+      .hero-stat{
+        min-width:unset;
+        width:100%;
+        padding:0.75rem 0.5rem;
+        border-radius:10px;
+        flex-shrink:unset;
+        text-align:center;
+        box-sizing:border-box;
+      }
+
+      /* Section grids: single column, full width */
+      .g2,.g-main{
+        grid-template-columns:1fr;
+        width:100%;
+      }
+      /* Inner flex columns must be full-width too */
+      .g-main > div{width:100%;box-sizing:border-box;}
+
+      /* Charts: uniform height, clamp width to container */
+      .chart-card{padding:0.875rem;overflow:hidden;}
+      .chart-canvas-wrap{height:160px !important;width:100%;overflow:hidden;}
+      .chart-card canvas{max-width:100% !important;}
+
+      /* Booking row */
+      .bk-row{
+        width:100%;
+        box-sizing:border-box;
+        padding:0.75rem;
+        gap:0.625rem;
+        border-radius:10px;
+      }
+
+      /* Activity items */
+      .act-item{gap:0.75rem;padding:0.6rem 0;}
+
+      /* Achievement grid: 4 cols on mobile (icons are small) */
+      .ach-grid{grid-template-columns:repeat(4,1fr) !important;gap:0.5rem !important;}
+      .ach-it{padding:0.75rem 0.25rem;border-radius:10px;box-sizing:border-box;}
+      .ach-it i{font-size:1.4rem !important;}
+      .ach-it span{font-size:0.6rem !important;}
+
+      /* Bundle options: full width */
+      .bundle-opt{width:100%;box-sizing:border-box;padding:0.625rem 0.875rem;}
+
+      /* Friends */
+      .fr-row{padding:0.4rem 0;}
+
+      /* Section labels */
+      .section-lbl{margin-top:1.25rem;margin-bottom:0.625rem;}
+    }
+
+    /* ── Very small screens (≤480px) ── */
+    @media(max-width:480px){
+      .dash-body{padding:0 0.75rem 2.5rem;}
+      .d-card,.chart-card{padding:0.875rem;border-radius:12px;}
+      .user-hero{padding:0.875rem;border-radius:12px;}
+      .user-hero h2{font-size:0.95rem !important;}
+      .hero-stats-row{grid-template-columns:repeat(3,1fr);gap:0.5rem;}
+      .hero-stat{padding:0.625rem 0.25rem;}
+      /* Achievements: 2×2 on very small screens */
+      .ach-grid{grid-template-columns:repeat(2,1fr) !important;}
+      .d-card-hdr .btn{font-size:0.72rem;padding:0.3rem 0.625rem;white-space:nowrap;}
+    }
+  </style>
 </head>
-<body style="background: var(--clr-bg);">
+<body>
+<div class="dash-wrapper">
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="container flex justify-between items-center">
-      <a href="home1.html" class="flex items-center gap-2" aria-label="Nexus VR Home">
-        <i class="ph ph-hexagon text-gradient" style="font-size: 2rem;"></i>
-        <span class="text-large" style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+  <!-- TOP BAR -->
+    <!-- PAGE HEADER -->
+  <div class="dash-page-header">
+    <!-- Brand + Page Title -->
+    <div style="display:flex;flex-direction:column;gap:0.25rem;">
+      <a href="home1.html" class="topbar-brand" style="margin-bottom:0.1rem;">
+        <i class="ph ph-hexagon topbar-brand-icon"></i>
+        <span class="topbar-brand-name">Nexus VR</span>
       </a>
-
-      <div class="nav-links items-center">
-        <div class="dropdown">
-          <a href="#" class="nav-link flex items-center gap-1">Home <i class="ph ph-caret-down"></i></a>
-          <div class="dropdown-menu">
-            <a href="home1.html" class="dropdown-item">Home 1 (Immersive)</a>
-            <a href="home2.html" class="dropdown-item">Home 2 (Dynamic)</a>
-          </div>
-        </div>
-        <a href="games.html" class="nav-link">Games Library</a>
-        <a href="pricing.html" class="nav-link">Pricing</a>
-        <a href="groups.html" class="nav-link">Parties & Groups</a>
-        <div class="dropdown">
-          <a href="#" class="nav-link flex items-center gap-1">Dashboards <i class="ph ph-caret-down"></i></a>
-          <div class="dropdown-menu">
-            <a href="dashboard.html" class="dropdown-item">Player Dashboard</a>
-            <a href="admin.html" class="dropdown-item">Admin Dashboard</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-4">
-        <button id="theme-toggle" class="btn-icon hidden lg:flex items-center justify-center" aria-label="Toggle Theme">
-          <i class="ph ph-moon"></i>
-        </button>
-        <button id="rtl-toggle" class="badge" style="border: none; cursor: pointer;">RTL</button>
-        <div class="dropdown hidden lg:block">
-          <div class="flex items-center gap-2 cursor-pointer">
-            <img src="src/assets/images/avatar-1.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
-            <i class="ph ph-caret-down text-muted"></i>
-          </div>
-          <div class="dropdown-menu" style="right: 0; left: auto; width: 200px;">
-            <a href="dashboard.html" class="dropdown-item"><i class="ph ph-user"></i> Profile</a>
-            <a href="#" class="dropdown-item"><i class="ph ph-gear"></i> Settings</a>
-            <hr style="border-color: var(--border-glass); margin: 0.5rem 0;">
-            <a href="login.html" class="dropdown-item text-error"><i class="ph ph-sign-out"></i> Logout</a>
-          </div>
-        </div>
-        <button id="mobile-menu-btn" class="btn-icon lg:hidden flex items-center justify-center">
-          <i class="ph ph-list" style="font-size: 1.5rem;"></i>
-        </button>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-size:0.75rem;color:var(--clr-text-muted);">Player Dashboard</span>
+        <span style="font-size:0.75rem;color:var(--clr-text-muted);">/</span>
+        <span style="font-size:0.75rem;color:var(--clr-primary);font-weight:600;">Overview</span>
       </div>
     </div>
-  </nav>
-
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="mobile-menu flex-col gap-6">
-    <div class="flex items-center gap-4 mb-4">
-      <img src="src/assets/images/avatar-1.jpg" alt="User" style="width: 48px; height: 48px; border-radius: 50%;">
-      <div>
-        <strong>VoidWalker</strong>
-        <div class="text-small text-muted">Gold Member</div>
+    <!-- Controls -->
+    <div class="topbar-actions">
+      <button id="theme-toggle" class="t-btn" aria-label="Toggle theme"><i class="ph ph-moon"></i></button>
+      <button id="rtl-toggle" class="t-rtl">RTL</button>
+      <div class="avatar-online">
+        <img src="src/assets/images/avatar-1.jpg" alt="VoidWalker" class="t-avatar">
       </div>
     </div>
-    <a href="home1.html" class="nav-link text-large">Home 1</a>
-    <a href="games.html" class="nav-link text-large">Games Library</a>
-    <a href="pricing.html" class="nav-link text-large">Pricing</a>
-    <a href="groups.html" class="nav-link text-large">Parties & Groups</a>
-    <a href="dashboard.html" class="nav-link text-large">Player Dashboard</a>
-    <a href="admin.html" class="nav-link text-large">Admin Dashboard</a>
-    <hr style="border-color: rgba(255,255,255,0.1);">
-    <a href="login.html" class="nav-link text-large text-error">Logout</a>
   </div>
 
-  <main style="padding-top: 100px; padding-bottom: var(--space-12);" class="container">
-    
-    <!-- User Header & Stats -->
-    <div class="flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 animate-on-scroll">
-      <div class="flex items-center gap-4">
-        <img src="src/assets/images/avatar-1.jpg" alt="Profile" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--clr-primary);">
-        <div>
-          <h2 class="m-0">Welcome, VoidWalker</h2>
-          <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: var(--clr-warning);"><i class="ph-fill ph-crown"></i> Gold Member</span>
-        </div>
-      </div>
-      <div class="flex gap-4">
-        <div class="card p-4 text-center" style="min-width: 120px;">
-          <div class="text-muted text-small mb-1">Time Balance</div>
-          <div class="text-large text-primary" style="font-family: var(--font-primary); font-weight: 700;">4.5 hrs</div>
-        </div>
-        <div class="card p-4 text-center" style="min-width: 120px;">
-          <div class="text-muted text-small mb-1">Reward Points</div>
-          <div class="text-large text-secondary" style="font-family: var(--font-primary); font-weight: 700;">1,250</div>
-        </div>
-      </div>
-    </div>
+  <main class="dash-body">
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-      <!-- Infographic 1: Play Time Trends -->
-      <div class="card animate-on-scroll flex-col h-full">
-        <h3 class="mb-4">Play Time <span class="text-small text-muted font-normal">Last 7 Days</span></h3>
-        <div style="flex-grow: 1; min-height: 250px; position: relative;">
-          <canvas id="userPlayTimeChart"></canvas>
+    <!-- USER HERO -->
+    <div class="user-hero animate-on-scroll">
+
+      <!-- Left: Avatar + Info -->
+      <div class="user-hero-left">
+        <div class="avatar-online" style="flex-shrink:0;">
+          <img src="src/assets/images/avatar-1.jpg" alt="Profile" style="width:56px;height:56px;border-radius:50%;border:2px solid var(--clr-primary);object-fit:cover;">
+        </div>
+        <div style="min-width:0;">
+          <h2 style="margin:0;font-size:1.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" class="text-gradient">Welcome back, VoidWalker</h2>
+          <div style="display:flex;align-items:center;gap:0.375rem;margin-top:0.3rem;flex-wrap:wrap;">
+            <span class="badge" style="background:rgba(245,158,11,0.15);color:var(--clr-warning);font-size:0.7rem;padding:0.15rem 0.5rem;"><i class="ph-fill ph-crown"></i> Gold</span>
+            <span style="font-size:0.72rem;color:var(--clr-text-muted);white-space:nowrap;">Oct 12</span>
+          </div>
         </div>
       </div>
 
-      <!-- Infographic 2: Favorite Genres -->
-      <div class="card animate-on-scroll flex-col h-full">
-        <h3 class="mb-4">Favorite Genres <span class="text-small text-muted font-normal">All Time</span></h3>
-        <div style="flex-grow: 1; min-height: 250px; position: relative; display: flex; justify-content: center;">
-          <canvas id="userGenresChart"></canvas>
+      <!-- Right: Stats -->
+      <div class="user-hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-lbl">Time</div>
+          <div class="hero-stat-val" style="color:var(--clr-primary);">4.5h</div>
         </div>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-      <!-- Infographic 3: Reward Points History -->
-      <div class="card animate-on-scroll flex-col h-full">
-        <h3 class="mb-4">Reward Points <span class="text-small text-muted font-normal">This Month</span></h3>
-        <div style="flex-grow: 1; min-height: 250px; position: relative;">
-          <canvas id="userPointsChart"></canvas>
+        <div class="hero-stat">
+          <div class="hero-stat-lbl">Points</div>
+          <div class="hero-stat-val" style="color:var(--clr-secondary);">1,250</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-lbl">Sessions</div>
+          <div class="hero-stat-val" style="color:var(--clr-success);">38</div>
         </div>
       </div>
 
-      <!-- Infographic 4: Completion Rate -->
-      <div class="card animate-on-scroll flex-col h-full">
-        <h3 class="mb-4">Completion Rate <span class="text-small text-muted font-normal">By Game</span></h3>
-        <div style="flex-grow: 1; min-height: 250px; position: relative; display: flex; justify-content: center;">
-          <canvas id="userCompletionChart"></canvas>
-        </div>
+
+    <!-- CHARTS -->
+    <div class="section-lbl">Analytics</div>
+    <div class="g2" style="margin-bottom:1.25rem;">
+      <div class="chart-card animate-on-scroll">
+        <div class="chart-ttl"><span><i class="ph ph-chart-line" style="color:var(--clr-primary);margin-right:0.3rem;"></i>Play Time</span><span style="font-size:0.72rem;font-weight:400;color:var(--clr-text-muted);">Last 7 Days</span></div>
+        <div class="chart-canvas-wrap" style="height:210px;"><canvas id="userPlayTimeChart"></canvas></div>
+      </div>
+      <div class="chart-card animate-on-scroll">
+        <div class="chart-ttl"><span><i class="ph ph-chart-pie-slice" style="color:var(--clr-secondary);margin-right:0.3rem;"></i>Favorite Genres</span><span style="font-size:0.72rem;font-weight:400;color:var(--clr-text-muted);">All Time</span></div>
+        <div class="chart-canvas-wrap" style="height:210px;display:flex;justify-content:center;"><canvas id="userGenresChart"></canvas></div>
+      </div>
+      <div class="chart-card animate-on-scroll">
+        <div class="chart-ttl"><span><i class="ph ph-star" style="color:var(--clr-warning);margin-right:0.3rem;"></i>Reward Points</span><span style="font-size:0.72rem;font-weight:400;color:var(--clr-text-muted);">This Month</span></div>
+        <div class="chart-canvas-wrap" style="height:210px;"><canvas id="userPointsChart"></canvas></div>
+      </div>
+      <div class="chart-card animate-on-scroll">
+        <div class="chart-ttl"><span><i class="ph ph-checks" style="color:var(--clr-success);margin-right:0.3rem;"></i>Completion Rate</span><span style="font-size:0.72rem;font-weight:400;color:var(--clr-text-muted);">By Game</span></div>
+        <div class="chart-canvas-wrap" style="height:210px;display:flex;justify-content:center;"><canvas id="userCompletionChart"></canvas></div>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- Left Column -->
-      <div class="lg:col-span-2 flex-col gap-8">
-        
-        <!-- Active Bookings -->
-        <div class="card animate-on-scroll">
-          <div class="flex justify-between items-center mb-6">
-            <h3 class="m-0"><i class="ph ph-calendar-check text-primary"></i> Upcoming Bookings</h3>
-            <button class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem;">Book New Slot</button>
+    <!-- MAIN COLUMNS -->
+    <div class="section-lbl">Overview</div>
+    <div class="g-main">
+
+      <!-- LEFT -->
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+
+        <!-- Bookings -->
+        <div class="d-card animate-on-scroll">
+          <div class="d-card-hdr">
+            <h3 class="d-card-ttl"><i class="ph ph-calendar-check" style="color:var(--clr-primary);"></i> Upcoming Bookings</h3>
+            <button class="btn btn-secondary btn-sm">+ Book New Slot</button>
           </div>
-          
-          <div class="flex-col sm:flex-row gap-4 items-center p-4 rounded-md mb-4" style="background: var(--clr-surface-alt); border-left: 4px solid var(--clr-secondary);">
-            <div style="flex: 0 0 80px; text-align: center;">
-              <div class="text-large font-bold">24</div>
-              <div class="text-small text-muted">OCT</div>
+          <div class="bk-row">
+            <div style="min-width:48px;text-align:center;line-height:1.1;">
+              <div style="font-size:1.5rem;font-weight:800;font-family:var(--font-primary);">24</div>
+              <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--clr-text-muted);">OCT</div>
             </div>
-            <div style="flex: 1;">
-              <h4 class="m-0">Pod 04 - Immersive Suite</h4>
-              <p class="text-small m-0 text-muted"><i class="ph ph-clock"></i> 6:00 PM - 8:00 PM (2 hrs)</p>
+            <div style="flex:1;">
+              <strong style="font-size:0.9rem;">Pod 04 &mdash; Immersive Suite</strong>
+              <div style="font-size:0.78rem;color:var(--clr-text-muted);margin-top:0.15rem;"><i class="ph ph-clock"></i> 6:00 PM &ndash; 8:00 PM &nbsp;&middot;&nbsp; 2 hrs</div>
             </div>
-            <div class="flex gap-2">
-              <button class="btn-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--clr-error);" title="Cancel"><i class="ph ph-x"></i></button>
-            </div>
+            <button class="t-btn" style="background:rgba(239,68,68,0.1);color:var(--clr-error);border-color:rgba(239,68,68,0.2);" title="Cancel"><i class="ph ph-x"></i></button>
           </div>
-          
-          <div class="text-center p-4">
-            <p class="text-muted m-0">No other upcoming bookings.</p>
+          <p style="text-align:center;color:var(--clr-text-muted);font-size:0.83rem;margin:0.25rem 0 0;">No other upcoming bookings.</p>
+        </div>
+
+        <!-- Activity -->
+        <div class="d-card animate-on-scroll">
+          <div class="d-card-hdr">
+            <h3 class="d-card-ttl"><i class="ph ph-clock-counter-clockwise" style="color:var(--clr-primary);"></i> Recent Activity</h3>
+          </div>
+          <div class="act-item">
+            <img src="src/assets/images/game-action-1.jpg" style="width:50px;height:50px;border-radius:8px;object-fit:cover;flex-shrink:0;" alt="">
+            <div style="flex:1;">
+              <strong style="font-size:0.88rem;">Cyber Ninja VR</strong>
+              <div style="font-size:0.78rem;color:var(--clr-text-muted);margin-top:0.1rem;">Played 1.5 hrs &middot; Earned <span style="color:var(--clr-warning);">&ldquo;Master Swordsman&rdquo;</span></div>
+            </div>
+            <span style="font-size:0.72rem;color:var(--clr-text-muted);white-space:nowrap;">Oct 12</span>
+          </div>
+          <div class="act-item">
+            <div style="width:50px;height:50px;border-radius:8px;background:rgba(34,211,238,0.1);color:var(--clr-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph ph-shopping-cart" style="font-size:1.3rem;"></i></div>
+            <div style="flex:1;">
+              <strong style="font-size:0.88rem;">Purchased 5-Hour Bundle</strong>
+              <div style="font-size:0.78rem;color:var(--clr-text-muted);margin-top:0.1rem;">Added 5 hours to wallet balance.</div>
+            </div>
+            <span style="font-size:0.72rem;color:var(--clr-text-muted);white-space:nowrap;">Oct 10</span>
+          </div>
+          <div class="act-item">
+            <div style="width:50px;height:50px;border-radius:8px;background:rgba(139,92,246,0.1);color:var(--clr-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph ph-trophy" style="font-size:1.3rem;"></i></div>
+            <div style="flex:1;">
+              <strong style="font-size:0.88rem;">Level Up &mdash; Prestige II</strong>
+              <div style="font-size:0.78rem;color:var(--clr-text-muted);margin-top:0.1rem;">Loyalty tier upgraded automatically.</div>
+            </div>
+            <span style="font-size:0.72rem;color:var(--clr-text-muted);white-space:nowrap;">Sep 28</span>
           </div>
         </div>
 
-        <!-- Play History & Achievements -->
-        <div class="card animate-on-scroll">
-          <h3 class="mb-6"><i class="ph ph-clock-counter-clockwise text-primary"></i> Recent Activity</h3>
-          
-          <div class="flex-col gap-4">
-            <!-- Item -->
-            <div class="flex gap-4 items-start pb-4" style="border-bottom: var(--border-glass);">
-              <img src="src/assets/images/game-action-1.jpg" style="width: 60px; height: 60px; border-radius: var(--radius-sm); object-fit: cover;">
-              <div style="flex: 1;">
-                <strong>Cyber Ninja VR</strong>
-                <p class="text-small text-muted m-0">Played for 1.5 hours • Earned "Master Swordsman" achievement</p>
-              </div>
-              <div class="text-small text-muted">Oct 12</div>
-            </div>
-            <!-- Item -->
-            <div class="flex gap-4 items-start pb-4" style="border-bottom: var(--border-glass);">
-              <div class="btn-icon flex items-center justify-center" style="width: 60px; height: 60px; background: rgba(34, 211, 238, 0.1); color: var(--clr-secondary); border-radius: var(--radius-sm);">
-                <i class="ph ph-shopping-cart" style="font-size: 1.5rem;"></i>
-              </div>
-              <div style="flex: 1;">
-                <strong>Purchased 5-Hour Bundle</strong>
-                <p class="text-small text-muted m-0">Added 5 hours to wallet balance.</p>
-              </div>
-              <div class="text-small text-muted">Oct 10</div>
-            </div>
+        <!-- Achievements -->
+        <div class="d-card animate-on-scroll">
+          <div class="d-card-hdr">
+            <h3 class="d-card-ttl"><i class="ph ph-medal" style="color:var(--clr-warning);"></i> Achievements &amp; Badges</h3>
+            <span style="font-size:0.78rem;color:var(--clr-text-muted);">14 / 50 Unlocked</span>
+          </div>
+          <div style="margin-bottom:1.25rem;">
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.375rem;"><span style="color:var(--clr-text-muted);">Overall Progress</span><span style="color:var(--clr-warning);font-weight:700;">28%</span></div>
+            <div class="pb-wrap"><div class="pb-fill" style="width:28%;background:linear-gradient(90deg,var(--clr-primary),var(--clr-warning));"></div></div>
+          </div>
+          <div class="ach-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.625rem;">
+            <div class="ach-it"><i class="ph-fill ph-sword text-error" style="font-size:1.75rem;"></i><span style="font-size:0.67rem;font-weight:700;">First Blood</span></div>
+            <div class="ach-it"><i class="ph-fill ph-trophy text-warning" style="font-size:1.75rem;"></i><span style="font-size:0.67rem;font-weight:700;">Champion</span></div>
+            <div class="ach-it"><i class="ph-fill ph-ghost text-secondary" style="font-size:1.75rem;"></i><span style="font-size:0.67rem;font-weight:700;">Survivor</span></div>
+            <div class="ach-it locked"><i class="ph-fill ph-lock-key text-muted" style="font-size:1.75rem;"></i><span style="font-size:0.67rem;">Locked</span></div>
           </div>
         </div>
-
       </div>
 
-      <!-- Right Column -->
-      <div class="flex-col gap-8">
-        
-        <!-- Buy Time Bundles -->
-        <div class="card animate-on-scroll" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), transparent);">
-          <h3 class="mb-4">Top Up Balance</h3>
-          <p class="text-small mb-4">You are running low on time. Grab a bundle before your next session.</p>
-          
-          <div class="flex justify-between items-center p-3 mb-2 rounded-md cursor-pointer" style="background: var(--clr-surface-alt); border: 1px solid var(--clr-primary);">
-            <div>
-              <strong>2 Hours</strong>
-              <div class="text-small text-muted">Standard Rate</div>
-            </div>
-            <strong>$60</strong>
-          </div>
-          
-          <div class="flex justify-between items-center p-3 mb-4 rounded-md cursor-pointer hover:bg-surface-alt transition" style="border: 1px solid transparent;">
-            <div>
-              <strong>5 Hours</strong>
-              <div class="text-small text-success">Save $10</div>
-            </div>
-            <strong>$140</strong>
-          </div>
-          
-          <button class="btn btn-primary w-full" style="width: 100%;">Purchase Selected</button>
+      <!-- RIGHT -->
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+
+        <!-- Top Up -->
+        <div class="d-card animate-on-scroll" style="background:linear-gradient(150deg,rgba(139,92,246,0.12),var(--clr-surface));">
+          <div class="d-card-hdr"><h3 class="d-card-ttl"><i class="ph ph-wallet" style="color:var(--clr-primary);"></i> Top Up Balance</h3></div>
+          <p style="font-size:0.8rem;color:var(--clr-text-muted);margin:0 0 1rem;">You have 4.5 hrs. Grab a bundle before your next session.</p>
+          <div class="bundle-opt sel"><div><strong style="font-size:0.875rem;">2 Hours</strong><div style="font-size:0.72rem;color:var(--clr-text-muted);">Standard Rate</div></div><strong style="color:var(--clr-primary);">$60</strong></div>
+          <div class="bundle-opt"><div><strong style="font-size:0.875rem;">5 Hours</strong><div style="font-size:0.72rem;color:var(--clr-success);">Save $10</div></div><strong>$140</strong></div>
+          <div class="bundle-opt"><div><strong style="font-size:0.875rem;">10 Hours</strong><div style="font-size:0.72rem;color:var(--clr-success);">Best Value &mdash; Save $30</div></div><strong>$270</strong></div>
+          <button class="btn btn-primary" style="width:100%;margin-top:0.75rem;">Purchase Selected</button>
         </div>
 
-        <!-- Available Game Titles (Quick Browse) -->
-        <div class="card animate-on-scroll">
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="m-0">Recommended</h3>
-            <a href="games.html" class="text-small text-primary">View All</a>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div style="position: relative; border-radius: var(--radius-sm); overflow: hidden;">
-              <img src="src/assets/images/game-top.jpg" style="width: 100%; height: 100px; object-fit: cover;">
-              <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.7); padding: 4px; text-align: center; font-size: 0.75rem;">Alyx</div>
-            </div>
-            <div style="position: relative; border-radius: var(--radius-sm); overflow: hidden;">
-              <img src="src/assets/images/game-horror-1.jpg" style="width: 100%; height: 100px; object-fit: cover;">
-              <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.7); padding: 4px; text-align: center; font-size: 0.75rem;">Dark Asylum</div>
-            </div>
+        <!-- Recommended -->
+        <div class="d-card animate-on-scroll">
+          <div class="d-card-hdr"><h3 class="d-card-ttl"><i class="ph ph-game-controller" style="color:var(--clr-secondary);"></i> Recommended</h3><a href="games.html" style="font-size:0.78rem;color:var(--clr-primary);text-decoration:none;">View All</a></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.625rem;">
+            <div style="position:relative;border-radius:10px;overflow:hidden;"><img src="src/assets/images/game-top.jpg" style="width:100%;height:88px;object-fit:cover;display:block;" alt="Alyx"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.8));padding:0.4rem 0.5rem;font-size:0.72rem;font-weight:600;">Alyx</div></div>
+            <div style="position:relative;border-radius:10px;overflow:hidden;"><img src="src/assets/images/game-horror-1.jpg" style="width:100%;height:88px;object-fit:cover;display:block;" alt="Dark Asylum"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.8));padding:0.4rem 0.5rem;font-size:0.72rem;font-weight:600;">Dark Asylum</div></div>
           </div>
         </div>
-        
-        <!-- Payment History (Mini) -->
-        <div class="card animate-on-scroll p-0 overflow-hidden">
-          <div class="p-4 border-b" style="border-bottom: var(--border-glass);">
-            <h3 class="m-0">Recent Invoices</h3>
-          </div>
-          <table style="width: 100%; text-align: left; font-size: 0.875rem;">
-            <tr style="border-bottom: var(--border-glass);">
-              <td style="padding: var(--space-2) var(--space-4);">Oct 10</td>
-              <td style="padding: var(--space-2) var(--space-4);">5h Bundle</td>
-              <td style="padding: var(--space-2) var(--space-4); text-align: right;">$140</td>
-            </tr>
-            <tr>
-              <td style="padding: var(--space-2) var(--space-4);">Sep 01</td>
-              <td style="padding: var(--space-2) var(--space-4);">Gold Mem.</td>
-              <td style="padding: var(--space-2) var(--space-4); text-align: right;">$49</td>
-            </tr>
-          </table>
+
+        <!-- Friends -->
+        <div class="d-card animate-on-scroll">
+          <div class="d-card-hdr"><h3 class="d-card-ttl"><i class="ph ph-users" style="color:var(--clr-primary);"></i> Friends Online</h3><span class="badge" style="font-size:0.7rem;">3 Online</span></div>
+          <div class="fr-row"><div class="avatar-online"><img src="src/assets/images/avatar-1.jpg" alt="Alex_VR" style="width:36px;height:36px;border-radius:50%;object-fit:cover;filter:hue-rotate(90deg);"></div><div style="flex:1;"><div style="font-size:0.85rem;font-weight:600;">Alex_VR</div><div style="font-size:0.72rem;color:var(--clr-text-muted);">Playing Cyber Ninja</div></div><button class="t-btn" style="font-size:0.8rem;" title="Invite"><i class="ph ph-plus"></i></button></div>
+          <div class="fr-row"><div class="avatar-online"><img src="src/assets/images/avatar-1.jpg" alt="SarahConnor" style="width:36px;height:36px;border-radius:50%;object-fit:cover;filter:hue-rotate(180deg);"></div><div style="flex:1;"><div style="font-size:0.85rem;font-weight:600;">SarahConnor</div><div style="font-size:0.72rem;color:var(--clr-text-muted);">In Lobby</div></div><button class="t-btn" style="font-size:0.8rem;" title="Invite"><i class="ph ph-plus"></i></button></div>
+          <div class="fr-row"><div class="avatar-online"><img src="src/assets/images/avatar-1.jpg" alt="NoobMaster" style="width:36px;height:36px;border-radius:50%;object-fit:cover;filter:hue-rotate(270deg);"></div><div style="flex:1;"><div style="font-size:0.85rem;font-weight:600;">NoobMaster</div><div style="font-size:0.72rem;color:var(--clr-text-muted);">Playing Alyx</div></div><button class="t-btn" style="font-size:0.8rem;" title="Invite"><i class="ph ph-plus"></i></button></div>
         </div>
+
+
 
       </div>
     </div>
   </main>
-
-  <!-- Footer -->
-  <footer style="background: var(--clr-surface); border-top: var(--border-glass); padding-top: var(--space-12); padding-bottom: var(--space-6);">
-    <div class="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-      <div>
-        <a href="home1.html" class="flex items-center gap-2 mb-4">
-          <i class="ph ph-hexagon text-gradient" style="font-size: 1.5rem;"></i>
-          <span style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
-        </a>
-        <p class="text-small">Elevating entertainment through cutting-edge virtual reality experiences.</p>
-        <div class="flex gap-4 mt-4">
-          <a href="#" class="nav-link"><i class="ph ph-twitter-logo" style="font-size: 1.5rem;"></i></a>
-          <a href="#" class="nav-link"><i class="ph ph-instagram-logo" style="font-size: 1.5rem;"></i></a>
-          <a href="#" class="nav-link"><i class="ph ph-discord-logo" style="font-size: 1.5rem;"></i></a>
-        </div>
-      </div>
-      <div>
-        <h4 style="margin-bottom: var(--space-4);">Explore</h4>
-        <ul class="flex-col gap-2">
-          <li><a href="games.html" class="nav-link text-small">Games Library</a></li>
-          <li><a href="pricing.html" class="nav-link text-small">Pricing & Bundles</a></li>
-          <li><a href="groups.html" class="nav-link text-small">Group Bookings</a></li>
-          <li><a href="dashboard.html" class="nav-link text-small">Player Dashboard</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 style="margin-bottom: var(--space-4);">Support</h4>
-        <ul class="flex-col gap-2">
-          <li><a href="#" class="nav-link text-small">FAQ</a></li>
-          <li><a href="#" class="nav-link text-small">Contact Us</a></li>
-          <li><a href="#" class="nav-link text-small">Terms of Service</a></li>
-          <li><a href="#" class="nav-link text-small">Privacy Policy</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 style="margin-bottom: var(--space-4);">Location</h4>
-        <p class="text-small">123 Cyber Avenue<br>Neon District, NT 45890</p>
-        <p class="text-small mt-2">Mon - Sun: 10:00 AM - 12:00 AM</p>
-      </div>
-    </div>
-    <div class="container text-center text-small" style="color: var(--clr-text-muted); border-top: var(--border-glass); padding-top: var(--space-6);">
-      &copy; 2026 Nexus VR Lounge. All rights reserved.
-    </div>
-  </footer>
-
-  <script src="src/js/main.js"></script>
-  <script src="src/js/charts.js"></script>
+</div>
+<script src="src/js/main.js"></script>
+<script src="src/js/charts.js"></script>
 </body>
 </html>
-

@@ -1,5 +1,5 @@
-﻿/* ============================================================
-   ClearShield — Navbar Manager
+/* ============================================================
+   Tintex — Navbar Manager
    ============================================================ */
 const NavbarManager = (() => {
   'use strict';
@@ -53,6 +53,13 @@ const NavbarManager = (() => {
     document.addEventListener('click', e => {
       if (ddParent && !ddParent.contains(e.target)) toggleDropdown(true);
       if (menu?.classList.contains('open') && !menu.contains(e.target) && !hamburger.contains(e.target)) toggleMenu(true);
+    });
+    menu?.querySelectorAll('.navbar__link:not(#home-dropdown-trigger), .navbar__dropdown-item').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 1024) {
+          toggleMenu(true);
+        }
+      });
     });
     window.addEventListener('resize', () => { if (window.innerWidth > 1024) { toggleMenu(true); document.body.style.overflow = ''; } });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') { toggleMenu(true); toggleDropdown(true); } });

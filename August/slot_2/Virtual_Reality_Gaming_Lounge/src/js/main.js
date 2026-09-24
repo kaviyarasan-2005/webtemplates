@@ -63,9 +63,31 @@ document.addEventListener('DOMContentLoaded', () => {
         icon.className = 'ph ph-x';
       } else {
         icon.className = 'ph ph-list';
+        // Close all accordion groups when menu closes
+        document.querySelectorAll('.mob-group-btn.open').forEach(btn => {
+          btn.classList.remove('open');
+          btn.nextElementSibling.classList.remove('open');
+        });
       }
     });
   }
+
+  // --- Mobile Accordion Dropdowns ---
+  document.querySelectorAll('.mob-group-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isOpen = btn.classList.contains('open');
+      // Close all groups first
+      document.querySelectorAll('.mob-group-btn').forEach(b => {
+        b.classList.remove('open');
+        b.nextElementSibling.classList.remove('open');
+      });
+      // Toggle clicked group
+      if (!isOpen) {
+        btn.classList.add('open');
+        btn.nextElementSibling.classList.add('open');
+      }
+    });
+  });
 
   // --- Skeleton Loaders ---
   // Simulate loading dynamic content

@@ -1,5 +1,5 @@
-﻿/* ============================================================
-   ClearShield — Gallery, Slider, Lightbox, Carousel
+/* ============================================================
+   Tintex — Gallery, Slider, Lightbox, Carousel
    ============================================================ */
 const GalleryManager = (() => {
   'use strict';
@@ -104,20 +104,54 @@ const GalleryManager = (() => {
     startAuto();
   }
 
-  /* Tint Shade Selector */
+  /* Tint Shade Selector & VLT Simulator */
   function initShadeSelector() {
-    const btns    = document.querySelectorAll('.shade-btn');
-    const preview = document.getElementById('shade-preview');
-    if (!btns.length || !preview) return;
+    const btns = document.querySelectorAll('.shade-btn, .shade-pill-btn');
+    if (!btns.length) return;
+
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
         btns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const opacity = btn.getAttribute('data-opacity');
-        const tintLayer = preview.querySelector('.shade-tint-layer');
+
+        const vlt = btn.getAttribute('data-vlt') || '35';
+        const opacity = btn.getAttribute('data-opacity') || '0.55';
+        const name = btn.getAttribute('data-name') || `${vlt}% Tint`;
+        const desc = btn.getAttribute('data-desc') || '';
+        const tser = btn.getAttribute('data-tser') || '58%';
+        const ir = btn.getAttribute('data-ir') || '88%';
+        const uv = btn.getAttribute('data-uv') || '99.9%';
+        const privacy = btn.getAttribute('data-privacy') || 'Medium';
+        const legal = btn.getAttribute('data-legal') || 'Compliant in most states';
+
+        // Update tint layer opacity
+        const tintLayer = document.querySelector('.shade-tint-layer');
         if (tintLayer) tintLayer.style.opacity = opacity;
-        const label = preview.querySelector('.shade-label-value');
-        if (label) label.textContent = btn.getAttribute('data-vlt') + '% VLT';
+
+        // Update preview badges
+        const badgeVlt = document.getElementById('sim-badge-vlt');
+        if (badgeVlt) badgeVlt.textContent = `${vlt}% VLT Active`;
+
+        const simName = document.getElementById('sim-shade-name');
+        if (simName) simName.textContent = `${vlt}% ${name}`;
+
+        const simDesc = document.getElementById('sim-shade-desc');
+        if (simDesc) simDesc.textContent = desc;
+
+        const simTser = document.getElementById('sim-metric-tser');
+        if (simTser) simTser.textContent = tser;
+
+        const simIr = document.getElementById('sim-metric-ir');
+        if (simIr) simIr.textContent = ir;
+
+        const simUv = document.getElementById('sim-metric-uv');
+        if (simUv) simUv.textContent = uv;
+
+        const simPrivacy = document.getElementById('sim-metric-privacy');
+        if (simPrivacy) simPrivacy.textContent = privacy;
+
+        const simLegal = document.getElementById('sim-legal-text');
+        if (simLegal) simLegal.textContent = legal;
       });
     });
   }

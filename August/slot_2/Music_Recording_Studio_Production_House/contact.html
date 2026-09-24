@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SoundForge Studios — Contact Us</title>
-  <meta name="description" content="Get in touch with SoundForge Studios to book a session, request a studio tour, or ask about our rates.">
+  <title>SoundForge Studios — Contact Us | Studio Booking & Production Inquiries</title>
+  <meta name="description" content="Get in touch with SoundForge Studios in Hollywood, CA. Calculate custom session budgets, explore our acoustic rooms, verify session readiness, and book your studio time.">
   <meta name="theme-color" content="#F7F5F9">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
@@ -18,81 +21,1018 @@
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/rtl.css">
   <style>
+    /* ============================================================
+       SoundForge Studios — Contact Page Custom Styles
+       ============================================================ */
+    
+    /* Hero Section */
     .contact-hero {
-      padding: calc(var(--navbar-height) + var(--space-12)) 0 var(--space-10);
+      padding: calc(var(--navbar-height) + var(--space-16)) 0 var(--space-12);
       text-align: center;
-      background: var(--color-bg-secondary);
-      border-bottom: 1px solid var(--color-border-subtle);
+      background: var(--color-studio-black);
+      color: #F5F2FA;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(212, 168, 79, 0.2);
     }
-    .contact-hero__title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: var(--space-4); }
+    .contact-hero__bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.18;
+      background: url('img/contact-hero.jpg') center/cover no-repeat;
+      z-index: 0;
+      filter: blur(1px);
+    }
+    .contact-hero__glow {
+      position: absolute;
+      width: 600px;
+      height: 300px;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.35) 0%, rgba(212, 168, 79, 0.15) 50%, transparent 70%);
+      filter: blur(50px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .contact-hero__content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .contact-hero__title {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 900;
+      margin-bottom: var(--space-4);
+      color: #FFFFFF;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.8);
+      letter-spacing: -0.02em;
+    }
+    .contact-hero__subtitle {
+      font-size: 1.15rem;
+      color: rgba(245, 242, 250, 0.85);
+      line-height: 1.6;
+      max-width: 680px;
+      margin: 0 auto var(--space-6);
+    }
+    .contact-hero__status-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-3);
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 10px #10B981;
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
 
+    /* Contact & Form Grid */
+    .contact-section {
+      padding: var(--space-16) 0;
+      background: var(--color-bg-primary);
+    }
     .contact-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-16);
-      padding: var(--space-16) 0;
+      grid-template-columns: 1fr 1.15fr;
+      gap: var(--space-12);
+      align-items: start;
     }
     @media (max-width: 1024px) {
       .contact-grid { grid-template-columns: 1fr; gap: var(--space-10); }
     }
 
+    .contact-cards-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
     .contact-info-card {
       background: var(--color-bg-card);
       border: 1px solid var(--color-border-subtle);
       border-radius: var(--radius-lg);
-      padding: var(--space-6);
-      margin-bottom: var(--space-6);
+      padding: var(--space-5) var(--space-6);
       display: flex;
+      align-items: center;
       gap: var(--space-4);
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .contact-info-card:hover {
+      border-color: var(--color-electric-violet);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
     .contact-info-card__icon {
-      width: 48px; height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: var(--radius-md);
       background: var(--gradient-violet);
       color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-violet);
     }
-    .contact-info-card__title { font-family: var(--font-secondary); font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-    .contact-info-card__value { font-size: 1.1rem; font-weight: 600; color: var(--color-text-primary); }
-    .contact-info-card__value a { color: inherit; text-decoration: none; transition: color var(--transition-fast); }
-    .contact-info-card__value a:hover { color: var(--color-electric-violet); }
-
-    .map-container {
-      width: 100%;
-      height: 300px;
-      border-radius: var(--radius-lg);
-      background: var(--color-bg-secondary);
-      border: 1px solid var(--color-border-subtle);
-      display: flex; align-items: center; justify-content: center;
+    .contact-info-card__icon--gold {
+      background: var(--gradient-gold);
+      box-shadow: var(--shadow-gold);
+    }
+    .contact-info-card__content { flex: 1; min-width: 0; }
+    .contact-info-card__title {
+      font-family: var(--font-secondary);
+      font-size: 0.78rem;
+      font-weight: 700;
       color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 2px;
+    }
+    .contact-info-card__value {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      word-break: break-word;
+    }
+    .contact-info-card__value a {
+      color: inherit;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .contact-info-card__value a:hover {
+      color: var(--color-electric-violet);
+    }
+    .contact-info-card__subtext {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      margin-top: 3px;
+    }
+    
+    .map-container-box {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid var(--color-border-subtle);
+      box-shadow: var(--shadow-md);
+      margin-top: var(--space-4);
+      background: var(--color-bg-card);
+    }
+    .map-header {
+      padding: var(--space-3) var(--space-5);
+      background: var(--color-bg-secondary);
+      border-bottom: 1px solid var(--color-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .map-directions-links {
+      display: flex;
+      gap: var(--space-3);
+    }
+    .map-directions-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+      color: var(--color-electric-violet);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .map-directions-link:hover { text-decoration: underline; }
+    .map-frame {
+      width: 100%;
+      height: 240px;
+      border: 0;
+      display: block;
+    }
+
+    /* Contact Form Box */
+    .contact-form-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+    [data-theme="dark"] .contact-form-card {
+      background: #1D1A24;
+      border-color: rgba(124, 58, 237, 0.25);
+    }
+    .contact-form__header {
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .contact-form__title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: var(--space-2);
+      color: var(--color-text-primary);
+    }
+    .contact-form__desc {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+    @media (max-width: 640px) {
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form-card { padding: var(--space-6); }
+    }
+
+    /* ============================================================
+       UNIQUE SECTION 1: Interactive Studio Session & Budget Estimator
+       ============================================================ */
+    .estimator-section {
+      padding: var(--space-20) 0;
+      background: var(--color-bg-secondary);
+      border-top: 1px solid var(--color-border-subtle);
+      border-bottom: 1px solid var(--color-border-subtle);
+      position: relative;
+    }
+    .estimator-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: var(--space-10);
+      align-items: start;
+    }
+    @media (max-width: 1024px) {
+      .estimator-grid { grid-template-columns: 1fr; }
+    }
+    
+    .config-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-md);
+    }
+    .config-step {
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-8);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .config-step:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .config-step__header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+    .config-step__number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--color-electric-violet);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: var(--font-secondary);
+    }
+    .config-step__title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+    
+    /* Service Tier Selection Radio Cards */
+    .tier-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-3);
+    }
+    .tier-radio-label {
+      cursor: pointer;
+      display: block;
+      position: relative;
+    }
+    .tier-radio-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .tier-box {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      background: var(--color-bg-primary);
+      transition: all var(--transition-fast);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .tier-radio-input:checked + .tier-box {
+      border-color: var(--color-electric-violet);
+      background: rgba(124, 58, 237, 0.08);
+      box-shadow: 0 0 0 2px var(--color-electric-violet);
+    }
+    [data-theme="dark"] .tier-radio-input:checked + .tier-box {
+      background: rgba(124, 58, 237, 0.18);
+    }
+    .tier-box__icon {
+      font-size: 1.4rem;
+      color: var(--color-electric-violet);
+      margin-bottom: var(--space-2);
+    }
+    .tier-box__name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--color-text-primary);
+      margin-bottom: 2px;
+    }
+    .tier-box__rate {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-champagne-gold);
+    }
+
+    /* Sliders */
+    .range-control-group {
+      margin-top: var(--space-4);
+    }
+    .range-control-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-2);
+    }
+    .range-value-badge {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-electric-violet);
+      background: rgba(124, 58, 237, 0.12);
+      padding: 2px 10px;
+      border-radius: var(--radius-full);
+    }
+    .custom-range {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--color-border);
+      outline: none;
+      accent-color: var(--color-electric-violet);
+      cursor: pointer;
+    }
+
+    /* Add-ons Checkbox Grid */
+    .addon-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-3);
+    }
+    .addon-checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+    .addon-checkbox-label:hover {
+      border-color: var(--color-electric-violet);
+    }
+    .addon-checkbox-input {
+      margin-top: 3px;
+      accent-color: var(--color-electric-violet);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .addon-info { flex: 1; }
+    .addon-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      display: block;
+    }
+    .addon-price {
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      color: var(--color-champagne-gold);
+    }
+
+    /* Summary Live Calculation Box */
+    .estimate-summary-card {
+      background: var(--color-studio-black);
+      color: #F5F2FA;
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      position: sticky;
+      top: calc(var(--navbar-height) + var(--space-6));
+      box-shadow: var(--shadow-xl);
+      border: 1px solid rgba(212, 168, 79, 0.3);
+    }
+    .summary-badge-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-family: var(--font-secondary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-champagne-gold);
+      background: rgba(212, 168, 79, 0.15);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-4);
+    }
+    .estimate-total-wrap {
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .estimate-total-label {
+      font-size: 0.85rem;
+      color: rgba(245, 242, 250, 0.65);
+      margin-bottom: 4px;
+    }
+    .estimate-total-price {
+      font-size: 2.8rem;
+      font-weight: 900;
+      font-family: var(--font-secondary);
+      color: #FFFFFF;
+      line-height: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .estimate-total-currency {
+      font-size: 1.5rem;
+      color: var(--color-champagne-gold);
+    }
+    .estimate-line-items {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+      font-size: 0.88rem;
+    }
+    .line-item-row {
+      display: flex;
+      justify-content: space-between;
+      color: rgba(245, 242, 250, 0.8);
+    }
+    .line-item-row--total {
+      font-weight: 700;
+      color: #FFFFFF;
+      padding-top: var(--space-2);
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+    .line-item-val {
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+    .transfer-quote-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-lg);
+      font-weight: 700;
+      background: var(--gradient-violet);
+      color: #FFFFFF;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all var(--transition-fast);
+      box-shadow: var(--shadow-violet);
+    }
+    .transfer-quote-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+    .quote-disclaimer {
+      font-size: 0.72rem;
+      color: rgba(245, 242, 250, 0.5);
+      margin-top: var(--space-3);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* ============================================================
+       UNIQUE SECTION 2: VIP Studio Tour & Acoustic Room VR Explorer
+       ============================================================ */
+    .tour-hub-section {
+      padding: var(--space-20) 0;
+      background: var(--color-bg-primary);
+      position: relative;
+    }
+    .tour-tabs-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-8);
+    }
+    .tour-tab-btn {
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-full);
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      transition: all var(--transition-fast);
+    }
+    .tour-tab-btn:hover {
+      border-color: var(--color-electric-violet);
+      color: var(--color-electric-violet);
+    }
+    .tour-tab-btn.is-active {
+      background: var(--color-electric-violet);
+      border-color: var(--color-electric-violet);
+      color: #FFFFFF;
+      box-shadow: var(--shadow-violet);
+    }
+
+    .tour-showcase-panel {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: var(--space-10);
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    @media (max-width: 1024px) {
+      .tour-showcase-panel { grid-template-columns: 1fr; }
+    }
+
+    .tour-viewport {
+      position: relative;
+      background: #0D0B12;
+      min-height: 420px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tour-viewport__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .tour-viewport:hover .tour-viewport__img {
+      transform: scale(1.03);
+    }
+    
+    /* Interactive Hotspots */
+    .tour-hotspot {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-electric-violet);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 0 0 6px rgba(124, 58, 237, 0.4);
+      animation: hotspotPulse 2.5s infinite;
+      z-index: 10;
+      transition: all var(--transition-fast);
+    }
+    .tour-hotspot:hover {
+      transform: scale(1.2);
+      background: var(--color-champagne-gold);
+      box-shadow: 0 0 0 8px rgba(212, 168, 79, 0.5);
+    }
+    @keyframes hotspotPulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(124, 58, 237, 0.1); }
+    }
+    
+    .hotspot-tooltip {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(6px);
+      background: rgba(17, 14, 24, 0.95);
+      backdrop-filter: blur(10px);
+      color: #FFFFFF;
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      font-size: 0.8rem;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-fast);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(212, 168, 79, 0.3);
+      z-index: 20;
+    }
+    .tour-hotspot:hover .hotspot-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+    .hotspot-tooltip__title {
+      font-weight: 700;
+      color: var(--color-champagne-gold);
+      margin-bottom: 2px;
+    }
+    
+    .tour-specs-content {
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .room-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-secondary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-electric-violet);
+      background: rgba(124, 58, 237, 0.1);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-3);
+    }
+    .room-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: var(--space-3);
+      color: var(--color-text-primary);
+    }
+    .room-description {
+      font-size: 0.95rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
       margin-bottom: var(--space-6);
     }
+    .room-spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+    .spec-item {
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+    }
+    .spec-label {
+      font-size: 0.75rem;
+      font-family: var(--font-secondary);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .spec-val {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-top: 2px;
+    }
+    
+    .walkthrough-cta-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+    @media (max-width: 640px) {
+      .walkthrough-cta-box { flex-direction: column; align-items: stretch; }
+      .room-spec-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       UNIQUE SECTION 3: Artist Pre-Production Guide & Live Studio Ops
+       ============================================================ */
+    .prep-hub-section {
+      padding: var(--space-20) 0;
+      background: var(--color-bg-secondary);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+    .prep-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: var(--space-10);
+      align-items: start;
+    }
+    @media (max-width: 1024px) {
+      .prep-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Live Studio Ops Monitor Card */
+    .ops-monitor-card {
+      background: var(--color-studio-black);
+      color: #F5F2FA;
+      border-radius: var(--radius-xl);
+      padding: var(--space-6) var(--space-8);
+      border: 1px solid rgba(212, 168, 79, 0.25);
+      box-shadow: var(--shadow-xl);
+      margin-bottom: var(--space-6);
+    }
+    .ops-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .ops-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .ops-live-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      background: rgba(16, 185, 129, 0.18);
+      border: 1px solid #10B981;
+      color: #10B981;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+    }
+    .room-status-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+    .room-status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.88rem;
+    }
+    .room-status-info {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .room-status-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .status-active { background: #EF4444; box-shadow: 0 0 8px #EF4444; }
+    .status-ready { background: #10B981; box-shadow: 0 0 8px #10B981; }
+    .status-prep { background: #F59E0B; box-shadow: 0 0 8px #F59E0B; }
+    
+    .room-status-badge {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(245, 242, 250, 0.9);
+    }
+
+    /* Interactive Stem Ingest Checklist */
+    .checklist-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-md);
+    }
+    .checklist-header {
+      margin-bottom: var(--space-6);
+    }
+    .readiness-meter-wrap {
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+    .readiness-meter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-2);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .readiness-percent {
+      font-family: var(--font-mono);
+      color: var(--color-electric-violet);
+    }
+    .readiness-bar {
+      height: 10px;
+      border-radius: 5px;
+      background: var(--color-border);
+      overflow: hidden;
+      position: relative;
+    }
+    .readiness-progress {
+      height: 100%;
+      width: 40%;
+      background: var(--gradient-violet);
+      border-radius: 5px;
+      transition: width 0.4s ease, background 0.4s ease;
+    }
+    
+    .stem-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .stem-check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border-subtle);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .stem-check-item:hover {
+      border-color: var(--color-electric-violet);
+    }
+    .stem-check-input {
+      margin-top: 3px;
+      accent-color: var(--color-electric-violet);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .stem-item-text {
+      flex: 1;
+    }
+    .stem-item-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      display: block;
+    }
+    .stem-item-desc {
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    /* Arrival Logistics Amenities Grid */
+    .arrival-amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+    .amenity-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      transition: all var(--transition-fast);
+    }
+    .amenity-card:hover {
+      border-color: var(--color-champagne-gold);
+      transform: translateY(-2px);
+    }
+    .amenity-icon {
+      font-size: 1.5rem;
+      color: var(--color-champagne-gold);
+      margin-bottom: var(--space-2);
+    }
+    .amenity-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 3px;
+    }
+    .amenity-desc {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    /* Toast Notification CSS */
+    .toast-container {
+      position: fixed;
+      bottom: var(--space-6);
+      right: var(--space-6);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .toast {
+      background: var(--color-studio-black);
+      color: #fff;
+      padding: var(--space-3) var(--space-5);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: 0.9rem;
+      font-weight: 500;
+      animation: slideToast 0.3s ease;
+    }
+    @keyframes slideToast {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* RTL specific overrides */
+    [dir="rtl"] .config-step__header { flex-direction: row-reverse; }
+    [dir="rtl"] .estimate-total-price { flex-direction: row-reverse; }
+    [dir="rtl"] .line-item-row { flex-direction: row-reverse; }
+    [dir="rtl"] .toast-container { right: auto; left: var(--space-6); }
+    [dir="rtl"] .status-pill,
+    [dir="rtl"] .tour-tab-btn,
+    [dir="rtl"] .contact-info-card { text-align: right; }
   </style>
 </head>
 <body>
 
-<div class="page-loader" id="page-loader" aria-hidden="true">
-  <div class="page-loader__logo">
-    <svg width="32" height="32" viewBox="0 0 36 36" fill="none"><rect x="6" y="18" width="4" height="12" rx="2" fill="white" opacity="0.9"/><rect x="12" y="10" width="4" height="20" rx="2" fill="white"/><rect x="18" y="6" width="4" height="24" rx="2" fill="white"/><rect x="24" y="12" width="4" height="16" rx="2" fill="white" opacity="0.9"/><rect x="30" y="20" width="4" height="8" rx="2" fill="white" opacity="0.7"/></svg>
-  </div>
-  <div class="page-loader__bar"><div class="page-loader__bar-fill"></div></div>
-</div>
 <div class="toast-container" id="toast-container"></div>
 
+<!-- Header / Top Navigation -->
 <nav class="navbar" id="navbar">
   <div class="container">
     <div class="navbar__inner">
       <a href="index.html" class="navbar__brand">
         <div class="navbar__logo"><svg width="22" height="22" viewBox="0 0 36 36" fill="none"><rect x="6" y="18" width="4" height="12" rx="2" fill="white" opacity="0.9"/><rect x="12" y="10" width="4" height="20" rx="2" fill="white"/><rect x="18" y="6" width="4" height="24" rx="2" fill="white"/><rect x="24" y="12" width="4" height="16" rx="2" fill="white" opacity="0.9"/><rect x="30" y="20" width="4" height="8" rx="2" fill="white" opacity="0.7"/><rect x="0" y="22" width="4" height="6" rx="2" fill="white" opacity="0.7"/></svg></div>
-        <span class="navbar__brand-name">SoundForge<span class="navbar__brand-accent">Studios</span></span>
+        <span class="navbar__brand-name">SoundForge</span>
       </a>
       <ul class="navbar__links">
         <li class="navbar__item navbar__item--dropdown">
           <button class="navbar__link navbar__link--dropdown">Home <i class="ri-arrow-down-s-line"></i></button>
           <ul class="navbar__dropdown">
-            <li><a href="home1.html" class="navbar__dropdown-link">Studio Showcase</a></li>
-            <li><a href="home2.html" class="navbar__dropdown-link">Production House</a></li>
+            <li><a href="home1.html" class="navbar__dropdown-link">Home 1</a></li>
+            <li><a href="home2.html" class="navbar__dropdown-link">Home 2</a></li>
           </ul>
         </li>
         <li class="navbar__item"><a href="services.html" class="navbar__link">Services</a></li>
@@ -101,121 +1041,1120 @@
         <li class="navbar__item"><a href="contact.html" class="navbar__link is-active" aria-current="page">Contact</a></li>
       </ul>
       <div class="navbar__controls">
-        <button class="navbar__control-btn" data-theme-toggle><i class="ri-moon-fill"></i></button>
-        <button class="navbar__control-btn" data-dir-toggle><i class="ri-text-direction-r"></i></button>
+        <button class="navbar__control-btn" data-theme-toggle title="Toggle Dark/Light"><i class="ri-moon-fill"></i></button>
+        <button class="navbar__control-btn" data-dir-toggle title="Toggle RTL"><span class="dir-label">RTL</span></button>
         <a href="login.html" class="btn btn--primary btn--sm navbar__login-btn">Artist Login</a>
-        <button class="navbar__hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        <button class="navbar__hamburger" id="hamburger" aria-label="Open mobile menu"><span></span><span></span><span></span></button>
       </div>
     </div>
   </div>
 </nav>
 
+<!-- Mobile Menu -->
+<div class="navbar__mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+  <button class="navbar__mobile-link" data-mobile-dropdown-trigger="mob-home" aria-expanded="false">Home <i class="ri-arrow-down-s-line mobile-dropdown-icon"></i></button>
+  <div class="navbar__mobile-dropdown" id="mob-home">
+    <a href="home1.html" class="navbar__mobile-sub-link">Home 1</a>
+    <a href="home2.html" class="navbar__mobile-sub-link">Home 2</a>
+  </div>
+  <a href="services.html" class="navbar__mobile-link">Services</a>
+  <a href="engineers.html" class="navbar__mobile-link">Engineers</a>
+  <a href="portfolio.html" class="navbar__mobile-link">Portfolio</a>
+  <a href="contact.html" class="navbar__mobile-link is-active">Contact</a>
+  <div class="navbar__mobile-divider"></div>
+  <div class="navbar__mobile-cta-group">
+    <a href="login.html" class="btn btn--primary btn--block"><i class="ri-user-3-line" aria-hidden="true"></i> Artist Login</a>
+  </div>
+</div>
+
 <main id="main-content">
+  <!-- Hero Section -->
   <header class="contact-hero reveal">
-    <div class="container">
-      <span class="section__label"><i class="ri-mail-send-fill"></i> Get in Touch</span>
-      <h1 class="contact-hero__title">Let's Discuss Your Project</h1>
+    <div class="contact-hero__bg"></div>
+    <div class="contact-hero__glow"></div>
+    <div class="container contact-hero__content">
+      <span class="section__label"><i class="ri-sound-module-line"></i> Direct Inquiries & Session Bookings</span>
+      <h1 class="contact-hero__title">Let's Bring Your Sonic Vision to Life</h1>
+      <p class="contact-hero__subtitle">Whether tracking an orchestral master, booking an album residency lockout, or scheduling Dolby Atmos immersive mixing, our engineering team is here 24/7.</p>
+      
+      <div class="contact-hero__status-pills">
+        <span class="status-pill"><span class="status-dot"></span> Live Studio Desk Online</span>
+        <span class="status-pill"><i class="ri-time-line" style="color:var(--color-champagne-gold);"></i> Average Response: &lt; 2 Hours</span>
+        <span class="status-pill"><i class="ri-map-pin-2-line" style="color:var(--color-electric-violet);"></i> Hollywood, CA Campus</span>
+      </div>
     </div>
   </header>
 
-  <div class="container contact-grid">
-    <!-- Contact Info -->
-    <div class="reveal--left">
-      <h2 style="margin-bottom: var(--space-6);">Contact Information</h2>
-      
-      <div class="contact-info-card">
-        <div class="contact-info-card__icon"><i class="ri-map-pin-2-fill"></i></div>
-        <div>
-          <div class="contact-info-card__title">Studio Location</div>
-          <div class="contact-info-card__value">1284 Harmony Lane<br>Hollywood, Los Angeles, CA 90028</div>
+  <!-- Primary Contact & Form Grid -->
+  <section class="contact-section">
+    <div class="container contact-grid">
+      <!-- Contact Info Cards & Map -->
+      <div class="reveal--left">
+        <div style="margin-bottom: var(--space-6);">
+          <span class="section__label"><i class="ri-building-4-line"></i> Campus Directory</span>
+          <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--color-text-primary);">Reach Our Production Team</h2>
+          <p style="font-size: 0.95rem; color: var(--color-text-muted); margin-top: 4px;">Walk-ins welcome by appointment. Secure load-in bays open 24/7 for booked artists.</p>
         </div>
-      </div>
-      
-      <div class="contact-info-card">
-        <div class="contact-info-card__icon"><i class="ri-phone-fill"></i></div>
-        <div>
-          <div class="contact-info-card__title">Booking & General Inquiries</div>
-          <div class="contact-info-card__value"><a href="tel:+13105550182">+1 (310) 555-0182</a></div>
-        </div>
-      </div>
-      
-      <div class="contact-info-card">
-        <div class="contact-info-card__icon"><i class="ri-mail-fill"></i></div>
-        <div>
-          <div class="contact-info-card__title">Email Address</div>
-          <div class="contact-info-card__value"><a href="mailto:studio@soundforgestudios.com">studio@soundforgestudios.com</a></div>
-        </div>
-      </div>
-
-      <div class="map-container">
-        <i class="ri-map-2-line" style="font-size:2rem; margin-right:8px;"></i> Interactive Map Placeholder
-      </div>
-    </div>
-
-    <!-- Contact Form -->
-    <div class="reveal--right">
-      <div style="background:var(--color-bg-card); border:1px solid var(--color-border-subtle); border-radius:var(--radius-xl); padding:var(--space-8);">
-        <h2 style="margin-bottom: var(--space-6);">Send a Message</h2>
-        <form class="form" id="contact-form" novalidate>
-          <div class="form__group">
-            <label class="form__label" for="name">Full Name <span class="form__required">*</span></label>
-            <input type="text" class="form__input" id="name" name="name" required placeholder="John Doe">
-            <span class="form__feedback"></span>
-          </div>
-          
-          <div class="form__group">
-            <label class="form__label" for="email">Email Address <span class="form__required">*</span></label>
-            <input type="email" class="form__input" id="email" name="email" required placeholder="john@example.com">
-            <span class="form__feedback"></span>
-          </div>
-
-          <div class="form__group">
-            <label class="form__label" for="inquiry">Type of Inquiry</label>
-            <div class="form__select-wrap">
-              <select class="form__select" id="inquiry" name="inquiry">
-                <option value="booking">Studio Booking</option>
-                <option value="tour">Studio Tour Request</option>
-                <option value="rates">Rates & Pricing</option>
-                <option value="other">Other</option>
-              </select>
+        
+        <div class="contact-cards-stack">
+          <!-- Location -->
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon"><i class="ri-map-pin-2-fill"></i></div>
+            <div class="contact-info-card__content">
+              <div class="contact-info-card__title">Studio Headquarters</div>
+              <div class="contact-info-card__value">1284 Harmony Lane, Hollywood, Los Angeles, CA 90028</div>
+              <div class="contact-info-card__subtext">Cross streets: Sunset Blvd & Gower St • Free VIP parking</div>
             </div>
           </div>
           
-          <div class="form__group">
-            <label class="form__label" for="message">Message <span class="form__required">*</span></label>
-            <textarea class="form__textarea" id="message" name="message" required placeholder="Tell us about your project..."></textarea>
-            <span class="form__feedback"></span>
+          <!-- Booking Phone -->
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon contact-info-card__icon--gold"><i class="ri-phone-fill"></i></div>
+            <div class="contact-info-card__content">
+              <div class="contact-info-card__title">Booking & Studio Desk</div>
+              <div class="contact-info-card__value"><a href="tel:+13105550182">+1 (310) 555-0182</a></div>
+              <div class="contact-info-card__subtext">Direct producer line & emergency lockouts (24/7)</div>
+            </div>
           </div>
           
-          <button type="submit" class="btn btn--primary" style="width: 100%;">
-            <i class="ri-send-plane-fill"></i> Send Message
-          </button>
-        </form>
+          <!-- Email -->
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon"><i class="ri-mail-fill"></i></div>
+            <div class="contact-info-card__content">
+              <div class="contact-info-card__title">Stems & Inquiries</div>
+              <div class="contact-info-card__value"><a href="mailto:studio@soundforgestudios.com">studio@soundforgestudios.com</a></div>
+              <div class="contact-info-card__subtext">Upload links, A&R inquiries, and licensing</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Google Map Box with Quick Directions -->
+        <div class="map-container-box">
+          <div class="map-header">
+            <span><i class="ri-navigation-line" style="color:var(--color-electric-violet);"></i> SoundForge Campus Map</span>
+            <div class="map-directions-links">
+              <a href="https://maps.google.com" target="_blank" rel="noopener" class="map-directions-link"><i class="ri-google-fill"></i> Google Maps</a>
+              <a href="https://maps.apple.com" target="_blank" rel="noopener" class="map-directions-link"><i class="ri-apple-fill"></i> Apple Maps</a>
+            </div>
+          </div>
+          <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3303.7548074665427!2d-118.3295229847895!3d34.0954719805943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2bf07045279bf%3A0xf67a9a6797bdfae4!2sHollywood%2C%20Los%20Angeles%2C%20CA!5e0!3m2!1sen!2sus!4v1680000000000!5m2!1sen!2sus" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="SoundForge Studios Location"></iframe>
+        </div>
+      </div>
+
+      <!-- Contact / Session Booking Form -->
+      <div class="reveal--right">
+        <div class="contact-form-card" id="contact-form-container">
+          <div class="contact-form__header">
+            <span class="section__label"><i class="ri-edit-line"></i> Priority Ingest</span>
+            <h2 class="contact-form__title">Send Project Inquiries</h2>
+            <p class="contact-form__desc">Fill out your session requirements or transfer an estimate from the calculator below. We will confirm dates within 2 hours.</p>
+          </div>
+          
+          <form class="form" id="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label form-label--required" for="name">Full Name / Artist Name</label>
+                <input type="text" class="form-control" id="name" name="name" required data-rules="required minLength:2" placeholder="e.g. Maya Lin / Nova Records">
+                <span class="form-error" id="name-error"></span>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label form-label--required" for="email">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" required data-rules="required email" placeholder="artist@recordlabel.com">
+                <span class="form-error" id="email-error"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="phone">Phone / WhatsApp</label>
+                <input type="tel" class="form-control" id="phone" name="phone" placeholder="+1 (555) 000-0000">
+                <span class="form-error" id="phone-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inquiry">Type of Inquiry</label>
+                <div class="form-select-wrap">
+                  <select class="form-control form-select" id="inquiry" name="inquiry">
+                    <option value="booking">Studio Session Booking</option>
+                    <option value="mixing-mastering">Mixing & Stem Mastering</option>
+                    <option value="dolby-atmos">Dolby Atmos Spatial Immersive</option>
+                    <option value="tour">VIP In-Person Studio Tour</option>
+                    <option value="residency">Multi-Day Album Lockout</option>
+                    <option value="other">General / Press / Other</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="target-date">Preferred Target Date</label>
+                <input type="date" class="form-control" id="target-date" name="target_date">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="budget-tier">Estimated Budget Scope</label>
+                <div class="form-select-wrap">
+                  <select class="form-control form-select" id="budget-tier" name="budget_tier">
+                    <option value="standard">Standard Session ($300 – $1,000)</option>
+                    <option value="single">Single Mix & Master ($500 – $2,000)</option>
+                    <option value="ep">EP / Album Package ($2,500 – $10,000)</option>
+                    <option value="major">Major Label Residency ($10,000+)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label form-label--required" for="message">Project Details & Audio Specs</label>
+              <textarea class="form-control" id="message" name="message" rows="4" required data-rules="required minLength:10" placeholder="Describe track count, genre, sample rate (e.g. 48kHz/96kHz), desired studio room, and reference artist inspirations..."></textarea>
+              <span class="form-error" id="message-error"></span>
+            </div>
+            
+            <button type="submit" class="btn btn--primary btn--lg" style="width: 100%;" id="contact-submit-btn">
+              <i class="ri-send-plane-fill"></i> Submit Studio Request
+            </button>
+            <p style="font-size: 0.78rem; color: var(--color-text-muted); text-align: center; margin-top: var(--space-3);">
+              <i class="ri-shield-check-line" style="color: var(--color-success);"></i> All audio materials and NDA contracts kept strictly confidential.
+            </p>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- ============================================================
+       UNIQUE SECTION 1: Interactive Studio Session & Budget Estimator
+       ============================================================ -->
+  <section class="estimator-section reveal" id="session-estimator">
+    <div class="container">
+      <div style="text-align: center; max-width: 760px; margin: 0 auto var(--space-12);">
+        <span class="section__label"><i class="ri-calculator-line"></i> Real-Time Project Configurator</span>
+        <h2 style="font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; color: var(--color-text-primary); margin-bottom: var(--space-3);">Interactive Studio Session & Budget Estimator</h2>
+        <p style="font-size: 1.05rem; color: var(--color-text-secondary);">Configure your tracking hours, mixing stems, Dolby Atmos spatialization, and vintage analog outboard riders with real-time transparent rate calculations.</p>
+      </div>
+
+      <div class="estimator-grid">
+        <!-- Configuration Controls -->
+        <div class="config-card">
+          <!-- Step 1: Service Tier -->
+          <div class="config-step">
+            <div class="config-step__header">
+              <div class="config-step__number">1</div>
+              <h3 class="config-step__title">Select Production Focus</h3>
+            </div>
+            <div class="tier-options-grid">
+              <label class="tier-radio-label">
+                <input type="radio" name="estimator-service" value="tracking" class="tier-radio-input" data-base-rate="85" data-unit="hour" checked>
+                <div class="tier-box">
+                  <div>
+                    <i class="ri-mic-line tier-box__icon"></i>
+                    <div class="tier-box__name">Vocal / Live Tracking</div>
+                  </div>
+                  <div class="tier-box__rate">$85 / hr</div>
+                </div>
+              </label>
+
+              <label class="tier-radio-label">
+                <input type="radio" name="estimator-service" value="mixing" class="tier-radio-input" data-base-rate="320" data-unit="track">
+                <div class="tier-box">
+                  <div>
+                    <i class="ri-equalizer-line tier-box__icon"></i>
+                    <div class="tier-box__name">Analog Hybrid Mixing</div>
+                  </div>
+                  <div class="tier-box__rate">$320 / track</div>
+                </div>
+              </label>
+
+              <label class="tier-radio-label">
+                <input type="radio" name="estimator-service" value="mastering" class="tier-radio-input" data-base-rate="140" data-unit="track">
+                <div class="tier-box">
+                  <div>
+                    <i class="ri-disc-line tier-box__icon"></i>
+                    <div class="tier-box__name">Stereo Analog Master</div>
+                  </div>
+                  <div class="tier-box__rate">$140 / track</div>
+                </div>
+              </label>
+
+              <label class="tier-radio-label">
+                <input type="radio" name="estimator-service" value="atmos" class="tier-radio-input" data-base-rate="260" data-unit="track">
+                <div class="tier-box">
+                  <div>
+                    <i class="ri-surround-sound-line tier-box__icon"></i>
+                    <div class="tier-box__name">Dolby Atmos 7.1.4</div>
+                  </div>
+                  <div class="tier-box__rate">$260 / track</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Step 2: Studio Room Selection -->
+          <div class="config-step">
+            <div class="config-step__header">
+              <div class="config-step__number">2</div>
+              <h3 class="config-step__title">Choose Studio Room</h3>
+            </div>
+            <div class="tier-options-grid">
+              <label class="tier-radio-label">
+                <input type="radio" name="estimator-room" value="Studio A (Neve 88RS)" class="tier-radio-input" data-room-fee="40" checked>
+                <div class="tier-box">
+                  <div>
+                    <i class="ri-building-line tier-box__icon"></i>
+                    <div class="tier-box__name">Studio A (Neve 88RS)</div>
+                  </div>
+                  <div class="tier-box__rate">+$40/hr premium</div>
+                </div>
+              </label>
+
+              <label class="tier-radio-label">
+                <input type="radio" name="estimator-room" value="Studio B (SSL 4000E)" class="tier-radio-input" data-room-fee="25">
+                <div class="tier-box">
+                  <div>
+                    <i class="ri-sound-module-fill tier-box__icon"></i>
+                    <div class="tier-box__name">Studio B (SSL 4000E)</div>
+                  </div>
+                  <div class="tier-box__rate">+$25/hr premium</div>
+                </div>
+              </label>
+
+              <label class="tier-radio-label">
+                <input type="radio" name="estimator-room" value="Studio C (Vocal Suite)" class="tier-radio-input" data-room-fee="0">
+                <div class="tier-box">
+                  <div>
+                    <i class="ri-headphone-line tier-box__icon"></i>
+                    <div class="tier-box__name">Studio C (Vocal Suite)</div>
+                  </div>
+                  <div class="tier-box__rate">Standard Rate</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Step 3: Duration / Track Count Slider -->
+          <div class="config-step">
+            <div class="config-step__header">
+              <div class="config-step__number">3</div>
+              <h3 class="config-step__title">Duration / Session Scope</h3>
+            </div>
+            <div class="range-control-group">
+              <div class="range-control-header">
+                <span style="font-size: 0.9rem; font-weight: 600; color: var(--color-text-secondary);" id="slider-label">Tracking Hours:</span>
+                <span class="range-value-badge" id="slider-display">6 Hours</span>
+              </div>
+              <input type="range" class="custom-range" id="estimator-quantity" min="2" max="24" step="1" value="6">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--color-text-muted); margin-top: 4px;">
+                <span id="slider-min-text">Min 2 hrs</span>
+                <span>12 hr Lockout</span>
+                <span id="slider-max-text">24 hrs Block</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Hardware & Engineering Add-ons -->
+          <div class="config-step">
+            <div class="config-step__header">
+              <div class="config-step__number">4</div>
+              <h3 class="config-step__title">Add-on Engineering & Gear Riders</h3>
+            </div>
+            <div class="addon-options-grid">
+              <label class="addon-checkbox-label">
+                <input type="checkbox" class="addon-checkbox-input" id="addon-chief" data-price="40" data-per-hour="true">
+                <div class="addon-info">
+                  <span class="addon-name">Chief Resident Engineer</span>
+                  <span class="addon-price">+$40 / hr</span>
+                </div>
+              </label>
+
+              <label class="addon-checkbox-label">
+                <input type="checkbox" class="addon-checkbox-input" id="addon-tape" data-price="150" data-per-hour="false">
+                <div class="addon-info">
+                  <span class="addon-name">2" Studer Tape Machine Setup</span>
+                  <span class="addon-price">+$150 flat</span>
+                </div>
+              </label>
+
+              <label class="addon-checkbox-label">
+                <input type="checkbox" class="addon-checkbox-input" id="addon-musician" data-price="250" data-per-hour="false">
+                <div class="addon-info">
+                  <span class="addon-name">In-House Session Musician</span>
+                  <span class="addon-price">+$250 flat</span>
+                </div>
+              </label>
+
+              <label class="addon-checkbox-label">
+                <input type="checkbox" class="addon-checkbox-input" id="addon-express" data-price="120" data-per-hour="false">
+                <div class="addon-info">
+                  <span class="addon-name">24-Hour Express Turnaround</span>
+                  <span class="addon-price">+$120 flat</span>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sticky Live Calculation HUD -->
+        <div class="estimate-summary-card">
+          <span class="summary-badge-top"><i class="ri-flashlight-line"></i> Live Dynamic Quote</span>
+          
+          <div class="estimate-total-wrap">
+            <div class="estimate-total-label">Estimated Session Investment</div>
+            <div class="estimate-total-price">
+              <span class="estimate-total-currency">$</span>
+              <span id="calculated-total">900</span>
+            </div>
+          </div>
+
+          <div class="estimate-line-items">
+            <div class="line-item-row">
+              <span id="summary-service-name">Vocal Tracking (6 hrs)</span>
+              <span class="line-item-val" id="summary-service-cost">$510</span>
+            </div>
+            <div class="line-item-row">
+              <span id="summary-room-name">Studio A (Neve 88RS)</span>
+              <span class="line-item-val" id="summary-room-cost">+$240</span>
+            </div>
+            <div class="line-item-row" id="summary-addons-row">
+              <span>Hardware & Add-ons</span>
+              <span class="line-item-val" id="summary-addons-cost">$150</span>
+            </div>
+            <div class="line-item-row line-item-row--total">
+              <span>Turnaround Guarantee</span>
+              <span class="line-item-val" style="color:var(--color-champagne-gold);" id="summary-turnaround">Standard 48h</span>
+            </div>
+          </div>
+
+          <button type="button" class="transfer-quote-btn" id="transfer-quote-btn">
+            <i class="ri-file-transfer-line"></i> Apply Quote to Booking Form
+          </button>
+          
+          <p class="quote-disclaimer">Estimates include all raw uncompressed WAV transfers and studio assistant support. Formal invoice generated upon schedule confirmation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       UNIQUE SECTION 2: VIP Studio Tour & Acoustic Room VR Explorer
+       ============================================================ -->
+  <section class="tour-hub-section reveal" id="studio-tour-hub">
+    <div class="container">
+      <div style="text-align: center; max-width: 760px; margin: 0 auto var(--space-8);">
+        <span class="section__label"><i class="ri-camera-lens-line"></i> Virtual Facilities Walkthrough</span>
+        <h2 style="font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; color: var(--color-text-primary); margin-bottom: var(--space-3);">VIP Studio Tour & Acoustic Room VR Explorer</h2>
+        <p style="font-size: 1.05rem; color: var(--color-text-secondary);">Explore our world-class acoustically decoupled recording environments, vintage analog control desks, and private artist penthouses.</p>
+      </div>
+
+      <!-- Room Navigation Tabs -->
+      <div class="tour-tabs-nav">
+        <button class="tour-tab-btn is-active" data-room-target="studio-a">
+          <i class="ri-equalizer-line"></i> Studio A (Neve Live Floor)
+        </button>
+        <button class="tour-tab-btn" data-room-target="studio-b">
+          <i class="ri-sound-module-line"></i> Studio B (SSL Hybrid Mix)
+        </button>
+        <button class="tour-tab-btn" data-room-target="atmos-suite">
+          <i class="ri-surround-sound-line"></i> Dolby Atmos 7.1.4 Suite
+        </button>
+        <button class="tour-tab-btn" data-room-target="lounge">
+          <i class="ri-cup-line"></i> VIP Artist Lounge & Vault
+        </button>
+      </div>
+
+      <!-- Tour Showcase Container -->
+      <div class="tour-showcase-panel" id="tour-panel">
+        <!-- Interactive Viewport with Hotspots -->
+        <div class="tour-viewport" id="tour-viewport-container">
+          <img src="img/studio-a-live.jpg" alt="Studio A Neve 88RS" class="tour-viewport__img" id="tour-display-img">
+          
+          <!-- Interactive Hotspot 1 -->
+          <div class="tour-hotspot" style="top: 55%; left: 48%;">
+            <i class="ri-add-line"></i>
+            <div class="hotspot-tooltip">
+              <div class="hotspot-tooltip__title">Neve 88RS 72-Channel Console</div>
+              <div>Marinair transformer preamps & Total Recall automation</div>
+            </div>
+          </div>
+
+          <!-- Interactive Hotspot 2 -->
+          <div class="tour-hotspot" style="top: 28%; left: 78%;">
+            <i class="ri-add-line"></i>
+            <div class="hotspot-tooltip">
+              <div class="hotspot-tooltip__title">ATC SCM150ASL Pro Mains</div>
+              <div>Acoustically calibrated 20Hz - 22kHz ruler-flat response</div>
+            </div>
+          </div>
+
+          <!-- Interactive Hotspot 3 -->
+          <div class="tour-hotspot" style="top: 35%; left: 22%;">
+            <i class="ri-add-line"></i>
+            <div class="hotspot-tooltip">
+              <div class="hotspot-tooltip__title">Walnut QRD Diffusion Canopy</div>
+              <div>Mathematically tuned RT60 0.35s controlled decay</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Room Specs & Details Content -->
+        <div class="tour-specs-content">
+          <div>
+            <span class="room-badge" id="tour-room-badge"><i class="ri-vip-diamond-line"></i> Flagship Live Tracking</span>
+            <h3 class="room-title" id="tour-room-title">Studio A: The Legendary Neve Live Floor</h3>
+            <p class="room-description" id="tour-room-desc">A 1,400 sq ft double-height live tracking room with 6 isolation booths, 1968 Steinway Model D concert grand piano, and a 72-channel Neve 88RS console engineered for full orchestras and platinum bands.</p>
+            
+            <div class="room-spec-grid" id="tour-spec-grid">
+              <div class="spec-item">
+                <div class="spec-label">Floor Dimensions</div>
+                <div class="spec-val" id="spec-dim">1,400 sq ft • 22ft Ceiling</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Acoustic Isolation</div>
+                <div class="spec-val" id="spec-iso">Floating Concrete Slab (-75dB)</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Flagship Console</div>
+                <div class="spec-val" id="spec-desk">Neve 88RS (72 Channels)</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Key Outboard</div>
+                <div class="spec-val" id="spec-gear">Fairchild 670, Pultec EQP-1A</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="walkthrough-cta-box">
+            <div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--color-text-primary);">Want an in-person walk-through?</div>
+              <div style="font-size: 0.78rem; color: var(--color-text-muted);">Guided tours available Mon–Sat by appointment.</div>
+            </div>
+            <a href="#contact-form-container" class="btn btn--secondary btn--sm" onclick="selectTourInquiry()">
+              <i class="ri-calendar-check-line"></i> Book a Tour
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       UNIQUE SECTION 3: Artist Pre-Production Guide & Live Studio Ops
+       ============================================================ -->
+  <section class="prep-hub-section reveal" id="artist-prep-hub">
+    <div class="container">
+      <div style="text-align: center; max-width: 760px; margin: 0 auto var(--space-12);">
+        <span class="section__label"><i class="ri-checkbox-circle-line"></i> Pre-Session Optimization</span>
+        <h2 style="font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; color: var(--color-text-primary); margin-bottom: var(--space-3);">Artist Pre-Production Guide & Live Studio Ops</h2>
+        <p style="font-size: 1.05rem; color: var(--color-text-secondary);">Ensure 100% session readiness with our interactive stem ingest validator, monitor live room status, and explore studio arrival amenities.</p>
+      </div>
+
+      <div class="prep-grid">
+        <!-- Column 1: Live Studio Status Monitor -->
+        <div>
+          <div class="ops-monitor-card">
+            <div class="ops-header">
+              <div class="ops-title"><i class="ri-radar-line" style="color:var(--color-champagne-gold);"></i> Live Studio Ops Board</div>
+              <span class="ops-live-tag">● 24/7 ONLINE</span>
+            </div>
+
+            <div class="room-status-list">
+              <div class="room-status-row">
+                <div class="room-status-info">
+                  <span class="room-status-indicator status-active"></span>
+                  <span style="font-weight: 600;">Studio A (Tracking Floor)</span>
+                </div>
+                <span class="room-status-badge">In Session • Velvet Sound</span>
+              </div>
+
+              <div class="room-status-row">
+                <div class="room-status-info">
+                  <span class="room-status-indicator status-ready"></span>
+                  <span style="font-weight: 600;">Studio B (Analog Mix)</span>
+                </div>
+                <span class="room-status-badge" style="color:#10B981;">Ready for Ingest</span>
+              </div>
+
+              <div class="room-status-row">
+                <div class="room-status-info">
+                  <span class="room-status-indicator status-prep"></span>
+                  <span style="font-weight: 600;">Dolby Atmos Suite</span>
+                </div>
+                <span class="room-status-badge">Calibrating 96kHz</span>
+              </div>
+
+              <div class="room-status-row">
+                <div class="room-status-info">
+                  <span class="room-status-indicator status-ready"></span>
+                  <span style="font-weight: 600;">Artist Green Room</span>
+                </div>
+                <span class="room-status-badge" style="color:#10B981;">Available</span>
+              </div>
+            </div>
+
+            <div style="font-size: 0.78rem; color: rgba(245, 242, 250, 0.6); display:flex; justify-content:space-between;">
+              <span>Ingest Speed: 10 Gbps Fiber</span>
+              <span>Next Open Slot: Today 8:00 PM</span>
+            </div>
+          </div>
+
+          <!-- Studio Arrival Amenities -->
+          <div class="arrival-amenities-grid">
+            <div class="amenity-card">
+              <i class="ri-truck-line amenity-icon"></i>
+              <div class="amenity-title">Secure Load-In Dock</div>
+              <div class="amenity-desc">Hydraulic instrument lift & direct roll-in to Studio A live room.</div>
+            </div>
+
+            <div class="amenity-card">
+              <i class="ri-car-fill amenity-icon"></i>
+              <div class="amenity-title">VIP Gated Parking</div>
+              <div class="amenity-desc">Free monitored parking with 4x 350kW Tesla EV superchargers.</div>
+            </div>
+
+            <div class="amenity-card">
+              <i class="ri-cup-line amenity-icon"></i>
+              <div class="amenity-title">Private Hospitality</div>
+              <div class="amenity-desc">La Marzocco espresso bar, organic cold press juices & catering.</div>
+            </div>
+
+            <div class="amenity-card">
+              <i class="ri-lock-password-line amenity-icon"></i>
+              <div class="amenity-title">AES-256 Vault Storage</div>
+              <div class="amenity-desc">Encrypted cloud backups & multi-redundant physical NAS storage.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Interactive Stem Ingest Validator -->
+        <div class="checklist-card">
+          <div class="checklist-header">
+            <span class="section__label"><i class="ri-file-list-3-line"></i> Session Ingest Checklist</span>
+            <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--color-text-primary); margin-bottom: var(--space-2);">Session Readiness Score Validator</h3>
+            <p style="font-size: 0.88rem; color: var(--color-text-muted);">Check the items you have prepared before arrival. Achieve 100% for an expedited soundcheck.</p>
+          </div>
+
+          <!-- Live Readiness Meter -->
+          <div class="readiness-meter-wrap">
+            <div class="readiness-meter-header">
+              <span>Readiness Rating: <strong id="readiness-verdict" style="color:var(--color-electric-violet);">Good Preparation</strong></span>
+              <span class="readiness-percent" id="readiness-percent">60%</span>
+            </div>
+            <div class="readiness-bar">
+              <div class="readiness-progress" id="readiness-progress" style="width: 60%;"></div>
+            </div>
+          </div>
+
+          <!-- Interactive Checklist Items -->
+          <div class="stem-items-list" id="stem-checklist">
+            <label class="stem-check-item">
+              <input type="checkbox" class="stem-check-input" checked data-weight="20">
+              <div class="stem-item-text">
+                <span class="stem-item-title">Consolidated Audio Files from Bar 1 / Beat 1</span>
+                <span class="stem-item-desc">All track stems start at 0:00.00 with zero phase offsets across DAW exports.</span>
+              </div>
+            </label>
+
+            <label class="stem-check-item">
+              <input type="checkbox" class="stem-check-input" checked data-weight="20">
+              <div class="stem-item-text">
+                <span class="stem-item-title">High-Resolution Format (24-bit / 48kHz or 96kHz WAV)</span>
+                <span class="stem-item-desc">Lossless uncompressed WAV or AIFF files with no MP3 compression artifacts.</span>
+              </div>
+            </label>
+
+            <label class="stem-check-item">
+              <input type="checkbox" class="stem-check-input" checked data-weight="20">
+              <div class="stem-item-text">
+                <span class="stem-item-title">Master Bus Processing Bypassed (Limiter OFF)</span>
+                <span class="stem-item-desc">Maintain at least -6dB true peak headroom on unmastered mix deliverables.</span>
+              </div>
+            </label>
+
+            <label class="stem-check-item">
+              <input type="checkbox" class="stem-check-input" data-weight="20">
+              <div class="stem-item-text">
+                <span class="stem-item-title">Tempo Map & Key Signature Included</span>
+                <span class="stem-item-desc">BPM annotations, meter shifts, and MIDI cue charts exported alongside stems.</span>
+              </div>
+            </label>
+
+            <label class="stem-check-item">
+              <input type="checkbox" class="stem-check-input" data-weight="20">
+              <div class="stem-item-text">
+                <span class="stem-item-title">Commercial Reference Tracks & Rough Mixes</span>
+                <span class="stem-item-desc">2–3 high-resolution commercial target songs for tonal balance calibration.</span>
+              </div>
+            </label>
+          </div>
+
+          <div style="margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--color-border-subtle); display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size: 0.8rem; color: var(--color-text-muted);"><i class="ri-information-line"></i> Need help exporting stems? Ask our engineer during intake.</span>
+            <a href="mailto:stems@soundforgestudios.com" class="btn btn--secondary btn--sm"><i class="ri-upload-cloud-line"></i> Send Stems via Portal</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
-<footer class="footer">
+<!-- ═══════════════════════════════════ FOOTER ═══ -->
+<footer class="footer" role="contentinfo">
   <div class="footer__main">
     <div class="container">
       <div class="footer__grid">
+        <!-- Brand -->
         <div class="footer__brand">
-          <a href="index.html" class="footer__logo-link">
-            <div class="footer__logo"><svg width="20" height="20" viewBox="0 0 36 36" fill="none"><rect x="6" y="18" width="4" height="12" rx="2" fill="white" opacity="0.9"/><rect x="12" y="10" width="4" height="20" rx="2" fill="white"/><rect x="18" y="6" width="4" height="24" rx="2" fill="white"/><rect x="24" y="12" width="4" height="16" rx="2" fill="white" opacity="0.9"/><rect x="30" y="20" width="4" height="8" rx="2" fill="white" opacity="0.7"/><rect x="0" y="22" width="4" height="6" rx="2" fill="white" opacity="0.7"/></svg></div>
-            <span class="footer__brand-name">SoundForge<span class="footer__brand-accent">Studios</span></span>
+          <a href="index.html" class="footer__logo-link" aria-label="SoundForge Studios — Home">
+            <div class="footer__logo" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 36 36" fill="none">
+                <rect x="6" y="18" width="4" height="12" rx="2" fill="white" opacity="0.9"/>
+                <rect x="12" y="10" width="4" height="20" rx="2" fill="white"/>
+                <rect x="18" y="6" width="4" height="24" rx="2" fill="white"/>
+                <rect x="24" y="12" width="4" height="16" rx="2" fill="white" opacity="0.9"/>
+                <rect x="30" y="20" width="4" height="8" rx="2" fill="white" opacity="0.7"/>
+                <rect x="0" y="22" width="4" height="6" rx="2" fill="white" opacity="0.7"/>
+              </svg>
+            </div>
+            <span class="footer__brand-name">SoundForge</span>
           </a>
           <p class="footer__tagline">Where Sound Becomes Art</p>
+          <p class="footer__desc">Premier recording, mixing, and mastering studio serving artists worldwide since 2010. Your vision, perfected.</p>
+          <nav class="footer__social" aria-label="Social media links">
+            <a href="#" class="footer__social-link" aria-label="Follow us on Instagram"><i class="ri-instagram-line" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Follow us on YouTube"><i class="ri-youtube-line" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Listen on Spotify"><i class="ri-spotify-line" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Follow us on SoundCloud"><i class="ri-soundcloud-line" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Follow us on X (Twitter)"><i class="ri-twitter-x-line" aria-hidden="true"></i></a>
+          </nav>
         </div>
+
+        <!-- Quick Links -->
+        <nav class="footer__col" aria-label="Quick navigation">
+          <h3 class="footer__col-title">Explore</h3>
+          <ul class="footer__links" role="list">
+            <li><a href="home1.html" class="footer__link">Home 1</a></li>
+            <li><a href="home2.html" class="footer__link">Home 2</a></li>
+            <li><a href="services.html" class="footer__link">Our Services</a></li>
+            <li><a href="engineers.html" class="footer__link">Meet Engineers</a></li>
+            <li><a href="portfolio.html" class="footer__link">Portfolio</a></li>
+            <li><a href="contact.html" class="footer__link">Contact Us</a></li>
+          </ul>
+        </nav>
+
+        <!-- Services -->
+        <nav class="footer__col" aria-label="Services navigation">
+          <h3 class="footer__col-title">Services</h3>
+          <ul class="footer__links" role="list">
+            <li><a href="services.html#recording" class="footer__link">Recording Sessions</a></li>
+            <li><a href="services.html#mixing" class="footer__link">Mixing</a></li>
+            <li><a href="services.html#mastering" class="footer__link">Mastering</a></li>
+            <li><a href="services.html#production" class="footer__link">Full Production</a></li>
+            <li><a href="services.html#vocal-coaching" class="footer__link">Vocal Coaching</a></li>
+            <li><a href="services.html#sound-design" class="footer__link">Sound Design</a></li>
+          </ul>
+        </nav>
+
+        <!-- Contact + Newsletter -->
+        <div class="footer__col">
+          <h3 class="footer__col-title">Contact</h3>
+          <address class="footer__contact-list" style="font-style:normal;">
+            <div class="footer__contact-item">
+              <i class="ri-map-pin-line" aria-hidden="true"></i>
+              <span>1284 Harmony Lane, Hollywood, Los Angeles, CA 90028</span>
+            </div>
+            <div class="footer__contact-item">
+              <i class="ri-phone-line" aria-hidden="true"></i>
+              <a href="tel:+13105550182">+1 (310) 555-0182</a>
+            </div>
+            <div class="footer__contact-item">
+              <i class="ri-mail-line" aria-hidden="true"></i>
+              <a href="mailto:studio@soundforgestudios.com">studio@soundforgestudios.com</a>
+            </div>
+            <div class="footer__contact-item">
+              <i class="ri-time-line" aria-hidden="true"></i>
+              <span>Mon–Sun, 8am–2am (by appointment)</span>
+            </div>
+          </address>
+
+          <div class="footer__newsletter">
+            <h4 class="footer__newsletter-title">Stay in the Loop</h4>
+            <form class="footer__newsletter-form" data-newsletter-form aria-label="Footer newsletter signup">
+              <label for="footer-email" class="sr-only">Email address</label>
+              <input type="email" id="footer-email" class="footer__newsletter-input" placeholder="Your email address" required autocomplete="email">
+              <button type="submit" class="footer__newsletter-btn" aria-label="Subscribe to newsletter">
+                <i class="ri-send-plane-fill" aria-hidden="true"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="container">
+      <div class="footer__bottom-inner">
+        <p class="footer__copyright">&copy; 2025 SoundForge Studios. All rights reserved.</p>
+        <nav class="footer__legal" aria-label="Legal links">
+          <a href="#" class="footer__legal-link">Privacy Policy</a>
+          <a href="#" class="footer__legal-link">Terms of Service</a>
+          <a href="#" class="footer__legal-link">Cookie Policy</a>
+        </nav>
       </div>
     </div>
   </div>
 </footer>
 
+<!-- Scripts -->
 <script src="js/theme.js"></script>
 <script src="js/rtl.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/form-validation.js"></script>
+
+<!-- Interactive Logic for Contact Page Components -->
+<script>
+  /* ============================================================
+     1. Interactive Studio Session & Budget Estimator Engine
+     ============================================================ */
+  const Estimator = (() => {
+    const serviceRadios = document.querySelectorAll('input[name="estimator-service"]');
+    const roomRadios = document.querySelectorAll('input[name="estimator-room"]');
+    const quantitySlider = document.getElementById('estimator-quantity');
+    const sliderLabel = document.getElementById('slider-label');
+    const sliderDisplay = document.getElementById('slider-display');
+    const sliderMinText = document.getElementById('slider-min-text');
+    const sliderMaxText = document.getElementById('slider-max-text');
+    const calculatedTotalEl = document.getElementById('calculated-total');
+    
+    const summaryServiceName = document.getElementById('summary-service-name');
+    const summaryServiceCost = document.getElementById('summary-service-cost');
+    const summaryRoomName = document.getElementById('summary-room-name');
+    const summaryRoomCost = document.getElementById('summary-room-cost');
+    const summaryAddonsCost = document.getElementById('summary-addons-cost');
+    const summaryTurnaround = document.getElementById('summary-turnaround');
+    const transferBtn = document.getElementById('transfer-quote-btn');
+
+    let currentQty = parseInt(quantitySlider.value, 10);
+
+    const recalculate = () => {
+      const selectedService = document.querySelector('input[name="estimator-service"]:checked');
+      const selectedRoom = document.querySelector('input[name="estimator-room"]:checked');
+      if (!selectedService || !selectedRoom) return;
+      
+      const serviceVal = selectedService.value;
+      const baseRate = parseFloat(selectedService.getAttribute('data-base-rate'));
+      const unit = selectedService.getAttribute('data-unit');
+      const roomFee = parseFloat(selectedRoom.getAttribute('data-room-fee'));
+      
+      currentQty = parseInt(quantitySlider.value, 10);
+      
+      if (unit === 'hour') {
+        sliderLabel.textContent = 'Tracking Hours:';
+        sliderDisplay.textContent = `${currentQty} Hours`;
+        sliderMinText.textContent = 'Min 2 hrs';
+        sliderMaxText.textContent = '24 hrs Block';
+      } else {
+        sliderLabel.textContent = 'Track / Stem Count:';
+        sliderDisplay.textContent = `${currentQty} ${currentQty === 1 ? 'Track' : 'Tracks'}`;
+        sliderMinText.textContent = '1 Track';
+        sliderMaxText.textContent = '24 Tracks (Full Album)';
+      }
+
+      // Base Service Cost
+      const serviceCost = baseRate * currentQty;
+      // Room Premium (if hourly, multiplied by hours; if per track, flat addition per track)
+      const roomCost = unit === 'hour' ? roomFee * currentQty : roomFee * currentQty * 2;
+      
+      // Calculate Addons
+      let addonsCost = 0;
+      let hasExpress = false;
+      const chiefCheckbox = document.getElementById('addon-chief');
+      const tapeCheckbox = document.getElementById('addon-tape');
+      const musicianCheckbox = document.getElementById('addon-musician');
+      const expressCheckbox = document.getElementById('addon-express');
+
+      if (chiefCheckbox && chiefCheckbox.checked) {
+        addonsCost += unit === 'hour' ? 40 * currentQty : 80;
+      }
+      if (tapeCheckbox && tapeCheckbox.checked) {
+        addonsCost += 150;
+      }
+      if (musicianCheckbox && musicianCheckbox.checked) {
+        addonsCost += 250;
+      }
+      if (expressCheckbox && expressCheckbox.checked) {
+        addonsCost += 120;
+        hasExpress = true;
+      }
+
+      const grandTotal = serviceCost + roomCost + addonsCost;
+
+      // Update HUD
+      calculatedTotalEl.textContent = grandTotal.toLocaleString();
+      summaryServiceName.textContent = `${selectedService.closest('.tier-box').querySelector('.tier-box__name').textContent} (${currentQty} ${unit === 'hour' ? 'hrs' : 'tracks'})`;
+      summaryServiceCost.textContent = `$${serviceCost.toLocaleString()}`;
+      summaryRoomName.textContent = selectedRoom.value;
+      summaryRoomCost.textContent = roomCost > 0 ? `+$${roomCost.toLocaleString()}` : '$0 (Included)';
+      summaryAddonsCost.textContent = `$${addonsCost.toLocaleString()}`;
+      summaryTurnaround.textContent = hasExpress ? 'Express 24h Turnaround' : (unit === 'hour' ? 'Immediate Session Ingest' : 'Standard 48h Delivery');
+
+      return {
+        service: selectedService.closest('.tier-box').querySelector('.tier-box__name').textContent,
+        room: selectedRoom.value,
+        quantity: currentQty,
+        unit: unit,
+        total: grandTotal,
+        hasExpress: hasExpress
+      };
+    };
+
+    // Attach listeners
+    serviceRadios.forEach(r => r.addEventListener('change', () => {
+      const unit = r.getAttribute('data-unit');
+      if (unit === 'track') {
+        quantitySlider.min = '1';
+        quantitySlider.max = '16';
+        if (parseInt(quantitySlider.value) > 16) quantitySlider.value = '4';
+      } else {
+        quantitySlider.min = '2';
+        quantitySlider.max = '24';
+      }
+      recalculate();
+    }));
+
+    roomRadios.forEach(r => r.addEventListener('change', recalculate));
+    quantitySlider.addEventListener('input', recalculate);
+    document.querySelectorAll('.addon-checkbox-input').forEach(cb => cb.addEventListener('change', recalculate));
+
+    // Transfer quote to contact form
+    if (transferBtn) {
+      transferBtn.addEventListener('click', () => {
+        const config = recalculate();
+        if (!config) return;
+        const inquirySelect = document.getElementById('inquiry');
+        const budgetSelect = document.getElementById('budget-tier');
+        const messageArea = document.getElementById('message');
+        
+        if (config.unit === 'hour') {
+          inquirySelect.value = 'booking';
+        } else if (config.service.includes('Atmos')) {
+          inquirySelect.value = 'dolby-atmos';
+        } else {
+          inquirySelect.value = 'mixing-mastering';
+        }
+
+        if (config.total < 1000) {
+          budgetSelect.value = 'standard';
+        } else if (config.total < 2500) {
+          budgetSelect.value = 'single';
+        } else if (config.total < 10000) {
+          budgetSelect.value = 'ep';
+        } else {
+          budgetSelect.value = 'major';
+        }
+
+        messageArea.value = `[CUSTOM SESSION ESTIMATOR CONFIGURATION]
+• Production Focus: ${config.service}
+• Studio Room: ${config.room}
+• Scope: ${config.quantity} ${config.unit === 'hour' ? 'hours' : 'tracks'}
+• Estimated Investment: $${config.total.toLocaleString()}
+• Turnaround Preference: ${config.hasExpress ? '24hr Express' : 'Standard 48h'}
+
+Additional session notes: `;
+
+        // Smooth scroll to form
+        const formContainer = document.getElementById('contact-form-container');
+        if (formContainer) {
+          formContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          messageArea.focus();
+        }
+
+        if (typeof FormValidator !== 'undefined' && FormValidator.showToast) {
+          FormValidator.showToast('Estimated quote transferred to your message form!', 'success');
+        }
+      });
+    }
+
+    recalculate();
+    return { recalculate };
+  })();
+
+  /* ============================================================
+     2. VIP Studio Tour VR Room Explorer Logic
+     ============================================================ */
+  const roomData = {
+    'studio-a': {
+      title: 'Studio A: The Legendary Neve Live Floor',
+      badge: '<i class="ri-vip-diamond-line"></i> Flagship Live Tracking',
+      desc: 'A 1,400 sq ft double-height live tracking room with 6 isolation booths, 1968 Steinway Model D concert grand piano, and a 72-channel Neve 88RS console engineered for full orchestras, jazz ensembles, and platinum pop productions.',
+      img: 'img/studio-a-live.jpg',
+      specs: {
+        dim: '1,400 sq ft • 22ft Ceiling',
+        iso: 'Floating Concrete Slab (-75dB)',
+        desk: 'Neve 88RS (72 Channels)',
+        gear: 'Fairchild 670, Pultec EQP-1A'
+      },
+      hotspots: [
+        { top: '55%', left: '48%', title: 'Neve 88RS 72-Channel Console', desc: 'Marinair transformer preamps & Total Recall automation' },
+        { top: '28%', left: '78%', title: 'ATC SCM150ASL Pro Mains', desc: 'Acoustically calibrated 20Hz - 22kHz ruler-flat response' },
+        { top: '35%', left: '22%', title: 'Walnut QRD Diffusion Canopy', desc: 'Mathematically tuned RT60 0.35s controlled decay' }
+      ]
+    },
+    'studio-b': {
+      title: 'Studio B: SSL 4000E Analog Hybrid Mix Suite',
+      badge: '<i class="ri-sound-module-line"></i> World-Class Mixing',
+      desc: 'Custom-tuned control room housing our vintage 48-channel Solid State Logic 4000E series console with G-Master bus compressor, Studer A800 24-track tape machine, and dual Burl Mothership converters.',
+      img: 'img/studio-console.jpg',
+      specs: {
+        dim: '650 sq ft • Symmetrical Tuning',
+        iso: 'Dual-Leaf Decoupled Walls (-68dB)',
+        desk: 'SSL 4000E (48 Channels)',
+        gear: 'Urei 1176LN Blue Stripe, LA-2A'
+      },
+      hotspots: [
+        { top: '50%', left: '50%', title: 'SSL 4000E Solid State Desk', desc: 'Vintage Black 242 EQs and famous G-Series Bus Compressor' },
+        { top: '30%', left: '25%', title: 'Burl Mothership Conversion', desc: 'Class-A discrete analog path for supreme punch' },
+        { top: '65%', left: '80%', title: 'Yamaha NS-10M + Sub Nearfields', desc: 'Industry benchmark for translation accuracy' }
+      ]
+    },
+    'atmos-suite': {
+      title: 'The Spatial Lab: Dolby Atmos 7.1.4 Immersive Suite',
+      badge: '<i class="ri-surround-sound-line"></i> Dolby Certified Spatial',
+      desc: 'Purpose-built 7.1.4 spatial audio mastering suite powered by 11 calibrated Genelec SAM Smart Active Monitors, dual Genelec subwoofers, and Trinnov D-MON room acoustic optimization processor.',
+      img: 'img/studio-atmos.jpg',
+      specs: {
+        dim: '820 sq ft • Dolby Certified',
+        iso: 'Acoustic Zero-Reflection Boundary',
+        desk: 'Avid S6 M40 Modular Controller',
+        gear: 'Genelec SAM 7.1.4, Trinnov D-Mon'
+      },
+      hotspots: [
+        { top: '45%', left: '50%', title: 'Genelec SAM 7.1.4 Array', desc: 'Coaxial point-source acoustic alignment in 3D sphere' },
+        { top: '25%', left: '70%', title: 'Trinnov D-MON Optimizer', desc: 'Phase-aligned 3D spatial acoustic room calibration' },
+        { top: '60%', left: '30%', title: 'Avid S6 Spatial Panning Joystick', desc: 'Object-based 3D immersive automation positioning' }
+      ]
+    },
+    'lounge': {
+      title: 'Artist Penthouse & Secure Hospitality Vault',
+      badge: '<i class="ri-cup-line"></i> Private VIP Hospitality',
+      desc: 'Private green room with full bar, La Marzocco espresso machine, dedicated dining suite, gigabit fiber Wi-Fi, 4K video playback screen, and climate-controlled instrument storage vaults.',
+      img: 'img/studio-lounge-vip.jpg',
+      specs: {
+        dim: '1,200 sq ft Private Penthouse',
+        iso: 'Ultra-Quiet Soundproof Access',
+        desk: 'Private Producer Writing Station',
+        gear: 'Barista Espresso Bar, 10G Fiber'
+      },
+      hotspots: [
+        { top: '50%', left: '40%', title: 'Private Green Room & Lounge', desc: 'Luxury leather seating, dining suite & streaming lounge' },
+        { top: '35%', left: '75%', title: 'Climate Controlled Vault', desc: 'Secure humidity-regulated vintage instrument storage' }
+      ]
+    }
+  };
+
+  const tourTabBtns = document.querySelectorAll('.tour-tab-btn');
+  const tourDisplayImg = document.getElementById('tour-display-img');
+  const tourRoomBadge = document.getElementById('tour-room-badge');
+  const tourRoomTitle = document.getElementById('tour-room-title');
+  const tourRoomDesc = document.getElementById('tour-room-desc');
+  const specDim = document.getElementById('spec-dim');
+  const specIso = document.getElementById('spec-iso');
+  const specDesk = document.getElementById('spec-desk');
+  const specGear = document.getElementById('spec-gear');
+  const tourViewportContainer = document.getElementById('tour-viewport-container');
+
+  const renderTourRoom = (roomId) => {
+    const data = roomData[roomId];
+    if (!data) return;
+
+    // Fade effect
+    tourDisplayImg.style.opacity = '0.4';
+    setTimeout(() => {
+      tourDisplayImg.src = data.img;
+      tourRoomBadge.innerHTML = data.badge;
+      tourRoomTitle.textContent = data.title;
+      tourRoomDesc.textContent = data.desc;
+      specDim.textContent = data.specs.dim;
+      specIso.textContent = data.specs.iso;
+      specDesk.textContent = data.specs.desk;
+      specGear.textContent = data.specs.gear;
+
+      // Re-render hotspots
+      const existingHotspots = tourViewportContainer.querySelectorAll('.tour-hotspot');
+      existingHotspots.forEach(h => h.remove());
+
+      data.hotspots.forEach(hs => {
+        const spotEl = document.createElement('div');
+        spotEl.className = 'tour-hotspot';
+        spotEl.style.top = hs.top;
+        spotEl.style.left = hs.left;
+        spotEl.innerHTML = `
+          <i class="ri-add-line"></i>
+          <div class="hotspot-tooltip">
+            <div class="hotspot-tooltip__title">${hs.title}</div>
+            <div>${hs.desc}</div>
+          </div>
+        `;
+        tourViewportContainer.appendChild(spotEl);
+      });
+
+      tourDisplayImg.style.opacity = '1';
+    }, 200);
+  };
+
+  tourTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tourTabBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const target = btn.getAttribute('data-room-target');
+      renderTourRoom(target);
+    });
+  });
+
+  window.selectTourInquiry = () => {
+    const inquirySelect = document.getElementById('inquiry');
+    if (inquirySelect) inquirySelect.value = 'tour';
+  };
+
+  /* ============================================================
+     3. Pre-Production Stem Ingest Readiness Score Calculator
+     ============================================================ */
+  const stemCheckboxes = document.querySelectorAll('.stem-check-input');
+  const readinessPercentEl = document.getElementById('readiness-percent');
+  const readinessProgressBar = document.getElementById('readiness-progress');
+  const readinessVerdictEl = document.getElementById('readiness-verdict');
+
+  const updateReadiness = () => {
+    let score = 0;
+    stemCheckboxes.forEach(cb => {
+      if (cb.checked) {
+        score += parseInt(cb.getAttribute('data-weight'), 10);
+      }
+    });
+
+    readinessPercentEl.textContent = `${score}%`;
+    readinessProgressBar.style.width = `${score}%`;
+
+    if (score === 100) {
+      readinessVerdictEl.textContent = '100% Ready for Platinum Tracking!';
+      readinessVerdictEl.style.color = '#10B981';
+      readinessProgressBar.style.background = 'linear-gradient(135deg, #10B981 0%, #059669 100%)';
+    } else if (score >= 60) {
+      readinessVerdictEl.textContent = 'Good Preparation — Minor items remaining';
+      readinessVerdictEl.style.color = 'var(--color-electric-violet)';
+      readinessProgressBar.style.background = 'var(--gradient-violet)';
+    } else {
+      readinessVerdictEl.textContent = 'Needs Pre-Production Attention';
+      readinessVerdictEl.style.color = 'var(--color-warning)';
+      readinessProgressBar.style.background = 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)';
+    }
+  };
+
+  stemCheckboxes.forEach(cb => cb.addEventListener('change', updateReadiness));
+  updateReadiness();
+</script>
+
 </body>
 </html>

@@ -1,10 +1,10 @@
 /**
- * RTL Manager — GoldCrest Engravings
+ * RTL Manager — CREST Engravings
  * Handles Right-to-Left / Left-to-Right layout direction toggle
  */
 
 const RTLManager = (() => {
-  const STORAGE_KEY = 'goldcrest-dir';
+  const STORAGE_KEY = 'crest-dir';
   const RTL = 'rtl';
   const LTR = 'ltr';
 

@@ -24,15 +24,14 @@ const DirectionManager = (() => {
     const btns = document.querySelectorAll('[data-dir-toggle]');
     btns.forEach((btn) => {
       const icon = btn.querySelector('i');
-      if (!icon) return;
       if (dir === RTL) {
-        icon.className = 'ri-text-direction-l';
+        if (icon) icon.className = 'ri-text-direction-l';
         btn.setAttribute('aria-label', 'Switch to LTR layout');
         btn.setAttribute('title', 'Switch to LTR layout');
         btn.querySelector('.dir-label') &&
           (btn.querySelector('.dir-label').textContent = 'LTR');
       } else {
-        icon.className = 'ri-text-direction-r';
+        if (icon) icon.className = 'ri-text-direction-r';
         btn.setAttribute('aria-label', 'Switch to RTL layout');
         btn.setAttribute('title', 'Switch to RTL layout');
         btn.querySelector('.dir-label') &&
