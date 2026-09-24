@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SHIP — Client Dashboard</title>
+<meta name="description" content="Manage your global shipments, track live cargo milestones, inspect customs documentation, download invoices, and communicate with SHIP operations."/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23C0392B'/%3E%3Ctext x='16' y='23' font-family='Arial Black' font-size='18' font-weight='900' fill='white' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E"/>
+<link rel="stylesheet" href="css/style.css"/><link rel="stylesheet" href="css/dark-mode.css"/>
+</head>
+<body class="dashboard-page">
+
+<!-- ══════════════════════════════════════════════════════════
+     FIXED LEFT SIDEBAR
+     ══════════════════════════════════════════════════════════ -->
+<aside class="db-sidebar" id="dbSidebar" aria-label="Sidebar Navigation">
+  <div class="db-sidebar-header">
+    <a href="index.html" class="db-sidebar-logo" title="SHIP Home">
+      <div class="nav-logo-mark" style="width:34px;height:34px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10"/><path d="M12 2v10l4 4"/><circle cx="12" cy="12" r="2"/>
+        </svg>
+      </div>
+      <span class="nav-logo-text" style="color:#fff;font-family:var(--font-display);font-size:1.3rem;font-weight:900;letter-spacing:-.02em;">SHIP</span>
+    </a>
+  </div>
+
+  <nav class="db-nav">
+    <div class="db-nav-item active" data-view="overview" tabindex="0" role="button">
+      <svg class="db-nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span class="db-nav-label">Overview</span>
+      <span class="db-tooltip">Overview</span>
+    </div>
+
+    <div class="db-nav-item" data-view="book" tabindex="0" role="button">
+      <svg class="db-nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      <span class="db-nav-label">Book Shipment</span>
+      <span class="db-tooltip">Book Shipment</span>
+    </div>
+
+    <div class="db-nav-item" data-view="shipments" tabindex="0" role="button">
+      <svg class="db-nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      <span class="db-nav-label">My Shipments</span>
+      <span class="db-tooltip">My Shipments</span>
+    </div>
+
+    <div class="db-nav-item" data-view="customs" tabindex="0" role="button">
+      <svg class="db-nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      <span class="db-nav-label">Customs Docs</span>
+      <span class="db-tooltip">Customs Docs</span>
+    </div>
+
+    <div class="db-nav-item" data-view="invoices" tabindex="0" role="button">
+      <svg class="db-nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      <span class="db-nav-label">Invoices</span>
+      <span class="db-tooltip">Invoices</span>
+    </div>
+
+    <div class="db-nav-item" data-view="pod" tabindex="0" role="button">
+      <svg class="db-nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span class="db-nav-label">Proof of Delivery</span>
+      <span class="db-tooltip">Proof of Delivery</span>
+    </div>
+
+    <div class="db-nav-item" data-view="messages" tabindex="0" role="button">
+      <svg class="db-nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span class="db-nav-label">Messages</span>
+      <span class="db-tooltip">Messages</span>
+    </div>
+
+    <div class="db-nav-item" data-view="settings" tabindex="0" role="button">
+      <svg class="db-nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span class="db-nav-label">Settings</span>
+      <span class="db-tooltip">Settings</span>
+    </div>
+  </nav>
+
+  <div style="padding:16px;border-top:1px solid rgba(255,255,255,.08);margin-top:auto;">
+    <button class="btn btn-outline" data-logout style="width:100%;font-size:.8rem;padding:8px 12px;color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.15);justify-content:center;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Log Out
+    </button>
+  </div>
+</aside>
+
+<!-- ══════════════════════════════════════════════════════════
+     MAIN DASHBOARD WORKSPACE
+     ══════════════════════════════════════════════════════════ -->
+<main class="db-main" id="dbMain">
+
+  <!-- Topbar -->
+  <header class="db-topbar">
+    <button class="db-hamburger" id="dbHamburger" aria-label="Toggle sidebar collapse" title="Toggle Sidebar">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="db-search">
+      <svg class="db-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="db-search-input" placeholder="Search reference, container, or doc..." aria-label="Search dashboard"/>
+    </div>
+
+    <div class="db-topbar-right">
+      <button class="db-bell" aria-label="3 Unread Notifications" title="3 Notifications">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="db-bell-badge">3</span>
+      </button>
+
+      <div class="db-profile-chip" title="Client Profile">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=64&h=64&fit=crop&crop=face" class="db-avatar" alt="Elena Rostova"/>
+        <div class="db-profile-info">
+          <div class="db-profile-name">Elena Rostova</div>
+          <div class="db-profile-role">Client • NorthStar Global</div>
+        </div>
+      </div>
+
+      <button class="db-topbar-toggle theme-toggle" data-theme-toggle aria-label="Toggle theme" title="Toggle Theme">
+        <span data-theme-icon></span>
+      </button>
+      <button class="db-topbar-toggle rtl-toggle" data-rtl-toggle aria-label="Toggle RTL/LTR" title="Toggle RTL/LTR">
+        <span data-rtl-label>RTL</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- View Area with in-page switching -->
+  <div class="db-view-area">
+
+    <!-- ── VIEW 1: OVERVIEW (Default) ── -->
+    <section class="db-view active" id="view-overview" aria-label="Client Overview">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+        <h1 style="font-size:1.4rem;font-weight:700;margin:0;">Client Operations Overview</h1>
+        <span style="font-size:.82rem;color:var(--txt-muted);">Live telemetry refreshed</span>
+      </div>
+
+      <!-- Stat Tiles -->
+      <div class="stat-tiles">
+        <div class="stat-tile">
+          <div class="stat-tile-label">ACTIVE SHIPMENTS</div>
+          <div class="stat-tile-value">14</div>
+          <div class="stat-tile-sub" style="color:#2e7d32;">↑ 2 booked this week</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile-label">IN CUSTOMS CLEARANCE</div>
+          <div class="stat-tile-value">3</div>
+          <div class="stat-tile-sub">Rotterdam, Hamburg, Jebel Ali</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile-label">INVOICES DUE</div>
+          <div class="stat-tile-value">$4,850</div>
+          <div class="stat-tile-sub" style="color:var(--clr-accent);">2 invoices awaiting payment</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile-label">SPEND TO DATE (YTD)</div>
+          <div class="stat-tile-value">$41,800</div>
+          <div class="stat-tile-sub">87% of annual contracted budget</div>
+        </div>
+      </div>
+
+      <!-- Next Arrival Card -->
+      <div class="shipment-card" style="margin-bottom:24px;border-left:4px solid var(--clr-accent);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:14px;">
+          <div>
+            <span class="status-pill in-transit" style="margin-bottom:6px;">Next Port Arrival</span>
+            <h3 style="font-size:1.15rem;margin:4px 0 2px;">Vessel CSCL GLOBE (IMO 9695121)</h3>
+            <p style="font-size:.85rem;color:var(--txt-muted);margin:0;">Port of Singapore (SGSIN) → Port of Rotterdam (NLRTM) • 4x 40ft HC Containers</p>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:.78rem;color:var(--txt-muted);text-transform:uppercase;letter-spacing:.04em;">Estimated Berth</div>
+            <div style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--clr-accent);">Tomorrow at 06:40 UTC</div>
+            <div style="font-size:.78rem;color:#2e7d32;font-weight:600;">On Schedule • ETA in 18 hrs</div>
+          </div>
+        </div>
+
+        <!-- Stage Tracker for Next Arrival -->
+        <div class="stage-tracker">
+          <div class="stage-tracker-step done">
+            <div class="stage-dot">✓</div>
+            <div class="stage-label">Booked</div>
+          </div>
+          <div class="stage-tracker-step done">
+            <div class="stage-dot">✓</div>
+            <div class="stage-label">Picked Up</div>
+          </div>
+          <div class="stage-tracker-step active">
+            <div class="stage-dot">3</div>
+            <div class="stage-label">In Transit</div>
+          </div>
+          <div class="stage-tracker-step">
+            <div class="stage-dot">4</div>
+            <div class="stage-label">Customs</div>
+          </div>
+          <div class="stage-tracker-step">
+            <div class="stage-dot">5</div>
+            <div class="stage-label">Out Delivery</div>
+          </div>
+          <div class="stage-tracker-step">
+            <div class="stage-dot">6</div>
+            <div class="stage-label">Delivered</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border-subtle);font-size:.82rem;">
+          <div><span style="color:var(--txt-muted);">Bill of Lading:</span> <strong>MSCU9817420</strong></div>
+          <div><span style="color:var(--txt-muted);">Current Speed:</span> <strong>19.4 knots</strong></div>
+          <div><span style="color:var(--txt-muted);">Draft Depth:</span> <strong>15.2 meters</strong></div>
+          <div><span style="color:var(--txt-muted);">Cargo:</span> <strong>Industrial Optics</strong></div>
+        </div>
+      </div>
+
+      <!-- EXACTLY FOUR HAND-BUILT CHARTS -->
+      <div class="charts-grid">
+        <!-- 1. Line Chart: Shipping spend per month -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-card-title">1. Shipping Spend Trend ($ / Month)</div>
+            <span style="font-size:.78rem;color:var(--txt-muted);">Past 12 Months</span>
+          </div>
+          <canvas id="lineChart" class="chart-canvas" height="200"></canvas>
+        </div>
+
+        <!-- 2. Bar Chart: Shipments per month -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-card-title">2. Monthly Shipment Volume</div>
+            <span style="font-size:.78rem;color:var(--txt-muted);">Total 383 TEU</span>
+          </div>
+          <canvas id="barChart" class="chart-canvas" height="200"></canvas>
+        </div>
+
+        <!-- 3. Donut Chart: Mode split (Air / Sea / Land) -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-card-title">3. Freight Mode Distribution</div>
+            <span style="font-size:.78rem;color:var(--txt-muted);">Air / Sea / Land</span>
+          </div>
+          <canvas id="donutChart" class="chart-canvas" height="200"></canvas>
+        </div>
+
+        <!-- 4. Area Chart: Cumulative spend vs contract budget -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-card-title">4. Cumulative Spend vs. Annual Budget</div>
+            <span style="font-size:.78rem;color:var(--txt-muted);">$48,000 Budget Cap</span>
+          </div>
+          <canvas id="areaChart" class="chart-canvas" height="200"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VIEW 2: BOOK SHIPMENT ── -->
+    <section class="db-view" id="view-book" aria-label="Book Shipment">
+      <div style="max-width:880px;margin:0 auto;">
+        <div style="margin-bottom:24px;">
+          <h2 style="font-size:1.4rem;margin-bottom:6px;">Create a New Shipment Booking</h2>
+          <p style="font-size:.9rem;color:var(--txt-secondary);">Schedule priority sea, air, or overland freight forwarding directly into SHIP operations dispatch.</p>
+        </div>
+
+        <div id="dbBookConfirm" class="alert-panel" style="display:none;background:rgba(46,125,50,.1);border:1.5px solid #2e7d32;border-radius:var(--radius-md);padding:18px 22px;margin-bottom:24px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <div>
+              <div style="font-weight:700;color:#2e7d32;font-size:1rem;">Shipment Dispatch Confirmed!</div>
+              <div style="font-size:.88rem;color:var(--txt-secondary);margin-top:2px;">Booking reference: <strong id="dbBookRef" style="color:var(--clr-accent);font-family:monospace;font-size:1.05rem;"></strong>. Our port radio operator has reserved your berth corridor.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-form-wrap" style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:32px;">
+          <form id="dbBookForm">
+            <!-- Origin & Destination -->
+            <div class="form-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+              <div class="form-group">
+                <label class="form-label" for="bookOrigin">Origin Port / Terminal</label>
+                <input class="form-input" type="text" id="bookOrigin" placeholder="e.g. Shanghai Port (CNSHG)" required value="Port of Singapore (SGSIN)"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bookDest">Destination Port / Inland CFS</label>
+                <input class="form-input" type="text" id="bookDest" placeholder="e.g. Rotterdam Maasvlakte (NLRTM)" required value="Rotterdam Maasvlakte (NLRTM)"/>
+              </div>
+            </div>
+
+            <!-- Mode selector -->
+            <div class="form-group" style="margin-bottom:20px;">
+              <label class="form-label">Transport Mode</label>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+                <label style="border:1.5px solid var(--clr-accent);background:rgba(192,57,43,.06);padding:12px;border-radius:var(--radius-sm);text-align:center;cursor:pointer;font-weight:600;font-size:.85rem;color:var(--clr-accent);">
+                  <input type="radio" name="bookMode" value="ocean" checked style="display:none;"/>
+                  Ocean FCL
+                </label>
+                <label style="border:1px solid var(--border);background:var(--bg-alt);padding:12px;border-radius:var(--radius-sm);text-align:center;cursor:pointer;font-weight:500;font-size:.85rem;">
+                  <input type="radio" name="bookMode" value="air" style="display:none;"/>
+                  Air Cargo
+                </label>
+                <label style="border:1px solid var(--border);background:var(--bg-alt);padding:12px;border-radius:var(--radius-sm);text-align:center;cursor:pointer;font-weight:500;font-size:.85rem;">
+                  <input type="radio" name="bookMode" value="road" style="display:none;"/>
+                  Overland Road
+                </label>
+                <label style="border:1px solid var(--border);background:var(--bg-alt);padding:12px;border-radius:var(--radius-sm);text-align:center;cursor:pointer;font-weight:500;font-size:.85rem;">
+                  <input type="radio" name="bookMode" value="rail" style="display:none;"/>
+                  Intermodal Rail
+                </label>
+              </div>
+            </div>
+
+            <!-- Cargo specs -->
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px;">
+              <div class="form-group">
+                <label class="form-label" for="cargoWeight">Gross Weight (kg)</label>
+                <input class="form-input" type="number" id="cargoWeight" placeholder="18500" required value="24000"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cargoVolume">Volume (CBM)</label>
+                <input class="form-input" type="number" id="cargoVolume" placeholder="68" required value="64"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cargoType">Equipment / Units</label>
+                <select class="form-input" id="cargoType">
+                  <option value="40hc">1x 40' High Cube Container</option>
+                  <option value="20gp">1x 20' General Purpose</option>
+                  <option value="45hc">1x 45' Pallet Wide</option>
+                  <option value="reefer">Refrigerated Reefer Unit</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;">
+              <div class="form-group">
+                <label class="form-label" for="readyDate">Cargo Ready Date</label>
+                <input class="form-input" type="date" id="readyDate" required value="2026-10-02"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cargoDesc">Commercial Commodity Description</label>
+                <input class="form-input" type="text" id="cargoDesc" placeholder="e.g. Precision CNC Components" required value="Solar Photovoltaic Inverter Assemblies"/>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:15px;font-size:1rem;">
+              Confirm Booking & Generate Radio Corridor
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VIEW 3: MY SHIPMENTS ── -->
+    <section class="db-view" id="view-shipments" aria-label="My Shipments">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+        <div>
+          <h2 style="font-size:1.4rem;margin-bottom:4px;">Active Shipment Ledger</h2>
+          <p style="font-size:.88rem;color:var(--txt-secondary);">Real-time stage progression across maritime, aerial, and land convoys.</p>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <span class="status-pill active">11 On Route</span>
+          <span class="status-pill due">3 In Customs</span>
+        </div>
+      </div>
+
+      <!-- Shipment Card 1: In Transit -->
+      <div class="shipment-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+              <span style="font-family:monospace;font-weight:700;font-size:.9rem;color:var(--clr-accent);">SHP-902148</span>
+              <span class="status-pill in-transit">In Transit</span>
+              <span style="font-size:.78rem;background:var(--bg-alt);padding:3px 8px;border-radius:4px;font-weight:600;">Ocean FCL</span>
+            </div>
+            <h3 style="font-size:1.1rem;margin:0 0 4px;">Busan (KRPUS) → Los Angeles Pier 400 (USLAX)</h3>
+            <div style="font-size:.82rem;color:var(--txt-muted);">Carrier: HMM RAON • Container: HMMU9120481 • 28,400 kg Automotive Modules</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:.78rem;color:var(--txt-muted);">Target Arrival</div>
+            <div style="font-family:var(--font-display);font-size:1.05rem;font-weight:700;">Oct 04, 14:00 PST</div>
+          </div>
+        </div>
+
+        <div class="stage-tracker">
+          <div class="stage-tracker-step done"><div class="stage-dot">✓</div><div class="stage-label">Booked</div></div>
+          <div class="stage-tracker-step done"><div class="stage-dot">✓</div><div class="stage-label">Picked Up</div></div>
+          <div class="stage-tracker-step active"><div class="stage-dot">3</div><div class="stage-label">In Transit</div></div>
+          <div class="stage-tracker-step"><div class="stage-dot">4</div><div class="stage-label">Customs</div></div>
+          <div class="stage-tracker-step"><div class="stage-dot">5</div><div class="stage-label">Out Delivery</div></div>
+          <div class="stage-tracker-step"><div class="stage-dot">6</div><div class="stage-label">Delivered</div></div>
+        </div>
+      </div>
+
+      <!-- Shipment Card 2: In Customs -->
+      <div class="shipment-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+              <span style="font-family:monospace;font-weight:700;font-size:.9rem;color:var(--clr-accent);">SHP-883921</span>
+              <span class="status-pill due">Customs Hold Review</span>
+              <span style="font-size:.78rem;background:var(--bg-alt);padding:3px 8px;border-radius:4px;font-weight:600;">Air Freight</span>
+            </div>
+            <h3 style="font-size:1.1rem;margin:0 0 4px;">Frankfurt CargoCity (FRA) → Dubai World Central (DWC)</h3>
+            <div style="font-size:.82rem;color:var(--txt-muted);">Carrier: Lufthansa Cargo LH8220 • AWB 020-91823901 • 3,200 kg Pharma Cold-Chain</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:.78rem;color:var(--txt-muted);">Target Arrival</div>
+            <div style="font-family:var(--font-display);font-size:1.05rem;font-weight:700;">Tonight at 22:30 GST</div>
+          </div>
+        </div>
+
+        <div class="stage-tracker">
+          <div class="stage-tracker-step done"><div class="stage-dot">✓</div><div class="stage-label">Booked</div></div>
+          <div class="stage-tracker-step done"><div class="stage-dot">✓</div><div class="stage-label">Picked Up</div></div>
+          <div class="stage-tracker-step done"><div class="stage-dot">✓</div><div class="stage-label">In Transit</div></div>
+          <div class="stage-tracker-step active"><div class="stage-dot">!</div><div class="stage-label">Customs</div></div>
+          <div class="stage-tracker-step"><div class="stage-dot">5</div><div class="stage-label">Out Delivery</div></div>
+          <div class="stage-tracker-step"><div class="stage-dot">6</div><div class="stage-label">Delivered</div></div>
+        </div>
+      </div>
+
+      <!-- Shipment Card 3: Out for Delivery -->
+      <div class="shipment-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+              <span style="font-family:monospace;font-weight:700;font-size:.9rem;color:var(--clr-accent);">SHP-774012</span>
+              <span class="status-pill active">Out for Final Delivery</span>
+              <span style="font-size:.78rem;background:var(--bg-alt);padding:3px 8px;border-radius:4px;font-weight:600;">Intermodal Rail/Truck</span>
+            </div>
+            <h3 style="font-size:1.1rem;margin:0 0 4px;">Antwerp Gateway → Munich Distribution Center Hub 4</h3>
+            <div style="font-size:.82rem;color:var(--txt-muted);">Fleet: SHIP Dedicated Haulage D-882 • Seal #BE-481902 • 14,800 kg Consumer Tech</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:.78rem;color:var(--txt-muted);">ETA Delivery</div>
+            <div style="font-family:var(--font-display);font-size:1.05rem;font-weight:700;color:#2e7d32;">Today by 16:30 CET</div>
+          </div>
+        </div>
+
+        <div class="stage-tracker">
+          <div class="stage-tracker-step done"><div class="stage-dot">✓</div><div class="stage-label">Booked</div></div>
+          <div class="stage-tracker-step done"><div class="stage-dot">✓</div><div class="stage-label">Picked Up</div></div>
+          <div class="stage-tracker-step done"><div class="stage-dot">✓</div><div class="stage-label">In Transit</div></div>
+          <div class="stage-tracker-step done"><div class="stage-dot">✓</div><div class="stage-label">Customs</div></div>
+          <div class="stage-tracker-step active"><div class="stage-dot">5</div><div class="stage-label">Out Delivery</div></div>
+          <div class="stage-tracker-step"><div class="stage-dot">6</div><div class="stage-label">Delivered</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VIEW 4: CUSTOMS DOCUMENTS ── -->
+    <section class="db-view" id="view-customs" aria-label="Customs Documentation Checklists">
+      <div style="margin-bottom:24px;">
+        <h2 style="font-size:1.4rem;margin-bottom:4px;">Customs Documentation & Clearances</h2>
+        <p style="font-size:.88rem;color:var(--txt-secondary);">Interactive document audit packs with per-consignment compliance rings.</p>
+      </div>
+
+      <!-- Shipment 1 Customs Packet -->
+      <div class="doc-shipment-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <strong style="font-family:monospace;font-size:1rem;color:var(--clr-accent);">SHP-902148</strong>
+              <span style="font-size:.85rem;color:var(--txt-secondary);font-weight:600;">Busan → Los Angeles Pier 400</span>
+            </div>
+            <div style="font-size:.78rem;color:var(--txt-muted);">US Customs Border Protection (ACE Manifest Port 2704)</div>
+          </div>
+
+          <!-- Progress ring -->
+          <div class="progress-ring-wrap">
+            <svg width="56" height="56" viewBox="0 0 56 56">
+              <circle cx="28" cy="28" r="20" fill="none" stroke="var(--border-subtle)" stroke-width="4"/>
+              <circle class="progress-ring-circle" cx="28" cy="28" r="20" fill="none" stroke="var(--clr-accent)" stroke-width="4" stroke-dasharray="125.66" stroke-dashoffset="31.41" stroke-linecap="round" transform="rotate(-90 28 28)"/>
+            </svg>
+            <span class="progress-ring-label">75%</span>
+          </div>
+        </div>
+
+        <div class="doc-item">
+          <label class="doc-checkbox">
+            <input type="checkbox" checked/>
+            <span>Commercial Invoice (Signed & Stamped, USD valuation)</span>
+          </label>
+          <span class="status-pill active">Verified</span>
+        </div>
+        <div class="doc-item">
+          <label class="doc-checkbox">
+            <input type="checkbox" checked/>
+            <span>Detailed Packing List (Tare & Net weights per pallet)</span>
+          </label>
+          <span class="status-pill active">Verified</span>
+        </div>
+        <div class="doc-item">
+          <label class="doc-checkbox">
+            <input type="checkbox" checked/>
+            <span>Master Bill of Lading (Surrendered / Telex Release)</span>
+          </label>
+          <span class="status-pill active">Verified</span>
+        </div>
+        <div class="doc-item">
+          <label class="doc-checkbox">
+            <input type="checkbox"/>
+            <span>EPA Declaration Form 3520-21 (Awaiting Consignee Signoff)</span>
+          </label>
+          <button class="btn btn-outline" style="font-size:.75rem;padding:4px 10px;">Upload File</button>
+        </div>
+      </div>
+
+      <!-- Shipment 2 Customs Packet -->
+      <div class="doc-shipment-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <strong style="font-family:monospace;font-size:1rem;color:var(--clr-accent);">SHP-883921</strong>
+              <span style="font-size:.85rem;color:var(--txt-secondary);font-weight:600;">Frankfurt → Dubai World Central</span>
+            </div>
+            <div style="font-size:.78rem;color:var(--txt-muted);">Dubai Customs Mirsal II Declaration</div>
+          </div>
+
+          <div class="progress-ring-wrap">
+            <svg width="56" height="56" viewBox="0 0 56 56">
+              <circle cx="28" cy="28" r="20" fill="none" stroke="var(--border-subtle)" stroke-width="4"/>
+              <circle class="progress-ring-circle" cx="28" cy="28" r="20" fill="none" stroke="var(--clr-accent)" stroke-width="4" stroke-dasharray="125.66" stroke-dashoffset="62.83" stroke-linecap="round" transform="rotate(-90 28 28)"/>
+            </svg>
+            <span class="progress-ring-label">50%</span>
+          </div>
+        </div>
+
+        <div class="doc-item">
+          <label class="doc-checkbox">
+            <input type="checkbox" checked/>
+            <span>Air Waybill e-AWB 020-91823901</span>
+          </label>
+          <span class="status-pill active">Verified</span>
+        </div>
+        <div class="doc-item">
+          <label class="doc-checkbox">
+            <input type="checkbox" checked/>
+            <span>Certificate of Origin (EUR.1 Movement Certificate)</span>
+          </label>
+          <span class="status-pill active">Verified</span>
+        </div>
+        <div class="doc-item">
+          <label class="doc-checkbox">
+            <input type="checkbox"/>
+            <span>Ministry of Health Import Permit for Biological Samples</span>
+          </label>
+          <button class="btn btn-outline" style="font-size:.75rem;padding:4px 10px;">Upload File</button>
+        </div>
+        <div class="doc-item">
+          <label class="doc-checkbox">
+            <input type="checkbox"/>
+            <span>Temperature Logging Calibration Certificate (-20°C Datalogger)</span>
+          </label>
+          <button class="btn btn-outline" style="font-size:.75rem;padding:4px 10px;">Upload File</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VIEW 5: INVOICES ── -->
+    <section class="db-view" id="view-invoices" aria-label="Invoices Ledger">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+        <div>
+          <h2 style="font-size:1.4rem;margin-bottom:4px;">Billing & Freight Invoices</h2>
+          <p style="font-size:.88rem;color:var(--txt-secondary);">Itemized terminal handling, ocean transit tariffs, and customs broker charges.</p>
+        </div>
+        <div>
+          <span style="font-size:.85rem;color:var(--txt-muted);">Total Outstanding: <strong style="color:var(--clr-accent);">$4,850.00</strong></span>
+        </div>
+      </div>
+
+      <div class="db-table-wrap" style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;">
+        <table class="db-table">
+          <thead>
+            <tr>
+              <th>Invoice #</th>
+              <th>Shipment Ref</th>
+              <th>Lane / Scope</th>
+              <th>Amount</th>
+              <th>Issue Date</th>
+              <th>Due Date</th>
+              <th>Status</th>
+              <th style="text-align:right;">Document</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>INV-2026-0819</strong></td>
+              <td>SHP-902148</td>
+              <td>Busan → Los Angeles</td>
+              <td>$2,450.00</td>
+              <td>Sep 18, 2026</td>
+              <td>Oct 02, 2026</td>
+              <td><span class="status-pill due">Due</span></td>
+              <td style="text-align:right;">
+                <button class="btn btn-outline" data-invoice-dl style="font-size:.78rem;padding:5px 10px;">Download PDF</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>INV-2026-0810</strong></td>
+              <td>SHP-883921</td>
+              <td>Frankfurt → Dubai</td>
+              <td>$2,400.00</td>
+              <td>Sep 12, 2026</td>
+              <td>Sep 26, 2026</td>
+              <td><span class="status-pill overdue">Overdue</span></td>
+              <td style="text-align:right;">
+                <button class="btn btn-outline" data-invoice-dl style="font-size:.78rem;padding:5px 10px;">Download PDF</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>INV-2026-0774</strong></td>
+              <td>SHP-774012</td>
+              <td>Antwerp → Munich</td>
+              <td>$1,180.00</td>
+              <td>Aug 29, 2026</td>
+              <td>Sep 12, 2026</td>
+              <td><span class="status-pill paid">Paid</span></td>
+              <td style="text-align:right;">
+                <button class="btn btn-outline" data-invoice-dl style="font-size:.78rem;padding:5px 10px;">Download PDF</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>INV-2026-0692</strong></td>
+              <td>SHP-692100</td>
+              <td>Rotterdam → New York</td>
+              <td>$3,820.00</td>
+              <td>Aug 14, 2026</td>
+              <td>Aug 28, 2026</td>
+              <td><span class="status-pill paid">Paid</span></td>
+              <td style="text-align:right;">
+                <button class="btn btn-outline" data-invoice-dl style="font-size:.78rem;padding:5px 10px;">Download PDF</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>INV-2026-0611</strong></td>
+              <td>SHP-611082</td>
+              <td>Singapore → Tokyo</td>
+              <td>$1,940.00</td>
+              <td>Jul 30, 2026</td>
+              <td>Aug 13, 2026</td>
+              <td><span class="status-pill paid">Paid</span></td>
+              <td style="text-align:right;">
+                <button class="btn btn-outline" data-invoice-dl style="font-size:.78rem;padding:5px 10px;">Download PDF</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── VIEW 6: PROOF OF DELIVERY ── -->
+    <section class="db-view" id="view-pod" aria-label="Proof of Delivery Library">
+      <div style="margin-bottom:24px;">
+        <h2 style="font-size:1.4rem;margin-bottom:4px;">Proof of Delivery (POD) Archive</h2>
+        <p style="font-size:.88rem;color:var(--txt-secondary);">Verified receiver timestamps, consignee endorsements, and signed electronic receipts.</p>
+      </div>
+
+      <div class="db-table-wrap" style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;">
+        <table class="db-table">
+          <thead>
+            <tr>
+              <th>Shipment Ref</th>
+              <th>Consignee Destination</th>
+              <th>Delivered Timestamp</th>
+              <th>Received By</th>
+              <th>Digital Endorsement</th>
+              <th style="text-align:right;">POD Certificate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>SHP-692100</strong></td>
+              <td>New York CFS Hub (Red Hook)</td>
+              <td>Sep 14, 2026 • 11:22 EDT</td>
+              <td>Arthur Pendelton, Receiving Dock</td>
+              <td>
+                <span style="display:inline-block;padding:3px 8px;background:rgba(46,125,50,.08);border:1px dashed #2e7d32;border-radius:4px;font-family:cursive;font-size:.85rem;color:#2e7d32;">
+                  ✓ Signed e-POD
+                </span>
+              </td>
+              <td style="text-align:right;">
+                <button class="btn btn-outline" data-pod-dl style="font-size:.78rem;padding:5px 10px;">Download POD</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>SHP-611082</strong></td>
+              <td>Tokyo Yokohama Distribution 2</td>
+              <td>Sep 02, 2026 • 15:40 JST</td>
+              <td>Kenji Takahashi, Logistics Lead</td>
+              <td>
+                <span style="display:inline-block;padding:3px 8px;background:rgba(46,125,50,.08);border:1px dashed #2e7d32;border-radius:4px;font-family:cursive;font-size:.85rem;color:#2e7d32;">
+                  ✓ Signed e-POD
+                </span>
+              </td>
+              <td style="text-align:right;">
+                <button class="btn btn-outline" data-pod-dl style="font-size:.78rem;padding:5px 10px;">Download POD</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>SHP-584201</strong></td>
+              <td>Hamburg Waltershof Terminal C</td>
+              <td>Aug 19, 2026 • 09:15 CEST</td>
+              <td>Stefan Weber, Freight Inspector</td>
+              <td>
+                <span style="display:inline-block;padding:3px 8px;background:rgba(46,125,50,.08);border:1px dashed #2e7d32;border-radius:4px;font-family:cursive;font-size:.85rem;color:#2e7d32;">
+                  ✓ Signed e-POD
+                </span>
+              </td>
+              <td style="text-align:right;">
+                <button class="btn btn-outline" data-pod-dl style="font-size:.78rem;padding:5px 10px;">Download POD</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── VIEW 7: MESSAGES ── -->
+    <section class="db-view" id="view-messages" aria-label="Messages">
+      <div style="margin-bottom:24px;">
+        <h2 style="font-size:1.4rem;margin-bottom:4px;">Bridge & Forwarder Dispatch Channel</h2>
+        <p style="font-size:.88rem;color:var(--txt-secondary);">Direct VHF and teleprinter communication with your designated operations forwarder.</p>
+      </div>
+
+      <div class="db-message-layout">
+        <!-- Thread list -->
+        <div class="thread-list">
+          <div class="thread-item active" data-thread="1" data-sender="Capt. Thomas Vance — Lead Maritime Dispatcher" data-content="Consignment SHP-902148 cleared the Tsugaru Strait cleanly at 19.4 kts with calm sea state (Beaufort 3). ETA at San Pedro Bay remains locked for Oct 04 at 14:00 PST. Pilot boarding booked.">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+              <strong style="font-size:.85rem;">Capt. Thomas Vance</strong>
+              <span style="font-size:.72rem;color:var(--txt-muted);">10:42 AM</span>
+            </div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--clr-accent);margin-bottom:2px;">SHP-902148: Tsugaru Passage Normal</div>
+            <div style="font-size:.78rem;color:var(--txt-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cleared strait cleanly at 19.4 kts...</div>
+          </div>
+
+          <div class="thread-item" data-thread="2" data-sender="Leila Mansour — Customs Broker (Frankfurt)" data-content="Good morning Elena, German Federal Customs requested an amended declaration form for the biological reagent temperature logs for SHP-883921. Please review the updated PDF in your Customs tab and confirm compliance.">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+              <strong style="font-size:.85rem;">Leila Mansour (Customs)</strong>
+              <span style="font-size:.72rem;color:var(--txt-muted);">Yesterday</span>
+            </div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--txt-primary);margin-bottom:2px;">SHP-883921: Reagent Documentation</div>
+            <div style="font-size:.78rem;color:var(--txt-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">German Federal Customs requested...</div>
+          </div>
+
+          <div class="thread-item" data-thread="3" data-sender="Port Radio Desk — Rotterdam" data-content="Berth corridor 24 at ECT Delta Terminal has confirmed crane availability for CSCL GLOBE. Cargo discharge will initiate immediately upon gangway security clearance.">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+              <strong style="font-size:.85rem;">Port Radio Rotterdam</strong>
+              <span style="font-size:.72rem;color:var(--txt-muted);">Sep 22</span>
+            </div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--txt-primary);margin-bottom:2px;">ECT Delta Berth Confirmation</div>
+            <div style="font-size:.78rem;color:var(--txt-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Berth corridor 24 confirmed crane...</div>
+          </div>
+        </div>
+
+        <!-- Thread Pane -->
+        <div class="message-pane-wrap">
+          <div id="messagePane" style="flex:1;display:flex;flex-direction:column;">
+            <div style="padding:16px 20px;border-bottom:1px solid var(--border-subtle);font-weight:600;font-size:.95rem;">
+              Capt. Thomas Vance — Lead Maritime Dispatcher
+            </div>
+            <div style="padding:20px;flex:1;overflow-y:auto;font-size:.9rem;color:var(--txt-secondary);line-height:1.7;">
+              Consignment SHP-902148 cleared the Tsugaru Strait cleanly at 19.4 kts with calm sea state (Beaufort 3). ETA at San Pedro Bay remains locked for Oct 04 at 14:00 PST. Pilot boarding booked.
+            </div>
+          </div>
+
+          <!-- Compose box -->
+          <form id="composeForm" class="message-pane-compose">
+            <textarea class="form-input" placeholder="Type a radio transmission or instruction to your ops forwarder..." style="resize:none;height:52px;font-size:.88rem;" required></textarea>
+            <button type="submit" class="btn btn-primary" style="padding:0 20px;height:52px;flex-shrink:0;">Send</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VIEW 8: SETTINGS ── -->
+    <section class="db-view" id="view-settings" aria-label="Settings">
+      <div style="max-width:800px;margin:0 auto;">
+        <div style="margin-bottom:24px;">
+          <h2 style="font-size:1.4rem;margin-bottom:4px;">Client Account & Dispatch Settings</h2>
+          <p style="font-size:.88rem;color:var(--txt-secondary);">Manage operational contacts, milestone webhooks, and billing coordinates.</p>
+        </div>
+
+        <div style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:32px;margin-bottom:24px;">
+          <h3 style="font-size:1.1rem;margin-bottom:20px;">Corporate Profile</h3>
+          <div class="form-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+            <div class="form-group">
+              <label class="form-label" for="stComp">Company Entity</label>
+              <input class="form-input" type="text" id="stComp" value="NorthStar Global Technologies Ltd."/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="stTax">VAT / EORI Registration</label>
+              <input class="form-input" type="text" id="stTax" value="GB 892 104 220 000"/>
+            </div>
+          </div>
+
+          <div class="form-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;">
+            <div class="form-group">
+              <label class="form-label" for="stName">Account Operations Lead</label>
+              <input class="form-input" type="text" id="stName" value="Elena Rostova"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="stMail">Operations Dispatch Email</label>
+              <input class="form-input" type="email" id="stMail" value="elena.rostova@northstar-global.com"/>
+            </div>
+          </div>
+
+          <h3 style="font-size:1.1rem;margin:24px 0 16px;">Notification Alert Coordinates</h3>
+          <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:24px;">
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;font-size:.9rem;">
+              <input type="checkbox" checked style="accent-color:var(--clr-accent);width:18px;height:18px;"/>
+              <span>SMS Critical Alerts for Customs Examination or Demurrage Warnings</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;font-size:.9rem;">
+              <input type="checkbox" checked style="accent-color:var(--clr-accent);width:18px;height:18px;"/>
+              <span>Email Milestone Receipts (Berth Secured, Out for Delivery, POD Recorded)</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;font-size:.9rem;">
+              <input type="checkbox" style="accent-color:var(--clr-accent);width:18px;height:18px;"/>
+              <span>Weekly Consolidated Carbon & Bunker Surcharge Report</span>
+            </label>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid var(--border-subtle);flex-wrap:wrap;gap:12px;">
+            <button type="button" class="btn btn-primary" onclick="alert('Profile configurations updated successfully.');">Save Changes</button>
+            <button type="button" class="btn btn-outline" data-logout style="color:var(--clr-accent);border-color:var(--clr-accent);">Sign Out of SHIP</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script src="js/main.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
