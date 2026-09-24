@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing &amp; Memberships | CRAG Climbing Gym</title>
+  <meta name="description" content="Transparent pricing for every kind of climber at CRAG. Day passes, punch cards, monthly memberships, and annual plans — no hidden fees, no lock-ins.">
+  <meta property="og:title" content="Pricing &amp; Memberships | CRAG Climbing Gym">
+  <meta property="og:description" content="Transparent pricing for every kind of climber at CRAG. Day passes, punch cards, monthly memberships, and annual plans — no hidden fees, no lock-ins.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+  <style>
+    /* ── Pricing Cards ─────────────────────────────────────────── */
+    .pricing-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    @media (max-width: 1100px) {
+      .pricing-cards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .pricing-cards-grid { grid-template-columns: 1fr; }
+    }
+
+    .pricing-card {
+      border: 3px solid var(--pitch-black);
+      background: var(--chalk-white);
+      padding: 36px 28px 32px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 4px 4px 0 0 var(--pitch-black);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+    }
+    .pricing-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 0 var(--pitch-black);
+    }
+
+    /* Featured Pricing Card (Light Mode) */
+    .pricing-card--featured {
+      border: 3px solid var(--orange);
+      box-shadow: 6px 6px 0 0 var(--orange);
+      background: var(--chalk-white);
+    }
+    .pricing-card--featured:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 0 var(--orange);
+    }
+    .pricing-card--featured .pricing-card__name {
+      color: var(--pitch-black);
+    }
+    .pricing-card--featured .pricing-card__price {
+      color: var(--orange);
+    }
+    .pricing-card--featured .pricing-card__period {
+      color: #52525b;
+    }
+    .pricing-card--featured .pricing-card__features li {
+      color: #27272a;
+      border-bottom-color: rgba(10,10,10,0.1);
+    }
+    .pricing-card--featured .pricing-card__features li i {
+      color: var(--orange);
+    }
+
+    .pricing-card {
+      position: relative;
+    }
+
+    .pricing-card__badge {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-block;
+      background: var(--orange);
+      color: var(--chalk-white);
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border: 2px solid var(--pitch-black);
+      box-shadow: 2px 2px 0 0 var(--pitch-black);
+      white-space: nowrap;
+      z-index: 10;
+      margin: 0;
+    }
+
+    [data-theme="dark"] .pricing-card__badge {
+      border-color: var(--chalk-white);
+      box-shadow: 2px 2px 0 0 var(--pitch-black);
+    }
+
+    .pricing-card__name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--pitch-black);
+      margin-bottom: 16px;
+    }
+
+    .pricing-card__price-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 28px;
+    }
+
+    .pricing-card__price {
+      font-family: 'Oswald', sans-serif;
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--orange);
+    }
+
+    .pricing-card__period {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #52525b;
+    }
+
+    .pricing-card__features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 32px;
+      flex: 1;
+    }
+    .pricing-card__features li {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #27272a;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(10,10,10,0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pricing-card__features li i {
+      color: var(--orange);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ── Compare Table ──────────────────────────────────────────── */
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 48px;
+      border: 3px solid var(--pitch-black);
+      box-shadow: 4px 4px 0 0 var(--pitch-black);
+      background: var(--chalk-white);
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      min-width: 600px;
+    }
+    .compare-table thead th {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 18px 20px;
+      text-align: center;
+      background: var(--pitch-black);
+      color: var(--chalk-white);
+      border-right: 2px solid rgba(250,250,250,0.1);
+    }
+    .compare-table thead th:first-child {
+      text-align: left;
+    }
+    .compare-table thead th:nth-child(4) {
+      background: var(--orange);
+      color: var(--chalk-white);
+    }
+    .compare-table tbody tr {
+      border-bottom: 2px solid rgba(10,10,10,0.1);
+      transition: background 0.15s ease;
+    }
+    .compare-table tbody tr:hover {
+      background: rgba(234,88,12,0.08);
+    }
+    .compare-table tbody td {
+      padding: 16px 20px;
+      text-align: center;
+      border-right: 2px solid rgba(10,10,10,0.08);
+      color: var(--pitch-black);
+    }
+    .compare-table tbody td:first-child {
+      text-align: left;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      color: var(--pitch-black);
+    }
+    .compare-table tbody td:nth-child(4) {
+      background: rgba(234,88,12,0.06);
+    }
+    .compare-table .check {
+      color: #16a34a;
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .compare-table .cross {
+      color: #dc2626;
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .compare-table .val {
+      font-weight: 700;
+      color: var(--orange);
+      font-size: 14px;
+    }
+
+    /* ── Add-ons ───────────────────────────────────────────────── */
+    .addons-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    @media (max-width: 900px) {
+      .addons-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .addons-grid { grid-template-columns: 1fr; }
+    }
+
+    .addon-card {
+      border: 3px solid var(--pitch-black);
+      background: var(--chalk-white);
+      box-shadow: 4px 4px 0 0 var(--pitch-black);
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .addon-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 0 var(--pitch-black);
+    }
+    .addon-card__icon {
+      width: 56px;
+      height: 56px;
+      border: 3px solid var(--pitch-black);
+      background: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+    .addon-card__icon i {
+      font-size: 26px;
+      color: var(--chalk-white);
+    }
+    .addon-card__price-badge {
+      display: inline-block;
+      background: var(--pitch-black);
+      color: var(--chalk-white);
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 4px 14px;
+      margin-bottom: 14px;
+    }
+    .addon-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--pitch-black);
+      margin-bottom: 10px;
+    }
+    .addon-card p {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #52525b;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── Groups Grid ───────────────────────────────────────────── */
+    .groups-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    @media (max-width: 900px) {
+      .groups-grid { grid-template-columns: 1fr; }
+    }
+
+    .group-card {
+      border: 3px solid var(--pitch-black);
+      background: var(--chalk-white);
+      box-shadow: 4px 4px 0 0 var(--pitch-black);
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .group-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 0 var(--pitch-black);
+    }
+    .group-card__icon {
+      width: 52px;
+      height: 52px;
+      border: 3px solid var(--pitch-black);
+      background: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+    .group-card__icon i {
+      font-size: 24px;
+      color: var(--chalk-white);
+    }
+    .group-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--pitch-black);
+      margin-bottom: 12px;
+    }
+    .group-card p {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #52525b;
+      line-height: 1.65;
+      flex: 1;
+      margin: 0 0 24px;
+    }
+    .group-card .link-arrow {
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--orange);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px solid var(--orange);
+      padding-bottom: 2px;
+      transition: gap 0.18s ease;
+    }
+    .group-card .link-arrow:hover {
+      gap: 12px;
+    }
+
+    /* ── CTA Section ───────────────────────────────────────────── */
+    .cta-section {
+      position: relative;
+      padding: 100px 0;
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0.78);
+    }
+    .cta-section .container {
+      position: relative;
+      z-index: 2;
+    }
+    .cta-section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--chalk-white);
+      margin-bottom: 20px;
+    }
+    .cta-section p {
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      color: rgba(250,250,250,0.8);
+      max-width: 620px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--chalk-white);
+      color: var(--pitch-black);
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 16px 36px;
+      border: 3px solid var(--chalk-white);
+      text-decoration: none;
+      box-shadow: 4px 4px 0 0 var(--orange);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+    }
+    .btn-white:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 0 var(--orange);
+      background: var(--orange);
+      color: var(--chalk-white);
+      border-color: var(--orange);
+    }
+
+    /* ── Section heading helper ─────────────────────────────────── */
+    .section-heading-center {
+      text-align: center;
+    }
+    .section-heading-center .section__eyebrow {
+      justify-content: center;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       DARK MODE REFINEMENTS FOR PRICING PAGE
+       ══════════════════════════════════════════════════════════════ */
+    [data-theme="dark"] .pricing-card {
+      background: #141414;
+      border-color: rgba(250,250,250,0.18);
+      box-shadow: 4px 4px 0 0 var(--orange);
+    }
+    [data-theme="dark"] .pricing-card:hover {
+      box-shadow: 6px 6px 0 0 var(--orange);
+    }
+    [data-theme="dark"] .pricing-card__name {
+      color: #fafafa;
+    }
+    [data-theme="dark"] .pricing-card__period {
+      color: #a1a1aa;
+    }
+    [data-theme="dark"] .pricing-card__features li {
+      color: #e4e4e7;
+      border-bottom-color: rgba(250,250,250,0.1);
+    }
+
+    [data-theme="dark"] .pricing-card--featured {
+      background: #1c1917;
+      border-color: var(--orange);
+      box-shadow: 6px 6px 0 0 var(--orange);
+    }
+    [data-theme="dark"] .pricing-card--featured:hover {
+      box-shadow: 8px 8px 0 0 var(--orange);
+    }
+    [data-theme="dark"] .pricing-card--featured .pricing-card__name {
+      color: #fafafa;
+    }
+    [data-theme="dark"] .pricing-card--featured .pricing-card__period {
+      color: #d4d4d8;
+    }
+
+    /* Dark Mode Compare Table (Benefits) */
+    [data-theme="dark"] .table-wrap {
+      background: #141414;
+      border-color: rgba(250,250,250,0.18);
+      box-shadow: 4px 4px 0 0 var(--orange);
+    }
+    [data-theme="dark"] .compare-table thead th {
+      background: var(--orange);
+      color: #0a0a0a;
+      border-right-color: rgba(10,10,10,0.15);
+    }
+    [data-theme="dark"] .compare-table thead th:nth-child(4) {
+      background: #c2410c;
+      color: #fafafa;
+    }
+    [data-theme="dark"] .compare-table tbody tr {
+      border-bottom-color: rgba(250,250,250,0.08);
+    }
+    [data-theme="dark"] .compare-table tbody tr:hover {
+      background: rgba(234,88,12,0.15);
+    }
+    [data-theme="dark"] .compare-table tbody td {
+      color: #fafafa;
+      border-right-color: rgba(250,250,250,0.08);
+    }
+    [data-theme="dark"] .compare-table tbody td:first-child {
+      color: #fafafa;
+    }
+    [data-theme="dark"] .compare-table tbody td:nth-child(4) {
+      background: rgba(234,88,12,0.18);
+    }
+    [data-theme="dark"] .compare-table .check {
+      color: #4ade80;
+    }
+    [data-theme="dark"] .compare-table .cross {
+      color: #f87171;
+    }
+    [data-theme="dark"] .compare-table .val {
+      color: var(--orange);
+    }
+
+    /* Dark Mode Add-ons & Groups */
+    [data-theme="dark"] .addon-card,
+    [data-theme="dark"] .group-card {
+      background: #141414;
+      border-color: rgba(250,250,250,0.18);
+      box-shadow: 4px 4px 0 0 var(--orange);
+    }
+    [data-theme="dark"] .addon-card:hover,
+    [data-theme="dark"] .group-card:hover {
+      box-shadow: 6px 6px 0 0 var(--orange);
+    }
+    [data-theme="dark"] .addon-card__icon,
+    [data-theme="dark"] .group-card__icon {
+      border-color: rgba(250,250,250,0.2);
+    }
+    [data-theme="dark"] .addon-card__price-badge {
+      background: var(--orange);
+      color: #0a0a0a;
+    }
+    [data-theme="dark"] .addon-card h3,
+    [data-theme="dark"] .group-card h3 {
+      color: #fafafa;
+    }
+    [data-theme="dark"] .addon-card p,
+    [data-theme="dark"] .group-card p {
+      color: #a1a1aa;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip link -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar__inner">
+      <a href="../index.html" class="navbar__brand" aria-label="CRAG Home">
+        <svg class="navbar__logo" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="40" height="40" fill="var(--orange)"/>
+          <path d="M5 32L20 8L35 32H5Z" fill="var(--pitch-black)" stroke="var(--pitch-black)" stroke-width="0"/>
+          <circle cx="20" cy="18" r="4" fill="var(--orange)"/>
+          <path d="M14 26L20 20L26 26" stroke="var(--chalk-white)" stroke-width="2.5" fill="none"/>
+        </svg>
+        <span class="navbar__brand-name">CRAG</span>
+      </a>
+      <ul class="navbar__nav" role="list">
+        <li class="nav-item">
+          <a href="#" class="nav-link" aria-haspopup="true">Home <i class="ph-bold ph-caret-down" style="font-size:10px"></i></a>
+          <div class="nav-dropdown" role="menu">
+            <a href="../index.html" role="menuitem">Home 1</a>
+            <a href="home2.html" role="menuitem">Home 2</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
+        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" aria-haspopup="true">Dashboard <i class="ph-bold ph-caret-down" style="font-size:10px"></i></a>
+          <div class="nav-dropdown" role="menu">
+            <a href="admin-dashboard.html" role="menuitem">Admin Dashboard</a>
+            <a href="user-dashboard.html" role="menuitem">User Dashboard</a>
+          </div>
+        </li>
+      </ul>
+      <div class="navbar__controls">
+        <button class="btn-toggle btn-theme-toggle" data-theme-toggle aria-label="Toggle theme" id="theme-toggle-nav">
+          <i class="ph-bold ph-moon" aria-hidden="true"></i>
+        </button>
+        <button class="btn-toggle btn-rtl-toggle" data-rtl-toggle aria-label="Toggle RTL" id="rtl-toggle-nav">LTR</button>
+        <a href="login.html" class="btn btn-primary">Login</a>
+      </div>
+      <button class="navbar__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <nav class="mobile-menu__nav">
+      <a href="../index.html" class="mobile-nav-link">Home 1</a>
+      <a href="home2.html" class="mobile-nav-link">Home 2</a>
+      <a href="about.html" class="mobile-nav-link">About</a>
+      <a href="services.html" class="mobile-nav-link">Services</a>
+      <a href="pricing.html" class="mobile-nav-link">Pricing</a>
+      <a href="blog.html" class="mobile-nav-link">Blog</a>
+      <a href="contact.html" class="mobile-nav-link">Contact</a>
+      <a href="admin-dashboard.html" class="mobile-nav-link">Admin Dashboard</a>
+      <a href="user-dashboard.html" class="mobile-nav-link">User Dashboard</a>
+    </nav>
+    <div class="mobile-menu__controls">
+      <button class="btn-toggle btn-theme-toggle" data-theme-toggle aria-label="Toggle theme"><i class="ph-bold ph-moon"></i></button>
+      <button class="btn-toggle btn-rtl-toggle" data-rtl-toggle>LTR</button>
+      <a href="login.html" class="btn btn-primary">Login</a>
+    </div>
+  </div>
+
+  <!-- ══ MAIN CONTENT ════════════════════════════════════════════════ -->
+  <main id="main">
+
+    <!-- ══ SECTION 1 · HERO ══════════════════════════════════════════ -->
+    <section class="hero" aria-label="Pricing hero">
+      <div class="hero__bg">
+        <img
+          src="../assets/images/hero-pricing.jpg"
+          alt="Rock climbers ascending the wall at CRAG gym"
+          class="hero__img"
+          loading="eager"
+          fetchpriority="high"
+        >
+        <div class="hero__overlay" aria-hidden="true"></div>
+      </div>
+      <div class="hero__content">
+        <div class="container">
+          <h1 class="hero__title">CHOOSE YOUR ACCESS</h1>
+          <p class="hero__sub">Transparent pricing for every kind of climber. No hidden fees. No lock-ins. Just climbing.</p>
+          <div class="hero__actions">
+            <a href="#memberships" class="btn btn-primary">
+              <i class="ph-bold ph-tag" aria-hidden="true"></i>
+              View Plans
+            </a>
+            <a href="contact.html" class="btn btn-outline-white">
+              <i class="ph-bold ph-chat-circle" aria-hidden="true"></i>
+              Talk to Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 2 · MEMBERSHIP TIERS ════════════════════════════ -->
+    <section id="memberships" class="section" aria-labelledby="memberships-heading">
+      <div class="container">
+        <div class="section-heading-center">
+          <div class="section__eyebrow">
+            <span class="eyebrow-line" aria-hidden="true"></span>
+            <span>Plans</span>
+            <span class="eyebrow-line" aria-hidden="true"></span>
+          </div>
+          <h2 id="memberships-heading" class="section__title" style="text-align:center">MEMBERSHIPS</h2>
+          <p class="section__sub" style="text-align:center;max-width:560px;margin:0 auto">Pick the access that fits your climbing frequency — upgrade or cancel any time.</p>
+        </div>
+
+        <div class="pricing-cards-grid" role="list">
+
+          <!-- Day Pass -->
+          <article class="pricing-card" role="listitem" aria-label="Day Pass">
+            <h3 class="pricing-card__name">Day Pass</h3>
+            <div class="pricing-card__price-wrap">
+              <span class="pricing-card__price">$18</span>
+              <span class="pricing-card__period">/day</span>
+            </div>
+            <ul class="pricing-card__features" aria-label="Day Pass features">
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Access to all walls</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Equipment rental available</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Locker access</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>1-day valid</li>
+            </ul>
+            <a href="contact.html" class="btn btn-outline" style="width:100%;text-align:center;justify-content:center">
+              Get Day Pass
+            </a>
+          </article>
+
+          <!-- 10-Visit Punch -->
+          <article class="pricing-card" role="listitem" aria-label="10-Visit Punch Card">
+            <h3 class="pricing-card__name">10-Visit Punch</h3>
+            <div class="pricing-card__price-wrap">
+              <span class="pricing-card__price">$149</span>
+            </div>
+            <ul class="pricing-card__features" aria-label="Punch Card features">
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>10 entries</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>6-month validity</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Equipment rental available</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Priority booking</li>
+            </ul>
+            <a href="contact.html" class="btn btn-outline" style="width:100%;text-align:center;justify-content:center">
+              Buy Punch Card
+            </a>
+          </article>
+
+          <!-- Monthly Member (FEATURED) -->
+          <article class="pricing-card pricing-card--featured" role="listitem" aria-label="Monthly Member — Most Popular">
+            <span class="pricing-card__badge" aria-label="Most Popular plan">Most Popular</span>
+            <h3 class="pricing-card__name">Monthly Member</h3>
+            <div class="pricing-card__price-wrap">
+              <span class="pricing-card__price">$69</span>
+              <span class="pricing-card__period">/mo</span>
+            </div>
+            <ul class="pricing-card__features" aria-label="Monthly Member features">
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Unlimited climbing</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Free gear locker</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>10% off classes</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Guest pass discount</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Month-to-month</li>
+            </ul>
+            <a href="contact.html" class="btn btn-primary" style="width:100%;text-align:center;justify-content:center">
+              Join Monthly
+            </a>
+          </article>
+
+          <!-- Annual Crag -->
+          <article class="pricing-card" role="listitem" aria-label="Annual Crag Plan">
+            <h3 class="pricing-card__name">Annual Crag</h3>
+            <div class="pricing-card__price-wrap">
+              <span class="pricing-card__price">$649</span>
+              <span class="pricing-card__period">/yr</span>
+            </div>
+            <ul class="pricing-card__features" aria-label="Annual Crag features">
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Everything in Monthly</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>2 free guest passes/mo</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Free personal coaching session</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Priority class booking</li>
+              <li><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Annual members tote bag</li>
+            </ul>
+            <a href="contact.html" class="btn btn-outline" style="width:100%;text-align:center;justify-content:center">
+              Join Annual
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 3 · COMPARE BENEFITS ════════════════════════════ -->
+    <section class="section section--alt" aria-labelledby="compare-heading">
+      <div class="container">
+        <div class="section-heading-center">
+          <div class="section__eyebrow">
+            <span class="eyebrow-line" aria-hidden="true"></span>
+            <span>Benefits</span>
+            <span class="eyebrow-line" aria-hidden="true"></span>
+          </div>
+          <h2 id="compare-heading" class="section__title" style="text-align:center">COMPARE</h2>
+          <p class="section__sub" style="text-align:center;max-width:520px;margin:0 auto">See exactly what each plan includes so you can pick the right fit.</p>
+        </div>
+
+        <div class="table-wrap" role="region" aria-label="Membership comparison table" tabindex="0">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th scope="col">Feature</th>
+                <th scope="col">Day Pass</th>
+                <th scope="col">Punch</th>
+                <th scope="col">Monthly</th>
+                <th scope="col">Annual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Wall Access</td>
+                <td><span class="check" aria-label="Included"><i class="ph-bold ph-check-circle"></i></span></td>
+                <td><span class="check" aria-label="Included"><i class="ph-bold ph-check-circle"></i></span></td>
+                <td><span class="check" aria-label="Included"><i class="ph-bold ph-check-circle"></i></span></td>
+                <td><span class="check" aria-label="Included"><i class="ph-bold ph-check-circle"></i></span></td>
+              </tr>
+              <tr>
+                <td>Locker Access</td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="check" aria-label="Included"><i class="ph-bold ph-check-circle"></i></span></td>
+                <td><span class="check" aria-label="Included"><i class="ph-bold ph-check-circle"></i></span></td>
+              </tr>
+              <tr>
+                <td>Free Gear Rental</td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="check" aria-label="Included"><i class="ph-bold ph-check-circle"></i></span></td>
+              </tr>
+              <tr>
+                <td>Class Discount</td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="val" aria-label="10 percent">10%</span></td>
+                <td><span class="val" aria-label="20 percent">20%</span></td>
+              </tr>
+              <tr>
+                <td>Guest Passes</td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="val" aria-label="10 dollars per pass">$10/pass</span></td>
+                <td><span class="val" aria-label="2 free per month">2 free/mo</span></td>
+              </tr>
+              <tr>
+                <td>Priority Booking</td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="check" aria-label="Included"><i class="ph-bold ph-check-circle"></i></span></td>
+                <td><span class="check" aria-label="Included"><i class="ph-bold ph-check-circle"></i></span></td>
+              </tr>
+              <tr>
+                <td>Freeze Option</td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="cross" aria-label="Not included"><i class="ph-bold ph-x-circle"></i></span></td>
+                <td><span class="check" aria-label="Included"><i class="ph-bold ph-check-circle"></i></span></td>
+                <td><span class="check" aria-label="Included"><i class="ph-bold ph-check-circle"></i></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 4 · ADD-ONS ══════════════════════════════════════ -->
+    <section class="section" aria-labelledby="addons-heading">
+      <div class="container">
+        <div class="section-heading-center">
+          <div class="section__eyebrow">
+            <span class="eyebrow-line" aria-hidden="true"></span>
+            <span>Extras</span>
+            <span class="eyebrow-line" aria-hidden="true"></span>
+          </div>
+          <h2 id="addons-heading" class="section__title" style="text-align:center">GEAR &amp; EXTRAS</h2>
+          <p class="section__sub" style="text-align:center;max-width:520px;margin:0 auto">Everything you need to climb, rent by the day or month — no long commitments required.</p>
+        </div>
+
+        <div class="addons-grid" role="list">
+
+          <!-- Shoe Rental -->
+          <div class="addon-card" role="listitem">
+            <div class="addon-card__icon" aria-hidden="true">
+              <i class="ph-bold ph-sneaker"></i>
+            </div>
+            <span class="addon-card__price-badge">$5/day</span>
+            <h3>Shoe Rental</h3>
+            <p>All sizes available, sanitized between each use.</p>
+          </div>
+
+          <!-- Chalk Bag -->
+          <div class="addon-card" role="listitem">
+            <div class="addon-card__icon" aria-hidden="true">
+              <i class="ph-bold ph-bag"></i>
+            </div>
+            <span class="addon-card__price-badge">$3/day</span>
+            <h3>Chalk Bag</h3>
+            <p>Including chalk ball. Liquid chalk available at front desk.</p>
+          </div>
+
+          <!-- Harness Rental -->
+          <div class="addon-card" role="listitem">
+            <div class="addon-card__icon" aria-hidden="true">
+              <i class="ph-bold ph-anchor"></i>
+            </div>
+            <span class="addon-card__price-badge">$4/day</span>
+            <h3>Harness Rental</h3>
+            <p>Certified Petzl and Black Diamond harnesses, all sizes.</p>
+          </div>
+
+          <!-- Private Lesson -->
+          <div class="addon-card" role="listitem">
+            <div class="addon-card__icon" aria-hidden="true">
+              <i class="ph-bold ph-person-simple-walk"></i>
+            </div>
+            <span class="addon-card__price-badge">$95/hr</span>
+            <h3>Private Lesson</h3>
+            <p>One-on-one with an AMGA-certified coach.</p>
+          </div>
+
+          <!-- Guest Pass -->
+          <div class="addon-card" role="listitem">
+            <div class="addon-card__icon" aria-hidden="true">
+              <i class="ph-bold ph-ticket"></i>
+            </div>
+            <span class="addon-card__price-badge">$14/visit</span>
+            <h3>Guest Pass</h3>
+            <p>Bring a friend. Members-only discounted pricing.</p>
+          </div>
+
+          <!-- Locker Rental -->
+          <div class="addon-card" role="listitem">
+            <div class="addon-card__icon" aria-hidden="true">
+              <i class="ph-bold ph-lock"></i>
+            </div>
+            <span class="addon-card__price-badge">$8/mo</span>
+            <h3>Locker Rental</h3>
+            <p>Secure daily lockers or long-term monthly rental.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 5 · GROUPS ════════════════════════════════════════ -->
+    <section class="section section--alt" aria-labelledby="groups-heading">
+      <div class="container">
+        <div class="section-heading-center">
+          <div class="section__eyebrow">
+            <span class="eyebrow-line" aria-hidden="true"></span>
+            <span>Groups</span>
+            <span class="eyebrow-line" aria-hidden="true"></span>
+          </div>
+          <h2 id="groups-heading" class="section__title" style="text-align:center">GROUP SESSIONS</h2>
+          <p class="section__sub" style="text-align:center;max-width:540px;margin:0 auto">Climb together — we offer tailored programs for corporate teams, birthday parties, and school groups.</p>
+        </div>
+
+        <div class="groups-grid" role="list">
+
+          <!-- Team Building -->
+          <article class="group-card" role="listitem" aria-label="Team Building">
+            <div class="group-card__icon" aria-hidden="true">
+              <i class="ph-bold ph-users-four"></i>
+            </div>
+            <h3>Team Building</h3>
+            <p>Private gym rental, group instruction, and facilitated challenges for your team. Min 10 people, 2 hours.</p>
+            <a href="contact.html" class="link-arrow" aria-label="Request a quote for Team Building">
+              Request Quote
+              <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+            </a>
+          </article>
+
+          <!-- Birthday Parties -->
+          <article class="group-card" role="listitem" aria-label="Birthday Parties">
+            <div class="group-card__icon" aria-hidden="true">
+              <i class="ph-bold ph-cake"></i>
+            </div>
+            <h3>Birthday Parties</h3>
+            <p>Wall time, gear, instructor, private area, and cake space. Available weekends for ages 8+. Packages from $350.</p>
+            <a href="contact.html" class="link-arrow" aria-label="Book a Birthday Party">
+              Book a Party
+              <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+            </a>
+          </article>
+
+          <!-- School Groups -->
+          <article class="group-card" role="listitem" aria-label="School Groups">
+            <div class="group-card__icon" aria-hidden="true">
+              <i class="ph-bold ph-graduation-cap"></i>
+            </div>
+            <h3>School Groups</h3>
+            <p>Curriculum-aligned programs with certified instructors for groups of 15–50 students. Subsidized rates available.</p>
+            <a href="contact.html" class="link-arrow" aria-label="Learn more about School Groups">
+              Learn More
+              <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 6 · INQUIRY CTA ══════════════════════════════════ -->
+    <section
+      class="cta-section"
+      aria-labelledby="cta-heading"
+      style="background-image: url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=1600&q=80');"
+    >
+      <div class="container">
+        <h2 id="cta-heading">NEED A CUSTOM PLAN?</h2>
+        <p>Corporate accounts, team discounts, and partnership rates are available. Reach out and we will build something that works for your organization.</p>
+        <a href="contact.html" class="btn-white" aria-label="Contact us for a custom plan">
+          <i class="ph-bold ph-envelope-simple" aria-hidden="true"></i>
+          Contact Us
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ══════════════════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a href="../index.html" class="footer__brand" aria-label="CRAG Home">
+            <svg width="36" height="36" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <rect width="40" height="40" fill="#ea580c"/>
+              <path d="M5 32L20 8L35 32H5Z" fill="#0a0a0a"/>
+              <circle cx="20" cy="18" r="4" fill="#ea580c"/>
+              <path d="M14 26L20 20L26 26" stroke="#fafafa" stroke-width="2.5" fill="none"/>
+            </svg>
+            <span class="footer__brand-name">CRAG</span>
+          </a>
+          <p class="footer__desc" style="margin-top:12px">Boulder. Lead. Train. CRAG is where climbers are made — your indoor mountain in the city.</p>
+        </div>
+        <div>
+          <h4 class="footer__heading">Gym Links</h4>
+          <ul class="footer__links">
+            <li><a href="services.html">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="services.html">Classes</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">Contact</h4>
+          <div class="footer__contact-item">
+            <i class="ph-bold ph-map-pin" aria-hidden="true"></i>
+            <span>42 Crag Street, Boulder CO 80301</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="ph-bold ph-phone" aria-hidden="true"></i>
+            <a href="tel:+13035550182" style="color:rgba(250,250,250,0.65)">(303) 555-0182</a>
+          </div>
+          <div class="footer__contact-item">
+            <i class="ph-bold ph-envelope" aria-hidden="true"></i>
+            <a href="mailto:hello@crag.gym" style="color:rgba(250,250,250,0.65)">hello@crag.gym</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">Follow Us</h4>
+          <div class="footer__social">
+            <a href="#" class="footer__social-btn" aria-label="Instagram"><i class="ph-bold ph-instagram-logo" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-btn" aria-label="X / Twitter"><i class="ph-bold ph-x-logo" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-btn" aria-label="Facebook"><i class="ph-bold ph-facebook-logo" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-btn" aria-label="YouTube"><i class="ph-bold ph-youtube-logo" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">&copy; 2026 CRAG Climbing Gym. All rights reserved.</p>
+        <nav class="footer__legal" aria-label="Legal links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+
+</body>
+</html>

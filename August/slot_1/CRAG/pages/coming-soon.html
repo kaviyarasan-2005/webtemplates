@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Walls Under Construction | CRAG Climbing Gym</title>
+  <meta name="description" content="CRAG is resetting the walls. New routes coming soon. Sign up for notifications and be the first to know.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+  <style>
+    .coming-page {
+      min-height: 100vh;
+      background-color: var(--bg);
+      /* Concrete texture using gradients */
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f0f0f0'/%3E%3Crect x='0' y='0' width='2' height='2' fill='%23e8e8e8'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23e8e8e8'/%3E%3C/svg%3E");
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 16px;
+      position: relative;
+      text-align: center;
+    }
+    [data-theme="dark"] .coming-page {
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%2318181b'/%3E%3Crect x='0' y='0' width='2' height='2' fill='%231f1f23'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%2316161a'/%3E%3C/svg%3E");
+    }
+    .auth-page__toggles {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      display: flex;
+      gap: 8px;
+      z-index: 200;
+    }
+    .coming-page__content {
+      max-width: 700px;
+      width: 100%;
+    }
+    .coming-page__logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .coming-page__logo-name {
+      font-family: var(--font-heading);
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 6px;
+      color: var(--orange);
+    }
+    .coming-page__icon-wrap {
+      margin: 0 auto 24px;
+      width: 96px;
+      height: 96px;
+      border: var(--border);
+      box-shadow: 4px 4px 0 var(--shadow-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+    }
+    .coming-page__icon {
+      font-size: 52px;
+      color: var(--orange);
+      animation: spin-slow 6s linear infinite;
+    }
+    @keyframes spin-slow {
+      0%   { transform: rotate(0deg); }
+      25%  { transform: rotate(15deg); }
+      50%  { transform: rotate(0deg); }
+      75%  { transform: rotate(-15deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .coming-page__heading {
+      font-family: var(--font-heading);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      color: var(--text);
+      line-height: 1.1;
+    }
+    .coming-page__heading span { color: var(--orange); }
+    .coming-page__desc {
+      font-size: 1rem;
+      color: var(--text-sub);
+      max-width: 500px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    /* Countdown */
+    .countdown {
+      display: flex;
+      gap: 0;
+      justify-content: center;
+      margin-bottom: 48px;
+      border: var(--border);
+      box-shadow: 4px 4px 0 var(--shadow-color);
+    }
+    .countdown__block {
+      flex: 1;
+      padding: 24px 16px;
+      border-right: var(--border);
+      background: var(--surface);
+    }
+    .countdown__block:last-child { border-right: none; }
+    .countdown__num {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: clamp(32px, 6vw, 64px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .countdown__num.highlight { color: var(--orange); }
+    .countdown__label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-sub);
+      text-transform: uppercase;
+    }
+    /* Notify form */
+    .coming-page__form {
+      display: flex;
+      gap: 0;
+      max-width: 480px;
+      margin: 0 auto 48px;
+      box-shadow: 4px 4px 0 var(--shadow-color);
+    }
+    .coming-page__form .form-control {
+      border-right: none;
+      flex: 1;
+      box-shadow: none;
+    }
+    .coming-page__form .btn {
+      flex-shrink: 0;
+      box-shadow: none;
+    }
+    .coming-page__divider {
+      width: 60px;
+      height: 3px;
+      background: var(--orange);
+      margin: 0 auto 32px;
+    }
+    .coming-page__social {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .coming-page__footer {
+      font-size: .8rem;
+      color: var(--text-sub);
+      opacity: .6;
+    }
+
+    @media (max-width: 500px) {
+      .countdown { flex-wrap: wrap; }
+      .countdown__block { flex: 1 1 45%; border-right: var(--border); border-bottom: var(--border); }
+      .countdown__block:nth-child(2) { border-right: none; }
+      .countdown__block:last-child { border-right: var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <div class="coming-page">
+    <!-- Toggles -->
+    <div class="auth-page__toggles" role="toolbar" aria-label="Display settings">
+      <button class="btn-toggle btn-theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+        <i class="ph-bold ph-moon" aria-hidden="true"></i>
+      </button>
+      <button class="btn-toggle btn-rtl-toggle" data-rtl-toggle aria-label="Toggle direction">LTR</button>
+    </div>
+
+    <div class="coming-page__content">
+
+      <!-- Logo -->
+      <div class="coming-page__logo">
+        <svg width="48" height="48" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <rect width="40" height="40" fill="#ea580c"/>
+          <path d="M5 32L20 8L35 32H5Z" fill="#0a0a0a"/>
+          <circle cx="20" cy="18" r="4" fill="#ea580c"/>
+          <path d="M14 26L20 20L26 26" stroke="#fafafa" stroke-width="2.5" fill="none"/>
+        </svg>
+        <span class="coming-page__logo-name">CRAG</span>
+      </div>
+
+      <!-- Construction icon -->
+      <div class="coming-page__icon-wrap" aria-hidden="true">
+        <i class="ph-bold ph-wrench coming-page__icon"></i>
+      </div>
+
+      <div class="coming-page__divider" aria-hidden="true"></div>
+
+      <h1 class="coming-page__heading">WALLS UNDER<br><span>CONSTRUCTION</span></h1>
+      <p class="coming-page__desc">
+        The gym is being reset. We are drilling, setting, and chalking up a brand new batch of problems.
+        We will reopen with fresh routes and exciting new challenges shortly. Good things take time.
+      </p>
+
+      <!-- Countdown -->
+      <div class="countdown" role="timer" aria-label="Countdown to reopening" aria-live="polite">
+        <div class="countdown__block">
+          <span class="countdown__num" id="cd-days">14</span>
+          <span class="countdown__label">Days</span>
+        </div>
+        <div class="countdown__block">
+          <span class="countdown__num" id="cd-hours">00</span>
+          <span class="countdown__label">Hours</span>
+        </div>
+        <div class="countdown__block">
+          <span class="countdown__num" id="cd-minutes">00</span>
+          <span class="countdown__label">Minutes</span>
+        </div>
+        <div class="countdown__block">
+          <span class="countdown__num highlight" id="cd-seconds">00</span>
+          <span class="countdown__label">Seconds</span>
+        </div>
+      </div>
+
+      <!-- Notify Form -->
+      <p style="font-size:.9rem;font-weight:600;color:var(--text-sub);margin-bottom:12px;letter-spacing:1px;text-transform:uppercase">Get notified when we reopen:</p>
+      <form data-validate id="notify-form" class="coming-page__form" novalidate aria-label="Notify me form">
+        <input class="form-control" type="email" name="email" id="cs-email" required placeholder="your@email.com" aria-label="Email address for notification" autocomplete="email">
+        <button type="submit" class="btn btn-primary" data-original="Notify Me">Notify Me</button>
+      </form>
+
+      <!-- Social links -->
+      <div class="coming-page__social">
+        <a href="#" class="footer__social-btn" aria-label="Follow on Instagram"><i class="ph-bold ph-instagram-logo" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn" aria-label="Follow on X"><i class="ph-bold ph-x-logo" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn" aria-label="Follow on Facebook"><i class="ph-bold ph-facebook-logo" aria-hidden="true"></i></a>
+        <a href="#" class="footer__social-btn" aria-label="Subscribe on YouTube"><i class="ph-bold ph-youtube-logo" aria-hidden="true"></i></a>
+      </div>
+
+      <p class="coming-page__footer">&copy; 2026 CRAG Climbing Gym. All rights reserved.</p>
+    </div>
+  </div>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

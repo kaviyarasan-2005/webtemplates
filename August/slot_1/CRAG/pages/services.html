@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classes &amp; Facilities | CRAG Climbing Gym</title>
+  <meta name="description" content="Explore CRAG's full range of climbing classes and gym facilities — from beginner lessons to lead certification, kids club, yoga, strength training, and private events.">
+  <meta property="og:title" content="Classes &amp; Facilities | CRAG Climbing Gym">
+  <meta property="og:description" content="Explore CRAG's full range of climbing classes and gym facilities — beginner lessons, lead certification, kids club, and more.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+  <style>
+    /* ── Service Cards Grid ── */
+    .cards-grid--8 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 1024px) {
+      .cards-grid--8 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .cards-grid--8 { grid-template-columns: 1fr; }
+    }
+
+    .service-card {
+      border: 3px solid var(--pitch-black);
+      box-shadow: 4px 4px 0 0 var(--pitch-black);
+      overflow: hidden;
+      background: var(--chalk-white);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .service-card:hover {
+      box-shadow: 8px 8px 0 0 var(--orange);
+      transform: translate(-2px, -2px);
+    }
+    .service-card__img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 3px solid var(--pitch-black);
+    }
+    .service-card__body {
+      padding: 18px 20px 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .service-card__title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--pitch-black);
+      line-height: 1.2;
+    }
+    .service-card__desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      color: rgba(10,10,10,0.68);
+      flex: 1;
+    }
+    .service-card__arrow {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--orange);
+      margin-top: 6px;
+    }
+
+    /* ── Feature Cards ── */
+    .feature-cards-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 28px;
+      border: 3px solid var(--pitch-black);
+      box-shadow: 4px 4px 0 0 var(--pitch-black);
+      padding: 32px 36px;
+      background: var(--chalk-white);
+    }
+    .feature-card__icon {
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      background: var(--orange);
+      border: 3px solid var(--pitch-black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .feature-card__icon i {
+      font-size: 1.75rem;
+      color: var(--chalk-white);
+    }
+    .feature-card__content { flex: 1; }
+    .feature-card__title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--pitch-black);
+      margin-bottom: 10px;
+    }
+    .feature-card__text {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: rgba(10,10,10,0.72);
+    }
+    @media (max-width: 600px) {
+      .feature-card {
+        flex-direction: column;
+        gap: 16px;
+        padding: 24px 20px;
+      }
+    }
+
+    /* ── Stat Blocks ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 900px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 500px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .stat-block {
+      border: 3px solid var(--pitch-black);
+      box-shadow: 4px 4px 0 0 var(--pitch-black);
+      padding: 36px 24px;
+      text-align: center;
+      background: var(--chalk-white);
+    }
+    .stat-block__number {
+      font-family: 'Oswald', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: var(--orange);
+      line-height: 1;
+      display: block;
+    }
+    .stat-block__label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--pitch-black);
+      margin: 10px 0 6px;
+      display: block;
+    }
+    .stat-block__sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      color: rgba(10,10,10,0.55);
+      line-height: 1.4;
+    }
+
+    /* ── FAQ Accordion ── */
+    .faq-list {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .faq-item {
+      border: 3px solid var(--pitch-black);
+      border-bottom: 0;
+      background: var(--chalk-white);
+    }
+    .faq-item:last-child { border-bottom: 3px solid var(--pitch-black); }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--pitch-black);
+      transition: background 0.15s;
+    }
+    .faq-question:hover { background: rgba(234,88,12,0.06); }
+    .faq-question[aria-expanded="true"] { background: var(--orange); color: var(--chalk-white); }
+    .faq-question[aria-expanded="true"] .faq-icon { color: var(--chalk-white); transform: rotate(45deg); }
+    .faq-icon {
+      flex-shrink: 0;
+      font-size: 1.2rem;
+      color: var(--orange);
+      transition: transform 0.25s ease, color 0.15s;
+    }
+    .faq-answer {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.35s ease, padding 0.25s ease;
+    }
+    .faq-answer.is-open {
+      max-height: 400px;
+    }
+    .faq-answer__inner {
+      padding: 18px 24px 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: rgba(10,10,10,0.75);
+      border-top: 3px solid var(--pitch-black);
+    }
+
+    /* ── CTA Section ── */
+    .cta-section {
+      position: relative;
+      padding: 120px 0;
+      text-align: center;
+      overflow: hidden;
+    }
+    .cta-section__bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('../assets/images/cta-services-book.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+    .cta-section__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0.72);
+      z-index: 1;
+    }
+    .cta-section__content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .cta-section__title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--chalk-white);
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .cta-section__title span { color: var(--orange); }
+    .cta-section__text {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: rgba(250,250,250,0.82);
+      margin-bottom: 36px;
+    }
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--pitch-black);
+      background: var(--chalk-white);
+      border: 3px solid var(--chalk-white);
+      box-shadow: 4px 4px 0 0 var(--orange);
+      padding: 14px 36px;
+      text-decoration: none;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .btn-white:hover {
+      box-shadow: 8px 8px 0 0 var(--orange);
+      transform: translate(-2px, -2px);
+    }
+
+    /* ── Section heading utility ── */
+    .section__heading-center {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section__heading-center h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--pitch-black);
+      position: relative;
+      display: inline-block;
+      padding-bottom: 14px;
+    }
+    .section__heading-center h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--orange);
+    }
+
+    /* Dark mode overrides */
+    [data-theme="dark"] .service-card,
+    [data-theme="dark"] .feature-card,
+    [data-theme="dark"] .stat-block,
+    [data-theme="dark"] .faq-item {
+      background: #141414;
+      border-color: rgba(250,250,250,0.18);
+      box-shadow: 4px 4px 0 0 rgba(250,250,250,0.12);
+    }
+    [data-theme="dark"] .service-card:hover {
+      box-shadow: 8px 8px 0 0 var(--orange);
+    }
+    [data-theme="dark"] .service-card__title,
+    [data-theme="dark"] .feature-card__title,
+    [data-theme="dark"] .stat-block__label,
+    [data-theme="dark"] .faq-question {
+      color: var(--chalk-white);
+    }
+    [data-theme="dark"] .service-card__desc,
+    [data-theme="dark"] .feature-card__text,
+    [data-theme="dark"] .stat-block__sub,
+    [data-theme="dark"] .faq-answer__inner {
+      color: rgba(250,250,250,0.6);
+    }
+    [data-theme="dark"] .section__heading-center h2 { color: var(--chalk-white); }
+    [data-theme="dark"] .faq-question:hover { background: rgba(234,88,12,0.12); }
+    [data-theme="dark"] .faq-answer__inner { border-top-color: rgba(250,250,250,0.15); }
+    [data-theme="dark"] .faq-item { border-color: rgba(250,250,250,0.15); }
+    [data-theme="dark"] .faq-item:last-child { border-bottom-color: rgba(250,250,250,0.15); }
+    [data-theme="dark"] .service-card__img { border-bottom-color: rgba(250,250,250,0.15); }
+    [data-theme="dark"] .feature-card__icon { border-color: rgba(250,250,250,0.2); }
+  </style>
+</head>
+<body>
+
+  <!-- Skip link -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar__inner">
+      <a href="../index.html" class="navbar__brand" aria-label="CRAG Home">
+        <svg class="navbar__logo" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="40" height="40" fill="var(--orange)"/>
+          <path d="M5 32L20 8L35 32H5Z" fill="var(--pitch-black)" stroke="var(--pitch-black)" stroke-width="0"/>
+          <circle cx="20" cy="18" r="4" fill="var(--orange)"/>
+          <path d="M14 26L20 20L26 26" stroke="var(--chalk-white)" stroke-width="2.5" fill="none"/>
+        </svg>
+        <span class="navbar__brand-name">CRAG</span>
+      </a>
+      <ul class="navbar__nav" role="list">
+        <li class="nav-item">
+          <a href="#" class="nav-link" aria-haspopup="true">Home <i class="ph-bold ph-caret-down" style="font-size:10px"></i></a>
+          <div class="nav-dropdown" role="menu">
+            <a href="../index.html" role="menuitem">Home 1</a>
+            <a href="home2.html" role="menuitem">Home 2</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="services.html" class="nav-link nav-link--active">Services</a></li>
+        <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
+        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" aria-haspopup="true">Dashboard <i class="ph-bold ph-caret-down" style="font-size:10px"></i></a>
+          <div class="nav-dropdown" role="menu">
+            <a href="admin-dashboard.html" role="menuitem">Admin Dashboard</a>
+            <a href="user-dashboard.html" role="menuitem">User Dashboard</a>
+          </div>
+        </li>
+      </ul>
+      <div class="navbar__controls">
+        <button class="btn-toggle btn-theme-toggle" data-theme-toggle aria-label="Toggle theme" id="theme-toggle-nav">
+          <i class="ph-bold ph-moon" aria-hidden="true"></i>
+        </button>
+        <button class="btn-toggle btn-rtl-toggle" data-rtl-toggle aria-label="Toggle RTL" id="rtl-toggle-nav">LTR</button>
+        <a href="login.html" class="btn btn-primary">Login</a>
+      </div>
+      <button class="navbar__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <nav class="mobile-menu__nav">
+      <a href="../index.html" class="mobile-nav-link">Home 1</a>
+      <a href="home2.html" class="mobile-nav-link">Home 2</a>
+      <a href="about.html" class="mobile-nav-link">About</a>
+      <a href="services.html" class="mobile-nav-link">Services</a>
+      <a href="pricing.html" class="mobile-nav-link">Pricing</a>
+      <a href="blog.html" class="mobile-nav-link">Blog</a>
+      <a href="contact.html" class="mobile-nav-link">Contact</a>
+      <a href="admin-dashboard.html" class="mobile-nav-link">Admin Dashboard</a>
+      <a href="user-dashboard.html" class="mobile-nav-link">User Dashboard</a>
+    </nav>
+    <div class="mobile-menu__controls">
+      <button class="btn-toggle btn-theme-toggle" data-theme-toggle aria-label="Toggle theme"><i class="ph-bold ph-moon"></i></button>
+      <button class="btn-toggle btn-rtl-toggle" data-rtl-toggle>LTR</button>
+      <a href="login.html" class="btn btn-primary">Login</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MAIN CONTENT
+  ══════════════════════════════════════ -->
+  <main id="main">
+
+    <!-- ══════════════════════════════
+         SECTION 1 — HERO
+    ══════════════════════════════ -->
+    <section class="hero" aria-label="Services hero" style="position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+      <!-- Background image -->
+      <div style="position:absolute; inset:0; background-image:url('../assets/images/hero-services.jpg'); background-size:cover; background-position:center; z-index:0;" aria-hidden="true"></div>
+      <!-- Dark overlay -->
+      <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(10,10,10,0.78) 0%, rgba(10,10,10,0.55) 100%); z-index:1;" aria-hidden="true"></div>
+      <!-- Orange accent stripe -->
+      <div style="position:absolute; left:0; top:0; bottom:0; width:6px; background:var(--orange); z-index:2;" aria-hidden="true"></div>
+
+      <div style="position:relative; z-index:3; text-align:center; padding:0 24px; max-width:900px; margin:0 auto;">
+        <!-- Eyebrow -->
+        <div style="display:inline-flex; align-items:center; gap:10px; border:2px solid var(--orange); padding:6px 18px; margin-bottom:28px;">
+          <i class="ph-bold ph-mountains" style="color:var(--orange); font-size:1rem;" aria-hidden="true"></i>
+          <span style="font-family:'Oswald',sans-serif; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color:var(--orange);">Classes &amp; Facilities</span>
+        </div>
+        <!-- H1 -->
+        <h1 style="font-family:'Oswald',sans-serif; font-size:clamp(2.8rem,8vw,6rem); font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--chalk-white); line-height:1.0; margin:0 0 24px;">
+          CLASSES &amp;<br><span style="color:var(--orange);">FACILITIES</span>
+        </h1>
+        <!-- Subtext -->
+        <p style="font-family:'Inter',sans-serif; font-size:clamp(1rem,2vw,1.2rem); line-height:1.7; color:rgba(250,250,250,0.82); max-width:640px; margin:0 auto 40px;">
+          From your first lesson to your competition send — CRAG has a program for every stage of the climb.
+        </p>
+        <!-- CTA buttons -->
+        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+          <a href="#services" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:10px;">
+            <i class="ph-bold ph-list-bullets" aria-hidden="true"></i> Explore Services
+          </a>
+          <a href="pricing.html" class="btn" style="display:inline-flex; align-items:center; gap:10px; border:3px solid var(--chalk-white); color:var(--chalk-white); background:transparent; box-shadow:4px 4px 0 0 rgba(250,250,250,0.25); font-family:'Oswald',sans-serif; font-size:0.95rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; padding:12px 28px; text-decoration:none;">
+            <i class="ph-bold ph-tag" aria-hidden="true"></i> View Pricing
+          </a>
+        </div>
+      </div>
+
+      <!-- Scroll cue -->
+      <div style="position:absolute; bottom:36px; left:50%; transform:translateX(-50%); z-index:3; display:flex; flex-direction:column; align-items:center; gap:8px;" aria-hidden="true">
+        <span style="font-family:'Oswald',sans-serif; font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(250,250,250,0.5);">Scroll</span>
+        <i class="ph-bold ph-arrow-down" style="color:var(--orange); font-size:1.2rem; animation:bounce 1.8s infinite;"></i>
+      </div>
+      <style>
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(6px); }
+        }
+      </style>
+    </section>
+
+    <!-- ══════════════════════════════
+         SECTION 2 — SERVICE CATEGORIES
+    ══════════════════════════════ -->
+    <section class="section" id="services" aria-labelledby="services-heading">
+      <div class="container">
+        <div class="section__heading-center">
+          <h2 id="services-heading">WHAT WE OFFER</h2>
+        </div>
+
+        <div class="cards-grid--8">
+
+          <!-- Card 1: Beginner Classes -->
+          <a href="service-details.html" class="service-card" aria-label="Learn more about Beginner Classes">
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="Beginner climbing class at CRAG" class="service-card__img" loading="lazy">
+            <div class="service-card__body">
+              <span class="service-card__title">Beginner Classes</span>
+              <p class="service-card__desc">Perfect introduction to movement, gear, and climbing gym culture.</p>
+              <span class="service-card__arrow">
+                Learn More <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card 2: Lead Climbing Course -->
+          <a href="service-details.html" class="service-card" aria-label="Learn more about Lead Climbing Course">
+            <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&q=80" alt="Lead climbing course at CRAG" class="service-card__img" loading="lazy">
+            <div class="service-card__body">
+              <span class="service-card__title">Lead Climbing Course</span>
+              <p class="service-card__desc">Get lead certified with our 2-day intensive course.</p>
+              <span class="service-card__arrow">
+                Learn More <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card 3: Bouldering Basics -->
+          <a href="service-details.html" class="service-card" aria-label="Learn more about Bouldering Basics">
+            <img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?w=800&q=80" alt="Bouldering basics session" class="service-card__img" loading="lazy">
+            <div class="service-card__body">
+              <span class="service-card__title">Bouldering Basics</span>
+              <p class="service-card__desc">Learn movement fundamentals on our world-class boulder problems.</p>
+              <span class="service-card__arrow">
+                Learn More <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card 4: Kids Club -->
+          <a href="service-details.html" class="service-card" aria-label="Learn more about Kids Club">
+            <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=80" alt="Kids climbing club at CRAG" class="service-card__img" loading="lazy">
+            <div class="service-card__body">
+              <span class="service-card__title">Kids Club</span>
+              <p class="service-card__desc">Age-appropriate climbing programs for kids 6–14 years old.</p>
+              <span class="service-card__arrow">
+                Learn More <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card 5: Personal Coaching -->
+          <a href="service-details.html" class="service-card" aria-label="Learn more about Personal Coaching">
+            <img src="https://images.unsplash.com/photo-1560184897-502a475f7a0d?w=800&q=80" alt="Personal coaching session at CRAG" class="service-card__img" loading="lazy">
+            <div class="service-card__body">
+              <span class="service-card__title">Personal Coaching</span>
+              <p class="service-card__desc">One-on-one sessions with a certified coach, tailored to your goals.</p>
+              <span class="service-card__arrow">
+                Learn More <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card 6: Yoga for Climbers -->
+          <a href="service-details.html" class="service-card" aria-label="Learn more about Yoga for Climbers">
+            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80" alt="Yoga for climbers class" class="service-card__img" loading="lazy">
+            <div class="service-card__body">
+              <span class="service-card__title">Yoga for Climbers</span>
+              <p class="service-card__desc">Flexibility, recovery, and body awareness designed for the climbing athlete.</p>
+              <span class="service-card__arrow">
+                Learn More <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card 7: Strength Training -->
+          <a href="service-details.html" class="service-card" aria-label="Learn more about Strength Training">
+            <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800&q=80" alt="Strength training for climbers" class="service-card__img" loading="lazy">
+            <div class="service-card__body">
+              <span class="service-card__title">Strength Training</span>
+              <p class="service-card__desc">Sport-specific strength and conditioning to break through plateaus.</p>
+              <span class="service-card__arrow">
+                Learn More <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card 8: Private Events -->
+          <a href="service-details.html" class="service-card" aria-label="Learn more about Private Events">
+            <img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?w=800&q=80" alt="Private climbing event at CRAG" class="service-card__img" loading="lazy">
+            <div class="service-card__body">
+              <span class="service-card__title">Private Events</span>
+              <p class="service-card__desc">Team building, birthday parties, and corporate events on the wall.</p>
+              <span class="service-card__arrow">
+                Learn More <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+              </span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         SECTION 3 — FACILITY FEATURES
+    ══════════════════════════════ -->
+    <section class="section section--alt" id="facility" aria-labelledby="facility-heading">
+      <div class="container">
+        <div class="section__heading-center">
+          <h2 id="facility-heading">THE GYM</h2>
+        </div>
+
+        <div class="feature-cards-stack">
+
+          <!-- Feature: Auto-Belays -->
+          <div class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">
+              <i class="ph-bold ph-robot"></i>
+            </div>
+            <div class="feature-card__content">
+              <h3 class="feature-card__title">Auto-Belays</h3>
+              <p class="feature-card__text">Sixteen Trublue auto-belay units across our top-rope section. No partner needed — solo climbing is always on.</p>
+            </div>
+          </div>
+
+          <!-- Feature: Moon Board -->
+          <div class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">
+              <i class="ph-bold ph-moon-stars"></i>
+            </div>
+            <div class="feature-card__content">
+              <h3 class="feature-card__title">Moon Board</h3>
+              <p class="feature-card__text">A 40-degree adjustable Moon Board with the full Moonclimbing hold set. Train specific movement patterns from V4 to V12.</p>
+            </div>
+          </div>
+
+          <!-- Feature: Campus Board -->
+          <div class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">
+              <i class="ph-bold ph-ladder"></i>
+            </div>
+            <div class="feature-card__content">
+              <h3 class="feature-card__title">Campus Board</h3>
+              <p class="feature-card__text">Full-length campus board with rungs from 18mm to 35mm. Essential for explosive contact strength and lock-off power.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         SECTION 4 — QUICK STATS
+    ══════════════════════════════ -->
+    <section class="section" id="specs" aria-labelledby="specs-heading">
+      <div class="container">
+        <div class="section__heading-center">
+          <h2 id="specs-heading">GYM SPECS</h2>
+        </div>
+
+        <div class="stats-grid">
+
+          <div class="stat-block">
+            <span class="stat-block__number" data-target="45" data-suffix="ft" aria-label="45 feet">45ft</span>
+            <span class="stat-block__label">Wall Height</span>
+            <p class="stat-block__sub">Tallest lead wall in the region</p>
+          </div>
+
+          <div class="stat-block">
+            <span class="stat-block__number" data-target="240" data-suffix="+" aria-label="240 plus">240+</span>
+            <span class="stat-block__label">Route Count</span>
+            <p class="stat-block__sub">Problems and routes across all grades</p>
+          </div>
+
+          <div class="stat-block">
+            <span class="stat-block__number" data-target="16" data-suffix="" aria-label="16">16</span>
+            <span class="stat-block__label">Auto-Belays</span>
+            <p class="stat-block__sub">Solo-friendly top-rope stations</p>
+          </div>
+
+          <div class="stat-block">
+            <span class="stat-block__number" data-target="6" data-suffix="" aria-label="6">6</span>
+            <span class="stat-block__label">Training Zones</span>
+            <p class="stat-block__sub">Specialized training areas</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         SECTION 5 — FAQ ACCORDION
+    ══════════════════════════════ -->
+    <section class="section section--alt" id="faq" aria-labelledby="faq-heading">
+      <div class="container">
+        <div class="section__heading-center">
+          <h2 id="faq-heading">COMMON QUESTIONS</h2>
+        </div>
+
+        <div class="faq-list" role="list">
+
+          <!-- FAQ 1 -->
+          <div class="faq-item" role="listitem">
+            <button
+              class="faq-question"
+              aria-expanded="false"
+              aria-controls="faq-answer-1"
+              id="faq-btn-1"
+            >
+              What should I bring on my first visit?
+              <i class="ph-bold ph-plus faq-icon" aria-hidden="true"></i>
+            </button>
+            <div
+              class="faq-answer"
+              id="faq-answer-1"
+              role="region"
+              aria-labelledby="faq-btn-1"
+            >
+              <div class="faq-answer__inner">
+                Just yourself! We have everything you need — shoes, harness, and chalk bag are all available to rent. Wear comfortable athletic clothing that allows free movement. Leave the jeans at home.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item" role="listitem">
+            <button
+              class="faq-question"
+              aria-expanded="false"
+              aria-controls="faq-answer-2"
+              id="faq-btn-2"
+            >
+              Do you offer gear rentals?
+              <i class="ph-bold ph-plus faq-icon" aria-hidden="true"></i>
+            </button>
+            <div
+              class="faq-answer"
+              id="faq-answer-2"
+              role="region"
+              aria-labelledby="faq-btn-2"
+            >
+              <div class="faq-answer__inner">
+                Yes. Rental packages: Shoes ($5), Chalk Bag ($3), Harness ($4), Full Package ($10). All gear is sanitized between uses.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item" role="listitem">
+            <button
+              class="faq-question"
+              aria-expanded="false"
+              aria-controls="faq-answer-3"
+              id="faq-btn-3"
+            >
+              How do I get lead certified?
+              <i class="ph-bold ph-plus faq-icon" aria-hidden="true"></i>
+            </button>
+            <div
+              class="faq-answer"
+              id="faq-answer-3"
+              role="region"
+              aria-labelledby="faq-btn-3"
+            >
+              <div class="faq-answer__inner">
+                Attend our Lead Climbing Course (Saturday mornings, 3 hours) then pass our in-house belay test. The entire process takes one day. Book online or at the front desk.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item" role="listitem">
+            <button
+              class="faq-question"
+              aria-expanded="false"
+              aria-controls="faq-answer-4"
+              id="faq-btn-4"
+            >
+              Is there an age minimum?
+              <i class="ph-bold ph-plus faq-icon" aria-hidden="true"></i>
+            </button>
+            <div
+              class="faq-answer"
+              id="faq-answer-4"
+              role="region"
+              aria-labelledby="faq-btn-4"
+            >
+              <div class="faq-answer__inner">
+                Children 6 and up are welcome in our Kids Club programs. For unsupervised climbing, the minimum age is 14 with a signed parental waiver.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item" role="listitem">
+            <button
+              class="faq-question"
+              aria-expanded="false"
+              aria-controls="faq-answer-5"
+              id="faq-btn-5"
+            >
+              Can I freeze my membership?
+              <i class="ph-bold ph-plus faq-icon" aria-hidden="true"></i>
+            </button>
+            <div
+              class="faq-answer"
+              id="faq-answer-5"
+              role="region"
+              aria-labelledby="faq-btn-5"
+            >
+              <div class="faq-answer__inner">
+                Monthly members can freeze up to 2 months per year at no charge. Annual members get up to 3 freeze months. Submit a freeze request through your member portal.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 6 -->
+          <div class="faq-item" role="listitem">
+            <button
+              class="faq-question"
+              aria-expanded="false"
+              aria-controls="faq-answer-6"
+              id="faq-btn-6"
+            >
+              Are chalk buckets allowed?
+              <i class="ph-bold ph-plus faq-icon" aria-hidden="true"></i>
+            </button>
+            <div
+              class="faq-answer"
+              id="faq-answer-6"
+              role="region"
+              aria-labelledby="faq-btn-6"
+            >
+              <div class="faq-answer__inner">
+                Yes, but chalk balls are preferred to limit airborne chalk. Liquid chalk is allowed anywhere. Loose chalk is restricted to the bouldering cave.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         SECTION 6 — BOOK CTA
+    ══════════════════════════════ -->
+    <section class="cta-section" aria-labelledby="cta-heading">
+      <div class="cta-section__bg" aria-hidden="true"></div>
+      <div class="cta-section__overlay" aria-hidden="true"></div>
+      <div class="cta-section__content">
+        <h2 class="cta-section__title" id="cta-heading">
+          GRAB YOUR <span>FIRST SESSION</span>
+        </h2>
+        <p class="cta-section__text">
+          Book online in 60 seconds, or walk in and we'll get you climbing within minutes.
+        </p>
+        <a href="contact.html" class="btn-white">
+          <i class="ph-bold ph-calendar-check" aria-hidden="true"></i>
+          Book Now
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a href="../index.html" class="footer__brand" aria-label="CRAG Home">
+            <svg width="36" height="36" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <rect width="40" height="40" fill="#ea580c"/>
+              <path d="M5 32L20 8L35 32H5Z" fill="#0a0a0a"/>
+              <circle cx="20" cy="18" r="4" fill="#ea580c"/>
+              <path d="M14 26L20 20L26 26" stroke="#fafafa" stroke-width="2.5" fill="none"/>
+            </svg>
+            <span class="footer__brand-name">CRAG</span>
+          </a>
+          <p class="footer__desc" style="margin-top:12px">Boulder. Lead. Train. CRAG is where climbers are made — your indoor mountain in the city.</p>
+        </div>
+        <div>
+          <h4 class="footer__heading">Gym Links</h4>
+          <ul class="footer__links">
+            <li><a href="services.html">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="services.html">Classes</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">Contact</h4>
+          <div class="footer__contact-item">
+            <i class="ph-bold ph-map-pin" aria-hidden="true"></i>
+            <span>42 Crag Street, Boulder CO 80301</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="ph-bold ph-phone" aria-hidden="true"></i>
+            <a href="tel:+13035550182" style="color:rgba(250,250,250,0.65)">(303) 555-0182</a>
+          </div>
+          <div class="footer__contact-item">
+            <i class="ph-bold ph-envelope" aria-hidden="true"></i>
+            <a href="mailto:hello@crag.gym" style="color:rgba(250,250,250,0.65)">hello@crag.gym</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">Follow Us</h4>
+          <div class="footer__social">
+            <a href="#" class="footer__social-btn" aria-label="Instagram"><i class="ph-bold ph-instagram-logo" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-btn" aria-label="X / Twitter"><i class="ph-bold ph-x-logo" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-btn" aria-label="Facebook"><i class="ph-bold ph-facebook-logo" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-btn" aria-label="YouTube"><i class="ph-bold ph-youtube-logo" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">&copy; 2026 CRAG Climbing Gym. All rights reserved.</p>
+        <nav class="footer__legal" aria-label="Legal links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+
+  <!-- FAQ Accordion Script -->
+  <script>
+    (function () {
+      var questions = document.querySelectorAll('.faq-question');
+      questions.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var expanded = this.getAttribute('aria-expanded') === 'true';
+          var answerId = this.getAttribute('aria-controls');
+          var answer = document.getElementById(answerId);
+          var icon = this.querySelector('.faq-icon');
+
+          // Close all others
+          questions.forEach(function (otherBtn) {
+            if (otherBtn !== btn) {
+              var otherId = otherBtn.getAttribute('aria-controls');
+              var otherAnswer = document.getElementById(otherId);
+              var otherIcon = otherBtn.querySelector('.faq-icon');
+              otherBtn.setAttribute('aria-expanded', 'false');
+              if (otherAnswer) otherAnswer.classList.remove('is-open');
+              if (otherIcon) {
+                otherIcon.classList.remove('ph-minus');
+                otherIcon.classList.add('ph-plus');
+              }
+            }
+          });
+
+          // Toggle current
+          if (expanded) {
+            this.setAttribute('aria-expanded', 'false');
+            answer.classList.remove('is-open');
+            icon.classList.remove('ph-minus');
+            icon.classList.add('ph-plus');
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            answer.classList.add('is-open');
+            icon.classList.remove('ph-plus');
+            icon.classList.add('ph-minus');
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- Counter Animation Script -->
+  <script>
+    (function () {
+      function animateCounters() {
+        var counters = document.querySelectorAll('.stat-block__number[data-target]');
+        counters.forEach(function (el) {
+          var target = parseInt(el.getAttribute('data-target'), 10);
+          var suffix = el.getAttribute('data-suffix') || '';
+          var start = 0;
+          var duration = 1800;
+          var startTime = null;
+
+          function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            var current = Math.floor(eased * target);
+            el.textContent = current + suffix;
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            } else {
+              el.textContent = target + suffix;
+            }
+          }
+
+          requestAnimationFrame(step);
+        });
+      }
+
+      // Use IntersectionObserver to trigger when stats section is visible
+      var statsSection = document.getElementById('specs');
+      if (statsSection && 'IntersectionObserver' in window) {
+        var observed = false;
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !observed) {
+              observed = true;
+              animateCounters();
+              observer.disconnect();
+            }
+          });
+        }, { threshold: 0.3 });
+        observer.observe(statsSection);
+      } else if (statsSection) {
+        animateCounters();
+      }
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home 2 — Advanced Brewing | BREW</title>
+  <meta name="description" content="Elevate your brewing craft with advanced all-grain setups, masterclasses, and premium ingredients. BREW is for the serious brewer.">
+  <meta property="og:title" content="Home 2 — Advanced Brewing | BREW">
+  <meta property="og:description" content="Elevate your brewing craft with advanced all-grain setups, masterclasses, and premium ingredients.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://brew.example.com/pages/home2.html">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=1200">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <!-- Phosphor Icons -->
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/fill/style.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --color-primary: #d97706;
+      --color-primary-light: #fbbf24;
+      --color-primary-dark: #b45309;
+      --color-secondary: #78350f;
+      --color-accent: #f59e0b;
+      --color-bg: #fafaf9;
+      --color-surface: #ffffff;
+      --color-text: #1c1917;
+      --color-text-muted: #57534e;
+      --color-border: #e7e5e4;
+      --color-clay: #fff7ed;
+      --color-clay-shadow: #d6cfc7;
+      --color-primary-bg: #fef3c7;
+      --font-display: 'Nunito', sans-serif;
+      --font-body: 'Nunito', sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --shadow-sm: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.9);
+      --shadow-md: 4px 4px 10px rgba(0,0,0,0.10), -4px -4px 10px rgba(255,255,255,0.9);
+      --shadow-lg: 6px 6px 14px rgba(0,0,0,0.12), -6px -6px 14px rgba(255,255,255,0.9);
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ─── Buttons ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .btn:focus-visible {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    .btn--primary {
+      background: var(--color-primary);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
+    }
+
+    .btn--primary:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(217, 119, 6, 0.45);
+    }
+
+    /* ─── Container & Layout ─── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    .section--alt {
+      background: var(--color-clay);
+    }
+
+    .section--primary {
+      background: var(--color-primary-bg);
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-title h2 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 36px;
+      color: var(--color-text);
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: var(--color-primary);
+      border-radius: 2px;
+    }
+
+    .grid-balanced {
+      display: grid;
+      gap: 24px;
+    }
+
+    .grid-balanced--4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .grid-balanced--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    /* ─── Clay Card ─── */
+    .clay-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .clay-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .clay-card:focus-within {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    .clay-card--accent {
+      border-left: 3px solid var(--color-primary);
+    }
+
+    .clay-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .clay-card__body {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .clay-card__body h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--color-text);
+      margin-bottom: 8px;
+    }
+
+    .clay-card__body p {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    .clay-card__body .clay-card__price {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--color-primary);
+      margin-top: auto;
+      padding-top: 12px;
+    }
+
+    .clay-card__body .clay-card__meta {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .clay-card__body .clay-card__duration {
+      font-size: 13px;
+      color: var(--color-primary);
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .clay-card__specs {
+      list-style: none;
+      margin-top: 8px;
+    }
+
+    .clay-card__specs li {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      padding: 3px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .clay-card__specs li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ─── Stat Card ─── */
+    .stat-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .stat-card__number {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 40px;
+      color: var(--color-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-card h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--color-text);
+      margin-bottom: 6px;
+    }
+
+    .stat-card p {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      min-height: 100vh;
+      background-image: url('https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=1920');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(28, 25, 23, 0.4);
+      z-index: 1;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .hero__content h1 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 56px;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+
+    .hero__content p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.9);
+      max-width: 520px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.2);
+    }
+
+    .hero__chevron {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      animation: bounceDown 2s infinite;
+    }
+
+    .hero__chevron i {
+      font-size: 32px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    @keyframes bounceDown {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* ─── Two-col text ─── */
+    .two-col__text h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 24px;
+      color: var(--color-text);
+      margin-bottom: 16px;
+    }
+
+    .two-col__text p {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .two-col__list {
+      list-style: none;
+      margin-top: 16px;
+    }
+
+    .two-col__list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 15px;
+      color: var(--color-text);
+      font-weight: 600;
+    }
+
+    .two-col__list li:last-child {
+      border-bottom: none;
+    }
+
+    .two-col__list li i {
+      color: var(--color-primary);
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .two-col__list li span {
+      font-weight: 400;
+      color: var(--color-text-muted);
+      font-size: 13px;
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* ─── CTA Section ─── */
+    .cta-section {
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=1920');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(28, 25, 23, 0.55);
+      z-index: 1;
+    }
+
+    .cta-section__inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 96px 24px;
+    }
+
+    .cta-section__inner h2 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 40px;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+
+    .cta-section__inner p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.9);
+      max-width: 500px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 1023px) {
+      .grid-balanced--4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .grid-balanced--3 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .two-col {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .footer__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hero__content h1 {
+        font-size: 42px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .grid-balanced--4 {
+        grid-template-columns: 1fr;
+      }
+      .grid-balanced--3 {
+        grid-template-columns: 1fr;
+      }
+      .footer__grid {
+        grid-template-columns: 1fr;
+      }
+      .hero__content h1 {
+        font-size: 34px;
+      }
+      .hero__content p {
+        font-size: 16px;
+      }
+      .section {
+        padding: 56px 0;
+      }
+      .section-title h2 {
+        font-size: 28px;
+      }
+      .cta-section__inner h2 {
+        font-size: 30px;
+      }
+      .cta-section__inner {
+        padding: 64px 24px;
+      }
+      .footer__bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* ─── RTL Support ─── */
+    [dir="rtl"] .clay-card--accent {
+      border-left: none;
+      border-right: 3px solid var(--color-primary);
+    }
+
+    /* ─── Focus Visible ─── */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    /* ─── Smooth scroll ─── */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* ─── Dark Mode Overrides ─── */
+    [data-theme="dark"] {
+      --color-bg: #0c0a09;
+      --color-surface: #292524;
+      --color-text: #fafaf9;
+      --color-text-muted: #a8a29e;
+      --color-border: #292524;
+      --color-clay: #1c1917;
+      --color-clay-shadow: #0c0a09;
+      --color-primary-bg: #292524;
+      --shadow-sm: 2px 2px 5px rgba(0, 0, 0, 0.4), -2px -2px 5px rgba(255, 255, 255, 0.03);
+      --shadow-md: 4px 4px 10px rgba(0, 0, 0, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.03);
+      --shadow-lg: 6px 6px 14px rgba(0, 0, 0, 0.5), -6px -6px 14px rgba(255, 255, 255, 0.04);
+    }
+
+    [data-theme="dark"] body {
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+
+    [data-theme="dark"] .clay-card,
+    [data-theme="dark"] .stat-card {
+      background: var(--color-surface);
+    }
+
+    [data-theme="dark"] .section--alt {
+      background: var(--color-clay);
+    }
+
+    [data-theme="dark"] .section--primary {
+      background: var(--color-primary-bg);
+    }
+
+    [data-theme="dark"] .two-col__list li {
+      border-bottom-color: var(--color-border);
+    }
+  </style>
+</head>
+<body class="page-with-navbar">
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- NAVBAR                                                  -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar__inner">
+
+      <!-- Logo -->
+      <a href="index.html" class="navbar__logo" aria-label="BREW Home">
+        <div class="navbar__logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M7 3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V4H18C19.6569 4 21 5.34315 21 7V9C21 11.5 19.5 13 18 14V18C18 20.2091 16.2091 22 14 22H10C7.79086 22 6 20.2091 6 18V14C4.5 13 3 11.5 3 9V7C3 5.34315 4.34315 4 6 4H7V3ZM8 4V6H16V4H8ZM6 8C6 9.10457 7 10 8 10H16C17 10 18 9.10457 18 8V7C18 6.44772 17.5523 6 17 6H7C6.44772 6 6 6.44772 6 7V8ZM8 12C7.44772 12 7 12.4477 7 13V18C7 19.6569 8.34315 21 10 21H14C15.6569 21 17 19.6569 17 18V13C17 12.4477 16.5523 12 16 12H8Z"/>
+          </svg>
+        </div>
+        <span class="navbar__logo-text">BREW</span>
+      </a>
+
+      <!-- Center Links -->
+      <div class="navbar__links">
+        <div class="navbar__dropdown-wrapper">
+          <a href="index.html" class="navbar__link active">
+            Home
+            <i class="ph ph-caret-down" aria-hidden="true"></i>
+          </a>
+          <div class="navbar__dropdown">
+            <a href="index.html">Home 1</a>
+            <a href="home2.html">Home 2</a>
+          </div>
+        </div>
+        <a href="about.html" class="navbar__link">About</a>
+        <a href="products.html" class="navbar__link">Products</a>
+        <a href="pricing.html" class="navbar__link">Pricing</a>
+        <a href="blog.html" class="navbar__link">Blog</a>
+        <a href="contact.html" class="navbar__link">Contact</a>
+      </div>
+
+      <!-- Right Controls -->
+      <div class="navbar__right">
+        <button class="navbar__toggle" data-theme-toggle aria-label="Toggle dark mode">
+          <i class="ph-fill ph-moon" aria-hidden="true"></i>
+        </button>
+        <button class="navbar__toggle navbar__toggle-label" data-rtl-toggle aria-label="Toggle text direction">
+          LTR
+        </button>
+        <a href="products.html" class="btn btn--primary navbar__cta">Shop Now</a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button class="navbar__hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu__links">
+      <a href="index.html" class="mobile-menu__link">Home</a>
+      <a href="home2.html" class="mobile-menu__link">Home 2</a>
+      <a href="about.html" class="mobile-menu__link">About</a>
+      <a href="products.html" class="mobile-menu__link">Products</a>
+      <a href="pricing.html" class="mobile-menu__link">Pricing</a>
+      <a href="blog.html" class="mobile-menu__link">Blog</a>
+      <a href="contact.html" class="mobile-menu__link">Contact</a>
+    </div>
+    <div class="mobile-menu__toggles">
+      <button class="navbar__toggle" data-theme-toggle aria-label="Toggle dark mode">
+        <i class="ph-fill ph-moon" aria-hidden="true"></i>
+      </button>
+      <button class="navbar__toggle navbar__toggle-label" data-rtl-toggle aria-label="Toggle text direction">
+        LTR
+      </button>
+    </div>
+    <div class="mobile-menu__cta">
+      <a href="products.html" class="btn btn--primary" style="width:100%;">Shop Now</a>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- SECTION 1 — HERO                                       -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero__content">
+      <h1>Level Up Your Brewery</h1>
+      <p>From all-grain systems to advanced fermentation, BREW gives serious brewers the tools and knowledge to craft perfection, batch after batch.</p>
+      <a class="btn btn--primary" href="products.html">Shop Advanced Gear</a>
+    </div>
+    <div class="hero__chevron">
+      <i class="ph-fill ph-caret-down"></i>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- SECTION 2 — ALL-GRAIN SYSTEMS                          -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-title">
+        <h2>All-Grain Setups</h2>
+      </div>
+      <div class="grid-balanced grid-balanced--4">
+        <!-- Mash Tun -->
+        <div class="clay-card clay-card--accent">
+          <img src="https://images.unsplash.com/photo-1567696911980-2eed69a46042?w=600" alt="Stainless steel mash tun with grain bed">
+          <div class="clay-card__body">
+            <h3>Mash Tun</h3>
+            <ul class="clay-card__specs">
+              <li>10gal capacity</li>
+              <li>Insulated</li>
+              <li>False bottom</li>
+            </ul>
+            <p class="clay-card__price">$349</p>
+          </div>
+        </div>
+        <!-- Hot Liquor Tank -->
+        <div class="clay-card clay-card--accent">
+          <img src="https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=600" alt="Hot liquor tank with thermometer">
+          <div class="clay-card__body">
+            <h3>Hot Liquor Tank</h3>
+            <ul class="clay-card__specs">
+              <li>15gal capacity</li>
+              <li>Thermal jacket</li>
+              <li>Ball valve</li>
+            </ul>
+            <p class="clay-card__price">$279</p>
+          </div>
+        </div>
+        <!-- Brew Kettle -->
+        <div class="clay-card clay-card--accent">
+          <img src="https://images.unsplash.com/photo-1532634922-8fe0b757fb13?w=600" alt="Brew kettle on burner">
+          <div class="clay-card__body">
+            <h3>Brew Kettle</h3>
+            <ul class="clay-card__specs">
+              <li>12gal capacity</li>
+              <li>Built-in sight glass</li>
+              <li>Welded fittings</li>
+            </ul>
+            <p class="clay-card__price">$299</p>
+          </div>
+        </div>
+        <!-- Fermentation Chamber -->
+        <div class="clay-card clay-card--accent">
+          <img src="https://images.unsplash.com/photo-1565106430482-8f6e74349ca1?w=600" alt="Temperature controlled fermentation chamber">
+          <div class="clay-card__body">
+            <h3>Fermentation Chamber</h3>
+            <ul class="clay-card__specs">
+              <li>Dual zone control</li>
+              <li>0-50F range</li>
+              <li>Digital thermostat</li>
+            </ul>
+            <p class="clay-card__price">$449</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- SECTION 3 — MASTERCLASS PREVIEW                        -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <section class="section section--primary">
+    <div class="container">
+      <div class="section-title">
+        <h2>Learn from the Masters</h2>
+      </div>
+      <div class="grid-balanced grid-balanced--3">
+        <!-- Grain Theory -->
+        <div class="clay-card">
+          <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=600" alt="Grains being poured into mash tun">
+          <div class="clay-card__body">
+            <h3>Grain Theory</h3>
+            <p class="clay-card__meta">Mark Wilson</p>
+            <p class="clay-card__duration">4 Hours</p>
+          </div>
+        </div>
+        <!-- Water Chemistry -->
+        <div class="clay-card">
+          <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=600&auto=format&fit=crop" alt="Water chemistry testing equipment in lab">
+          <div class="clay-card__body">
+            <h3>Water Chemistry</h3>
+            <p class="clay-card__meta">Dr. Lisa Chen</p>
+            <p class="clay-card__duration">3 Hours</p>
+          </div>
+        </div>
+        <!-- Advanced Fermentation -->
+        <div class="clay-card">
+          <img src="https://images.unsplash.com/photo-1565106430482-8f6e74349ca1?w=600&auto=format&fit=crop" alt="Advanced fermentation carboys in temperature controlled room">
+          <div class="clay-card__body">
+            <h3>Advanced Fermentation</h3>
+            <p class="clay-card__meta">Tom Baker</p>
+            <p class="clay-card__duration">5 Hours</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- SECTION 4 — BREWERY STATS                              -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-title">
+        <h2>The BREW Community</h2>
+      </div>
+      <div class="grid-balanced grid-balanced--4">
+        <div class="stat-card">
+          <div class="stat-card__number" data-count="12500" data-suffix="+">0</div>
+          <h4>Active Brewers</h4>
+          <p>Homebrewers and professionals crafting better beer every day.</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__number" data-count="8200" data-suffix="+">0</div>
+          <h4>Recipes Shared</h4>
+          <p>Community-tested recipes from stouts to sours and everything between.</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__number" data-count="1200000" data-suffix="+" data-prefix="">0</div>
+          <h4>Liters Brewed</h4>
+          <p>Total craft beer produced by our members using BREW systems and guides.</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__number" data-count="45" data-suffix="+">0</div>
+          <h4>Countries Reached</h4>
+          <p>Brewers across six continents trust BREW for equipment and education.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- SECTION 5 — INGREDIENT DEEP DIVE                      -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <section class="section section--primary">
+    <div class="container">
+      <div class="section-title">
+        <h2>Hop Varieties of the Month</h2>
+      </div>
+      <div class="two-col">
+        <div class="two-col__text">
+          <h3>This Month's Selection</h3>
+          <p>We source the freshest hops from premier growing regions around the world. Each month our team curates a selection of varieties at peak freshness, selected for their aromatic complexity and brewing versatility.</p>
+          <p>Whether you are designing a bold West Coast IPA or a delicate session ale, these four hops give you a complete flavor palette to work with.</p>
+          <ul class="two-col__list">
+            <li>
+              <i class="ph-fill ph-check-circle"></i>
+              <div>
+                Cascade
+                <span>Floral and citrus notes with moderate bitterness. A classic American hop for pale ales.</span>
+              </div>
+            </li>
+            <li>
+              <i class="ph-fill ph-check-circle"></i>
+              <div>
+                Citra
+                <span>Intense tropical fruit and grapefruit. High alpha acid for bold, juicy IPAs.</span>
+              </div>
+            </li>
+            <li>
+              <i class="ph-fill ph-check-circle"></i>
+              <div>
+                Mosaic
+                <span>Complex berry, tropical, and earthy layers. Perfect for hazy and New England styles.</span>
+              </div>
+            </li>
+            <li>
+              <i class="ph-fill ph-check-circle"></i>
+              <div>
+                Simcoe
+                <span>Pine and passion fruit character. Versatile dual-use hop for deep aroma complexity.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1628557044797-f21a177c37ec?w=800" alt="Fresh hop cones close-up" style="border-radius: 16px; width: 100%; display: block;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- SECTION 6 — FINAL CTA                                  -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <section class="cta-section">
+    <div class="cta-section__inner">
+      <h2>Join the Craft Revolution</h2>
+      <p>Get access to exclusive recipes, advanced courses, member-only discounts on pro-grade equipment, and a community of passionate brewers.</p>
+      <a class="btn btn--primary" href="products.html">Become a Member</a>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+
+        <!-- Column 1 - Brand -->
+        <div class="footer__brand">
+          <a href="index.html" class="footer__brand-logo" aria-label="BREW Home">
+            <div class="navbar__logo-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M7 3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V4H18C19.6569 4 21 5.34315 21 7V9C21 11.5 19.5 13 18 14V18C18 20.2091 16.2091 22 14 22H10C7.79086 22 6 20.2091 6 18V14C4.5 13 3 11.5 3 9V7C3 5.34315 4.34315 4 6 4H7V3ZM8 4V6H16V4H8ZM6 8C6 9.10457 7 10 8 10H16C17 10 18 9.10457 18 8V7C18 6.44772 17.5523 6 17 6H7C6.44772 6 6 6.44772 6 7V8ZM8 12C7.44772 12 7 12.4477 7 13V18C7 19.6569 8.34315 21 10 21H14C15.6569 21 17 19.6569 17 18V13C17 12.4477 16.5523 12 16 12H8Z"/>
+              </svg>
+            </div>
+            <span class="navbar__logo-text">BREW</span>
+          </a>
+          <p>Your trusted partner in home brewing. We provide premium supplies, expert guidance, and a passionate community to help you craft exceptional beer at home.</p>
+          <div class="footer__social">
+            <a href="https://www.facebook.com/brewstore" aria-label="Follow us on Facebook" target="_blank" rel="noopener noreferrer">
+              <i class="ph-fill ph-facebook-logo" aria-hidden="true" style="color:#1877F2;"></i>
+            </a>
+            <a href="https://www.instagram.com/brewstore" aria-label="Follow us on Instagram" target="_blank" rel="noopener noreferrer">
+              <i class="ph-fill ph-instagram-logo" aria-hidden="true" style="color:#E4405F;"></i>
+            </a>
+            <a href="https://twitter.com/brewstore" aria-label="Follow us on Twitter" target="_blank" rel="noopener noreferrer">
+              <i class="ph-fill ph-twitter-logo" aria-hidden="true" style="color:#1DA1F2;"></i>
+            </a>
+            <a href="https://www.youtube.com/brewstore" aria-label="Subscribe on YouTube" target="_blank" rel="noopener noreferrer">
+              <i class="ph-fill ph-youtube-logo" aria-hidden="true" style="color:#FF0000;"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Column 2 - Shop Links -->
+        <div class="footer__col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="products.html"><i class="ph ph-arrow-right" aria-hidden="true"></i> Starter Kits</a></li>
+            <li><a href="products.html"><i class="ph ph-arrow-right" aria-hidden="true"></i> Ingredients</a></li>
+            <li><a href="products.html"><i class="ph ph-arrow-right" aria-hidden="true"></i> Equipment</a></li>
+            <li><a href="products.html"><i class="ph ph-arrow-right" aria-hidden="true"></i> Seasonal Specials</a></li>
+            <li><a href="products.html"><i class="ph ph-arrow-right" aria-hidden="true"></i> Gift Cards</a></li>
+            <li><a href="products.html"><i class="ph ph-arrow-right" aria-hidden="true"></i> New Arrivals</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3 - Contact Info -->
+        <div class="footer__col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+15035550187"><i class="ph ph-phone" aria-hidden="true"></i> (503) 555-0187</a></li>
+            <li><a href="mailto:hello@brewstore.com"><i class="ph ph-envelope" aria-hidden="true"></i> hello@brewstore.com</a></li>
+            <li><a href="contact.html"><i class="ph ph-map-pin" aria-hidden="true"></i> 142 Craft Lane, Portland, OR</a></li>
+            <li><a href="contact.html"><i class="ph ph-clock" aria-hidden="true"></i> Mon-Fri: 9am-6pm</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4 - Quick Links -->
+        <div class="footer__col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html"><i class="ph ph-arrow-right" aria-hidden="true"></i> About Us</a></li>
+            <li><a href="blog.html"><i class="ph ph-arrow-right" aria-hidden="true"></i> Blog</a></li>
+            <li><a href="pricing.html"><i class="ph ph-arrow-right" aria-hidden="true"></i> Pricing</a></li>
+            <li><a href="contact.html"><i class="ph ph-arrow-right" aria-hidden="true"></i> Contact</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer__bottom">
+        <div class="footer__copyright">
+          &copy; 2026 BREW Home Brewing Supply. All rights reserved.
+        </div>
+        <div class="footer__legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================
+       SCRIPTS
+       ============================================ -->
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
