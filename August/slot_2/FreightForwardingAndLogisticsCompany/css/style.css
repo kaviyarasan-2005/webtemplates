@@ -486,10 +486,12 @@ p  { font-size: clamp(.9rem, 1.2vw, 1.05rem); color: var(--txt-secondary); }
 /* ── Mobile Drawer ── */
 .nav-drawer {
   position: fixed;
-  top: var(--nav-h-mobile);
+  top: var(--nav-h);
   left: 0;
   right: 0;
   bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
   background: var(--clr-primary);
   z-index: 999;
   transform: translateX(-100%);
@@ -4839,8 +4841,10 @@ p  { font-size: clamp(.9rem, 1.2vw, 1.05rem); color: var(--txt-secondary); }
   transform: translateY(0);
 }
 [dir="rtl"] .nav-drawer {
-  left: auto;
+  left: 0;
   right: 0;
+  width: 100%;
+  box-sizing: border-box;
   transform: translateX(100%);
 }
 [dir="rtl"] .nav-drawer.open {
@@ -4995,10 +4999,11 @@ p  { font-size: clamp(.9rem, 1.2vw, 1.05rem); color: var(--txt-secondary); }
   :root { --nav-h: 64px; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
-  /* At 768–1024px: login & CTA stay in the navbar; drawer CTA is hidden (redundant) */
+  /* At 769–1024px: login & CTA stay in the navbar; drawer CTA is hidden (redundant) */
   .nav-drawer-toggles { display: none; }
   .nav-drawer-cta     { display: none; }
-  .nav-drawer-links > li:last-child { display: none; }
+  .nav-drawer-links > li:last-child,
+  .nav-drawer-links > li.nav-drawer-login-item { display: none; }
   /* Push nav-right to far right (LTR) / far left (RTL) — adjacent to hamburger */
   .nav-right               { margin-left: auto;  margin-right: 0;    } /* LTR: near right-side hamburger */
   [dir="rtl"] .nav-right   { margin-right: auto; margin-left: 0;     } /* RTL: near left-side hamburger  */
@@ -5015,8 +5020,8 @@ p  { font-size: clamp(.9rem, 1.2vw, 1.05rem); color: var(--txt-secondary); }
   .story-pair { grid-template-columns: 1fr; gap: 40px; }
   .telegraph-wrap { flex-direction: column; align-items: flex-start; gap: 32px; }
   .db-sidebar { width: 200px; }
-  .db-main { margin-left: 200px; }
-  .db-sidebar.collapsed ~ .db-main { margin-left: 64px; }
+  .db-main { margin-left: 200px; width: calc(100% - 200px); max-width: calc(100% - 200px); }
+  .db-sidebar.collapsed ~ .db-main { margin-left: 64px; width: calc(100% - 64px); max-width: calc(100% - 64px); }
   [dir="rtl"] .db-main { margin-right: 200px; margin-left: 0; width: calc(100% - 200px); max-width: calc(100% - 200px); }
   [dir="rtl"] .db-sidebar.collapsed ~ .db-main { margin-left: 0; margin-right: 64px; width: calc(100% - 64px); max-width: calc(100% - 64px); }
   .mast-row { gap: 24px; }
@@ -5032,14 +5037,16 @@ p  { font-size: clamp(.9rem, 1.2vw, 1.05rem); color: var(--txt-secondary); }
 }
 
 @media (max-width: 767px) {
-  /* Below 768px: hide Login & CTA from navbar (too cramped), show them in the drawer */
+  /* Below 768px: hide Login & CTA from navbar (cramped mobile), show them in the drawer */
   .nav-right .nav-login,
   .nav-right .nav-cta { display: none; }
   .nav-drawer-cta     { display: block; }
 
   /* Style the Login link inside the drawer as an outlined button */
-  .nav-drawer-links > li:last-child { display: block; border-bottom: none; }
-  .nav-drawer-links > li:last-child > a {
+  .nav-drawer-links > li:last-child,
+  .nav-drawer-links > li.nav-drawer-login-item { display: block; border-bottom: none; }
+  .nav-drawer-links > li:last-child > a,
+  .nav-drawer-links > li.nav-drawer-login-item > a {
     display: block;
     margin-top: 8px;
     padding: 13px 20px;
@@ -5053,7 +5060,8 @@ p  { font-size: clamp(.9rem, 1.2vw, 1.05rem); color: var(--txt-secondary); }
     letter-spacing: .02em;
     transition: background var(--trans-fast), border-color var(--trans-fast);
   }
-  .nav-drawer-links > li:last-child > a:hover {
+  .nav-drawer-links > li:last-child > a:hover,
+  .nav-drawer-links > li.nav-drawer-login-item > a:hover {
     background: rgba(255,255,255,.08);
     border-color: rgba(255,255,255,.6);
     color: #fff;
@@ -5087,10 +5095,12 @@ p  { font-size: clamp(.9rem, 1.2vw, 1.05rem); color: var(--txt-secondary); }
   .channel-cards { grid-template-columns: 1fr; }
   .berth-row { flex-direction: column; }
   .db-sidebar { width: 0; }
-  .db-main { margin-left: 0; }
-  .db-sidebar.open { width: 240px; }
+  .db-main { margin-left: 0; width: 100%; max-width: 100%; }
+  .db-sidebar.collapsed ~ .db-main { margin-left: 0; width: 100%; max-width: 100%; }
+  .db-sidebar.open { width: 240px; box-shadow: var(--shadow-lg); }
   [dir="rtl"] .db-sidebar { width: 0; right: 0; }
   [dir="rtl"] .db-main { margin-right: 0; margin-left: 0; width: 100%; max-width: 100%; }
+  [dir="rtl"] .db-sidebar.collapsed ~ .db-main { margin-right: 0; margin-left: 0; width: 100%; max-width: 100%; }
   [dir="rtl"] .db-sidebar.open { width: 240px; }
   .stat-tiles { grid-template-columns: 1fr 1fr; }
   .watch-officer-card { flex-direction: column; }
