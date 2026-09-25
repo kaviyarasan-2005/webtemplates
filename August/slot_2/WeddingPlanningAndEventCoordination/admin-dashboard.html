@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — VOWS</title>
+  <meta name="description" content="Master agency management console for VOWS wedding planning partners, client roster, and financial analytics.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='11' cy='16' r='7' fill='none' stroke='%23C9A8E0' stroke-width='2.5'/%3E%3Ccircle cx='21' cy='16' r='7' fill='none' stroke='%23C9A8E0' stroke-width='2.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dark-mode.css">
+</head>
+<body class="dashboard-body">
+<div class="dashboard-page">
+
+  <!-- ADMIN SIDEBAR -->
+  <aside class="dash-sidebar" id="dash-sidebar" aria-label="Admin Dashboard Sidebar">
+    <div class="sidebar-top">
+      <a href="index.html" class="sidebar-logo">
+        <svg class="nav-logo-mark" viewBox="0 0 36 36" fill="none" style="width:28px;height:28px">
+          <circle cx="13" cy="18" r="8.5" stroke="#C9A8E0" stroke-width="2.5"/>
+          <circle cx="23" cy="18" r="8.5" stroke="#FAF5F7" stroke-width="2.5"/>
+        </svg>
+        <span class="sidebar-logo-text">VOWS</span>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav" role="tablist">
+      <button type="button" class="sidebar-nav-item active" data-view="view-overview-admin" role="tab" aria-selected="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span class="nav-item-label">Executive View</span>
+        <span class="sidebar-tooltip">Executive View</span>
+      </button>
+      <button type="button" class="sidebar-nav-item" data-view="view-clients" role="tab" aria-selected="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="nav-item-label">Client Couples</span>
+        <span class="sidebar-tooltip">Client Couples</span>
+      </button>
+      <button type="button" class="sidebar-nav-item" data-view="view-vendors-admin" role="tab" aria-selected="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        <span class="nav-item-label">Vendor Network</span>
+        <span class="sidebar-tooltip">Vendor Network</span>
+      </button>
+      <button type="button" class="sidebar-nav-item" data-view="view-calendar" role="tab" aria-selected="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span class="nav-item-label">Master Calendar</span>
+        <span class="sidebar-tooltip">Master Calendar</span>
+      </button>
+      <button type="button" class="sidebar-nav-item" data-view="view-reports" role="tab" aria-selected="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span class="nav-item-label">Financials &amp; Reports</span>
+        <span class="sidebar-tooltip">Financials &amp; Reports</span>
+      </button>
+      <button type="button" class="sidebar-nav-item" data-view="view-messages-admin" role="tab" aria-selected="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span class="nav-item-label">Team Comms</span>
+        <span class="sidebar-tooltip">Team Comms</span>
+      </button>
+      <button type="button" class="sidebar-nav-item" data-view="view-settings-admin" role="tab" aria-selected="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="nav-item-label">Agency Settings</span>
+        <span class="sidebar-tooltip">Agency Settings</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <button type="button" class="sidebar-nav-item" data-logout aria-label="Sign out">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span class="nav-item-label">Sign Out</span>
+        <span class="sidebar-tooltip">Sign Out</span>
+      </button>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- MAIN AREA -->
+  <div class="dash-main">
+    <!-- Topbar -->
+    <header class="dash-topbar">
+      <button class="sidebar-hamburger" id="sidebar-hamburger" aria-label="Toggle Sidebar Navigation" title="Toggle Sidebar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <div class="dash-search">
+        <svg class="dash-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" placeholder="Search clients, vendors, invoices..." aria-label="Search admin portal">
+      </div>
+
+      <div class="dash-topbar-right">
+        <button class="nav-toggle-btn" data-theme-toggle aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="nav-toggle-btn nav-rtl-btn" data-rtl-toggle aria-label="Switch to RTL">RTL</button>
+
+        <div class="dash-notif" aria-label="5 alerts">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-badge">5</span>
+        </div>
+
+        <div class="profile-chip">
+          <img class="profile-photo" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=80&h=80&q=80" alt="Isabelle Laurent" width="30" height="30">
+          <div class="profile-info">
+            <span class="profile-name">Isabelle Laurent</span>
+            <span class="profile-role">Founder &middot; Lead Planner</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT VIEWS -->
+    <main class="dash-content">
+
+      <!-- VIEW 1: EXECUTIVE VIEW (ADMIN) -->
+      <div class="dash-view active" id="view-overview-admin">
+        <div class="view-skeleton" style="display:none">
+          <div class="stat-tiles">
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+          </div>
+          <div class="charts-grid">
+            <div class="skeleton skeleton-chart"></div>
+            <div class="skeleton skeleton-chart"></div>
+          </div>
+        </div>
+
+        <div class="view-content">
+          <div class="dash-card-header mb-3">
+            <div>
+              <h1 class="dash-view-title" style="margin-bottom:.25rem">Agency Operations &amp; Performance</h1>
+              <p style="color:var(--color-text-secondary);font-size:.88rem;margin:0">Season 2025/2026 &middot; 34 Active Weddings &middot; 12 Senior Coordinators</p>
+            </div>
+            <button class="btn btn-primary" onclick="document.querySelector('[data-view=view-clients]').click()">+ New Wedding File</button>
+          </div>
+
+          <!-- 4 Admin Stat Tiles -->
+          <div class="stat-tiles">
+            <div class="stat-tile">
+              <span class="stat-tile-label">Annual Gross Bookings</span>
+              <div class="stat-tile-value">$524,000</div>
+              <span class="stat-tile-sub">+18.4% vs previous year</span>
+            </div>
+            <div class="stat-tile">
+              <span class="stat-tile-label">Active Ceremonies</span>
+              <div class="stat-tile-value">34</div>
+              <span class="stat-tile-sub">12 Destination &middot; 22 UK</span>
+            </div>
+            <div class="stat-tile">
+              <span class="stat-tile-label">Pipeline Inquiries</span>
+              <div class="stat-tile-value">28</div>
+              <span class="stat-tile-sub">7 Consultations this week</span>
+            </div>
+            <div class="stat-tile">
+              <span class="stat-tile-label">Client CSAT Score</span>
+              <div class="stat-tile-value">99.4%</div>
+              <span class="stat-tile-sub">500+ Five-Star Reviews</span>
+            </div>
+          </div>
+
+          <!-- 4 Pure Canvas Charts (NO external libraries) -->
+          <div class="charts-grid">
+            <!-- Chart 1: Revenue Line Chart -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <span class="chart-card-title">Monthly Agency Revenue ($)</span>
+                <span style="font-size:.72rem;color:var(--color-text-muted)">FY 2025</span>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="admin-chart-line" height="220"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 2: Bookings Bar Chart -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <span class="chart-card-title">Confirmed Weddings by Month</span>
+                <span style="font-size:.72rem;color:var(--color-text-muted)">Peak Season: Jun &mdash; Sep</span>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="admin-chart-bar" height="220"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 3: Event Type Donut Chart -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <span class="chart-card-title">Wedding Portfolio by Category</span>
+                <span style="font-size:.72rem;color:var(--color-text-muted)">Local vs Overseas</span>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="admin-chart-donut" height="220"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 4: Cumulative Inquiries Area Chart -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <span class="chart-card-title">Cumulative Qualified Inquiries (2025)</span>
+                <span style="font-size:.72rem;color:var(--color-text-muted)">Conversion: 43%</span>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="admin-chart-area" height="220"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kanban Pipeline Card -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <span class="dash-card-title">Active Season Event Flow</span>
+              <span style="font-size:.8rem;color:var(--color-text-muted)">34 Weddings in Pipeline</span>
+            </div>
+            <div class="kanban-board">
+              <div class="kanban-col">
+                <div class="kanban-col-header">
+                  <span>Concept &amp; Design</span>
+                  <span class="kanban-col-count">8</span>
+                </div>
+                <div class="kanban-card">
+                  <h4>Camilla &amp; Arthur</h4>
+                  <p style="color:var(--color-text-muted)">Château de Chantilly &middot; Oct 2026</p>
+                </div>
+                <div class="kanban-card">
+                  <h4>Julianna &amp; Liam</h4>
+                  <p style="color:var(--color-text-muted)">Kew Gardens Orangery &middot; Sep 2026</p>
+                </div>
+              </div>
+
+              <div class="kanban-col">
+                <div class="kanban-col-header">
+                  <span>Vendor Locking</span>
+                  <span class="kanban-col-count">11</span>
+                </div>
+                <div class="kanban-card">
+                  <h4>Elena &amp; Marcus</h4>
+                  <p style="color:var(--color-text-muted)">Villa Balbiano, Como &middot; Aug 2026</p>
+                </div>
+                <div class="kanban-card">
+                  <h4>Sophia &amp; Tariq</h4>
+                  <p style="color:var(--color-text-muted)">Santorini Caldera &middot; Jul 2026</p>
+                </div>
+              </div>
+
+              <div class="kanban-col">
+                <div class="kanban-col-header">
+                  <span>Final Run-Sheets</span>
+                  <span class="kanban-col-count">9</span>
+                </div>
+                <div class="kanban-card">
+                  <h4>Chloe &amp; William</h4>
+                  <p style="color:var(--color-text-muted)">Cotswolds Manor &middot; May 2026</p>
+                </div>
+              </div>
+
+              <div class="kanban-col">
+                <div class="kanban-col-header">
+                  <span>Completed Season</span>
+                  <span class="kanban-col-count">6</span>
+                </div>
+                <div class="kanban-card">
+                  <h4>Amelia &amp; James</h4>
+                  <p style="color:var(--color-text-muted)">Hampton Court &middot; Sep 2025</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: CLIENT COUPLES TABLE (Interactive Search & Status Filter) -->
+      <div class="dash-view" id="view-clients">
+        <div class="dash-card-header">
+          <h2 class="dash-view-title" style="margin-bottom:0">Client Couple Roster</h2>
+          <div style="display:flex;gap:.75rem">
+            <input type="text" id="client-search" class="form-input" placeholder="Search by couple name..." style="width:220px;padding:.4rem .8rem;font-size:.85rem">
+            <select id="client-status-filter" class="form-select" style="width:160px;padding:.4rem .8rem;font-size:.85rem">
+              <option value="all">All Statuses</option>
+              <option value="planning">Planning</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="inquiry">Inquiry</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <div class="dash-table-wrap">
+            <table class="dash-table" aria-label="Client Roster">
+              <thead>
+                <tr>
+                  <th>Couple</th>
+                  <th>Destination Venue</th>
+                  <th>Wedding Date</th>
+                  <th>Lead Coordinator</th>
+                  <th>Package Investment</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="client-row" data-name="Elena Vance & Marcus Thorne" data-status="planning">
+                  <td><strong>Elena Vance &amp; Marcus Thorne</strong></td>
+                  <td>Villa Balbiano, Lake Como</td>
+                  <td>Aug 8, 2026</td>
+                  <td>Isabelle Laurent</td>
+                  <td>$14,500 (Grand Luxe)</td>
+                  <td><span class="status-pill status-planning">Planning</span></td>
+                </tr>
+                <tr class="client-row" data-name="Sophia Rossi & Tariq Al-Mansoor" data-status="confirmed">
+                  <td><strong>Sophia Rossi &amp; Tariq Al-Mansoor</strong></td>
+                  <td>Grace Hotel, Santorini</td>
+                  <td>Jul 18, 2026</td>
+                  <td>Priya Sharma</td>
+                  <td>$14,500 (Grand Luxe)</td>
+                  <td><span class="status-pill status-confirmed">Confirmed</span></td>
+                </tr>
+                <tr class="client-row" data-name="Chloe Bennett & William Sterling" data-status="confirmed">
+                  <td><strong>Chloe Bennett &amp; William Sterling</strong></td>
+                  <td>Aynhoe Park, Cotswolds</td>
+                  <td>May 23, 2026</td>
+                  <td>Oliver Mackenzie</td>
+                  <td>$7,800 (Signature Suite)</td>
+                  <td><span class="status-pill status-confirmed">Confirmed</span></td>
+                </tr>
+                <tr class="client-row" data-name="Camilla Dubois & Arthur Pendelton" data-status="planning">
+                  <td><strong>Camilla Dubois &amp; Arthur Pendelton</strong></td>
+                  <td>Château de Chantilly, France</td>
+                  <td>Oct 10, 2026</td>
+                  <td>Isabelle Laurent</td>
+                  <td>$14,500 (Grand Luxe)</td>
+                  <td><span class="status-pill status-planning">Planning</span></td>
+                </tr>
+                <tr class="client-row" data-name="Julianna Ward & Liam Gallagher" data-status="inquiry">
+                  <td><strong>Julianna Ward &amp; Liam Gallagher</strong></td>
+                  <td>Kew Gardens Orangery, London</td>
+                  <td>Sep 12, 2026</td>
+                  <td>Amara Osei</td>
+                  <td>$3,200 (Day-Of Ribbon)</td>
+                  <td><span class="status-pill status-inquiry">Inquiry</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: VENDOR MANAGEMENT (Approve / Suspend Demo) -->
+      <div class="dash-view" id="view-vendors-admin">
+        <h2 class="dash-view-title">Vendor Accreditation Network</h2>
+        <div class="dash-card">
+          <div class="dash-table-wrap">
+            <table class="dash-table" aria-label="Vendor Management">
+              <thead>
+                <tr>
+                  <th>Vendor Partner</th>
+                  <th>Category</th>
+                  <th>Region</th>
+                  <th>Quality Rating</th>
+                  <th>Accreditation Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Villa Balbiano</strong></td>
+                  <td>Historic Venue</td>
+                  <td>Lake Como, Italy</td>
+                  <td>&#9733;&#9733;&#9733;&#9733;&#9733; 5.0</td>
+                  <td><span class="status-pill status-approved">Approved</span></td>
+                  <td>
+                    <div class="row-actions">
+                      <button class="action-btn" data-vendor-mgmt="suspend">Suspend</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Matteo Rossi Cinema</strong></td>
+                  <td>Photography &amp; Film</td>
+                  <td>Milan / Worldwide</td>
+                  <td>&#9733;&#9733;&#9733;&#9733;&#9733; 4.9</td>
+                  <td><span class="status-pill status-approved">Approved</span></td>
+                  <td>
+                    <div class="row-actions">
+                      <button class="action-btn" data-vendor-mgmt="suspend">Suspend</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>L'Atelier des Fleurs</strong></td>
+                  <td>Botanical Artistry</td>
+                  <td>Paris / Provence</td>
+                  <td>&#9733;&#9733;&#9733;&#9733;&#9734; 4.7</td>
+                  <td><span class="status-pill status-pending">In Review</span></td>
+                  <td>
+                    <div class="row-actions">
+                      <button class="action-btn" data-vendor-mgmt="approve" style="background:var(--color-accent);color:var(--color-text-on-accent);border:none">Approve</button>
+                      <button class="action-btn" data-vendor-mgmt="suspend">Reject</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 4: MASTER CALENDAR -->
+      <div class="dash-view" id="view-calendar">
+        <h2 class="dash-view-title">Master Celebration Schedule</h2>
+        <div class="dash-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+            <h3>Summer 2026 Operational Schedule</h3>
+            <span style="font-size:.85rem;color:var(--color-accent-dark);font-weight:600">34 Total Events Booked</span>
+          </div>
+          <div class="timeline-block">
+            <div class="timeline-time">May 23</div>
+            <div class="timeline-block-body">
+              <h4>Chloe &amp; William &middot; Aynhoe Park (Cotswolds)</h4>
+              <p>Lead: Oliver Mackenzie &middot; 130 Guests &middot; Outdoor Pavilion Ceremony</p>
+            </div>
+          </div>
+          <div class="timeline-block">
+            <div class="timeline-time">Jul 18</div>
+            <div class="timeline-block-body">
+              <h4>Sophia &amp; Tariq &middot; Grace Hotel (Santorini)</h4>
+              <p>Lead: Priya Sharma &middot; 75 Guests &middot; Caldera Sunset Reception</p>
+            </div>
+          </div>
+          <div class="timeline-block">
+            <div class="timeline-time">Aug 08</div>
+            <div class="timeline-block-body">
+              <h4>Elena &amp; Marcus &middot; Villa Balbiano (Lake Como)</h4>
+              <p>Lead: Isabelle Laurent &middot; 110 Guests &middot; Lakefront Ceremony &amp; Fireworks</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 5: FINANCIALS & REPORTS (Period Selector Demo) -->
+      <div class="dash-view" id="view-reports">
+        <div class="dash-card-header">
+          <h2 class="dash-view-title" style="margin-bottom:0">Financial Reports &amp; Analytics</h2>
+          <div style="display:flex;align-items:center;gap:.5rem">
+            <label for="report-period" style="font-size:.85rem;font-weight:600">Reporting Period:</label>
+            <select id="report-period" class="form-select" style="width:160px;padding:.4rem .8rem;font-size:.85rem">
+              <option value="month">Current Month</option>
+              <option value="quarter">Quarter to Date</option>
+              <option value="year" selected>Full Year 2025</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="stat-tiles">
+          <div class="stat-tile">
+            <span class="stat-tile-label">Gross Revenue</span>
+            <div class="stat-tile-value" data-report-value="revenue">$524,000</div>
+            <span class="stat-tile-sub">Consultations + Planning Fees</span>
+          </div>
+          <div class="stat-tile">
+            <span class="stat-tile-label">Confirmed Bookings</span>
+            <div class="stat-tile-value" data-report-value="bookings">134</div>
+            <span class="stat-tile-sub">Total Signed Contracts</span>
+          </div>
+          <div class="stat-tile">
+            <span class="stat-tile-label">Inquiries Received</span>
+            <div class="stat-tile-value" data-report-value="inquiries">312</div>
+            <span class="stat-tile-sub">Through VOWS digital journal</span>
+          </div>
+          <div class="stat-tile">
+            <span class="stat-tile-label">Average Contract Value</span>
+            <div class="stat-tile-value" data-report-value="avg">$3,910</div>
+            <span class="stat-tile-sub">Across All 3 Packages</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 6: TEAM COMMS -->
+      <div class="dash-view" id="view-messages-admin">
+        <h2 class="dash-view-title">Planner Team Communications</h2>
+        <div class="messages-layout">
+          <div class="message-list">
+            <div class="message-item active">
+              <div class="message-item-from">Oliver Mackenzie (Design)</div>
+              <div class="message-item-preview">Balbiano floral runner mockup completed...</div>
+              <div class="message-item-time">11:15 AM</div>
+            </div>
+            <div class="message-item">
+              <div class="message-item-from">Priya Sharma (Senior Planner)</div>
+              <div class="message-item-preview">Santorini sound permit approved by municipality.</div>
+              <div class="message-item-time">09:40 AM</div>
+            </div>
+          </div>
+          <div class="message-thread">
+            <div class="thread-header">
+              Creative Directors Channel (Oliver, Priya, Isabelle, Amara)
+            </div>
+            <div class="thread-body">
+              <div class="thread-message from-them">
+                <div class="thread-message-bubble">
+                  Isabelle, the Como botanical supplier confirmed the white garden roses will be fresh-cut the morning of Elena &amp; Marcus's ceremony.
+                </div>
+                <div class="thread-message-time">11:10 AM</div>
+              </div>
+              <div class="thread-message from-me">
+                <div class="thread-message-bubble">
+                  Excellent work Oliver. Please make sure the backup indoor salon plan has the same candle distribution.
+                </div>
+                <div class="thread-message-time">11:14 AM</div>
+              </div>
+            </div>
+            <div class="compose-box">
+              <input type="text" placeholder="Message the planning team..." aria-label="Team message">
+              <button class="btn btn-primary send-btn">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 7: AGENCY SETTINGS -->
+      <div class="dash-view" id="view-settings-admin">
+        <h2 class="dash-view-title">Agency Console Configuration</h2>
+        <div class="dash-card">
+          <form class="settings-form">
+            <div class="settings-section-title">Brand &amp; Agency Profile</div>
+            <div class="form-group">
+              <label for="agency-name" class="form-label">Brand Name</label>
+              <input type="text" id="agency-name" class="form-input" value="VOWS Wedding Planning &amp; Event Coordination">
+            </div>
+
+            <div class="settings-section-title">Security &amp; Notifications</div>
+            <div class="toggle-row">
+              <span class="toggle-row-label">Two-Factor Authentication for Senior Planners</span>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span class="toggle-row-label">Real-time SMS alerts for new high-value destination inquiries</span>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Save Agency Settings</button>
+          </form>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

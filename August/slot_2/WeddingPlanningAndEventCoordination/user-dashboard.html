@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elena &amp; Marcus — Couple Portal | VOWS</title>
+  <meta name="description" content="Wedding planning dashboard for Elena &amp; Marcus. Track budget, checklists, vendor bookings, and timelines.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='11' cy='16' r='7' fill='none' stroke='%23C9A8E0' stroke-width='2.5'/%3E%3Ccircle cx='21' cy='16' r='7' fill='none' stroke='%23C9A8E0' stroke-width='2.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dark-mode.css">
+</head>
+<body class="dashboard-body">
+<div class="dashboard-page">
+
+  <!-- SIDEBAR -->
+  <aside class="dash-sidebar" id="dash-sidebar" aria-label="Dashboard Sidebar">
+    <div class="sidebar-top">
+      <a href="index.html" class="sidebar-logo">
+        <svg class="nav-logo-mark" viewBox="0 0 36 36" fill="none" style="width:28px;height:28px">
+          <circle cx="13" cy="18" r="8.5" stroke="#C9A8E0" stroke-width="2.5"/>
+          <circle cx="23" cy="18" r="8.5" stroke="#FAF5F7" stroke-width="2.5"/>
+        </svg>
+        <span class="sidebar-logo-text">VOWS</span>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav" role="tablist">
+      <button type="button" class="sidebar-nav-item active" data-view="view-overview-user" role="tab" aria-selected="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span class="nav-item-label">Overview</span>
+        <span class="sidebar-tooltip">Overview</span>
+      </button>
+      <button type="button" class="sidebar-nav-item" data-view="view-checklist" role="tab" aria-selected="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span class="nav-item-label">Checklist</span>
+        <span class="sidebar-tooltip">Checklist</span>
+      </button>
+      <button type="button" class="sidebar-nav-item" data-view="view-budget" role="tab" aria-selected="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M15 9.5a3.5 3.5 0 0 0-7 0c0 2 1.5 3 3.5 3s3.5 1 3.5 3a3.5 3.5 0 0 1-7 0"/></svg>
+        <span class="nav-item-label">Budget</span>
+        <span class="sidebar-tooltip">Budget</span>
+      </button>
+      <button type="button" class="sidebar-nav-item" data-view="view-vendors" role="tab" aria-selected="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="nav-item-label">Vendors</span>
+        <span class="sidebar-tooltip">Vendors</span>
+      </button>
+      <button type="button" class="sidebar-nav-item" data-view="view-timeline" role="tab" aria-selected="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="nav-item-label">Timeline</span>
+        <span class="sidebar-tooltip">Timeline</span>
+      </button>
+      <button type="button" class="sidebar-nav-item" data-view="view-messages" role="tab" aria-selected="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span class="nav-item-label">Messages</span>
+        <span class="sidebar-tooltip">Messages</span>
+      </button>
+      <button type="button" class="sidebar-nav-item" data-view="view-settings" role="tab" aria-selected="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="nav-item-label">Settings</span>
+        <span class="sidebar-tooltip">Settings</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <button type="button" class="sidebar-nav-item" data-logout aria-label="Sign out">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span class="nav-item-label">Sign Out</span>
+        <span class="sidebar-tooltip">Sign Out</span>
+      </button>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- MAIN AREA -->
+  <div class="dash-main">
+    <!-- Topbar -->
+    <header class="dash-topbar">
+      <button class="sidebar-hamburger" id="sidebar-hamburger" aria-label="Toggle Sidebar Navigation" title="Toggle Sidebar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <div class="dash-search">
+        <svg class="dash-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" placeholder="Search tasks, vendors, documents..." aria-label="Search dashboard">
+      </div>
+
+      <div class="dash-topbar-right">
+        <button class="nav-toggle-btn" data-theme-toggle aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="nav-toggle-btn nav-rtl-btn" data-rtl-toggle aria-label="Switch to RTL">RTL</button>
+
+        <div class="dash-notif" aria-label="3 new notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-badge">3</span>
+        </div>
+
+        <div class="profile-chip">
+          <img class="profile-photo" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80" alt="Elena Vance" width="30" height="30">
+          <div class="profile-info">
+            <span class="profile-name">Elena &amp; Marcus</span>
+            <span class="profile-role">August 8, 2026</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT VIEWS -->
+    <main class="dash-content">
+
+      <!-- VIEW 1: OVERVIEW (USER) -->
+      <div class="dash-view active" id="view-overview-user">
+        <div class="view-skeleton" style="display:none">
+          <div class="stat-tiles">
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+          </div>
+          <div class="charts-grid">
+            <div class="skeleton skeleton-chart"></div>
+            <div class="skeleton skeleton-chart"></div>
+          </div>
+        </div>
+
+        <div class="view-content">
+          <div class="dash-card-header mb-3">
+            <div>
+              <h1 class="dash-view-title" style="margin-bottom:.25rem">Celebration Command Center</h1>
+              <p style="color:var(--color-text-secondary);font-size:.88rem;margin:0">Elena Vance &amp; Marcus Thorne &middot; Villa Balbiano, Lake Como</p>
+            </div>
+            <button class="btn btn-primary" onclick="document.querySelector('[data-view=view-checklist]').click()">View Next Milestones</button>
+          </div>
+
+          <!-- 4 Stat Tiles -->
+          <div class="stat-tiles">
+            <div class="stat-tile">
+              <span class="stat-tile-label">Days to I Do</span>
+              <div class="stat-tile-value">142</div>
+              <span class="stat-tile-sub">Saturday, August 8, 2026</span>
+            </div>
+            <div class="stat-tile">
+              <span class="stat-tile-label">Budget Allocated</span>
+              <div class="stat-tile-value">$34,200</div>
+              <span class="stat-tile-sub">of $55,000 total investment (62%)</span>
+            </div>
+            <div class="stat-tile">
+              <span class="stat-tile-label">Vendors Booked</span>
+              <div class="stat-tile-value">8 / 11</div>
+              <span class="stat-tile-sub">Florals &amp; Quartet in review</span>
+            </div>
+            <div class="stat-tile">
+              <span class="stat-tile-label">Checklist Tasks</span>
+              <div class="stat-tile-value">36 / 75</div>
+              <span class="stat-tile-sub">48% complete &middot; On Schedule</span>
+            </div>
+          </div>
+
+          <!-- 4 Pure Canvas Charts (NO external libraries) -->
+          <div class="charts-grid">
+            <!-- Chart 1: Line Chart -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <span class="chart-card-title">Cumulative Spending Progress ($)</span>
+                <span style="font-size:.72rem;color:var(--color-text-muted)">Actual vs Timeline</span>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="user-chart-line" height="220"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 2: Bar Chart -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <span class="chart-card-title">Scheduled Payment Milestones ($)</span>
+                <span style="font-size:.72rem;color:var(--color-text-muted)">Monthly Cash Flow</span>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="user-chart-bar" height="220"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 3: Donut Chart -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <span class="chart-card-title">Budget Allocation by Category</span>
+                <span style="font-size:.72rem;color:var(--color-text-muted)">6 Major Disciplines</span>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="user-chart-donut" height="220"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 4: Area Chart -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <span class="chart-card-title">Cumulative Spend vs Total Cap ($)</span>
+                <span style="font-size:.72rem;color:var(--color-text-muted)">Cap: $55,000</span>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="user-chart-area" height="220"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Milestones Card -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <span class="dash-card-title">Upcoming Wedding Milestones</span>
+              <a href="#" style="font-size:.8rem;color:var(--color-accent-dark);font-weight:600" onclick="document.querySelector('[data-view=view-timeline]').click();return false">Full Schedule &rarr;</a>
+            </div>
+            <div class="dash-table-wrap">
+              <table class="dash-table" aria-label="Upcoming Milestones">
+                <thead>
+                  <tr>
+                    <th>Milestone</th>
+                    <th>Due Date</th>
+                    <th>Lead Coordinator</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Menu &amp; Wine Tasting at Villa Balbiano</td>
+                    <td>March 24, 2026</td>
+                    <td>Isabelle Laurent</td>
+                    <td><span class="status-pill status-confirmed">Confirmed</span></td>
+                  </tr>
+                  <tr>
+                    <td>Florals Mockup &amp; Linen Swatches</td>
+                    <td>April 12, 2026</td>
+                    <td>Oliver Mackenzie</td>
+                    <td><span class="status-pill status-planning">In Progress</span></td>
+                  </tr>
+                  <tr>
+                    <td>Formal Calligraphed Invitations Mail-Out</td>
+                    <td>May 1, 2026</td>
+                    <td>Priya Sharma</td>
+                    <td><span class="status-pill status-upcoming">Upcoming</span></td>
+                  </tr>
+                  <tr>
+                    <td>Final Guest RSVP Count &amp; Dietary Lockdown</td>
+                    <td>June 15, 2026</td>
+                    <td>Amara Osei</td>
+                    <td><span class="status-pill status-upcoming">Upcoming</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: CHECKLIST -->
+      <div class="dash-view" id="view-checklist">
+        <div class="dash-card-header">
+          <h2 class="dash-view-title" style="margin-bottom:0">Master Planning Checklist</h2>
+          <div style="display:flex;gap:.5rem">
+            <input type="text" id="checklist-add-input" class="form-input" placeholder="Add new task..." style="width:240px;padding:.4rem .8rem;font-size:.85rem">
+            <button class="btn btn-primary btn-sm" id="checklist-add-btn">Add Task</button>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <!-- Phase 1 -->
+          <div class="checklist-phase">
+            <div class="checklist-phase-header">
+              <div>
+                <h4 style="margin:0">Phase 1: Foundation &amp; Venue (12 &mdash; 9 Months Prior)</h4>
+                <span style="font-size:.78rem;color:var(--color-text-muted)">Vision, budget architecture, venue locking</span>
+              </div>
+              <div class="phase-ring">
+                <svg width="44" height="44" viewBox="0 0 44 44">
+                  <circle class="phase-ring-bg" cx="22" cy="22" r="18" stroke-width="4"/>
+                  <circle class="phase-ring-fill" cx="22" cy="22" r="18" stroke-width="4"/>
+                </svg>
+                <div class="phase-ring-text">100%</div>
+              </div>
+            </div>
+            <div class="checklist-items">
+              <div class="checklist-item checked">
+                <div class="checklist-checkbox">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="checklist-label">Establish total wedding budget cap ($55,000)</span>
+              </div>
+              <div class="checklist-item checked">
+                <div class="checklist-checkbox">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="checklist-label">Book primary ceremony &amp; reception venue (Villa Balbiano)</span>
+              </div>
+              <div class="checklist-item checked">
+                <div class="checklist-checkbox">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="checklist-label">Retain VOWS full-service planning agreement</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 2 -->
+          <div class="checklist-phase">
+            <div class="checklist-phase-header">
+              <div>
+                <h4 style="margin:0">Phase 2: Creative Design &amp; Key Suppliers (8 &mdash; 5 Months Prior)</h4>
+                <span style="font-size:.78rem;color:var(--color-text-muted)">Florals, catering, photography, entertainment</span>
+              </div>
+              <div class="phase-ring">
+                <svg width="44" height="44" viewBox="0 0 44 44">
+                  <circle class="phase-ring-bg" cx="22" cy="22" r="18" stroke-width="4"/>
+                  <circle class="phase-ring-fill" cx="22" cy="22" r="18" stroke-width="4"/>
+                </svg>
+                <div class="phase-ring-text">60%</div>
+              </div>
+            </div>
+            <div class="checklist-items">
+              <div class="checklist-item checked">
+                <div class="checklist-checkbox">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="checklist-label">Contract lead editorial photographer (Matteo Rossi)</span>
+              </div>
+              <div class="checklist-item checked">
+                <div class="checklist-checkbox">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="checklist-label">Confirm catering tasting menu &amp; Italian wine pairing</span>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-checkbox">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="checklist-label">Finalise botanical runner floral mockups with Oliver</span>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-checkbox">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="checklist-label">Sign acoustic string quartet &amp; evening DJ contract</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 3 -->
+          <div class="checklist-phase">
+            <div class="checklist-phase-header">
+              <div>
+                <h4 style="margin:0">Phase 3: Finer Details &amp; Run-Sheets (4 Months &mdash; Wedding Week)</h4>
+                <span style="font-size:.78rem;color:var(--color-text-muted)">Guest seating, transport charters, rehearsal dinner</span>
+              </div>
+              <div class="phase-ring">
+                <svg width="44" height="44" viewBox="0 0 44 44">
+                  <circle class="phase-ring-bg" cx="22" cy="22" r="18" stroke-width="4"/>
+                  <circle class="phase-ring-fill" cx="22" cy="22" r="18" stroke-width="4"/>
+                </svg>
+                <div class="phase-ring-text">15%</div>
+              </div>
+            </div>
+            <div class="checklist-items">
+              <div class="checklist-item checked">
+                <div class="checklist-checkbox">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="checklist-label">Reserve hotel room block in Bellagio &amp; Varenna</span>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-checkbox">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="checklist-label">Submit personalized vow copies to VOWS officiant</span>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-checkbox">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="checklist-label">Confirm Lake Como wooden water-taxi guest transfers</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: BUDGET -->
+      <div class="dash-view" id="view-budget">
+        <h2 class="dash-view-title">Budget Management</h2>
+        <div class="payment-summary-strip">
+          <div class="payment-summary-card">
+            <span class="stat-tile-label">Total Cap</span>
+            <div class="stat-tile-value">$55,000</div>
+            <span class="stat-tile-sub">Fixed Contract</span>
+          </div>
+          <div class="payment-summary-card">
+            <span class="stat-tile-label">Committed / Spent</span>
+            <div class="stat-tile-value" style="color:var(--color-accent-dark)">$34,200</div>
+            <span class="stat-tile-sub">62.1% of Budget</span>
+          </div>
+          <div class="payment-summary-card">
+            <span class="stat-tile-label">Remaining Buffer</span>
+            <div class="stat-tile-value" style="color:#2a0f2e">$20,800</div>
+            <span class="stat-tile-sub">Unallocated Cushion</span>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <span class="dash-card-title">Category Breakdown (Click edit to adjust spent amounts)</span>
+          </div>
+
+          <div class="budget-row">
+            <div class="budget-row-header">
+              <div class="budget-cat">1. Venue Rental &amp; Permits (Villa Balbiano)</div>
+              <div class="budget-amounts">
+                Spent: <strong class="budget-spent" data-spent="18500">$18,500</strong> / Est. $18,500
+                <button class="action-btn budget-edit-btn" style="margin-left:.5rem">Edit</button>
+              </div>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:100%"></div></div>
+          </div>
+
+          <div class="budget-row">
+            <div class="budget-row-header">
+              <div class="budget-cat">2. Catering, Wine &amp; Aperitivo Bar</div>
+              <div class="budget-amounts">
+                Spent: <strong class="budget-spent" data-spent="8200">$8,200</strong> / Est. $14,000
+                <button class="action-btn budget-edit-btn" style="margin-left:.5rem">Edit</button>
+              </div>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:58%"></div></div>
+          </div>
+
+          <div class="budget-row">
+            <div class="budget-row-header">
+              <div class="budget-cat">3. Botanical Styling &amp; Lighting</div>
+              <div class="budget-amounts">
+                Spent: <strong class="budget-spent" data-spent="3500">$3,500</strong> / Est. $7,500
+                <button class="action-btn budget-edit-btn" style="margin-left:.5rem">Edit</button>
+              </div>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:46%"></div></div>
+          </div>
+
+          <div class="budget-row">
+            <div class="budget-row-header">
+              <div class="budget-cat">4. Photography &amp; Editorial Cinema</div>
+              <div class="budget-amounts">
+                Spent: <strong class="budget-spent" data-spent="4000">$4,000</strong> / Est. $6,500
+                <button class="action-btn budget-edit-btn" style="margin-left:.5rem">Edit</button>
+              </div>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:61%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 4: VENDORS -->
+      <div class="dash-view" id="view-vendors">
+        <h2 class="dash-view-title">Curated Vendor Team</h2>
+        <div class="grid-3 gap-3">
+          <!-- Vendor 1 -->
+          <div class="vendor-card dash-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem">
+              <span class="status-pill status-booked">Booked</span>
+              <span style="font-size:.78rem;font-weight:700;color:var(--color-primary)">$18,500</span>
+            </div>
+            <h4>Villa Balbiano</h4>
+            <p style="font-size:.82rem;color:var(--color-text-secondary);margin-bottom:.75rem">Historic Lakefront Villa Venue &middot; Ossuccio, Italy</p>
+            <div style="font-size:.78rem;color:var(--color-text-muted);border-top:1px solid var(--color-border);padding-top:.5rem">
+              Lead Contact: Francesca Morandi &middot; Contract Signed Oct 2025
+            </div>
+          </div>
+
+          <!-- Vendor 2 -->
+          <div class="vendor-card dash-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem">
+              <span class="status-pill status-booked">Booked</span>
+              <span style="font-size:.78rem;font-weight:700;color:var(--color-primary)">$6,500</span>
+            </div>
+            <h4>Matteo Rossi Photography</h4>
+            <p style="font-size:.82rem;color:var(--color-text-secondary);margin-bottom:.75rem">Editorial Fine-Art Film &amp; Digital Coverage (10 hrs)</p>
+            <div style="font-size:.78rem;color:var(--color-text-muted);border-top:1px solid var(--color-border);padding-top:.5rem">
+              Lead: Matteo &middot; Pre-wedding sunset session included
+            </div>
+          </div>
+
+          <!-- Vendor 3 (Actionable Demo) -->
+          <div class="vendor-card dash-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem">
+              <span class="status-pill status-shortlisted">Proposal Pending</span>
+              <span style="font-size:.78rem;font-weight:700;color:var(--color-primary)">$7,200</span>
+            </div>
+            <h4>Fioreria Como &amp; Botanicals</h4>
+            <p style="font-size:.82rem;color:var(--color-text-secondary);margin-bottom:.75rem">Garden Rose Runners, Pergola Arch, Scented Tapers</p>
+            <div class="vendor-actions" style="display:flex;gap:.5rem;margin-top:.75rem">
+              <button class="action-btn" data-vendor-action="accept" style="background:var(--color-accent);color:var(--color-text-on-accent);border:none">Approve &amp; Book</button>
+              <button class="action-btn" data-vendor-action="decline">Request Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 5: TIMELINE -->
+      <div class="dash-view" id="view-timeline">
+        <div class="dash-card-header">
+          <h2 class="dash-view-title" style="margin-bottom:0">Wedding Day Run-Sheet (Aug 8, 2026)</h2>
+          <span style="font-size:.82rem;color:var(--color-text-muted)">Click any entry to edit notes</span>
+        </div>
+
+        <div class="dash-card">
+          <div class="timeline-block">
+            <div class="timeline-time">10:00 AM</div>
+            <div class="timeline-block-body">
+              <h4>Bridal Suite Preparation &amp; Hair/Makeup</h4>
+              <p>Senior bridal stylist arrives with champagne breakfast; steamer on site.</p>
+              <span class="vendor-chip">Beauty Team &middot; Suite 4</span>
+            </div>
+          </div>
+
+          <div class="timeline-block">
+            <div class="timeline-time">1:30 PM</div>
+            <div class="timeline-block-body">
+              <h4>First Look &amp; Villa Balbiano Garden Portraits</h4>
+              <p>Intimate meeting by the cypress alley before guest water-taxis arrive.</p>
+              <span class="vendor-chip">Matteo Rossi Photography</span>
+            </div>
+          </div>
+
+          <div class="timeline-block">
+            <div class="timeline-time">4:00 PM</div>
+            <div class="timeline-block-body">
+              <h4>Lakeside Vows Ceremony</h4>
+              <p>Acoustic strings prelude; processional down the stone terrace steps.</p>
+              <span class="vendor-chip">VOWS Lead Planner &middot; Isabelle</span>
+            </div>
+          </div>
+
+          <div class="timeline-block">
+            <div class="timeline-time">5:15 PM</div>
+            <div class="timeline-block-body">
+              <h4>Aperitivo &amp; Champagne Tower on Lower Terrace</h4>
+              <p>Spumante, antipasti stations, live jazz trio.</p>
+              <span class="vendor-chip">Villa Balbiano Catering</span>
+            </div>
+          </div>
+
+          <div class="timeline-block">
+            <div class="timeline-time">7:00 PM</div>
+            <div class="timeline-block-body">
+              <h4>Seated Candlelit Dinner &amp; Speeches</h4>
+              <p>Three-course slow dining menu under warm botanical fairy canopy.</p>
+              <span class="vendor-chip">All Staff &middot; Speech Mic Concierge</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline Edit Modal -->
+        <div class="modal" id="timeline-modal" role="dialog" aria-modal="true" style="position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:999">
+          <div style="background:var(--color-surface);border-radius:var(--radius-lg);padding:2rem;max-width:440px;width:90%;box-shadow:var(--shadow-xl)">
+            <h3 style="margin-bottom:1rem">Edit Schedule Milestone</h3>
+            <div class="form-group mb-3">
+              <label for="modal-timeline-title" class="form-label">Activity Description</label>
+              <input type="text" id="modal-timeline-title" class="form-input">
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:.5rem">
+              <button type="button" class="btn btn-ghost-dark btn-sm" id="modal-close">Cancel</button>
+              <button type="button" class="btn btn-primary btn-sm" id="modal-save">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 6: MESSAGES -->
+      <div class="dash-view" id="view-messages">
+        <h2 class="dash-view-title">Direct Planner Concierge</h2>
+        <div class="messages-layout">
+          <!-- Threads list -->
+          <div class="message-list">
+            <div class="message-item active">
+              <div class="message-item-from">Isabelle Laurent (Lead Planner)</div>
+              <div class="message-item-preview">Reviewing the linen swatches from Como today...</div>
+              <div class="message-item-time">10:45 AM</div>
+            </div>
+            <div class="message-item">
+              <div class="message-item-from">Oliver Mackenzie (Design)</div>
+              <div class="message-item-preview">Attached are the 3D tablescape sketches!</div>
+              <div class="message-item-time">Yesterday</div>
+            </div>
+            <div class="message-item">
+              <div class="message-item-from">Villa Balbiano Concierge</div>
+              <div class="message-item-preview">Water-taxi mooring confirmation received.</div>
+              <div class="message-item-time">Oct 12</div>
+            </div>
+          </div>
+
+          <!-- Active thread -->
+          <div class="message-thread">
+            <div class="thread-header">
+              Chat with Isabelle Laurent &middot; Lead Wedding Planner
+            </div>
+            <div class="thread-body">
+              <div class="thread-message from-them">
+                <div class="thread-message-bubble">
+                  Bonjour Elena! I met with the villa sommelier yesterday. We selected three exceptional regional wines for the aperitivo.
+                </div>
+                <div class="thread-message-time">10:30 AM</div>
+              </div>
+              <div class="thread-message from-me">
+                <div class="thread-message-bubble">
+                  That sounds wonderful Isabelle! Marcus was hoping we could also include a signature peach Bellini on arrival?
+                </div>
+                <div class="thread-message-time">10:38 AM</div>
+              </div>
+              <div class="thread-message from-them">
+                <div class="thread-message-bubble">
+                  Already mapped into the bar run-sheet! We are using fresh white peaches from northern Italy.
+                </div>
+                <div class="thread-message-time">10:45 AM</div>
+              </div>
+            </div>
+            <div class="compose-box">
+              <input type="text" placeholder="Type a message to your planner..." aria-label="Type message">
+              <button class="btn btn-primary send-btn">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 7: SETTINGS -->
+      <div class="dash-view" id="view-settings">
+        <h2 class="dash-view-title">Portal Preferences</h2>
+        <div class="dash-card">
+          <form class="settings-form">
+            <div class="settings-section-title">Couple Information</div>
+            <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+              <div class="form-group">
+                <label for="partner-1" class="form-label">Partner 1</label>
+                <input type="text" id="partner-1" class="form-input" value="Elena Vance">
+              </div>
+              <div class="form-group">
+                <label for="partner-2" class="form-label">Partner 2</label>
+                <input type="text" id="partner-2" class="form-input" value="Marcus Thorne">
+              </div>
+            </div>
+
+            <div class="settings-section-title">Notifications</div>
+            <div class="toggle-row">
+              <span class="toggle-row-label">Instant WhatsApp alerts when planner updates run-sheet</span>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span class="toggle-row-label">Weekly milestone digest email</span>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Save Preferences</button>
+          </form>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

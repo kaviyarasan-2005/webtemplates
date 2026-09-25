@@ -1,0 +1,591 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOVE — HR Client Mobility Command Dashboard</title>
+  <meta name="description" content="Manage corporate relocations, employee document checklists, real-time spend telemetry, and active transit pipelines.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dark-mode.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E1713'/%3E%3Cpath d='M6 10L12 6.5V21.5L6 25V10Z' fill='%23E5BE85'/%3E%3Cpath d='M20 6.5L26 10V25L20 21.5V6.5Z' fill='%23C59B63'/%3E%3Cpath d='M12 6.5L16 11L20 6.5L16 17.5L12 6.5Z' fill='%23FFFFFF'/%3E%3Cpath d='M12 21.5L16 25L20 21.5L16 18.5L12 21.5Z' fill='%23C59B63'/%3E%3C/svg%3E">
+</head>
+<body style="background-color: var(--bg-page);">
+
+  <div class="dashboard-layout">
+    <!-- Backdrop overlay for mobile drawer -->
+    <div class="dash-sidebar-overlay" id="dashSidebarOverlay"></div>
+
+    <!-- ==========================================================================
+         FIXED LEFT SIDEBAR (Rule 12: hamburger on left, collapsed state keeps icons visible)
+         ========================================================================== -->
+    <aside class="dash-sidebar" aria-label="Dashboard Sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="brand-logo" style="color:#FFFFFF; font-size:1.25rem;">
+          <span class="brand-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="8" fill="#1E1713" stroke="url(#bl)" stroke-width="1.2"/><path d="M6 10L12 6.5V21.5L6 25V10Z" fill="url(#fl)"/><path d="M20 6.5L26 10V25L20 21.5V6.5Z" fill="url(#fr)"/><path d="M12 6.5L16 11L20 6.5L16 17.5L12 6.5Z" fill="url(#fc)"/><path d="M12 21.5L16 25L20 21.5L16 18.5L12 21.5Z" fill="url(#fb)"/><defs><linearGradient id="bl" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#C59B63" stop-opacity="0.8"/><stop offset="1" stop-color="#8B693A" stop-opacity="0.3"/></linearGradient><linearGradient id="fl" x1="6" y1="6.5" x2="12" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#E5BE85"/><stop offset="1" stop-color="#B38446"/></linearGradient><linearGradient id="fr" x1="20" y1="6.5" x2="26" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#C59B63"/><stop offset="1" stop-color="#8E6631"/></linearGradient><linearGradient id="fc" x1="12" y1="6.5" x2="20" y2="17.5" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#E8D5B5"/></linearGradient><linearGradient id="fb" x1="12" y1="18.5" x2="20" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#D9AB6D"/><stop offset="1" stop-color="#9E7339"/></linearGradient></defs></svg></span>
+          <span class="nav-text">MOVE</span>
+        </a>
+        <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Navigation Sidebar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="dash-nav-item" data-tooltip="Overview">
+          <a href="#" class="dash-nav-link active" data-view="viewOverview">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span class="nav-text">Overview</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="New Request">
+          <a href="#" class="dash-nav-link" data-view="viewNewRequest">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            <span class="nav-text">New Request</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="My Moves">
+          <a href="#" class="dash-nav-link" data-view="viewMyMoves">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            <span class="nav-text">My Moves</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="Documents">
+          <a href="#" class="dash-nav-link" data-view="viewDocuments">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <span class="nav-text">Documents</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="Cost Estimates">
+          <a href="#" class="dash-nav-link" data-view="viewEstimates">
+            <svg viewBox="0 0 24 24" fill="none"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <span class="nav-text">Cost Estimates</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="Reports">
+          <a href="#" class="dash-nav-link" data-view="viewReports">
+            <svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            <span class="nav-text">Reports</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="Messages">
+          <a href="#" class="dash-nav-link" data-view="viewMessages">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <span class="nav-text">Messages</span>
+          </a>
+        </li>
+        <li class="dash-nav-item" data-tooltip="Settings">
+          <a href="#" class="dash-nav-link" data-view="viewSettings">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <span class="nav-text">Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <div style="padding:1.25rem; border-top:1px solid rgba(255, 255, 255, 0.1);">
+        <a href="login.html" class="dash-nav-link" style="color:#D5C9BC;">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span class="nav-text">Sign Out</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ==========================================================================
+         MAIN VIEWPORT
+         ========================================================================== -->
+    <main class="dash-main">
+      <!-- Topbar -->
+      <header class="dash-topbar">
+        <div class="dash-topbar-left">
+          <button class="dash-topbar-hamburger" id="dashSidebarToggle" aria-label="Toggle Navigation Sidebar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <input type="search" placeholder="Search employee, move ID..." class="dash-search-input">
+        </div>
+
+        <div class="dash-topbar-right">
+          <!-- Notification Bell -->
+          <div style="position:relative; cursor:pointer;" title="Notifications">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <span style="position:absolute; top:-4px; right:-4px; width:8px; height:8px; background:var(--accent-color); border-radius:50%;"></span>
+          </div>
+
+          <!-- Mandatory Toggles -->
+          <button class="toggle-btn theme-toggle-btn" aria-label="Toggle Color Theme"></button>
+          <button class="toggle-btn rtl-toggle-btn" aria-label="Toggle Reading Direction">RTL</button>
+
+          <!-- HR Profile Chip -->
+          <div class="profile-chip">
+            <img src="images/avatar-hr-client.jpg" alt="Sarah Jenkins">
+            <div class="profile-info">
+              <h4>Sarah Jenkins</h4>
+              <span>HR Client &bull; CloudScale</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Shimmer Skeleton Loading Container -->
+      <div id="dashSkeleton" style="display:none; padding:2rem;">
+        <div class="skeleton-shimmer" style="height:40px; width:220px; margin-bottom:1.5rem;"></div>
+        <div class="skeleton-grid-4" style="margin-bottom:2rem;">
+          <div class="skeleton-shimmer" style="height:100px;"></div>
+          <div class="skeleton-shimmer" style="height:100px;"></div>
+          <div class="skeleton-shimmer" style="height:100px;"></div>
+          <div class="skeleton-shimmer" style="height:100px;"></div>
+        </div>
+        <div class="skeleton-grid-2">
+          <div class="skeleton-shimmer" style="height:260px;"></div>
+          <div class="skeleton-shimmer" style="height:260px;"></div>
+        </div>
+      </div>
+
+      <!-- Dashboard Views Container -->
+      <div class="dash-content">
+
+        <!-- VIEW 1: OVERVIEW (Default) -->
+        <section id="viewOverview" class="view-panel active">
+          <!-- Stat Tiles -->
+          <div class="stat-tiles-grid">
+            <div class="stat-tile">
+              <span style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Active Moves</span>
+              <div class="stat-val">24</div>
+              <span style="font-size:0.78rem; color:var(--accent-color); font-weight:600;">+4 booked this month</span>
+            </div>
+
+            <div class="stat-tile">
+              <span style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Employees in Transit</span>
+              <div class="stat-val">16</div>
+              <span style="font-size:0.78rem; color:var(--text-muted);">8 ocean, 8 air lanes</span>
+            </div>
+
+            <div class="stat-tile">
+              <span style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Documents Pending</span>
+              <div class="stat-val">5</div>
+              <span style="font-size:0.78rem; color:var(--accent-color); font-weight:600;">2 require HR sign-off</span>
+            </div>
+
+            <div class="stat-tile">
+              <span style="font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">YTD Mobility Spend</span>
+              <div class="stat-val">$396k</div>
+              <span style="font-size:0.78rem; color:var(--text-muted);">88% of annual budget target</span>
+            </div>
+          </div>
+
+          <!-- EXACTLY FOUR HAND-BUILT CHARTS -->
+          <div class="charts-grid-2x2">
+            <!-- Chart 1: Line Chart -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <div>
+                  <h4>Monthly Relocation Spend</h4>
+                  <p style="font-size:0.8rem; margin:0;">Expenditure per month (USD)</p>
+                </div>
+                <span class="section-badge" style="margin:0; font-size:0.7rem;">Line Chart</span>
+              </div>
+              <div class="chart-svg-container" id="userSpendLineChart"></div>
+            </div>
+
+            <!-- Chart 2: Bar Chart -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <div>
+                  <h4>Active Moves per Month</h4>
+                  <p style="font-size:0.8rem; margin:0;">Initiated employee relocations</p>
+                </div>
+                <span class="section-badge" style="margin:0; font-size:0.7rem;">Bar Chart</span>
+              </div>
+              <div class="chart-svg-container" id="userMovesBarChart"></div>
+            </div>
+
+            <!-- Chart 3: Donut Chart -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <div>
+                  <h4>Move Status Split</h4>
+                  <p style="font-size:0.8rem; margin:0;">Active caseload breakdown</p>
+                </div>
+                <span class="section-badge" style="margin:0; font-size:0.7rem;">Donut Chart</span>
+              </div>
+              <div class="chart-svg-container" id="userStatusDonutChart"></div>
+            </div>
+
+            <!-- Chart 4: Area Chart -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <div>
+                  <h4>Cumulative Spend vs. Budget</h4>
+                  <p style="font-size:0.8rem; margin:0;">Spend (solid) vs Annual Target (dashed)</p>
+                </div>
+                <span class="section-badge" style="margin:0; font-size:0.7rem;">Area Chart</span>
+              </div>
+              <div class="chart-svg-container" id="userSpendAreaChart"></div>
+            </div>
+          </div>
+
+          <!-- Next Milestone Card -->
+          <div class="review-card" style="padding:1.5rem; flex-direction:row; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <span class="box-label" style="margin-bottom:0.25rem;">NEXT KEY MILESTONE</span>
+              <h4 style="margin:0;">Customs Key Clearance: Helena Martins &bull; Singapore (SIN)</h4>
+              <p style="font-size:0.85rem; margin:0; color:var(--text-muted);">Inspection passed at Jurong Port. Residence keys delivery scheduled tomorrow 10:00 SGT.</p>
+            </div>
+            <button class="btn btn-camel" data-demo-toast="Helena Martins shipment details downloaded.">View Bill of Lading</button>
+          </div>
+        </section>
+
+        <!-- VIEW 2: NEW REQUEST -->
+        <section id="viewNewRequest" class="view-panel">
+          <div style="max-width:720px;">
+            <h2 style="margin-bottom:0.5rem;">Submit New Relocation Brief</h2>
+            <p style="margin-bottom:2rem;">Register an employee for corporate mobility management. Generates an immediate reference number.</p>
+
+            <form id="newRequestForm" class="move-request-form">
+              <div class="grid-2" style="margin-bottom:1rem;">
+                <div>
+                  <label class="form-label">Employee Full Name *</label>
+                  <input type="text" required class="form-control" placeholder="e.g. Liam Vance">
+                </div>
+                <div>
+                  <label class="form-label">Job Title / Department *</label>
+                  <input type="text" required class="form-control" placeholder="e.g. Senior Security Engineer">
+                </div>
+              </div>
+
+              <div class="grid-2" style="margin-bottom:1rem;">
+                <div>
+                  <label class="form-label">Origin Location *</label>
+                  <input type="text" required class="form-control" placeholder="e.g. London, UK">
+                </div>
+                <div>
+                  <label class="form-label">Destination Location *</label>
+                  <input type="text" required class="form-control" placeholder="e.g. Singapore (or Tokyo)">
+                </div>
+              </div>
+
+              <div class="grid-2" style="margin-bottom:1.5rem;">
+                <div>
+                  <label class="form-label">Target Moving Date *</label>
+                  <input type="date" required class="form-control">
+                </div>
+                <div>
+                  <label class="form-label">Engagement Tier</label>
+                  <select class="form-control">
+                    <option>Full-Service Executive Mobility</option>
+                    <option>Essential Move (Single)</option>
+                    <option>Enterprise Cohort Transfer</option>
+                  </select>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-camel" style="width:100%;">Dispatch Relocation Request</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- VIEW 3: MY MOVES -->
+        <section id="viewMyMoves" class="view-panel">
+          <h2 style="margin-bottom:0.5rem;">Active Relocations &amp; Stage Trackers</h2>
+          <p style="margin-bottom:2rem;">Live stage trackers for all relocating personnel with pulse telemetry.</p>
+
+          <div style="display:flex; flex-direction:column; gap:1.5rem;">
+            <!-- Move Card 1 -->
+            <div class="review-card" style="padding:2rem;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem;">
+                <div>
+                  <h3>Helena Martins &bull; Principal Cryptographer</h3>
+                  <p style="color:var(--accent-color); font-weight:700; font-size:0.88rem;">ROUTE: LISBON (LIS) &rarr; SINGAPORE (SIN) &bull; TARGET: OCT 12, 2026</p>
+                </div>
+                <span class="box-label">STAGE 4 &bull; IN TRANSIT</span>
+              </div>
+
+              <!-- Stage Tracker Component -->
+              <div class="stage-tracker">
+                <div class="stage-step active">
+                  <div class="stage-circle">&#10003;</div>
+                  <span class="stage-label">Survey</span>
+                </div>
+                <div class="stage-step active">
+                  <div class="stage-circle">&#10003;</div>
+                  <span class="stage-label">Quoted</span>
+                </div>
+                <div class="stage-step active">
+                  <div class="stage-circle">&#10003;</div>
+                  <span class="stage-label">Packing</span>
+                </div>
+                <div class="stage-step active">
+                  <div class="stage-circle"><span class="pulse-dot" style="width:8px; height:8px;"></span></div>
+                  <span class="stage-label" style="color:var(--accent-color); font-weight:700;">In Transit</span>
+                </div>
+                <div class="stage-step">
+                  <div class="stage-circle">5</div>
+                  <span class="stage-label">Delivered</span>
+                </div>
+                <div class="stage-step">
+                  <div class="stage-circle">6</div>
+                  <span class="stage-label">Settled</span>
+                </div>
+              </div>
+              <div style="display:flex; justify-content:flex-end; gap:1rem; margin-top:1rem;">
+                <button class="btn btn-outline-dark" data-demo-toast="Tracking link sent to employee email.">Send Tracking SMS</button>
+                <button class="btn btn-camel" data-demo-toast="Opened inventory manifest #MV-7749.">View Inventory (84 items)</button>
+              </div>
+            </div>
+
+            <!-- Move Card 2 -->
+            <div class="review-card" style="padding:2rem;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem;">
+                <div>
+                  <h3>David Kim &bull; Semiconductor Architect</h3>
+                  <p style="color:var(--accent-color); font-weight:700; font-size:0.88rem;">ROUTE: SEOUL (ICN) &rarr; LONDON (LHR) &bull; TARGET: NOV 05, 2026</p>
+                </div>
+                <span class="box-label">STAGE 2 &bull; QUOTED</span>
+              </div>
+
+              <div class="stage-tracker">
+                <div class="stage-step active">
+                  <div class="stage-circle">&#10003;</div>
+                  <span class="stage-label">Survey</span>
+                </div>
+                <div class="stage-step active">
+                  <div class="stage-circle"><span class="pulse-dot" style="width:8px; height:8px;"></span></div>
+                  <span class="stage-label" style="color:var(--accent-color); font-weight:700;">Quoted</span>
+                </div>
+                <div class="stage-step">
+                  <div class="stage-circle">3</div>
+                  <span class="stage-label">Packing</span>
+                </div>
+                <div class="stage-step">
+                  <div class="stage-circle">4</div>
+                  <span class="stage-label">In Transit</span>
+                </div>
+                <div class="stage-step">
+                  <div class="stage-circle">5</div>
+                  <span class="stage-label">Delivered</span>
+                </div>
+                <div class="stage-step">
+                  <div class="stage-circle">6</div>
+                  <span class="stage-label">Settled</span>
+                </div>
+              </div>
+              <div style="display:flex; justify-content:flex-end; gap:1rem; margin-top:1rem;">
+                <button class="btn btn-camel" data-demo-toast="Quote #QT-992 approved. Move moved to packing schedule.">Approve Estimate ($11,200)</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 4: DOCUMENTS -->
+        <section id="viewDocuments" class="view-panel">
+          <h2 style="margin-bottom:0.5rem;">Document Compliance Checklists</h2>
+          <p style="margin-bottom:2rem;">Housing agreements, visa apostilles, and customs declarations per active candidate.</p>
+
+          <div class="grid-2">
+            <!-- Visa Checklist -->
+            <div class="chart-card">
+              <span class="box-label" style="margin-bottom:0.75rem;">VISA &amp; LEGAL &bull; HELENA MARTINS</span>
+              <ul class="doc-checklist">
+                <li class="doc-item">
+                  <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer;">
+                    <input type="checkbox" class="doc-check-input" checked>
+                    <span>Passport Digital Scans (Color)</span>
+                  </label>
+                  <span style="font-size:0.75rem; color:var(--accent-color); font-weight:700;">VERIFIED</span>
+                </li>
+                <li class="doc-item">
+                  <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer;">
+                    <input type="checkbox" class="doc-check-input" checked>
+                    <span>Employment Pass Application Form 8</span>
+                  </label>
+                  <span style="font-size:0.75rem; color:var(--accent-color); font-weight:700;">VERIFIED</span>
+                </li>
+                <li class="doc-item">
+                  <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer;">
+                    <input type="checkbox" class="doc-check-input">
+                    <span>Apostilled Master's Degree Diploma</span>
+                  </label>
+                  <button class="btn btn-outline-dark" style="padding:2px 8px; font-size:0.75rem;" data-demo-toast="Upload modal opened for document.">Upload</button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Housing Checklist -->
+            <div class="chart-card">
+              <span class="box-label" style="margin-bottom:0.75rem;">DESTINATION LEASE &bull; HELENA MARTINS</span>
+              <ul class="doc-checklist">
+                <li class="doc-item">
+                  <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer;">
+                    <input type="checkbox" class="doc-check-input" checked>
+                    <span>Executive Lease Agreement (Orchard Rd)</span>
+                  </label>
+                  <span style="font-size:0.75rem; color:var(--accent-color); font-weight:700;">SIGNED</span>
+                </li>
+                <li class="doc-item">
+                  <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer;">
+                    <input type="checkbox" class="doc-check-input" checked>
+                    <span>Security Deposit Bank Guarantee</span>
+                  </label>
+                  <span style="font-size:0.75rem; color:var(--accent-color); font-weight:700;">ESCROWED</span>
+                </li>
+                <li class="doc-item">
+                  <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer;">
+                    <input type="checkbox" class="doc-check-input">
+                    <span>Singapore Power Electricity / Fiber Hookup</span>
+                  </label>
+                  <button class="btn btn-outline-dark" style="padding:2px 8px; font-size:0.75rem;" data-demo-toast="Utility transfer initiated.">Connect</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 5: COST ESTIMATES -->
+        <section id="viewEstimates" class="view-panel">
+          <h2 style="margin-bottom:0.5rem;">Relocation Cost Estimates</h2>
+          <p style="margin-bottom:2rem;">Itemized line item budgets across transport, packing, customs, and insurance.</p>
+
+          <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:8px;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border-strong); text-align:left; color:var(--text-muted); font-size:0.85rem;">
+                  <th style="padding:1rem;">Estimate ID</th>
+                  <th style="padding:1rem;">Employee</th>
+                  <th style="padding:1rem;">Lane Route</th>
+                  <th style="padding:1rem;">Transport</th>
+                  <th style="padding:1rem;">Insurance</th>
+                  <th style="padding:1rem;">Total USD</th>
+                  <th style="padding:1rem;">Status</th>
+                  <th style="padding:1rem;">Action</th>
+                </tr>
+              </thead>
+              <tbody style="font-size:0.9rem;">
+                <tr style="border-bottom:1px solid var(--border-subtle);">
+                  <td style="padding:1rem; font-family:monospace; font-weight:700;">EST-2026-081</td>
+                  <td style="padding:1rem;">Helena Martins</td>
+                  <td style="padding:1rem;">LIS &rarr; SIN</td>
+                  <td style="padding:1rem;">$8,400</td>
+                  <td style="padding:1rem;">$1,100</td>
+                  <td style="padding:1rem; font-weight:700; color:var(--accent-color);">$12,850</td>
+                  <td style="padding:1rem;"><span class="section-badge" style="margin:0; font-size:0.7rem;">Approved</span></td>
+                  <td style="padding:1rem;"><button class="btn btn-outline-dark" style="padding:4px 10px; font-size:0.75rem;" data-demo-toast="Revision request filed for EST-2026-081">Revise</button></td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border-subtle);">
+                  <td style="padding:1rem; font-family:monospace; font-weight:700;">EST-2026-094</td>
+                  <td style="padding:1rem;">David Kim</td>
+                  <td style="padding:1rem;">ICN &rarr; LHR</td>
+                  <td style="padding:1rem;">$7,200</td>
+                  <td style="padding:1rem;">$950</td>
+                  <td style="padding:1rem; font-weight:700; color:var(--accent-color);">$11,200</td>
+                  <td style="padding:1rem;"><span class="section-badge" style="margin:0; font-size:0.7rem; background:#EDE6DD;">Sent</span></td>
+                  <td style="padding:1rem;"><button class="btn btn-camel" style="padding:4px 10px; font-size:0.75rem;" data-demo-toast="Estimate approved!">Approve</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- VIEW 6: REPORTS -->
+        <section id="viewReports" class="view-panel">
+          <h2 style="margin-bottom:0.5rem;">Mobility Program Reports</h2>
+          <p style="margin-bottom:2rem;">Audited quarterly expenditure reconciliations, compliance reports, and carbon offset summaries.</p>
+
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="doc-item">
+              <div>
+                <h4 style="margin-bottom:0.25rem;">Q2 2026 Global Mobility Financial Audit</h4>
+                <span style="font-size:0.8rem; color:var(--text-muted);">PDF &bull; 4.2 MB &bull; Generated July 2026</span>
+              </div>
+              <button class="btn btn-camel" style="padding:6px 14px; font-size:0.85rem;" data-demo-toast="Downloading Q2 Audit Report...">Download</button>
+            </div>
+
+            <div class="doc-item">
+              <div>
+                <h4 style="margin-bottom:0.25rem;">APAC Employment Pass Policy Compliance Matrix</h4>
+                <span style="font-size:0.8rem; color:var(--text-muted);">XLSX &bull; 1.8 MB &bull; Generated August 2026</span>
+              </div>
+              <button class="btn btn-camel" style="padding:6px 14px; font-size:0.85rem;" data-demo-toast="Downloading Compliance Matrix...">Download</button>
+            </div>
+
+            <div class="doc-item">
+              <div>
+                <h4 style="margin-bottom:0.25rem;">Annual Employee Relocation Satisfaction Survey</h4>
+                <span style="font-size:0.8rem; color:var(--text-muted);">PDF &bull; 2.6 MB &bull; 99.1% Satisfaction Score</span>
+              </div>
+              <button class="btn btn-camel" style="padding:6px 14px; font-size:0.85rem;" data-demo-toast="Downloading Survey Results...">Download</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 7: MESSAGES -->
+        <section id="viewMessages" class="view-panel">
+          <h2 style="margin-bottom:0.5rem;">Desk Coordinator Communications</h2>
+          <p style="margin-bottom:2rem;">Secure channel with your assigned senior move coordinator in London.</p>
+
+          <div class="chat-thread-box" style="margin-bottom:1.5rem;">
+            <div class="chat-bubble-a" style="align-self:flex-start; border-left:none; border-right:3px solid var(--accent-color);">
+              <div style="font-size:0.75rem; color:var(--accent-color); font-weight:700; margin-bottom:0.25rem;">JULIAN STERLING (MOVE DESK)</div>
+              Good morning Sarah. Container 419 for David Kim has completed export scanning at Southampton. Custom clearance documents for Heathrow air freight are also pre-filed.
+            </div>
+
+            <div class="chat-bubble-q" style="align-self:flex-end;">
+              Thank you Julian. Could you confirm if the piano rigging team is scheduled for Friday morning?
+            </div>
+
+            <div class="chat-bubble-a" style="align-self:flex-start; border-left:none; border-right:3px solid var(--accent-color);">
+              <div style="font-size:0.75rem; color:var(--accent-color); font-weight:700; margin-bottom:0.25rem;">JULIAN STERLING (MOVE DESK)</div>
+              Confirmed. The master rigging crew will arrive at 08:30 AM with specialized acoustic flight padding.
+            </div>
+          </div>
+
+          <form onsubmit="event.preventDefault(); alert('Message dispatched to move coordinator.');" style="display:flex; gap:0.75rem;">
+            <input type="text" placeholder="Write message to move desk..." required class="form-control" style="flex:1;">
+            <button type="submit" class="btn btn-camel">Send</button>
+          </form>
+        </section>
+
+        <!-- VIEW 8: SETTINGS -->
+        <section id="viewSettings" class="view-panel">
+          <h2 style="margin-bottom:0.5rem;">Enterprise Profile Settings</h2>
+          <p style="margin-bottom:2rem;">Configure corporate billing contacts, notification webhooks, and team access.</p>
+
+          <div style="max-width:640px;">
+            <form onsubmit="event.preventDefault(); alert('Settings saved successfully.');" class="move-request-form">
+              <div class="form-group">
+                <label class="form-label">Corporate Entity Name</label>
+                <input type="text" class="form-control" value="CloudScale Systems Ltd">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Primary People Operations Lead</label>
+                <input type="text" class="form-control" value="Sarah Jenkins">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Billing Invoicing Email</label>
+                <input type="email" class="form-control" value="finance-ap@cloudscale.com">
+              </div>
+
+              <div style="margin-bottom:1.5rem;">
+                <label class="form-label">Notification Preferences</label>
+                <label style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;"><input type="checkbox" checked> Email notifications for customs clearance</label>
+                <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" checked> SMS alerts for flight and vessel departures</label>
+              </div>
+
+              <button type="submit" class="btn btn-camel">Save Account Changes</button>
+            </form>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

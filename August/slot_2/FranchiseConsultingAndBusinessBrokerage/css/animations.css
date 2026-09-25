@@ -1,0 +1,141 @@
+/* ============================================================
+   DEAL — Animations & Scroll Transitions
+   ============================================================ */
+
+/* ── Keyframes ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.90); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.55; }
+}
+@keyframes progressBar {
+  0%   { width: 0%; }
+  100% { width: 100%; }
+}
+@keyframes counterTick {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+@keyframes signatureDraw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── Scroll-triggered fade-up ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity var(--dur-slow) var(--ease-out),
+              transform var(--dur-slow) var(--ease-out);
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-up.delay-1 { transition-delay: 0.10s; }
+.fade-up.delay-2 { transition-delay: 0.20s; }
+.fade-up.delay-3 { transition-delay: 0.30s; }
+.fade-up.delay-4 { transition-delay: 0.40s; }
+.fade-up.delay-5 { transition-delay: 0.50s; }
+.fade-up.delay-6 { transition-delay: 0.60s; }
+
+.fade-left {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity var(--dur-slow) var(--ease-out),
+              transform var(--dur-slow) var(--ease-out);
+}
+.fade-left.visible { opacity: 1; transform: translateX(0); }
+
+.fade-right {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity var(--dur-slow) var(--ease-out),
+              transform var(--dur-slow) var(--ease-out);
+}
+.fade-right.visible { opacity: 1; transform: translateX(0); }
+
+.scale-in {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity var(--dur-slow) var(--ease-out),
+              transform var(--dur-slow) var(--ease-spring);
+}
+.scale-in.visible { opacity: 1; transform: scale(1); }
+
+/* ── Reduce motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up, .fade-left, .fade-right, .scale-in {
+    opacity: 1; transform: none; transition: none;
+  }
+}
+@media (max-width: 768px) {
+  .fade-up { transform: translateY(14px); }
+  .fade-left { transform: translateX(20px); }
+  .fade-right { transform: translateX(-20px); }
+}
+
+/* ── Animated counter display ── */
+.counter-value {
+  font-family: var(--font-display);
+  font-size: var(--fs-5xl);
+  font-weight: var(--fw-bold);
+  color: var(--brass);
+  line-height: 1;
+}
+.counter-suffix {
+  font-size: 0.55em;
+  vertical-align: super;
+  font-weight: var(--fw-semibold);
+}
+
+/* ── Float animation for decorative elements ── */
+.float-anim { animation: floatY 4s ease-in-out infinite; }
+
+/* ── Skeleton loading shimmer ── */
+.shimmer {
+  background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ── Progress bar ── */
+.progress-track {
+  height: 4px;
+  background: rgba(255,255,255,0.15);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--brass);
+  border-radius: var(--radius-full);
+  transition: width var(--dur-slow) var(--ease-out);
+}

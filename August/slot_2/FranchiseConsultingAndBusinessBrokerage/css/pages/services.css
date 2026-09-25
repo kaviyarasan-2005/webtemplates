@@ -1,0 +1,181 @@
+/* ============================================================
+   Services Page
+   ============================================================ */
+
+/* ── S1: Three-Lane Corridor Hero ── */
+.corridor-hero { position: relative; min-height: 100svh; display: flex; overflow: hidden; }
+.corridor-lane {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: flex var(--dur-slow) var(--ease-in-out);
+}
+.corridor-lane:hover { flex: 2.2; }
+.corridor-lane-bg { position: absolute; inset: 0; }
+.corridor-lane-bg img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease-out); }
+.corridor-lane:hover .corridor-lane-bg img { transform: scale(1.05); }
+.corridor-lane-overlay {
+  position: absolute; inset: 0;
+  background: rgba(16,42,67,0.72);
+  transition: background var(--dur-normal);
+}
+[data-theme="dark"] .corridor-lane-overlay { background: rgba(0,0,0,0.75); }
+.corridor-lane:hover .corridor-lane-overlay { background: rgba(16,42,67,0.50); }
+.corridor-lane-divider { position: absolute; top: 0; bottom: 0; right: 0; width: 1px; background: rgba(255,255,255,0.20); z-index: 3; }
+.corridor-lane:last-child .corridor-lane-divider { display: none; }
+[dir="rtl"] .corridor-lane-divider { right: auto; left: 0; }
+.corridor-lane-content {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: var(--space-8) var(--space-6);
+  padding-top: calc(var(--navbar-h) + var(--space-8));
+  color: #fff;
+}
+.corridor-lane-icon { width: 48px; height: 48px; margin-bottom: var(--space-4); opacity: 0.80; }
+.corridor-lane h2 { font-size: var(--fs-2xl); color: #fff; margin-bottom: var(--space-3); }
+.corridor-reveal {
+  display: flex; align-items: center; gap: var(--space-3);
+  font-size: var(--fs-sm); color: rgba(255,255,255,0.70);
+  opacity: 0; transform: translateY(12px);
+  transition: opacity var(--dur-normal), transform var(--dur-normal);
+}
+.corridor-lane:hover .corridor-reveal { opacity: 1; transform: translateY(0); }
+.corridor-reveal svg { width: 20px; height: 20px; stroke: var(--brass); fill: none; stroke-width: 2; }
+@media (max-width: 768px) {
+  .corridor-hero { flex-direction: column; min-height: auto; }
+  .corridor-lane { min-height: 260px; }
+  .corridor-lane:hover { flex: 1.5; }
+  .corridor-reveal { opacity: 1; transform: none; }
+  .corridor-lane-divider { top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 1px; }
+}
+
+/* ── S2: Service Dock Cards ── */
+.dock-section { background: var(--bg-primary); }
+.dock-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+.dock-card { position: relative; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); min-height: 400px; cursor: pointer; }
+.dock-card-img { position: absolute; inset: 0; }
+.dock-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease-out); }
+.dock-card:hover .dock-card-img img { transform: scale(1.08); }
+.dock-card-base {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(16,42,67,0.90) 0%, rgba(16,42,67,0.30) 60%, transparent 100%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: var(--space-8) var(--space-6);
+  transition: background var(--dur-normal);
+}
+.dock-card h3 { color: #fff; font-size: var(--fs-2xl); margin-bottom: var(--space-2); }
+.dock-card-tagline { color: rgba(255,255,255,0.70); font-size: var(--fs-sm); }
+.dock-card-reveal {
+  position: absolute; inset: 0;
+  background: rgba(16,42,67,0.88);
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  padding: var(--space-8) var(--space-6);
+  opacity: 0; transform: translateY(100%);
+  transition: opacity var(--dur-normal) var(--ease-out), transform var(--dur-normal) var(--ease-out);
+}
+[data-theme="dark"] .dock-card-reveal { background: rgba(0,0,0,0.90); }
+.dock-card:hover .dock-card-reveal { opacity: 1; transform: translateY(0); }
+.dock-card-reveal h3 { color: #fff; margin-bottom: var(--space-4); }
+.dock-card-reveal p { color: rgba(255,255,255,0.80); margin-bottom: var(--space-6); font-size: var(--fs-sm); }
+@media (max-width: 900px) { .dock-grid { grid-template-columns: 1fr; } .dock-card { min-height: 320px; } }
+
+/* ── S3: Engagement Stepper ── */
+.stepper-section { background: var(--bg-secondary); }
+.stepper-track {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 0;
+  counter-reset: step;
+}
+.stepper-track::before {
+  content: ''; position: absolute;
+  top: 32px; left: 10%; right: 10%;
+  height: 2px; background: var(--border);
+}
+.stepper-progress {
+  position: absolute; top: 32px; left: 10%;
+  height: 2px; background: var(--brass);
+  width: 0; transition: width 1.2s var(--ease-out);
+  border-radius: var(--radius-full);
+}
+.stepper-step {
+  display: flex; flex-direction: column; align-items: center;
+  gap: var(--space-4); flex: 1; text-align: center; position: relative; z-index: 1;
+}
+.stepper-num {
+  width: 64px; height: 64px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--border); background: var(--surface);
+  font-family: var(--font-body); font-size: var(--fs-xl); font-weight: var(--fw-bold);
+  color: var(--text-muted);
+  transition: all var(--dur-normal) var(--ease-out);
+}
+.stepper-step.done .stepper-num { background: var(--brass); border-color: var(--brass); color: #fff; }
+.stepper-step h4 { font-size: var(--fs-md); color: var(--text-primary); }
+.stepper-step p  { font-size: var(--fs-xs); color: var(--text-muted); max-width: 14ch; margin-inline: auto; }
+@media (max-width: 768px) {
+  .stepper-track { flex-direction: column; align-items: flex-start; gap: var(--space-6); }
+  .stepper-track::before, .stepper-progress { display: none; }
+  .stepper-step { flex-direction: row; text-align: start; }
+  .stepper-step p { max-width: none; }
+}
+
+/* ── S4: Outcome Counter Strip ── */
+.outcome-strip { background: var(--navy); padding-block: clamp(3rem,6vw,5rem); }
+[data-theme="dark"] .outcome-strip { background: #0A0A0A; }
+.outcome-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-8); }
+.outcome-item { text-align: center; }
+.outcome-num { font-family: var(--font-display); font-size: var(--fs-5xl); font-weight: var(--fw-bold); color: var(--brass); line-height: 1; margin-bottom: var(--space-2); }
+.outcome-suffix { font-size: 0.6em; vertical-align: super; }
+.outcome-label { font-size: var(--fs-sm); color: rgba(255,255,255,0.70); letter-spacing: var(--ls-wide); text-transform: uppercase; }
+@media (max-width: 768px) { .outcome-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ── S5: Industry Wheel Selector ── */
+.wheel-section { background: var(--bg-primary); }
+.wheel-layout { display: grid; grid-template-columns: 380px 1fr; gap: var(--space-8); align-items: center; }
+.wheel-wrap { position: relative; }
+.wheel-svg { width: 360px; height: 360px; cursor: pointer; }
+.wheel-segment { transition: opacity var(--dur-fast), transform 0.2s; transform-box: fill-box; transform-origin: center; }
+.wheel-segment:hover { opacity: 0.85; }
+.wheel-segment.active { transform-box: fill-box; }
+.wheel-center-text { font-family: var(--font-body); font-weight: 600; font-size: 13px; fill: var(--text-primary); }
+.wheel-results { }
+.wheel-result-title { font-size: var(--fs-2xl); margin-bottom: var(--space-4); }
+.wheel-result-list { display: flex; flex-direction: column; gap: var(--space-3); }
+.wheel-result-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-secondary); border-radius: var(--radius-lg);
+  border: 1px solid var(--border); transition: border-color var(--dur-fast), transform var(--dur-fast);
+}
+.wheel-result-item:hover { border-color: var(--brass); transform: translateX(4px); }
+[dir="rtl"] .wheel-result-item:hover { transform: translateX(-4px); }
+.wheel-result-name { font-weight: var(--fw-medium); font-size: var(--fs-sm); }
+.wheel-result-price { color: var(--brass); font-size: var(--fs-sm); font-weight: var(--fw-semibold); }
+@media (max-width: 900px) { .wheel-layout { grid-template-columns: 1fr; } .wheel-svg { width: 280px; height: 280px; } .wheel-wrap { text-align: center; } }
+
+/* ── S6: Valuation Teaser Banner ── */
+.valuation-banner {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  padding-block: clamp(4rem,7vw,6rem);
+}
+.valuation-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
+.valuation-ticker {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: var(--space-8);
+  box-shadow: var(--shadow-md);
+}
+.valuation-ticker-label { font-size: var(--fs-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: var(--ls-wider); margin-bottom: var(--space-3); }
+.valuation-ticker-amount {
+  font-family: var(--font-display); font-size: var(--fs-5xl);
+  color: var(--brass); font-weight: var(--fw-bold); line-height: 1;
+  margin-bottom: var(--space-2);
+}
+.valuation-ticker-note { font-size: var(--fs-xs); color: var(--text-muted); }
+.valuation-ticker-bar { margin-top: var(--space-5); }
+.valuation-content h2 { margin-bottom: var(--space-4); }
+.valuation-content p  { margin-bottom: var(--space-8); }
+@media (max-width: 768px) { .valuation-inner { grid-template-columns: 1fr; } }
