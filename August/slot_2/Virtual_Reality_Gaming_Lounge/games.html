@@ -8,7 +8,7 @@
   
   <link rel="stylesheet" href="src/css/main.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon-2.svg">
   
   <style>
     .games-hero {
@@ -65,6 +65,99 @@
     }
     [data-theme="light"] .games-hero .text-gradient {
       /* Ensure gradient text still works or provide a fallback if needed */
+    }
+
+    /* Remove top-rated section gradient in light mode */
+    [data-theme="light"] .top-rated-fade {
+      display: none;
+    }
+
+
+    /* Enhanced Game Card Styling */
+    .game-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid var(--border-glass);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+      background: var(--clr-surface);
+      border-radius: var(--radius-lg);
+    }
+    
+    .game-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--clr-primary);
+    }
+    
+    .game-card-img {
+      position: relative;
+      overflow: hidden;
+      border-top-left-radius: inherit;
+      border-top-right-radius: inherit;
+    }
+    
+    .game-card-img img {
+      transition: transform 0.6s ease;
+      display: block;
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    
+    .game-card:hover .game-card-img img {
+      transform: scale(1.08);
+    }
+    
+    .game-card-img::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: linear-gradient(to top, var(--clr-surface), transparent);
+      pointer-events: none;
+    }
+
+    .game-card-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 1.5rem;
+      position: relative;
+      z-index: 1;
+      margin-top: -3rem; /* overlap with image fade */
+    }
+
+    .game-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .game-card-content h4 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--clr-text);
+    }
+
+    .game-card-content p {
+      color: var(--clr-text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    /* Filter Bar Enhancements */
+    .filter-bar {
+      background: var(--clr-surface);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(12px);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
   </style>
 </head>
@@ -157,12 +250,12 @@
     </section>
 
     <!-- Section 2: Filters -->
-    <section class="section" style="padding-top: 0; padding-bottom: var(--space-8);">
+    <section class="section" style="padding-top: 0; padding-bottom: var(--space-8); margin-top: -3rem; position: relative; z-index: 10;">
       <div class="container animate-on-scroll">
-        <div class="card flex flex-col md:flex-row gap-4 justify-between items-center">
-          <div class="form-group mb-0 flex-1 w-100">
-            <i class="ph ph-magnifying-glass" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--clr-text-muted);"></i>
-            <input type="text" class="form-input" placeholder="Search games..." style="padding-left: 2.5rem;">
+        <div class="filter-bar flex flex-col md:flex-row gap-4 justify-between items-center">
+          <div class="form-group mb-0 flex-1 w-100" style="position: relative;">
+            <i class="ph ph-magnifying-glass" style="position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); color: var(--clr-primary); font-size: 1.2rem;"></i>
+            <input type="text" class="form-input" placeholder="Search games..." style="padding-left: 3.2rem;">
           </div>
           <div class="flex gap-4 w-100 md:w-auto">
             <select class="form-input" style="width: auto;">
@@ -185,110 +278,132 @@
 
     <!-- Section 3: Action & Adventure Grid -->
     <section class="section container pt-0 animate-on-scroll">
-      <div class="flex items-center gap-2 mb-6">
-        <i class="ph ph-sword text-primary" style="font-size: 1.5rem;"></i>
-        <h3 class="m-0">Action & Adventure</h3>
+      <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center gap-3">
+          <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(34, 211, 238, 0.1); color: var(--clr-secondary); display: flex; align-items: center; justify-content: center;">
+            <i class="ph ph-sword" style="font-size: 1.5rem;"></i>
+          </div>
+          <h3 class="m-0" style="font-size: 1.75rem;">Action & Adventure</h3>
+        </div>
+        <a href="#" class="btn btn-sm" style="background: transparent; border: 1px solid var(--border-glass);">View All <i class="ph ph-arrow-right"></i></a>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Game Card -->
-        <div class="card p-0">
-          <img src="src/assets/images/game-action-1.jpg" alt="Game" style="width: 100%; height: 200px; object-fit: cover;">
-          <div class="p-4">
-            <div class="flex justify-between items-start mb-2">
-              <span class="badge">Action</span>
-              <span class="text-small text-muted"><i class="ph ph-users"></i> 1-4</span>
+        <div class="game-card">
+          <div class="game-card-img">
+            <img src="src/assets/images/game-action-1.jpg" alt="Game">
+          </div>
+          <div class="game-card-content">
+            <div class="game-card-header">
+              <span class="badge" style="background: rgba(34, 211, 238, 0.15); color: var(--clr-secondary); border: none;">Action</span>
+              <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-users text-primary"></i> 1-4</span>
             </div>
             <h4>Cyber Ninja VR</h4>
-            <p class="text-small">Slice through neon cityscapes.</p>
-            <a href="dashboard.html" class="btn btn-secondary" style="width: 100%; padding: 0.5rem;">Book to Play</a>
+            <p>Slice through neon cityscapes with perfectly timed strikes.</p>
+            <a href="dashboard.html" class="btn btn-secondary w-full" style="width: 100%;">Book to Play</a>
           </div>
         </div>
         <!-- Game Card -->
-        <div class="card p-0">
-          <img src="src/assets/images/game-action-2.jpg" alt="Game" style="width: 100%; height: 200px; object-fit: cover;">
-          <div class="p-4">
-            <div class="flex justify-between items-start mb-2">
-              <span class="badge">Shooter</span>
-              <span class="text-small text-muted"><i class="ph ph-users"></i> 1-8</span>
+        <div class="game-card">
+          <div class="game-card-img">
+            <img src="src/assets/images/game-action-2.jpg" alt="Game">
+          </div>
+          <div class="game-card-content">
+            <div class="game-card-header">
+              <span class="badge" style="background: rgba(34, 211, 238, 0.15); color: var(--clr-secondary); border: none;">Shooter</span>
+              <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-users text-primary"></i> 1-8</span>
             </div>
             <h4>Zero Caliber</h4>
-            <p class="text-small">Tactical military shooter.</p>
-            <a href="dashboard.html" class="btn btn-secondary" style="width: 100%; padding: 0.5rem;">Book to Play</a>
+            <p>Experience ultra-realistic tactical military combat.</p>
+            <a href="dashboard.html" class="btn btn-secondary w-full" style="width: 100%;">Book to Play</a>
           </div>
         </div>
         <!-- Game Card -->
-        <div class="card p-0">
-          <img src="src/assets/images/game-action-3.jpg" alt="Game" style="width: 100%; height: 200px; object-fit: cover;">
-          <div class="p-4">
-            <div class="flex justify-between items-start mb-2">
-              <span class="badge">Adventure</span>
-              <span class="text-small text-muted"><i class="ph ph-user"></i> 1</span>
+        <div class="game-card">
+          <div class="game-card-img">
+            <img src="src/assets/images/game-action-3.jpg" alt="Game">
+          </div>
+          <div class="game-card-content">
+            <div class="game-card-header">
+              <span class="badge" style="background: rgba(34, 211, 238, 0.15); color: var(--clr-secondary); border: none;">Adventure</span>
+              <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-user text-primary"></i> 1</span>
             </div>
             <h4>Wanderer</h4>
-            <p class="text-small">Time travel puzzle adventure.</p>
-            <a href="dashboard.html" class="btn btn-secondary" style="width: 100%; padding: 0.5rem;">Book to Play</a>
+            <p>Solve intricate puzzles while traveling across different eras.</p>
+            <a href="dashboard.html" class="btn btn-secondary w-full" style="width: 100%;">Book to Play</a>
           </div>
         </div>
         <!-- Game Card -->
-        <div class="card p-0">
-          <img src="src/assets/images/game-action-4.jpg" alt="Game" style="width: 100%; height: 200px; object-fit: cover;">
-          <div class="p-4">
-            <div class="flex justify-between items-start mb-2">
-              <span class="badge">Action</span>
-              <span class="text-small text-muted"><i class="ph ph-user"></i> 1</span>
+        <div class="game-card">
+          <div class="game-card-img">
+            <img src="src/assets/images/game-action-4.jpg" alt="Game">
+          </div>
+          <div class="game-card-content">
+            <div class="game-card-header">
+              <span class="badge" style="background: rgba(34, 211, 238, 0.15); color: var(--clr-secondary); border: none;">Action</span>
+              <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-user text-primary"></i> 1</span>
             </div>
             <h4>Apex Construct</h4>
-            <p class="text-small">Bow and arrow survival.</p>
-            <a href="dashboard.html" class="btn btn-secondary" style="width: 100%; padding: 0.5rem;">Book to Play</a>
+            <p>Master the futuristic bow in a shattered, robot-filled world.</p>
+            <a href="dashboard.html" class="btn btn-secondary w-full" style="width: 100%;">Book to Play</a>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Section 4: Horror & Survival Grid -->
-    <section class="section" style="background: var(--clr-surface-alt);">
+    <section class="section" style="background: linear-gradient(to bottom, var(--clr-surface-alt), var(--clr-background)); border-top: 1px solid var(--border-glass);">
       <div class="container animate-on-scroll">
-        <div class="flex items-center justify-center mb-8">
-          <h3 class="m-0 text-center" style="font-size: 2rem;">Horror & Survival</h3>
+        <div class="flex items-center justify-between mb-8">
+          <div class="flex items-center gap-3">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(239, 68, 68, 0.1); color: var(--clr-error); display: flex; align-items: center; justify-content: center;">
+              <i class="ph ph-ghost" style="font-size: 1.5rem;"></i>
+            </div>
+            <h3 class="m-0" style="font-size: 1.75rem;">Horror & Survival</h3>
+          </div>
+          <a href="#" class="btn btn-sm" style="background: transparent; border: 1px solid var(--border-glass);">View All <i class="ph ph-arrow-right"></i></a>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="card p-0">
-            <img src="src/assets/images/game-horror-1.jpg" alt="Game" style="width: 100%; height: 200px; object-fit: cover;">
-            <div class="p-5 text-center flex flex-col justify-between h-full">
+          <div class="game-card">
+            <div class="game-card-img">
+              <img src="src/assets/images/game-horror-1.jpg" alt="Game">
+            </div>
+            <div class="game-card-content text-center">
               <div class="flex justify-center items-center gap-3 mb-3">
-                <span class="badge bg-error" style="color: #fff; background: var(--clr-error);">18+ Horror</span>
-                <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-user"></i> 1</span>
+                <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--clr-error); border: none;">18+ Horror</span>
+                <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-user text-primary"></i> 1</span>
               </div>
-              <div>
-                <h4 class="mb-2">Dark Asylum</h4>
-                <p class="text-small text-muted">Escape the abandoned hospital.</p>
-              </div>
+              <h4 style="font-size: 1.4rem;">Dark Asylum</h4>
+              <p>Can you escape the terrifying secrets hidden within the abandoned hospital?</p>
+              <a href="dashboard.html" class="btn btn-primary w-full mt-auto" style="width: 100%; border: 1px solid var(--clr-error); background: rgba(239, 68, 68, 0.1); color: var(--clr-error);">Dare to Play</a>
             </div>
           </div>
-          <div class="card p-0">
-            <img src="src/assets/images/game-horror-2.jpg" alt="Game" style="width: 100%; height: 200px; object-fit: cover;">
-            <div class="p-5 text-center flex flex-col justify-between h-full">
+          <div class="game-card">
+            <div class="game-card-img">
+              <img src="src/assets/images/game-horror-2.jpg" alt="Game">
+            </div>
+            <div class="game-card-content text-center">
               <div class="flex justify-center items-center gap-3 mb-3">
-                <span class="badge bg-error" style="color: #fff; background: var(--clr-error);">18+ Zombies</span>
-                <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-users"></i> 1-4</span>
+                <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--clr-error); border: none;">18+ Zombies</span>
+                <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-users text-primary"></i> 1-4</span>
               </div>
-              <div>
-                <h4 class="mb-2">Dead City VR</h4>
-                <p class="text-small text-muted">Co-op zombie wave survival.</p>
-              </div>
+              <h4 style="font-size: 1.4rem;">Dead City VR</h4>
+              <p>Team up and fight through endless waves of the undead in an apocalyptic city.</p>
+              <a href="dashboard.html" class="btn btn-primary w-full mt-auto" style="width: 100%; border: 1px solid var(--clr-error); background: rgba(239, 68, 68, 0.1); color: var(--clr-error);">Dare to Play</a>
             </div>
           </div>
-          <div class="card p-0">
-            <img src="src/assets/images/game-horror-3.jpg" alt="Game" style="width: 100%; height: 200px; object-fit: cover;">
-            <div class="p-5 text-center flex flex-col justify-between h-full">
+          <div class="game-card">
+            <div class="game-card-img">
+              <img src="src/assets/images/game-horror-3.jpg" alt="Game">
+            </div>
+            <div class="game-card-content text-center">
               <div class="flex justify-center items-center gap-3 mb-3">
-                <span class="badge">Survival</span>
-                <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-user"></i> 1</span>
+                <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--clr-warning); border: none;">Survival</span>
+                <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-user text-primary"></i> 1</span>
               </div>
-              <div>
-                <h4 class="mb-2">The Forest VR</h4>
-                <p class="text-small text-muted">Survive after a plane crash.</p>
-              </div>
+              <h4 style="font-size: 1.4rem;">The Forest VR</h4>
+              <p>Survive the harsh elements and terrifying mutants after a plane crash.</p>
+              <a href="dashboard.html" class="btn btn-primary w-full mt-auto" style="width: 100%; border: 1px solid var(--clr-error); background: rgba(239, 68, 68, 0.1); color: var(--clr-error);">Dare to Play</a>
             </div>
           </div>
         </div>
@@ -297,63 +412,93 @@
 
     <!-- Section 5: Family & Casual Grid -->
     <section class="section container animate-on-scroll">
-      <div class="flex items-center gap-2 mb-6">
-        <i class="ph ph-smiley text-primary" style="font-size: 1.5rem;"></i>
-        <h3 class="m-0">Family & Casual</h3>
+      <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center gap-3">
+          <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(139, 92, 246, 0.1); color: var(--clr-primary); display: flex; align-items: center; justify-content: center;">
+            <i class="ph ph-smiley" style="font-size: 1.5rem;"></i>
+          </div>
+          <h3 class="m-0" style="font-size: 1.75rem;">Family & Casual</h3>
+        </div>
+        <a href="#" class="btn btn-sm" style="background: transparent; border: 1px solid var(--border-glass);">View All <i class="ph ph-arrow-right"></i></a>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="card p-0">
-          <img src="src/assets/images/game-family-1.jpg" alt="Game" style="width: 100%; height: 200px; object-fit: cover;">
-          <div class="p-4">
-            <span class="badge mb-2">Music</span>
+        <div class="game-card">
+          <div class="game-card-img">
+            <img src="src/assets/images/game-family-1.jpg" alt="Game">
+          </div>
+          <div class="game-card-content">
+            <div class="game-card-header">
+              <span class="badge" style="background: rgba(139, 92, 246, 0.15); color: var(--clr-primary); border: none;">Music</span>
+            </div>
             <h4>Beat Rhythm</h4>
-            <p class="text-small">Slash beats to the rhythm.</p>
+            <p>Slash through the beats and feel the music in this high-energy rhythm game.</p>
+            <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Book to Play</a>
           </div>
         </div>
-        <div class="card p-0">
-          <img src="src/assets/images/game-family-2.jpg" alt="Game" style="width: 100%; height: 200px; object-fit: cover;">
-          <div class="p-4">
-            <span class="badge mb-2">Job Sim</span>
+        <div class="game-card">
+          <div class="game-card-img">
+            <img src="src/assets/images/game-family-2.jpg" alt="Game">
+          </div>
+          <div class="game-card-content">
+            <div class="game-card-header">
+              <span class="badge" style="background: rgba(139, 92, 246, 0.15); color: var(--clr-primary); border: none;">Job Sim</span>
+            </div>
             <h4>Work Simulator</h4>
-            <p class="text-small">Hilarious office antics.</p>
+            <p>Experience hilarious office antics in a world run entirely by quirky robots.</p>
+            <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Book to Play</a>
           </div>
         </div>
-        <div class="card p-0">
-          <img src="src/assets/images/game-family-3.jpg" alt="Game" style="width: 100%; height: 200px; object-fit: cover;">
-          <div class="p-4">
-            <span class="badge mb-2">Sports</span>
+        <div class="game-card">
+          <div class="game-card-img">
+            <img src="src/assets/images/game-family-3.jpg" alt="Game">
+          </div>
+          <div class="game-card-content">
+            <div class="game-card-header">
+              <span class="badge" style="background: rgba(139, 92, 246, 0.15); color: var(--clr-primary); border: none;">Sports</span>
+            </div>
             <h4>Racket Fury</h4>
-            <p class="text-small">Table tennis perfection.</p>
+            <p>Immersive table tennis perfection with realistic physics and AI opponents.</p>
+            <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Book to Play</a>
           </div>
         </div>
-        <div class="card p-0">
-          <img src="src/assets/images/game-family-4.jpg" alt="Game" style="width: 100%; height: 200px; object-fit: cover;">
-          <div class="p-4">
-            <span class="badge mb-2">Art</span>
+        <div class="game-card">
+          <div class="game-card-img">
+            <img src="src/assets/images/game-family-4.jpg" alt="Game">
+          </div>
+          <div class="game-card-content">
+            <div class="game-card-header">
+              <span class="badge" style="background: rgba(139, 92, 246, 0.15); color: var(--clr-primary); border: none;">Art</span>
+            </div>
             <h4>Tilt Brush</h4>
-            <p class="text-small">Paint in 3D space.</p>
+            <p>Unleash your creativity and paint beautiful masterpieces in 3D space.</p>
+            <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Book to Play</a>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Section 6: Top Rated -->
-    <section class="section" style="background: var(--clr-surface);">
+    <section class="section" style="background: var(--clr-surface); border-top: 1px solid var(--border-glass);">
       <div class="container animate-on-scroll">
-        <h2 class="text-center mb-8">All-Time Top Rated</h2>
-        <div class="card p-0">
-          <div class="grid grid-cols-1 md:grid-cols-2">
-            <img src="src/assets/images/game-top.jpg" alt="Half Life" style="width: 100%; height: 100%; object-fit: cover; min-height: 300px;">
-            <div class="p-8 flex-col justify-center">
-              <div class="flex gap-2 text-warning mb-4">
+        <h2 class="text-center mb-8" style="font-size: 2.5rem;"><span class="text-gradient">All-Time</span> Top Rated</h2>
+        <div class="card p-0" style="overflow: hidden; border: 1px solid var(--border-glass); background: var(--clr-surface); box-shadow: var(--shadow-card);">
+          <div class="grid grid-cols-1 md:grid-cols-2 items-center">
+            <div style="position: relative; height: 100%; min-height: 400px;">
+              <img src="src/assets/images/game-top-3.jpg" alt="Half Life" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;">
+              <div class="top-rated-fade" style="position: absolute; inset: 0; background: linear-gradient(to right, transparent, var(--clr-surface));"></div>
+            </div>
+            <div style="padding: 3rem 4rem; display: flex; flex-direction: column; justify-content: center;">
+              <div class="flex gap-2 text-warning mb-4" style="font-size: 1.25rem; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.5));">
                 <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
               </div>
-              <h2 class="mb-2">Alyx: Ground Zero</h2>
-              <p>The defining VR experience. A masterpiece of physics, storytelling, and combat. An absolute must-play for anyone visiting Nexus VR.</p>
-              <div class="flex gap-4 mt-6">
-                <div class="flex items-center gap-2 text-small"><i class="ph ph-clock"></i> 15h Campaign</div>
-                <div class="flex items-center gap-2 text-small"><i class="ph ph-user"></i> Singleplayer</div>
+              <h2 class="mb-4" style="font-size: 2.25rem;">Alyx: Ground Zero</h2>
+              <p style="font-size: 1.1rem; color: var(--clr-text-muted); line-height: 1.6; margin-bottom: 2rem;">The defining VR experience. A masterpiece of physics, storytelling, and combat. An absolute must-play for anyone visiting Nexus VR.</p>
+              
+              <div class="flex gap-6 mb-6">
+                <div class="flex items-center gap-2 text-large"><i class="ph ph-clock text-primary"></i> 15h Campaign</div>
+                <div class="flex items-center gap-2 text-large"><i class="ph ph-user text-primary"></i> Singleplayer</div>
               </div>
+              <a href="dashboard.html" class="btn btn-primary" style="align-self: flex-start; padding: 1rem 2rem; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);">Book Session Now <i class="ph ph-arrow-right"></i></a>
             </div>
           </div>
         </div>
@@ -430,4 +575,6 @@
   <script src="src/js/forms.js"></script>
 </body>
 </html>
+
+
 
