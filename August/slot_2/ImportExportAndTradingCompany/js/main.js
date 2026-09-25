@@ -311,21 +311,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const hudTelemetryData = {
     ocean: {
-      img: 'images/hero-port-cranes.jpg',
+      img: 'images/hero-port-cranes.png',
       code: 'WAYBILL #EXIM-98240-X',
       vehicle: 'CMA CGM Palais',
       speed: '19.4 knots',
       customs: 'HS-Code 8471.30 • Green Channel Fast-Track'
     },
     air: {
-      img: 'images/hero-warehouse.jpg',
+      img: 'images/hero-air-cargo.png',
       code: 'AWB #EXIM-AIR-4109-A',
       vehicle: 'Boeing 777-200F',
       speed: '490 knots (Mach 0.84)',
       customs: 'IATA e-Freight • Pre-Cleared at Wheels Up'
     },
     rail: {
-      img: 'images/hero-isometric.jpg',
+      img: 'images/hero-rail-freight.png',
       code: 'CIM/SMGS #EXIM-RL-882',
       vehicle: 'Eurasia Express #44',
       speed: '65 mph (Block Train)',
