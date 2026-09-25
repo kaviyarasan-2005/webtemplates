@@ -215,7 +215,7 @@ const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
     {
       name: 'Elena Rostova',
       div: 'Haute Couture & Editorial Runway',
-      img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=85&fit=crop',
+      img: 'images/elena-rostova-editorial-model.png',
       booking: 'Chanel Haute Couture \'26 Exclusive',
       height: '180 cm / 5\'11"',
       stats: '32" • 24" • 34.5"',
@@ -225,7 +225,7 @@ const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
     {
       name: 'Marcus Webb',
       div: 'Runway Men & Global Campaigns',
-      img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=900&q=85&fit=crop',
+      img: 'images/marcus-webb-actor.png',
       booking: 'Prada SS26 Worldwide Exclusive',
       height: '188 cm / 6\'2"',
       stats: 'Chest 38" • W 30"',
@@ -235,7 +235,7 @@ const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
     {
       name: 'Amara Nwosu',
       div: 'Screen, Cinema & Red Carpet',
-      img: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=900&q=85&fit=crop',
+      img: 'images/amara-nwosu-runway-model.png',
       booking: 'Lead Booking: Cannes \'26 Feature Film',
       height: '177 cm / 5\'9.5"',
       stats: '33" • 25" • 35"',
@@ -245,7 +245,7 @@ const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
     {
       name: 'Sophia Laurent',
       div: 'Vogue Cover Icon & High Luxury',
-      img: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=900&q=85&fit=crop',
+      img: 'images/sophia-laurent-editorial-model.png',
       booking: 'Cover Story: Vogue Global Autumn Issue',
       height: '179 cm / 5\'10.5"',
       stats: '32.5" • 24" • 35"',
@@ -363,7 +363,7 @@ const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
       likes: '1.8M',
       comments: '34.2k',
       shares: '128k',
-      img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&q=80&fit=crop',
+      img: 'images/zia-rossi-featured-creator.png',
       alt: 'Zia Rossi Fashion Creator'
     },
     cinema: {
@@ -378,7 +378,7 @@ const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
       likes: '2.6M',
       comments: '51.8k',
       shares: '210k',
-      img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80&fit=crop',
+      img: 'images/james-osei-creative-director.png',
       alt: 'Kaito Tanaka Cinema Creator'
     },
     beauty: {
@@ -393,7 +393,7 @@ const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
       likes: '3.4M',
       comments: '82.4k',
       shares: '415k',
-      img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=80&fit=crop',
+      img: 'images/elena-rostova-editorial-model.png',
       alt: 'Maya Sterling Beauty Creator'
     },
     lifestyle: {
@@ -408,7 +408,7 @@ const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
       likes: '1.2M',
       comments: '28.9k',
       shares: '94k',
-      img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900&q=80&fit=crop',
+      img: 'images/marcus-fontaine-creative-director.png',
       alt: 'Leo Vance Lifestyle Creator'
     }
   };
