@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <meta name="description" content="Axe Throwing Venue — Experience Edition. Pricing, gallery, reviews, FAQ, and location." />
+  <meta property="og:title" content="Axe — Experience Edition" />
+  <title>Axe — Experience Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <style>
+    /* ── HERO: SPLIT ── */
+    .h2-hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;}
+    .h2-hero__left{background:#0a0a0b;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-height) + var(--sp-20)) var(--sp-16) var(--sp-16);position:relative;z-index:2;}
+    .h2-hero__left::after{content:'';position:absolute;top:0;right:-1px;bottom:0;width:120px;background:linear-gradient(to right,#0a0a0b,transparent);z-index:3;}
+    .h2-hero__eyebrow{display:inline-flex;align-items:center;gap:var(--sp-2);font-size:.75rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--clr-primary);margin-bottom:var(--sp-6);}
+    .h2-hero__number{font-family:var(--font-display);font-size:clamp(6rem,15vw,14rem);color:rgba(200,64,27,.06);line-height:.85;position:absolute;top:calc(var(--nav-height) + var(--sp-8));left:var(--sp-8);pointer-events:none;user-select:none;}
+    .h2-hero__title{font-family:var(--font-display);font-size:clamp(3rem,6vw,5.5rem);color:white;line-height:1;letter-spacing:.03em;margin-bottom:var(--sp-6);}
+    .h2-hero__title span{color:var(--clr-primary);}
+    .h2-hero__desc{font-size:1.0625rem;color:rgba(255,255,255,.6);line-height:1.8;max-width:420px;margin-bottom:var(--sp-10);}
+    .h2-hero__stats{display:flex;gap:var(--sp-8);padding-top:var(--sp-8);border-top:1px solid rgba(255,255,255,.08);}
+    .h2-hero__stat-val{font-family:var(--font-display);font-size:2.25rem;color:white;line-height:1;display:block;}
+    .h2-hero__stat-val span{color:var(--clr-primary);}
+    .h2-hero__stat-label{font-size:.8rem;color:rgba(255,255,255,.4);margin-top:var(--sp-1);display:block;}
+    .h2-hero__right{position:relative;overflow:hidden;}
+    .h2-hero__mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;height:100%;gap:4px;}
+    .h2-mosaic-cell{overflow:hidden;position:relative;}
+    .h2-mosaic-cell img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease,filter .3s;filter:brightness(.8);}
+    .h2-mosaic-cell:hover img{transform:scale(1.05);filter:brightness(1);}
+    .h2-mosaic-cell:first-child{grid-row:span 2;}
+    .h2-hero__scroll-hint{position:absolute;bottom:var(--sp-8);left:var(--sp-16);display:flex;align-items:center;gap:var(--sp-3);color:rgba(255,255,255,.35);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;z-index:4;}
+    .h2-hero__scroll-hint::before{content:'';width:48px;height:1px;background:var(--clr-primary);display:block;}
+    /* ── EXPERIENCE STRIP ── */
+    .h2-experience{background:var(--clr-surface-alt);padding:var(--sp-20) 0;overflow:hidden;}
+    .h2-exp-track{display:flex;gap:var(--sp-5);overflow-x:auto;padding:var(--sp-4) var(--sp-8) var(--sp-8);scrollbar-width:none;-ms-overflow-style:none;}
+    .h2-exp-track::-webkit-scrollbar{display:none;}
+    .h2-exp-card{min-width:280px;background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-xl);padding:var(--sp-8);flex-shrink:0;transition:all var(--transition-base);position:relative;overflow:hidden;}
+    .h2-exp-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--clr-primary);transform:scaleX(0);transition:transform var(--transition-base);}
+    .h2-exp-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--clr-primary);}
+    .h2-exp-card:hover::before{transform:scaleX(1);}
+    .h2-exp-card__icon{width:56px;height:56px;border-radius:var(--radius-md);background:rgba(200,64,27,.1);display:flex;align-items:center;justify-content:center;color:var(--clr-primary);margin-bottom:var(--sp-6);}
+    .h2-exp-card__title{font-size:1.25rem;font-weight:800;margin-bottom:var(--sp-3);}
+    .h2-exp-card__desc{font-size:.9rem;color:var(--clr-text-secondary);line-height:1.65;}
+    .h2-exp-card__tag{display:inline-block;margin-top:var(--sp-5);font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--clr-primary);background:rgba(200,64,27,.1);padding:var(--sp-1) var(--sp-3);border-radius:var(--radius-full);}
+    /* ── PRICING ── */
+    .h2-pricing{background:#0a0a0b;padding:var(--sp-24) 0;position:relative;overflow:hidden;}
+    .h2-pricing::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(200,64,27,.07) 0%,transparent 65%);pointer-events:none;}
+    .h2-pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-6);margin-top:var(--sp-12);}
+    .h2-price-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-xl);padding:var(--sp-8);transition:all var(--transition-base);position:relative;overflow:hidden;}
+    .h2-price-card.featured{background:linear-gradient(135deg,rgba(200,64,27,.15),rgba(200,64,27,.05));border-color:var(--clr-primary);box-shadow:0 0 40px rgba(200,64,27,.15);}
+    .h2-price-card:hover{transform:translateY(-4px);border-color:var(--clr-primary);}
+    .h2-price-badge{position:absolute;top:var(--sp-5);inset-inline-end:var(--sp-5);background:var(--clr-primary);color:white;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px var(--sp-3);border-radius:var(--radius-full);}
+    .h2-price-name{font-size:.875rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--clr-primary);margin-bottom:var(--sp-4);}
+    .h2-price-amount{font-family:var(--font-display);font-size:3.5rem;color:white;line-height:1;margin-bottom:var(--sp-1);}
+    .h2-price-amount sup{font-size:1.5rem;vertical-align:top;margin-top:var(--sp-2);}
+    .h2-price-per{font-size:.85rem;color:rgba(255,255,255,.4);margin-bottom:var(--sp-6);}
+    .h2-price-divider{height:1px;background:rgba(255,255,255,.08);margin-bottom:var(--sp-6);}
+    .h2-price-features{display:flex;flex-direction:column;gap:var(--sp-3);margin-bottom:var(--sp-8);}
+    .h2-price-feature{display:flex;align-items:center;gap:var(--sp-3);font-size:.9rem;color:rgba(255,255,255,.7);}
+    .h2-price-feature svg{color:var(--clr-primary);flex-shrink:0;}
+    /* ── TESTIMONIALS ── */
+    .h2-testimonials{background:var(--clr-bg);padding:var(--sp-24) 0;}
+    .h2-testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5);margin-top:var(--sp-12);}
+    .h2-testi-card{background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-lg);padding:var(--sp-6);transition:all var(--transition-base);display:flex;flex-direction:column;}
+    .h2-testi-card:hover{border-color:var(--clr-primary);box-shadow:var(--shadow-md);}
+    .h2-testi-stars{display:flex;gap:3px;margin-bottom:var(--sp-4);}
+    .h2-testi-stars svg{color:#f59e0b;}
+    .h2-testi-text{font-size:.9375rem;color:var(--clr-text-secondary);line-height:1.7;margin-bottom:var(--sp-5);font-style:italic;}
+    .h2-testi-author{display:flex;align-items:center;gap:var(--sp-3);margin-top:auto;}
+    .h2-testi-avatar{width:40px;height:40px;border-radius:50%;background:var(--clr-primary);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.1rem;color:white;flex-shrink:0;}
+    .h2-testi-name{font-weight:700;font-size:.9rem;}
+    .h2-testi-meta{font-size:.8rem;color:var(--clr-text-muted);}
+
+    .h2-gallery-overlay{position:absolute;inset:0;background:rgba(200,64,27,0);transition:background .3s;display:flex;align-items:center;justify-content:center;}
+    .h2-gallery-cell:hover .h2-gallery-overlay{background:rgba(200,64,27,.12);}
+    /* ── FAQ ── */
+    .h2-faq{background:var(--clr-bg);padding:var(--sp-24) 0;}
+    .h2-faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5);margin-top:var(--sp-12);align-items:start;}
+    .h2-faq-item{border:1px solid var(--clr-border);border-radius:var(--radius-lg);overflow:hidden;transition:border-color var(--transition-fast);}
+    .h2-faq-item.open{border-color:var(--clr-primary);}
+    .h2-faq-question{display:flex;align-items:center;justify-content:space-between;padding:var(--sp-5) var(--sp-6);cursor:pointer;background:var(--clr-surface);font-weight:700;font-size:.9375rem;gap:var(--sp-4);user-select:none;}
+    .h2-faq-question svg{flex-shrink:0;color:var(--clr-primary);transition:transform var(--transition-fast);}
+    .h2-faq-item.open .h2-faq-question svg{transform:rotate(45deg);}
+    .h2-faq-answer{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .2s;background:var(--clr-surface);color:var(--clr-text-secondary);font-size:.9rem;line-height:1.75;padding:0 var(--sp-6);}
+    .h2-faq-item.open .h2-faq-answer{max-height:300px;padding:var(--sp-4) var(--sp-6) var(--sp-6);}
+    /* ── LOCATION ── */
+    .h2-location{background:#0a0a0b;padding:var(--sp-24) 0;}
+    .h2-location-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16);align-items:center;margin-top:var(--sp-12);}
+    .h2-map-frame{aspect-ratio:4/3;border-radius:var(--radius-xl);overflow:hidden;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;}
+    .h2-map-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#111 0%,#1a1a1a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--sp-4);color:rgba(255,255,255,.4);}
+    .h2-map-placeholder svg{color:var(--clr-primary);}
+    .h2-info-item{display:flex;gap:var(--sp-4);align-items:flex-start;padding:var(--sp-5);border-radius:var(--radius-md);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);transition:border-color var(--transition-fast);margin-bottom:var(--sp-4);}
+    .h2-info-item:hover{border-color:rgba(200,64,27,.3);}
+    .h2-info-icon{width:44px;height:44px;border-radius:var(--radius-md);background:rgba(200,64,27,.12);display:flex;align-items:center;justify-content:center;color:var(--clr-primary);flex-shrink:0;}
+    .h2-info-title{font-weight:700;color:white;margin-bottom:var(--sp-1);}
+    .h2-info-text{font-size:.875rem;color:rgba(255,255,255,.55);line-height:1.6;}
+    /* ── CTA ── */
+    .h2-cta{min-height:60vh;background:linear-gradient(135deg,#0a0a0b 0%,#1c0a06 50%,#0a0a0b 100%);display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;}
+    .h2-cta::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(200,64,27,.18) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+    .h2-cta__tag{font-family:var(--font-display);font-size:clamp(5rem,15vw,13rem);color:rgba(255,255,255,.03);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;letter-spacing:.05em;}
+    .h2-cta__content{position:relative;z-index:1;max-width:640px;}
+    .h2-cta__title{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,5rem);color:white;line-height:1;margin-bottom:var(--sp-6);letter-spacing:.03em;}
+    .h2-cta__title em{color:var(--clr-primary);font-style:normal;}
+    .h2-cta__desc{font-size:1.125rem;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:var(--sp-10);}
+    .h2-cta__actions{display:flex;gap:var(--sp-4);justify-content:center;flex-wrap:wrap;}
+    @media(max-width:1023px){
+      .h2-hero{grid-template-columns:1fr;}
+      .h2-hero__left::after{display:none;}
+      .h2-hero__right{height:50vw;}
+      .h2-pricing-grid{grid-template-columns:1fr;}
+      .h2-testi-grid{grid-template-columns:repeat(2,1fr);}
+      .h2-gallery-mosaic{grid-template-columns:1fr 1fr;}
+      .h2-gallery-cell:nth-child(1){grid-column:span 2;}
+      .h2-faq-grid{grid-template-columns:1fr;}
+      .h2-location-grid{grid-template-columns:1fr;}
+    }
+    @media(max-width:639px){
+      .h2-hero__left{padding:calc(var(--nav-height) + var(--sp-12)) var(--sp-5) var(--sp-10);}
+      .h2-hero__stats{flex-wrap:wrap;gap:var(--sp-5);}
+      .h2-testi-grid{grid-template-columns:1fr;}
+      .h2-gallery-mosaic{grid-template-columns:1fr;}
+      .h2-gallery-cell:nth-child(1),.h2-gallery-cell:nth-child(4){grid-column:span 1;}
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- HERO -->
+<section class="h2-hero" id="hero" aria-label="Hero banner">
+  <div class="h2-hero__left">
+    <span class="h2-hero__number" aria-hidden="true">AXE</span>
+    <div class="h2-hero__eyebrow">
+      <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><circle cx="4" cy="4" r="4"/></svg>
+      Toronto's Premier Experience
+    </div>
+    <h1 class="h2-hero__title animate-fadeInUp">Feel The<br><span>Rush.</span><br>Own The Lane.</h1>
+    <p class="h2-hero__desc animate-fadeInUp animate-delay-1">Every throw. Every bullseye. Every moment of glory. Axe is where adrenaline meets precision — and legends are made.</p>
+    <div class="hero-home__actions animate-fadeInUp animate-delay-2">
+      <a href="pages/book-a-lane.html" class="btn btn--primary btn--xl">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book a Session
+      </a>
+      <a href="#pricing" class="btn btn--ghost btn--xl">View Packages</a>
+    </div>
+    <div class="h2-hero__stats animate-fadeInUp animate-delay-3">
+      <div><span class="h2-hero__stat-val">48K<span>+</span></span><span class="h2-hero__stat-label">Axes Thrown</span></div>
+      <div><span class="h2-hero__stat-val">98<span>%</span></span><span class="h2-hero__stat-label">Satisfaction</span></div>
+      <div><span class="h2-hero__stat-val">10</span><span class="h2-hero__stat-label">Premium Lanes</span></div>
+    </div>
+  </div>
+  <div class="h2-hero__right" aria-hidden="true">
+    <div class="h2-hero__mosaic">
+      <div class="h2-mosaic-cell"><img src="assets/images/hero-bg.jpg" alt="" /></div>
+      <div class="h2-mosaic-cell"><img src="assets/images/events-hero.jpg" alt="" /></div>
+      <div class="h2-mosaic-cell"><img src="assets/images/league-action.jpg" alt="" /></div>
+    </div>
+  </div>
+  <div class="h2-hero__scroll-hint" aria-hidden="true">Scroll to explore</div>
+</section>
+
+<!-- EXPERIENCE STRIP -->
+<section class="h2-experience" id="experience" aria-labelledby="exp-heading">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <span class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>What We Offer</span>
+      <h2 id="exp-heading">The Full Axe Experience</h2>
+      <div class="divider divider-center"></div>
+    </div>
+  </div>
+  <div class="h2-exp-track">
+    <div class="h2-exp-card reveal">
+      <div class="h2-exp-card__icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+      <h3 class="h2-exp-card__title">Beginner Coaching</h3>
+      <p class="h2-exp-card__desc">Never thrown before? Our NATF-certified coaches will have you sticking axes in 15 minutes flat. No experience needed.</p>
+      <span class="h2-exp-card__tag">Included Free</span>
+    </div>
+    <div class="h2-exp-card reveal animate-delay-1">
+      <div class="h2-exp-card__icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+      <h3 class="h2-exp-card__title">League Play</h3>
+      <p class="h2-exp-card__desc">Compete weekly in our ranked leagues. Climb the standings, win prizes, and claim the championship belt.</p>
+      <span class="h2-exp-card__tag">Seasonal</span>
+    </div>
+    <div class="h2-exp-card reveal animate-delay-2">
+      <div class="h2-exp-card__icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h3 class="h2-exp-card__title">Group Events</h3>
+      <p class="h2-exp-card__desc">From 2 to 200. Birthdays, bachelor parties, team-building — we run the whole show so you can focus on throwing.</p>
+      <span class="h2-exp-card__tag">Up to 200 guests</span>
+    </div>
+    <div class="h2-exp-card reveal animate-delay-3">
+      <div class="h2-exp-card__icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+      <h3 class="h2-exp-card__title">Corporate Packages</h3>
+      <p class="h2-exp-card__desc">Fully customisable buyouts with catering, branding options, and dedicated staff. Perfect for unforgettable team days.</p>
+      <span class="h2-exp-card__tag">Custom Quotes</span>
+    </div>
+    <div class="h2-exp-card reveal animate-delay-1">
+      <div class="h2-exp-card__icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <h3 class="h2-exp-card__title">Gift Cards</h3>
+      <p class="h2-exp-card__desc">Give the gift of adrenaline. Digital and physical gift cards available for any amount. Never expires.</p>
+      <span class="h2-exp-card__tag">Any Amount</span>
+    </div>
+    <div class="h2-exp-card reveal animate-delay-2">
+      <div class="h2-exp-card__icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+      <h3 class="h2-exp-card__title">Private Lane Rental</h3>
+      <p class="h2-exp-card__desc">Reserve an entire lane for your crew. No strangers, full privacy, and a dedicated coach just for you.</p>
+      <span class="h2-exp-card__tag">2hr Min</span>
+    </div>
+  </div>
+  <div class="h2-exp-nav" style="display: flex; justify-content: center; gap: var(--sp-4); margin-top: var(--sp-8);">
+    <button id="exp-prev" class="btn btn--secondary" style="width: 48px; height: 48px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;" aria-label="Scroll left">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <button id="exp-next" class="btn btn--secondary" style="width: 48px; height: 48px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;" aria-label="Scroll right">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="h2-pricing section-pad" id="pricing" aria-labelledby="pricing-heading">
+  <div class="container">
+    <div class="section-header centered reveal" style="text-align:center;">
+      <span class="section-label" style="margin-inline:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Transparent Pricing</span>
+      <h2 id="pricing-heading" style="color:white;margin-top:var(--sp-4);">Pick Your Package</h2>
+      <div class="divider divider-center"></div>
+      <p class="text-lead" style="color:rgba(255,255,255,.6);">No hidden fees. No surprises. Just axes, lanes, and memories.</p>
+    </div>
+    <div class="h2-pricing-grid">
+      <div class="h2-price-card reveal">
+        <p class="h2-price-name">Rookie</p>
+        <div class="h2-price-amount"><sup>$</sup>28</div>
+        <p class="h2-price-per">per person / hour</p>
+        <div class="h2-price-divider"></div>
+        <ul class="h2-price-features">
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>1 hour lane time</li>
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Safety briefing</li>
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Shared coaching</li>
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Up to 4 players</li>
+        </ul>
+        <a href="pages/book-a-lane.html" class="btn btn--secondary btn--full">Book Rookie</a>
+      </div>
+      <div class="h2-price-card featured reveal animate-delay-1">
+        <span class="h2-price-badge">Most Popular</span>
+        <p class="h2-price-name">Champion</p>
+        <div class="h2-price-amount"><sup>$</sup>45</div>
+        <p class="h2-price-per">per person / 2 hours</p>
+        <div class="h2-price-divider"></div>
+        <ul class="h2-price-features">
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>2 hour lane time</li>
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Dedicated coach</li>
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Digital scoreboard</li>
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Up to 8 players</li>
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Photos included</li>
+        </ul>
+        <a href="pages/book-a-lane.html" class="btn btn--primary btn--full">Book Champion</a>
+      </div>
+      <div class="h2-price-card reveal animate-delay-2">
+        <p class="h2-price-name">Elite</p>
+        <div class="h2-price-amount"><sup>$</sup>79</div>
+        <p class="h2-price-per">per person / 3 hours</p>
+        <div class="h2-price-divider"></div>
+        <ul class="h2-price-features">
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>3 hour private lane</li>
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>VIP lounge access</li>
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Pro gear selection</li>
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Up to 16 players</li>
+          <li class="h2-price-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Championship trophy</li>
+        </ul>
+        <a href="pages/book-a-lane.html" class="btn btn--secondary btn--full">Book Elite</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="h2-testimonials" id="reviews" aria-labelledby="testi-heading">
+  <div class="container">
+    <div class="section-header centered reveal" style="text-align:center;">
+      <span class="section-label" style="margin-inline:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Real Reviews</span>
+      <h2 id="testi-heading">What Throwers Say</h2>
+      <div class="divider divider-center"></div>
+    </div>
+    <div class="h2-testi-grid">
+      <article class="h2-testi-card reveal">
+        <div class="h2-testi-stars" aria-label="5 stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="h2-testi-text">"Booked for my husband's 40th — 14 people, zero experience. The coaches were incredible. Everyone was sticking axes by the second round. Best night out we've had in years."</p>
+        <div class="h2-testi-author"><div class="h2-testi-avatar">S</div><div><p class="h2-testi-name">Sarah M.</p><p class="h2-testi-meta">Birthday Party &middot; Champion Package</p></div></div>
+      </article>
+      <article class="h2-testi-card reveal animate-delay-1">
+        <div class="h2-testi-stars" aria-label="5 stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="h2-testi-text">"Did the weekly league for 3 seasons. The community here is unlike anything else. You walk in as strangers and leave as rivals — the best kind."</p>
+        <div class="h2-testi-author"><div class="h2-testi-avatar">J</div><div><p class="h2-testi-name">James R.</p><p class="h2-testi-meta">League Member &middot; Season 11</p></div></div>
+      </article>
+      <article class="h2-testi-card reveal animate-delay-2">
+        <div class="h2-testi-stars" aria-label="5 stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="h2-testi-text">"Brought 45 people for our company retreat. The team handled everything — logistics, catering coordination, you name it. We'll be back every quarter."</p>
+        <div class="h2-testi-author"><div class="h2-testi-avatar">P</div><div><p class="h2-testi-name">Priya K.</p><p class="h2-testi-meta">Corporate Event &middot; Elite Package</p></div></div>
+      </article>
+      <article class="h2-testi-card reveal">
+        <div class="h2-testi-stars" aria-label="5 stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="h2-testi-text">"First time doing anything like this. The coach made it so easy — within 20 minutes I was hitting bullseyes. This is my new favourite hobby. Already booked again."</p>
+        <div class="h2-testi-author"><div class="h2-testi-avatar">T</div><div><p class="h2-testi-name">Tyler O.</p><p class="h2-testi-meta">First Timer &middot; Rookie Package</p></div></div>
+      </article>
+      <article class="h2-testi-card reveal animate-delay-1">
+        <div class="h2-testi-stars" aria-label="5 stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="h2-testi-text">"Took my two daughters (16 and 18). The safety setup is seriously impressive. You feel completely safe but the thrill is absolutely real. 10/10 family experience."</p>
+        <div class="h2-testi-author"><div class="h2-testi-avatar">M</div><div><p class="h2-testi-name">Marcus V.</p><p class="h2-testi-meta">Family Session &middot; Champion Package</p></div></div>
+      </article>
+      <article class="h2-testi-card reveal animate-delay-2">
+        <div class="h2-testi-stars" aria-label="5 stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="h2-testi-text">"I've been to 3 different axe venues across Canada. This is the only one that feels like a real destination. The vibe, the music, the staff — unmatched."</p>
+        <div class="h2-testi-author"><div class="h2-testi-avatar">A</div><div><p class="h2-testi-name">Aisha L.</p><p class="h2-testi-meta">Returning Member &middot; League</p></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- FAQ -->
+<section class="h2-faq" id="faq" aria-labelledby="faq-heading">
+  <div class="container">
+    <div class="section-header centered reveal" style="text-align:center;">
+      <span class="section-label" style="margin-inline:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>FAQs</span>
+      <h2 id="faq-heading">Got Questions?</h2>
+      <div class="divider divider-center"></div>
+    </div>
+    <div class="h2-faq-grid">
+      <div class="h2-faq-item reveal"><div class="h2-faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false"><span>Do I need prior experience?</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="h2-faq-answer">Absolutely not. Our coaches will walk you through grip, stance, and release. You'll be throwing like a pro within minutes — no experience needed at all.</div></div>
+      <div class="h2-faq-item reveal animate-delay-1"><div class="h2-faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false"><span>What's the minimum age?</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="h2-faq-answer">Participants must be 12 years or older. Under-18s must be accompanied by a parent or legal guardian who signs the waiver.</div></div>
+      <div class="h2-faq-item reveal"><div class="h2-faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false"><span>What should I wear?</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="h2-faq-answer">Closed-toe shoes are mandatory. Wear comfortable clothes you can move in freely. All throwing equipment is provided by us.</div></div>
+      <div class="h2-faq-item reveal animate-delay-1"><div class="h2-faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false"><span>Can I bring alcohol?</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="h2-faq-answer">Outside alcohol is not permitted. We have a licensed bar on-site. Anyone showing signs of intoxication will be removed from the throwing area.</div></div>
+      <div class="h2-faq-item reveal"><div class="h2-faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false"><span>How many people per lane?</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="h2-faq-answer">Up to 6 active throwers per lane, with spectators welcome. For larger groups, we offer multi-lane packages for 200+ guests.</div></div>
+      <div class="h2-faq-item reveal animate-delay-1"><div class="h2-faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false"><span>What's your cancellation policy?</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="h2-faq-answer">Free cancellation up to 24 hours before your session. Within 24 hours, we offer a 100% credit toward a future booking. No-shows forfeit their deposit.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="h2-location" id="location" aria-labelledby="location-heading">
+  <div class="container">
+    <div class="section-header centered reveal" style="text-align:center;">
+      <span class="section-label" style="margin-inline:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Find Us</span>
+      <h2 id="location-heading" style="color:white;margin-top:var(--sp-4);">Visit the Forge</h2>
+      <div class="divider divider-center"></div>
+    </div>
+    <div class="h2-location-grid">
+      <div class="h2-map-frame reveal">
+        <div class="h2-map-placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <p style="font-size:.875rem;text-align:center;">482 Forge Street<br>Toronto, ON M5V 2T6</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="h2-info-item"><div class="h2-info-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><p class="h2-info-title">Address</p><p class="h2-info-text">482 Forge Street, Industrial District<br>Toronto, ON M5V 2T6</p></div></div>
+        <div class="h2-info-item"><div class="h2-info-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><p class="h2-info-title">Hours</p><p class="h2-info-text">Mon &ndash; Fri: 2:00 PM &ndash; 11:00 PM<br>Sat &ndash; Sun: 10:00 AM &ndash; 12:00 AM</p></div></div>
+        <div class="h2-info-item"><div class="h2-info-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.84h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 5.68 5.68l1.82-1.82a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><p class="h2-info-title">Phone</p><p class="h2-info-text"><a href="tel:+14165550192" style="color:rgba(255,255,255,.55);text-decoration:none;">+1 (416) 555-0192</a></p></div></div>
+        <div class="h2-info-item"><div class="h2-info-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><p class="h2-info-title">Email</p><p class="h2-info-text"><a href="mailto:info@axeforge.com" style="color:rgba(255,255,255,.55);text-decoration:none;">info@axeforge.com</a></p></div></div>
+        <div style="margin-top:var(--sp-6);"><a href="pages/book-a-lane.html" class="btn btn--primary btn--lg" style="width:100%;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Reserve Your Lane</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="h2-cta" id="cta" aria-label="Call to action">
+  <span class="h2-cta__tag" aria-hidden="true">THROW</span>
+  <div class="h2-cta__content">
+    <h2 class="h2-cta__title">Ready to <em>Forge</em><br>Your Legend?</h2>
+    <p class="h2-cta__desc">Stop watching. Start throwing. Book your lane in under 2 minutes and show up ready to become a legend.</p>
+    <div class="h2-cta__actions">
+      <a href="pages/book-a-lane.html" class="btn btn--primary btn--xl"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Your Lane</a>
+      <a href="pages/login.html" class="btn btn--ghost btn--xl">Create Account</a>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script>
+  function toggleFaq(el) {
+    const item = el.closest('.h2-faq-item');
+    const isOpen = item.classList.toggle('open');
+    el.setAttribute('aria-expanded', isOpen);
+  }
+
+  // Experience Strip Scrolling
+  const expTrack = document.querySelector('.h2-exp-track');
+  const expPrev = document.getElementById('exp-prev');
+  const expNext = document.getElementById('exp-next');
+  if (expTrack && expPrev && expNext) {
+    const scrollAmount = 300;
+    expPrev.addEventListener('click', () => {
+      expTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+    expNext.addEventListener('click', () => {
+      expTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+  }
+</script>
+<script src="js/app.js"></script>
+<script src="js/nav-footer.js"></script>
+</body>
+</html>

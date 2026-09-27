@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+  <meta name="description" content="Login or create your Axe Forge account to manage bookings, track scores, join leagues, and access your dashboard." />
+  <title>Login — Axe Forge Throwing Venue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <style>
+    /* Login Page */
+    .login-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+    .login-visual {
+      background: linear-gradient(135deg, #0a0a0b 0%, #1c1016 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: var(--sp-10);
+    }
+    .login-visual img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.4;
+    }
+    /* Dark gradient overlay for readability */
+    .login-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,10,11,0.55) 0%, rgba(10,10,11,0.75) 100%);
+      z-index: 0;
+    }
+    .login-visual__content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .login-visual__logo-area {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+      justify-content: center;
+      margin-bottom: var(--sp-6);
+    }
+    .login-forms {
+      background: var(--clr-bg);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--sp-8) var(--sp-10);
+    }
+    .auth-tabs {
+      display: flex;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--clr-border);
+      overflow: hidden;
+      margin-bottom: var(--sp-6);
+    }
+    .auth-tab {
+      flex: 1;
+      padding: var(--sp-3) var(--sp-4);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      color: var(--clr-text-muted);
+      background: var(--clr-surface);
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-align: center;
+    }
+    .auth-tab.active {
+      background: var(--clr-primary);
+      color: white;
+    }
+    .auth-panel { display: none; }
+    .auth-panel.active { display: block; }
+
+    .benefits-list { display: flex; flex-direction: column; gap: var(--sp-4); }
+    .benefit-row { display: flex; align-items: flex-start; gap: var(--sp-3); }
+    .benefit-row__icon { width: 36px; height: 36px; background: rgba(200,64,27,0.15); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: var(--clr-primary); flex-shrink: 0; }
+
+    .social-row { display: flex; gap: var(--sp-3); margin-top: var(--sp-4); margin-bottom: var(--sp-3); }
+    .or-divider { display: flex; align-items: center; gap: var(--sp-3); margin-top: var(--sp-3); margin-bottom: var(--sp-4); color: var(--clr-text-muted); font-size: 0.875rem; }
+    .or-divider::before, .or-divider::after { content: ''; flex: 1; height: 1px; background: var(--clr-border); }
+
+    .trust-item { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3); border-radius: var(--radius-sm); background: rgba(200,64,27,0.04); border: 1px solid rgba(200,64,27,0.1); }
+    .trust-item svg { color: var(--clr-primary); flex-shrink: 0; }
+
+    @media (max-width: 1023px) { .login-split { grid-template-columns: 1fr; } .login-visual { min-height: 40vh; padding: var(--sp-8); } }
+    @media (max-width: 639px) { .login-forms { padding: var(--sp-6) var(--sp-5); } .social-row { flex-direction: column; } }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================
+     SECTIONS 1+2: HERO SPLIT + SIGN IN / SIGN UP
+     ================================================================ -->
+<div class="login-split">
+  <!-- Visual Side (Section 1: Login Hero) -->
+  <aside class="login-visual" aria-label="Axe Forge branding panel">
+    <img src="../assets/images/login-bg.jpg" alt="Dramatic axe throwing at Axe Forge, dark moody lighting" id="login-bg-img" loading="lazy" />
+    <div class="login-visual__content">
+      <h2 style="font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);color:white;line-height:1;margin-bottom:var(--sp-5);">Your Forge, Your Profile.</h2>
+      <p style="color:rgba(255,255,255,0.65);max-width:380px;margin-inline:auto;line-height:1.7;">Access your bookings, track your personal bests, and stay ahead of the leaderboard — all from one place.</p>
+
+      <div style="display:flex;gap:var(--sp-8);justify-content:center;margin-top:var(--sp-10);">
+        <div style="text-align:center;">
+          <p style="font-family:var(--font-display);font-size:2.5rem;color:var(--clr-primary);line-height:1;" data-counter data-target="12500" data-suffix="+">12,500+</p>
+          <p style="font-size:0.8125rem;color:rgba(255,255,255,0.5);">Registered Members</p>
+        </div>
+        <div style="width:1px;background:rgba(255,255,255,0.1);" aria-hidden="true"></div>
+        <div style="text-align:center;">
+          <p style="font-family:var(--font-display);font-size:2.5rem;color:var(--clr-primary);line-height:1;" data-counter data-target="98" data-suffix="%">98%</p>
+          <p style="font-size:0.8125rem;color:rgba(255,255,255,0.5);">Member Satisfaction</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Forms Side (Sections 2, 3, 4, 5) -->
+  <main class="login-forms" style="position: relative;">
+    <!-- Controls -->
+    <div style="position: absolute; top: var(--sp-6); inset-inline-end: var(--sp-8); display: flex; gap: var(--sp-2);">
+      <button class="ctrl-btn" data-theme-toggle data-theme-icon title="Toggle Theme" aria-label="Toggle Theme"></button>
+      <button class="ctrl-btn" data-rtl-toggle data-dir-label title="Toggle RTL" aria-label="Toggle RTL/LTR">RTL</button>
+    </div>
+    
+    <div style="max-width:440px;width:100%;margin-inline:auto;">
+
+      <a href="../index.html" class="login-visual__logo-area" style="justify-content: flex-start; align-items: center; margin-bottom: var(--sp-5); text-decoration: none; gap: var(--sp-4); display: flex; transition: opacity var(--transition-fast);" aria-label="Back to Axe Forge homepage">
+        <div style="width:48px;height:48px;background:var(--clr-primary);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-primary);">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9"/><path d="M15 13 9 7l4-4 6 6h3a8 8 0 0 1-7 7z"/></svg>
+        </div>
+        <p style="font-family:var(--font-display);font-size:1.875rem;color:var(--clr-text-primary);line-height:1;margin:0;">Axe</p>
+      </a>
+
+      <!-- Section 2: Auth Tabs (Sign In / Sign Up) -->
+      <div class="auth-tabs" role="tablist" aria-label="Authentication options">
+        <button class="auth-tab active" id="tab-signin" role="tab" aria-selected="true" aria-controls="panel-signin" onclick="switchAuthTab('signin')">Sign In</button>
+        <button class="auth-tab" id="tab-signup" role="tab" aria-selected="false" aria-controls="panel-signup" onclick="switchAuthTab('signup')">Create Account</button>
+      </div>
+
+      <!-- Sign In Panel -->
+      <div class="auth-panel active" id="panel-signin" role="tabpanel" aria-labelledby="tab-signin">
+        <h2 style="font-size:1.375rem;font-weight:800;margin-bottom:var(--sp-1);">Welcome Back</h2>
+        <p style="color:var(--clr-text-muted);font-size:0.9rem;margin-bottom:var(--sp-4);">Sign in to access your dashboard and bookings.</p>
+
+        <!-- Social Login (Section 5) -->
+        <div class="social-row">
+          <button class="btn btn--social btn--full" type="button" aria-label="Sign in with Google">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21.35 11.1H12.18V13.83H18.69C18.36 17.64 15.19 19.27 12.19 19.27C8.36 19.27 5 16.25 5 12C5 7.9 8.2 4.73 12.2 4.73C15.29 4.73 17.1 6.7 17.1 6.7L19 4.72C19 4.72 16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12C2.03 17.05 6.16 22 12.25 22C17.6 22 21.5 18.33 21.5 12.91C21.5 11.76 21.35 11.1 21.35 11.1Z"/></svg>
+            Continue with Google
+          </button>
+          <button class="btn btn--social btn--full" type="button" aria-label="Sign in with Facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Continue with Facebook
+          </button>
+        </div>
+
+        <div class="or-divider" aria-hidden="true"><span>or sign in with email</span></div>
+
+        <form data-form-validate action="#" method="post" aria-label="Sign in form" novalidate>
+          <div class="form-group">
+            <label for="signin-email" class="form-label">Email Address <span class="required" aria-label="required">*</span></label>
+            <div class="input-icon-wrap has-left">
+              <svg class="icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input type="email" id="signin-email" class="form-input" placeholder="you@email.com" data-validate="required,email" autocomplete="email" aria-required="true" />
+            </div>
+            <span class="form-error-msg" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <label for="signin-password" class="form-label">Password <span class="required" aria-label="required">*</span></label>
+              <a href="#forgot" class="text-sm" style="color:var(--clr-primary);" onclick="document.getElementById('forgot-section').scrollIntoView({behavior:'smooth'});return false;" aria-label="Forgot your password?">Forgot password?</a>
+            </div>
+            <div class="input-icon-wrap has-left has-right">
+              <svg class="icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="signin-password" class="form-input" placeholder="Enter your password" data-validate="required" autocomplete="current-password" aria-required="true" />
+              <button type="button" class="icon-right" aria-label="Toggle password visibility" onclick="togglePass('signin-password')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <span class="form-error-msg" role="alert"></span>
+          </div>
+
+          <div class="form-check" style="margin-bottom:var(--sp-5);">
+            <input type="checkbox" id="remember-me" name="remember" />
+            <label for="remember-me" class="form-check__label">Remember me for 30 days</label>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--full" aria-label="Sign in to your account">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            Sign In to My Account
+          </button>
+        </form>
+      </div>
+
+      <!-- Section 3: Create Account Panel -->
+      <div class="auth-panel" id="panel-signup" role="tabpanel" aria-labelledby="tab-signup">
+        <h2 style="font-size:1.375rem;font-weight:800;margin-bottom:var(--sp-1);">Join Axe</h2>
+        <p style="color:var(--clr-text-muted);font-size:0.9rem;margin-bottom:var(--sp-4);">Create your free account and start throwing.</p>
+
+        <div class="social-row">
+          <button class="btn btn--social btn--full" type="button" aria-label="Sign up with Google">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21.35 11.1H12.18V13.83H18.69C18.36 17.64 15.19 19.27 12.19 19.27C8.36 19.27 5 16.25 5 12C5 7.9 8.2 4.73 12.2 4.73C15.29 4.73 17.1 6.7 17.1 6.7L19 4.72C19 4.72 16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12C2.03 17.05 6.16 22 12.25 22C17.6 22 21.5 18.33 21.5 12.91C21.5 11.76 21.35 11.1 21.35 11.1Z"/></svg>
+            Sign Up with Google
+          </button>
+        </div>
+        <div class="or-divider" aria-hidden="true"><span>or register with email</span></div>
+
+        <form data-form-validate action="#" method="post" aria-label="Create account form" novalidate>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);">
+            <div class="form-group">
+              <label for="signup-first" class="form-label">First Name <span class="required" aria-label="required">*</span></label>
+              <input type="text" id="signup-first" class="form-input" placeholder="John" data-validate="required" autocomplete="given-name" aria-required="true" />
+              <span class="form-error-msg" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label for="signup-last" class="form-label">Last Name <span class="required" aria-label="required">*</span></label>
+              <input type="text" id="signup-last" class="form-input" placeholder="Doe" data-validate="required" autocomplete="family-name" aria-required="true" />
+              <span class="form-error-msg" role="alert"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="signup-email" class="form-label">Email Address <span class="required" aria-label="required">*</span></label>
+            <div class="input-icon-wrap has-left">
+              <svg class="icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input type="email" id="signup-email" class="form-input" placeholder="john@email.com" data-validate="required,email" autocomplete="email" aria-required="true" />
+            </div>
+            <span class="form-error-msg" role="alert"></span>
+          </div>
+          <div class="form-group">
+            <label for="signup-password" class="form-label">Create Password <span class="required" aria-label="required">*</span></label>
+            <div class="input-icon-wrap has-left has-right">
+              <svg class="icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="signup-password" class="form-input" placeholder="Min. 8 characters" data-validate="required,password" autocomplete="new-password" aria-required="true" aria-describedby="password-strength" />
+              <button type="button" class="icon-right" aria-label="Toggle password visibility" onclick="togglePass('signup-password')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <span class="form-error-msg" role="alert"></span>
+            <div id="password-strength" style="display:flex;gap:var(--sp-2);margin-top:var(--sp-2);" aria-label="Password strength indicator">
+              <div style="height:4px;flex:1;background:var(--clr-border);border-radius:var(--radius-full);" id="ps1"></div>
+              <div style="height:4px;flex:1;background:var(--clr-border);border-radius:var(--radius-full);" id="ps2"></div>
+              <div style="height:4px;flex:1;background:var(--clr-border);border-radius:var(--radius-full);" id="ps3"></div>
+              <div style="height:4px;flex:1;background:var(--clr-border);border-radius:var(--radius-full);" id="ps4"></div>
+            </div>
+          </div>
+          <div class="form-check" style="margin-bottom:var(--sp-5);">
+            <input type="checkbox" id="agree-terms" name="terms" required data-validate="required" aria-required="true" />
+            <label for="agree-terms" class="form-check__label">I agree to the <a href="#" style="color:var(--clr-primary);">Terms of Service</a> and <a href="#" style="color:var(--clr-primary);">Privacy Policy</a>.</label>
+          </div>
+          <button type="submit" class="btn btn--primary btn--full" aria-label="Create your Axe Forge account">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="21" y1="8" x2="21" y2="14"/><line x1="24" y1="11" x2="18" y2="11"/></svg>
+            Create My Account
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
+<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}</style>
+
+<script>
+  function switchAuthTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+    document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById('tab-' + tab).setAttribute('aria-selected', 'true');
+    document.getElementById('panel-' + tab).classList.add('active');
+  }
+
+  function togglePass(id) {
+    const input = document.getElementById(id);
+    if (!input) return;
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+
+  // Password strength indicator
+  const pwdInput = document.getElementById('signup-password');
+  if (pwdInput) {
+    pwdInput.addEventListener('input', () => {
+      const val = pwdInput.value;
+      const strength = [val.length >= 8, /[A-Z]/.test(val), /[0-9]/.test(val), /[^A-Za-z0-9]/.test(val)];
+      const colors = ['var(--clr-error)', 'var(--clr-warning)', 'var(--clr-accent)', 'var(--clr-success)'];
+      const score = strength.filter(Boolean).length;
+      [1,2,3,4].forEach(i => {
+        const bar = document.getElementById('ps' + i);
+        if (bar) bar.style.background = i <= score ? colors[score - 1] : 'var(--clr-border)';
+      });
+    });
+  }
+</script>
+
+<script src="../js/app.js"></script>
+</body>
+</html>
