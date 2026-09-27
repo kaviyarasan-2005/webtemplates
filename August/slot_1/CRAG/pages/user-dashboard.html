@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Portal | CRAG Climbing Gym</title>
+  <meta name="description" content="CRAG Member Dashboard — track your climbing progress, view session stats, manage bookings, and monitor skill development.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+</head>
+<body>
+
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <div class="dashboard-layout">
+
+    <!-- ── SIDEBAR ────────────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Member navigation">
+      <a href="../index.html" class="sidebar__brand" aria-label="CRAG Home">
+        <svg width="36" height="36" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <rect width="40" height="40" fill="#ea580c"/>
+          <path d="M5 32L20 8L35 32H5Z" fill="#0a0a0a"/>
+          <circle cx="20" cy="18" r="4" fill="#ea580c"/>
+          <path d="M14 26L20 20L26 26" stroke="#fafafa" stroke-width="2.5" fill="none"/>
+        </svg>
+        <span class="sidebar__brand-name">CRAG</span>
+      </a>
+
+      <button class="sidebar__toggle" id="sidebar-toggle" aria-label="Toggle sidebar" aria-expanded="true">
+        <i class="ph-bold ph-sidebar" style="font-size:20px;flex-shrink:0" aria-hidden="true"></i>
+        <span class="sidebar__toggle-label">Collapse</span>
+      </button>
+
+      <nav class="sidebar__nav">
+        <a href="user-dashboard.html" class="sidebar__link active" aria-current="page">
+          <i class="ph-bold ph-house" aria-hidden="true"></i>
+          <span class="sidebar__link-label">Overview</span>
+        </a>
+        <a href="#" class="sidebar__link">
+          <i class="ph-bold ph-mountains" aria-hidden="true"></i>
+          <span class="sidebar__link-label">My Sends</span>
+        </a>
+        <a href="#" class="sidebar__link">
+          <i class="ph-bold ph-calendar" aria-hidden="true"></i>
+          <span class="sidebar__link-label">Bookings</span>
+        </a>
+        <a href="#" class="sidebar__link">
+          <i class="ph-bold ph-chart-bar" aria-hidden="true"></i>
+          <span class="sidebar__link-label">Progress</span>
+        </a>
+        <a href="#" class="sidebar__link">
+          <i class="ph-bold ph-chat-circle" aria-hidden="true"></i>
+          <span class="sidebar__link-label">Messages</span>
+        </a>
+        <a href="#" class="sidebar__link">
+          <i class="ph-bold ph-gear" aria-hidden="true"></i>
+          <span class="sidebar__link-label">Settings</span>
+        </a>
+      </nav>
+
+      <div style="border-top:var(--border);padding:12px 0">
+        <a href="admin-dashboard.html" class="sidebar__link">
+          <i class="ph-bold ph-chart-line-up" aria-hidden="true"></i>
+          <span class="sidebar__link-label">Admin Panel</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ── MAIN ───────────────────────────────────────────── -->
+    <div class="dashboard-main" id="dashboard-main">
+
+      <!-- Top Bar -->
+      <header class="dashboard-topbar" role="banner">
+        <button class="btn-toggle sidebar-mobile-toggle" id="sidebar-mobile-toggle" aria-label="Open sidebar">
+          <i class="ph-bold ph-list" aria-hidden="true"></i>
+        </button>
+        <span style="font-family:var(--font-heading);font-size:20px;font-weight:700;letter-spacing:1px;text-transform:uppercase">Member Portal</span>
+
+        <div class="dashboard-topbar__search" role="search">
+          <i class="ph-bold ph-magnifying-glass dashboard-topbar__search-icon" aria-hidden="true"></i>
+          <input type="search" placeholder="Search sessions, classes..." aria-label="Search your data">
+        </div>
+
+        <div class="dashboard-topbar__right">
+          <button class="notif-btn" aria-label="2 notifications">
+            <i class="ph-bold ph-bell" aria-hidden="true"></i>
+            <span class="notif-badge" aria-hidden="true">2</span>
+          </button>
+          <button class="btn-toggle btn-theme-toggle" data-theme-toggle aria-label="Toggle theme">
+            <i class="ph-bold ph-moon" aria-hidden="true"></i>
+          </button>
+          <button class="btn-toggle btn-rtl-toggle" data-rtl-toggle aria-label="Toggle direction">LTR</button>
+          <img class="topbar-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Member avatar" loading="lazy">
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <main class="dashboard-content" id="main">
+
+        <!-- ── WIDGET 1: MEMBER STATS ───────────────────── -->
+        <section aria-label="Your climbing statistics">
+          <div class="dashboard-stats">
+            <div class="dashboard-stat">
+              <div class="dashboard-stat__icon"><i class="ph-bold ph-lightning" aria-hidden="true"></i></div>
+              <div class="dashboard-stat__info">
+                <div class="dashboard-stat__number" data-target="142">0</div>
+                <div class="dashboard-stat__label">Sessions Climbed</div>
+                <div class="dashboard-stat__trend" style="color:var(--text-sub)">Since joining Nov 2024</div>
+              </div>
+            </div>
+            <div class="dashboard-stat">
+              <div class="dashboard-stat__icon"><i class="ph-bold ph-mountains" aria-hidden="true"></i></div>
+              <div class="dashboard-stat__info">
+                <div class="dashboard-stat__number">V7</div>
+                <div class="dashboard-stat__label">Current Grade</div>
+                <div class="dashboard-stat__trend" style="color:var(--text-sub)">Personal best</div>
+              </div>
+            </div>
+            <div class="dashboard-stat">
+              <div class="dashboard-stat__icon"><i class="ph-bold ph-map-pin" aria-hidden="true"></i></div>
+              <div class="dashboard-stat__info">
+                <div class="dashboard-stat__number" style="font-size:20px;line-height:1.3">Boulder Cave</div>
+                <div class="dashboard-stat__label">Favorite Zone</div>
+                <div class="dashboard-stat__trend" style="color:var(--text-sub)">68% of sessions</div>
+              </div>
+            </div>
+            <div class="dashboard-stat">
+              <div class="dashboard-stat__icon"><i class="ph-bold ph-fire" aria-hidden="true"></i></div>
+              <div class="dashboard-stat__info">
+                <div class="dashboard-stat__number" data-target="23">0</div>
+                <div class="dashboard-stat__label">Streak Days</div>
+                <div class="dashboard-stat__trend"><i class="ph-bold ph-arrow-up" aria-hidden="true"></i> Keep it going!</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── WIDGET 2: CHARTS ROW 1 ──────────────────── -->
+        <section aria-label="Frequency and grade charts">
+          <div class="dashboard-charts">
+            <div class="chart-card">
+              <div class="chart-card__header">
+                <h2 class="chart-card__title">Climbing Frequency</h2>
+                <span style="font-size:12px;color:var(--text-sub)">Last 12 months</span>
+              </div>
+              <canvas id="chart-frequency" aria-label="Line chart showing monthly climbing sessions over 12 months" role="img"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-card__header">
+                <h2 class="chart-card__title">Grade Distribution</h2>
+                <span style="font-size:12px;color:var(--text-sub)">Routes sent by grade</span>
+              </div>
+              <canvas id="chart-grades" aria-label="Bar chart showing number of routes sent across V-grades" role="img"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── WIDGET 3: CHARTS ROW 2 ──────────────────── -->
+        <section aria-label="Zone time and skill charts">
+          <div class="dashboard-charts">
+            <div class="chart-card">
+              <div class="chart-card__header">
+                <h2 class="chart-card__title">Time by Zone</h2>
+                <span style="font-size:12px;color:var(--text-sub)">All-time distribution</span>
+              </div>
+              <canvas id="chart-zones-user" aria-label="Doughnut chart: Bouldering 52%, Top-Rope 20%, Lead 18%, Training 10%" role="img"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-card__header">
+                <h2 class="chart-card__title">Skill Breakdown</h2>
+                <span style="font-size:12px;color:var(--text-sub)">Radar assessment</span>
+              </div>
+              <canvas id="chart-skills" aria-label="Radar chart showing skill levels across Strength, Technique, Endurance, Flexibility, Mental, and Route Reading" role="img"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── WIDGET 4: UPCOMING BOOKINGS ─────────────── -->
+        <section aria-labelledby="h2-upcoming">
+          <div class="dashboard-table-card" style="margin-bottom:24px">
+            <div class="dashboard-table-card__header">
+              <h2 id="h2-upcoming" class="chart-card__title">Upcoming Bookings</h2>
+              <a href="#" class="btn btn-outline" style="padding:8px 16px;font-size:12px">View All</a>
+            </div>
+            <div class="table-wrap" style="border:none;box-shadow:none">
+              <table class="table" aria-label="Upcoming bookings">
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Class / Session</th>
+                    <th scope="col">Instructor</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Sep 12, 2026</td>
+                    <td style="font-weight:600">Lead Climbing Course</td>
+                    <td>Elena Marsh</td>
+                    <td><span class="badge badge--warning">Upcoming</span></td>
+                    <td><button class="btn btn-outline" style="padding:6px 14px;font-size:12px" aria-label="Cancel Lead Climbing Course booking">Cancel</button></td>
+                  </tr>
+                  <tr>
+                    <td>Sep 14, 2026</td>
+                    <td style="font-weight:600">Strength Training</td>
+                    <td>Ben Osei</td>
+                    <td><span class="badge badge--warning">Upcoming</span></td>
+                    <td><button class="btn btn-outline" style="padding:6px 14px;font-size:12px" aria-label="Cancel Strength Training booking">Cancel</button></td>
+                  </tr>
+                  <tr>
+                    <td>Sep 16, 2026</td>
+                    <td style="font-weight:600">Yoga for Climbers</td>
+                    <td>Aiko Tanaka</td>
+                    <td><span class="badge badge--warning">Upcoming</span></td>
+                    <td><button class="btn btn-outline" style="padding:6px 14px;font-size:12px" aria-label="Reschedule Yoga for Climbers booking">Reschedule</button></td>
+                  </tr>
+                  <tr>
+                    <td>Sep 19, 2026</td>
+                    <td style="font-weight:600">Personal Coaching</td>
+                    <td>Jamie Cortez</td>
+                    <td><span class="badge badge--warning">Upcoming</span></td>
+                    <td><button class="btn btn-outline" style="padding:6px 14px;font-size:12px" aria-label="Cancel Personal Coaching booking">Cancel</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── WIDGET 5: QUICK ACTIONS ──────────────────── -->
+        <section aria-label="Quick actions">
+          <div class="quick-actions-grid">
+            <a href="services.html" class="card" style="padding:24px;text-align:center;text-decoration:none">
+              <i class="ph-bold ph-calendar-plus" style="font-size:36px;color:var(--orange);display:block;margin-bottom:12px" aria-hidden="true"></i>
+              <h3 style="font-size:16px">Book a Class</h3>
+            </a>
+            <a href="home2.html" class="card" style="padding:24px;text-align:center;text-decoration:none">
+              <i class="ph-bold ph-barbell" style="font-size:36px;color:var(--orange);display:block;margin-bottom:12px" aria-hidden="true"></i>
+              <h3 style="font-size:16px">Training Plans</h3>
+            </a>
+            <a href="#" class="card" style="padding:24px;text-align:center;text-decoration:none">
+              <i class="ph-bold ph-user-circle" style="font-size:36px;color:var(--orange);display:block;margin-bottom:12px" aria-hidden="true"></i>
+              <h3 style="font-size:16px">Edit Profile</h3>
+            </a>
+            <a href="contact.html" class="card" style="padding:24px;text-align:center;text-decoration:none">
+              <i class="ph-bold ph-question" style="font-size:36px;color:var(--orange);display:block;margin-bottom:12px" aria-hidden="true"></i>
+              <h3 style="font-size:16px">Get Help</h3>
+            </a>
+          </div>
+        </section>
+
+        <!-- ── WIDGET 6: RECENT SENDS ───────────────────── -->
+        <section aria-labelledby="h2-activity">
+          <div class="dashboard-table-card">
+            <div class="dashboard-table-card__header">
+              <h2 id="h2-activity" class="chart-card__title">Recent Activity</h2>
+            </div>
+            <div class="dashboard-activity-list" style="padding:0 24px 24px">
+              <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid rgba(113,113,122,.15)">
+                <span style="width:10px;height:10px;border-radius:50%;background:var(--orange);flex-shrink:0;margin-top:6px" aria-hidden="true"></span>
+                <div>
+                  <span style="font-size:.8rem;color:var(--text-sub);display:block;margin-bottom:2px">Sep 11, 2026</span>
+                  <strong>Sent V6 in Bouldering Cave</strong>
+                  <span class="badge badge--success" style="margin-inline-start:8px">V6</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid rgba(113,113,122,.15)">
+                <span style="width:10px;height:10px;border-radius:50%;background:var(--orange);flex-shrink:0;margin-top:6px" aria-hidden="true"></span>
+                <div>
+                  <span style="font-size:.8rem;color:var(--text-sub);display:block;margin-bottom:2px">Sep 9, 2026</span>
+                  <strong>Completed Lead Certification</strong>
+                  <span class="badge badge--success" style="margin-inline-start:8px">Certified</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid rgba(113,113,122,.15)">
+                <span style="width:10px;height:10px;border-radius:50%;background:var(--orange);flex-shrink:0;margin-top:6px" aria-hidden="true"></span>
+                <div>
+                  <span style="font-size:.8rem;color:var(--text-sub);display:block;margin-bottom:2px">Sep 7, 2026</span>
+                  <strong>New personal best: V7 Flash</strong>
+                  <span class="badge badge--success" style="margin-inline-start:8px">V7 ⚡</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid rgba(113,113,122,.15)">
+                <span style="width:10px;height:10px;border-radius:50%;background:var(--concrete-grey);flex-shrink:0;margin-top:6px" aria-hidden="true"></span>
+                <div>
+                  <span style="font-size:.8rem;color:var(--text-sub);display:block;margin-bottom:2px">Sep 5, 2026</span>
+                  <strong>Attended Technique Lab with Coach Ben</strong>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 0">
+                <span style="width:10px;height:10px;border-radius:50%;background:var(--orange);flex-shrink:0;margin-top:6px" aria-hidden="true"></span>
+                <div>
+                  <span style="font-size:.8rem;color:var(--text-sub);display:block;margin-bottom:2px">Sep 3, 2026</span>
+                  <strong>Sent V5 slab problem in Training Zone</strong>
+                  <span class="badge badge--success" style="margin-inline-start:8px">V5</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/main.js" defer></script>
+  <script src="../assets/js/dashboard.js" defer></script>
+  <script>
+    function checkMobile() {
+      const mobileBtn = document.getElementById('sidebar-mobile-toggle');
+      if (mobileBtn) mobileBtn.style.display = window.innerWidth <= 1024 ? 'flex' : 'none';
+    }
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+  </script>
+</body>
+</html>

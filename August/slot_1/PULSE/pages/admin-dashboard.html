@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PULSE — Admin Dashboard</title>
+  <meta name="description" content="PULSE admin command center: revenue pulse, game popularity, demographics, performance radar, and recent bookings.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Ccircle cx='17' cy='17' r='9' stroke='%2300f0ff' stroke-width='2.4' fill='none'/%3E%3Ccircle cx='17' cy='17' r='3.4' fill='%2300f0ff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+</head>
+<body class="dshb-body" data-page="admin-dashboard.html" data-nofooter="true">
+
+  <div class="dshb-layout">
+    <aside class="dshb-sidebar" id="adminSidebar" aria-label="Dashboard navigation">
+      <div class="dshb-brand">
+        <svg width="30" height="30" viewBox="0 0 34 34" fill="none" style="stroke:#00f0ff; filter:drop-shadow(0 0 6px rgba(0,240,255,0.6));" aria-hidden="true">
+          <circle cx="17" cy="17" r="9" stroke="currentColor" stroke-width="2.4" fill="none"/>
+          <circle cx="17" cy="17" r="3.4" fill="currentColor"/>
+          <path d="M8.5 4.5 L4.5 2.5 L6.5 9 L3 8.5 L8 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M25.5 29.5 L29.5 31.5 L27.5 25 L31 25.5 L26 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="brand-text">PULSE</span>
+      </div>
+      <nav class="dshb-nav">
+        <a href="admin-dashboard.html" class="active"><i class="ph-bold ph-gauge" aria-hidden="true"></i><span>Overview</span></a>
+        <a href="#"><i class="ph-bold ph-users" aria-hidden="true"></i><span>Players</span></a>
+        <a href="#"><i class="ph-bold ph-calendar-check" aria-hidden="true"></i><span>Bookings</span></a>
+        <a href="#"><i class="ph-bold ph-game-controller" aria-hidden="true"></i><span>Games</span></a>
+        <a href="#"><i class="ph-bold ph-chart-bar" aria-hidden="true"></i><span>Reports</span></a>
+        <a href="#"><i class="ph-bold ph-gear" aria-hidden="true"></i><span>Settings</span></a>
+      </nav>
+    </aside>
+    <div class="dshb-sidenav-overlay" id="sidenavOverlay"></div>
+
+    <div class="dshb-main" id="adminMain">
+      <header class="dshb-topbar">
+        <button type="button" class="dshb-collapse" id="collapseBtn" aria-label="Collapse sidebar" title="Toggle sidebar"><i class="ph-bold ph-caret-line-left" aria-hidden="true"></i></button>
+        <button type="button" class="menu-btn" id="menuBtn" aria-label="Open navigation"><i class="ph-bold ph-list" aria-hidden="true"></i></button>
+        <div class="dshb-search">
+          <i class="ph-bold ph-magnifying-glass" aria-hidden="true"></i>
+          <input type="search" placeholder="Search players, bookings, modes..." aria-label="Search dashboard" id="dshbSearch">
+        </div>
+        <div class="dshb-actions">
+          <button type="button" class="dshb-icon-btn" aria-label="Notifications"><i class="ph-bold ph-bell" aria-hidden="true"></i><span class="notif-dot"></span></button>
+          <button type="button" class="pill-toggle theme-toggle" id="adminTheme" aria-label="Toggle color theme"><i class="ph-bold ph-moon-stars"></i><span></span></button>
+          <button type="button" class="pill-toggle rtl-toggle" id="adminRtl" aria-label="Toggle writing direction"><i class="ph-bold ph-swap"></i><span></span></button>
+          <div class="dshb-profile">
+            <div class="avatar">
+              <picture><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Admin avatar"></picture>
+              <span class="online-dot"></span>
+            </div>
+            <div><div class="p-name">A. Marshal</div><div class="p-role">Admin</div></div>
+          </div>
+        </div>
+      </header>
+
+      <main class="dshb-content">
+        <div class="dshb-title">
+          <h1>Command Center</h1>
+          <span class="dshb-date" id="todayDate">Session overview</span>
+        </div>
+
+        <div class="stat-row">
+          <div class="glass-card kpi-card reveal in-view">
+            <div class="kpi-head"><span class="kpi-label">Total Revenue</span><i class="ph-bold ph-coins kpi-icon" aria-hidden="true"></i></div>
+            <div class="kpi-num" data-count="42850" data-prefix="$">$0</div>
+            <div><span class="kpi-trend up"><i class="ph-bold ph-trend-up" aria-hidden="true"></i> +12.4%</span></div>
+          </div>
+          <div class="glass-card kpi-card reveal in-view">
+            <div class="kpi-head"><span class="kpi-label">Active Sessions</span><i class="ph-bold ph-pulse kpi-icon" aria-hidden="true"></i></div>
+            <div class="kpi-num">32</div>
+            <div><span class="kpi-trend up"><i class="ph-bold ph-trend-up" aria-hidden="true"></i> +3 today</span></div>
+          </div>
+          <div class="glass-card kpi-card reveal in-view">
+            <div class="kpi-head"><span class="kpi-label">New Players</span><i class="ph-bold ph-user-plus kpi-icon" aria-hidden="true"></i></div>
+            <div class="kpi-num" data-count="147">0</div>
+            <div><span class="kpi-trend up"><i class="ph-bold ph-trend-up" aria-hidden="true"></i> +8.1%</span></div>
+          </div>
+          <div class="glass-card kpi-card reveal in-view">
+            <div class="kpi-head"><span class="kpi-label">Pending Bookings</span><i class="ph-bold ph-clock-countdown kpi-icon" aria-hidden="true"></i></div>
+            <div class="kpi-num">9</div>
+            <div><span class="kpi-trend down"><i class="ph-bold ph-trend-down" aria-hidden="true"></i> -2 queue</span></div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="glass-card chart-card wide reveal in-view">
+            <h2>Weekly Revenue Pulse</h2>
+            <span class="chart-sub">7 days &middot; thousands $</span>
+            <div class="chart-canvas tall" id="chRevenue"></div>
+          </div>
+          <div class="glass-card chart-card reveal in-view">
+            <h2>Game Mode Popularity</h2>
+            <span class="chart-sub">Sessions by mode</span>
+            <div class="chart-canvas" id="chPopularity"></div>
+          </div>
+          <div class="glass-card chart-card reveal in-view">
+            <h2>Player Demographics</h2>
+            <span class="chart-sub">Split by play type</span>
+            <div class="chart-canvas" id="chDemographics"></div>
+            <div class="chart-legend">
+              <span class="lg-item"><span class="lg-dot" style="background:var(--cyan);"></span> Casual 42%</span>
+              <span class="lg-item"><span class="lg-dot" style="background:var(--magenta);"></span> Competitive 26%</span>
+              <span class="lg-item"><span class="lg-dot" style="background:var(--purple);"></span> Corporate 18%</span>
+              <span class="lg-item"><span class="lg-dot" style="background:var(--neon-warning);"></span> VR-Only 14%</span>
+            </div>
+          </div>
+          <div class="glass-card chart-card wide reveal in-view">
+            <h2>Arena Performance Metrics</h2>
+            <span class="chart-sub">Player rating out of 100</span>
+            <div class="chart-canvas" id="chRadar"></div>
+          </div>
+        </div>
+
+        <div class="glass-card" style="padding:26px;">
+          <h2 style="font-size:16px; margin-bottom:4px;">Recent Bookings</h2>
+          <span class="chart-sub" style="display:block; font-size:12.5px; color:var(--text-secondary); margin-bottom:18px;">Latest 6 confirmed slots</span>
+          <div class="dshb-table-wrap">
+            <table class="dshb-table">
+              <thead>
+                <tr><th>Player</th><th>Game</th><th>Date</th><th>Status</th><th>Total</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="avatar-cell"><span class="avatar"><picture><img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=100&q=80" alt="Player VexOverdrive"></picture></span><strong>VexOverdrive</strong></div></td>
+                  <td>Capture the Flag</td><td>Sep 12, 2026</td><td><span class="badge badge-success">Confirmed</span></td><td>$144</td>
+                  <td><div class="actions"><button type="button" aria-label="View booking"><i class="ph-bold ph-eye" aria-hidden="true"></i></button><button type="button" aria-label="Edit booking"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="avatar-cell"><span class="avatar"><picture><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Player Krysmata"></picture></span><strong>Krysmata</strong></div></td>
+                  <td>Zombie Survival</td><td>Sep 12, 2026</td><td><span class="badge badge-warning">Pending</span></td><td>$96</td>
+                  <td><div class="actions"><button type="button" aria-label="View booking"><i class="ph-bold ph-eye" aria-hidden="true"></i></button><button type="button" aria-label="Edit booking"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="avatar-cell"><span class="avatar"><picture><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="Player CircuitWraith"></picture></span><strong>CircuitWraith</strong></div></td>
+                  <td>VR Co-Op</td><td>Sep 11, 2026</td><td><span class="badge badge-success">Completed</span></td><td>$120</td>
+                  <td><div class="actions"><button type="button" aria-label="View booking"><i class="ph-bold ph-eye" aria-hidden="true"></i></button><button type="button" aria-label="Edit booking"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="avatar-cell"><span class="avatar"><picture><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Player ByteBandit"></picture></span><strong>ByteBandit</strong></div></td>
+                  <td>Team Deathmatch</td><td>Sep 11, 2026</td><td><span class="badge badge-warning">Pending</span></td><td>$72</td>
+                  <td><div class="actions"><button type="button" aria-label="View booking"><i class="ph-bold ph-eye" aria-hidden="true"></i></button><button type="button" aria-label="Edit booking"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="avatar-cell"><span class="avatar"><picture><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Player PhantomDuck"></picture></span><strong>PhantomDuck</strong></div></td>
+                  <td>Sniper Alley</td><td>Sep 10, 2026</td><td><span class="badge badge-error">Cancelled</span></td><td>$48</td>
+                  <td><div class="actions"><button type="button" aria-label="View booking"><i class="ph-bold ph-eye" aria-hidden="true"></i></button><button type="button" aria-label="Edit booking"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="avatar-cell"><span class="avatar"><picture><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="Player NyxiaEight"></picture></span><strong>NyxiaEight</strong></div></td>
+                  <td>VIP Escort</td><td>Sep 10, 2026</td><td><span class="badge badge-success">Completed</span></td><td>$60</td>
+                  <td><div class="actions"><button type="button" aria-label="View booking"><i class="ph-bold ph-eye" aria-hidden="true"></i></button><button type="button" aria-label="Edit booking"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../assets/js/main.js" defer></script>
+  <script src="../assets/js/dashboard.js" defer></script>
+</body>
+</html>

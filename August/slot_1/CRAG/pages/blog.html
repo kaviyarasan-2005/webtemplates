@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | CRAG Climbing Gym</title>
+  <meta name="description" content="Route tips, training science, gear guides, and gym news from CRAG indoor climbing gym. The editorial wall for climbers of every level.">
+  <meta property="og:title" content="Blog | CRAG Climbing Gym">
+  <meta property="og:description" content="Route tips, training science, gear guides, and gym news from CRAG indoor climbing gym. The editorial wall for climbers of every level.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+  <style>
+    /* ── Blog-specific overrides ── */
+
+    /* Visually hidden screen-reader utility */
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    /* Featured article card layout */
+    .featured-card {
+      display: grid;
+      grid-template-columns: 60% 40%;
+      border: 3px solid var(--border-color);
+      box-shadow: 6px 6px 0 0 var(--shadow-color);
+      overflow: hidden;
+      background: var(--card-bg);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .featured-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 0 var(--orange);
+    }
+    .featured-card__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-right: 3px solid var(--border-color);
+      display: block;
+      min-height: 420px;
+    }
+    .featured-card__body {
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+    }
+    .featured-card__body .article__cat {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--chalk-white);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border: 2px solid var(--border-color);
+      align-self: flex-start;
+    }
+    .featured-card__body h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-transform: uppercase;
+      color: var(--text);
+      margin: 0;
+    }
+    .featured-card__body p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text-sub);
+      margin: 0;
+    }
+    .featured-card__meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .featured-card__meta strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .featured-card__meta span {
+      color: var(--orange);
+    }
+
+    /* Filter pills */
+    .filter-pills {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .filter-pill {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 22px;
+      border: 2px solid var(--border-color);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      box-shadow: 3px 3px 0 0 var(--shadow-color);
+    }
+    .filter-pill:hover,
+    .filter-pill.is-active {
+      background: var(--orange);
+      color: var(--chalk-white);
+      border-color: var(--orange);
+      box-shadow: 3px 3px 0 0 var(--shadow-color);
+    }
+
+    /* Article cards grid */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .article-card {
+      border: 3px solid var(--border-color);
+      box-shadow: 4px 4px 0 0 var(--shadow-color);
+      background: var(--card-bg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .article-card:hover {
+      box-shadow: 6px 6px 0 0 var(--orange);
+      transform: translate(-2px, -2px);
+    }
+    .article-card.is-hidden {
+      display: none;
+    }
+    .article-card__img-wrap {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      border-bottom: 3px solid var(--border-color);
+    }
+    .article-card__img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s;
+    }
+    .article-card:hover .article-card__img-wrap img {
+      transform: scale(1.04);
+    }
+    .article-card__body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+    .article-card__cat {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--chalk-white);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border: 2px solid var(--border-color);
+      align-self: flex-start;
+    }
+    .article-card__title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.25;
+      text-transform: uppercase;
+      color: var(--text);
+      margin: 0;
+    }
+    .article-card__excerpt {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--text-sub);
+      margin: 0;
+      flex: 1;
+    }
+    .article-card__date {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-top: 2px solid var(--border-color);
+      padding-top: 12px;
+      margin-top: auto;
+    }
+
+    /* Category cards (Browse Section) */
+    .category-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+    .category-card {
+      position: relative;
+      height: 250px;
+      overflow: hidden;
+      border: 3px solid var(--border-color);
+      box-shadow: 4px 4px 0 0 var(--shadow-color);
+      display: block;
+      text-decoration: none;
+      transition: box-shadow 0.2s, transform 0.2s;
+      background-color: var(--card-bg);
+    }
+    .category-card:hover {
+      box-shadow: 6px 6px 0 0 var(--orange);
+      transform: translate(-2px, -2px);
+    }
+    .category-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s;
+    }
+    .category-card:hover img {
+      transform: scale(1.06);
+    }
+    .category-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.88) 35%, rgba(10,10,10,0.2) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 24px 16px;
+      gap: 10px;
+    }
+    .category-card__label {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(14px, 1.2vw, 17px);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--chalk-white);
+      text-align: center;
+      margin: 0;
+    }
+    .category-card__arrow {
+      width: 36px;
+      height: 36px;
+      border: 2px solid var(--chalk-white);
+      background: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--chalk-white);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .category-card:hover .category-card__arrow {
+      background: var(--chalk-white);
+      color: var(--pitch-black);
+      border-color: var(--pitch-black);
+      transform: translateY(-2px);
+    }
+
+    /* Newsletter section (Get the Beta) */
+    .newsletter-card {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 3px solid var(--border-color);
+      box-shadow: 6px 6px 0 0 var(--shadow-color);
+      padding: 48px 40px;
+      text-align: center;
+    }
+    .newsletter-form {
+      margin-top: 28px;
+    }
+    .newsletter-form__input-group {
+      display: flex;
+      align-items: stretch;
+      border: 3px solid var(--border-color);
+      box-shadow: 4px 4px 0 0 var(--shadow-color);
+      background: var(--bg);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .newsletter-form__input-group:focus-within {
+      border-color: var(--orange);
+      box-shadow: 4px 4px 0 0 var(--orange);
+    }
+    .newsletter-form input[type="email"] {
+      flex: 1;
+      min-width: 0;
+      height: 52px;
+      padding: 0 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      outline: none;
+      border-radius: 0;
+      box-shadow: none !important;
+    }
+    .newsletter-form input[type="email"]::placeholder {
+      color: var(--text-sub);
+      opacity: 0.7;
+    }
+    .newsletter-form .btn-primary {
+      border-radius: 0;
+      padding: 0 28px;
+      height: 52px;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      border: none;
+      border-left: 3px solid var(--border-color);
+      background-color: var(--orange);
+      color: var(--chalk-white);
+      box-shadow: none !important;
+      transform: none !important;
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .newsletter-form .btn-primary:hover {
+      background-color: var(--chalk-white);
+      color: var(--pitch-black);
+    }
+    .newsletter-note {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* CTA section */
+    .cta-section {
+      position: relative;
+      padding: 120px 0;
+      background-size: cover;
+      background-position: center;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0.72);
+    }
+    .cta-section .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--chalk-white);
+      margin-bottom: 16px;
+    }
+    .cta-section p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      color: rgba(250,250,250,0.85);
+      max-width: 560px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 36px;
+      background: var(--chalk-white);
+      color: var(--pitch-black);
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      border: 3px solid var(--chalk-white);
+      box-shadow: 4px 4px 0 0 var(--orange);
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .btn-white:hover {
+      background: var(--orange);
+      color: var(--chalk-white);
+      border-color: var(--orange);
+      box-shadow: 6px 6px 0 0 var(--chalk-white);
+      transform: translate(-2px, -2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .category-cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 900px) {
+      .featured-card {
+        grid-template-columns: 1fr;
+      }
+      .featured-card__image {
+        min-height: 280px;
+        border-right: none;
+        border-bottom: 3px solid var(--border-color);
+      }
+      .articles-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .category-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .articles-grid {
+        grid-template-columns: 1fr;
+      }
+      .category-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .featured-card__body {
+        padding: 28px 20px;
+      }
+      .newsletter-card {
+        padding: 32px 20px;
+      }
+      .newsletter-form__input-group {
+        flex-direction: column;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        gap: 12px;
+      }
+      .newsletter-form input[type="email"] {
+        border: 3px solid var(--border-color);
+        box-shadow: 4px 4px 0 0 var(--shadow-color);
+        background: var(--bg);
+        width: 100%;
+        border-radius: 0;
+      }
+      .newsletter-form input[type="email"]:focus {
+        border-color: var(--orange);
+        box-shadow: 4px 4px 0 0 var(--orange);
+      }
+      .newsletter-form .btn-primary {
+        border: 3px solid var(--border-color);
+        box-shadow: 4px 4px 0 0 var(--shadow-color) !important;
+        width: 100%;
+      }
+      .newsletter-form .btn-primary:hover {
+        transform: translate(-2px, -2px) !important;
+        box-shadow: 6px 6px 0 0 var(--shadow-color) !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar__inner">
+      <a href="../index.html" class="navbar__brand" aria-label="CRAG Home">
+        <svg class="navbar__logo" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="40" height="40" fill="var(--orange)"/>
+          <path d="M5 32L20 8L35 32H5Z" fill="var(--pitch-black)" stroke="var(--pitch-black)" stroke-width="0"/>
+          <circle cx="20" cy="18" r="4" fill="var(--orange)"/>
+          <path d="M14 26L20 20L26 26" stroke="var(--chalk-white)" stroke-width="2.5" fill="none"/>
+        </svg>
+        <span class="navbar__brand-name">CRAG</span>
+      </a>
+      <ul class="navbar__nav" role="list">
+        <li class="nav-item">
+          <a href="#" class="nav-link" aria-haspopup="true">Home <i class="ph-bold ph-caret-down" style="font-size:10px"></i></a>
+          <div class="nav-dropdown" role="menu">
+            <a href="../index.html" role="menuitem">Home 1</a>
+            <a href="home2.html" role="menuitem">Home 2</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
+        <li class="nav-item"><a href="blog.html" class="nav-link" aria-current="page">Blog</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" aria-haspopup="true">Dashboard <i class="ph-bold ph-caret-down" style="font-size:10px"></i></a>
+          <div class="nav-dropdown" role="menu">
+            <a href="admin-dashboard.html" role="menuitem">Admin Dashboard</a>
+            <a href="user-dashboard.html" role="menuitem">User Dashboard</a>
+          </div>
+        </li>
+      </ul>
+      <div class="navbar__controls">
+        <button class="btn-toggle btn-theme-toggle" data-theme-toggle aria-label="Toggle theme" id="theme-toggle-nav">
+          <i class="ph-bold ph-moon" aria-hidden="true"></i>
+        </button>
+        <button class="btn-toggle btn-rtl-toggle" data-rtl-toggle aria-label="Toggle RTL" id="rtl-toggle-nav">LTR</button>
+        <a href="login.html" class="btn btn-primary">Login</a>
+      </div>
+      <button class="navbar__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ══ MOBILE MENU ══ -->
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <nav class="mobile-menu__nav">
+      <a href="../index.html" class="mobile-nav-link">Home 1</a>
+      <a href="home2.html" class="mobile-nav-link">Home 2</a>
+      <a href="about.html" class="mobile-nav-link">About</a>
+      <a href="services.html" class="mobile-nav-link">Services</a>
+      <a href="pricing.html" class="mobile-nav-link">Pricing</a>
+      <a href="blog.html" class="mobile-nav-link">Blog</a>
+      <a href="contact.html" class="mobile-nav-link">Contact</a>
+      <a href="admin-dashboard.html" class="mobile-nav-link">Admin Dashboard</a>
+      <a href="user-dashboard.html" class="mobile-nav-link">User Dashboard</a>
+    </nav>
+    <div class="mobile-menu__controls">
+      <button class="btn-toggle btn-theme-toggle" data-theme-toggle aria-label="Toggle theme"><i class="ph-bold ph-moon"></i></button>
+      <button class="btn-toggle btn-rtl-toggle" data-rtl-toggle>LTR</button>
+      <a href="login.html" class="btn btn-primary">Login</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ══════════════════════════════════════
+         SECTION 1 — HERO
+    ══════════════════════════════════════ -->
+    <section class="hero" aria-label="Blog hero">
+      <div class="hero__bg">
+        <img
+          src="../assets/images/hero-blog.jpg"
+          alt="Climbers on the CRAG gym walls"
+          class="hero__bg-img"
+          loading="eager"
+        >
+        <div class="hero__overlay"></div>
+      </div>
+      <div class="hero__content container">
+        <div class="hero__badge">
+          <i class="ph-bold ph-newspaper" aria-hidden="true"></i>
+          <span>CRAG Editorial</span>
+        </div>
+        <h1 class="hero__title">BETA, NEWS &amp; TECHNIQUE</h1>
+        <p class="hero__subtitle">
+          Route tips, training science, gear guides, and gym news.<br>
+          The CRAG editorial wall.
+        </p>
+        <div class="hero__actions">
+          <a href="#recent-posts" class="btn btn-primary">
+            <i class="ph-bold ph-arrow-down" aria-hidden="true"></i>
+            Browse Articles
+          </a>
+          <a href="#newsletter" class="btn btn-outline-white">
+            <i class="ph-bold ph-envelope-simple" aria-hidden="true"></i>
+            Get the Beta
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════
+         SECTION 2 — FEATURED ARTICLE
+    ══════════════════════════════════════ -->
+    <section class="section" aria-labelledby="featured-heading">
+      <div class="container">
+        <h2 id="featured-heading" class="section__title" style="text-align:center;margin-bottom:48px">FEATURED</h2>
+
+        <article class="featured-card" aria-label="Featured article: The Science of Training Your Way to V10">
+          <!-- Left: image -->
+          <img
+            class="featured-card__image"
+            src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=1200&q=80"
+            alt="The Science of Training for V10"
+            loading="lazy"
+          >
+          <!-- Right: body -->
+          <div class="featured-card__body">
+            <span class="article__cat">Training</span>
+            <h3>The Science of Training Your Way to V10</h3>
+            <p>
+              Unlock the physiological and psychological frameworks that elite boulderers use to break through grade plateaus. A deep dive into periodization, antagonist training, and mental rehearsal.
+            </p>
+            <div class="featured-card__meta">
+              <strong>By Coach Ben Osei</strong>
+              <span>|</span>
+              <span>Sep 8, 2026</span>
+              <span>&bull;</span>
+              <span>12 min read</span>
+            </div>
+            <div>
+              <a href="blog-details.html" class="btn btn-outline">
+                Read Full Article
+                <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════
+         SECTION 3 — RECENT POSTS
+    ══════════════════════════════════════ -->
+    <section class="section section--alt" id="recent-posts" aria-labelledby="recent-posts-heading">
+      <div class="container">
+        <h2 id="recent-posts-heading" class="section__title" style="text-align:center;margin-bottom:36px">FRESH FROM THE WALL</h2>
+
+        <!-- Filter pills -->
+        <div class="filter-pills" role="group" aria-label="Filter articles by category">
+          <button class="filter-pill is-active" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-pill" data-filter="technique" aria-pressed="false">Technique</button>
+          <button class="filter-pill" data-filter="training" aria-pressed="false">Training</button>
+          <button class="filter-pill" data-filter="news" aria-pressed="false">News</button>
+          <button class="filter-pill" data-filter="stories" aria-pressed="false">Stories</button>
+        </div>
+
+        <!-- Articles grid -->
+        <div class="articles-grid" id="articles-grid" aria-live="polite" aria-atomic="false">
+
+          <!-- Card 1: Technique -->
+          <article class="article-card" data-category="technique" aria-label="Technique: Silent Feet">
+            <div class="article-card__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80"
+                alt="Climber focusing on footwork technique"
+                loading="lazy"
+              >
+            </div>
+            <div class="article-card__body">
+              <span class="article-card__cat">Technique</span>
+              <h3 class="article-card__title">Silent Feet: The Footwork Drill That Changes Everything</h3>
+              <p class="article-card__excerpt">Master the silent feet drill and watch your technique transform across every grade.</p>
+              <div class="article-card__date">
+                <i class="ph-bold ph-calendar-blank" aria-hidden="true"></i>
+                Sep 5, 2026
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2: Training -->
+          <article class="article-card" data-category="training" aria-label="Training: 4x4 Method">
+            <div class="article-card__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80"
+                alt="Climber on a training board"
+                loading="lazy"
+              >
+            </div>
+            <div class="article-card__body">
+              <span class="article-card__cat">Training</span>
+              <h3 class="article-card__title">4x4 Training: The Most Efficient Endurance Method</h3>
+              <p class="article-card__excerpt">Four sets of four problems with maximum rest. Simple, brutal, and incredibly effective.</p>
+              <div class="article-card__date">
+                <i class="ph-bold ph-calendar-blank" aria-hidden="true"></i>
+                Sep 2, 2026
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3: News -->
+          <article class="article-card" data-category="news" aria-label="News: Moon Board installation">
+            <div class="article-card__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80"
+                alt="New Moon Board installation at CRAG"
+                loading="lazy"
+              >
+            </div>
+            <div class="article-card__body">
+              <span class="article-card__cat">News</span>
+              <h3 class="article-card__title">New Moon Board Installation Complete</h3>
+              <p class="article-card__excerpt">Our upgraded Moon Board is live with the full Moonclimbing 2024 hold set.</p>
+              <div class="article-card__date">
+                <i class="ph-bold ph-calendar-blank" aria-hidden="true"></i>
+                Aug 28, 2026
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4: Stories -->
+          <article class="article-card" data-category="stories" aria-label="Stories: Sarah's journey">
+            <div class="article-card__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1550259979-ed79b48d2a30?w=800&q=80"
+                alt="Climber celebrating a send"
+                loading="lazy"
+              >
+            </div>
+            <div class="article-card__body">
+              <span class="article-card__cat">Stories</span>
+              <h3 class="article-card__title">From V0 to V7 in 18 Months: Sarah's Story</h3>
+              <p class="article-card__excerpt">How a total beginner became one of our top boulderers through consistency and community.</p>
+              <div class="article-card__date">
+                <i class="ph-bold ph-calendar-blank" aria-hidden="true"></i>
+                Aug 22, 2026
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 5: Technique -->
+          <article class="article-card" data-category="technique" aria-label="Technique: Reading comp routes">
+            <div class="article-card__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1554284126-aa88f22d8b74?w=800&q=80"
+                alt="Climber reading a competition route"
+                loading="lazy"
+              >
+            </div>
+            <div class="article-card__body">
+              <span class="article-card__cat">Technique</span>
+              <h3 class="article-card__title">Reading Comp Routes: Think Like a Setter</h3>
+              <p class="article-card__excerpt">Understanding setter intent is the fastest way to decode competition problems.</p>
+              <div class="article-card__date">
+                <i class="ph-bold ph-calendar-blank" aria-hidden="true"></i>
+                Aug 18, 2026
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 6: Training -->
+          <article class="article-card" data-category="training" aria-label="Training: Hangboard protocol">
+            <div class="article-card__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=800&q=80"
+                alt="Climber hangboarding for finger strength"
+                loading="lazy"
+              >
+            </div>
+            <div class="article-card__body">
+              <span class="article-card__cat">Training</span>
+              <h3 class="article-card__title">Hangboard Protocol for Intermediate Climbers</h3>
+              <p class="article-card__excerpt">A science-backed 8-week finger strength program designed for V4–V7 climbers.</p>
+              <div class="article-card__date">
+                <i class="ph-bold ph-calendar-blank" aria-hidden="true"></i>
+                Aug 12, 2026
+              </div>
+            </div>
+          </article>
+
+        </div><!-- /articles-grid -->
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════
+         SECTION 4 — CATEGORIES
+    ══════════════════════════════════════ -->
+    <section class="section" aria-labelledby="categories-heading">
+      <div class="container">
+        <h2 id="categories-heading" class="section__title" style="text-align:center;margin-bottom:48px">BROWSE</h2>
+
+        <div class="category-cards-grid">
+
+          <!-- Technique -->
+          <a href="?category=technique" class="category-card" aria-label="Browse Technique articles">
+            <img
+              src="https://images.unsplash.com/photo-1522163182402-834f871fd851?w=800&q=80"
+              alt="Climber demonstrating technique on the wall"
+              loading="lazy"
+            >
+            <div class="category-card__overlay">
+              <div class="category-card__arrow"><i class="ph-bold ph-arrow-right" aria-hidden="true"></i></div>
+              <span class="category-card__label">Technique</span>
+            </div>
+          </a>
+
+          <!-- Training -->
+          <a href="?category=training" class="category-card" aria-label="Browse Training articles">
+            <img
+              src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800&q=80"
+              alt="Climber in training session"
+              loading="lazy"
+            >
+            <div class="category-card__overlay">
+              <div class="category-card__arrow"><i class="ph-bold ph-arrow-right" aria-hidden="true"></i></div>
+              <span class="category-card__label">Training</span>
+            </div>
+          </a>
+
+          <!-- Gear Reviews -->
+          <a href="?category=gear" class="category-card" aria-label="Browse Gear Reviews articles">
+            <img
+              src="https://images.unsplash.com/photo-1522163182402-834f871fd851?w=800&q=80"
+              alt="Climbing gear and equipment"
+              loading="lazy"
+            >
+            <div class="category-card__overlay">
+              <div class="category-card__arrow"><i class="ph-bold ph-arrow-right" aria-hidden="true"></i></div>
+              <span class="category-card__label">Gear Reviews</span>
+            </div>
+          </a>
+
+          <!-- Gym News -->
+          <a href="?category=news" class="category-card" aria-label="Browse Gym News articles">
+            <img
+              src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80"
+              alt="CRAG gym interior and events"
+              loading="lazy"
+            >
+            <div class="category-card__overlay">
+              <div class="category-card__arrow"><i class="ph-bold ph-arrow-right" aria-hidden="true"></i></div>
+              <span class="category-card__label">Gym News</span>
+            </div>
+          </a>
+
+          <!-- Climber Stories -->
+          <a href="?category=stories" class="category-card" aria-label="Browse Climber Stories articles">
+            <img
+              src="https://images.unsplash.com/photo-1560184897-502a475f7a0d?w=800&q=80"
+              alt="Climber sharing their story"
+              loading="lazy"
+            >
+            <div class="category-card__overlay">
+              <div class="category-card__arrow"><i class="ph-bold ph-arrow-right" aria-hidden="true"></i></div>
+              <span class="category-card__label">Climber Stories</span>
+            </div>
+          </a>
+
+        </div><!-- /category-cards-grid -->
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════
+         SECTION 5 — NEWSLETTER
+    ══════════════════════════════════════ -->
+    <section class="section section--alt" id="newsletter" aria-labelledby="newsletter-heading">
+      <div class="container">
+        <h2 id="newsletter-heading" class="section__title" style="text-align:center;margin-bottom:12px">GET THE BETA</h2>
+        <p class="section__subtitle" style="text-align:center;max-width:500px;margin:0 auto 48px">
+          Weekly route tips, training insights, and gym news. Zero spam.
+        </p>
+
+        <div class="newsletter-card">
+          <i class="ph-bold ph-envelope-open" aria-hidden="true" style="font-size:2.2rem;color:var(--orange);display:block;margin-bottom:12px"></i>
+          <p style="font-family:'Inter',sans-serif;font-size:0.95rem;color:var(--text-sub);line-height:1.6;margin:0 0 4px">
+            Join <strong style="color:var(--text)">3,400+ climbers</strong> getting the CRAG weekly newsletter.
+          </p>
+
+          <form
+            class="newsletter-form"
+            id="newsletter-form"
+            data-validate
+            aria-label="Newsletter subscription form"
+            novalidate
+          >
+            <div class="newsletter-form__input-group">
+              <label for="newsletter-email" class="sr-only">Email address</label>
+              <input
+                type="email"
+                id="newsletter-email"
+                name="email"
+                placeholder="your@email.com"
+                required
+                autocomplete="email"
+                aria-required="true"
+                aria-describedby="newsletter-note"
+              >
+              <button type="submit" class="btn btn-primary">
+                Subscribe
+                <i class="ph-bold ph-paper-plane-right" aria-hidden="true"></i>
+              </button>
+            </div>
+          </form>
+
+          <p class="newsletter-note" id="newsletter-note">
+            <i class="ph-bold ph-lock-simple" aria-hidden="true"></i>
+            We respect your inbox. Unsubscribe any time.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════
+         SECTION 6 — READ MORE CTA
+    ══════════════════════════════════════ -->
+    <section
+      class="cta-section"
+      aria-labelledby="cta-heading"
+      style="background-image:url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1600&q=80');"
+    >
+      <div class="container">
+        <h2 id="cta-heading">DIG INTO THE ARCHIVES</h2>
+        <p>Over 200 articles on technique, training, gear, and the CRAG community. Find your next breakthrough.</p>
+        <a href="#recent-posts" class="btn-white">
+          <i class="ph-bold ph-books" aria-hidden="true"></i>
+          View All Posts
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a href="../index.html" class="footer__brand" aria-label="CRAG Home">
+            <svg width="36" height="36" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <rect width="40" height="40" fill="#ea580c"/>
+              <path d="M5 32L20 8L35 32H5Z" fill="#0a0a0a"/>
+              <circle cx="20" cy="18" r="4" fill="#ea580c"/>
+              <path d="M14 26L20 20L26 26" stroke="#fafafa" stroke-width="2.5" fill="none"/>
+            </svg>
+            <span class="footer__brand-name">CRAG</span>
+          </a>
+          <p class="footer__desc" style="margin-top:12px">Boulder. Lead. Train. CRAG is where climbers are made — your indoor mountain in the city.</p>
+        </div>
+        <div>
+          <h4 class="footer__heading">Gym Links</h4>
+          <ul class="footer__links">
+            <li><a href="services.html">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="services.html">Classes</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">Contact</h4>
+          <div class="footer__contact-item">
+            <i class="ph-bold ph-map-pin" aria-hidden="true"></i>
+            <span>42 Crag Street, Boulder CO 80301</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="ph-bold ph-phone" aria-hidden="true"></i>
+            <a href="tel:+13035550182" style="color:rgba(250,250,250,0.65)">(303) 555-0182</a>
+          </div>
+          <div class="footer__contact-item">
+            <i class="ph-bold ph-envelope" aria-hidden="true"></i>
+            <a href="mailto:hello@crag.gym" style="color:rgba(250,250,250,0.65)">hello@crag.gym</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">Follow Us</h4>
+          <div class="footer__social">
+            <a href="#" class="footer__social-btn" aria-label="Instagram"><i class="ph-bold ph-instagram-logo" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-btn" aria-label="X / Twitter"><i class="ph-bold ph-x-logo" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-btn" aria-label="Facebook"><i class="ph-bold ph-facebook-logo" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-btn" aria-label="YouTube"><i class="ph-bold ph-youtube-logo" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">&copy; 2026 CRAG Climbing Gym. All rights reserved.</p>
+        <nav class="footer__legal" aria-label="Legal links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+
+  <!-- Blog filter script -->
+  <script>
+    (function () {
+      'use strict';
+
+      const pills = document.querySelectorAll('.filter-pill');
+      const cards = document.querySelectorAll('.article-card');
+
+      function filterCards(category) {
+        cards.forEach(function (card) {
+          const cardCat = card.getAttribute('data-category');
+          if (category === 'all' || cardCat === category) {
+            card.classList.remove('is-hidden');
+            card.removeAttribute('aria-hidden');
+          } else {
+            card.classList.add('is-hidden');
+            card.setAttribute('aria-hidden', 'true');
+          }
+        });
+      }
+
+      pills.forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          // Update active state
+          pills.forEach(function (p) {
+            p.classList.remove('is-active');
+            p.setAttribute('aria-pressed', 'false');
+          });
+          pill.classList.add('is-active');
+          pill.setAttribute('aria-pressed', 'true');
+
+          // Filter
+          filterCards(pill.getAttribute('data-filter'));
+        });
+      });
+
+      // Newsletter form
+      var newsletterForm = document.getElementById('newsletter-form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var emailInput = document.getElementById('newsletter-email');
+          if (!emailInput.value || !emailInput.checkValidity()) {
+            emailInput.focus();
+            emailInput.style.borderColor = '#dc2626';
+            return;
+          }
+          emailInput.style.borderColor = '';
+          // Success feedback
+          var note = document.getElementById('newsletter-note');
+          var original = note.innerHTML;
+          note.innerHTML = '<i class="ph-bold ph-check-circle" aria-hidden="true" style="color:var(--orange)"></i> You\'re on the list! Check your inbox.';
+          note.style.color = 'var(--text)';
+          emailInput.value = '';
+          setTimeout(function () {
+            note.innerHTML = original;
+            note.style.color = '';
+          }, 5000);
+        });
+      }
+
+    })();
+  </script>
+
+</body>
+</html>
