@@ -18,7 +18,8 @@
     .dashboard-layout {
       display: grid;
       grid-template-columns: 280px 1fr;
-      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
       background: var(--clr-bg);
     }
 
@@ -94,6 +95,11 @@
     }
 
     /* Main Content Area */
+    .dash-main-wrapper {
+      height: 100vh;
+      overflow-y: auto;
+      width: 100%;
+    }
     .dash-main {
       padding: var(--sp-8);
       max-width: 1400px;
@@ -192,7 +198,8 @@
     .activity-time { font-size: 0.75rem; color: var(--clr-text-muted); }
 
     @media (max-width: 1023px) {
-      .dashboard-layout { display: block; }
+      .dashboard-layout { display: block; height: auto; overflow: visible; }
+      .dash-main-wrapper { height: auto; overflow: visible; }
       .dash-sidebar { width: 100%; position: static; height: auto; border-right: none; border-bottom: 1px solid var(--clr-border); padding: var(--sp-4) 0; display: grid; grid-template-columns: 1fr auto; grid-template-areas: "logo logout" "nav nav"; gap: var(--sp-4) 0; align-items: center; }
       .dash-logo-wrap { grid-area: logo; padding: 0 0 0 var(--sp-4) !important; }
       .dash-user { display: none; }
@@ -201,6 +208,7 @@
       .dash-nav-link { white-space: nowrap; width: auto; }
       .dash-logout { grid-area: logout; margin-top: 0; display: block; padding: 0 var(--sp-4) 0 0; border-top: none; }
       .dash-logout .btn { padding: var(--sp-2) var(--sp-4); font-size: 0.8125rem; width: auto; }
+      .dash-global-actions { position: absolute; top: var(--sp-3); right: var(--sp-3); }
       .dash-main { padding: var(--sp-4); }
     }
 
@@ -268,7 +276,16 @@
     </div>
   </aside>
 
-  <main class="dash-main">
+  <div class="dash-main-wrapper" style="position: relative;">
+    <div class="dash-global-actions" style="position: absolute; top: var(--sp-6); right: var(--sp-8); display: flex; gap: var(--sp-2); z-index: 50;">
+      <button class="btn btn--ghost" data-theme-toggle data-theme-icon aria-label="Toggle Theme" style="padding: var(--sp-2); aspect-ratio: 1; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid var(--clr-border);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg>
+      </button>
+      <button class="btn btn--ghost" data-rtl-toggle data-dir-label aria-label="Toggle RTL/LTR" style="padding: var(--sp-2); flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid var(--clr-border); font-size: 0.75rem; font-weight: 700; width: 40px;">
+        RTL
+      </button>
+    </div>
+    <main class="dash-main">
     
     <!-- ================================================================
          SECTION 2: OVERVIEW PANEL
@@ -725,6 +742,7 @@
     </div>
     
   </main>
+  </div>
 </div>
 
 <script>
