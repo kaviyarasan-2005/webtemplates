@@ -2590,12 +2590,67 @@ h4 {
   min-height: 100%;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(3, 12, 18, 0.5), rgba(20, 4, 24, 0.45));
+  background: #030609;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
 }
 
+.map-frame:hover {
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: var(--card-lift);
+}
+
+/* Map iframe and SVG fill the frame */
+.pulse-map-iframe,
+.pulse-map-svg {
+  width: 100%;
+  flex: 1;
+  min-height: 420px;
+  display: block;
+  border: 0;
+}
+
+[data-theme="dark"] .pulse-map-iframe {
+  filter: invert(90%) hue-rotate(180deg) contrast(95%) saturate(120%);
+}
+
+/* Bottom overlay bar with pin label + directions button */
+.map-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px;
+  background: rgba(5, 5, 8, 0.88);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--glass-border);
+  flex-shrink: 0;
+}
+
+.map-pin-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.map-pin-label i {
+  color: var(--cyan);
+  font-size: 16px;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+  flex-shrink: 0;
+}
+
+.map-dir-btn {
+  padding: 10px 22px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* Legacy fallback (map-inner / pin) kept intact */
 .map-frame .map-inner {
   height: 100%;
   min-height: 460px;
@@ -2610,7 +2665,7 @@ h4 {
   padding: 24px;
 }
 
-.map-frame i {
+.map-frame .map-inner i {
   font-size: 44px;
   color: var(--cyan);
   text-shadow: var(--glow-cyan);
@@ -3862,6 +3917,22 @@ h4 {
 }
 
 @media (max-width: 767px) {
+  .pulse-map-iframe,
+  .pulse-map-svg {
+    min-height: 280px;
+  }
+
+  .map-overlay {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .map-dir-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .container {
     padding-left: 24px;
     padding-right: 24px;
