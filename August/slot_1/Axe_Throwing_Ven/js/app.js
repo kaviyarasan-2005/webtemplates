@@ -92,34 +92,7 @@ const NavbarManager = (() => {
 
     if (!navbar) return;
 
-    // Hide on scroll down, reveal on scroll up
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY;
-          const scrollingDown = currentScrollY > lastScrollY;
-
-          // Always show when near top
-          if (currentScrollY < 80) {
-            navbar.classList.remove('navbar--hidden');
-          } else if (scrollingDown) {
-            navbar.classList.add('navbar--hidden');
-          } else {
-            navbar.classList.remove('navbar--hidden');
-          }
-
-          lastScrollY = currentScrollY;
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    // Navbar always visible — no hide-on-scroll
 
     // Active link
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
