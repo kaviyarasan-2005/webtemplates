@@ -507,6 +507,115 @@
       justify-content: center;
       margin-top: 32px;
     }
+
+    /* ─── Our Story Section ─── */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .story-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+    .story-img-wrap {
+      position: relative;
+    }
+    .story-img-wrap img {
+      width: 100%;
+      height: 440px;
+      object-fit: cover;
+      display: block;
+      border: 3px solid var(--pitch-black);
+      box-shadow: 6px 6px 0 0 var(--orange);
+    }
+    [data-theme="dark"] .story-img-wrap img {
+      border-color: var(--chalk-white);
+    }
+    .story-content p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(10,10,10,0.8);
+      margin-bottom: 20px;
+    }
+    [data-theme="dark"] .story-content p {
+      color: rgba(250,250,250,0.8);
+    }
+
+    /* ─── Build Climbers Section ─── */
+    .build-climbers-section {
+      position: relative;
+      padding: 96px 0;
+      background-image: url('https://images.unsplash.com/photo-1593079831268-3381b0db4a77?w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--chalk-white);
+      overflow: hidden;
+    }
+    .build-climbers-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.82);
+    }
+    .build-climbers-content {
+      position: relative;
+      z-index: 2;
+    }
+    .build-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    @media (max-width: 1024px) {
+      .build-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 640px) {
+      .build-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .build-card {
+      background: rgba(24, 24, 27, 0.88);
+      border: 3px solid var(--orange);
+      box-shadow: 4px 4px 0 0 var(--pitch-black);
+      padding: 28px 24px;
+      backdrop-filter: blur(4px);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .build-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 0 var(--orange);
+      background: rgba(10, 10, 10, 0.95);
+    }
+    .build-card__icon {
+      font-size: 2.2rem;
+      color: var(--orange);
+      margin-bottom: 12px;
+    }
+    .build-card__title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--chalk-white);
+      margin: 0 0 8px;
+    }
+    .build-card__desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: rgba(250, 250, 250, 0.8);
+      margin: 0;
+    }
   </style>
 </head>
 <body>
@@ -520,10 +629,11 @@
   <div class="navbar__inner">
     <a href="../index.html" class="navbar__brand" aria-label="CRAG Home">
       <svg class="navbar__logo" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="40" height="40" fill="var(--orange)"/>
-        <path d="M5 32L20 8L35 32H5Z" fill="var(--pitch-black)" stroke="var(--pitch-black)" stroke-width="0"/>
-        <circle cx="20" cy="18" r="4" fill="var(--orange)"/>
-        <path d="M14 26L20 20L26 26" stroke="var(--chalk-white)" stroke-width="2.5" fill="none"/>
+        <rect width="40" height="40" fill="#ea580c"/>
+          <path d="M5 33L19 6L23 17L14 33H5Z" fill="#0a0a0a"/>
+          <path d="M19 6L35 33H22L17 19L19 6Z" fill="#fafafa"/>
+          <path d="M13 25L19 14L27 27" stroke="#ea580c" stroke-width="2.5" stroke-linecap="square"/>
+          <circle cx="19" cy="14" r="2" fill="#fafafa"/>
       </svg>
       <span class="navbar__brand-name">CRAG</span>
     </a>
@@ -591,14 +701,18 @@
   ══════════════════════════════════════ -->
   <section class="hero" aria-label="Hero" style="position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden;">
     <!-- Background Image -->
-    <div style="position:absolute; inset:0; background-image:url('../assets/images/hero-home2.jpg'); background-size:cover; background-position:center; background-attachment:fixed;"></div>
+    <div style="position:absolute; inset:0; background-image:url('https://images.unsplash.com/photo-1522163182402-834f871fd851?w=1600&q=80'); background-size:cover; background-position:center; background-attachment:fixed;"></div>
     <!-- Dark Overlay -->
-    <div style="position:absolute; inset:0; background:rgba(10,10,10,0.5);"></div>
+    <div style="position:absolute; inset:0; background:rgba(10,10,10,0.65);"></div>
     <!-- Hero Content -->
-    <div class="hero__content" style="position:relative; z-index:2; padding:0 24px; max-width:860px; margin:0 auto;">
+    <div class="hero__content" style="position:relative; z-index:2; padding:0 24px; max-width:880px; margin:0 auto;">
+      <span style="display:inline-block; font-family:'Oswald',sans-serif; font-size:0.85rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--orange); border:2px solid var(--orange); padding:4px 14px; margin-bottom:24px;">BOULDER • LEAD • TRAIN</span>
       <h1 class="hero__title" style="font-family:'Oswald',sans-serif; font-size:clamp(2.8rem,8vw,5.5rem); font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--chalk-white); margin:0 0 20px; line-height:1.05;">TRAIN. SEND. REPEAT.</h1>
-      <p class="hero__sub" style="font-family:'Inter',sans-serif; font-size:clamp(1rem,2.2vw,1.25rem); line-height:1.65; color:rgba(250,250,250,0.88); max-width:620px; margin:0 auto 36px;">For serious climbers pushing their grade. Evidence-based training, expert setters, and competition-grade walls.</p>
-      <a href="services.html" class="btn btn-primary" style="font-size:1rem; padding:16px 36px;">Explore Training Programs</a>
+      <p class="hero__sub" style="font-family:'Inter',sans-serif; font-size:clamp(1rem,2.2vw,1.25rem); line-height:1.65; color:rgba(250,250,250,0.9); max-width:680px; margin:0 auto 36px;">Boulder's premier climbing sanctuary — 18,000 sq ft of bouldering caves, 45ft lead walls, and evidence-based training for serious climbers.</p>
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <a href="services.html" class="btn btn-primary" style="font-size:1rem; padding:16px 36px;">Explore Programs</a>
+        <a href="#our-story" class="btn btn-outline-white" style="font-size:1rem; padding:16px 36px;">Our Story</a>
+      </div>
     </div>
     <!-- Scroll indicator -->
     <div style="position:absolute; bottom:36px; left:50%; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:6px; opacity:0.6;">
@@ -613,8 +727,8 @@
   <section class="section section--alt" aria-labelledby="programs-heading">
     <div class="container">
       <div class="section-heading-center">
-        <h2 id="programs-heading" class="section__title">PROGRAMS</h2>
-        <p class="section__sub" style="max-width:560px; margin:0 auto;">Structured, goal-oriented training for every serious climber — from building base strength to stepping onto the podium.</p>
+        <h2 id="programs-heading" class="section__title">TRAINING PROGRAMS</h2>
+        <p class="section__sub" style="max-width:600px; margin:0 auto;">Structured, goal-oriented training for every serious climber — from building finger strength to stepping onto competition podiums.</p>
       </div>
 
       <div class="cards-grid--4" role="list">
@@ -622,8 +736,8 @@
         <!-- Card 1: Strength & Conditioning -->
         <article class="program-card" role="listitem">
           <img
-            src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800&q=80"
-            alt="Climber performing hangboard training for strength and conditioning"
+            src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=80"
+            alt="Climber performing hangboard finger strength training"
             class="program-card__img"
             loading="lazy"
           >
@@ -639,8 +753,8 @@
         <!-- Card 2: Technique Lab -->
         <article class="program-card" role="listitem">
           <img
-            src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=800&q=80"
-            alt="Coach analyzing climber technique on a training wall"
+            src="https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=800&q=80"
+            alt="Climber practicing technical footwork on overhanging wall"
             class="program-card__img"
             loading="lazy"
           >
@@ -656,8 +770,8 @@
         <!-- Card 3: Endurance Circuit -->
         <article class="program-card" role="listitem">
           <img
-            src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80"
-            alt="Climber performing endurance circuit training on a climbing wall"
+            src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&q=80"
+            alt="Climber training endurance on tall lead climbing wall"
             class="program-card__img"
             loading="lazy"
           >
@@ -673,8 +787,8 @@
         <!-- Card 4: Competition Prep -->
         <article class="program-card" role="listitem">
           <img
-            src="https://images.unsplash.com/photo-1534258936925-c58bed479fcb?w=800&q=80"
-            alt="Climbers training in competition preparation session"
+            src="https://images.unsplash.com/photo-1522163182402-834f871fd851?w=800&q=80"
+            alt="Competition climbing wall session at CRAG gym"
             class="program-card__img"
             loading="lazy"
           >
@@ -686,6 +800,75 @@
             <p class="program-card__desc">8-week structured periodization leading into local and national competitions.</p>
           </div>
         </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 3 — OUR STORY
+  ══════════════════════════════════════ -->
+  <section class="section" id="our-story" aria-labelledby="story-heading">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-content">
+          <span style="display:inline-block; font-family:'Oswald',sans-serif; font-size:0.78rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--orange); border:2px solid var(--orange); padding:4px 12px; margin-bottom:18px;">SINCE 2018</span>
+          <h2 id="story-heading" class="section__title" style="margin-bottom:20px;">OUR STORY</h2>
+          <p>In 2018, two lifelong climbers walked into an abandoned warehouse on the edge of Boulder with nothing but a vision and a truck full of climbing holds. The building smelled of machine oil and ambition. They smelled of chalk.</p>
+          <p>What followed was 18 months of weekend builds, maxed-out credit cards, and hand-drilled panels. Today, CRAG hosts over 1,200 active members, runs certified instructor programs, and trains competition climbers from across the region — but our warehouse stoke never left.</p>
+          <div style="margin-top:28px;">
+            <a href="about.html" class="btn btn-outline">
+              <i class="ph-bold ph-book-open" aria-hidden="true"></i> Read Full Story
+            </a>
+          </div>
+        </div>
+        <div class="story-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=800&q=80"
+            alt="Climber working on an overhanging bouldering problem at CRAG gym"
+            loading="lazy"
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 4 — WE BUILD CLIMBERS
+  ══════════════════════════════════════ -->
+  <section class="build-climbers-section" id="build-climbers" aria-labelledby="build-heading">
+    <div class="build-climbers-overlay"></div>
+    <div class="container build-climbers-content">
+      <div class="section-heading-center">
+        <h2 id="build-heading" class="section__title" style="color:var(--chalk-white);">WE BUILD CLIMBERS</h2>
+        <p class="section__sub" style="max-width:620px; margin:0 auto; color:rgba(250,250,250,0.85);">Every route we set, every drill we coach, and every wall we build is engineered to transform your movement.</p>
+      </div>
+
+      <div class="build-grid">
+
+        <div class="build-card">
+          <i class="ph-bold ph-users-three build-card__icon" aria-hidden="true"></i>
+          <h3 class="build-card__title">1,200+ Members</h3>
+          <p class="build-card__desc">A supportive, stoke-filled community cheering on every single send across all grades.</p>
+        </div>
+
+        <div class="build-card">
+          <i class="ph-bold ph-arrows-clockwise build-card__icon" aria-hidden="true"></i>
+          <h3 class="build-card__title">240+ Monthly Resets</h3>
+          <p class="build-card__desc">Fresh boulder problems and rope routes set weekly by certified route setters.</p>
+        </div>
+
+        <div class="build-card">
+          <i class="ph-bold ph-mountains build-card__icon" aria-hidden="true"></i>
+          <h3 class="build-card__title">45ft Lead Walls</h3>
+          <p class="build-card__desc">The highest climbing terrain in the region designed for serious endurance training.</p>
+        </div>
+
+        <div class="build-card">
+          <i class="ph-bold ph-shield-check build-card__icon" aria-hidden="true"></i>
+          <h3 class="build-card__title">100% Certified Safety</h3>
+          <p class="build-card__desc">Auto-belay stations, thick safety matting, and AMGA-trained staff on floor at all times.</p>
+        </div>
 
       </div>
     </div>
@@ -948,9 +1131,10 @@
         <a href="../index.html" class="footer__brand" aria-label="CRAG Home">
           <svg width="36" height="36" viewBox="0 0 40 40" fill="none" aria-hidden="true">
             <rect width="40" height="40" fill="#ea580c"/>
-            <path d="M5 32L20 8L35 32H5Z" fill="#0a0a0a"/>
-            <circle cx="20" cy="18" r="4" fill="#ea580c"/>
-            <path d="M14 26L20 20L26 26" stroke="#fafafa" stroke-width="2.5" fill="none"/>
+          <path d="M5 33L19 6L23 17L14 33H5Z" fill="#0a0a0a"/>
+          <path d="M19 6L35 33H22L17 19L19 6Z" fill="#fafafa"/>
+          <path d="M13 25L19 14L27 27" stroke="#ea580c" stroke-width="2.5" stroke-linecap="square"/>
+          <circle cx="19" cy="14" r="2" fill="#fafafa"/>
           </svg>
           <span class="footer__brand-name">CRAG</span>
         </a>

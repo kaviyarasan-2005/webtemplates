@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         title: 'Ball Python Care',
         difficulty: 'Beginner',
         readTime: '10 Min Read',
-        image: 'https://images.unsplash.com/photo-1531386151447-fd76ad50012f?w=1600&q=80',
+        image: 'https://images.unsplash.com/photo-1546992772-3318f1f3a1be?w=1600&q=80',
         intro: 'Ball pythons are widely considered the perfect starter snake. With their docile nature, manageable size, and relatively simple care requirements, they make fantastic companions for reptile enthusiasts of all experience levels.',
         sections: [
           { id: 'habitat', title: 'Habitat Setup', content: '<p>Adult ball pythons require an enclosure of at least 40 gallons, though a 4x2x2 foot enclosure is ideal for adults. Provide multiple hides—one on the warm side and one on the cool side—so your snake feels secure.</p>' },
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         title: 'Bearded Dragon Care',
         difficulty: 'Beginner',
         readTime: '15 Min Read',
-        image: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=1600&q=80',
+        image: 'https://images.unsplash.com/photo-1619816128374-a6b4766ca92c?w=1600&q=80',
         intro: 'Bearded dragons are incredibly resilient and full of personality, but they require a very specific setup to mimic their native Australian environment.',
         sections: [
           { id: 'lighting', title: 'Lighting & UVB', content: '<p>The most common mistake new keepers make is underestimating the need for intense, quality UVB. It is not just light—it is literal life support for a bearded dragon.</p>' },
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         title: 'Crested Gecko Care',
         difficulty: 'Beginner',
         readTime: '10 Min Read',
-        image: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=1600&q=80',
+        image: 'https://images.unsplash.com/photo-1769986289575-d402e93d5885?w=1600&q=80',
         intro: 'Crested geckos are arboreal wonders that do well at room temperature, making them a fantastic low-maintenance pet.',
         sections: [
           { id: 'environment', title: 'Environment', content: '<p>They require a tall enclosure with plenty of vertical climbing space and foliage. Keep humidity between 50-80% with daily misting.</p>' }

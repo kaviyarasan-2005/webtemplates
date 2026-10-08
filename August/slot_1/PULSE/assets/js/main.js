@@ -16,10 +16,9 @@
       '<svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true" id="' +
       id +
       '">' +
-      '<circle cx="17" cy="17" r="9" stroke="currentColor" stroke-width="2.4" fill="none"/>' +
-      '<circle cx="17" cy="17" r="3.4" fill="currentColor"/>' +
-      '<path d="M8.5 4.5 L4.5 2.5 L6.5 9 L3 8.5 L8 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
-      '<path d="M25.5 29.5 L29.5 31.5 L27.5 25 L31 25.5 L26 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<polygon points="17,3 29,10 29,24 17,31 5,24 5,10" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" fill="none"/>' +
+      '<path d="M2 17h8l3-7 4 15 3.5-12 3 4h8.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<circle cx="17" cy="17" r="2.2" fill="currentColor"/>' +
       "</svg>"
     );
   }
@@ -33,6 +32,17 @@
   }
 
   function toggleHTML(klass, id, label) {
+    if (klass.indexOf("rtl") > -1) {
+      return (
+        '<button class="pill-toggle ' +
+        klass +
+        '" id="' +
+        id +
+        '" type="button" aria-label="' +
+        label +
+        '"><span>LTR</span></button>'
+      );
+    }
     return (
       '<button class="pill-toggle ' +
       klass +
@@ -40,9 +50,7 @@
       id +
       '" type="button" aria-label="' +
       label +
-      '"><i class="ph-bold ph-' +
-      (klass.indexOf("theme") > -1 ? "moon-stars" : "swap") +
-      '"></i><span></span></button>'
+      '"><i class="ph-bold ph-moon-stars"></i></button>'
     );
   }
 
@@ -245,9 +253,18 @@
       localStorage.setItem("pulse-dir", dir);
     } catch (e) {}
     var label = dir === "rtl" ? "RTL" : "LTR";
+    var aria = dir === "rtl" ? "Switch to LTR mode" : "Switch to RTL mode";
     $$(".rtl-toggle").forEach(function (b) {
+      var ic = $("i", b);
+      if (ic) ic.remove();
       var s = $("span", b);
-      if (s) s.textContent = label;
+      if (s) {
+        s.textContent = label;
+      } else {
+        b.textContent = label;
+      }
+      b.setAttribute("aria-label", aria);
+      b.setAttribute("title", aria);
     });
   }
 
