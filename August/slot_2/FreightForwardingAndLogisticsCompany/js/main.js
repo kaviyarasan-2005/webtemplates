@@ -25,7 +25,7 @@
   const isDark = document.documentElement.classList.contains('dark');
   applyThemeIcons(isDark);
 
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     if (e.target.closest('[data-theme-toggle]')) {
       const html = document.documentElement;
       html.classList.toggle('dark');
@@ -62,7 +62,7 @@
   }
   applyRTLLabel();
 
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     if (e.target.closest('[data-rtl-toggle]')) {
       const current = document.documentElement.getAttribute('dir') || 'ltr';
       const next = current === 'ltr' ? 'rtl' : 'ltr';
@@ -79,10 +79,10 @@
    ───────────────────────────────────────── */
 (function initHamburger() {
   const hamburger = document.getElementById('navHamburger');
-  const drawer    = document.getElementById('navDrawer');
+  const drawer = document.getElementById('navDrawer');
   if (!hamburger || !drawer) return;
 
-  hamburger.addEventListener('click', function() {
+  hamburger.addEventListener('click', function () {
     const open = hamburger.classList.toggle('open');
     drawer.classList.toggle('open', open);
     hamburger.setAttribute('aria-expanded', open);
@@ -90,7 +90,7 @@
   });
 
   // close on outside click
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     if (!hamburger.contains(e.target) && !drawer.contains(e.target)) {
       hamburger.classList.remove('open');
       drawer.classList.remove('open');
@@ -100,7 +100,7 @@
 
   // drawer sub-menu toggles
   drawer.querySelectorAll('[data-drawer-toggle]').forEach(btn => {
-    btn.addEventListener('click', function(e) {
+    btn.addEventListener('click', function (e) {
       e.preventDefault();
       const target = document.getElementById(btn.dataset.drawerToggle);
       if (target) target.classList.toggle('open');
@@ -119,7 +119,7 @@
     const toggle = item.querySelector('.nav-dropdown-toggle');
     if (!toggle) return;
 
-    toggle.addEventListener('click', function(e) {
+    toggle.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
       const wasOpen = item.classList.contains('open');
@@ -136,7 +136,7 @@
     });
 
     // close on Escape
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
         items.forEach(i => {
           i.classList.remove('open');
@@ -148,7 +148,7 @@
   });
 
   // close on outside click
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     if (!e.target.closest('.nav-item-dropdown')) {
       items.forEach(i => {
         i.classList.remove('open');
@@ -202,14 +202,14 @@
 /* ── Home 1: Multimodal Freight Command Center ── */
 let currentH1Mode = 'ocean';
 
-window.switchH1Mode = function(btn, mode) {
+window.switchH1Mode = function (btn, mode) {
   currentH1Mode = mode;
   document.querySelectorAll('.h1-mode-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   window.calcH1Route();
 };
 
-window.calcH1Route = function() {
+window.calcH1Route = function () {
   const originEl = document.getElementById('h1OriginSelect');
   const destEl = document.getElementById('h1DestSelect');
   const transitVal = document.getElementById('h1TransitVal');
@@ -293,7 +293,7 @@ const h1CarrierData = {
   }
 };
 
-window.switchH1Carrier = function(type) {
+window.switchH1Carrier = function (type) {
   const data = h1CarrierData[type];
   if (!data) return;
 
@@ -331,7 +331,7 @@ window.switchH1Carrier = function(type) {
   }
 };
 
-window.triggerH1AisPing = function() {
+window.triggerH1AisPing = function () {
   const statusEl = document.getElementById('h1AisStatusText');
   if (!statusEl) return;
   statusEl.textContent = 'PINGING AIS TRANSPONDER...';
@@ -354,14 +354,14 @@ const h2PkgRates = {
   pallet: { price: 48.00, code: 'SHIP-PLT-4401', sla: '✓ 3-5 DAYS PRIORITY FREIGHT INJECTION', duty: 'Commercial Invoice Pre-Filed' }
 };
 
-window.switchH2Package = function(btn, pkg) {
+window.switchH2Package = function (btn, pkg) {
   currentH2Pkg = pkg;
   document.querySelectorAll('.h2-pkg-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   window.calcH2Rate();
 };
 
-window.calcH2Rate = function() {
+window.calcH2Rate = function () {
   const destEl = document.getElementById('h2DestSelect');
   const codeEl = document.getElementById('h2LabelCode');
   const priceEl = document.getElementById('h2LabelPrice');
@@ -384,7 +384,7 @@ window.calcH2Rate = function() {
   if (dutyEl) dutyEl.textContent = base.duty;
 };
 
-window.runH2FulfillmentSim = function() {
+window.runH2FulfillmentSim = function () {
   const btn = document.getElementById('h2SimBtn');
   const s1 = document.getElementById('h2Step1');
   const s2 = document.getElementById('h2Step2');
@@ -529,11 +529,11 @@ window.runH2FulfillmentSim = function() {
   if (!stages.length) return;
 
   stages.forEach(s => {
-    s.addEventListener('click', function() {
+    s.addEventListener('click', function () {
       const card = document.getElementById('loopStageCard');
       if (!card) return;
       card.querySelector('h4').textContent = s.dataset.stageName || '';
-      card.querySelector('p').textContent  = s.dataset.stageDesc || '';
+      card.querySelector('p').textContent = s.dataset.stageDesc || '';
       card.style.display = 'block';
     });
   });
@@ -566,20 +566,49 @@ window.runH2FulfillmentSim = function() {
   const items = document.querySelectorAll('[data-telegraph]');
   if (!items.length) return;
 
+  const needle = document.getElementById('telegraphNeedle');
+  const angles = {
+    air: 0,
+    sea: 51,
+    land: 107,
+    customs: 149,
+    warehouse: 211,
+    insurance: 253
+  };
+
   items.forEach(item => {
-    item.addEventListener('click', function() {
-      items.forEach(i => i.classList.remove('active'));
+    function selectSector() {
+      items.forEach(i => {
+        i.classList.remove('active');
+        const c = i.querySelector('circle');
+        if (c) c.setAttribute('stroke', 'var(--border)');
+      });
       item.classList.add('active');
+      const activeCircle = item.querySelector('circle');
+      if (activeCircle) activeCircle.setAttribute('stroke', 'var(--clr-accent)');
+
+      const key = item.dataset.telegraph;
+      if (needle && angles[key] !== undefined) {
+        needle.style.transform = `rotate(${angles[key]}deg)`;
+      }
 
       const panel = document.getElementById('telegraphPanel');
       if (!panel) return;
       panel.querySelector('h3').textContent = item.dataset.name || '';
-      panel.querySelector('p').textContent  = item.dataset.desc || '';
+      panel.querySelector('p').textContent = item.dataset.desc || '';
       const featWrap = panel.querySelector('.telegraph-features');
       if (featWrap && item.dataset.features) {
         featWrap.innerHTML = item.dataset.features.split('|').map(f =>
           `<div class="telegraph-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>${f}</span></div>`
         ).join('');
+      }
+    }
+
+    item.addEventListener('click', selectSector);
+    item.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selectSector();
       }
     });
   });
@@ -592,17 +621,212 @@ window.runH2FulfillmentSim = function() {
    14. WAYPOINT / PASSAGE PLAN — Services
    ───────────────────────────────────────── */
 (function initWaypoints() {
-  const dots = document.querySelectorAll('.waypoint-dot');
-  if (!dots.length) return;
+  const waypoints = document.querySelectorAll('.passage-strip .waypoint');
+  if (!waypoints.length) return;
 
-  dots.forEach(dot => {
-    dot.addEventListener('click', function() {
-      dots.forEach(d => { d.classList.remove('active'); const c = d.closest('.waypoint').querySelector('.waypoint-card'); if (c) c.classList.remove('open'); });
-      dot.classList.add('active');
-      const card = dot.closest('.waypoint').querySelector('.waypoint-card');
-      if (card) card.classList.add('open');
+  const processSteps = [
+    {
+      step: 'STAGE 01 / 06',
+      cat: 'Pre-Transit & Ingestion',
+      title: 'Instant Booking & Digital Quote Generation',
+      desc: 'Submit shipment parameters including origin, destination, cargo dimensions, and IMO hazard classifications through our API or enterprise shipper portal. Our neural rate engine checks real-time ocean and air capacity across 40+ carriers to generate firm, bookable quotes within minutes.',
+      features: [
+        'Automated rate optimization across ocean, air, and multimodal corridors',
+        'Electronic Shipping Instructions (ESI) & digital SLI generation',
+        'Carbon footprint projection and certified green routing recommendations'
+      ],
+      stats: [
+        { val: '< 4 Hours', lbl: 'Confirmation SLA' },
+        { val: 'EDI 204 / 304', lbl: 'Data Interchange' },
+        { val: 'Instant Lock', lbl: 'Carrier Capacity' }
+      ]
+    },
+    {
+      step: 'STAGE 02 / 06',
+      cat: 'Origin CFS Operations',
+      title: 'First-Mile Collection & CFS Consolidation',
+      desc: 'Our GPS-monitored fleet collects freight directly from your origin warehouse or vendor facility. Shipments undergo physical barcode check-in, dimensional laser scanning, and secure palletization at our nearest bonded CFS hub.',
+      features: [
+        'Cross-dock verification with high-speed barcode and RFID scanning',
+        'Dangerous Goods (DG/IMO) certified inspection and compliance handling',
+        'Moisture barrier vacuum-packing, fumigation, and ISPM-15 crate verification'
+      ],
+      stats: [
+        { val: 'Same-Day', lbl: 'Dispatch Window' },
+        { val: 'Live GPS', lbl: 'Fleet Telematics' },
+        { val: '100% Audit', lbl: 'Weight & Cube Verification' }
+      ]
+    },
+    {
+      step: 'STAGE 03 / 06',
+      cat: 'Main Carriage Transit',
+      title: 'Global Linehaul Carriage & Live Telemetry',
+      desc: 'Main carriage execution across ocean liners, dedicated air freighters, or transcontinental rail networks. Continuous satellite telematics, reefer temperature telemetry, and dynamic ETA predictive modeling keep stakeholders informed throughout the voyage.',
+      features: [
+        'Direct carrier EDI 214 & 315 automated milestone event stream',
+        'Continuous IoT sensor logging for reefer temperature, humidity, and shock',
+        'Proactive meteorological rerouting and port berth congestion avoidance'
+      ],
+      stats: [
+        { val: '99.4%', lbl: 'On-Time Linehaul SLA' },
+        { val: 'Satellite AIS', lbl: 'Vessel Tracking' },
+        { val: 'MBL / AWB', lbl: 'Digital Carriage Document' }
+      ]
+    },
+    {
+      step: 'STAGE 04 / 06',
+      cat: 'Customs & Regulatory',
+      title: 'Customs Brokerage, Tariffs & Regulatory Clearance',
+      desc: 'Our licensed in-house customs brokers submit electronic entries prior to vessel berthing or flight touchdown to eliminate port dwell times and costly demurrage. Direct links to global customs authorities ensure green-lane clearance.',
+      features: [
+        'Automated HS code classification and preferential tariff (FTA) matching',
+        'Bonded warehouse transit, duty drawback, and tax deferral management',
+        'Full coordination for FDA, CE, veterinary, and phytosanitary inspections'
+      ],
+      stats: [
+        { val: '< 6 Hours', lbl: 'Average Clearance' },
+        { val: 'ACE / ATLAS', lbl: 'Direct Customs Gateway' },
+        { val: '60+ Countries', lbl: 'Licensed Brokerage' }
+      ]
+    },
+    {
+      step: 'STAGE 05 / 06',
+      cat: 'Hub & Last-Mile',
+      title: 'Regional Deconsolidation & Final Mile Delivery',
+      desc: 'Upon port release, containers are moved to our regional distribution centre for sorting, de-vanning, and final-mile vehicle dispatch. Consignees receive automated appointment booking links and live driver tracking.',
+      features: [
+        'Tailgate lift, inside delivery, and white-glove uncrating options',
+        'Automated SMS, email, and WhatsApp delivery arrival alerts',
+        'Scheduled time-definite appointment windows for high-value consignees'
+      ],
+      stats: [
+        { val: 'Time-Definite', lbl: 'Delivery Window' },
+        { val: 'Live Map', lbl: 'Last-Mile Courier Tracking' },
+        { val: 'Zero Dwell', lbl: 'Deconsolidation Turnaround' }
+      ]
+    },
+    {
+      step: 'STAGE 06 / 06',
+      cat: 'Settlement & POD',
+      title: 'Digital Proof of Delivery & Automated Settlement',
+      desc: 'Instant delivery confirmation captured electronically via mobile scanner with photo evidence and recipient signature coordinates. Automated invoice generation reconciles line items and syncs with client ERPs seamlessly.',
+      features: [
+        'High-resolution photographic POD with geo-timestamp accessible on portal',
+        'Zero-discrepancy digital billing reconciliation and electronic invoicing',
+        'Permanent cloud document vault archiving all customs, waybill, and POD files'
+      ],
+      stats: [
+        { val: 'Instant', lbl: 'Digital POD Availability' },
+        { val: 'EDI 210', lbl: 'Automated Invoicing' },
+        { val: '7 Years', lbl: 'Encrypted Cloud Archival' }
+      ]
+    }
+  ];
+
+  let currentStep = 0;
+
+  const stepBadge = document.getElementById('processStepBadge');
+  const catBadge = document.getElementById('processCatBadge');
+  const titleEl = document.getElementById('processTitle');
+  const descEl = document.getElementById('processDesc');
+  const featGrid = document.getElementById('processFeatures');
+  const stat1Val = document.getElementById('processStat1Val');
+  const stat1Lbl = document.getElementById('processStat1Lbl');
+  const stat2Val = document.getElementById('processStat2Val');
+  const stat2Lbl = document.getElementById('processStat2Lbl');
+  const stat3Val = document.getElementById('processStat3Val');
+  const stat3Lbl = document.getElementById('processStat3Lbl');
+  const prevBtn = document.getElementById('processPrevBtn');
+  const nextBtn = document.getElementById('processNextBtn');
+
+  function updateProcessStep(index) {
+    if (index < 0 || index >= processSteps.length) return;
+    currentStep = index;
+
+    // Update waypoint tabs
+    waypoints.forEach((wp, i) => {
+      const dot = wp.querySelector('.waypoint-dot');
+      const isSelected = i === index;
+      if (isSelected) {
+        wp.classList.add('active');
+        wp.setAttribute('aria-selected', 'true');
+        if (dot) dot.classList.add('active');
+      } else {
+        wp.classList.remove('active');
+        wp.setAttribute('aria-selected', 'false');
+        if (dot) dot.classList.remove('active');
+      }
+    });
+
+    const data = processSteps[index];
+    if (stepBadge) stepBadge.textContent = data.step;
+    if (catBadge) catBadge.textContent = data.cat;
+    if (titleEl) titleEl.textContent = data.title;
+    if (descEl) descEl.textContent = data.desc;
+
+    if (featGrid) {
+      featGrid.innerHTML = data.features.map(f => `
+        <div class="process-feat-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>${f}</span>
+        </div>
+      `).join('');
+    }
+
+    if (stat1Val && data.stats[0]) {
+      stat1Val.textContent = data.stats[0].val;
+      stat1Lbl.textContent = data.stats[0].lbl;
+    }
+    if (stat2Val && data.stats[1]) {
+      stat2Val.textContent = data.stats[1].val;
+      stat2Lbl.textContent = data.stats[1].lbl;
+    }
+    if (stat3Val && data.stats[2]) {
+      stat3Val.textContent = data.stats[2].val;
+      stat3Lbl.textContent = data.stats[2].lbl;
+    }
+
+    if (prevBtn) prevBtn.disabled = index === 0;
+    if (nextBtn) nextBtn.disabled = index === processSteps.length - 1;
+  }
+
+  // Click & keyboard listeners on waypoint tabs
+  waypoints.forEach((wp, i) => {
+    wp.addEventListener('click', function () {
+      updateProcessStep(i);
+    });
+
+    wp.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        updateProcessStep(i);
+      } else if (e.key === 'ArrowRight' && i < waypoints.length - 1) {
+        e.preventDefault();
+        waypoints[i + 1].focus();
+        updateProcessStep(i + 1);
+      } else if (e.key === 'ArrowLeft' && i > 0) {
+        e.preventDefault();
+        waypoints[i - 1].focus();
+        updateProcessStep(i - 1);
+      }
     });
   });
+
+  // Navigation button listeners
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function () {
+      if (currentStep > 0) updateProcessStep(currentStep - 1);
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function () {
+      if (currentStep < processSteps.length - 1) updateProcessStep(currentStep + 1);
+    });
+  }
+
+  // Initialize first step
+  updateProcessStep(0);
 })();
 
 /* ─────────────────────────────────────────
@@ -615,7 +839,7 @@ window.runH2FulfillmentSim = function() {
   cards.forEach(card => {
     const btn = card.querySelector('.radio-tune-btn');
     if (!btn) return;
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function () {
       const isOpen = card.classList.toggle('open');
       btn.textContent = isOpen ? 'Over & Out' : 'Tune In';
     });
@@ -626,7 +850,7 @@ window.runH2FulfillmentSim = function() {
    16. TRACKING — Track page
    ───────────────────────────────────────── */
 (function initTracking() {
-  const form  = document.getElementById('trackForm');
+  const form = document.getElementById('trackForm');
   const input = document.getElementById('trackInput');
   if (!form || !input) return;
 
@@ -723,7 +947,7 @@ window.runH2FulfillmentSim = function() {
     });
   }
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
     const ref = input.value.trim().toUpperCase() || 'DEFAULT';
     const data = demoShipments[ref] || demoShipments['DEFAULT'];
@@ -746,7 +970,7 @@ window.runH2FulfillmentSim = function() {
 
   // Shipment card clicks
   document.querySelectorAll('.shipment-card').forEach(card => {
-    card.addEventListener('click', function() {
+    card.addEventListener('click', function () {
       document.querySelectorAll('.shipment-card').forEach(c => c.classList.remove('active'));
       card.classList.add('active');
       const ref = card.dataset.ref || 'DEFAULT';
@@ -786,7 +1010,7 @@ window.runH2FulfillmentSim = function() {
   if (!btns.length) return;
 
   btns.forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function () {
       btns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
@@ -816,7 +1040,7 @@ window.runH2FulfillmentSim = function() {
   if (!filterBtns.length) return;
 
   filterBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function () {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const cat = btn.dataset.cat;
@@ -831,14 +1055,14 @@ window.runH2FulfillmentSim = function() {
    20. SIGNAL BOOSTER SUBSCRIBE — Blog
    ───────────────────────────────────────── */
 (function initSignalBooster() {
-  const input   = document.getElementById('subscribeInput');
+  const input = document.getElementById('subscribeInput');
   const confirm = document.getElementById('subscribeConfirm');
-  const form    = document.getElementById('subscribeForm');
+  const form = document.getElementById('subscribeForm');
   if (!input) return;
 
   function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
-  input.addEventListener('input', function() {
+  input.addEventListener('input', function () {
     const bars = document.querySelectorAll('.s-bar');
     const valid = isValidEmail(input.value);
     const len = Math.min(input.value.length, 20);
@@ -848,7 +1072,7 @@ window.runH2FulfillmentSim = function() {
   });
 
   if (form) {
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!isValidEmail(input.value)) return;
       document.querySelectorAll('.s-bar').forEach(b => b.classList.add('active'));
@@ -865,9 +1089,9 @@ window.runH2FulfillmentSim = function() {
   const fill = document.getElementById('morseProgressFill');
   if (!fill) return;
 
-  window.addEventListener('scroll', function() {
-    const scrollTop  = document.documentElement.scrollTop;
-    const scrollH    = document.documentElement.scrollHeight - window.innerHeight;
+  window.addEventListener('scroll', function () {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollH = document.documentElement.scrollHeight - window.innerHeight;
     const pct = scrollH > 0 ? (scrollTop / scrollH) * 100 : 0;
     fill.style.width = pct + '%';
   });
@@ -880,7 +1104,7 @@ window.runH2FulfillmentSim = function() {
   const form = document.getElementById('commentForm');
   if (!form) return;
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
     const confirm = document.getElementById('commentConfirm');
     if (confirm) { confirm.style.display = 'block'; }
@@ -907,7 +1131,7 @@ window.runH2FulfillmentSim = function() {
     el.addEventListener('blur', () => validate(el));
   });
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
     let valid = true;
     form.querySelectorAll('[required]').forEach(el => { if (!validate(el)) valid = false; });
@@ -915,9 +1139,9 @@ window.runH2FulfillmentSim = function() {
 
     const ref = 'SHP-2026-' + Math.floor(1000 + Math.random() * 9000);
     const confirm = document.getElementById('bookingConfirm');
-    const refEl   = document.getElementById('bookingRefGen');
+    const refEl = document.getElementById('bookingRefGen');
     if (confirm) confirm.style.display = 'block';
-    if (refEl)   refEl.textContent = ref;
+    if (refEl) refEl.textContent = ref;
     form.reset();
   });
 })();
@@ -932,8 +1156,8 @@ window.runH2FulfillmentSim = function() {
   const now = new Date();
   const hour = now.getHours();
   const watches = [
-    { start: 0,  end: 6  },
-    { start: 6,  end: 12 },
+    { start: 0, end: 6 },
+    { start: 6, end: 12 },
     { start: 12, end: 18 },
     { start: 18, end: 24 },
   ];
@@ -962,7 +1186,7 @@ window.runH2FulfillmentSim = function() {
   let role = 'client';
 
   roleBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function () {
       roleBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       role = btn.dataset.role;
@@ -980,7 +1204,7 @@ window.runH2FulfillmentSim = function() {
 
   form.querySelectorAll('input').forEach(el => el.addEventListener('blur', () => validate(el)));
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
     let valid = true;
     form.querySelectorAll('[required]').forEach(el => { if (!validate(el)) valid = false; });
@@ -1011,7 +1235,7 @@ window.runH2FulfillmentSim = function() {
 
   form.querySelectorAll('input').forEach(el => el.addEventListener('blur', () => validate(el)));
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
     let valid = true;
     form.querySelectorAll('[required]').forEach(el => { if (!validate(el)) valid = false; });
@@ -1031,21 +1255,38 @@ window.runH2FulfillmentSim = function() {
 
   const panel = document.getElementById('coveragePanel');
   const regionData = {
-    'asia':   { name: 'Asia Pacific', lanes: '48 active lanes', partners: '180+ partners', transit: '12–28 days avg.' },
-    'europe': { name: 'Europe',       lanes: '36 active lanes', partners: '140+ partners', transit: '8–18 days avg.' },
-    'america':{ name: 'Americas',     lanes: '30 active lanes', partners: '95+ partners',  transit: '14–32 days avg.' },
-    'africa': { name: 'Africa & ME',  lanes: '22 active lanes', partners: '65+ partners',  transit: '18–40 days avg.' },
+    'asia': { name: 'Asia Pacific', lanes: '48 active lanes', partners: '180+ partners', transit: '12–28 days avg.' },
+    'europe': { name: 'Europe', lanes: '36 active lanes', partners: '140+ partners', transit: '8–18 days avg.' },
+    'america': { name: 'Americas', lanes: '30 active lanes', partners: '95+ partners', transit: '14–32 days avg.' },
+    'africa': { name: 'Africa & ME', lanes: '22 active lanes', partners: '65+ partners', transit: '18–40 days avg.' },
   };
 
+  function updateRegion(key) {
+    const data = regionData[key];
+    if (!panel || !data) return;
+    const titleEl = document.getElementById('coveragePanelTitle') || panel.querySelector('h4');
+    if (titleEl) titleEl.textContent = data.name;
+    const lanesEl = panel.querySelector('[data-lanes]');
+    if (lanesEl) lanesEl.textContent = data.lanes;
+    const partnersEl = panel.querySelector('[data-partners]');
+    if (partnersEl) partnersEl.textContent = data.partners;
+    const transitEl = panel.querySelector('[data-transit]');
+    if (transitEl) transitEl.textContent = data.transit;
+    panel.style.opacity = '1';
+
+    // Synchronize active state on region pills
+    document.querySelectorAll('.coverage-pill').forEach(pill => {
+      const isActive = pill.dataset.region === key;
+      pill.classList.toggle('active', isActive);
+      pill.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+  }
+
   regions.forEach(r => {
-    r.addEventListener('mouseenter', function() {
-      const data = regionData[r.dataset.region];
-      if (!panel || !data) return;
-      panel.querySelector('h4').textContent  = data.name;
-      panel.querySelector('[data-lanes]').textContent   = data.lanes;
-      panel.querySelector('[data-partners]').textContent = data.partners;
-      panel.querySelector('[data-transit]').textContent  = data.transit;
-      panel.style.opacity = '1';
+    r.addEventListener('mouseenter', () => updateRegion(r.dataset.region));
+    r.addEventListener('click', (e) => {
+      e.preventDefault();
+      updateRegion(r.dataset.region);
     });
   });
 })();
@@ -1057,7 +1298,7 @@ window.runH2FulfillmentSim = function() {
   const btn = document.getElementById('setWatchBtn');
   if (!btn) return;
 
-  btn.addEventListener('click', function() {
+  btn.addEventListener('click', function () {
     btn.textContent = 'Watch Set';
     btn.disabled = true;
     btn.style.opacity = '0.6';
@@ -1088,7 +1329,7 @@ window.runH2FulfillmentSim = function() {
 (function initChannelResponseBanner() {
   const cta = document.getElementById('openChannelCTA');
   if (!cta) return;
-  cta.addEventListener('click', function(e) {
+  cta.addEventListener('click', function (e) {
     e.preventDefault();
     const form = document.getElementById('bookingFormSection');
     if (form) form.scrollIntoView({ behavior: 'smooth' });
@@ -1102,7 +1343,7 @@ window.runH2FulfillmentSim = function() {
   const form = document.getElementById('notifyForm');
   if (!form) return;
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
     const btn = form.querySelector('button');
     if (btn) { btn.textContent = 'Registered'; btn.disabled = true; }
@@ -1112,9 +1353,67 @@ window.runH2FulfillmentSim = function() {
 /* ─────────────────────────────────────────
    32. GLOBAL: resize handler for canvas elements
    ───────────────────────────────────────── */
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
   document.querySelectorAll('canvas[data-resize]').forEach(c => {
-    c.width  = c.offsetWidth;
+    c.width = c.offsetWidth;
     c.height = c.offsetHeight;
   });
 });
+
+/* ─────────────────────────────────────────
+   33. SERVICES: Passage Plan Strip Tab Switching
+   ───────────────────────────────────────── */
+(function initProcessTabs() {
+  function switchProcessTab(stepNum) {
+    stepNum = parseInt(stepNum, 10);
+    if (isNaN(stepNum) || stepNum < 1 || stepNum > 6) return;
+
+    var waypoints = document.querySelectorAll('.passage-strip .waypoint');
+    waypoints.forEach(function (wp, idx) {
+      var step = idx + 1;
+      var dot = wp.querySelector('.waypoint-dot');
+      if (step === stepNum) {
+        wp.classList.add('active');
+        wp.setAttribute('aria-selected', 'true');
+        if (dot) dot.classList.add('active');
+      } else {
+        wp.classList.remove('active');
+        wp.setAttribute('aria-selected', 'false');
+        if (dot) dot.classList.remove('active');
+      }
+    });
+
+    var panels = document.querySelectorAll('.process-panel');
+    panels.forEach(function (panel) {
+      panel.classList.remove('active');
+    });
+    var targetPanel = document.getElementById('processPanel-' + stepNum);
+    if (targetPanel) {
+      targetPanel.classList.add('active');
+    }
+  }
+
+  window.switchProcessTab = switchProcessTab;
+
+  var waypoints = document.querySelectorAll('.passage-strip .waypoint');
+  waypoints.forEach(function (wp, idx) {
+    var step = idx + 1;
+    wp.addEventListener('click', function () {
+      switchProcessTab(step);
+    });
+    wp.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        switchProcessTab(step);
+      } else if (e.key === 'ArrowRight' && step < waypoints.length) {
+        e.preventDefault();
+        switchProcessTab(step + 1);
+        if (waypoints[idx + 1]) waypoints[idx + 1].focus();
+      } else if (e.key === 'ArrowLeft' && step > 1) {
+        e.preventDefault();
+        switchProcessTab(step - 1);
+        if (waypoints[idx - 1]) waypoints[idx - 1].focus();
+      }
+    });
+  });
+})();
