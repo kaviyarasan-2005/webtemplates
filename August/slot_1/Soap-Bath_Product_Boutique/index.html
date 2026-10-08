@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SUDZ — Handmade Soap & Bath Products</title>
+  <title>SUDZ â€” Handmade Soap & Bath Products</title>
   <meta name="description" content="Discover SUDZ handmade bar soaps, bath bombs, and body scrubs. Cold-process, small-batch crafted with botanical ingredients. Shop the collection.">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cpath d='M 18 32 C 18 32, 8 22, 8 16 C 8 8, 18 4, 18 4 C 18 4, 28 8, 28 16 C 28 22, 18 32, 18 32 Z' fill='none' stroke='%233E5C50' stroke-width='2'/%3E%3Ccircle cx='22' cy='12' r='2.5' fill='%23C2764A'/%3E%3Ccircle cx='14' cy='20' r='1.5' fill='%23C2764A'/%3E%3C/svg%3E">
@@ -27,24 +27,63 @@
   <style>
     /* Page-specific: Parallax hero + floating bubbles */
     .home-a-hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .home-a-hero__bg { position: absolute; inset: 0; z-index: 0; background: url('assets/images/index_hero.png') center/cover no-repeat; }
+    .home-a-hero__bg { position: absolute; inset: 0; z-index: 0; background: linear-gradient(rgba(246, 241, 231, 0.45), rgba(246, 241, 231, 0.65)), url('assets/images/index_hero.png') center/cover no-repeat; }
     .home-a-hero__bg-pattern { position: absolute; inset: 0; opacity: 0.15; background-image: radial-gradient(circle at 20% 50%, rgba(246,241,231,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(194,118,74,0.2) 0%, transparent 40%), radial-gradient(circle at 60% 80%, rgba(246,241,231,0.2) 0%, transparent 45%); }
-    .home-a-hero__content { position: relative; z-index: 3; text-align: center; max-width: 720px; padding: 0 var(--container-gutter); color: #fff; }
-    .home-a-hero__content h1 { color: #fff; margin-bottom: var(--sp-3); font-size: clamp(2.75rem, 6vw, 4.5rem); }
-    .home-a-hero__content p { font-size: 1.125rem; opacity: 0.9; margin-bottom: var(--sp-4); line-height: 1.7; }
+    .home-a-hero__content { position: relative; z-index: 3; text-align: center; max-width: 720px; padding: 0 var(--container-gutter); color: var(--clr-ink); }
+    .home-a-hero__content h1 { color: #1E2B24; margin-bottom: var(--sp-3); font-size: clamp(2.75rem, 6vw, 4.5rem); text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5); }
+    .home-a-hero__content p { font-size: 1.15rem; color: #2D3E35; font-weight: 500; opacity: 0.95; margin-bottom: var(--sp-4); line-height: 1.7; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4); }
     .home-a-hero__bubbles { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
-    .home-a-hero__scroll { position: absolute; bottom: var(--sp-4); left: 50%; transform: translateX(-50%); z-index: 3; color: #fff; opacity: 0.7; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.1em; animation: scrollBounce 2s infinite; }
+    .home-a-hero__scroll { position: absolute; bottom: var(--sp-4); left: 50%; transform: translateX(-50%); z-index: 3; color: #1E2B24; opacity: 0.85; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.1em; animation: scrollBounce 2s infinite; font-weight: 600; }
+    .hero__btn-story { border-color: #2D4439 !important; color: #1E2B24 !important; background: rgba(255, 255, 255, 0.65) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-weight: 500; }
+    .hero__btn-story:hover { background: #fff !important; color: var(--clr-primary) !important; border-color: var(--clr-primary) !important; }
+
+    /* Dark mode hero overrides */
+    [data-theme="dark"] .home-a-hero__bg { background: linear-gradient(rgba(23, 32, 28, 0.8), rgba(31, 42, 37, 0.9)), url('assets/images/index_hero.png') center/cover no-repeat; }
+    [data-theme="dark"] .home-a-hero__content h1 { color: #ECE7DC; text-shadow: none; }
+    [data-theme="dark"] .home-a-hero__content p { color: #D5CEBF; text-shadow: none; }
+    [data-theme="dark"] .home-a-hero__scroll { color: #ECE7DC; }
+    [data-theme="dark"] .hero__btn-story { border-color: rgba(255, 255, 255, 0.35) !important; color: #fff !important; background: rgba(255, 255, 255, 0.08) !important; }
 
     /* Craft process animated line */
     .craft-line { position: absolute; top: 32px; left: 15%; right: 15%; height: 2px; background: var(--clr-border); }
     .craft-line__fill { height: 100%; width: 0; background: var(--clr-primary); transition: width 1.5s var(--ease-out); }
     .craft-line__fill.animate { width: 100%; }
 
-    /* Newsletter band bubbles background */
-    .suds-band { position: relative; overflow: hidden; }
+    /* Newsletter band bubbles background, spacing & CTA */
+    .suds-band {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(4.5rem, 7vw, 6.5rem) 0;
+      margin-top: var(--sp-3);
+    }
     .suds-band__bubbles { position: absolute; inset: 0; pointer-events: none; }
+    .suds-band__cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 28px;
+      border-radius: var(--radius-pill);
+      font-size: var(--fs-small);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: all var(--duration-fast) var(--ease-out);
+      text-decoration: none;
+    }
+    .suds-band__cta:hover,
+    .suds-band__cta:focus-visible {
+      background: #ffffff !important;
+      color: var(--clr-primary-dark) !important;
+      border-color: #ffffff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
   </style>
-  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 <body>
 
@@ -123,7 +162,7 @@
   <div class="navbar-spacer"></div>
 
   <!-- ----------------------------------------------------------------------- -->
-  <!-- S1: HERO — Parallax with floating bubble SVGs -->
+  <!-- S1: HERO â€” Parallax with floating bubble SVGs -->
   <!-- ----------------------------------------------------------------------- -->
   <section class="home-a-hero" id="hero" aria-label="Hero">
     <div class="home-a-hero__bg" data-parallax="0.2">
@@ -135,7 +174,7 @@
       <p class="anim-fade-scale" style="animation-delay: 0.15s">Small-batch soaps, bath bombs, and body scrubs made with botanical ingredients and 28 days of patience. Every bar tells a story.</p>
       <div class="hero__ctas anim-fade-scale" style="animation-delay: 0.3s">
         <a href="products.html" class="btn btn--primary btn--lg">Shop the Collection</a>
-        <a href="about.html" class="btn btn--secondary btn--lg" style="border-color: rgba(255,255,255,0.4); color: #fff;">Our Story</a>
+        <a href="about.html" class="btn btn--secondary btn--lg hero__btn-story">Our Story</a>
       </div>
     </div>
     <div class="home-a-hero__scroll">
@@ -145,7 +184,7 @@
   </section>
 
   <!-- ----------------------------------------------------------------------- -->
-  <!-- S2: FEATURED COLLECTIONS — 3 large equal-height cards -->
+  <!-- S2: FEATURED COLLECTIONS â€” 3 large equal-height cards -->
   <!-- ----------------------------------------------------------------------- -->
   <section class="section" id="collections" aria-label="Featured Collections">
     <div class="container">
@@ -186,13 +225,13 @@
   </section>
 
   <!-- ----------------------------------------------------------------------- -->
-  <!-- S3: BESTSELLERS — Horizontal scroll-snap row -->
+  <!-- S3: BESTSELLERS â€” Horizontal scroll-snap row -->
   <!-- ----------------------------------------------------------------------- -->
   <section class="section section--bg-surface" id="bestsellers" aria-label="Bestsellers">
     <div class="container">
       <div class="section__header reveal">
         <h2>Bestsellers</h2>
-        <p>Our most-loved bars, bombs, and scrubs — handpicked by the SUDZ community.</p>
+        <p>Our most-loved bars, bombs, and scrubs â€” handpicked by the SUDZ community.</p>
       </div>
       <div class="scroll-row-wrapper">
         <div class="scroll-row" id="bestsellersRow">
@@ -341,13 +380,13 @@
   </section>
 
   <!-- ----------------------------------------------------------------------- -->
-  <!-- S4: THE CRAFT PROCESS — 4-step horizontal stepper -->
+  <!-- S4: THE CRAFT PROCESS â€” 4-step horizontal stepper -->
   <!-- ----------------------------------------------------------------------- -->
   <section class="section" id="craft-process" aria-label="Our Craft Process">
     <div class="container">
       <div class="section__header reveal">
         <h2>The Craft Process</h2>
-        <p>From raw botanicals to your bathroom shelf — four steps, twenty-eight days, zero shortcuts.</p>
+        <p>From raw botanicals to your bathroom shelf â€” four steps, twenty-eight days, zero shortcuts.</p>
       </div>
       <div class="process-steps reveal-stagger" id="craftSteps">
         <div class="craft-line"><div class="craft-line__fill" id="craftLineFill"></div></div>
@@ -359,7 +398,7 @@
             </svg>
           </div>
           <h3 class="process-step__title">Nourish</h3>
-          <p class="process-step__text">Select premium oils — olive, coconut, shea — cold-pressed and unrefined.</p>
+          <p class="process-step__text">Select premium oils â€” olive, coconut, shea â€” cold-pressed and unrefined.</p>
         </div>
         <!-- Step 2: Blend -->
         <div class="process-step reveal">
@@ -397,100 +436,109 @@
           <p class="process-step__text">Rest for 28 days on curing racks. Patience makes every bar gentler.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ----------------------------------------------------------------------- -->
-  <!-- S5: TESTIMONIALS — 2×2 grid + single CTA -->
+    </div>  <!-- ----------------------------------------------------------------------- -->
+  <!-- S5: TESTIMONIALS â€“ Symmetrical 2x2 grid + verified customer cards -->
   <!-- ----------------------------------------------------------------------- -->
   <section class="section section--bg-surface" id="testimonials" aria-label="Customer Reviews">
-    <div class="container">
+    <div class="container" style="max-width: 1080px;">
       <div class="section__header reveal">
         <h2>What Our Customers Say</h2>
         <p>Real reviews from people who've made SUDZ part of their daily ritual.</p>
       </div>
-      <div class="grid grid--2x2 reveal-stagger" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+      <div class="grid grid--2x2 reveal-stagger">
         <!-- Review 1 -->
         <div class="testimonial-card reveal">
-          <div class="testimonial-card__quote">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <div class="testimonial-card__header">
+            <div class="stars">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="testimonial-card__badge">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Verified Buyer</span>
+            </div>
           </div>
           <p class="testimonial-card__text">"The Lavender Dreams bar is the best soap I've ever used. My skin feels so soft, and the scent lingers all day. I'll never go back to commercial soap."</p>
-          <div class="stars mb-2">
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </div>
-          <div class="testimonial-card__author">
+          <div class="testimonial-card__footer">
             <img class="testimonial-card__avatar" src="assets/images/review_emma.png" alt="Emma C." loading="lazy">
-            <div>
+            <div class="testimonial-card__meta">
               <div class="testimonial-card__name">Emma C.</div>
-              <div class="testimonial-card__role">Verified buyer</div>
+              <div class="testimonial-card__role">Verified Buyer &bull; Lavender Dreams</div>
             </div>
           </div>
         </div>
         <!-- Review 2 -->
         <div class="testimonial-card reveal">
-          <div class="testimonial-card__quote">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <div class="testimonial-card__header">
+            <div class="stars">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="testimonial-card__badge">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Verified Buyer</span>
+            </div>
           </div>
-          <p class="testimonial-card__text">"Bought the gift box for my sister's birthday — the packaging was gorgeous, and she absolutely loved every product. The bath bombs fizz for ages!"</p>
-          <div class="stars mb-2">
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </div>
-          <div class="testimonial-card__author">
+          <p class="testimonial-card__text">"Bought the gift box for my sister's birthday &mdash; the packaging was gorgeous, and she absolutely loved every product. The bath bombs fizz for ages!"</p>
+          <div class="testimonial-card__footer">
             <img class="testimonial-card__avatar" src="assets/images/review_marco.png" alt="Marco R." loading="lazy">
-            <div>
+            <div class="testimonial-card__meta">
               <div class="testimonial-card__name">Marco R.</div>
-              <div class="testimonial-card__role">Verified buyer</div>
+              <div class="testimonial-card__role">Verified Buyer &bull; Citrus Sunrise &amp; Midnight Bloom</div>
             </div>
           </div>
         </div>
         <!-- Review 3 -->
         <div class="testimonial-card reveal">
-          <div class="testimonial-card__quote">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <div class="testimonial-card__header">
+            <div class="stars">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="testimonial-card__badge">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Verified Buyer</span>
+            </div>
           </div>
-          <p class="testimonial-card__text">"As someone with sensitive skin, finding SUDZ was a game-changer. No irritation, no harsh chemicals — just pure, gentle goodness. The oat milk bar is divine."</p>
-          <div class="stars mb-2">
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </div>
-          <div class="testimonial-card__author">
+          <p class="testimonial-card__text">"As someone with sensitive skin, finding SUDZ was a game-changer. No irritation, no harsh chemicals &mdash; just pure, gentle goodness. The oat milk bar is divine."</p>
+          <div class="testimonial-card__footer">
             <img class="testimonial-card__avatar" src="assets/images/review_aisha.png" alt="Aisha L." loading="lazy">
-            <div>
+            <div class="testimonial-card__meta">
               <div class="testimonial-card__name">Aisha L.</div>
-              <div class="testimonial-card__role">Verified buyer</div>
+              <div class="testimonial-card__role">Verified Buyer &bull; Charcoal Detox</div>
             </div>
           </div>
         </div>
         <!-- Review 4 -->
         <div class="testimonial-card reveal">
-          <div class="testimonial-card__quote">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <div class="testimonial-card__header">
+            <div class="stars">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="testimonial-card__badge">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Verified Buyer</span>
+            </div>
           </div>
-          <p class="testimonial-card__text">"The scrubs are unbelievable — my skin has never been this smooth. I also love that everything is plastic-free and sustainably packaged. Real talk."</p>
-          <div class="stars mb-2">
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" class="empty"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </div>
-          <div class="testimonial-card__author">
+          <p class="testimonial-card__text">"The Honey Oat scrub is unbelievable &mdash; my skin has never been this smooth. I also love that everything is plastic-free and sustainably packaged. Real talk."</p>
+          <div class="testimonial-card__footer">
             <img class="testimonial-card__avatar" src="assets/images/review_jordan.png" alt="Jordan T." loading="lazy">
-            <div>
+            <div class="testimonial-card__meta">
               <div class="testimonial-card__name">Jordan T.</div>
-              <div class="testimonial-card__role">Verified buyer</div>
+              <div class="testimonial-card__role">Verified Buyer &bull; Honey Oat Glow</div>
             </div>
           </div>
         </div>
@@ -502,7 +550,7 @@
   </section>
 
   <!-- ----------------------------------------------------------------------- -->
-  <!-- S6: SUDS CLUB BAND — Newsletter + bubble animation -->
+  <!-- S6: SUDS CLUB BAND â€” Newsletter + bubble animation -->
   <!-- ----------------------------------------------------------------------- -->
   <section class="band band--accent suds-band" id="suds-club" aria-label="SUDZ Club Newsletter">
     <div class="suds-band__bubbles" data-bubbles="10"></div>
@@ -518,7 +566,7 @@
           <button type="submit" class="btn btn--white btn--sm">Subscribe</button>
         </form>
         <div style="margin-top: var(--sp-4);">
-          <a href="gifting.html" class="btn btn--secondary" style="border-color: rgba(255,255,255,0.4); color: #fff;">Build Your Box</a>
+          <a href="gifting.html" class="suds-band__cta">Build Your Box</a>
         </div>
       </div>
     </div>
@@ -630,11 +678,11 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
+
+
+
+
+
+
+
+
