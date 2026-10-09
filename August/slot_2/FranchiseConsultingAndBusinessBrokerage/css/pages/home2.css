@@ -392,40 +392,93 @@
 
 /* ── S6: Discovery Call Split Banner ── */
 .discovery-banner {
+  background: var(--navy);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 400px;
+  grid-template-columns: clamp(280px, 32vw, 420px) 1fr;
+  align-items: stretch;
+  min-height: 340px;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+[data-theme="dark"] .discovery-banner {
+  background: #000;
+  border-top: 1px solid var(--border);
 }
 .discovery-photo {
   position: relative;
   overflow: hidden;
+  height: 100%;
 }
-.discovery-photo img { width: 100%; height: 100%; object-fit: cover; }
+.discovery-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
 .discovery-photo::after {
   content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(to right, transparent 60%, var(--navy));
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 55%, var(--navy) 98%);
 }
-[data-theme="dark"] .discovery-photo::after { background: linear-gradient(to right, transparent 60%, #000); }
+[data-theme="dark"] .discovery-photo::after {
+  background: linear-gradient(to right, transparent 55%, #000 98%);
+}
 .discovery-content {
   background: var(--navy);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(2.5rem, 5vw, 5rem) clamp(2rem, 4vw, 4rem);
+  padding: clamp(2.25rem, 3.5vw, 3.25rem) clamp(2rem, 4vw, 4.5rem);
   color: #fff;
 }
-[data-theme="dark"] .discovery-content { background: #000; }
-.discovery-content h2 { color: #fff; margin-bottom: var(--space-4); font-size: var(--fs-4xl); }
-.discovery-content p  { color: rgba(255,255,255,0.75); margin-bottom: var(--space-8); font-size: var(--fs-md); }
+[data-theme="dark"] .discovery-content {
+  background: #000;
+}
+.discovery-content h2 {
+  color: #fff;
+  margin-bottom: var(--space-3);
+  font-size: clamp(var(--fs-2xl), 3vw, var(--fs-4xl));
+  line-height: var(--lh-tight);
+}
+.discovery-content p {
+  color: rgba(255, 255, 255, 0.80);
+  margin-bottom: var(--space-5);
+  font-size: var(--fs-md);
+  max-width: 52ch;
+  line-height: var(--lh-relaxed);
+}
 .discovery-calendar-hint {
-  display: flex; align-items: center; gap: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
   margin-bottom: var(--space-6);
-  color: rgba(255,255,255,0.60);
+  color: rgba(255, 255, 255, 0.65);
   font-size: var(--fs-sm);
 }
+@media (max-width: 900px) {
+  .discovery-banner {
+    grid-template-columns: clamp(260px, 36vw, 360px) 1fr;
+    min-height: 320px;
+  }
+}
 @media (max-width: 768px) {
-  .discovery-banner { grid-template-columns: 1fr; }
-  .discovery-photo { min-height: 240px; }
-  .discovery-photo::after { background: linear-gradient(to bottom, transparent 50%, var(--navy)); }
+  .discovery-banner {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .discovery-photo {
+    height: 220px;
+    min-height: 200px;
+  }
+  .discovery-photo::after {
+    background: linear-gradient(to bottom, transparent 40%, var(--navy) 98%);
+  }
+  [data-theme="dark"] .discovery-photo::after {
+    background: linear-gradient(to bottom, transparent 40%, #000 98%);
+  }
+  .discovery-content {
+    padding: var(--space-8) var(--space-6);
+  }
 }
