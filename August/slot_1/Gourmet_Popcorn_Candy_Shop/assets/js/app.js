@@ -398,13 +398,14 @@
   /**
    * Add an item to the cart stored in localStorage.
    */
-  window.addToCart = function (productId, name, price, image) {
+  window.addToCart = function (productId, name, price, image, qty) {
+    qty = Math.max(1, parseInt(qty, 10) || 1);
     var cart = JSON.parse(localStorage.getItem('popz-cart') || '[]');
     var existing = cart.find(function (item) { return item.id === productId; });
     if (existing) {
-      existing.qty = (existing.qty || 1) + 1;
+      existing.qty = (existing.qty || 1) + qty;
     } else {
-      cart.push({ id: productId, name: name, price: price, image: image, qty: 1 });
+      cart.push({ id: productId, name: name, price: price, image: image, qty: qty });
     }
     localStorage.setItem('popz-cart', JSON.stringify(cart));
     updateCartBadge();
@@ -426,7 +427,9 @@
   function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(function (link) {
       link.addEventListener('click', function (e) {
-        var target = document.querySelector(link.getAttribute('href'));
+        var href = link.getAttribute('href');
+        if (!href || href === '#') return;
+        var target = document.querySelector(href);
         if (target) {
           e.preventDefault();
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -451,6 +454,77 @@
     });
   }
 
+
+  /* ──────────────────────────────────────────────────────────
+     PRODUCT CARDS — size pills, quantity stepper, gallery, add to cart
+     Markup contract: .product-card[data-id][data-name][data-image]
+       optional data-prices='{"Small":8.99,"Medium":12.99}' + data-default
+       optional data-price (single-price cards)
+     ────────────────────────────────────────────────────────── */
+
+  function initProductCards() {
+    document.querySelectorAll('.product-card').forEach(function (card) {
+      var prices = null;
+      try { prices = card.dataset.prices ? JSON.parse(card.dataset.prices) : null; } catch (e) { prices = null; }
+      var size = card.dataset.default || (prices ? Object.keys(prices)[0] : '');
+      var qty = 1;
+      var priceEl = card.querySelector('.js-price');
+      var qtyEl = card.querySelector('.js-qty');
+      var addBtn = card.querySelector('.js-add');
+      var mainImg = card.querySelector('.js-main-img');
+
+      function unitPrice() {
+        return prices && prices[size] != null ? prices[size] : parseFloat(card.dataset.price);
+      }
+      function render() {
+        if (priceEl) priceEl.textContent = '$' + unitPrice().toFixed(2);
+        if (qtyEl) qtyEl.textContent = qty;
+      }
+
+      card.querySelectorAll('.js-size').forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          size = pill.dataset.size;
+          card.querySelectorAll('.js-size').forEach(function (p) {
+            var on = p === pill;
+            p.classList.toggle('is-active', on);
+            p.setAttribute('aria-checked', on ? 'true' : 'false');
+          });
+          render();
+        });
+      });
+
+      card.querySelectorAll('.js-thumb').forEach(function (thumb) {
+        thumb.addEventListener('click', function () {
+          if (mainImg) mainImg.src = thumb.dataset.src;
+          card.querySelectorAll('.js-thumb').forEach(function (t) { t.classList.toggle('is-active', t === thumb); });
+        });
+      });
+
+      var dec = card.querySelector('.js-qty-dec');
+      var inc = card.querySelector('.js-qty-inc');
+      if (dec) dec.addEventListener('click', function () { qty = Math.max(1, qty - 1); render(); });
+      if (inc) inc.addEventListener('click', function () { qty = Math.min(99, qty + 1); render(); });
+
+      if (addBtn) {
+        addBtn.addEventListener('click', function () {
+          var id = card.dataset.id + (prices ? '-' + size.toLowerCase() : '');
+          var name = card.dataset.name + (prices ? ' (' + size + ')' : '');
+          window.addToCart(id, name, unitPrice(), card.dataset.image, qty);
+          var label = addBtn.textContent;
+          addBtn.textContent = 'Added \u2713';
+          addBtn.classList.add('is-added');
+          setTimeout(function () {
+            addBtn.textContent = label;
+            addBtn.classList.remove('is-added');
+          }, 1300);
+          qty = 1;
+          render();
+        });
+      }
+      render();
+    });
+  }
+
   /* ──────────────────────────────────────────────────────────
      INITIALIZATION
      ────────────────────────────────────────────────────────── */
@@ -466,6 +540,7 @@
     initSmoothScroll();
     bindToggles();
     initFlavorMatcher();
+    initProductCards();
     updateCartBadge();
   }
 
