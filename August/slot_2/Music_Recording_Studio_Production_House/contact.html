@@ -1449,16 +1449,16 @@
 
       <!-- Room Navigation Tabs -->
       <div class="tour-tabs-nav">
-        <button class="tour-tab-btn is-active" data-room-target="studio-a">
+        <button class="tour-tab-btn is-active" data-room-target="studio-a" onclick="switchTourRoom('studio-a', this)">
           <i class="ri-equalizer-line"></i> Studio A (Neve Live Floor)
         </button>
-        <button class="tour-tab-btn" data-room-target="studio-b">
+        <button class="tour-tab-btn" data-room-target="studio-b" onclick="switchTourRoom('studio-b', this)">
           <i class="ri-sound-module-line"></i> Studio B (SSL Hybrid Mix)
         </button>
-        <button class="tour-tab-btn" data-room-target="atmos-suite">
+        <button class="tour-tab-btn" data-room-target="atmos-suite" onclick="switchTourRoom('atmos-suite', this)">
           <i class="ri-surround-sound-line"></i> Dolby Atmos 7.1.4 Suite
         </button>
-        <button class="tour-tab-btn" data-room-target="lounge">
+        <button class="tour-tab-btn" data-room-target="lounge" onclick="switchTourRoom('lounge', this)">
           <i class="ri-cup-line"></i> VIP Artist Lounge & Vault
         </button>
       </div>
@@ -2054,20 +2054,24 @@ Additional session notes: `;
     }
   };
 
-  const tourTabBtns = document.querySelectorAll('.tour-tab-btn');
-  const tourDisplayImg = document.getElementById('tour-display-img');
-  const tourRoomBadge = document.getElementById('tour-room-badge');
-  const tourRoomTitle = document.getElementById('tour-room-title');
-  const tourRoomDesc = document.getElementById('tour-room-desc');
-  const specDim = document.getElementById('spec-dim');
-  const specIso = document.getElementById('spec-iso');
-  const specDesk = document.getElementById('spec-desk');
-  const specGear = document.getElementById('spec-gear');
-  const tourViewportContainer = document.getElementById('tour-viewport-container');
-
-  const renderTourRoom = (roomId) => {
+  window.switchTourRoom = (roomId, btnEl) => {
     const data = roomData[roomId];
     if (!data) return;
+
+    // Update active tab styling
+    const tourTabBtns = document.querySelectorAll('.tour-tab-btn');
+    tourTabBtns.forEach(b => b.classList.remove('is-active'));
+    if (btnEl) btnEl.classList.add('is-active');
+
+    const tourDisplayImg = document.getElementById('tour-display-img');
+    const tourRoomBadge = document.getElementById('tour-room-badge');
+    const tourRoomTitle = document.getElementById('tour-room-title');
+    const tourRoomDesc = document.getElementById('tour-room-desc');
+    const specDim = document.getElementById('spec-dim');
+    const specIso = document.getElementById('spec-iso');
+    const specDesk = document.getElementById('spec-desk');
+    const specGear = document.getElementById('spec-gear');
+    const tourViewportContainer = document.getElementById('tour-viewport-container');
 
     // Fade effect
     tourDisplayImg.style.opacity = '0.4';
@@ -2103,15 +2107,6 @@ Additional session notes: `;
       tourDisplayImg.style.opacity = '1';
     }, 200);
   };
-
-  tourTabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tourTabBtns.forEach(b => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      const target = btn.getAttribute('data-room-target');
-      renderTourRoom(target);
-    });
-  });
 
   window.selectTourInquiry = () => {
     const inquirySelect = document.getElementById('inquiry');

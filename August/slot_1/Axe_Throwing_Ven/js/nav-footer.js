@@ -72,7 +72,7 @@
           <button class="ctrl-btn" data-rtl-toggle data-dir-label title="Toggle RTL" aria-label="Toggle RTL/LTR">
             RTL
           </button>
-          <a href="${root}pages/login.html" class="btn btn--primary btn--sm" aria-label="Login">
+          <a href="${root}pages/login.html" class="btn btn--primary btn--sm" aria-label="Login" style="margin-top: 16px; margin-bottom: 16px;">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
             Login
           </a>
@@ -124,7 +124,7 @@
           RTL
         </button>
       </div>
-      <a href="${root}pages/login.html" class="btn btn--primary" aria-label="Login" style="width:100%; justify-content:center;">
+      <a href="${root}pages/login.html" class="btn btn--primary btn--sm" aria-label="Login" style="width:100%; justify-content:center; margin-top: 16px; margin-bottom: 16px;">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
         Login
       </a>

@@ -105,7 +105,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-1);
-  padding: 12px 12px 6px 12px;
+  padding: 8px 12px;
   font-family: var(--font-secondary);
   font-size: 0.9rem;
   font-weight: 500;
@@ -177,7 +177,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: 16px 16px 8px 16px;
+  padding: 12px 16px;
   font-family: var(--font-secondary);
   font-size: 0.875rem;
   font-weight: 500;
@@ -435,5 +435,97 @@
 @media (min-width: 1025px) {
   .navbar__mobile-menu {
     display: none !important;
+  }
+  
+  /* Full-width Glassmorphic Navbar */
+  .navbar {
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    background: rgba(17, 14, 24, 0.5) !important;
+    backdrop-filter: blur(24px) saturate(1.8);
+    -webkit-backdrop-filter: blur(24px) saturate(1.8);
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 16px 0 !important;
+  }
+
+  .navbar.scrolled {
+    top: 0 !important;
+    background: rgba(17, 14, 24, 0.85) !important;
+    border-bottom-color: rgba(124, 58, 237, 0.3) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Improved Link Styling */
+  .navbar__link {
+    padding: 10px 20px;
+    border-radius: var(--radius-full);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    position: relative;
+    overflow: hidden;
+    color: rgba(245, 242, 250, 0.8);
+    transition: color var(--transition-fast);
+    z-index: 1;
+  }
+  
+  .navbar__link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-violet);
+    opacity: 0;
+    transition: opacity var(--transition-base), transform var(--transition-base);
+    transform: scale(0.9);
+    z-index: -1;
+    border-radius: var(--radius-full);
+  }
+
+  .navbar__link:hover {
+    color: #fff;
+    background: transparent !important;
+  }
+  
+  .navbar__link:hover::before,
+  .navbar__link.active::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .navbar__link.active {
+    color: #fff;
+    background: transparent !important;
+    box-shadow: var(--shadow-violet);
+  }
+
+  /* Enhanced Controls */
+  .navbar__control-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .navbar__control-btn:hover {
+    background: rgba(124, 58, 237, 0.15);
+    border-color: rgba(124, 58, 237, 0.4);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .navbar__login-btn {
+    border-radius: var(--radius-full);
+    transition: transform var(--transition-spring), box-shadow var(--transition-base);
+  }
+
+  .navbar__login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-violet);
   }
 }
