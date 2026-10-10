@@ -10,8 +10,10 @@
     <!-- Logo -->
     <a href="index.html" class="nav-logo" aria-label="DEAL Home">
       <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="nav-logo-svg">
-        <path d="M16 4L4 9.5V21.5C4 26 9 30 16 32.5V4Z" class="logo-pillar" />
-        <path d="M20 4L32 9.5V21.5C32 26 27 30 20 32.5V4Z" class="logo-arch" />
+        <path d="M16.5 4.5C10.5 4.5 6.8 7 5.5 10C5.5 21.5 11.5 29 16.5 31.5V27C12.8 24.8 9 19 9 11.5C11 10 13.8 9 16.5 8.8V4.5Z" class="logo-pillar" />
+        <path d="M19.5 4.5C25.5 4.5 29.2 7 30.5 10C30.5 21.5 24.5 29 19.5 31.5V27C23.2 24.8 27 19 27 11.5C25 10 22.2 9 19.5 8.8V4.5Z" class="logo-arch" />
+        <path d="M18 10L13.8 18L18 26V10Z" class="logo-core" />
+        <path d="M18 10L22.2 18L18 26V10Z" class="logo-core-light" />
       </svg>
       <span class="nav-logo-text">DEAL</span>
     </a>
@@ -57,8 +59,10 @@
   <div class="drawer-top">
     <a href="index.html" class="nav-logo" aria-label="DEAL Home">
       <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="nav-logo-svg" style="width:32px; height:32px;">
-        <path d="M16 4L4 9.5V21.5C4 26 9 30 16 32.5V4Z" class="logo-pillar" />
-        <path d="M20 4L32 9.5V21.5C32 26 27 30 20 32.5V4Z" class="logo-arch" />
+        <path d="M16.5 4.5C10.5 4.5 6.8 7 5.5 10C5.5 21.5 11.5 29 16.5 31.5V27C12.8 24.8 9 19 9 11.5C11 10 13.8 9 16.5 8.8V4.5Z" class="logo-pillar" />
+        <path d="M19.5 4.5C25.5 4.5 29.2 7 30.5 10C30.5 21.5 24.5 29 19.5 31.5V27C23.2 24.8 27 19 27 11.5C25 10 22.2 9 19.5 8.8V4.5Z" class="logo-arch" />
+        <path d="M18 10L13.8 18L18 26V10Z" class="logo-core" />
+        <path d="M18 10L22.2 18L18 26V10Z" class="logo-core-light" />
       </svg>
       <span class="nav-logo-text" style="font-size:1.4rem;">DEAL</span>
     </a>
@@ -99,8 +103,10 @@
       <div class="footer-brand-col">
         <a href="index.html" class="footer-logo" aria-label="DEAL Home">
           <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="footer-logo-svg">
-            <path d="M16 4L4 9.5V21.5C4 26 9 30 16 32.5V4Z" class="logo-pillar" />
-            <path d="M20 4L32 9.5V21.5C32 26 27 30 20 32.5V4Z" class="logo-arch" />
+            <path d="M16.5 4.5C10.5 4.5 6.8 7 5.5 10C5.5 21.5 11.5 29 16.5 31.5V27C12.8 24.8 9 19 9 11.5C11 10 13.8 9 16.5 8.8V4.5Z" class="logo-pillar" />
+            <path d="M19.5 4.5C25.5 4.5 29.2 7 30.5 10C30.5 21.5 24.5 29 19.5 31.5V27C23.2 24.8 27 19 27 11.5C25 10 22.2 9 19.5 8.8V4.5Z" class="logo-arch" />
+            <path d="M18 10L13.8 18L18 26V10Z" class="logo-core" />
+            <path d="M18 10L22.2 18L18 26V10Z" class="logo-core-light" />
           </svg>
           <span class="footer-logo-text">DEAL</span>
         </a>

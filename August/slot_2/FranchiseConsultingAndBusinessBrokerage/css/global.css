@@ -28,7 +28,9 @@
   text-transform: uppercase;
   white-space: nowrap;
   max-width: 100%;
+  text-decoration: none;
   cursor: pointer;
+  line-height: 1.2;
   transition: background-color var(--dur-fast) var(--ease-out),
               color var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-fast) var(--ease-out),
@@ -37,40 +39,141 @@
   min-width: 44px;
   min-height: 44px;
 }
+.btn:active {
+  transform: translateY(0);
+}
+.btn:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+/* Primary Button */
 .btn-primary {
-  background: var(--brass);
-  color: #fff;
-  border: 2px solid var(--brass);
-  box-shadow: 0 4px 14px rgba(176,141,60,0.30);
+  background: var(--btn-primary-bg, var(--brass));
+  color: var(--btn-primary-text, #ffffff);
+  border: 2px solid var(--btn-primary-border, var(--brass));
+  box-shadow: var(--btn-primary-shadow, 0 4px 14px rgba(176, 141, 60, 0.30));
 }
-.btn-primary:hover {
-  background: var(--brass-deep);
-  border-color: var(--brass-deep);
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--btn-primary-bg-hover, var(--brass-deep));
+  border-color: var(--btn-primary-border-hover, var(--brass-deep));
+  color: var(--btn-primary-text, #ffffff);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(176,141,60,0.40);
+  box-shadow: var(--btn-primary-shadow-hover, 0 8px 24px rgba(176, 141, 60, 0.42));
 }
+
+[data-theme="dark"] .btn-primary {
+  background: var(--btn-primary-bg, var(--brass));
+  color: var(--btn-primary-text, #0A0A0A);
+  border-color: var(--btn-primary-border, var(--brass));
+  font-weight: var(--fw-bold);
+  box-shadow: var(--btn-primary-shadow, 0 4px 16px rgba(176, 141, 60, 0.35));
+}
+[data-theme="dark"] .btn-primary:hover,
+[data-theme="dark"] .btn-primary:focus-visible {
+  background: var(--btn-primary-bg-hover, #C9A44F);
+  border-color: var(--btn-primary-border-hover, #C9A44F);
+  color: #0A0A0A;
+  box-shadow: var(--btn-primary-shadow-hover, 0 8px 24px rgba(176, 141, 60, 0.50));
+}
+
+/* Secondary Button (supported via .btn-secondary and .btn-ghost-navy) */
+.btn-secondary,
+.btn-ghost-navy {
+  background: var(--btn-secondary-bg, transparent);
+  color: var(--btn-secondary-text, var(--navy));
+  border: 2px solid var(--btn-secondary-border, var(--navy));
+  box-shadow: var(--btn-secondary-shadow, none);
+}
+.btn-secondary:hover,
+.btn-secondary:focus-visible,
+.btn-ghost-navy:hover,
+.btn-ghost-navy:focus-visible {
+  background: var(--btn-secondary-bg-hover, var(--navy));
+  color: var(--btn-secondary-text-hover, #ffffff);
+  border-color: var(--btn-secondary-border-hover, var(--navy));
+  transform: translateY(-2px);
+  box-shadow: var(--btn-secondary-shadow-hover, 0 6px 18px rgba(16, 42, 67, 0.22));
+}
+
+[data-theme="dark"] .btn-secondary,
+[data-theme="dark"] .btn-ghost-navy {
+  background: var(--btn-secondary-bg, transparent);
+  color: var(--btn-secondary-text, var(--brass));
+  border-color: var(--btn-secondary-border, var(--brass));
+}
+[data-theme="dark"] .btn-secondary:hover,
+[data-theme="dark"] .btn-secondary:focus-visible,
+[data-theme="dark"] .btn-ghost-navy:hover,
+[data-theme="dark"] .btn-ghost-navy:focus-visible {
+  background: var(--btn-secondary-bg-hover, rgba(176, 141, 60, 0.15));
+  color: var(--btn-secondary-text-hover, #C9A44F);
+  border-color: var(--btn-secondary-border-hover, #C9A44F);
+  transform: translateY(-2px);
+  box-shadow: var(--btn-secondary-shadow-hover, 0 4px 18px rgba(176, 141, 60, 0.25));
+}
+
+/* Ghost Button (for dark hero & banner backgrounds) */
 .btn-ghost {
   background: transparent;
-  color: #fff;
-  border: 2px solid rgba(255,255,255,0.70);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.70);
+  box-shadow: none;
 }
-.btn-ghost:hover {
-  background: rgba(255,255,255,0.12);
-  border-color: #fff;
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  border-color: #ffffff;
   transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.15);
 }
-.btn-ghost-navy {
+
+[data-theme="dark"] .btn-ghost {
+  color: rgba(255, 255, 255, 0.90);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+[data-theme="dark"] .btn-ghost:hover,
+[data-theme="dark"] .btn-ghost:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+/* Inline Link Button */
+.btn-link {
   background: transparent;
-  color: var(--navy);
-  border: 2px solid var(--navy);
+  border: none;
+  padding: 0;
+  min-height: auto;
+  min-width: auto;
+  color: var(--brass);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  box-shadow: none;
+  transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
-.btn-ghost-navy:hover {
-  background: var(--navy);
-  color: #fff;
-  transform: translateY(-2px);
+.btn-link:hover {
+  color: var(--brass-deep);
+  transform: translateX(4px);
 }
-.btn-sm { padding: 0.5rem 1.25rem; font-size: var(--fs-xs); }
-.btn-lg { padding: 1rem 2.5rem; font-size: var(--fs-md); }
+[data-theme="dark"] .btn-link {
+  color: var(--brass);
+}
+[data-theme="dark"] .btn-link:hover {
+  color: #C9A44F;
+}
+
+/* Sizes */
+.btn-sm { padding: 0.5rem 1.25rem; font-size: var(--fs-xs); min-height: 36px; }
+.btn-lg { padding: 0.95rem 2.5rem; font-size: var(--fs-md); min-height: 50px; }
 
 /* ── Section Label / Eyebrow ── */
 .eyebrow {
@@ -133,8 +236,12 @@
 .nav-logo-svg { width: 36px; height: 36px; flex-shrink: 0; }
 .logo-pillar { fill: var(--navy); transition: fill var(--dur-normal) var(--ease-out); }
 .logo-arch { fill: var(--brass); transition: fill var(--dur-normal) var(--ease-out); }
+.logo-core { fill: var(--brass); transition: fill var(--dur-normal) var(--ease-out); }
+.logo-core-light { fill: var(--brass-light, #DFC478); transition: fill var(--dur-normal) var(--ease-out); }
 [data-theme="dark"] .logo-pillar { fill: var(--brass); }
 [data-theme="dark"] .logo-arch { fill: #fff; }
+[data-theme="dark"] .logo-core { fill: var(--brass); }
+[data-theme="dark"] .logo-core-light { fill: var(--brass-light, #DFC478); }
 .nav-logo-text {
   font-family: var(--font-display);
   font-size: 1.6rem;
@@ -456,6 +563,8 @@
 .footer-logo-svg { width: 44px; height: 44px; flex-shrink: 0; }
 .footer-logo-svg .logo-pillar { fill: #fff; }
 .footer-logo-svg .logo-arch { fill: var(--brass); }
+.footer-logo-svg .logo-core { fill: var(--brass); }
+.footer-logo-svg .logo-core-light { fill: #DFC478; }
 .footer-logo-text {
   font-family: var(--font-display);
   font-size: 1.8rem;

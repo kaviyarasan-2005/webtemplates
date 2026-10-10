@@ -748,6 +748,20 @@
       });
     });
 
+    // Checkbox cards selection
+    var checkboxCards = form.querySelectorAll('.checkbox-card');
+    checkboxCards.forEach(function (card) {
+      var input = card.querySelector('input[type="checkbox"]');
+      if (!input) return;
+      input.addEventListener('change', function () {
+        if (input.checked) {
+          card.classList.add('is-checked');
+        } else {
+          card.classList.remove('is-checked');
+        }
+      });
+    });
+
     // Form submission with validation
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -801,6 +815,17 @@
             form.querySelectorAll('.segment-btn').forEach(function (b) {
               b.classList.remove('active');
             });
+            // Reset checkbox cards
+            setTimeout(function () {
+              form.querySelectorAll('.checkbox-card').forEach(function (card) {
+                var input = card.querySelector('input[type="checkbox"]');
+                if (input && input.checked) {
+                  card.classList.add('is-checked');
+                } else {
+                  card.classList.remove('is-checked');
+                }
+              });
+            }, 10);
           }, 2500);
         }
       }
@@ -1060,6 +1085,58 @@
     }
   }
 
+  /* ═══════════════════════════════════════════════════════════
+     AVAILABILITY BOARD & LIVE CAPACITY FLIP CARDS
+     ═══════════════════════════════════════════════════════════ */
+  function initAvailabilityBoard() {
+    // 1. Mobile touch/click flip card toggle
+    const flipCards = document.querySelectorAll('.capacity-flip-card');
+    flipCards.forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('.flip-cta')) return;
+        card.classList.toggle('flipped');
+      });
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          if (e.target.closest('.flip-cta')) return;
+          e.preventDefault();
+          card.classList.toggle('flipped');
+        }
+      });
+    });
+
+    // 2. Rack Slot selection & Live Inspector updates
+    const slots = document.querySelectorAll('.avail-slot.available');
+    const inspectorText = document.getElementById('inspector-slot-text');
+    const reserveBtn = document.getElementById('inspector-reserve-btn');
+
+    if (!slots.length || !inspectorText || !reserveBtn) return;
+
+    slots.forEach(function (slot) {
+      function selectThisSlot() {
+        slots.forEach(function (s) { s.classList.remove('selected'); });
+        slot.classList.add('selected');
+
+        const slotCode = slot.getAttribute('data-slot') || 'A03';
+        const zone = slot.getAttribute('data-zone') || 'Deep Frozen';
+        const temp = slot.getAttribute('data-temp') || '-22°C';
+        const load = slot.getAttribute('data-load') || '1,200 kg';
+
+        inspectorText.innerHTML = '<strong>Bay ' + slotCode + '</strong> &bull; ' + zone + ' (' + temp + ') &bull; Ready for Immediate Intake (' + load + ' max)';
+        reserveBtn.textContent = 'Reserve Selected Bay (' + slotCode + ') →';
+        reserveBtn.href = 'contact.html?slot=' + encodeURIComponent(slotCode) + '&zone=' + encodeURIComponent(zone);
+      }
+
+      slot.addEventListener('click', selectThisSlot);
+      slot.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectThisSlot();
+        }
+      });
+    });
+  }
+
   /* ═══════════════════════════════════════════════════════
      INIT — Run everything on DOM ready
      ═══════════════════════════════════════════════════════ */
@@ -1096,6 +1173,7 @@
     initKioskForm();
     initCalloutPins();
     initPrefooterInteractions();
+    initAvailabilityBoard();
   });
 
 })();
