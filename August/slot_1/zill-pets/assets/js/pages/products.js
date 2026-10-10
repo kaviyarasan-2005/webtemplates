@@ -1,4 +1,4 @@
-/**
+﻿/**
  * products.js
  * Handles products grid filtering, searching, sorting, and detail page population.
  */
@@ -103,19 +103,22 @@ function initProductsPage() {
       card.style.animationDelay = `${(idx % 4) * 80}ms`;
       card.dataset.category = p.category;
       
-      const badgeHtml = p.badge ? `<div class="sticker sticker--absolute" style="top:10px;left:10px;transform:rotate(-5deg);">${p.badge}</div>` : '';
+      const badgeHtml = p.badge ? `<div class="sticker sticker--absolute" style="top:10px;left:10px;">${p.badge}</div>` : '';
       const priceVal = typeof p.price === 'number' ? p.price.toFixed(2) : '0.00';
       
       card.innerHTML = `
-        <div class="card__img-wrap" style="position:relative; border-bottom: 2px solid var(--clr-border); overflow:hidden; aspect-ratio:1/1;">
+        <div class="card__img-wrap" style="position:relative; border-bottom: 1px solid var(--clr-border); overflow:hidden; aspect-ratio:1/1;">
           ${badgeHtml}
           <img src="${p.image}" alt="${p.name}" class="card__img" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
         </div>
         <div class="card__body" style="padding: 1.5rem; display:flex; flex-direction:column; gap:0.5rem; flex:1;">
           <span class="card__tag" style="font-family:'Space Mono',monospace; font-size:0.75rem; text-transform:uppercase; color:var(--clr-text-sub);">${p.category}</span>
           <h3 class="card__title" style="margin:0; font-size:1.25rem;">${p.name}</h3>
-          <div class="price-tag" style="font-family:'Space Mono',monospace; font-weight:bold; font-size:1.1rem; margin-top:auto;">$${priceVal}</div>
-          <a href="product-detail.html?id=${p.id}" class="card__link btn btn--sm btn--outline" style="margin-top:1rem; text-align:center;">View →</a>
+          <p class="card__desc" style="font-family:'Inter', sans-serif; font-size:0.9rem; color:var(--clr-text-muted); line-height:1.5; margin:0.25rem 0 0.5rem; flex:1;">${p.description || 'Premium quality captive-bred species or supply.'}</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.5rem; padding-top:1rem; border-top:1px solid rgba(22,22,22,0.1);">
+            <span class="price-tag" style="font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:1.25rem;">$${priceVal}</span>
+            <a href="product-detail.html?id=${p.id}" class="btn btn--sm btn--primary" style="color: #fff !important;">View &rarr;</a>
+          </div>
         </div>
       `;
       gridContainer.appendChild(card);
@@ -247,14 +250,14 @@ function initProductDetailPage() {
     
     relatedGrid.innerHTML = related.map((p, idx) => `
       <div class="card reveal reveal--visible" data-delay="${idx * 80}">
-        <div class="card__img-wrap" style="position:relative; border-bottom: 2px solid var(--clr-border); overflow:hidden; aspect-ratio:1/1;">
+        <div class="card__img-wrap" style="position:relative; border-bottom: 1px solid var(--clr-border); overflow:hidden; aspect-ratio:1/1;">
           <img src="${p.image}" alt="${p.name}" class="card__img" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
         </div>
         <div class="card__body" style="padding: 1.5rem; display:flex; flex-direction:column; gap:0.5rem; flex:1;">
           <span class="card__tag" style="font-family:'Space Mono',monospace; font-size:0.75rem; text-transform:uppercase; color:var(--clr-text-sub);">${p.category}</span>
           <h3 class="card__title" style="margin:0; font-size:1.25rem;">${p.name}</h3>
           <div class="price-tag" style="font-family:'Space Mono',monospace; font-weight:bold; font-size:1.1rem; margin-top:auto;">$${typeof p.price === 'number' ? p.price.toFixed(2) : '0.00'}</div>
-          <a href="product-detail.html?id=${p.id}" class="card__link btn btn--sm btn--outline" style="margin-top:1rem; text-align:center;">View →</a>
+          <a href="product-detail.html?id=${p.id}" class="btn btn--sm btn--primary" style="margin-top:1rem; text-align:center; color: #fff !important;">View &rarr;</a>
         </div>
       </div>
     `).join('');
@@ -264,13 +267,15 @@ function initProductDetailPage() {
 // Fallback Mock Data
 function getMockProducts() {
   return [
-    { id: '1', name: 'Bearded Dragon', category: 'reptile', price: 150, image: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=600&q=80', badge: 'Best Seller' },
-    { id: '2', name: 'Ball Python', category: 'reptile', price: 200, image: 'https://images.unsplash.com/photo-1531386151447-fd76ad50012f?w=600&q=80' },
-    { id: '3', name: 'Crested Gecko', category: 'reptile', price: 80, image: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=600&q=80', badge: 'Staff Pick' },
-    { id: '4', name: '40G PVC Enclosure', category: 'habitat', price: 250, image: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=600&q=80' },
-    { id: '5', name: 'Bioactive Kit', category: 'habitat', price: 90, image: 'https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&q=80' },
-    { id: '6', name: 'Live Crickets (500ct)', category: 'feeder', price: 25, image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80', badge: 'Subscribe' },
-    { id: '7', name: 'UVB Lamp', category: 'supply', price: 45, image: 'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=600&q=80' },
-    { id: '8', name: 'Calcium Supplement', category: 'supply', price: 15, image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80' }
+    { id: '1', name: 'Bearded Dragon', category: 'reptile', price: 150, image: 'https://images.unsplash.com/photo-1619816128374-a6b4766ca92c?w=600&q=80', badge: 'Best Seller', description: 'Friendly, diurnal, and active. A classic starter lizard with tons of personality.' },
+    { id: '2', name: 'Ball Python', category: 'reptile', price: 200, image: 'https://images.unsplash.com/photo-1546992772-3318f1f3a1be?w=600&q=80', description: 'Shy, slow-moving snakes that tolerate handling well. A great introduction to keeping snakes.' },
+    { id: '3', name: 'Crested Gecko', category: 'reptile', price: 80, image: 'https://images.unsplash.com/photo-1769986289575-d402e93d5885?w=600&q=80', badge: 'Staff Pick', description: 'Arboreal acrobats that thrive at room temperature. Perfect for planted vertical tanks.' },
+    { id: '4', name: '40G PVC Enclosure', category: 'habitat', price: 250, image: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=600&q=80', description: 'Premium PVC enclosure built for long-term health, holding heat and humidity perfectly.' },
+    { id: '5', name: 'Bioactive Kit', category: 'habitat', price: 90, image: 'https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&q=80', description: 'Complete bioactive setup with drainage layer, substrate, and live plant starter pack.' },
+    { id: '6', name: 'Live Crickets (500ct)', category: 'feeder', price: 25, image: 'https://images.unsplash.com/photo-1591792111137-5b8219d5fad6?w=600&q=80', badge: 'Subscribe', description: 'Live gut-loaded crickets, pre-dusted with calcium supplement. Ship same-day.' },
+    { id: '7', name: 'UVB Lamp', category: 'supply', price: 45, image: 'https://images.unsplash.com/photo-1746196596959-c6153c84982a?w=600&q=80', description: 'Professional-grade T5 HO UVB lamp for desert-dwelling reptiles.' },
+    { id: '8', name: 'Calcium Supplement', category: 'supply', price: 15, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600&q=80', description: 'Veterinarian-recommended calcium and D3 supplement powder for dusting feeders.' }
   ];
 }
+
+
