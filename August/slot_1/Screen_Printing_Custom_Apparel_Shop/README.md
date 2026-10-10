@@ -17,9 +17,10 @@
 
 ### Core Pages
 1. **`index.html`** — Home 1 (Production Powerhouse)
-   - Hero video simulation, live statistics counter strip, 6 core print services cards, interactive quote calculator widget, 8-step process timeline, client logo ticker, testimonial carousel, CTA band.
+   - Screen-printing hero with product showcase and stats bar, animated 4-step process timeline, zig-zag capabilities rows, apparel category cards, 16-item filterable portfolio grid, FAQ, testimonials, CTA band.
 2. **`home-alt.html`** — Home 2 (Creative Studio)
-   - Dark aesthetic, interactive canvas print mockup, technique showcase tabber, apparel catalog spotlight, case studies split layout, Instagram grid.
+   - Centered hero with print-method mosaic, apparel categories, technique cards, instant estimate widget, process steps, why-PRNT, recent work, redesigned team cards, FAQ and a closing CTA. (Pricing now lives on `pricing.html`.)
+   - **`pricing.html`** — Pricing plans (Starter / Studio / Enterprise), bulk discount table, included-with-every-order and CTA.
 3. **`about.html`** — About PRNT & Factory Tour
    - Industrial history timeline, 4-stat counters, interactive virtual factory tour floorplan, press line specs, 4 team cards, quality guarantee card.
 4. **`products.html`** — Blank Apparel Catalog

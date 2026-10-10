@@ -16,40 +16,7 @@
   <link rel="stylesheet" href="styles/components.css" />
   <link rel="stylesheet" href="styles/animations.css" />
   <link rel="stylesheet" href="styles/responsive.css" />
-  <style>
-    /* Home Alt specific styles */
-    .split-hero { display:grid; grid-template-columns:1fr 1fr; min-height:560px; }
-    .split-hero__left { display:flex; flex-direction:column; justify-content:center; padding:var(--space-16) var(--page-padding); background:var(--bg-surface); }
-    .split-hero__right { position:relative; overflow:hidden; }
-    .split-hero__right img { width:100%; height:100%; object-fit:cover; }
-    .estimate-widget { background:var(--bg-muted); padding:var(--space-6); border-radius:var(--radius-lg); margin-top:var(--space-6); border:1px solid var(--border-color); }
-    .estimate-widget h4 { margin-bottom:var(--space-4); }
-    .estimate-widget .form-group { margin-bottom:var(--space-3); }
-    .estimate-result { font-family:var(--font-heading); font-size:var(--fs-h3); font-weight:var(--fw-extrabold); color:var(--color-secondary); margin-top:var(--space-4); }
-    .scroll-strip { display:flex; gap:var(--space-6); overflow-x:auto; padding:var(--space-4) 0; cursor:grab; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
-    .scroll-strip::-webkit-scrollbar { display:none; }
-    .scroll-strip.is-dragging { cursor:grabbing; }
-    .ink-card { min-width:280px; flex-shrink:0; scroll-snap-align:start; background:var(--bg-card); border-radius:var(--radius-lg); overflow:hidden; border:1px solid var(--border-color-light); box-shadow:var(--shadow-card); transition:all var(--transition-base); }
-    .ink-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-card-hover); }
-    .ink-card__image { height:180px; overflow:hidden; }
-    .ink-card__image img { width:100%; height:100%; object-fit:cover; }
-    .ink-card__body { padding:var(--space-5); }
-    .ink-card__body h4 { margin-bottom:var(--space-2); }
-    .ink-card__body p { font-size:var(--fs-small); color:var(--text-secondary); margin:0; }
-    @media (max-width:767px) {
-      .split-hero { grid-template-columns:1fr; }
-      .split-hero__left { padding:var(--space-8) var(--page-padding-mobile); }
-      .split-hero__right { height:300px; }
-    }
-    @media (max-width:480px) {
-      .split-hero__left { padding:var(--space-6) var(--page-padding-mobile); }
-      .split-hero__right { height:220px; }
-      .ink-card { min-width: 240px; }
-    }
-    @media (min-width:768px) and (max-width:1023px) {
-      .split-hero__left { padding:var(--space-8) var(--page-padding-tablet); }
-    }
-  </style>
+  <link rel="stylesheet" href="styles/home2.css" />
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -59,8 +26,8 @@
   <header class="navbar" role="banner">
     <div class="navbar__inner">
       <a href="index.html" class="navbar__logo" aria-label="PRNT Home">
-        <div class="navbar__logo-icon"><i data-lucide="printer"></i></div>
-        <span class="navbar__logo-text">PRNT</span>
+        <div class="navbar__logo-icon"><svg class="prnt-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect width="40" height="40" rx="9" fill="#17A2B8"/><path d="M14.2 7.6 L7.6 10.8 L4.6 17.2 L10 20 L12.2 17.4 L12.2 32.4 L27.8 32.4 L27.8 17.4 L30 20 L35.4 17.2 L32.4 10.8 L25.8 7.6 Q20 12.8 14.2 7.6Z" fill="#FFFFFF"/><path d="M20 17.2 Q24.6 22.4 24.6 25.4 A4.6 4.6 0 0 1 15.4 25.4 Q15.4 22.4 20 17.2Z" fill="#F4A100"/><path d="M14.2 7.6 Q20 12.8 25.8 7.6" fill="none" stroke="#16233F" stroke-opacity=".25" stroke-width="1.4"/></svg></div>
+        <span class="navbar__logo-words"><span class="navbar__logo-text">PRNT</span><span class="navbar__logo-tag">Screen Print &amp; Apparel</span></span>
       </a>
       <nav class="navbar__nav" role="navigation" aria-label="Main navigation">
         <div class="navbar__dropdown">
@@ -72,6 +39,7 @@
         </div>
         <a href="about.html" class="navbar__link">About</a>
         <a href="products.html" class="navbar__link">Products</a>
+        <a href="pricing.html" class="navbar__link">Pricing</a>
         <a href="bulk.html" class="navbar__link">Bulk & Corporate</a>
         <a href="design-guide.html" class="navbar__link">Design Guide</a>
         <a href="blog.html" class="navbar__link">Blog</a>
@@ -81,6 +49,7 @@
         <a href="cart.html" class="navbar__cart-btn" aria-label="Shopping Cart"><i data-lucide="shopping-cart"></i><span class="navbar__cart-badge badge--count">0</span></a>
         <button class="navbar__toggle-btn" data-toggle-theme aria-label="Toggle theme"><i data-lucide="moon" class="theme-toggle-icon"></i></button>
         <button class="navbar__rtl-btn navbar__toggle-btn" data-toggle-dir aria-label="Toggle direction"><span class="rtl-toggle-text">RTL</span></button>
+        <a href="contact.html" class="btn btn--primary navbar__cta">Get a Quote</a>
         <button class="navbar__hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -88,10 +57,12 @@
       <div class="navbar__dropdown"><a href="#" class="navbar__link">Home <i data-lucide="chevron-down"></i></a><div class="navbar__dropdown-menu"><a href="index.html" class="navbar__dropdown-item"><i data-lucide="zap"></i> Home 1</a><a href="home-alt.html" class="navbar__dropdown-item"><i data-lucide="palette"></i> Home 2</a></div></div>
       <a href="about.html" class="navbar__link">About</a>
       <a href="products.html" class="navbar__link">Products</a>
+        <a href="pricing.html" class="navbar__link">Pricing</a>
       <a href="bulk.html" class="navbar__link">Bulk & Corporate</a>
       <a href="design-guide.html" class="navbar__link">Design Guide</a>
       <a href="blog.html" class="navbar__link">Blog</a>
       <a href="contact.html" class="navbar__link">Contact</a>
+      <a href="contact.html" class="navbar__link navbar__link--cta">Get a Quote</a>
       <div class="navbar__mobile-toggles">
         <button class="navbar__toggle-btn" data-toggle-theme aria-label="Toggle theme"><i data-lucide="moon" class="theme-toggle-icon"></i></button>
         <button class="navbar__rtl-btn navbar__toggle-btn" data-toggle-dir><span class="rtl-toggle-text">RTL</span></button>
@@ -99,234 +70,208 @@
     </div>
   </header>
 
-  <main id="main-content" class="page-content">
+  <main id="main-content" class="page-content home2">
 
-    <!-- ─── SECTION 1: SPLIT-SCREEN HERO ────────────────────────── -->
-    <section class="split-hero" id="hero-alt" aria-label="Hero">
-      <div class="split-hero__left">
-        <span class="section__label">Creative Studio</span>
-        <h1 style="margin-bottom:var(--space-4);">Your Design,<br/>Our Expertise</h1>
-        <p style="font-size:var(--fs-body-lg);max-width:460px;">Custom screen printing that brings your creative vision to life — from concept sketch to finished garment.</p>
-
-        <!-- Estimate Mini Widget -->
-        <div class="estimate-widget">
-          <h4>Get Instant Estimate</h4>
-          <div class="form-group">
-            <select class="form-input" id="est-garment" aria-label="Garment type">
-              <option value="">Select Garment</option>
-              <option value="tshirt">T-Shirt</option>
-              <option value="hoodie">Hoodie</option>
-              <option value="cap">Cap</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <input type="number" class="form-input" id="est-qty" placeholder="Quantity (min 25)" min="25" aria-label="Quantity" />
-          </div>
-          <div class="form-group">
-            <select class="form-input" id="est-colors" aria-label="Print colors">
-              <option value="1">1 Color Print</option>
-              <option value="2">2 Color Print</option>
-              <option value="3">3 Color Print</option>
-              <option value="4">4+ Color Print</option>
-            </select>
-          </div>
-          <button class="btn btn--primary btn--block" id="est-calculate">Calculate Estimate</button>
-          <div class="estimate-result" id="est-result" style="display:none;"></div>
+    <!-- ─── SECTION 1: HERO ─────────────────────────────────────── -->
+    <section class="h2-hero" id="hero-alt" aria-label="Hero">
+      <div class="container">
+        <span class="h2-hero__eyebrow"><i data-lucide="shirt"></i> Custom Screen Printing &amp; Apparel Studio</span>
+        <h1><span class="hero-word">We</span> <span class="hero-word hl">Print</span> <span class="hero-word">Your</span> <span class="hero-word">Brand</span> <span class="hero-word">on</span> <span class="hero-word hl2">Tees,</span> <span class="hero-word hl2">Hoodies</span> <span class="hero-word">&amp;</span> <span class="hero-word hl2">Caps</span></h1>
+        <p class="h2-hero__lead">Screen printing, embroidery, DTG and heat transfer under one roof — from a 25-piece team order to a 50,000-piece merch launch.</p>
+        <div class="hero__actions">
+          <a href="contact.html" class="btn btn--primary btn--lg">Get a Free Quote</a>
+          <a href="products.html" class="btn btn--secondary btn--lg">Browse Products</a>
         </div>
-      </div>
-      <div class="split-hero__right">
-        <img src="assets/images/hero_home_alt.png" alt="Creative apparel design studio light table" />
+        <div class="h2-mosaic">
+        <figure class="h2-tile"><img src="assets/images/print_press_video.jpg" alt="Automatic screen printing presses on the print floor" /><figcaption>Screen Printing<span>Up to 8 colors</span></figcaption></figure>
+        <figure class="h2-tile"><img src="assets/images/w_tee_festival.jpg" alt="Black t-shirt with a retro sunset screen print" /><figcaption>Custom Tees<span>From 25 pieces</span></figcaption></figure>
+        <figure class="h2-tile"><img src="assets/images/embroidery_machine_detail.jpg" alt="Multi-needle embroidery machine stitching a logo" /><figcaption>Embroidery<span>Logos in thread</span></figcaption></figure>
+        <figure class="h2-tile"><img src="assets/images/w_hood_uni.jpg" alt="Maroon hoodie with a printed eagle crest" /><figcaption>Hoodies<span>Print or stitch</span></figcaption></figure>
+        <figure class="h2-tile"><img src="assets/images/heat_press_transfer.jpg" alt="Heat press applying a vinyl transfer to a shirt" /><figcaption>Heat Transfer<span>Names and numbers</span></figcaption></figure>
+        </div>
       </div>
     </section>
 
-    <!-- ─── SECTION 2: INK & TECHNIQUE SHOWCASE ─────────────────── -->
-    <section class="section" id="ink-techniques" aria-label="Ink techniques showcase">
+    <!-- ─── SECTION 2: WHAT WE PRINT ────────────────────────────── -->
+    <section class="section section--plain" id="what-we-print" aria-label="What we print">
+      <div class="container">
+        <div class="section__header reveal">
+          <span class="section__label">What We Print</span>
+          <h2>Apparel Made to Order</h2>
+          <p class="section__subtitle">Pick a garment, send your artwork, and we handle the rest</p>
+        </div>
+        <div class="h2-cats reveal-stagger">
+        <a href="products.html#tshirts" class="h2-cat"><div class="h2-cat__media"><img src="assets/images/cat_tshirts.jpg" alt="Custom printed t-shirts" loading="lazy" /></div><div class="h2-cat__body"><h3>T-Shirts</h3><p>Ringspun, tri-blend and heavyweight tees.</p><span class="h2-cat__more">Shop T-Shirts <i data-lucide="arrow-right"></i></span></div></a>
+        <a href="products.html#hoodies" class="h2-cat"><div class="h2-cat__media"><img src="assets/images/cat_hoodies.jpg" alt="Custom printed hoodies" loading="lazy" /></div><div class="h2-cat__body"><h3>Hoodies</h3><p>Pullovers, zip-ups and cropped fits.</p><span class="h2-cat__more">Shop Hoodies <i data-lucide="arrow-right"></i></span></div></a>
+        <a href="products.html#caps" class="h2-cat"><div class="h2-cat__media"><img src="assets/images/cat_caps.jpg" alt="Embroidered caps" loading="lazy" /></div><div class="h2-cat__body"><h3>Caps</h3><p>Snapback, trucker and dad hats.</p><span class="h2-cat__more">Shop Caps <i data-lucide="arrow-right"></i></span></div></a>
+        <a href="bulk.html" class="h2-cat"><div class="h2-cat__media"><img src="assets/images/cat_corporate.jpg" alt="Corporate polos, vests and tote bags" loading="lazy" /></div><div class="h2-cat__body"><h3>Corporate</h3><p>Uniforms, vests and promo gear.</p><span class="h2-cat__more">Shop Corporate <i data-lucide="arrow-right"></i></span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SECTION 3: TECHNIQUES ───────────────────────────────── -->
+    <section class="section section--alt" id="ink-techniques" aria-label="Ink techniques showcase">
       <div class="container">
         <div class="section__header reveal">
           <span class="section__label">Our Techniques</span>
-          <h2>Ink & Print Methods</h2>
+          <h2>Ink &amp; Print Methods</h2>
           <p class="section__subtitle">Every method mastered for the perfect finish</p>
         </div>
+        <div class="h2-tech reveal-stagger">
+        <div class="ink-card"><div class="ink-card__image"><span class="ink-card__num">01</span><img src="assets/images/ink_comparison.png" alt="Thick plastisol ink being worked on a printing surface" loading="lazy" /></div><div class="ink-card__body"><h4>Plastisol Ink</h4><p>Industry standard — vibrant, opaque, durable on dark fabrics. Perfect for bold designs.</p></div></div>
+        <div class="ink-card"><div class="ink-card__image"><span class="ink-card__num">02</span><img src="assets/images/sustainable_screen_printing.png" alt="Jars of eco-friendly water-based screen printing ink" loading="lazy" /></div><div class="ink-card__body"><h4>Water-Based Ink</h4><p>Soft hand feel that breathes — eco-friendly with a vintage, worn-in look.</p></div></div>
+        <div class="ink-card"><div class="ink-card__image"><span class="ink-card__num">03</span><img src="assets/images/tech_discharge.jpg" alt="Dark tee with a soft discharge print and a fabric close-up" loading="lazy" /></div><div class="ink-card__body"><h4>Discharge Print</h4><p>Removes garment dye and replaces with color — no ink layer, ultra-soft feel.</p></div></div>
+        <div class="ink-card"><div class="ink-card__image"><span class="ink-card__num">04</span><img src="assets/images/tech_dtg.jpg" alt="Direct-to-garment printer printing full-color artwork on a white tee" loading="lazy" /></div><div class="ink-card__body"><h4>DTG Printing</h4><p>Direct-to-garment for photo-quality detail — ideal for complex multi-color artwork.</p></div></div>
+        <div class="ink-card"><div class="ink-card__image"><span class="ink-card__num">05</span><img src="assets/images/heat_press_transfer.jpg" alt="Heat press applying vinyl transfer to a black shirt" loading="lazy" /></div><div class="ink-card__body"><h4>Heat Transfer</h4><p>Vinyl cut &amp; pressed — great for names, numbers, and small batch custom pieces.</p></div></div>
+        </div>
       </div>
-      <div class="container--full" style="padding-inline:var(--page-padding);">
-        <div class="scroll-strip">
-          <div class="ink-card">
-            <div class="ink-card__image"><img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80" alt="Plastisol ink printing process" /></div>
-            <div class="ink-card__body"><h4>Plastisol Ink</h4><p>Industry standard — vibrant, opaque, durable on dark fabrics. Perfect for bold designs.</p></div>
+    </section>
+
+    <!-- ─── SECTION 4: INSTANT ESTIMATE (former hero content) ───── -->
+    <section class="section section--plain" id="estimate" aria-label="Instant estimate">
+      <div class="container">
+        <div class="h2-estimate">
+          <div class="h2-estimate__copy reveal reveal--left">
+            <span class="section__label">Creative Studio</span>
+            <h2>Your Design,<br/>Our Expertise</h2>
+            <p>Custom screen printing that brings your creative vision to life — from concept sketch to finished garment.</p>
+            <ul class="h2-estimate__list">
+              <li><i data-lucide="check-circle-2"></i> Free digital proof on every order</li>
+              <li><i data-lucide="check-circle-2"></i> In-house designers for artwork help</li>
+              <li><i data-lucide="check-circle-2"></i> Transparent per-piece pricing</li>
+            </ul>
+            <a href="pricing.html" class="btn btn--ghost btn--lg">View Pricing</a>
           </div>
-          <div class="ink-card">
-            <div class="ink-card__image"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&q=80" alt="Water-based ink soft hand print" /></div>
-            <div class="ink-card__body"><h4>Water-Based Ink</h4><p>Soft hand feel that breathes — eco-friendly with a vintage, worn-in look.</p></div>
-          </div>
-          <div class="ink-card">
-            <div class="ink-card__image"><img src="https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=400&q=80" alt="Discharge printing technique" /></div>
-            <div class="ink-card__body"><h4>Discharge Print</h4><p>Removes garment dye and replaces with color — no ink layer, ultra-soft feel.</p></div>
-          </div>
-          <div class="ink-card">
-            <div class="ink-card__image"><img src="https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=400&q=80" alt="Direct to garment DTG printing" /></div>
-            <div class="ink-card__body"><h4>DTG Printing</h4><p>Direct-to-garment for photo-quality detail — ideal for complex multi-color artwork.</p></div>
-          </div>
-          <div class="ink-card">
-            <div class="ink-card__image"><img src="https://images.unsplash.com/photo-1618220179428-22790b461013?w=400&q=80" alt="Heat transfer vinyl application" /></div>
-            <div class="ink-card__body"><h4>Heat Transfer</h4><p>Vinyl cut & pressed — great for names, numbers, and small batch custom pieces.</p></div>
+          <div class="estimate-widget reveal reveal--right">
+            <h4>Get Instant Estimate</h4>
+            <div class="form-group">
+              <select class="form-input" id="est-garment" aria-label="Garment type">
+                <option value="">Select Garment</option>
+                <option value="tshirt">T-Shirt</option>
+                <option value="hoodie">Hoodie</option>
+                <option value="cap">Cap</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-input" id="est-qty" placeholder="Quantity (min 25)" min="25" aria-label="Quantity" />
+            </div>
+            <div class="form-group">
+              <select class="form-input" id="est-colors" aria-label="Print colors">
+                <option value="1">1 Color Print</option>
+                <option value="2">2 Color Print</option>
+                <option value="3">3 Color Print</option>
+                <option value="4">4+ Color Print</option>
+              </select>
+            </div>
+            <button class="btn btn--primary btn--block" id="est-calculate">Calculate Estimate</button>
+            <div class="estimate-result" id="est-result" style="display:none;"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ─── SECTION 3: PRICING TIERS ────────────────────────────── -->
-    <section class="section" id="pricing" aria-label="Pricing" style="background:var(--bg-muted);">
+    <!-- ─── SECTION 5: HOW IT WORKS ─────────────────────────────── -->
+    <section class="section section--alt" id="how-it-works" aria-label="How it works">
       <div class="container">
         <div class="section__header reveal">
-          <span class="section__label">Pricing</span>
-          <h2>Choose Your Plan</h2>
-          <p class="section__subtitle">Transparent pricing, no hidden fees</p>
+          <span class="section__label">Our Process</span>
+          <h2>From Artwork to Doorstep</h2>
+          <p class="section__subtitle">Four simple steps to finished custom apparel</p>
         </div>
-
-        <div class="grid grid--3 reveal-stagger">
-          <div class="pricing-card">
-            <div class="pricing-card__tier">Starter</div>
-            <div class="pricing-card__price">$8 <span>/ piece</span></div>
-            <p class="pricing-card__desc">Perfect for small runs and personal projects</p>
-            <ul class="pricing-card__features">
-              <li><i data-lucide="check"></i> 25–99 pieces</li>
-              <li><i data-lucide="check"></i> Up to 2 ink colors</li>
-              <li><i data-lucide="check"></i> 1 print location</li>
-              <li><i data-lucide="check"></i> Standard 7-day turnaround</li>
-              <li><i data-lucide="check"></i> Digital proof included</li>
-            </ul>
-            <a href="contact.html" class="btn btn--ghost btn--block">Get Started</a>
-          </div>
-
-          <div class="pricing-card is-featured">
-            <div class="pricing-card__tier">Studio</div>
-            <div class="pricing-card__price">$5 <span>/ piece</span></div>
-            <p class="pricing-card__desc">Best value for growing brands and events</p>
-            <ul class="pricing-card__features">
-              <li><i data-lucide="check"></i> 100–499 pieces</li>
-              <li><i data-lucide="check"></i> Up to 4 ink colors</li>
-              <li><i data-lucide="check"></i> 2 print locations</li>
-              <li><i data-lucide="check"></i> Priority 5-day turnaround</li>
-              <li><i data-lucide="check"></i> Free design assistance</li>
-            </ul>
-            <a href="contact.html" class="btn btn--primary btn--block">Choose Studio</a>
-          </div>
-
-          <div class="pricing-card">
-            <div class="pricing-card__tier">Enterprise</div>
-            <div class="pricing-card__price">$3 <span>/ piece</span></div>
-            <p class="pricing-card__desc">Volume pricing for large-scale operations</p>
-            <ul class="pricing-card__features">
-              <li><i data-lucide="check"></i> 500+ pieces</li>
-              <li><i data-lucide="check"></i> Unlimited ink colors</li>
-              <li><i data-lucide="check"></i> All print locations</li>
-              <li><i data-lucide="check"></i> Express 48-hour available</li>
-              <li><i data-lucide="check"></i> Dedicated account manager</li>
-            </ul>
-            <a href="contact.html" class="btn btn--ghost btn--block">Contact Sales</a>
-          </div>
+        <div class="h2-process reveal-stagger">
+        <div class="h2-process__item"><div class="h2-process__icon"><i data-lucide="upload"></i></div><h3>Send Your Art</h3><p>Upload AI, EPS, PDF, PSD or PNG files — we check every file for print-readiness.</p></div>
+        <div class="h2-process__item"><div class="h2-process__icon"><i data-lucide="file-check"></i></div><h3>Approve the Proof</h3><p>A digital mockup shows placement, size and Pantone colors before anything is printed.</p></div>
+        <div class="h2-process__item"><div class="h2-process__icon"><i data-lucide="printer"></i></div><h3>We Print</h3><p>Your garments run on our automatic presses with strict ink and cure control.</p></div>
+        <div class="h2-process__item"><div class="h2-process__icon"><i data-lucide="truck"></i></div><h3>Delivered On Time</h3><p>Quality-checked, folded and boxed — shipped nationwide or ready for local pickup.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- ─── SECTION 4: WHY PRNT — 2x2 Value Grid ───────────────── -->
-    <section class="section" id="why-prnt" aria-label="Why choose PRNT">
+    <!-- ─── SECTION 6: WHY PRNT ─────────────────────────────────── -->
+    <section class="section section--plain" id="why-prnt" aria-label="Why choose PRNT">
       <div class="container">
         <div class="section__header reveal">
           <span class="section__label">Our Advantage</span>
           <h2>Why PRNT</h2>
         </div>
-
-        <div class="grid grid--2x2 reveal-stagger">
-          <div class="card" style="padding:var(--space-6);text-align:center;">
-            <div class="stat-card__icon stat-card__icon--primary" style="margin-inline:auto;margin-bottom:var(--space-4);"><i data-lucide="pipette"></i></div>
-            <h3 style="font-size:var(--fs-h4);margin-bottom:var(--space-2);">Pantone Matching</h3>
-            <p class="card__text">Exact color matching using PMS system — your brand colors, perfectly reproduced every time.</p>
+        <div class="h2-why">
+          <div class="h2-why__media reveal reveal--left">
+            <img src="assets/images/hero_home_alt.png" alt="Designer laying out print artwork on a light table with Pantone swatches" loading="lazy" />
+            <div class="h2-why__badge"><strong>98%</strong>Pantone accuracy</div>
           </div>
-          <div class="card" style="padding:var(--space-6);text-align:center;">
-            <div class="stat-card__icon stat-card__icon--accent" style="margin-inline:auto;margin-bottom:var(--space-4);"><i data-lucide="zap"></i></div>
-            <h3 style="font-size:var(--fs-h4);margin-bottom:var(--space-2);">48-Hour Rush</h3>
-            <p class="card__text">Need it fast? Our express production line delivers in as little as 48 hours.</p>
-          </div>
-          <div class="card" style="padding:var(--space-6);text-align:center;">
-            <div class="stat-card__icon stat-card__icon--primary" style="margin-inline:auto;margin-bottom:var(--space-4);"><i data-lucide="leaf"></i></div>
-            <h3 style="font-size:var(--fs-h4);margin-bottom:var(--space-2);">Eco-Friendly Inks</h3>
-            <p class="card__text">Water-based and phthalate-free inks available — great prints without the environmental cost.</p>
-          </div>
-          <div class="card" style="padding:var(--space-6);text-align:center;">
-            <div class="stat-card__icon stat-card__icon--accent" style="margin-inline:auto;margin-bottom:var(--space-4);"><i data-lucide="shield-check"></i></div>
-            <h3 style="font-size:var(--fs-h4);margin-bottom:var(--space-2);">Quality Guaranteed</h3>
-            <p class="card__text">Every batch inspected before shipping. If it's not perfect, we reprint it — free.</p>
+          <div class="h2-why__grid reveal-stagger">
+          <div class="h2-why__card"><div class="stat-card__icon stat-card__icon--primary"><i data-lucide="pipette"></i></div><h3>Pantone Matching</h3><p>Exact color matching using the PMS system — your brand colors, reproduced every time.</p></div>
+          <div class="h2-why__card"><div class="stat-card__icon stat-card__icon--accent"><i data-lucide="zap"></i></div><h3>48-Hour Rush</h3><p>Need it fast? Our express production line delivers in as little as 48 hours.</p></div>
+          <div class="h2-why__card"><div class="stat-card__icon stat-card__icon--primary"><i data-lucide="leaf"></i></div><h3>Eco-Friendly Inks</h3><p>Water-based and phthalate-free inks available — great prints without the environmental cost.</p></div>
+          <div class="h2-why__card"><div class="stat-card__icon stat-card__icon--accent"><i data-lucide="shield-check"></i></div><h3>Quality Guaranteed</h3><p>Every batch inspected before shipping. If it's not perfect, we reprint it — free.</p></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ─── SECTION 5: TEAM — Compact Cards ─────────────────────── -->
-    <section class="section" id="team" aria-label="Our team" style="background:var(--bg-muted);">
+    <!-- ─── SECTION 7: RECENT WORK ──────────────────────────────── -->
+    <section class="section section--alt" id="recent-work" aria-label="Recent work">
+      <div class="container">
+        <div class="section__header reveal">
+          <span class="section__label">Recent Work</span>
+          <h2>Fresh Off the Press</h2>
+          <p class="section__subtitle">A few of the pieces we printed and stitched this season</p>
+        </div>
+        <div class="h2-work reveal-stagger">
+        <figure><img src="assets/images/w_tee_band.jpg" alt="White band tee with a red bolt print" loading="lazy" /></figure>
+        <figure><img src="assets/images/w_hood_street.jpg" alt="Black hoodie with bold type print" loading="lazy" /></figure>
+        <figure><img src="assets/images/w_cap_cafe.jpg" alt="Navy snapback with embroidered patch" loading="lazy" /></figure>
+        <figure><img src="assets/images/w_tee_cafe.jpg" alt="Green coffee-print tee" loading="lazy" /></figure>
+        <figure><img src="assets/images/w_corp_polo.jpg" alt="Navy corporate polo with embroidered logo" loading="lazy" /></figure>
+        <figure><img src="assets/images/w_hood_zip.jpg" alt="Charcoal zip hoodie with chest logo" loading="lazy" /></figure>
+        </div>
+        <div class="text-center reveal" style="margin-top:var(--space-8);"><a href="products.html" class="btn btn--ghost">Explore All Products</a></div>
+      </div>
+    </section>
+
+    <!-- ─── SECTION 8: TEAM ─────────────────────────────────────── -->
+    <section class="section section--plain" id="team" aria-label="Our team">
       <div class="container">
         <div class="section__header reveal">
           <span class="section__label">The Crew</span>
           <h2>Meet the Team</h2>
           <p class="section__subtitle">The people behind every perfect print</p>
         </div>
-
-        <div class="grid grid--4 reveal-stagger">
-          <div class="team-card">
-            <img src="assets/images/team_founder_alex.jpg" alt="Alex Martinez" class="team-card__avatar" />
-            <div class="team-card__info">
-              <div class="team-card__name">Alex Martinez</div>
-              <div class="team-card__role">Founder & CEO</div>
-              <div class="team-card__socials">
-                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="team-card">
-            <img src="assets/images/team_priya_sharma.jpg" alt="Priya Sharma" class="team-card__avatar" />
-            <div class="team-card__info">
-              <div class="team-card__name">Priya Sharma</div>
-              <div class="team-card__role">Head of Production</div>
-              <div class="team-card__socials">
-                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="team-card">
-            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=80" alt="David Kim" class="team-card__avatar" />
-            <div class="team-card__info">
-              <div class="team-card__name">David Kim</div>
-              <div class="team-card__role">Lead Designer</div>
-              <div class="team-card__socials">
-                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="team-card">
-            <img src="assets/images/team_lisa_nguyen.jpg" alt="Lisa Nguyen" class="team-card__avatar" />
-            <div class="team-card__info">
-              <div class="team-card__name">Lisa Nguyen</div>
-              <div class="team-card__role">Client Relations</div>
-              <div class="team-card__socials">
-                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-              </div>
-            </div>
-          </div>
+        <div class="h2-team reveal-stagger">
+        <article class="h2-member">
+          <div class="h2-member__initials" aria-hidden="true">AM</div>
+          <img class="h2-member__photo" src="assets/images/team_founder_alex.jpg" alt="Alex Martinez" loading="lazy" />
+          <div class="h2-member__info"><span class="h2-member__role">Founder &amp; CEO</span><div class="h2-member__name">Alex Martinez</div><p class="h2-member__bio">Twenty years on press and still obsessed with perfect color.</p><div class="h2-member__socials"><a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a><a href="#" aria-label="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a></div></div>
+        </article>
+        <article class="h2-member">
+          <div class="h2-member__initials" aria-hidden="true">PS</div>
+          <img class="h2-member__photo" src="assets/images/team_priya_sharma.jpg" alt="Priya Sharma" loading="lazy" />
+          <div class="h2-member__info"><span class="h2-member__role">Head of Production</span><div class="h2-member__name">Priya Sharma</div><p class="h2-member__bio">Keeps every press running and every order on schedule.</p><div class="h2-member__socials"><a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a></div></div>
+        </article>
+        <article class="h2-member">
+          <div class="h2-member__initials" aria-hidden="true">DK</div>
+          <img class="h2-member__photo" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&q=80" alt="David Kim" onerror="this.remove()" loading="lazy" />
+          <div class="h2-member__info"><span class="h2-member__role">Lead Designer</span><div class="h2-member__name">David Kim</div><p class="h2-member__bio">Turns rough ideas into print-ready artwork.</p><div class="h2-member__socials"><a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></div></div>
+        </article>
+        <article class="h2-member">
+          <div class="h2-member__initials" aria-hidden="true">LN</div>
+          <img class="h2-member__photo" src="assets/images/team_lisa_nguyen.jpg" alt="Lisa Nguyen" loading="lazy" />
+          <div class="h2-member__info"><span class="h2-member__role">Client Relations</span><div class="h2-member__name">Lisa Nguyen</div><p class="h2-member__bio">Your first call and your last follow-up on every project.</p><div class="h2-member__socials"><a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a><a href="#" aria-label="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a></div></div>
+        </article>
         </div>
       </div>
     </section>
 
+    <!-- ─── SECTION 9: FAQ ──────────────────────────────────────── -->
     <!-- ─── SECTION 6: FAQ + CTA ────────────────────────────────── -->
-    <section class="section" id="faq" aria-label="Frequently asked questions">
+    <section class="section section--plain" id="faq" aria-label="Frequently asked questions">
       <div class="container">
         <div class="section__header reveal">
           <span class="section__label">FAQ</span>
           <h2>Common Questions</h2>
         </div>
 
-        <div class="accordion reveal">
+        <div class="accordion reveal" style="max-width:800px;margin-inline:auto;">
           <div class="accordion__item">
             <button class="accordion__trigger" aria-expanded="false">
               What is the minimum order quantity? <i data-lucide="chevron-down"></i>
@@ -349,7 +294,7 @@
             <button class="accordion__trigger" aria-expanded="false">
               Do you offer design services? <i data-lucide="chevron-down"></i>
             </button>
-            <div class="accordion__content"><div class="accordion__body">Yes! Our in-house design team can help create or refine your artwork. Basic design assistance is included with Studio and Enterprise plans. Custom design projects are quoted separately.</div></div>
+            <div class="accordion__content"><div class="accordion__body">Yes! Our in-house design team can help create or refine your artwork. Basic design assistance is included on orders of 100+ pieces. Custom design projects are quoted separately — see our pricing page for details.</div></div>
           </div>
           <div class="accordion__item">
             <button class="accordion__trigger" aria-expanded="false">
@@ -359,8 +304,17 @@
           </div>
         </div>
 
-        <div class="text-center mt-12 reveal">
-          <a href="contact.html" class="btn btn--primary btn--lg">Start Your Project</a>
+      </div>
+    </section>
+
+    <!-- ─── SECTION 10: FINAL CTA ───────────────────────────────── -->
+    <section class="h2-final" id="final-cta" aria-label="Start your project">
+      <div class="container">
+        <h2>Let's Print Something Great</h2>
+        <p>Tell us what you need and get a free quote with a digital proof — fast.</p>
+        <div class="h2-final__actions">
+          <a href="contact.html" class="btn btn--primary btn--lg">Get a Free Quote</a>
+          <a href="pricing.html" class="btn btn--secondary btn--lg">View Pricing</a>
         </div>
       </div>
     </section>
@@ -371,7 +325,7 @@
   <footer class="footer" role="contentinfo">
     <div class="footer__grid">
       <div>
-        <div class="footer__brand"><a href="index.html" class="navbar__logo" aria-label="PRNT Home"><div class="navbar__logo-icon"><i data-lucide="printer"></i></div><span class="navbar__logo-text">PRNT</span></a></div>
+        <div class="footer__brand"><a href="index.html" class="navbar__logo" aria-label="PRNT Home"><div class="navbar__logo-icon"><svg class="prnt-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect width="40" height="40" rx="9" fill="#17A2B8"/><path d="M14.2 7.6 L7.6 10.8 L4.6 17.2 L10 20 L12.2 17.4 L12.2 32.4 L27.8 32.4 L27.8 17.4 L30 20 L35.4 17.2 L32.4 10.8 L25.8 7.6 Q20 12.8 14.2 7.6Z" fill="#FFFFFF"/><path d="M20 17.2 Q24.6 22.4 24.6 25.4 A4.6 4.6 0 0 1 15.4 25.4 Q15.4 22.4 20 17.2Z" fill="#F4A100"/><path d="M14.2 7.6 Q20 12.8 25.8 7.6" fill="none" stroke="#16233F" stroke-opacity=".25" stroke-width="1.4"/></svg></div><span class="navbar__logo-words"><span class="navbar__logo-text">PRNT</span><span class="navbar__logo-tag">Screen Print &amp; Apparel</span></span></a></div>
         <p class="footer__desc">Premium screen printing and custom apparel for brands, events, and businesses. Portland-based, shipping nationwide.</p>
         <div class="footer__socials">
           <a href="https://facebook.com" target="_blank" rel="noopener" class="social-btn social-btn--facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
