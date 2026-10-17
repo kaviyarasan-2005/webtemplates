@@ -161,79 +161,402 @@ document.addEventListener('DOMContentLoaded', () => {
      PAGE-SPECIFIC LOGIC (Guarded)
      ========================================================================== */
   
-  // Home 2 - Coordinate Lock Typing
-  const coordElement = document.getElementById('typing-coordinates');
-  if (coordElement) {
-    const coords = ["LAT: 40.7128° N", "LON: 74.0060° W", "LOCKING TARGET..."];
-    let i = 0; let j = 0; let currentWord = ""; let isDeleting = false;
-    function type() {
-      currentWord = coords[i];
-      if (isDeleting) {
-        coordElement.textContent = currentWord.substring(0, j - 1);
-        j--;
-        if (j == 0) { isDeleting = false; i++; if (i == coords.length) i = 0; }
-      } else {
-        coordElement.textContent = currentWord.substring(0, j + 1);
-        j++;
-        if (j == currentWord.length) { isDeleting = true; setTimeout(type, 2000); return; }
-      }
-      setTimeout(type, isDeleting ? 50 : 100);
+  // ==========================================================================
+  // PAGE 2: REDESIGNED HOME 2 INTERACTIVITY
+  // ==========================================================================
+
+  // 1. Panoramic 4-Bay Physical Commodity Specimen Dock & Allocation Terminal
+  const specimenBayCards = document.querySelectorAll('.specimen-bay-card');
+  const terminalCommodityName = document.getElementById('terminal-commodity-name');
+  const terminalShipName = document.getElementById('terminal-ship-name');
+  const terminalCorridorText = document.getElementById('terminal-corridor-text');
+  const terminalLeadText = document.getElementById('terminal-lead-text');
+  const terminalSpecText = document.getElementById('terminal-spec-text');
+  const terminalAssayText = document.getElementById('terminal-assay-text');
+  const terminalVolumeSelect = document.getElementById('terminal-volume-select');
+  const terminalIncotermPills = document.querySelectorAll('.terminal-incoterm-pills .term-pill-btn');
+  const terminalTotalPrice = document.getElementById('terminal-total-price');
+  const terminalLockBtn = document.getElementById('terminal-lock-btn');
+
+  let activeBayPrice = 9480;
+  let activeBayCommodity = 'copper';
+  let activeTerminalIncoterm = 'CIF';
+
+  function updateTerminalBookingTotal() {
+    if (!terminalTotalPrice || !terminalVolumeSelect) return;
+    const volume = parseFloat(terminalVolumeSelect.value) || 500;
+    let multiplier = 1.0;
+    if (activeTerminalIncoterm === 'FOB') multiplier = 0.96;
+    if (activeTerminalIncoterm === 'DDP') multiplier = 1.12;
+
+    const total = Math.round(activeBayPrice * volume * multiplier);
+    terminalTotalPrice.textContent = '$' + total.toLocaleString() + ' USD';
+
+    if (terminalLockBtn) {
+      terminalLockBtn.href = `contact.html?commodity=${encodeURIComponent(activeBayCommodity)}&volume=${volume}&term=${activeTerminalIncoterm}`;
     }
-    type();
   }
 
-  // Home 2 - Route String Board (Mock animation toggle)
-  const portItems = document.querySelectorAll('.port-item');
-  if(portItems.length > 0) {
-    portItems.forEach(item => {
-      item.addEventListener('click', () => {
-        item.parentElement.querySelectorAll('.port-item').forEach(p => p.classList.remove('selected'));
-        item.classList.add('selected');
-        const board = document.querySelector('.route-board-stats');
-        if(board) board.classList.add('pulse');
-        setTimeout(() => {
-          if(board) board.classList.remove('pulse');
-        }, 500);
-      });
-    });
-  }
-
-  // Home 2 - Commodity Card Fan Selection
-  const fanCards = document.querySelectorAll('.fan-card');
-  if (fanCards.length > 0) {
-    fanCards.forEach(card => {
-      card.addEventListener('click', (e) => {
-        if (e.target.tagName === 'A') return;
-        fanCards.forEach(c => c.classList.remove('active'));
+  if (specimenBayCards.length > 0) {
+    specimenBayCards.forEach(card => {
+      card.addEventListener('click', () => {
+        specimenBayCards.forEach(c => c.classList.remove('active'));
         card.classList.add('active');
+
+        activeBayPrice = parseFloat(card.getAttribute('data-price')) || 9480;
+        activeBayCommodity = card.getAttribute('data-commodity') || 'copper';
+
+        if (terminalCommodityName) terminalCommodityName.textContent = card.getAttribute('data-name');
+        if (terminalShipName) terminalShipName.textContent = card.getAttribute('data-ship');
+        if (terminalCorridorText) terminalCorridorText.textContent = `${card.getAttribute('data-origin')} ➔ Waalhaven Rotterdam`;
+        if (terminalLeadText) terminalLeadText.textContent = card.getAttribute('data-lead');
+        if (terminalSpecText) terminalSpecText.textContent = card.getAttribute('data-spec');
+        if (terminalAssayText) terminalAssayText.textContent = card.getAttribute('data-assay');
+
+        // Adjust volume select options if Unit vs MT
+        const unit = card.getAttribute('data-unit') || 'MT';
+        if (terminalVolumeSelect) {
+          if (unit === 'Unit') {
+            terminalVolumeSelect.innerHTML = `
+              <option value="1">1 Unit (Flat-Rack FCL)</option>
+              <option value="2" selected>2 Units (~1 40ft FCL)</option>
+              <option value="5">5 Units (Fleet Allocation)</option>
+              <option value="10">10 Units (Turnkey Line)</option>
+            `;
+          } else {
+            terminalVolumeSelect.innerHTML = `
+              <option value="100">100 MT (~4 TEU)</option>
+              <option value="250">250 MT (~10 TEU)</option>
+              <option value="500" selected>500 MT (~20 TEU)</option>
+              <option value="1000">1,000 MT (~40 TEU)</option>
+              <option value="2500">2,500 MT (Full Hold)</option>
+            `;
+          }
+        }
+
+        updateTerminalBookingTotal();
       });
     });
   }
-  
+
+  if (terminalVolumeSelect) {
+    terminalVolumeSelect.addEventListener('change', updateTerminalBookingTotal);
+  }
+
+  if (terminalIncotermPills.length > 0) {
+    terminalIncotermPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        terminalIncotermPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeTerminalIncoterm = pill.getAttribute('data-incoterm');
+        updateTerminalBookingTotal();
+      });
+    });
+  }
+
+  if (terminalVolumeSelect && terminalTotalPrice) {
+    updateTerminalBookingTotal();
+  }
+
+  // 3. Sourcing Corridor Matrix Filter Tabs
+  const matrixFilterPills = document.querySelectorAll('.matrix-filter-pill');
+  const matrixCards = document.querySelectorAll('.commodity-matrix-card');
+  if (matrixFilterPills.length > 0 && matrixCards.length > 0) {
+    matrixFilterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        matrixFilterPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const filterVal = pill.getAttribute('data-filter');
+        matrixCards.forEach(card => {
+          if (filterVal === 'all' || card.getAttribute('data-cat') === filterVal) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  // 4. 4-Stage Provenance & Assay Pipeline
+  const pipelineSteps = document.querySelectorAll('.pipeline-step-item');
+  const coaStageTitle = document.getElementById('coa-stage-title');
+  const coaLotCode = document.getElementById('coa-lot-code');
+  const coaMetaCommodity = document.getElementById('coa-meta-commodity');
+  const coaMetaProtocol = document.getElementById('coa-meta-protocol');
+  const coaMetaInspector = document.getElementById('coa-meta-inspector');
+  const coaTableBody = document.getElementById('coa-table-body');
+
+  const pipelineStagesData = {
+    "1": {
+      title: "STAGE 01 // MINE ORIGIN & ESG AUDIT CERTIFICATE",
+      lot: "ORIGIN-AUDIT #EXIM-2026-CHILE-0894",
+      commodity: "Atacama Mine Extraction Pit 4B",
+      protocol: "IRMA Standard / Conflict-Free Gold & Cu",
+      inspector: "SGS On-Site Extraction Auditor",
+      rows: `
+        <tr><td><strong>Origin Pit Depth</strong></td><td>Surveyed Section</td><td>Bench 42 Level</td><td class="assay-pass">✓ VERIFIED</td></tr>
+        <tr><td><strong>ESG Water Recycling</strong></td><td>Min 85% Target</td><td>94.2% Achieved</td><td class="assay-pass">✓ VERIFIED</td></tr>
+        <tr><td><strong>Labor Standard ILO</strong></td><td>Zero Child / Forced</td><td>100% Compliant</td><td class="assay-pass">✓ VERIFIED</td></tr>
+        <tr><td><strong>Batch Chain of Custody</strong></td><td>Tamper Tagging</td><td>RFID Chip #4401</td><td class="assay-pass">✓ VERIFIED</td></tr>
+      `
+    },
+    "2": {
+      title: "STAGE 02 // CERTIFICATE OF CHEMICAL ANALYSIS (COA)",
+      lot: "LAB-ASSAY #EXIM-2026-CHILE-0894",
+      commodity: "Electrolytic Copper Cathode Grade A",
+      protocol: "ISO 12743 / Core Multi-Point Assay",
+      inspector: "SGS Inspector Desk Waalhaven",
+      rows: `
+        <tr><td><strong>Copper (Cu)</strong></td><td>Min 99.9900%</td><td><strong>99.9935%</strong></td><td class="assay-pass">✓ PASS</td></tr>
+        <tr><td><strong>Arsenic (As)</strong></td><td>Max 0.0005%</td><td>0.0001%</td><td class="assay-pass">✓ PASS</td></tr>
+        <tr><td><strong>Sulfur (S)</strong></td><td>Max 0.0015%</td><td>0.0008%</td><td class="assay-pass">✓ PASS</td></tr>
+        <tr><td><strong>Lead (Pb)</strong></td><td>Max 0.0005%</td><td>0.0002%</td><td class="assay-pass">✓ PASS</td></tr>
+      `
+    },
+    "3": {
+      title: "STAGE 03 // PORT LOADING & DRAFT SURVEY TELEMETRY",
+      lot: "HOLD-SEAL #EXIM-2026-CHILE-0894",
+      commodity: "M/V EXIM PACIFIC TRADER Hold #2 & #3",
+      protocol: "IMO Cleanliness Standard / Electronic Seal",
+      inspector: "Bureau Veritas Maritime Port Surveyor",
+      rows: `
+        <tr><td><strong>Hold Dryness & Desiccant</strong></td><td>Relative Humidity < 40%</td><td>28.4% RH</td><td class="assay-pass">✓ PASS</td></tr>
+        <tr><td><strong>Draft Survey Tonnage</strong></td><td>Target 500.00 MT</td><td>500.42 MT Verified</td><td class="assay-pass">✓ PASS</td></tr>
+        <tr><td><strong>Electronic Bolt Seal</strong></td><td>GPS Geo-Fenced</td><td>Seal #BV-9921-X</td><td class="assay-pass">✓ LOCKED</td></tr>
+        <tr><td><strong>Nitrogen Purge Atmosphere</strong></td><td>O2 < 5% in Packaging</td><td>2.1% O2 Barrier</td><td class="assay-pass">✓ SECURED</td></tr>
+      `
+    },
+    "4": {
+      title: "STAGE 04 // BLOCKCHAIN SMART BILL OF LADING",
+      lot: "BLOCKCHAIN-TX #0x9f4a...e12d-BL",
+      commodity: "Confirmed Title & Escrow Release",
+      protocol: "TradeTrust / UNCITRAL MLETR Compliant",
+      inspector: "Automated Smart Escrow Oracles",
+      rows: `
+        <tr><td><strong>Phytosanitary EUR.1</strong></td><td>Authorized Authority</td><td>Digital Signed</td><td class="assay-pass">✓ EMITTED</td></tr>
+        <tr><td><strong>Commercial Invoice</strong></td><td>L/C Verified MT700</td><td>Matching 100%</td><td class="assay-pass">✓ RELEASED</td></tr>
+        <tr><td><strong>Customs Fast Track</strong></td><td>Green Channel Pre-Arrival</td><td>Approved Rotterdam</td><td class="assay-pass">✓ GREEN TRACK</td></tr>
+        <tr><td><strong>Smart Escrow Settlement</strong></td><td>Letter of Credit Release</td><td>Dispatched to Seller</td><td class="assay-pass">✓ SETTLED</td></tr>
+      `
+    }
+  };
+
+  if (pipelineSteps.length > 0) {
+    pipelineSteps.forEach(step => {
+      step.addEventListener('click', () => {
+        pipelineSteps.forEach(s => s.classList.remove('active'));
+        step.classList.add('active');
+        const stageNum = step.getAttribute('data-stage');
+        const data = pipelineStagesData[stageNum];
+        if (data) {
+          if (coaStageTitle) coaStageTitle.textContent = data.title;
+          if (coaLotCode) coaLotCode.textContent = data.lot;
+          if (coaMetaCommodity) coaMetaCommodity.textContent = data.commodity;
+          if (coaMetaProtocol) coaMetaProtocol.textContent = data.protocol;
+          if (coaMetaInspector) coaMetaInspector.textContent = data.inspector;
+          if (coaTableBody) coaTableBody.innerHTML = data.rows;
+        }
+      });
+    });
+  }
+
+  // 5. Incoterms 2020 Interactive Allocator
+  const incotermBtns = document.querySelectorAll('.incoterm-switch-bar .incoterm-btn');
+  const milestoneNodes = document.querySelectorAll('#incoterms-milestones .milestone-node');
+  const incotermSummaryTitle = document.getElementById('incoterm-summary-title');
+  const incotermSummaryDesc = document.getElementById('incoterm-summary-desc');
+  const incotermRecText = document.getElementById('incoterm-rec-text');
+
+  const incotermsMatrixConfig = {
+    EXW: {
+      sellerSteps: [1],
+      riskStep: 1,
+      title: "EXW (Ex Works) — Maximum Buyer Liability",
+      desc: "The seller makes goods available at their factory or warehouse gate. The buyer assumes all risks, export clearance permits, loading fees, ocean carriage, insurance, and import duties.",
+      rec: "Rarely recommended for bulk commodities due to international export customs liability. Best suited for domestic buyers with existing regional freight fleets."
+    },
+    FOB: {
+      sellerSteps: [1, 2, 3],
+      riskStep: 4,
+      title: "FOB (Free on Board) — Port of Loading Handover",
+      desc: "EXIM handles mine transport, export permits, and loading onboard the vessel. Risk transfers to you once goods pass the ship's rail. You choose and contract the ocean charter carrier.",
+      rec: "Ideal if you have long-term volume charter contracts with shipping lines and wish to control ocean freight routes directly."
+    },
+    CFR: {
+      sellerSteps: [1, 2, 3, 4],
+      riskStep: 4,
+      title: "CFR (Cost and Freight) — Ocean Freight Paid by EXIM",
+      desc: "EXIM charters and pays for ocean carriage to your destination port. However, marine insurance is excluded and risk transfers at loading port. The buyer must arrange separate cargo insurance.",
+      rec: "Suitable for corporate buyers that maintain master open-cover marine insurance policies."
+    },
+    CIF: {
+      sellerSteps: [1, 2, 3, 4, 5],
+      riskStep: 4,
+      title: "CIF (Cost, Insurance and Freight) — Recommended by EXIM",
+      desc: "EXIM pays for inland haulage, export licenses, ocean vessel freight, and Institute Cargo Clauses (A) insurance to your designated destination deepwater port. You take over for destination port clearance and inland cartage, avoiding complex overseas vessel booking.",
+      rec: "Best for international buyers seeking guaranteed freight rates without the liability of ocean vessel chartering."
+    },
+    DDP: {
+      sellerSteps: [1, 2, 3, 4, 5, 6, 7, 8],
+      riskStep: 8,
+      title: "DDP (Delivered Duty Paid) — Complete Turnkey Door-to-Door",
+      desc: "The ultimate white-glove trade service. EXIM manages every single milestone: overseas export, maritime freight, all-risks insurance, discharge port handling, import tariffs, customs duties, and final inland transport right to your factory warehouse door.",
+      rec: "The preferred solution for manufacturers who want fixed, all-inclusive pricing without needing an in-house customs or maritime logistics department."
+    }
+  };
+
+  function applyIncotermConfig(term) {
+    const config = incotermsMatrixConfig[term];
+    if (!config) return;
+
+    if (incotermSummaryTitle) incotermSummaryTitle.textContent = config.title;
+    if (incotermSummaryDesc) incotermSummaryDesc.textContent = config.desc;
+    if (incotermRecText) incotermRecText.textContent = config.rec;
+
+    milestoneNodes.forEach(node => {
+      const stepNum = parseInt(node.getAttribute('data-milestone'), 10);
+      const isSeller = config.sellerSteps.includes(stepNum);
+      const isRisk = (stepNum === config.riskStep);
+
+      node.classList.remove('seller-owned', 'buyer-owned', 'has-risk-transfer');
+      const existingBadge = node.querySelector('.milestone-risk-badge');
+      if (existingBadge) existingBadge.remove();
+
+      if (isSeller) {
+        node.classList.add('seller-owned');
+        node.querySelector('.milestone-responsible-tag').textContent = 'EXIM';
+      } else {
+        node.classList.add('buyer-owned');
+        node.querySelector('.milestone-responsible-tag').textContent = 'Buyer';
+      }
+
+      if (isRisk) {
+        node.classList.add('has-risk-transfer');
+        const badge = document.createElement('span');
+        badge.className = 'milestone-risk-badge';
+        badge.textContent = '● Risk Transfers Here';
+        node.prepend(badge);
+      }
+    });
+  }
+
+  if (incotermBtns.length > 0) {
+    incotermBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        incotermBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const term = btn.getAttribute('data-incoterm');
+        applyIncotermConfig(term);
+      });
+    });
+  }
+
+  // 6. Bulk Vessel Fleet Telemetry Switcher
+  const vesselTabs = document.querySelectorAll('.vessel-tabs-nav .vessel-tab-btn');
+  const vesselNameDisplay = document.getElementById('vessel-name-display');
+  const vesselTagDisplay = document.getElementById('vessel-tag-display');
+  const specDwt = document.getElementById('spec-dwt');
+  const specVolume = document.getElementById('spec-volume');
+  const specCranes = document.getElementById('spec-cranes');
+  const specDraft = document.getElementById('spec-draft');
+  const vesselCargoText = document.getElementById('vessel-cargo-text');
+
+  const activeShipName = document.getElementById('active-ship-name');
+  const activeShipCorridor = document.getElementById('active-ship-corridor');
+  const activeShipCoords = document.getElementById('active-ship-coords');
+  const activeShipSpeed = document.getElementById('active-ship-speed');
+  const activeShipEta = document.getElementById('active-ship-eta');
+
+  const vesselFleetData = {
+    panamax: {
+      name: "Panamax Geared Dry Bulk Carrier",
+      tag: "Lloyd's Register 100A1",
+      dwt: "76,450 DWT MT",
+      volume: "91,200 m³ (7 Holds)",
+      cranes: "4 x 35 MT with Grabs",
+      draft: "14.25 Meters",
+      cargo: "Non-GMO Agricultural Soybeans & Corn, Fertilizer Urea, Refined Copper Cathodes, Bauxite, and Structural Steel Billets.",
+      ship: "M/V EXIM PACIFIC TRADER",
+      corridor: "Current Corridor: Malacca Strait ➔ Suez ➔ Rotterdam",
+      coords: "Lat: 01°16' N // Lon: 103°50' E",
+      speed: "13.8 knots (Eco-Engineered)",
+      eta: "2026-10-24 06:00 UTC (On Schedule)"
+    },
+    heavylift: {
+      name: "Multipurpose Project Heavy-Lift Vessel",
+      tag: "DNV-GL +1A1 Project Cargo",
+      dwt: "32,500 DWT MT",
+      volume: "38,500 m³ + Flush Weather Deck",
+      cranes: "2 x 250 MT (500 MT Tandem Lift)",
+      draft: "9.80 Meters",
+      cargo: "Industrial CNC Machining Centers, 2000 kVA Soundproof Generators, Steel Mill Plant Components, Wind Turbines, and Mining Shovels.",
+      ship: "M/V EXIM ATLAS TITAN",
+      corridor: "Current Corridor: Shanghai ➔ Houston Ship Channel",
+      coords: "Lat: 28°45' N // Lon: 89°10' W",
+      speed: "15.2 knots",
+      eta: "2026-10-21 14:00 UTC (Berth Green-Tracked)"
+    },
+    container: {
+      name: "Neo-Panamax High-Capacity Container Ship",
+      tag: "ABS High-Efficiency Carrier",
+      dwt: "128,000 DWT MT",
+      volume: "12,500 TEU (1,200 Reefer Plugs)",
+      cranes: "Gearless (Shore Gantry Compatible)",
+      draft: "15.50 Meters",
+      cargo: "Consolidated FCL Manufactured Electronics, Lithium Forklifts, Palletized Industrial Chemicals, and High-Value Packaged Goods.",
+      ship: "M/V EXIM GLOBAL PIONEER",
+      corridor: "Current Corridor: Ningbo ➔ Los Angeles Pier 400",
+      coords: "Lat: 33°42' N // Lon: 118°15' W",
+      speed: "18.6 knots",
+      eta: "2026-10-19 18:00 UTC (Pilot Boarding Active)"
+    },
+    tanker: {
+      name: "Stainless Steel Parcel Chemical Tanker",
+      tag: "IMO Type II/III Chemical Tanker",
+      dwt: "25,000 DWT MT",
+      volume: "28,000 m³ (SUS316LN Steel)",
+      cranes: "Center Manifold Hose Cranes",
+      draft: "10.10 Meters",
+      cargo: "Industrial Solvents, Biofuels, Liquid Fertilizers, Base Lubricants, and Speciality Chemical Intermediates.",
+      ship: "M/V EXIM CHEM NAVIGATOR",
+      corridor: "Current Corridor: Singapore ➔ Antwerp Petrochemical Hub",
+      coords: "Lat: 51°14' N // Lon: 04°23' E",
+      speed: "14.1 knots",
+      eta: "2026-10-26 09:00 UTC (Nitrogen Blanket Verified)"
+    }
+  };
+
+  if (vesselTabs.length > 0) {
+    vesselTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        vesselTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const vesselKey = tab.getAttribute('data-vessel');
+        const data = vesselFleetData[vesselKey];
+        if (data) {
+          if (vesselNameDisplay) vesselNameDisplay.textContent = data.name;
+          if (vesselTagDisplay) vesselTagDisplay.textContent = data.tag;
+          if (specDwt) specDwt.textContent = data.dwt;
+          if (specVolume) specVolume.textContent = data.volume;
+          if (specCranes) specCranes.textContent = data.cranes;
+          if (specDraft) specDraft.textContent = data.draft;
+          if (vesselCargoText) vesselCargoText.textContent = data.cargo;
+
+          if (activeShipName) activeShipName.textContent = data.ship;
+          if (activeShipCorridor) activeShipCorridor.textContent = data.corridor;
+          if (activeShipCoords) activeShipCoords.textContent = data.coords;
+          if (activeShipSpeed) activeShipSpeed.textContent = data.speed;
+          if (activeShipEta) activeShipEta.textContent = data.eta;
+        }
+      });
+    });
+  }
+
   // Pricing - Departure Board Flap
   const departureBoard = document.querySelector('.departure-board');
   if (departureBoard) {
-    // Add split flap logic here if needed
-  }
-
-  // Home 2 - Incoterms 3D Cube Rotation
-  const incotermCube = document.getElementById('incoterm-cube');
-  const cubePrevBtn = document.getElementById('cube-prev-btn');
-  const cubeNextBtn = document.getElementById('cube-next-btn');
-  if (incotermCube && (cubePrevBtn || cubeNextBtn)) {
-    let cubeYAngle = 0;
-    if (cubePrevBtn) {
-      cubePrevBtn.addEventListener('click', () => {
-        cubeYAngle += 90;
-        incotermCube.style.transform = `rotateY(${cubeYAngle}deg)`;
-      });
-    }
-    if (cubeNextBtn) {
-      cubeNextBtn.addEventListener('click', () => {
-        cubeYAngle -= 90;
-        incotermCube.style.transform = `rotateY(${cubeYAngle}deg)`;
-      });
-    }
+    // Split flap logic
   }
 
   // Blog - Intelligence Terminal Topic Pills Toggle
