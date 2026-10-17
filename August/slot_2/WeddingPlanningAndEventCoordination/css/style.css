@@ -3698,13 +3698,57 @@ blockquote { font-family: var(--font-display); font-size: 1.05rem; font-style: i
 
 /* PRICING S3 — TABLE RUNNER COMPARISON */
 .comparison-section { background: var(--color-section-alt); }
-.runner-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-bottom: 1.5rem; }
+.table-scroll-cue {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+  background: rgba(201, 168, 224, 0.18);
+  border: 1px dashed var(--color-accent);
+  border-radius: var(--radius-full);
+  padding: .45rem 1rem;
+  margin: 0 auto 1.25rem;
+  width: fit-content;
+  max-width: 100%;
+}
+.table-scroll-cue svg {
+  animation: scrollCueBounce 1.6s ease-in-out infinite;
+}
+@keyframes scrollCueBounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+.runner-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  padding-bottom: 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) rgba(201, 168, 224, 0.15);
+}
+.runner-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+.runner-wrap::-webkit-scrollbar-track {
+  background: rgba(201, 168, 224, 0.15);
+  border-radius: var(--radius-full);
+}
+.runner-wrap::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+}
 .runner-tassel {
   position: absolute;
-  left: 0; right: 0;
+  left: 0;
+  width: 100%;
+  min-width: 600px;
   height: 12px;
   background: repeating-linear-gradient(90deg, var(--color-accent) 0 6px, transparent 6px 12px);
   border-radius: 2px;
+  pointer-events: none;
 }
 .runner-tassel-top { top: 0; }
 .runner-tassel-bottom { bottom: 0; }
@@ -3721,14 +3765,25 @@ blockquote { font-family: var(--font-display); font-size: 1.05rem; font-style: i
   border-bottom: 2px solid var(--color-border);
   white-space: nowrap;
 }
-.comparison-table th:first-child { position: sticky; left: 0; background: var(--color-section-alt); }
+.comparison-table th:first-child {
+  position: sticky;
+  left: 0;
+  background: var(--color-section-alt);
+  z-index: 3;
+}
 .comparison-table td {
   padding: .85rem 1.5rem;
   font-size: .9rem;
   border-bottom: 1px solid var(--color-border);
   color: var(--color-text);
 }
-.comparison-table td:first-child { position: sticky; left: 0; background: var(--color-section-alt); font-weight: 500; }
+.comparison-table td:first-child {
+  position: sticky;
+  left: 0;
+  background: var(--color-section-alt);
+  font-weight: 500;
+  z-index: 2;
+}
 .comparison-table tr:last-child td { border-bottom: none; }
 .check-bloom { color: var(--color-accent-dark); }
 .dash-excl { color: var(--color-border); }
@@ -4366,11 +4421,10 @@ blockquote { font-family: var(--font-display); font-size: 1.05rem; font-style: i
   background: #FFFEF8;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 2rem 1.5rem;
+  padding: 2rem 1.35rem 1.75rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: .75rem;
   position: relative;
   overflow: hidden;
   transition: transform var(--dur-base) var(--ease-spring), box-shadow var(--dur-base);
@@ -4389,10 +4443,72 @@ blockquote { font-family: var(--font-display); font-size: 1.05rem; font-style: i
   border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
   color: var(--color-accent-dark);
+  margin-bottom: 1.15rem;
+  flex-shrink: 0;
 }
-.contact-stationery h4 { font-size: .95rem; color: var(--color-primary); }
-.contact-stationery p  { font-size: .82rem; margin: 0; }
-.contact-action { font-size: .82rem; font-weight: 600; color: var(--color-accent-dark); display: flex; align-items: center; gap: .3rem; margin-top: auto; }
+.contact-stationery h4,
+.contact-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem;
+  line-height: 1.35;
+  height: 1.45rem;
+  display: flex;
+  align-items: center;
+}
+.contact-stationery p,
+.contact-card-desc {
+  font-size: 0.81rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0 0 0.85rem;
+  height: 2.65rem;
+  overflow: hidden;
+}
+.contact-card-value {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  line-height: 1.35;
+  margin: 0 0 1.25rem;
+  height: 1.45rem;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.contact-card-value a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--dur-fast);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.contact-card-value a:hover {
+  color: var(--color-accent-dark);
+}
+.contact-action {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: auto;
+  text-decoration: none;
+  transition: color var(--dur-fast), transform var(--dur-fast);
+}
+.contact-action:hover {
+  color: var(--color-primary);
+  transform: translateX(3px);
+}
+[dir="rtl"] .contact-action:hover {
+  transform: translateX(-3px);
+}
 
 /* CONTACT S3 — INVITATION RESPONSE FORM */
 .invite-form-section { background: var(--color-section-alt); }
@@ -5686,6 +5802,41 @@ blockquote { font-family: var(--font-display); font-size: 1.05rem; font-style: i
     gap: 4.5rem;
     padding-top: 1.5rem;
   }
+  /* Pricing Comparison Table (Mobile & Tablet: prevent sticky column from hiding scrolled content) */
+  .table-scroll-cue {
+    display: inline-flex;
+  }
+  .comparison-table {
+    min-width: 580px;
+  }
+  .comparison-table th:first-child,
+  .comparison-table td:first-child {
+    position: static !important;
+    left: auto !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .comparison-table th {
+    padding: .85rem .75rem;
+    font-size: .74rem;
+    white-space: normal;
+  }
+  .comparison-table td {
+    padding: .8rem .75rem;
+    font-size: .84rem;
+    line-height: 1.45;
+  }
+  .comparison-table th:first-child,
+  .comparison-table td:first-child {
+    width: 175px;
+    min-width: 160px;
+  }
+  .comparison-table th:not(:first-child),
+  .comparison-table td:not(:first-child) {
+    width: 135px;
+    min-width: 125px;
+    text-align: center;
+  }
   .gift-stack {
     padding-top: 1rem;
     position: relative;
@@ -6135,6 +6286,28 @@ blockquote { font-family: var(--font-display); font-size: 1.05rem; font-style: i
 
 /* Small mobile: ≤480px */
 @media (max-width: 480px) {
+  .comparison-table {
+    min-width: 480px;
+  }
+  .comparison-table th {
+    padding: .7rem .55rem;
+    font-size: .68rem;
+    letter-spacing: .05em;
+  }
+  .comparison-table td {
+    padding: .65rem .55rem;
+    font-size: .78rem;
+  }
+  .comparison-table th:first-child,
+  .comparison-table td:first-child {
+    width: 145px;
+    min-width: 135px;
+  }
+  .comparison-table th:not(:first-child),
+  .comparison-table td:not(:first-child) {
+    width: 110px;
+    min-width: 100px;
+  }
   .grid-4 { grid-template-columns: 1fr; }
   .contact-suite { grid-template-columns: 1fr; }
   .escort-grid { grid-template-columns: 1fr; }
