@@ -1502,6 +1502,7 @@ select.form-control {
   font-weight: 400;
   background: linear-gradient(120deg, #FFFFFF 20%, #F5D386 60%, var(--clr-accent-light) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   padding-right: 4px;
 }
@@ -2215,8 +2216,9 @@ select.form-control {
 
 .rope-hooks {
   display: flex;
-  gap: 40px;
+  gap: 32px;
   justify-content: center;
+  align-items: stretch;
   padding-top: 0;
 }
 
@@ -2242,6 +2244,7 @@ select.form-control {
   margin-bottom: 0;
   position: relative;
   z-index: 2;
+  flex-shrink: 0;
   background: linear-gradient(90deg, #C8A035, #D4A843);
 }
 
@@ -2254,15 +2257,36 @@ select.form-control {
   background: var(--clr-surface);
   border: 1px solid var(--clr-border);
   border-radius: 4px;
-  padding: 20px;
-  width: 130px;
+  padding: 16px 12px 14px;
+  width: 136px;
+  height: 132px;
+  box-sizing: border-box;
   text-align: center;
   box-shadow: var(--shadow);
   transition: box-shadow var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .rope-item:hover .rope-plaque {
   box-shadow: var(--shadow-lg);
+}
+
+.rope-brand,
+.rope-plaque > div:first-child {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  line-height: 1.2;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .rope-plaque img {
@@ -2273,24 +2297,37 @@ select.form-control {
 }
 
 .rope-plaque small {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   font-size: 0.65rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--clr-text-muted);
   margin-top: 6px;
+  height: 20px;
+  line-height: 1.2;
+  width: 100%;
 }
 
 .placard {
   background: #F8F5F0;
   border: 1px solid var(--clr-border);
   border-radius: 2px;
-  padding: 4px 8px;
-  margin-top: 6px;
-  font-size: 0.6rem;
+  padding: 5px 4px;
+  margin-top: 10px;
+  font-size: 0.62rem;
   font-style: italic;
   color: var(--clr-text-muted);
   text-align: center;
+  width: 100%;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  box-sizing: border-box;
 }
 
 /* S4: CLIENT APPLAUSE GRID */
@@ -2721,6 +2758,7 @@ select.form-control {
   font-weight: 400;
   background: linear-gradient(120deg, #FFFFFF 10%, #A78BFA 50%, #F43F5E 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   padding-right: 4px;
 }
@@ -9780,6 +9818,7 @@ img.comment-avatar {
   align-items: center;
   justify-content: center;
   transition: background var(--transition);
+  flex-shrink: 0;
 }
 
 .notif-btn:hover {
@@ -9813,6 +9852,7 @@ img.comment-avatar {
   padding: 4px 12px 4px 4px;
   cursor: pointer;
   transition: background var(--transition), box-shadow var(--transition);
+  flex-shrink: 0;
 }
 
 .profile-chip:hover {
@@ -9858,6 +9898,26 @@ img.comment-avatar {
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 24px;
+}
+
+/* Invite Cards */
+.invite-card {
+  padding: 24px;
+}
+
+.invite-card-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.invite-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 /* Skeleton loader */
@@ -11034,15 +11094,68 @@ canvas {
     display: none;
   }
 
-  /* Rope Gallery: wrap items so 5 cards fit in 2 rows */
+  /* Rope Gallery: equal box sizes and straight-line content alignment */
   .rope-hooks {
+    display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 12px;
     justify-content: center;
+    align-items: stretch;
+  }
+
+  .rope-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 auto;
   }
 
   .rope-plaque {
-    width: 120px;
+    width: 126px;
+    height: 128px;
+    padding: 14px 8px 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rope-brand,
+  .rope-plaque > div:first-child {
+    font-size: 1.12rem;
+    letter-spacing: .06em;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+  }
+
+  .rope-plaque small {
+    height: 20px;
+    font-size: 0.62rem;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.2;
+    width: 100%;
+  }
+
+  .placard {
+    margin-top: 9px;
+    width: 100%;
+    height: 32px;
+    padding: 5px 4px;
+    font-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    line-height: 1.2;
   }
 
   /* Script Beat cards: collapse from 2-col to 1-col */
@@ -11541,6 +11654,20 @@ canvas {
     width: 100% !important;
   }
 
+  .dash-topbar {
+    padding: 0 16px;
+    gap: 12px;
+    height: 60px;
+  }
+
+  .topbar-search {
+    max-width: 220px;
+  }
+
+  .profile-role {
+    display: none;
+  }
+
   .stat-tiles {
     grid-template-columns: 1fr 1fr;
   }
@@ -11571,6 +11698,172 @@ canvas {
 @media (max-width: 480px) {
   :root {
     --gutter: 16px;
+  }
+
+  /* Dashboard Topbar 360px range */
+  body.dash-body {
+    overflow-x: hidden;
+  }
+
+  .dash-shell {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  .dash-main {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .dash-topbar {
+    padding: 0 10px;
+    gap: 8px;
+    height: 56px;
+    box-sizing: border-box;
+  }
+
+  .topbar-hamburger {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  .topbar-hamburger span {
+    width: 15px;
+  }
+
+  /* Hide search bar on 360px screens so nav bar controls align cleanly without crowding */
+  .topbar-search {
+    display: none !important;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    margin-inline-start: auto;
+    flex-shrink: 0;
+  }
+
+  [dir="rtl"] .topbar-right {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .notif-btn {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  .notif-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .notif-badge {
+    top: 2px;
+    right: 2px;
+    width: 14px;
+    height: 14px;
+    font-size: 0.55rem;
+  }
+
+  .dash-topbar .toggle-theme-btn {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  .dash-topbar .toggle-rtl-btn {
+    height: 34px;
+    padding: 0 8px;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+    border-radius: 17px;
+  }
+
+  /* Compact profile chip on 360px: avatar-only circle */
+  .profile-chip {
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .profile-chip:hover {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .profile-avatar {
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid var(--clr-border-light);
+  }
+
+  .profile-name,
+  .profile-role,
+  .profile-chip > div {
+    display: none !important;
+  }
+
+  .dash-view-title {
+    font-size: clamp(1.2rem, 5vw, 1.45rem);
+    margin-bottom: 18px;
+  }
+
+  .dash-content {
+    padding: 20px 12px;
+  }
+
+  /* Invite card mobile adjustments for 360px */
+  .invite-card {
+    padding: 16px 14px !important;
+  }
+
+  .invite-card-inner {
+    gap: 14px;
+  }
+
+  .invite-actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+
+  .invite-actions .btn {
+    font-size: 0.8rem;
+    padding: 7px 10px;
+    white-space: nowrap;
+  }
+
+  .invite-actions .invite-accept {
+    flex: 1 1 100%;
+    justify-content: center;
+    order: 3;
+    padding: 9px 14px;
+  }
+
+  .invite-actions .btn-outline {
+    flex: 1 1 calc(50% - 4px);
+    justify-content: center;
+    order: 1;
+  }
+
+  .invite-actions .invite-decline {
+    flex: 1 1 calc(50% - 4px);
+    justify-content: center;
+    order: 2;
   }
 
   .navbar-right .nav-login,
