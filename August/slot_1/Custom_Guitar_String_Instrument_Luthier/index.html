@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FRET | Handcrafted Guitars & String Instruments</title>
-  <meta name="description" content="FRET is a premium luthier atelier crafting bespoke acoustic, electric, and custom string instruments with generational techniques.">
+  <title>FRET | Master Luthier Custom Guitars & String Instruments</title>
+  <meta name="description" content="Handcrafted acoustic, electric, and archtop guitars built one at a time by master luthiers in Portland, Oregon. Explore our vault-aged tonewoods and bespoke commissions.">
   
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   
@@ -17,17 +17,520 @@
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/rtl.css">
+
+  <style>
+    /* ==========================================================================
+       Home 1 Specific Visual Design & Interactive Resonance Lab
+       ========================================================================== */
+
+    /* ── Hero Enhancement ─────────────────────────────────────────────────── */
+    .hero-home1 {
+      position: relative;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      background-color: #0c0a09;
+      color: #fff;
+      overflow: hidden;
+      padding-top: calc(var(--navbar-height) + var(--space-4));
+      padding-bottom: var(--space-8);
+    }
+
+    .hero-home1__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-home1__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.42;
+      filter: saturate(1.1) contrast(1.1);
+      transform: scale(1.02);
+      transition: transform 12s ease-out;
+    }
+
+    .hero-home1:hover .hero-home1__bg img {
+      transform: scale(1.08);
+    }
+
+    .hero-home1__overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 40%, rgba(180, 83, 9, 0.25) 0%, transparent 70%),
+                  linear-gradient(180deg, rgba(12, 10, 9, 0.7) 0%, #0c0a09 100%);
+      z-index: 1;
+    }
+
+    .hero-home1__content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-home1__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(180, 83, 9, 0.22);
+      border: 1px solid rgba(217, 119, 6, 0.45);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #FBBF24;
+      margin-bottom: var(--space-3);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-home1__title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      line-height: 1.12;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: var(--space-3);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-home1__lead {
+      font-size: 1.1875rem;
+      line-height: 1.7;
+      color: rgba(245, 243, 239, 0.92);
+      margin: 0 auto var(--space-5);
+      max-width: 660px;
+    }
+
+    .hero-home1__ctas {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-5);
+    }
+
+    .hero-home1__specs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.8125rem;
+      color: rgba(231, 229, 228, 0.85);
+    }
+
+    .hero-spec-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-full);
+    }
+
+    .hero-spec-item svg {
+      color: var(--color-primary-light);
+    }
+
+    /* ── Interactive Tonewood & Acoustic Resonance Explorer ────────────────── */
+    .tonewood-explorer {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .tonewood-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: var(--space-6);
+      align-items: center;
+    }
+
+    .tonewood-nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .tonewood-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      text-align: left;
+      transition: all var(--transition-fast);
+      width: 100%;
+    }
+
+    [dir="rtl"] .tonewood-nav-btn {
+      text-align: right;
+    }
+
+    .tonewood-nav-btn:hover {
+      border-color: var(--color-primary-alpha-20);
+      transform: translateX(4px);
+    }
+
+    [dir="rtl"] .tonewood-nav-btn:hover {
+      transform: translateX(-4px);
+    }
+
+    .tonewood-nav-btn.active {
+      border-color: var(--color-primary);
+      background: var(--color-surface-elevated);
+      box-shadow: 0 4px 12px var(--color-primary-alpha-10);
+    }
+
+    .tonewood-nav-btn.active .tonewood-nav-indicator {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    .tonewood-nav-indicator {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary-alpha-10);
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: all var(--transition-fast);
+    }
+
+    .tonewood-nav-info h4 {
+      font-size: 1.0625rem;
+      margin-bottom: 2px;
+    }
+
+    .tonewood-nav-info span {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+
+    .tonewood-display-card {
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tonewood-photo-wrap {
+      width: 100%;
+      height: 220px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-4);
+      background: #0c0a09;
+      border: 1px solid var(--color-border);
+    }
+
+    .tonewood-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .tonewood-display-card:hover .tonewood-photo-wrap img {
+      transform: scale(1.05);
+    }
+
+    .tonewood-frequency-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-block: var(--space-3);
+    }
+
+    .tonewood-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.75rem;
+    }
+
+    .tonewood-bar-lbl {
+      width: 90px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+    }
+
+    .tonewood-bar-track {
+      flex: 1;
+      height: 8px;
+      background: var(--color-divider);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .tonewood-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary));
+      border-radius: var(--radius-full);
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ── Collection 2x2 Showcase ───────────────────────────────────────────── */
+    .instrument-grid-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-5);
+    }
+
+    .inst-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .inst-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card-hover);
+      border-color: var(--color-primary-alpha-20);
+    }
+
+    .inst-card__media {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #0c0a09;
+    }
+
+    .inst-card__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .inst-card:hover .inst-card__media img {
+      transform: scale(1.05);
+    }
+
+    .inst-card__badge {
+      position: absolute;
+      top: 14px;
+      inset-inline-start: 14px;
+      padding: 4px 10px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #fff;
+      background: rgba(18, 16, 14, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(8px);
+      z-index: 1;
+    }
+
+    .inst-card__price {
+      position: absolute;
+      bottom: 14px;
+      inset-inline-end: 14px;
+      padding: 4px 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+      background: var(--color-primary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      z-index: 1;
+    }
+
+    .inst-card__content {
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .inst-card__title {
+      font-size: 1.375rem;
+      margin-bottom: 4px;
+    }
+
+    .inst-card__specs-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-block: var(--space-3);
+    }
+
+    .inst-spec-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 4px 8px;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .inst-card__footer {
+      margin-top: auto;
+      padding-top: var(--space-2);
+    }
+
+    /* ── Visual Process Timeline ───────────────────────────────────────────── */
+    .process-strip-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+    }
+
+    .process-card-step {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all var(--transition-fast);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .process-card-step:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary-alpha-20);
+    }
+
+    .process-card-step__img-wrap {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #0c0a09;
+    }
+
+    .process-card-step__img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .process-card-step:hover .process-card-step__img-wrap img {
+      transform: scale(1.06);
+    }
+
+    .process-step-pill {
+      position: absolute;
+      top: 12px;
+      inset-inline-start: 12px;
+      background: var(--color-primary);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.8125rem;
+      padding: 2px 10px;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .process-card-step__body {
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .process-card-step__body h4 {
+      font-size: 1.125rem;
+      margin-bottom: 6px;
+    }
+
+    .process-card-step__body p {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--color-text-secondary);
+      margin: 0;
+    }
+
+    /* ── Counters Row ──────────────────────────────────────────────────────── */
+    .counters-bar-home1 {
+      margin-top: var(--space-8);
+      padding: var(--space-5) var(--space-6);
+      background-color: #0c0a09;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(217, 119, 6, 0.25);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .counter-block-home1 {
+      text-align: center;
+    }
+
+    .counter-num-home1 {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1;
+      margin-bottom: var(--space-1);
+    }
+
+    .counter-lbl-home1 {
+      font-size: var(--small-size);
+      color: #E7E5E4;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* ── Responsive Rules for Home 1 ───────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .tonewood-layout {
+        grid-template-columns: 1fr;
+      }
+      .instrument-grid-2x2 {
+        grid-template-columns: 1fr;
+      }
+      .process-strip-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .process-strip-grid {
+        grid-template-columns: 1fr;
+      }
+      .counters-bar-home1 .grid--4 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
+      }
+    }
+  </style>
   <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
-  <!-- Skip Link -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-
   <!-- Header -->
   <header class="header">
     <div class="header__inner">
-      <!-- Logo -->
       <a href="index.html" class="header__logo" aria-label="FRET Home">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
           <path d="M40 20 h20 l5 15 v40 l-5 15 h-20 l-5 -15 v-40 z"/>
@@ -35,17 +538,15 @@
         <span class="header__logo-text">FRET</span>
       </a>
 
-      <!-- Desktop Navigation -->
       <nav class="header__nav" aria-label="Primary Navigation">
-        <!-- Dropdown Home -->
         <div class="nav-dropdown">
-          <a href="index.html" class="nav-link nav-link--active">
+          <a href="#" class="nav-link nav-link--active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
             Home
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </a>
           <div class="nav-dropdown__menu">
-            <a href="index.html" class="nav-dropdown__link">Home 1 <span>— The Atelier</span></a>
-            <a href="home-2.html" class="nav-dropdown__link">Home 2 <span>— The Gallery</span></a>
+            <a href="index.html" class="nav-dropdown__link">Home 1</a>
+            <a href="home-2.html" class="nav-dropdown__link">Home 2</a>
           </div>
         </div>
         <a href="instruments.html" class="nav-link">Instruments</a>
@@ -56,28 +557,17 @@
         <a href="contact.html" class="nav-link">Contact</a>
       </nav>
 
-      <!-- Header Controls -->
       <div class="header__controls">
-        <!-- Dashboard Dropdown -->
-
-        <!-- Theme Toggle -->
         <button class="theme-toggle" aria-label="Toggle theme">
           <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
           <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         </button>
-
-        <!-- RTL Toggle -->
         <button class="rtl-toggle" aria-label="Toggle direction">RTL</button>
-
-        <!-- Cart Button -->
         <button class="header__icon-btn cart-btn" aria-label="Open cart">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
           <span class="header__cart-badge"></span>
         </button>
-
         <a href="contact.html" class="btn btn--primary header__cta">Book a Consultation</a>
-        
-        <!-- Mobile Menu Toggle -->
         <button class="header__hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
           <svg class="icon-menu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
           <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -94,8 +584,8 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
       </a>
       <div id="mobile-home-menu" class="mobile-menu__sub">
-        <a href="index.html" class="mobile-menu__link mobile-menu__link--active">The Atelier</a>
-        <a href="home-2.html" class="mobile-menu__link">The Gallery</a>
+        <a href="index.html" class="mobile-menu__link mobile-menu__link--active">Home 1</a>
+        <a href="home-2.html" class="mobile-menu__link">Home 2</a>
       </div>
       <a href="instruments.html" class="mobile-menu__link">Instruments</a>
       <a href="repair.html" class="mobile-menu__link">Repair & Restoration</a>
@@ -103,17 +593,7 @@
       <a href="about.html" class="mobile-menu__link">About</a>
       <a href="journal.html" class="mobile-menu__link">Journal</a>
       <a href="contact.html" class="mobile-menu__link">Contact</a>
-      
-
     </nav>
-    
-    <div class="mobile-menu__toggles">
-      <button class="theme-toggle mobile-toggle" aria-label="Toggle theme">
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      </button>
-      <button class="rtl-toggle mobile-toggle" aria-label="Toggle direction">RTL</button>
-    </div>
     
     <a href="contact.html" class="btn btn--primary mobile-menu__cta">Book a Consultation</a>
   </div>
@@ -133,7 +613,6 @@
         <p>Your cart is empty.</p>
         <a href="instruments.html" class="btn btn--outline-dark mt-2" onclick="document.querySelector('.cart-drawer__close').click()">Browse Instruments</a>
       </div>
-      <!-- Cart items will be injected here via JS -->
     </div>
     <div class="cart-drawer__footer">
       <div class="cart-drawer__total">
@@ -146,315 +625,486 @@
 
   <main id="main-content">
     
-    <!-- SECTION 1: HERO -->
-    <section class="hero">
-      <div class="hero__bg hover-zoom">
-        <img src="images/hero/hero-home1.png" alt="Sunlit workbench with hand planes, chisels, and an unfinished guitar body" class="ken-burns">
+    <!-- ========================================================================
+         HERO SECTION: BUILT BY HAND. HEARD FOR GENERATIONS.
+         ======================================================================== -->
+    <section class="hero-home1">
+      <div class="hero-home1__bg">
+        <img src="images/hero/hero-home1.png" alt="Sunlit luthier workbench with hand planes, spruce shavings, and an unfinished archtop guitar body">
       </div>
-      <div class="hero__overlay"></div>
+      <div class="hero-home1__overlay"></div>
       
       <!-- Sawdust particles canvas -->
       <canvas id="sawdust-canvas" style="position: absolute; inset: 0; z-index: 1; pointer-events: none;"></canvas>
 
-      <div class="hero__content reveal">
-        <span class="overline">Handcrafted in the Atelier</span>
-        <h1>Built by Hand.<br>Heard for Generations.</h1>
-        <div class="hero__ctas">
-          <a href="instruments.html" class="btn btn--primary">Explore Instruments</a>
-          <a href="contact.html" class="btn btn--outline">Book a Consultation</a>
+      <div class="container container--wide">
+        <div class="hero-home1__content reveal">
+          
+          <div class="hero-home1__badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Master Luthier Atelier · Portland, Oregon</span>
+          </div>
+
+          <h1 class="hero-home1__title">
+            Built by Hand.<br>
+            Heard for Generations.
+          </h1>
+
+          <p class="hero-home1__lead">
+            Every curve, bracing bar, and fret is hand-voiced by master luthiers. We build bespoke string instruments for discerning artists who demand uncompromising acoustic projection and lifelong heirloom craft.
+          </p>
+
+          <div class="hero-home1__ctas">
+            <a href="instruments.html" class="btn btn--primary btn--lg">Explore Instruments</a>
+            <a href="contact.html" class="btn btn--outline btn--lg">Book a Consultation</a>
+          </div>
+
+          <div class="hero-home1__specs">
+            <span class="hero-spec-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              100% Hand-Carved Necks
+            </span>
+            <span class="hero-spec-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Individually Tap-Tuned Soundboards
+            </span>
+            <span class="hero-spec-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              10–25 Year Vault-Aged Tonewoods
+            </span>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- SECTION 2: CRAFT PILLARS -->
-    <section class="section section--surface">
-      <div class="container">
+    <!-- ========================================================================
+         SECTION 2: INTERACTIVE TONEWOOD & ACOUSTIC RESONANCE LAB
+         Replaces generic icon text boxes with interactive tactile discovery
+         ======================================================================== -->
+    <section class="section section--surface" id="tonewood-lab">
+      <div class="container container--wide">
+        
         <div class="section-header reveal reveal--fade">
           <span class="overline">The Philosophy</span>
-          <h2>Crafted Without Compromise</h2>
-          <p>Every FRET instrument is a dialogue between the luthier and the tonewood, guided by decades of generational knowledge.</p>
+          <h2>Every Note Begins in the Grain</h2>
+          <p>We reject industrial CNC shortcuts. Each tonewood billet responds differently under tension — explore our vault pairings and acoustic frequency profiles.</p>
         </div>
 
-        <div class="grid grid--3 mb-8">
-          <div class="card card--icon reveal reveal--slide-left reveal-delay-1">
-            <div class="card__icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-            </div>
-            <div class="card__body">
-              <h3>Bespoke Design</h3>
-              <p>Tailored ergonomics and acoustics that respond to your unique playing style.</p>
-            </div>
-            <div class="card__footer">
-              <a href="process.html" class="btn btn--ghost">Learn more</a>
-            </div>
-          </div>
+        <div class="tonewood-explorer reveal">
+          <div class="tonewood-layout">
+            
+            <!-- Left: Tonewood Selector Tabs -->
+            <div class="tonewood-nav">
+              <button type="button" class="tonewood-nav-btn active" data-wood="adirondack">
+                <div class="tonewood-nav-indicator">01</div>
+                <div class="tonewood-nav-info">
+                  <h4>Adirondack Red Spruce & Indian Rosewood</h4>
+                  <span>Concert Acoustic Projection · Enormous Dynamic Headroom</span>
+                </div>
+              </button>
 
-          <div class="card card--icon reveal reveal--scale reveal-delay-2">
-            <div class="card__icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15.222C5 17.86 7.18 20 9.87 20h4.26C16.82 20 19 17.86 19 15.222V8.778C19 6.14 16.82 4 14.13 4H9.87C7.18 4 5 6.14 5 8.778v6.444z"></path><path d="M9 12h6"></path><path d="M9 16h6"></path><path d="M9 8h6"></path></svg>
-            </div>
-            <div class="card__body">
-              <h3>Master Grade Tonewood</h3>
-              <p>Ethically sourced, individually tap-tuned spruce, rosewood, and mahogany.</p>
-            </div>
-            <div class="card__footer">
-              <a href="about.html" class="btn btn--ghost">Learn more</a>
-            </div>
-          </div>
+              <button type="button" class="tonewood-nav-btn" data-wood="redwood">
+                <div class="tonewood-nav-indicator">02</div>
+                <div class="tonewood-nav-info">
+                  <h4>Sinker Redwood & Mexican Ziricote</h4>
+                  <span>Warm Overtone Bloom · Fingerstyle Sensitivity & Piano Clarity</span>
+                </div>
+              </button>
 
-          <div class="card card--icon reveal reveal--slide-right reveal-delay-3">
-            <div class="card__icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              <button type="button" class="tonewood-nav-btn" data-wood="maple">
+                <div class="tonewood-nav-indicator">03</div>
+                <div class="tonewood-nav-info">
+                  <h4>Carved Flame Maple & Honduran Mahogany</h4>
+                  <span>Fast Transient Attack · Archtop Velvety Warmth & Stage Cut</span>
+                </div>
+              </button>
             </div>
-            <div class="card__body">
-              <h3>Precision Setup</h3>
-              <p>Every fret leveled, every saddle compensated to a fraction of a millimeter.</p>
+
+            <!-- Right: Dynamic Acoustic Specimen Card -->
+            <div class="tonewood-display-card">
+              <div class="tonewood-photo-wrap">
+                <img id="wood-img" src="images/process/wood-spruce.png" alt="Close-up of Adirondack spruce grain and quarter-sawn tonewood slice">
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+                <h3 id="wood-title" style="font-size: 1.375rem; margin: 0;">Adirondack Red Spruce</h3>
+                <span class="badge badge--amber" id="wood-vintage">25-Year Vault Aged</span>
+              </div>
+              <p id="wood-desc" style="font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.55; margin-bottom: var(--space-3);">
+                The legendary pre-war eastern spruce. Offers the highest velocity of sound and highest stiffness-to-weight ratio, allowing aggressive flatpicking without tonal breakup.
+              </p>
+
+              <!-- Dynamic Harmonic Frequency Response Bars -->
+              <div class="tonewood-frequency-bars">
+                <div class="tonewood-bar-row">
+                  <span class="tonewood-bar-lbl">Bass Response</span>
+                  <div class="tonewood-bar-track">
+                    <div class="tonewood-bar-fill" id="wood-bar-bass" style="width: 88%;"></div>
+                  </div>
+                </div>
+                <div class="tonewood-bar-row">
+                  <span class="tonewood-bar-lbl">Mid Clarification</span>
+                  <div class="tonewood-bar-track">
+                    <div class="tonewood-bar-fill" id="wood-bar-mid" style="width: 76%;"></div>
+                  </div>
+                </div>
+                <div class="tonewood-bar-row">
+                  <span class="tonewood-bar-lbl">Treble Sparkle</span>
+                  <div class="tonewood-bar-track">
+                    <div class="tonewood-bar-fill" id="wood-bar-treble" style="width: 94%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: var(--space-4); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-divider); padding-top: var(--space-3);">
+                <span style="font-size: 0.75rem; color: var(--color-text-muted); text-transform: uppercase;">Acoustic Matching</span>
+                <a href="instruments.html" class="btn btn--ghost btn--sm">View Instruments Using This Wood →</a>
+              </div>
             </div>
-            <div class="card__footer">
-              <a href="repair.html" class="btn btn--ghost">Learn more</a>
-            </div>
+
           </div>
         </div>
-        
-        <!-- Image Strip -->
-        <div class="hover-zoom" style="border-radius: var(--radius-xl); overflow: hidden; max-height: 240px;">
-          <img src="images/misc/grain-strip.png" alt="Close-up of maple and spruce tonewood grain" style="width: 100%; object-fit: cover;">
-        </div>
+
       </div>
     </section>
 
-    <!-- SECTION 3: FEATURED INSTRUMENTS -->
-    <section class="section">
-      <div class="container">
+    <!-- ========================================================================
+         SECTION 3: CURATED MASTERPIECE COLLECTION (2x2 Grid)
+         ======================================================================== -->
+    <section class="section" id="collection">
+      <div class="container container--wide">
+        
         <div class="flex-between mb-6 flex-wrap gap-3 reveal">
           <div>
             <span class="overline">The Collection</span>
             <h2>Handbuilt Masterpieces</h2>
           </div>
-          <a href="instruments.html" class="btn btn--outline-dark">View All Instruments</a>
+          <a href="instruments.html" class="btn btn--outline-dark">Browse Full Catalog</a>
         </div>
 
-        <!-- 2x2 Grid per requirements -->
-        <div class="grid grid--2">
+        <div class="instrument-grid-2x2">
+          
           <!-- Acoustic -->
-          <div class="card reveal reveal-delay-1">
-            <div class="card__image">
+          <div class="inst-card reveal reveal-delay-1">
+            <div class="inst-card__media">
+              <span class="inst-card__badge">Acoustic Series</span>
+              <span class="inst-card__price">$4,250</span>
               <img src="images/instruments/grand-auditorium.png" alt="The Grand Auditorium Acoustic Guitar">
             </div>
-            <div class="card__body text-center">
-              <h3>The Grand Auditorium</h3>
-              <p class="card__spec">Sitka Spruce Top · Indian Rosewood Back/Sides</p>
-              <div class="card__price">$4,250</div>
-            </div>
-            <div class="card__footer pb-4">
-              <a href="instruments.html" class="btn btn--primary">View Details</a>
+            <div class="inst-card__content">
+              <h3 class="inst-card__title">The Grand Auditorium</h3>
+              <p style="font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0;">
+                Balanced fundamental clarity, bell-like harmonics, and scalloped X-bracing tuned for fingerstyle and articulate flatpicking.
+              </p>
+              
+              <div class="inst-card__specs-row">
+                <span class="inst-spec-tag">Sitka Spruce Top</span>
+                <span class="inst-spec-tag">East Indian Rosewood</span>
+                <span class="inst-spec-tag">Scalloped X-Brace</span>
+                <span class="inst-spec-tag">Thin Nitro Gloss</span>
+              </div>
+
+              <div class="inst-card__footer">
+                <a href="instruments.html" class="btn btn--primary" style="width: 100%;">View Instrument Details</a>
+              </div>
             </div>
           </div>
 
           <!-- Electric -->
-          <div class="card reveal reveal-delay-2">
-            <div class="card__image">
+          <div class="inst-card reveal reveal-delay-2">
+            <div class="inst-card__media">
+              <span class="inst-card__badge">Solidbody Electric</span>
+              <span class="inst-card__price">$3,800</span>
               <img src="images/instruments/classic-59.png" alt="The Classic '59 Solidbody Electric">
             </div>
-            <div class="card__body text-center">
-              <h3>The Classic '59</h3>
-              <p class="card__spec">Honduran Mahogany · Figured Maple Cap</p>
-              <div class="card__price">$3,800</div>
-            </div>
-            <div class="card__footer pb-4">
-              <a href="instruments.html" class="btn btn--primary">View Details</a>
+            <div class="inst-card__content">
+              <h3 class="inst-card__title">The Classic '59</h3>
+              <p style="font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0;">
+                Vintage PAF sustain, contoured ergonomic neck heel, and hand-wound Alnico II pickups inside a copper-shielded chamber.
+              </p>
+              
+              <div class="inst-card__specs-row">
+                <span class="inst-spec-tag">Honduran Mahogany</span>
+                <span class="inst-spec-tag">Carved Maple Cap</span>
+                <span class="inst-spec-tag">PAF Alnico II Pickups</span>
+                <span class="inst-spec-tag">24.75" Vintage Scale</span>
+              </div>
+
+              <div class="inst-card__footer">
+                <a href="instruments.html" class="btn btn--primary" style="width: 100%;">View Instrument Details</a>
+              </div>
             </div>
           </div>
 
           <!-- Archtop -->
-          <div class="card reveal reveal-delay-3">
-            <div class="card__image">
+          <div class="inst-card reveal reveal-delay-3">
+            <div class="inst-card__media">
+              <span class="inst-card__badge">Acoustic Archtop</span>
+              <span class="inst-card__price">$6,500</span>
               <img src="images/instruments/jazz-standard.png" alt="The Jazz Standard Archtop">
             </div>
-            <div class="card__body text-center">
-              <h3>The Jazz Standard</h3>
-              <p class="card__spec">Carved Spruce Top · Flame Maple Back/Sides</p>
-              <div class="card__price">$6,500</div>
-            </div>
-            <div class="card__footer pb-4">
-              <a href="instruments.html" class="btn btn--primary">View Details</a>
+            <div class="inst-card__content">
+              <h3 class="inst-card__title">The Jazz Standard</h3>
+              <p style="font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0;">
+                Carved violin-arch soundboard voiced with parallel tone bars for velvety warmth, woody chop, and feedback rejection on loud stages.
+              </p>
+              
+              <div class="inst-card__specs-row">
+                <span class="inst-spec-tag">Carved Alpine Spruce</span>
+                <span class="inst-spec-tag">Flame Hard Maple</span>
+                <span class="inst-spec-tag">Ebony Floating Tail</span>
+                <span class="inst-spec-tag">Parallel Tone Bars</span>
+              </div>
+
+              <div class="inst-card__footer">
+                <a href="instruments.html" class="btn btn--primary" style="width: 100%;">View Instrument Details</a>
+              </div>
             </div>
           </div>
 
-          <!-- Custom -->
-          <div class="card reveal reveal-delay-4">
-            <div class="card__image">
-              <img src="images/instruments/bespoke-baritone.png" alt="The Bespoke Baritone">
+          <!-- Custom Baritone -->
+          <div class="inst-card reveal reveal-delay-4">
+            <div class="inst-card__media">
+              <span class="inst-card__badge">Custom Commission</span>
+              <span class="inst-card__price">From $5,200</span>
+              <img src="images/instruments/bespoke-baritone.png" alt="The Bespoke Baritone Custom">
             </div>
-            <div class="card__body text-center">
-              <h3>The Bespoke Baritone</h3>
-              <p class="card__spec">Sinker Redwood Top · Ziricote Back/Sides</p>
-              <div class="card__price">From $5,200</div>
-            </div>
-            <div class="card__footer pb-4">
-              <a href="contact.html" class="btn btn--primary">View Details</a>
+            <div class="inst-card__content">
+              <h3 class="inst-card__title">The Bespoke Baritone</h3>
+              <p style="font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0;">
+                Extended 27.5" scale delivering deep fundamental resonance in B-standard tuning with tight, punchy string tension.
+              </p>
+              
+              <div class="inst-card__specs-row">
+                <span class="inst-spec-tag">Sinker Redwood Top</span>
+                <span class="inst-spec-tag">Ziricote Exotica</span>
+                <span class="inst-spec-tag">27.5" Extended Scale</span>
+                <span class="inst-spec-tag">B Standard Tuning</span>
+              </div>
+
+              <div class="inst-card__footer">
+                <a href="contact.html" class="btn btn--primary" style="width: 100%;">Inquire About Custom</a>
+              </div>
             </div>
           </div>
+
         </div>
+
       </div>
     </section>
 
-    <!-- SECTION 4: THE LUTHIER'S BENCH -->
-    <section class="section section--surface">
-      <div class="container">
-        <!-- Split layout enforcing equal heights -->
+    <!-- ========================================================================
+         SECTION 4: THE LUTHIER'S BENCH & HERITAGE
+         ======================================================================== -->
+    <section class="section section--surface" id="story">
+      <div class="container container--wide">
+        
         <div class="split split--40-60">
           <div class="split__content reveal reveal--slide-left">
-            <span class="overline">Our Story</span>
-            <h3 style="margin-bottom: var(--space-3);">The Luthier's Bench</h3>
-            <p style="color: var(--color-text-secondary); margin-bottom: var(--space-3); font-size: 1.125rem;">
-              Founded in 1988, FRET was born from a singular belief: that an instrument should be as inspiring to hold as it is to hear. 
+            <span class="overline">Our Heritage</span>
+            <h2 style="margin-bottom: var(--space-3);">Where Time Meets Handcraft</h2>
+            <p style="color: var(--color-secondary); font-size: 1.125rem; margin-bottom: var(--space-3); line-height: 1.6;">
+              Founded in 1988 in Portland, Oregon, FRET was born from a singular conviction: an instrument must feel like a natural anatomical extension of the player.
             </p>
-            <p style="margin-bottom: var(--space-4);">
-              We don't use CNC machines for our neck profiles. We carve them by hand, feeling the grain, reading the wood, and ensuring that the final shape rests perfectly in the player's palm. It is a slow, methodical process that cannot be rushed.
+            <p style="color: var(--color-text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+              We don't use CNC profiling machines for our neck carves. We shape each neck with Japanese spoke shaves, checking the palm curve against hand anatomy, feeling wood grain under string tension, and adjusting relief by hand. No two trees grow identically, and no two instruments on our bench sound alike.
             </p>
-            <div>
-              <a href="about.html" class="btn btn--primary">Read the Full Story</a>
+            
+            <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+              <a href="about.html" class="btn btn--primary">Read Our Story</a>
+              <a href="process.html" class="btn btn--outline-dark">Explore The Atelier</a>
             </div>
           </div>
           
           <div class="split__media hover-zoom reveal reveal--slide-right">
-            <img src="images/workshop/carving-neck.png" alt="Master luthier carving a guitar neck with a spoke shave">
+            <img src="images/workshop/carving-neck.png" alt="Master luthier hand-carving a guitar neck with a spoke shave, wood shavings on apron" style="border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);">
           </div>
         </div>
+
+        <!-- Integrated Numbers That Sing Bar -->
+        <div class="counters-bar-home1 reveal">
+          <div class="grid grid--4">
+            <div class="counter-block-home1">
+              <div class="counter-num-home1">38</div>
+              <div class="counter-lbl-home1">Years of Craft</div>
+            </div>
+            <div class="counter-block-home1">
+              <div class="counter-num-home1">412</div>
+              <div class="counter-lbl-home1">Instruments Built</div>
+            </div>
+            <div class="counter-block-home1">
+              <div class="counter-num-home1">97%</div>
+              <div class="counter-lbl-home1">Clients Returning</div>
+            </div>
+            <div class="counter-block-home1">
+              <div class="counter-num-home1">26</div>
+              <div class="counter-lbl-home1">Tonewood Varieties</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- SECTION 5: PROCESS PREVIEW -->
-    <section class="section section--dark" style="position: relative; z-index: 1;">
-      <!-- Unique background texture -->
-      <div style="position: absolute; inset: 0; z-index: -1; opacity: 0.1;">
-        <img src="images/misc/spruce-texture.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover;">
-      </div>
-      
-      <div class="container">
-        <div class="section-header reveal reveal--fade">
-          <span class="overline">How It's Made</span>
-          <h2>The Journey of a Build</h2>
+    <!-- ========================================================================
+         SECTION 5: VISUAL BUILD PROCESS
+         Photographic step progression
+         ======================================================================== -->
+    <section class="section" id="process">
+      <div class="container container--wide">
+        
+        <div class="flex-between mb-6 flex-wrap gap-3 reveal">
+          <div>
+            <span class="overline">How It's Made</span>
+            <h2>The Journey of a Build</h2>
+          </div>
+          <a href="process.html" class="btn btn--outline-dark">Full Workshop Tour</a>
         </div>
 
-        <div style="position: relative; max-width: 900px; margin: 0 auto; padding-top: var(--space-4);">
-          <!-- Animated connecting line -->
-          <svg style="position: absolute; top: 76px; left: 10%; width: 80%; height: 4px; z-index: 0; pointer-events: none;" preserveAspectRatio="none">
-            <line x1="0" y1="2" x2="100%" y2="2" stroke="rgba(255, 255, 255, 0.2)" stroke-width="2" />
-            <line class="draw-line" x1="0" y1="2" x2="100%" y2="2" stroke="var(--color-primary)" stroke-width="2" style="--line-length: 1000;" />
-          </svg>
-
-          <!-- 4-step horizontal strip -->
-          <div class="grid grid--4" style="position: relative; z-index: 1;">
-            
-            <div class="text-center reveal reveal-delay-1">
-              <div class="flex-center" style="width: 64px; height: 64px; border-radius: 50%; background-color: var(--color-primary); color: #fff; margin: 0 auto var(--space-3); font-family: var(--font-heading); font-size: var(--h4-size); font-weight: 700; box-shadow: 0 0 0 8px var(--color-secondary);">
-                1
-              </div>
-              <h4 style="margin-bottom: 8px;">Selection</h4>
-              <p style="font-size: var(--small-size);">Choosing the perfect tonewood sets.</p>
-            </div>
-
-            <div class="text-center reveal reveal-delay-2">
-              <div class="flex-center" style="width: 64px; height: 64px; border-radius: 50%; background-color: var(--color-primary); color: #fff; margin: 0 auto var(--space-3); font-family: var(--font-heading); font-size: var(--h4-size); font-weight: 700; box-shadow: 0 0 0 8px var(--color-secondary);">
-                2
-              </div>
-              <h4 style="margin-bottom: 8px;">Voicing</h4>
-              <p style="font-size: var(--small-size);">Tap-tuning and hand-carving braces.</p>
-            </div>
-
-            <div class="text-center reveal reveal-delay-3">
-              <div class="flex-center" style="width: 64px; height: 64px; border-radius: 50%; background-color: var(--color-primary); color: #fff; margin: 0 auto var(--space-3); font-family: var(--font-heading); font-size: var(--h4-size); font-weight: 700; box-shadow: 0 0 0 8px var(--color-secondary);">
-                3
-              </div>
-              <h4 style="margin-bottom: 8px;">Finishing</h4>
-              <p style="font-size: var(--small-size);">Ultra-thin nitrocellulose lacquer.</p>
-            </div>
-
-            <div class="text-center reveal reveal-delay-4">
-              <div class="flex-center" style="width: 64px; height: 64px; border-radius: 50%; background-color: var(--color-primary); color: #fff; margin: 0 auto var(--space-3); font-family: var(--font-heading); font-size: var(--h4-size); font-weight: 700; box-shadow: 0 0 0 8px var(--color-secondary);">
-                4
-              </div>
-              <h4 style="margin-bottom: 8px;">Setup</h4>
-              <p style="font-size: var(--small-size);">Precision fretwork and intonation.</p>
-            </div>
-
-          </div>
+        <div class="process-strip-grid">
           
-          <div class="text-center mt-8 reveal">
-            <a href="process.html" class="btn btn--primary">Discover the Process</a>
+          <div class="process-card-step reveal reveal-delay-1">
+            <div class="process-card-step__img-wrap">
+              <span class="process-step-pill">01</span>
+              <img src="images/process/step-1.png" alt="Selecting raw tonewoods in humidity controlled vault">
+            </div>
+            <div class="process-card-step__body">
+              <h4>Tonewood Selection</h4>
+              <p>Choosing resonant quarter-sawn spruce and rosewood billets aged at least 10 years in our vault.</p>
+            </div>
           </div>
+
+          <div class="process-card-step reveal reveal-delay-2">
+            <div class="process-card-step__img-wrap">
+              <span class="process-step-pill">02</span>
+              <img src="images/process/step-2.png" alt="Tap-tuning soundboard with finger plane">
+            </div>
+            <div class="process-card-step__body">
+              <h4>Tap-Tuning & Voicing</h4>
+              <p>Graduating soundboard thickness with violin planes until acoustic harmonic frequencies peak.</p>
+            </div>
+          </div>
+
+          <div class="process-card-step reveal reveal-delay-3">
+            <div class="process-card-step__img-wrap">
+              <span class="process-step-pill">03</span>
+              <img src="images/process/step-3.png" alt="Applying ultra-thin nitrocellulose lacquer coats">
+            </div>
+            <div class="process-card-step__body">
+              <h4>Ultra-Thin Lacquer</h4>
+              <p>18 micro-thin coats of traditional nitro lacquer, cured and hand-buffed for crystalline resonance.</p>
+            </div>
+          </div>
+
+          <div class="process-card-step reveal reveal-delay-4">
+            <div class="process-card-step__img-wrap">
+              <span class="process-step-pill">04</span>
+              <img src="images/process/step-4.png" alt="Precision fret leveling and intonation setup">
+            </div>
+            <div class="process-card-step__body">
+              <h4>Master Setup & Voicing</h4>
+              <p>Fret dressing under string tension, bone nut carving, and microscopic saddle intonation compensation.</p>
+            </div>
+          </div>
+
         </div>
+
       </div>
     </section>
 
-    <!-- SECTION 6: TESTIMONIALS -->
-    <section class="section">
-      <div class="container">
+    <!-- ========================================================================
+         SECTION 6: IN THE HANDS OF ARTISTS (Testimonials)
+         ======================================================================== -->
+    <section class="section section--surface" id="testimonials">
+      <div class="container container--wide">
+        
         <div class="section-header reveal reveal--fade">
           <span class="overline">The Players</span>
-          <h2>In the Hands of Artists</h2>
+          <h2>Voices from Stage & Studio</h2>
+          <p>Musicians who rely on FRET instruments night after night on worldwide tours.</p>
         </div>
 
-        <!-- 2x2 Grid -->
         <div class="grid grid--2 mb-6">
-          <div class="card card--testimonial hover-lift reveal reveal--slide-left reveal-delay-1">
-            <p class="card__quote">
-              "The responsiveness is unlike anything I've ever played. It breathes with you. The low end is thunderous, yet individual notes remain perfectly articulated up the neck."
+          
+          <div class="card card--testimonial hover-lift reveal reveal-delay-1" style="padding: var(--space-5);">
+            <p class="card__quote" style="font-size: 1.0625rem; line-height: 1.6; margin-bottom: var(--space-4);">
+              "The dynamic responsiveness of my Grand Auditorium is unlike any guitar I've owned. It breathes with you. The low end is authoritative, yet notes remain crystal clear up the neck."
             </p>
             <div class="card__author">
-              <img src="images/team/client-1.png" alt="Client playing acoustic" class="card__avatar">
+              <img src="images/team/client-1.png" alt="Sarah Jenkins" class="card__avatar">
               <div class="card__author-info">
                 <strong>Sarah Jenkins</strong>
-                <span>Plays The Grand Auditorium</span>
+                <span>Touring Acoustic Artist · Nashville</span>
               </div>
             </div>
           </div>
 
-          <div class="card card--testimonial hover-lift reveal reveal--slide-right reveal-delay-2">
-            <p class="card__quote">
-              "I commissioned a custom archtop, and the experience was incredible. They listened to exactly the tone I had in my head, and somehow carved it out of spruce."
+          <div class="card card--testimonial hover-lift reveal reveal-delay-2" style="padding: var(--space-5);">
+            <p class="card__quote" style="font-size: 1.0625rem; line-height: 1.6; margin-bottom: var(--space-4);">
+              "I commissioned a custom archtop for my jazz quintet recordings. They listened to the exact acoustic warmth in my head, and carved it out of aged spruce. Absolute perfection."
             </p>
             <div class="card__author">
-              <img src="images/team/client-2.png" alt="Client in studio" class="card__avatar">
+              <img src="images/team/client-2.png" alt="David Ross" class="card__avatar">
               <div class="card__author-info">
                 <strong>David Ross</strong>
-                <span>Plays Custom Archtop</span>
+                <span>Jazz Recording Artist · New York</span>
               </div>
             </div>
           </div>
-          
-          <div class="card card--testimonial hover-lift reveal reveal--slide-left reveal-delay-3">
-            <p class="card__quote">
-              "The neck profile on the Classic '59 fits my hand like a glove. It feels like an instrument that has been played for 40 years, right out of the case."
+
+          <div class="card card--testimonial hover-lift reveal reveal-delay-3" style="padding: var(--space-5);">
+            <p class="card__quote" style="font-size: 1.0625rem; line-height: 1.6; margin-bottom: var(--space-4);">
+              "The neck profile on the Classic '59 fits my hand like an old friend. Zero fatigue over 3-hour festival sets, and the sustained overtones are astonishing."
             </p>
             <div class="card__author">
-              <img src="images/team/client-3.png" alt="Client on stage" class="card__avatar">
+              <img src="images/team/client-3.png" alt="Marcus Chen" class="card__avatar">
               <div class="card__author-info">
                 <strong>Marcus Chen</strong>
-                <span>Plays The Classic '59</span>
+                <span>Session Guitarist · Los Angeles</span>
               </div>
             </div>
           </div>
 
-          <div class="card card--testimonial hover-lift reveal reveal--slide-right reveal-delay-4">
-            <p class="card__quote">
-              "They completely restored my grandfather's 1942 dreadnought. The structural integrity is perfect, yet they preserved all the mojo and patina. Masterful work."
+          <div class="card card--testimonial hover-lift reveal reveal-delay-4" style="padding: var(--space-5);">
+            <p class="card__quote" style="font-size: 1.0625rem; line-height: 1.6; margin-bottom: var(--space-4);">
+              "They restored my grandfather's pre-war dreadnought. The structural integrity is flawless, yet they preserved every bit of the historical patina. A masterclass in lutherie."
             </p>
             <div class="card__author">
-              <img src="images/team/client-4.png" alt="Client looking at restored guitar" class="card__avatar">
+              <img src="images/team/client-4.png" alt="Elena Vasquez" class="card__avatar">
               <div class="card__author-info">
                 <strong>Elena Vasquez</strong>
-                <span>Restoration Client</span>
+                <span>Classical & Folk Performer · Austin</span>
               </div>
             </div>
           </div>
+
         </div>
 
-        <!-- Single Centered CTA -->
         <div class="text-center reveal">
-          <a href="about.html#reviews" class="btn btn--primary">Read More Reviews</a>
+          <a href="about.html#reviews" class="btn btn--primary">Read All Artist Reviews</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 7: VIP CONSULTATION BANNER
+         ======================================================================== -->
+    <section class="section" id="consultation">
+      <div class="container container--wide">
+        <div class="reveal" style="background: radial-gradient(circle at 75% 30%, #2b1705 0%, #170d03 50%, #0c0a09 100%); border-radius: var(--radius-2xl); border: 1px solid rgba(217, 119, 6, 0.3); padding: var(--space-8) var(--space-6); color: #fff; text-align: center; box-shadow: var(--shadow-xl); position: relative; overflow: hidden;">
+          
+          <span class="overline" style="color: #FBBF24; margin-bottom: 8px; display: inline-block;">Custom Commissions</span>
+          <h2 style="color: #fff; font-size: clamp(2rem, 3.5vw, 2.75rem); margin-bottom: var(--space-3);">Ready to Build Your Dream Instrument?</h2>
+          <p style="color: rgba(231, 229, 228, 0.9); font-size: 1.125rem; max-width: 620px; margin: 0 auto var(--space-5); line-height: 1.65;">
+            Whether commissioning a bespoke custom guitar or scheduling a bench diagnostic for your cherished heirloom, your journey begins with a conversation.
+          </p>
+          
+          <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+            <a href="contact.html" class="btn btn--primary btn--lg">Book a Consultation</a>
+            <a href="instruments.html" class="btn btn--outline btn--lg">Explore Available Models</a>
+          </div>
         </div>
       </div>
     </section>
@@ -553,6 +1203,75 @@
   <script src="js/forms.js"></script>
   <script src="js/particles.js"></script>
 
+  <!-- Interactive Tonewood Lab Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const woods = {
+        'adirondack': {
+          title: 'Adirondack Red Spruce & Indian Rosewood',
+          vintage: '25-Year Vault Aged',
+          desc: 'The legendary pre-war eastern spruce. Offers the highest velocity of sound and highest stiffness-to-weight ratio, allowing aggressive flatpicking and delicate fingerstyle without tonal breakup.',
+          image: 'images/process/wood-spruce.png',
+          bass: '88%',
+          mid: '76%',
+          treble: '94%'
+        },
+        'redwood': {
+          title: 'Sinker Redwood & Mexican Ziricote',
+          vintage: '100-Year Submerged Billet',
+          desc: 'Retrieved from Northern California river bottoms. Mineralization gives this redwood exceptional harmonic warmth and piano-like sustain, favored by contemporary fingerstyle acoustic soloists.',
+          image: 'images/process/wood-mahogany.png',
+          bass: '92%',
+          mid: '85%',
+          treble: '82%'
+        },
+        'maple': {
+          title: 'Carved Flame Maple & Honduran Mahogany',
+          vintage: 'Vault Aged 15 Years',
+          desc: 'Hard rock violin-grade flamed maple carved into archtop soundboards. Delivers lightning-fast transient response, crystalline fundamental cut, and maximum feedback rejection for stage performance.',
+          image: 'images/process/wood-rosewood.png',
+          bass: '78%',
+          mid: '96%',
+          treble: '90%'
+        }
+      };
+
+      const buttons = document.querySelectorAll('.tonewood-nav-btn');
+      const img = document.getElementById('wood-img');
+      const title = document.getElementById('wood-title');
+      const vintage = document.getElementById('wood-vintage');
+      const desc = document.getElementById('wood-desc');
+      const barBass = document.getElementById('wood-bar-bass');
+      const barMid = document.getElementById('wood-bar-mid');
+      const barTreble = document.getElementById('wood-bar-treble');
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const woodKey = btn.getAttribute('data-wood');
+          const data = woods[woodKey];
+          if (!data) return;
+
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          if (img) {
+            img.style.opacity = '0.3';
+            setTimeout(() => {
+              img.src = data.image;
+              img.style.opacity = '1';
+            }, 140);
+          }
+
+          if (title) title.textContent = data.title;
+          if (vintage) vintage.textContent = data.vintage;
+          if (desc) desc.textContent = data.desc;
+          if (barBass) barBass.style.width = data.bass;
+          if (barMid) barMid.style.width = data.mid;
+          if (barTreble) barTreble.style.width = data.treble;
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>
-

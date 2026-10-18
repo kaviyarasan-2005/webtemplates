@@ -173,12 +173,13 @@
   ---------------------------------------------------------- */
   const HomeSwitcher = {
     init() {
-      // 1. Desktop Navbar Dropdown (Home tab)
+      // 1. Desktop Navbar Dropdown (Home tab & others)
       var dropdowns = document.querySelectorAll('.navbar__dropdown');
       dropdowns.forEach(function (dd) {
         var toggle = dd.querySelector('.navbar__dropdown-toggle');
         if (!toggle) return;
 
+        // Click & touch handler (toggle open state)
         toggle.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
@@ -904,7 +905,7 @@
   /* ----------------------------------------------------------
      INITIALIZATION
   ---------------------------------------------------------- */
-  document.addEventListener('DOMContentLoaded', function () {
+  function initAll() {
     ThemeManager.init();
     DirectionManager.init();
     Navbar.init();
@@ -927,6 +928,11 @@
     SmoothScroll.init();
     HeroEntrance.init();
     DifficultySlider.init();
-  });
+  }
 
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
 })();

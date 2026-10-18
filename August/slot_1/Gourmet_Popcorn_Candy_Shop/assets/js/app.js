@@ -565,7 +565,7 @@
         cards.forEach(function (card) {
           var cardMoods = (card.getAttribute('data-mood') || '').split(' ');
           if (targetMood === 'all' || cardMoods.indexOf(targetMood) !== -1) {
-            card.style.display = 'block';
+            card.style.display = '';
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
           } else {

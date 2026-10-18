@@ -277,32 +277,7 @@
 }
 
 /* Cart Button in Nav */
-.nav__cart {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: var(--space-xs) var(--space-md);
-  background-color: var(--color-primary);
-  color: #FAF4EB;
-  font-size: var(--small-size);
-  font-weight: 600;
-  border-radius: var(--radius-full);
-  text-decoration: none;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
-}
-
-.nav__cart:hover {
-  background-color: var(--color-primary-hover);
-  color: #FAF4EB;
-  transform: scale(1.03);
-}
-
-.nav__cart svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* Header Controls (theme/RTL toggles) */
+/* Header Controls (theme/RTL toggles, cart, and CTA) */
 .header__controls {
   display: flex;
   align-items: center;
@@ -310,20 +285,35 @@
   flex-shrink: 0;
 }
 
-.header__toggle {
-  display: flex;
+.header__toggle,
+.header__rtl-toggle,
+.nav__cart {
+  position: relative;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  padding: 0;
   border-radius: var(--radius-sm);
   color: var(--color-text-secondary);
-  transition: color var(--transition-fast), background-color var(--transition-fast);
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 }
 
-.header__toggle:hover {
+.header__toggle:hover,
+.header__rtl-toggle:hover,
+.nav__cart:hover {
   color: var(--color-primary);
   background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
 }
 
 .header__toggle svg {
@@ -332,17 +322,84 @@
 }
 
 .header__rtl-toggle {
+  font-family: var(--font-body);
   font-size: var(--caption-size);
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: var(--radius-sm);
-  color: var(--color-text-secondary);
-  transition: color var(--transition-fast), background-color var(--transition-fast);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  line-height: 1;
 }
 
-.header__rtl-toggle:hover {
+.nav__cart svg {
+  width: 18px;
+  height: 18px;
+}
+
+.nav__cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  color: #FAF4EB;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border: 2px solid var(--color-bg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
+.nav__cart.nav__link--active,
+.nav__cart--active {
   color: var(--color-primary);
   background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+}
+
+.nav__cart.nav__link--active::after {
+  display: none;
+}
+
+/* Primary CTA in Navbar */
+.header__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  min-height: 38px;
+  padding: 0 var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--small-size);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary);
+  color: #FAF4EB;
+  border: 1px solid var(--color-primary);
+  text-decoration: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: all var(--transition-base);
+  margin-inline-start: 4px;
+}
+
+.header__cta:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  color: #FAF4EB;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(201, 123, 61, 0.28);
+}
+
+.header__cta:active {
+  transform: translateY(0);
 }
 
 /* Mobile Hamburger */
@@ -412,6 +469,10 @@
 .mobile-menu__link:hover,
 .mobile-menu__link--active {
   color: var(--color-primary);
+}
+
+.mobile-menu__link[href*="cart.html"] {
+  display: none !important;
 }
 
 .mobile-menu__controls {

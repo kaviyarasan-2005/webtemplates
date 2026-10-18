@@ -220,25 +220,29 @@
       options = options || {};
       var maxVal = Math.max.apply(null, data.values);
       container.innerHTML = '';
+      container.style.maxWidth = '100%';
+      container.style.overflow = 'hidden';
 
       var wrapper = document.createElement('div');
-      wrapper.style.cssText = 'display:flex;align-items:flex-end;gap:8px;height:100%;padding:0 4px;';
+      wrapper.style.cssText = 'display:flex;align-items:flex-end;gap:5px;height:100%;padding:0 2px;width:100%;box-sizing:border-box;';
 
       data.values.forEach(function (val, i) {
         var col = document.createElement('div');
-        col.style.cssText = 'flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;';
+        col.style.cssText = 'flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end;';
 
         var valLabel = document.createElement('span');
         valLabel.textContent = val;
-        valLabel.style.cssText = 'font-size:11px;color:var(--text-tertiary);font-weight:600;';
+        valLabel.style.cssText = 'font-size:10px;color:var(--text-tertiary);font-weight:600;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;text-align:center;';
 
         var bar = document.createElement('div');
         var pct = (val / maxVal) * 100;
-        bar.style.cssText = 'width:100%;max-width:' + (options.maxBarWidth || 48) + 'px;height:0%;background:' + (options.color || 'var(--ember-amber)') + ';border-radius:4px 4px 0 0;transition:height 0.8s cubic-bezier(.34,1.56,.64,1);';
+        bar.style.cssText = 'width:100%;max-width:' + (options.maxBarWidth || 38) + 'px;height:0%;background:' + (options.color || 'var(--ember-amber)') + ';border-radius:4px 4px 0 0;transition:height 0.8s cubic-bezier(.34,1.56,.64,1);';
 
         var label = document.createElement('span');
-        label.textContent = data.labels ? data.labels[i] : '';
-        label.style.cssText = 'font-size:11px;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60px;text-align:center;';
+        var labelText = data.labels ? data.labels[i] : '';
+        label.textContent = labelText;
+        label.title = labelText;
+        label.style.cssText = 'font-size:10px;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center;width:100%;display:block;';
 
         col.appendChild(valLabel);
         col.appendChild(bar);
@@ -354,16 +358,17 @@
     draw(container, data, options) {
       if (!container) return;
       options = options || {};
-      var size = Math.min(container.offsetWidth, parseInt(getComputedStyle(container).height) || 260);
-      var cx = size / 2;
-      var cy = size / 2;
-      var radius = size / 2 - 40;
+      var w = container.offsetWidth || 300;
+      var h = parseInt(getComputedStyle(container).height) || 260;
+      var cx = w / 2;
+      var cy = h / 2;
+      var radius = Math.min(w, h) / 2 - 42;
       var n = data.labels.length;
       var maxVal = options.maxValue || 100;
       var levels = 5;
 
       var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
+      svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
       svg.setAttribute('width', '100%');
       svg.setAttribute('height', '100%');
 
@@ -384,8 +389,10 @@
 
       for (var i = 0; i < n; i++) {
         var angle = (Math.PI * 2 / n) * i - Math.PI / 2;
-        var lx = cx + radius * Math.cos(angle);
-        var ly = cy + radius * Math.sin(angle);
+        var cos = Math.cos(angle);
+        var sin = Math.sin(angle);
+        var lx = cx + radius * cos;
+        var ly = cy + radius * sin;
         var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         line.setAttribute('x1', cx);
         line.setAttribute('y1', cy);
@@ -395,8 +402,9 @@
         line.setAttribute('stroke-width', '1');
         svg.appendChild(line);
 
-        var labelX = cx + (radius + 18) * Math.cos(angle);
-        var labelY = cy + (radius + 18) * Math.sin(angle);
+        var labelOffset = 16;
+        var labelX = cx + (radius + labelOffset) * cos;
+        var labelY = cy + (radius + labelOffset) * sin;
         var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         text.setAttribute('x', labelX);
         text.setAttribute('y', labelY);
@@ -445,22 +453,25 @@
       if (!container) return;
       options = options || {};
       container.innerHTML = '';
+      container.style.overflowX = 'auto';
+      container.style.maxWidth = '100%';
+      container.style.webkitOverflowScrolling = 'touch';
 
       var wrapper = document.createElement('div');
-      wrapper.style.cssText = 'display:flex;flex-direction:column;gap:4px;';
+      wrapper.style.cssText = 'display:flex;flex-direction:column;gap:3px;min-width:max-content;';
 
       var hours = ['8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm'];
       var days = data.labels || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
       var headerRow = document.createElement('div');
-      headerRow.style.cssText = 'display:flex;gap:3px;';
+      headerRow.style.cssText = 'display:flex;gap:2px;align-items:center;';
       var cornerCell = document.createElement('div');
-      cornerCell.style.cssText = 'width:36px;flex-shrink:0;';
+      cornerCell.style.cssText = 'width:30px;flex-shrink:0;';
       headerRow.appendChild(cornerCell);
 
       hours.forEach(function (h) {
         var cell = document.createElement('div');
-        cell.style.cssText = 'flex:1;font-size:9px;color:var(--text-tertiary);text-align:center;min-width:24px;';
+        cell.style.cssText = 'flex:1;font-size:8px;color:var(--text-tertiary);text-align:center;min-width:14px;';
         cell.textContent = h;
         headerRow.appendChild(cell);
       });
@@ -468,10 +479,10 @@
 
       days.forEach(function (day, di) {
         var row = document.createElement('div');
-        row.style.cssText = 'display:flex;gap:3px;align-items:center;';
+        row.style.cssText = 'display:flex;gap:2px;align-items:center;';
 
         var dayLabel = document.createElement('div');
-        dayLabel.style.cssText = 'width:36px;font-size:11px;color:var(--text-tertiary);flex-shrink:0;font-weight:500;';
+        dayLabel.style.cssText = 'width:30px;font-size:10px;color:var(--text-tertiary);flex-shrink:0;font-weight:500;';
         dayLabel.textContent = day;
         row.appendChild(dayLabel);
 
@@ -481,7 +492,7 @@
           var intensity = value / maxVal;
 
           var cell = document.createElement('div');
-          cell.style.cssText = 'flex:1;aspect-ratio:1;min-width:18px;max-width:32px;border-radius:3px;' +
+          cell.style.cssText = 'flex:1;aspect-ratio:1;min-width:14px;max-width:28px;border-radius:3px;' +
             'background:rgba(242,163,60,' + (0.05 + intensity * 0.85) + ');' +
             'cursor:pointer;transition:transform 0.15s;';
           cell.title = day + ' ' + h + ': ' + value + ' bookings';

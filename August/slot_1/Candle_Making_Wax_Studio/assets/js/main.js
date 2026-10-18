@@ -20,6 +20,17 @@
     initScrollAnimations();
     initAccordions();
     initDropdowns();
+    updateCartCount();
+  }
+
+  function updateCartCount() {
+    try {
+      var cart = JSON.parse(localStorage.getItem('lume-cart')) || [];
+      var total = cart.reduce(function (sum, item) { return sum + (item.qty || 1); }, 0);
+      document.querySelectorAll('.cart-count').forEach(function (el) {
+        el.textContent = total;
+      });
+    } catch (e) {}
   }
 
   // ════════════════════════════════════════════════════════════
