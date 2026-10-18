@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
-  <meta name="description" content="Book an axe throwing lane at Axe Forge. Choose your lane, date, group size, and extras. Easy online booking with secure payment." />
+  <meta name="description" content="Book an axe throwing lane at Axe Forge. Interactive booking wizard with lane selection, real-time schedule, group customization, and secure payment." />
   <title>Book a Lane — Axe Forge Throwing Venue</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -12,122 +12,1237 @@
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/layout.css" />
   <style>
-    /* ── BOOK A LANE PAGE ── */
-    .booking-wrap {
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: var(--sp-8);
-      align-items: start;
-    }
-    .booking-panel {
-      background: var(--clr-surface);
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--clr-border);
+    /* ================================================================
+       REDESIGNED BOOKING JOURNEY — STYLES
+       ================================================================ */
+
+    /* ── Hero Refinement ── */
+    .booking-hero-wrap {
+      position: relative;
+      padding-block: var(--sp-16) var(--sp-12);
       overflow: hidden;
-    }
-    .booking-panel__header {
-      padding: var(--sp-6) var(--sp-8);
       border-bottom: 1px solid var(--clr-border);
+    }
+    .booking-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.18;
+    }
+    .booking-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.3) brightness(0.9);
+    }
+    .booking-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      margin-inline: auto;
+      text-align: center;
+    }
+    .booking-hero-perks {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--sp-4) var(--sp-6);
+      margin-top: var(--sp-6);
+    }
+    .hero-perk-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-full);
+      padding: var(--sp-2) var(--sp-4);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--clr-text-secondary);
+    }
+    .hero-perk-pill svg {
+      color: var(--clr-primary);
+    }
+
+    /* ── Dynamic Interactive Step Bar (Wizard Navigation) ── */
+    .wizard-nav-bar,
+    .wizard-nav-sticky {
+      position: relative;
+      z-index: 20;
+      background: #1C1C20;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+      padding-block: var(--sp-4);
+      margin-bottom: var(--sp-2);
+      transition: all var(--transition-base);
+    }
+    [data-theme="light"] .wizard-nav-bar,
+    [data-theme="light"] .wizard-nav-sticky {
+      background: #FFFFFF;
+      border-top: 1px solid var(--clr-border);
+      border-bottom: 1px solid var(--clr-border);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Animated Horizontal Progress Bar */
+    .wizard-progress-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      z-index: 5;
+    }
+    [data-theme="light"] .wizard-progress-track {
+      background: rgba(0, 0, 0, 0.06);
+    }
+    .wizard-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FF6640 0%, #F5B324 100%);
+      transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 10px rgba(255, 102, 64, 0.6);
+    }
+
+    .wizard-nav-inner {
       display: flex;
       align-items: center;
-      gap: var(--sp-4);
+      gap: var(--sp-3);
+      position: relative;
+      width: 100%;
     }
-    .booking-panel__step-num {
-      width: 36px;
-      height: 36px;
-      background: var(--clr-primary);
+
+    /* Live Counter Badge */
+    .wizard-status-badge-wrap {
+      flex-shrink: 0;
+    }
+    .wizard-live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 102, 64, 0.16);
+      border: 1px solid rgba(255, 102, 64, 0.4);
+      color: #FFFFFF;
+      font-size: 0.875rem;
+      font-weight: 800;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+    [data-theme="light"] .wizard-live-pill {
+      background: rgba(200, 64, 27, 0.1);
+      border-color: rgba(200, 64, 27, 0.3);
+      color: var(--clr-primary);
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
+      background: #4ADE80;
+      box-shadow: 0 0 8px #4ADE80;
+      animation: pulse-glow 2s infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    /* Scroll Navigation Arrow Buttons */
+    .wizard-track-scroll-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--clr-surface-alt);
+      border: 1.5px solid var(--clr-border);
+      color: var(--clr-text-primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
-      color: white;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all var(--transition-fast);
+      z-index: 3;
+    }
+    [data-theme="dark"] .wizard-track-scroll-btn {
+      background: #28282D;
+      border-color: rgba(255, 255, 255, 0.16);
+      color: #FFFFFF;
+    }
+    .wizard-track-scroll-btn:hover {
+      background: var(--clr-primary);
+      border-color: var(--clr-primary);
+      color: #FFFFFF;
+      transform: scale(1.08);
+    }
+
+    /* Horizontally Scrollable Step Buttons Track */
+    .wizard-steps-track {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      flex: 1;
+      padding-block: var(--sp-2) var(--sp-3);
+      padding-inline: var(--sp-1);
+      cursor: grab;
+      user-select: none;
+      scrollbar-width: thin;
+      scrollbar-color: var(--clr-primary) rgba(255, 255, 255, 0.1);
+    }
+    .wizard-steps-track:active,
+    .wizard-steps-track.is-dragging {
+      cursor: grabbing;
+    }
+    .wizard-steps-track::-webkit-scrollbar {
+      height: 6px;
+    }
+    .wizard-steps-track::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-full);
+    }
+    .wizard-steps-track::-webkit-scrollbar-thumb {
+      background: var(--clr-primary);
+      border-radius: var(--radius-full);
+    }
+    [data-theme="light"] .wizard-steps-track::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    .wizard-step-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: var(--sp-3) var(--sp-4);
+      min-width: 230px;
+      flex: 0 0 auto;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1.5px solid var(--clr-border);
+      cursor: pointer;
+      text-align: start;
+      transition: all var(--transition-base);
+      position: relative;
+      z-index: 2;
+    }
+    .wizard-step-btn:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 102, 64, 0.4);
+      transform: translateY(-2px);
+    }
+    [data-theme="light"] .wizard-step-btn {
+      background: #F8F8FA;
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+    [data-theme="light"] .wizard-step-btn:hover {
+      background: #FFFFFF;
+      border-color: var(--clr-primary);
+      box-shadow: 0 4px 12px rgba(200, 64, 27, 0.12);
+      transform: translateY(-2px);
+    }
+
+    /* Step Icon Indicator Circle */
+    .step-indicator-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--clr-surface-alt);
+      border: 2px solid var(--clr-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9375rem;
+      color: var(--clr-text-muted);
+      transition: all var(--transition-base);
+      flex-shrink: 0;
+      position: relative;
+    }
+    [data-theme="dark"] .step-indicator-circle {
+      background: #242428;
+      border-color: rgba(255, 255, 255, 0.16);
+      color: #E2DFD9;
+    }
+    .step-indicator-circle svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .step-text-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .step-num-eyebrow {
       font-size: 0.875rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--clr-text-muted);
+    }
+    [data-theme="dark"] .step-num-eyebrow {
+      color: #D4D0C8;
+    }
+    .step-title-text {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--clr-text-primary);
+      white-space: nowrap;
+    }
+    [data-theme="dark"] .step-title-text {
+      color: #FFFFFF;
+    }
+    .step-preview-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--clr-primary);
+      white-space: nowrap;
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Active Step State */
+    .wizard-step-btn.is-active {
+      background: rgba(255, 102, 64, 0.12);
+      border-color: rgba(255, 102, 64, 0.45);
+    }
+    .wizard-step-btn.is-active .step-indicator-circle {
+      background: var(--clr-primary);
+      border-color: var(--clr-primary);
+      color: #ffffff;
+      box-shadow: 0 0 16px rgba(255, 102, 64, 0.5);
+    }
+    .wizard-step-btn.is-active .step-num-eyebrow {
+      color: var(--clr-primary);
+    }
+
+    /* Completed Step State */
+    .wizard-step-btn.is-completed .step-indicator-circle {
+      background: rgba(74, 222, 128, 0.18);
+      border-color: var(--clr-success);
+      color: var(--clr-success);
+    }
+    .wizard-step-btn.is-completed .step-num-eyebrow {
+      color: var(--clr-success);
+    }
+
+    /* Step Arrow Separator */
+    .wizard-step-arrow {
+      color: var(--clr-text-muted);
+      opacity: 0.45;
       flex-shrink: 0;
     }
-    .booking-panel__body { padding: var(--sp-8); }
 
-    /* Lane Cards Grid */
+    /* ── 2-Column Booking Journey Layout ── */
+    .booking-journey-grid {
+      display: grid;
+      grid-template-columns: 1fr 370px;
+      gap: var(--sp-8);
+      align-items: start;
+      padding-block: var(--sp-8) var(--sp-16);
+    }
+
+    /* ── Step Container Cards ── */
+    .step-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      margin-bottom: var(--sp-8);
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-base);
+      scroll-margin-top: calc(var(--nav-height) + 24px);
+    }
+    .step-card:focus-within {
+      border-color: rgba(255, 102, 64, 0.4);
+    }
+    .step-card__header {
+      padding: var(--sp-6) var(--sp-8);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+      border-bottom: 1px solid var(--clr-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      flex-wrap: wrap;
+    }
+    .step-header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+    }
+    .step-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      padding: var(--sp-1) var(--sp-3);
+      border-radius: var(--radius-full);
+      background: rgba(255, 102, 64, 0.12);
+      border: 1px solid rgba(255, 102, 64, 0.3);
+      color: var(--clr-primary);
+      font-size: 0.875rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .step-card__title {
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: var(--clr-text-primary);
+      margin: 0;
+    }
+    .step-card__desc {
+      font-size: 0.9375rem;
+      color: var(--clr-text-secondary);
+      margin-top: 2px;
+    }
+    .step-status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      padding: var(--sp-1) var(--sp-3);
+      border-radius: var(--radius-full);
+      background: var(--clr-surface-alt);
+      border: 1px solid var(--clr-border);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--clr-text-muted);
+    }
+    .step-status-chip.active {
+      background: rgba(255, 102, 64, 0.1);
+      border-color: rgba(255, 102, 64, 0.3);
+      color: var(--clr-primary);
+    }
+    .step-status-chip.done {
+      background: rgba(74, 222, 128, 0.1);
+      border-color: rgba(74, 222, 128, 0.3);
+      color: var(--clr-success);
+    }
+
+    .step-card__body {
+      padding: var(--sp-8);
+    }
+
+    .step-card__footer {
+      padding: var(--sp-5) var(--sp-8);
+      background: var(--clr-surface-alt);
+      border-top: 1px solid var(--clr-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      flex-wrap: wrap;
+    }
+
+    /* ── Step 1: Redesigned Lane Cards Grid ── */
     .lanes-select-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--sp-4);
+      gap: var(--sp-5);
     }
-    .lane-card__image { height: 160px; overflow: hidden; border-bottom: 1px solid var(--clr-border); }
-    .lane-card__image img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-base); }
-    .lane-card:hover .lane-card__image img { transform: scale(1.05); }
+    .lane-card {
+      border: 2px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      background: var(--clr-surface);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: all var(--transition-base);
+    }
+    .lane-card:hover:not(.busy) {
+      border-color: rgba(255, 102, 64, 0.6);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+    }
+    .lane-card.selected {
+      border-color: var(--clr-primary);
+      background: rgba(255, 102, 64, 0.03);
+      box-shadow: 0 0 0 3px rgba(255, 102, 64, 0.25), 0 16px 36px rgba(0, 0, 0, 0.3);
+    }
+    .lane-card.busy {
+      opacity: 0.65;
+      cursor: not-allowed;
+      filter: grayscale(80%);
+    }
 
-    /* Time Slots */
+    .lane-card__media {
+      position: relative;
+      height: 180px;
+      overflow: hidden;
+    }
+    .lane-card__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+    .lane-card:hover:not(.busy) .lane-card__media img {
+      transform: scale(1.06);
+    }
+    .lane-card__media-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
+    }
+    .lane-card__badges-top {
+      position: absolute;
+      top: var(--sp-3);
+      inset-inline-start: var(--sp-3);
+      inset-inline-end: var(--sp-3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+    .lane-num-chip {
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.875rem;
+      font-weight: 800;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .lane-select-check {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      transition: all var(--transition-fast);
+    }
+    .lane-card.selected .lane-select-check {
+      background: var(--clr-primary);
+      border-color: var(--clr-primary);
+      color: #ffffff;
+      transform: scale(1.1);
+    }
+
+    .lane-card__content {
+      padding: var(--sp-5);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .lane-card__title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-2);
+    }
+    .lane-card__title {
+      font-size: 1.1875rem;
+      font-weight: 700;
+      color: var(--clr-text-primary);
+    }
+    .lane-card__desc {
+      font-size: 0.9375rem;
+      color: var(--clr-text-secondary);
+      line-height: 1.5;
+      margin-bottom: var(--sp-4);
+    }
+    .lane-amenities-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-4);
+    }
+    .amenity-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--clr-surface-alt);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-sm);
+      padding: 2px 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--clr-text-secondary);
+    }
+    .lane-card__pricing-row {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: var(--sp-3);
+      border-top: 1px solid var(--clr-border);
+    }
+    .lane-price-amount {
+      font-size: 1.375rem;
+      font-weight: 800;
+      color: var(--clr-primary);
+    }
+    .lane-price-unit {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--clr-text-muted);
+    }
+    .lane-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    .lane-status-badge.available { color: var(--clr-success); }
+    .lane-status-badge.booked { color: var(--clr-error); }
+
+    /* Special Spotlight: Cyber Glow Feature */
+    .cyber-spotlight-banner {
+      background: linear-gradient(135deg, rgba(255, 102, 64, 0.12) 0%, rgba(99, 102, 241, 0.15) 100%);
+      border: 1px solid rgba(255, 102, 64, 0.35);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-5);
+      margin-top: var(--sp-6);
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: var(--sp-5);
+      align-items: center;
+    }
+    .cyber-thumb-img {
+      width: 120px;
+      height: 80px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--clr-border);
+    }
+    .cyber-thumb-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ── Step 2: Date & Time Experience ── */
+    .quick-date-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-6);
+    }
+    .quick-date-chip {
+      padding: var(--sp-2) var(--sp-4);
+      border-radius: var(--radius-full);
+      background: var(--clr-surface-alt);
+      border: 1px solid var(--clr-border);
+      color: var(--clr-text-secondary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      transition: all var(--transition-fast);
+    }
+    .quick-date-chip:hover {
+      border-color: var(--clr-primary);
+      color: var(--clr-primary);
+      transform: translateY(-1px);
+    }
+    .quick-date-chip.active {
+      background: var(--clr-primary);
+      border-color: var(--clr-primary);
+      color: #ffffff;
+    }
+    [data-theme="dark"] .quick-date-chip {
+      background: #242428;
+      border-color: rgba(255, 255, 255, 0.16);
+      color: #E2DFD9;
+    }
+    [data-theme="dark"] .quick-date-chip:hover {
+      background: #303036;
+      border-color: #FF6640;
+      color: #FFFFFF;
+    }
+    [data-theme="dark"] .quick-date-chip.active {
+      background: rgba(255, 102, 64, 0.25);
+      border-color: #FF6640;
+      color: #FFFFFF;
+      box-shadow: 0 0 14px rgba(255, 102, 64, 0.4);
+    }
+
+    .date-time-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-6);
+    }
+    .cal-wrapper-box {
+      background: var(--clr-surface-alt);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-5);
+    }
+    [data-theme="dark"] .cal-wrapper-box {
+      background: #202024;
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+    .cal-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--sp-4);
+    }
+    .cal-month-title {
+      font-size: 1.125rem;
+      font-weight: 800;
+      color: var(--clr-text-primary);
+    }
+    [data-theme="dark"] .cal-month-title {
+      color: #FFFFFF;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--clr-text-primary);
+      border: 1px solid transparent;
+      transition: all var(--transition-fast);
+    }
+    [data-theme="dark"] .cal-day {
+      color: #FFFFFF;
+    }
+    .cal-day.header {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--clr-text-muted);
+      cursor: default;
+      aspect-ratio: auto;
+      padding-block: var(--sp-1);
+    }
+    [data-theme="dark"] .cal-day.header {
+      color: #B8B5AE;
+    }
+    .cal-day:hover:not(.disabled):not(.header) {
+      background: rgba(255, 102, 64, 0.15);
+      border-color: var(--clr-primary);
+      color: var(--clr-primary);
+    }
+    [data-theme="dark"] .cal-day:hover:not(.disabled):not(.header) {
+      background: rgba(255, 102, 64, 0.22);
+      border-color: #FF6640;
+      color: #FFFFFF;
+    }
+    .cal-day.today {
+      border-color: var(--clr-primary);
+      font-weight: 800;
+    }
+    [data-theme="dark"] .cal-day.today {
+      border-color: #FF6640;
+      color: #FF8566;
+    }
+    .cal-day.selected {
+      background: var(--clr-primary) !important;
+      border-color: var(--clr-primary) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px rgba(255, 102, 64, 0.4);
+    }
+    [data-theme="dark"] .cal-day.selected {
+      background: rgba(255, 102, 64, 0.28) !important;
+      border-color: #FF6640 !important;
+      color: #FFFFFF !important;
+      font-weight: 800;
+      box-shadow: 0 0 14px rgba(255, 102, 64, 0.5);
+    }
+    .cal-day.disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+    [data-theme="dark"] .cal-day.disabled {
+      color: #6C6A64;
+      opacity: 0.5;
+    }
+
+    /* ── Time Slots Panel (High-Contrast Dark Mode Redesign) ── */
+    .time-picker-box {
+      background: var(--clr-surface-alt);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-5);
+    }
+    [data-theme="dark"] .time-picker-box {
+      background: #202024;
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+    .time-picker-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--sp-4);
+      padding-bottom: var(--sp-3);
+      border-bottom: 1px solid var(--clr-border);
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+    }
+    [data-theme="dark"] .time-picker-header {
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+    .time-picker-title {
+      font-size: 1.125rem;
+      font-weight: 800;
+      color: var(--clr-text-primary);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      margin: 0;
+    }
+    [data-theme="dark"] .time-picker-title {
+      color: #FFFFFF;
+    }
+    .time-slots-legend {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--clr-text-secondary);
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-dot--available { background: #4ADE80; box-shadow: 0 0 6px rgba(74, 222, 128, 0.6); }
+    .legend-dot--popular { background: #FBBF24; box-shadow: 0 0 6px rgba(251, 191, 36, 0.6); }
+    .legend-dot--glow { background: #C084FC; box-shadow: 0 0 6px rgba(192, 132, 252, 0.6); }
+    .legend-dot--booked { background: #F87171; }
+
+    .time-slot-category {
+      margin-bottom: var(--sp-5);
+    }
+    .time-slot-category:last-child {
+      margin-bottom: 0;
+    }
+    .time-slot-category-title {
+      font-size: 0.875rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--clr-text-primary);
+      margin-bottom: var(--sp-3);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+    }
+    [data-theme="dark"] .time-slot-category-title {
+      color: #FFFFFF;
+    }
+    .time-slot-category-title svg {
+      color: var(--clr-primary);
+    }
     .time-slots-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: var(--sp-3);
     }
+
+    /* Time Slot Buttons */
     .time-slot {
       padding: var(--sp-3) var(--sp-2);
-      border: 2px solid var(--clr-border);
-      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--clr-border);
+      border-radius: var(--radius-md);
       text-align: center;
       cursor: pointer;
       transition: all var(--transition-fast);
+      background: var(--clr-surface);
+      color: var(--clr-text-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+    }
+    [data-theme="dark"] .time-slot {
+      background: #28282D;
+      border-color: rgba(255, 255, 255, 0.16);
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    .slot-time-text {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--clr-text-primary);
+      letter-spacing: 0.01em;
+      transition: color var(--transition-fast);
+    }
+    [data-theme="dark"] .slot-time-text {
+      color: #FFFFFF;
+    }
+    .slot-badge-sub {
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .slot-badge-sub.status-available { color: #4ADE80; }
+    .slot-badge-sub.status-popular { color: #FBBF24; }
+    .slot-badge-sub.status-glow { color: #C084FC; }
+    .slot-badge-sub.status-booked { color: #F87171; }
+
+    /* Hover */
+    .time-slot:hover:not(.disabled) {
+      border-color: var(--clr-primary);
+      transform: translateY(-2px);
+    }
+    [data-theme="dark"] .time-slot:hover:not(.disabled) {
+      background: #34343A;
+      border-color: #FF6640;
+      box-shadow: 0 4px 16px rgba(255, 102, 64, 0.3);
+    }
+
+    /* Selected State — WCAG AAA Compliant High Contrast */
+    .time-slot.selected {
+      border-width: 2px;
+      border-color: var(--clr-primary);
+    }
+    [data-theme="dark"] .time-slot.selected {
+      background: rgba(255, 102, 64, 0.22);
+      border-color: #FF6640;
+      box-shadow: 0 0 0 1px #FF6640, 0 4px 20px rgba(255, 102, 64, 0.45);
+    }
+    [data-theme="dark"] .time-slot.selected .slot-time-text {
+      color: #FFFFFF;
+      font-weight: 800;
+    }
+    [data-theme="dark"] .time-slot.selected .slot-badge-sub {
+      color: #FF9478;
+      font-weight: 800;
+    }
+    [data-theme="light"] .time-slot.selected {
+      background: var(--clr-primary);
+      border-color: var(--clr-primary);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(200, 64, 27, 0.35);
+    }
+    [data-theme="light"] .time-slot.selected .slot-time-text {
+      color: #FFFFFF;
+    }
+    [data-theme="light"] .time-slot.selected .slot-badge-sub {
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    /* Disabled / Sold Out State — Legible & High Contrast */
+    .time-slot.disabled {
+      cursor: not-allowed;
+      border-style: dashed;
+    }
+    [data-theme="dark"] .time-slot.disabled {
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: none;
+    }
+    [data-theme="dark"] .time-slot.disabled .slot-time-text {
+      color: #A8A59E;
+      text-decoration: line-through;
+    }
+    [data-theme="dark"] .time-slot.disabled .slot-badge-sub {
+      color: #F87171;
+      font-weight: 700;
+      background: rgba(248, 113, 113, 0.12);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    [data-theme="light"] .time-slot.disabled {
+      background: var(--clr-surface-alt);
+      border-color: var(--clr-border);
+      opacity: 0.65;
+    }
+    [data-theme="light"] .time-slot.disabled .slot-time-text {
+      color: var(--clr-text-muted);
+      text-decoration: line-through;
+    }
+    [data-theme="light"] .time-slot.disabled .slot-badge-sub {
+      color: var(--clr-error);
+    }
+
+    /* ── Step 3: Group Size & Duration ── */
+    .group-planner-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-8);
+      align-items: start;
+    }
+    .quick-group-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+      margin-top: var(--sp-4);
+    }
+    .group-chip-btn {
+      padding: var(--sp-1) var(--sp-3);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--clr-border);
+      background: var(--clr-surface-alt);
       font-size: 0.875rem;
       font-weight: 600;
-      background: var(--clr-surface);
+      color: var(--clr-text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
     }
-    .time-slot:hover:not(.disabled) { border-color: var(--clr-primary); color: var(--clr-primary); }
-    .time-slot.selected { background: var(--clr-primary); border-color: var(--clr-primary); color: white; }
-    .time-slot.disabled { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; }
+    .group-chip-btn:hover, .group-chip-btn.active {
+      background: var(--clr-primary);
+      border-color: var(--clr-primary);
+      color: #ffffff;
+    }
 
-    /* Extras */
-    .extras-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-4); }
-    .extra-card {
+    .recommendation-banner {
+      background: rgba(255, 102, 64, 0.08);
+      border: 1px solid rgba(255, 102, 64, 0.25);
+      border-radius: var(--radius-md);
+      padding: var(--sp-4);
+      margin-top: var(--sp-4);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-3);
+      font-size: 0.9375rem;
+      color: var(--clr-text-secondary);
+    }
+    .recommendation-banner svg {
+      color: var(--clr-primary);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Visual Duration Cards */
+    .duration-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-3);
+      margin-top: var(--sp-3);
+    }
+    .duration-card {
       border: 2px solid var(--clr-border);
       border-radius: var(--radius-md);
+      padding: var(--sp-4) var(--sp-3);
+      text-align: center;
+      cursor: pointer;
+      background: var(--clr-surface);
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    .duration-card:hover {
+      border-color: var(--clr-primary);
+      transform: translateY(-2px);
+    }
+    .duration-card.selected {
+      border-color: var(--clr-primary);
+      background: rgba(255, 102, 64, 0.06);
+      box-shadow: 0 0 0 2px rgba(255, 102, 64, 0.2);
+    }
+    .duration-card-badge {
+      position: absolute;
+      top: -10px;
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
+      background: var(--clr-primary);
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .duration-hours {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--clr-text-primary);
+      margin-top: 2px;
+    }
+    .duration-card.selected .duration-hours {
+      color: var(--clr-primary);
+    }
+    .duration-desc {
+      font-size: 0.875rem;
+      color: var(--clr-text-muted);
+      margin-top: 4px;
+    }
+
+    /* ── Step 4: Upgrades & Add-ons Grid ── */
+    .extras-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-5);
+    }
+    .extra-card {
+      border: 2px solid var(--clr-border);
+      border-radius: var(--radius-lg);
       padding: var(--sp-5);
       cursor: pointer;
       transition: all var(--transition-fast);
       position: relative;
+      background: var(--clr-surface);
+      display: flex;
+      flex-direction: column;
     }
-    .extra-card:hover { border-color: var(--clr-primary); }
-    .extra-card input[type="checkbox"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; margin: 0; }
-    .extra-card.checked { border-color: var(--clr-primary); background: rgba(200,64,27,0.05); }
-    .extra-card__icon { width: 44px; height: 44px; background: rgba(200,64,27,0.1); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: var(--clr-primary); margin-bottom: var(--sp-3); }
-    .extra-card__name { font-weight: 700; font-size: 0.9375rem; margin-bottom: var(--sp-1); }
-    .extra-card__price { color: var(--clr-primary); font-weight: 700; font-size: 0.875rem; }
-    .extra-card__check {
+    .extra-card:hover {
+      border-color: rgba(255, 102, 64, 0.6);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .extra-card input[type="checkbox"] {
       position: absolute;
-      top: var(--sp-3);
-      inset-inline-end: var(--sp-3);
-      width: 22px;
-      height: 22px;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      z-index: 2;
+    }
+    .extra-card.checked {
+      border-color: var(--clr-primary);
+      background: rgba(255, 102, 64, 0.04);
+      box-shadow: 0 0 0 2px rgba(255, 102, 64, 0.2);
+    }
+    .extra-card__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--sp-4);
+    }
+    .extra-card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 102, 64, 0.12);
+      color: var(--clr-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .extra-card__icon svg {
+      width: 24px;
+      height: 24px;
+    }
+    .extra-card__check {
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       border: 2px solid var(--clr-border);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all var(--transition-fast);
       background: var(--clr-surface);
       color: transparent;
+      transition: all var(--transition-fast);
     }
-    .extra-card.checked .extra-card__check { background: var(--clr-primary); border-color: var(--clr-primary); color: white; }
+    .extra-card.checked .extra-card__check {
+      background: var(--clr-primary);
+      border-color: var(--clr-primary);
+      color: #ffffff;
+      transform: scale(1.08);
+    }
+    .extra-card__name {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--clr-text-primary);
+      margin-bottom: var(--sp-1);
+    }
+    .extra-card__desc {
+      font-size: 0.9375rem;
+      color: var(--clr-text-secondary);
+      line-height: 1.5;
+      margin-bottom: var(--sp-3);
+      flex: 1;
+    }
+    .extra-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: var(--sp-3);
+      border-top: 1px solid var(--clr-border);
+    }
+    .extra-card__price {
+      font-size: 1.125rem;
+      font-weight: 800;
+      color: var(--clr-primary);
+    }
+    .extra-card__tag {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background: var(--clr-surface-alt);
+      color: var(--clr-text-muted);
+    }
 
-    /* Summary Card */
-    .summary-card {
-      background: var(--clr-surface);
-      border-radius: var(--radius-xl);
+    /* ── Step 5: Checkout & Payment Section ── */
+    .order-recap-banner {
+      background: linear-gradient(135deg, rgba(255, 102, 64, 0.08) 0%, rgba(240, 165, 0, 0.08) 100%);
+      border: 1px solid rgba(255, 102, 64, 0.25);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-5);
+      margin-bottom: var(--sp-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      flex-wrap: wrap;
+    }
+    .recap-details {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+    }
+    .recap-lane-thumb {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
       border: 1px solid var(--clr-border);
-      padding: var(--sp-6);
-      position: sticky;
-      top: calc(var(--nav-height) + var(--sp-6));
+      flex-shrink: 0;
     }
-    .summary-card__title { font-weight: 700; font-size: 1.125rem; margin-bottom: var(--sp-5); display: flex; align-items: center; gap: var(--sp-3); }
-    .summary-row { display: flex; justify-content: space-between; align-items: center; padding-block: var(--sp-3); border-bottom: 1px solid var(--clr-border); font-size: 0.9375rem; }
-    .summary-row:last-of-type { border-bottom: none; }
-    .summary-row.total { font-weight: 700; font-size: 1.125rem; color: var(--clr-primary); padding-top: var(--sp-4); border-top: 2px solid var(--clr-border); margin-top: var(--sp-3); }
-    .summary-label { color: var(--clr-text-secondary); }
+    .recap-lane-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-    /* Payment */
-    .payment-methods { display: flex; gap: var(--sp-3); margin-bottom: var(--sp-6); }
+    .payment-methods {
+      display: flex;
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-6);
+    }
     .payment-method-btn {
       flex: 1;
       padding: var(--sp-4);
@@ -139,41 +1254,204 @@
       flex-direction: column;
       align-items: center;
       gap: var(--sp-2);
-      font-size: 0.8125rem;
-      font-weight: 600;
+      font-size: 0.9375rem;
+      font-weight: 700;
       color: var(--clr-text-secondary);
       transition: all var(--transition-fast);
     }
-    .payment-method-btn:hover, .payment-method-btn.active { border-color: var(--clr-primary); color: var(--clr-primary); background: rgba(200,64,27,0.05); }
+    .payment-method-btn:hover {
+      border-color: rgba(255, 102, 64, 0.5);
+      color: var(--clr-text-primary);
+    }
+    .payment-method-btn.active {
+      border-color: var(--clr-primary);
+      color: var(--clr-primary);
+      background: rgba(255, 102, 64, 0.05);
+    }
 
-    /* FAQ */
-    .faq-section { background: var(--clr-surface-alt); }
-
-    /* Policy banner */
-    .policy-banner {
-      background: rgba(200,64,27,0.08);
-      border: 1px solid rgba(200,64,27,0.2);
+    /* ── Persistent Sticky Live Booking Receipt Sidebar ── */
+    .booking-summary-sidebar {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-xl);
+      padding: var(--sp-6);
+      position: sticky;
+      top: calc(var(--nav-height) + 24px);
+      box-shadow: var(--shadow-lg);
+      transition: all var(--transition-base);
+    }
+    .summary-card__header-box {
+      border-bottom: 1px solid var(--clr-border);
+      padding-bottom: var(--sp-4);
+      margin-bottom: var(--sp-4);
+    }
+    .summary-card__title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      margin: 0;
+    }
+    .summary-lane-preview-card {
+      background: var(--clr-surface-alt);
+      border: 1px solid var(--clr-border);
       border-radius: var(--radius-md);
-      padding: var(--sp-4) var(--sp-5);
+      padding: var(--sp-3);
       display: flex;
       gap: var(--sp-3);
-      align-items: flex-start;
-      margin-top: var(--sp-5);
+      align-items: center;
+      margin-bottom: var(--sp-4);
+    }
+    .preview-thumb {
+      width: 58px;
+      height: 58px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .preview-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .preview-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--clr-text-primary);
+    }
+    .preview-rate {
       font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--clr-primary);
+      margin-top: 2px;
+    }
+
+    .summary-parameters-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-4);
+      padding-bottom: var(--sp-4);
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .summary-param-chip {
+      background: var(--clr-surface-alt);
+      border-radius: var(--radius-sm);
+      padding: var(--sp-2) var(--sp-3);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .param-label {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--clr-text-muted);
+    }
+    .param-val {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--clr-text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .summary-calc-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-4);
+      font-size: 0.9375rem;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       color: var(--clr-text-secondary);
     }
-    .policy-banner svg { color: var(--clr-primary); flex-shrink: 0; margin-top: 2px; }
-
-    @media (max-width: 1023px) {
-      .booking-wrap { grid-template-columns: 1fr; }
-      .summary-card { position: static; }
-      .lanes-select-grid { grid-template-columns: 1fr; }
+    .summary-row strong {
+      color: var(--clr-text-primary);
     }
-    @media (max-width: 639px) {
-      .time-slots-grid { grid-template-columns: repeat(3, 1fr); }
-      .extras-grid { grid-template-columns: 1fr; }
-      .booking-panel__body { padding: var(--sp-5); }
-      .payment-methods { flex-direction: column; }
+    .summary-row.total-row {
+      margin-top: var(--sp-2);
+      padding-top: var(--sp-3);
+      border-top: 2px dashed var(--clr-border);
+      font-size: 1.1875rem;
+    }
+    .summary-row.total-row strong {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--clr-primary);
+    }
+
+    .summary-trust-perks {
+      margin-top: var(--sp-5);
+      padding-top: var(--sp-4);
+      border-top: 1px solid var(--clr-border);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+    .trust-perk-item {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-size: 0.875rem;
+      color: var(--clr-text-muted);
+    }
+    .trust-perk-item svg {
+      color: var(--clr-success);
+    }
+
+    /* ── Responsive Refinements ── */
+    @media (max-width: 1080px) {
+      .booking-journey-grid {
+        grid-template-columns: 1fr;
+      }
+      .booking-summary-sidebar {
+        position: static;
+        order: -1;
+        margin-bottom: var(--sp-6);
+      }
+      .date-time-layout {
+        grid-template-columns: 1fr;
+      }
+      .group-planner-box {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .lanes-select-grid {
+        grid-template-columns: 1fr;
+      }
+      .extras-grid {
+        grid-template-columns: 1fr;
+      }
+      .cyber-spotlight-banner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .cyber-thumb-img {
+        margin-inline: auto;
+      }
+      .duration-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .time-slots-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .step-card__header {
+        padding: var(--sp-5);
+      }
+      .step-card__body {
+        padding: var(--sp-5);
+      }
+      .step-card__footer {
+        padding: var(--sp-4) var(--sp-5);
+      }
     }
   </style>
 </head>
@@ -182,587 +1460,1035 @@
 <div id="nav-placeholder"></div>
 
 <!-- ================================================================
-     SECTION 1: PAGE HERO / STEP PROGRESS
+     SECTION 1: HERO & BOOKING INTRO
      ================================================================ -->
-<section class="page-hero" id="booking-hero" aria-labelledby="booking-hero-heading">
-  <div style="position: absolute; inset: 0; z-index: 0; opacity: 0.25;">
-    <img src="../assets/images/booking_hero_bg.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover;" />
+<header class="booking-hero-wrap" id="booking-hero" aria-labelledby="booking-hero-heading">
+  <div class="booking-hero-bg">
+    <img src="../assets/images/booking_hero_bg.jpg" alt="Axe throwing lanes background" />
   </div>
-  <div class="container" style="position: relative; z-index: 2;">
-    <div class="page-hero__content text-center">
-      <div class="page-hero__eyebrow">Online Booking</div>
-      <h1 class="page-hero__title" id="booking-hero-heading">Book Your <span>Lane</span></h1>
-      <p class="page-hero__desc" style="margin-inline:auto;">Reserve your axe throwing session in just a few steps. Choose your lane, time, group size, and extras — then secure your booking.</p>
+  <div class="container">
+    <div class="booking-hero-content">
+      <span class="badge badge--primary" style="margin-bottom:var(--sp-3);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+        Instant Online Reservation
+      </span>
+      <h1 class="page-hero__title" id="booking-hero-heading">Book Your <span>Axe Lane</span></h1>
+      <p class="text-lead" style="margin-inline:auto;max-width:680px;">Reserve your session in a few effortless steps. Choose your lane tier, pick your date and time slot, add group extras, and get instant confirmation.</p>
+      
+      <div class="booking-hero-perks" role="list" aria-label="Booking assurances">
+        <div class="hero-perk-pill" role="listitem">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Free 24h Cancellation
+        </div>
+        <div class="hero-perk-pill" role="listitem">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Instant Mobile Tickets
+        </div>
+        <div class="hero-perk-pill" role="listitem">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Coaching &amp; Axes Included
+        </div>
+      </div>
     </div>
-
-    <!-- Step Progress -->
-    <nav class="steps" style="margin-top:var(--sp-10);" aria-label="Booking steps">
-      <div class="step active" aria-current="step">
-        <div class="step__num">1</div>
-        <span class="step__label">Select Lane</span>
-      </div>
-      <div class="step">
-        <div class="step__num">2</div>
-        <span class="step__label">Date &amp; Time</span>
-      </div>
-      <div class="step">
-        <div class="step__num">3</div>
-        <span class="step__label">Group Size</span>
-      </div>
-      <div class="step">
-        <div class="step__num">4</div>
-        <span class="step__label">Extras</span>
-      </div>
-      <div class="step">
-        <div class="step__num">5</div>
-        <span class="step__label">Payment</span>
-      </div>
-    </nav>
   </div>
-</section>
+</header>
 
 <!-- ================================================================
-     SECTION 2: LANE SELECTION
+     STEP WIZARD NAVIGATION BAR (SCROLLABLE & NON-STATIC)
      ================================================================ -->
-<section class="section-pad bg-surface-alt" id="lane-selection" aria-labelledby="lane-select-heading">
-  <div class="container">
-    <div class="section-header centered reveal">
-      <span class="section-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        Step 1
-      </span>
-      <h2 id="lane-select-heading">Choose Your Lane</h2>
-      <p class="text-lead">Select the lane that best fits your group size and experience level. Green = Available, Red = Booked.</p>
-    </div>
-
-    <p aria-live="polite" id="selected-lane-display" style="display:none;"></p>
-
-    <div class="lanes-select-grid" role="list" aria-label="Available lanes">
-      <!-- Lane Cards -->
-      <div class="lane-card" data-lane="1" tabindex="0" role="button" aria-label="Select Lane 1 — Champion Lane" aria-pressed="false">
-        <div class="lane-card__header">
-          <span class="lane-card__num" aria-hidden="true">01</span>
-          <span class="badge badge--accent">VIP</span>
-        </div>
-        <div class="lane-card__image"><img src="../assets/images/lane-champion.jpg" alt="Champion Lane" /></div>
-        <div class="lane-card__body">
-          <h3 style="font-weight:700;margin-bottom:var(--sp-2);">Champion Lane</h3>
-          <p style="font-size:0.875rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-3);">Full competition setup, digital scoring, VIP seating. Up to 6 throwers.</p>
-          <div class="lane-card__status lane-card__status--available">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
-            Available
-          </div>
-          <p style="font-size:1.25rem;font-weight:800;color:var(--clr-primary);margin-top:var(--sp-3);">$35<span style="font-size:0.8125rem;font-weight:500;color:var(--clr-text-muted);">/person/hr</span></p>
-        </div>
-      </div>
-
-      <div class="lane-card" data-lane="2" tabindex="0" role="button" aria-label="Select Lane 2 — Rookie Range" aria-pressed="false">
-        <div class="lane-card__header">
-          <span class="lane-card__num" aria-hidden="true">02</span>
-          <span class="badge badge--success">Beginner</span>
-        </div>
-        <div class="lane-card__image"><img src="../assets/images/lane-rookie.jpg" alt="Rookie Range" /></div>
-        <div class="lane-card__body">
-          <h3 style="font-weight:700;margin-bottom:var(--sp-2);">Rookie Range</h3>
-          <p style="font-size:0.875rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-3);">Guided coaching, lighter axes, closer targets. Perfect for first-timers.</p>
-          <div class="lane-card__status lane-card__status--available">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
-            Available
-          </div>
-          <p style="font-size:1.25rem;font-weight:800;color:var(--clr-primary);margin-top:var(--sp-3);">$25<span style="font-size:0.8125rem;font-weight:500;color:var(--clr-text-muted);">/person/hr</span></p>
-        </div>
-      </div>
-
-      <div class="lane-card busy" data-lane="3" tabindex="0" role="button" aria-label="Lane 3 — Group Forge — Currently booked" aria-disabled="true" style="cursor:not-allowed;">
-        <div class="lane-card__header">
-          <span class="lane-card__num" aria-hidden="true">03</span>
-          <span class="badge" style="background:var(--clr-error);color:white;border:none;">Booked</span>
-        </div>
-        <div class="lane-card__image"><img src="../assets/images/lane-group.jpg" alt="Group Forge" style="filter: grayscale(100%); opacity: 0.7;" /></div>
-        <div class="lane-card__body">
-          <h3 style="font-weight:700;margin-bottom:var(--sp-2);">Group Forge</h3>
-          <p style="font-size:0.875rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-3);">Dual side-by-side lanes with private lounge. Up to 20 guests.</p>
-          <div class="lane-card__status lane-card__status--busy">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
-            Currently Booked
-          </div>
-          <p style="font-size:1.25rem;font-weight:800;color:var(--clr-text-muted);margin-top:var(--sp-3);">$28<span style="font-size:0.8125rem;font-weight:500;color:var(--clr-text-muted);">/person/hr</span></p>
-        </div>
-      </div>
-
-      <div class="lane-card" data-lane="4" tabindex="0" role="button" aria-label="Select Lane 4 — Elite Circuit" aria-pressed="false">
-        <div class="lane-card__header">
-          <span class="lane-card__num" aria-hidden="true">04</span>
-          <span class="badge badge--primary">Pro</span>
-        </div>
-        <div class="lane-card__image"><img src="../assets/images/lane-elite.jpg" alt="Elite Circuit" /></div>
-        <div class="lane-card__body">
-          <h3 style="font-weight:700;margin-bottom:var(--sp-2);">Elite Circuit</h3>
-          <p style="font-size:0.875rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-3);">Regulation distance, auto digital scoring. For competitive players.</p>
-          <div class="lane-card__status lane-card__status--available">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
-            Available
-          </div>
-          <p style="font-size:1.25rem;font-weight:800;color:var(--clr-primary);margin-top:var(--sp-3);">$30<span style="font-size:0.8125rem;font-weight:500;color:var(--clr-text-muted);">/person/hr</span></p>
-        </div>
-      </div>
-    </div>
+<nav class="wizard-nav-bar" id="wizard-nav" aria-label="Booking steps navigation">
+  <!-- Dynamic Animated Progress Line -->
+  <div class="wizard-progress-track">
+    <div class="wizard-progress-fill" id="wizard-progress-bar" style="width: 20%;"></div>
   </div>
-</section>
 
-<!-- ================================================================
-     SECTION 3: DATE & TIME PICKER
-     ================================================================ -->
-<section class="section-pad" id="date-time" aria-labelledby="datetime-heading">
   <div class="container">
-    <div class="section-header centered reveal">
-      <span class="section-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Step 2
-      </span>
-      <h2 id="datetime-heading">Pick Your Date &amp; Time</h2>
-      <p class="text-lead">Select an available date and your preferred time slot.</p>
-    </div>
+    <div class="wizard-nav-inner">
 
-    <div class="booking-wrap">
-      <div>
-        <!-- Calendar -->
-        <div class="booking-panel reveal" id="booking-calendar" aria-label="Session date picker">
-          <div class="booking-panel__header">
-            <div class="booking-panel__step-num" aria-hidden="true">2</div>
-            <div>
-              <h3 style="font-weight:700;">Select Date</h3>
-              <p id="selected-date-display" style="font-size:0.875rem;color:var(--clr-primary);margin-top:2px;" aria-live="polite">No date selected</p>
-            </div>
-            <div style="margin-inline-start:auto;display:flex;gap:var(--sp-2);">
-              <button class="ctrl-btn" data-cal="prev" aria-label="Previous month" title="Previous month">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-              </button>
-              <button class="ctrl-btn" data-cal="next" aria-label="Next month" title="Next month">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-            </div>
-          </div>
-          <div class="booking-panel__body">
-            <h4 class="cal-month-title" style="text-align:center;font-weight:700;margin-bottom:var(--sp-4);" aria-live="polite"></h4>
-            <div class="calendar-grid" role="grid" aria-label="Date selection calendar"></div>
-          </div>
-        </div>
-
-        <!-- Time Slots -->
-        <div class="booking-panel reveal" style="margin-top:var(--sp-5);" aria-label="Time slot selection">
-          <div class="booking-panel__header">
-            <div class="booking-panel__step-num" aria-hidden="true">2</div>
-            <h3 style="font-weight:700;">Select Time Slot</h3>
-          </div>
-          <div class="booking-panel__body">
-            <div class="time-slots-grid" role="group" aria-label="Available time slots">
-              <button class="time-slot" aria-pressed="false">2:00 PM</button>
-              <button class="time-slot" aria-pressed="false">3:00 PM</button>
-              <button class="time-slot disabled" disabled aria-disabled="true">4:00 PM</button>
-              <button class="time-slot" aria-pressed="false">5:00 PM</button>
-              <button class="time-slot" aria-pressed="false">6:00 PM</button>
-              <button class="time-slot disabled" disabled aria-disabled="true">7:00 PM</button>
-              <button class="time-slot" aria-pressed="false">8:00 PM</button>
-              <button class="time-slot" aria-pressed="false">9:00 PM</button>
-              <button class="time-slot" aria-pressed="false">10:00 PM</button>
-              <button class="time-slot disabled" disabled aria-disabled="true">11:00 PM</button>
-            </div>
-            <p style="font-size:0.8rem;color:var(--clr-text-muted);margin-top:var(--sp-4);display:flex;gap:var(--sp-3);">
-              <span style="display:flex;align-items:center;gap:var(--sp-2);">
-                <span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:var(--clr-primary);"></span>
-                Selected
-              </span>
-              <span style="display:flex;align-items:center;gap:var(--sp-2);">
-                <span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:var(--clr-border);opacity:0.4;"></span>
-                Booked
-              </span>
-            </p>
-          </div>
-        </div>
+      <!-- Live Overall Step Counter Pill -->
+      <div class="wizard-status-badge-wrap">
+        <span class="wizard-live-pill" id="wizard-live-counter">
+          <span class="pulse-dot"></span>
+          Step 01 of 05
+        </span>
       </div>
 
-      <!-- Summary Sidebar -->
-      <aside class="summary-card" aria-label="Booking summary">
-        <h3 class="summary-card__title">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--clr-primary)" stroke-width="2.2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Booking Summary
-        </h3>
-        <div class="summary-row">
-          <span class="summary-label">Lane</span>
-          <strong id="sum-lane">Not selected</strong>
-        </div>
-        <div class="summary-row">
-          <span class="summary-label">Date</span>
-          <strong id="sum-date">Not selected</strong>
-        </div>
-        <div class="summary-row">
-          <span class="summary-label">Time</span>
-          <strong id="sum-time">Not selected</strong>
-        </div>
-        <div class="summary-row">
-          <span class="summary-label">Group Size</span>
-          <strong id="sum-group">1 person</strong>
-        </div>
-        <div class="summary-row">
-          <span class="summary-label">Duration</span>
-          <strong id="sum-duration">1 hour</strong>
-        </div>
-        <div class="summary-row">
-          <span class="summary-label">Extras</span>
-          <strong id="sum-extras">None</strong>
-        </div>
-        <div class="summary-row">
-          <span class="summary-label">Subtotal</span>
-          <strong id="price-subtotal">$25.00</strong>
-        </div>
-        <div class="summary-row">
-          <span class="summary-label">Tax (13%)</span>
-          <strong id="price-tax">$3.25</strong>
-        </div>
-        <div class="summary-row total">
-          <span>Total</span>
-          <strong id="price-total">$28.25</strong>
-        </div>
-        <button class="btn btn--primary btn--full" style="margin-top:var(--sp-5);" onclick="document.getElementById('payment-section').scrollIntoView({behavior:'smooth'})" aria-label="Proceed to payment">
-          Proceed to Payment
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      <!-- Left Scroll Arrow Button -->
+      <button class="wizard-track-scroll-btn" id="wizard-scroll-prev" type="button" aria-label="Scroll steps left" title="Scroll steps left (or drag track)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <!-- Horizontally Scrollable Step Buttons Track -->
+      <div class="wizard-steps-track" id="wizard-steps-track" role="tablist" tabindex="0" aria-label="Booking steps track">
+        
+        <!-- Step 1 Button -->
+        <button class="wizard-step-btn is-active" id="btn-step-1" type="button" role="tab" aria-selected="true" aria-controls="step-lane" data-target="step-lane">
+          <div class="step-indicator-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <div class="step-text-meta">
+            <span class="step-num-eyebrow">Step 01</span>
+            <span class="step-title-text">Select Lane</span>
+            <span class="step-preview-badge" id="preview-step-lane">Champion ($35)</span>
+          </div>
         </button>
-        <p style="font-size:0.8125rem;text-align:center;color:var(--clr-text-muted);margin-top:var(--sp-3);">Free cancellation up to 24 hours before session</p>
-      </aside>
-    </div>
-  </div>
-</section>
 
-<!-- ================================================================
-     SECTION 4: GROUP SIZE SELECTOR
-     ================================================================ -->
-<section class="section-pad bg-surface-alt" id="group-size" aria-labelledby="group-size-heading">
-  <div class="container" style="max-width:720px;">
-    <div class="section-header reveal">
-      <span class="section-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Step 3
-      </span>
-      <h2 id="group-size-heading">Group Size &amp; Duration</h2>
-      <p class="text-lead">Tell us how many are in your party and how long you'd like to throw.</p>
-    </div>
+        <svg class="wizard-step-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
 
-    <div class="booking-panel reveal">
-      <div class="booking-panel__body">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);align-items:center;">
-          <div>
-            <p style="font-weight:700;margin-bottom:var(--sp-4);">Number of Throwers</p>
-            <div class="qty-control" data-min="1" data-max="20" aria-label="Group size control">
-              <button class="qty-btn" data-qty="minus" aria-label="Decrease group size">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </button>
-              <span class="qty-value" id="group-size-value" aria-live="polite" aria-atomic="true">1</span>
-              <button class="qty-btn" data-qty="plus" aria-label="Increase group size">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </button>
-            </div>
-            <p style="font-size:0.8rem;color:var(--clr-text-muted);margin-top:var(--sp-3);">Max 20 per lane. For larger groups, contact us for a custom package.</p>
+        <!-- Step 2 Button -->
+        <button class="wizard-step-btn" id="btn-step-2" type="button" role="tab" aria-selected="false" aria-controls="step-datetime" data-target="step-datetime">
+          <div class="step-indicator-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           </div>
-          <div>
-            <div class="form-group">
-              <label for="duration-select" class="form-label">Session Duration</label>
-              <select class="form-select" id="duration-select" name="duration" aria-label="Select session duration">
-                <option value="1">1 Hour</option>
-                <option value="2">2 Hours</option>
-                <option value="3">3 Hours (Best Value)</option>
-              </select>
-            </div>
-            <div class="form-group" style="margin-top:var(--sp-4);">
-              <label for="skill-level" class="form-label">Skill Level</label>
-              <select class="form-select" id="skill-level" name="skill" aria-label="Select your skill level">
-                <option value="beginner">Beginner — First time ever</option>
-                <option value="intermediate">Intermediate — A few sessions</option>
-                <option value="advanced">Advanced — League / competition</option>
-              </select>
-            </div>
+          <div class="step-text-meta">
+            <span class="step-num-eyebrow">Step 02</span>
+            <span class="step-title-text">Date &amp; Time</span>
+            <span class="step-preview-badge" id="preview-step-datetime">Select time</span>
           </div>
-        </div>
+        </button>
 
-        <div class="policy-banner">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <span>All participants under 18 must have a parent or guardian sign a waiver. Participants must wear closed-toe shoes — no exceptions.</span>
-        </div>
+        <svg class="wizard-step-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+
+        <!-- Step 3 Button -->
+        <button class="wizard-step-btn" id="btn-step-3" type="button" role="tab" aria-selected="false" aria-controls="step-group" data-target="step-group">
+          <div class="step-indicator-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="step-text-meta">
+            <span class="step-num-eyebrow">Step 03</span>
+            <span class="step-title-text">Group &amp; Hours</span>
+            <span class="step-preview-badge" id="preview-step-group">1 Guest · 1h</span>
+          </div>
+        </button>
+
+        <svg class="wizard-step-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+
+        <!-- Step 4 Button -->
+        <button class="wizard-step-btn" id="btn-step-4" type="button" role="tab" aria-selected="false" aria-controls="step-extras" data-target="step-extras">
+          <div class="step-indicator-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="step-text-meta">
+            <span class="step-num-eyebrow">Step 04</span>
+            <span class="step-title-text">Add-Ons</span>
+            <span class="step-preview-badge" id="preview-step-extras">No Extras</span>
+          </div>
+        </button>
+
+        <svg class="wizard-step-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+
+        <!-- Step 5 Button -->
+        <button class="wizard-step-btn" id="btn-step-5" type="button" role="tab" aria-selected="false" aria-controls="payment-section" data-target="payment-section">
+          <div class="step-indicator-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <div class="step-text-meta">
+            <span class="step-num-eyebrow">Step 05</span>
+            <span class="step-title-text">Review &amp; Pay</span>
+            <span class="step-preview-badge" id="preview-step-payment">Secure Checkout</span>
+          </div>
+        </button>
+
       </div>
+
+      <!-- Right Scroll Arrow Button -->
+      <button class="wizard-track-scroll-btn" id="wizard-scroll-next" type="button" aria-label="Scroll steps right" title="Scroll steps right (or drag track)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
     </div>
   </div>
-</section>
+</nav>
 
 <!-- ================================================================
-     SECTION 5: UPGRADES & EXTRAS
+     MAIN 2-COLUMN BOOKING EXPERIENCE
      ================================================================ -->
-<section class="section-pad" id="extras" aria-labelledby="extras-heading">
-  <div class="container">
-    <div class="section-header centered reveal">
-      <span class="section-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        Step 4
-      </span>
-      <h2 id="extras-heading">Upgrades &amp; Add-Ons</h2>
-      <div class="divider divider-center"></div>
-      <p class="text-lead">Enhance your session with premium extras. All prices are per booking.</p>
-    </div>
+<main class="container" id="main-content">
+  <div class="booking-journey-grid">
 
-    <div class="extras-grid reveal" role="group" aria-label="Optional upgrades">
-      <label class="extra-card" for="extra-coaching" role="checkbox" aria-checked="false">
-        <input type="checkbox" id="extra-coaching" name="extras" data-extra="coaching" value="coaching" aria-label="Private coaching session — $30" />
-        <div class="extra-card__check" aria-hidden="true">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <div class="extra-card__icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-        </div>
-        <p class="extra-card__name">Private Coaching</p>
-        <p style="font-size:0.8125rem;color:var(--clr-text-secondary);margin-block:var(--sp-1) var(--sp-2);">30-minute 1-on-1 session with a certified coach before your main throw.</p>
-        <p class="extra-card__price">+$30</p>
-      </label>
+    <!-- LEFT COLUMN: THE 5 STEPS -->
+    <div class="booking-steps-column">
 
-      <label class="extra-card" for="extra-drinks" role="checkbox" aria-checked="false">
-        <input type="checkbox" id="extra-drinks" name="extras" data-extra="drinks" value="drinks" aria-label="Drinks package — $20 per person" />
-        <div class="extra-card__check" aria-hidden="true">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      <!-- ── STEP 1: CHOOSE YOUR LANE ── -->
+      <section class="step-card" id="step-lane" aria-labelledby="step-lane-heading">
+        <div class="step-card__header">
+          <div class="step-header-left">
+            <span class="step-badge-pill">Step 01 of 05</span>
+            <div>
+              <h2 class="step-card__title" id="step-lane-heading">Choose Your Lane Experience</h2>
+              <p class="step-card__desc">Select the lane setup that fits your group size and skill vibe.</p>
+            </div>
+          </div>
+          <span class="step-status-chip active" id="badge-lane-status">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+            Select a Lane
+          </span>
         </div>
-        <div class="extra-card__icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <p class="extra-card__name">Drinks Package</p>
-        <p style="font-size:0.8125rem;color:var(--clr-text-secondary);margin-block:var(--sp-1) var(--sp-2);">Craft beer, mocktails, and soft drinks for your entire group. Per-person pricing.</p>
-        <p class="extra-card__price">+$20/person</p>
-      </label>
 
-      <label class="extra-card" for="extra-photo" role="checkbox" aria-checked="false">
-        <input type="checkbox" id="extra-photo" name="extras" data-extra="photo" value="photo" aria-label="Photo package — $15" />
-        <div class="extra-card__check" aria-hidden="true">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <div class="extra-card__icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        </div>
-        <p class="extra-card__name">Photo Package</p>
-        <p style="font-size:0.8125rem;color:var(--clr-text-secondary);margin-block:var(--sp-1) var(--sp-2);">Professional action shots of your session. Digital gallery delivered by email.</p>
-        <p class="extra-card__price">+$15</p>
-      </label>
+        <div class="step-card__body">
+          <p aria-live="polite" id="selected-lane-display" class="sr-only">Lane 1</p>
 
-      <label class="extra-card" for="extra-trophy" role="checkbox" aria-checked="false">
-        <input type="checkbox" id="extra-trophy" name="extras" data-extra="trophy" value="trophy" aria-label="Trophy Engraving — $25" />
-        <div class="extra-card__check" aria-hidden="true">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <div class="extra-card__icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
-        </div>
-        <p class="extra-card__name">Trophy Engraving</p>
-        <p style="font-size:0.8125rem;color:var(--clr-text-secondary);margin-block:var(--sp-1) var(--sp-2);">Personalized trophy with your name and high score. Pick up at venue after session.</p>
-        <p class="extra-card__price">+$25</p>
-      </label>
-    </div>
-  </div>
-</section>
+          <div class="lanes-select-grid" role="radiogroup" aria-label="Available lane categories">
+            
+            <!-- Lane 1: Champion Lane -->
+            <div class="lane-card selected" data-lane="1" data-price="35" data-name="Champion Lane" data-img="../assets/images/lane-champion.jpg" tabindex="0" role="radio" aria-checked="true" aria-label="Champion Lane — $35 per person per hour — VIP Setup">
+              <div class="lane-card__media">
+                <img src="../assets/images/lane-champion.jpg" alt="Champion Lane setup" />
+                <div class="lane-card__media-overlay"></div>
+                <div class="lane-card__badges-top">
+                  <span class="lane-num-chip">LANE 01</span>
+                  <div class="lane-select-check" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="lane-card__content">
+                <div class="lane-card__title-row">
+                  <h3 class="lane-card__title">Champion Lane</h3>
+                  <span class="badge badge--accent">VIP Favorite</span>
+                </div>
+                <p class="lane-card__desc">Full tournament competition setup, projected digital target games, dedicated lane coach, and plush leather VIP lounge seating.</p>
+                <div class="lane-amenities-list">
+                  <span class="amenity-chip">🎯 Digital Scoring</span>
+                  <span class="amenity-chip">🛋️ VIP Seating</span>
+                  <span class="amenity-chip">👥 Up to 6 Guests</span>
+                </div>
+                <div class="lane-card__pricing-row">
+                  <div>
+                    <span class="lane-price-amount">$35</span>
+                    <span class="lane-price-unit">/person/hr</span>
+                  </div>
+                  <span class="lane-status-badge available">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                    Available
+                  </span>
+                </div>
+              </div>
+            </div>
 
-<!-- ================================================================
-     SECTION 6: BOOKING SUMMARY (Full Detail)
-     ================================================================ -->
-<section class="section-pad bg-surface-alt" id="booking-summary" aria-labelledby="summary-heading">
-  <div class="container" style="max-width:720px;">
-    <div class="section-header reveal">
-      <span class="section-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
-        Review
-      </span>
-      <h2 id="summary-heading">Order Summary</h2>
-      <p class="text-lead">Review your booking details before proceeding to payment.</p>
-    </div>
+            <!-- Lane 2: Rookie Range -->
+            <div class="lane-card" data-lane="2" data-price="25" data-name="Rookie Range" data-img="../assets/images/lane-rookie.jpg" tabindex="0" role="radio" aria-checked="false" aria-label="Rookie Range — $25 per person per hour — Beginner Friendly">
+              <div class="lane-card__media">
+                <img src="../assets/images/lane-rookie.jpg" alt="Rookie Range setup" />
+                <div class="lane-card__media-overlay"></div>
+                <div class="lane-card__badges-top">
+                  <span class="lane-num-chip">LANE 02</span>
+                  <div class="lane-select-check" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="lane-card__content">
+                <div class="lane-card__title-row">
+                  <h3 class="lane-card__title">Rookie Range</h3>
+                  <span class="badge badge--success">Beginner Friendly</span>
+                </div>
+                <p class="lane-card__desc">Dedicated throwing master, balanced lightweight axes, and closer targets designed for first-timers and casual fun.</p>
+                <div class="lane-amenities-list">
+                  <span class="amenity-chip">🛡️ Safety Guide</span>
+                  <span class="amenity-chip">🪓 Light Axes</span>
+                  <span class="amenity-chip">👥 Up to 6 Guests</span>
+                </div>
+                <div class="lane-card__pricing-row">
+                  <div>
+                    <span class="lane-price-amount">$25</span>
+                    <span class="lane-price-unit">/person/hr</span>
+                  </div>
+                  <span class="lane-status-badge available">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                    Available
+                  </span>
+                </div>
+              </div>
+            </div>
 
-    <div class="booking-panel reveal">
-      <div class="booking-panel__body">
-        <div style="display:flex;flex-direction:column;gap:var(--sp-4);">
-          <div style="display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-4);background:rgba(200,64,27,0.06);border-radius:var(--radius-md);">
-            <div style="width:56px;height:56px;background:var(--clr-primary);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            <!-- Lane 3: Group Forge -->
+            <div class="lane-card" data-lane="3" data-price="28" data-name="Group Forge" data-img="../assets/images/lane-group.jpg" tabindex="0" role="radio" aria-checked="false" aria-label="Group Forge — $28 per person per hour — Dual Party Lane">
+              <div class="lane-card__media">
+                <img src="../assets/images/lane-group.jpg" alt="Group Forge dual lane" />
+                <div class="lane-card__media-overlay"></div>
+                <div class="lane-card__badges-top">
+                  <span class="lane-num-chip">LANE 03</span>
+                  <div class="lane-select-check" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="lane-card__content">
+                <div class="lane-card__title-row">
+                  <h3 class="lane-card__title">Group Forge (Dual)</h3>
+                  <span class="badge badge--primary">Social Party</span>
+                </div>
+                <p class="lane-card__desc">Side-by-side dual lanes with connected private lounge and dedicated tournament host. Ideal for parties and team outings.</p>
+                <div class="lane-amenities-list">
+                  <span class="amenity-chip">👥 Up to 20 Guests</span>
+                  <span class="amenity-chip">🍻 Bar Service</span>
+                  <span class="amenity-chip">🏆 Party Host</span>
+                </div>
+                <div class="lane-card__pricing-row">
+                  <div>
+                    <span class="lane-price-amount">$28</span>
+                    <span class="lane-price-unit">/person/hr</span>
+                  </div>
+                  <span class="lane-status-badge available">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                    Available
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lane 4: Elite Circuit -->
+            <div class="lane-card" data-lane="4" data-price="30" data-name="Elite Circuit" data-img="../assets/images/lane-elite.jpg" tabindex="0" role="radio" aria-checked="false" aria-label="Elite Circuit — $30 per person per hour — Pro Tournament specs">
+              <div class="lane-card__media">
+                <img src="../assets/images/lane-elite.jpg" alt="Elite Circuit target" />
+                <div class="lane-card__media-overlay"></div>
+                <div class="lane-card__badges-top">
+                  <span class="lane-num-chip">LANE 04</span>
+                  <div class="lane-select-check" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="lane-card__content">
+                <div class="lane-card__title-row">
+                  <h3 class="lane-card__title">Elite Circuit</h3>
+                  <span class="badge badge--outline">Pro League</span>
+                </div>
+                <p class="lane-card__desc">Official IATF regulation tournament distances, hardened end-grain timber boards, and high-speed slow-motion replay camera.</p>
+                <div class="lane-amenities-list">
+                  <span class="amenity-chip">📐 IATF Distance</span>
+                  <span class="amenity-chip">📹 Replay Cam</span>
+                  <span class="amenity-chip">👥 Up to 6 Guests</span>
+                </div>
+                <div class="lane-card__pricing-row">
+                  <div>
+                    <span class="lane-price-amount">$30</span>
+                    <span class="lane-price-unit">/person/hr</span>
+                  </div>
+                  <span class="lane-status-badge available">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                    Available
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Spotlight Banner: Cyber Glow Upgrade -->
+          <div class="cyber-spotlight-banner">
+            <div class="cyber-thumb-img">
+              <img src="../assets/images/lane-glow.jpg" alt="Cyber Glow Lane blacklight targets" />
             </div>
             <div>
-              <p style="font-weight:800;font-size:1.125rem;">Champion Lane</p>
-              <p style="font-size:0.875rem;color:var(--clr-text-muted);">2 Throwers · 2 Hours · Saturday, Sep 20, 2026</p>
+              <div style="display:flex;align-items:center;gap:var(--sp-2);margin-bottom:4px;">
+                <span class="badge badge--accent" style="font-size:0.875rem;">NEW NIGHT EXPERIENCE</span>
+                <strong style="color:var(--clr-text-primary);font-size:1.0625rem;">Want Blacklight Cyber Glow?</strong>
+              </div>
+              <p style="font-size:0.9375rem;color:var(--clr-text-secondary);margin:0;">Turn any lane into a neon spectacle with ultraviolet reactive axes and pulsing EDM music. Available during 8 PM – 11 PM slots or as an upgrade in Step 4!</p>
             </div>
-            <p style="font-size:1.375rem;font-weight:800;color:var(--clr-primary);margin-inline-start:auto;">$70.00</p>
+            <button class="btn btn--outline btn--sm" type="button" onclick="document.querySelector('#extra-glow')?.click(); document.getElementById('step-extras').scrollIntoView({behavior:'smooth'});">
+              Add Glow Pack (+$18)
+            </button>
           </div>
 
-          <div style="background:var(--clr-surface-alt);padding:var(--sp-4);border-radius:var(--radius-md);">
-            <p style="font-size:0.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--clr-text-muted);margin-bottom:var(--sp-3);">Add-Ons</p>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding-block:var(--sp-2);">
-              <p style="font-size:0.9375rem;color:var(--clr-text-secondary);">Private Coaching</p>
-              <p style="font-weight:700;">$30.00</p>
-            </div>
-          </div>
-
-          <div style="display:flex;flex-direction:column;gap:var(--sp-2);padding:var(--sp-4);">
-            <div style="display:flex;justify-content:space-between;"><span style="color:var(--clr-text-muted);">Subtotal</span><strong>$100.00</strong></div>
-            <div style="display:flex;justify-content:space-between;"><span style="color:var(--clr-text-muted);">HST (13%)</span><strong>$13.00</strong></div>
-            <div style="display:flex;justify-content:space-between;padding-top:var(--sp-3);border-top:2px solid var(--clr-border);margin-top:var(--sp-2);"><span style="font-size:1.125rem;font-weight:800;">Total</span><strong style="font-size:1.375rem;color:var(--clr-primary);">$113.00</strong></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================================================================
-     SECTION 7: PAYMENT FORM
-     ================================================================ -->
-<section class="section-pad" id="payment-section" aria-labelledby="payment-heading">
-  <div class="container" style="max-width:720px;">
-    <div class="section-header reveal">
-      <span class="section-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        Step 5
-      </span>
-      <h2 id="payment-heading">Secure Payment</h2>
-      <p class="text-lead">Your transaction is protected with 256-bit SSL encryption.</p>
-    </div>
-
-    <div class="booking-panel reveal">
-      <div class="booking-panel__body">
-        <!-- Payment Method Selector -->
-        <div class="payment-methods" role="group" aria-label="Payment method selection">
-          <button class="payment-method-btn active" type="button" aria-pressed="true" aria-label="Pay with credit or debit card">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            Card
-          </button>
-          <button class="payment-method-btn" type="button" aria-pressed="false" aria-label="Pay with PayPal">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7.5 7H12c3.3 0 5.5 1.5 5 5-0.5 3.5-3 5-6.5 5H9l-1 4H5L7.5 7Z"/></svg>
-            PayPal
-          </button>
-          <button class="payment-method-btn" type="button" aria-pressed="false" aria-label="Pay with gift card">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            Gift Card
-          </button>
         </div>
 
-        <form data-form-validate action="#" method="post" aria-label="Payment form">
-          <div class="form-group">
-            <label for="card-name" class="form-label">Cardholder Name <span class="required" aria-label="required">*</span></label>
-            <div class="input-icon-wrap has-left">
-              <svg class="icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              <input type="text" id="card-name" class="form-input" placeholder="Jane Doe" data-validate="required" autocomplete="cc-name" aria-required="true" />
+        <div class="step-card__footer">
+          <span style="font-size:0.875rem;color:var(--clr-text-muted);">Selected: <strong id="footer-selected-lane-name" style="color:var(--clr-text-primary);">Champion Lane</strong></span>
+          <button class="btn btn--primary" type="button" onclick="goToStep(2)" aria-label="Proceed to Step 2: Date and Time">
+            Continue to Date &amp; Time
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- ── STEP 2: PICK DATE & TIME ── -->
+      <section class="step-card" id="step-datetime" aria-labelledby="step-datetime-heading">
+        <div class="step-card__header">
+          <div class="step-header-left">
+            <span class="step-badge-pill">Step 02 of 05</span>
+            <div>
+              <h2 class="step-card__title" id="step-datetime-heading">Pick Your Date &amp; Time Slot</h2>
+              <p class="step-card__desc">Choose an available date and preferred session throwing time.</p>
             </div>
-            <span class="form-error-msg" role="alert"></span>
+          </div>
+          <span class="step-status-chip" id="badge-datetime-status">Select Date &amp; Time</span>
+        </div>
+
+        <div class="step-card__body">
+          
+          <!-- Quick Date Shortcut Chips -->
+          <div>
+            <span style="font-size:0.875rem;font-weight:700;color:var(--clr-text-muted);display:block;margin-bottom:var(--sp-2);">QUICK DATE SELECTOR</span>
+            <div class="quick-date-row" role="group" aria-label="Quick date options">
+              <button class="quick-date-chip active" type="button" data-days-offset="0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Today (Saturday)
+              </button>
+              <button class="quick-date-chip" type="button" data-days-offset="1">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Tomorrow (Sunday)
+              </button>
+              <button class="quick-date-chip" type="button" data-days-offset="6">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/></svg>
+                Next Friday
+              </button>
+              <button class="quick-date-chip" type="button" data-days-offset="7">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Next Saturday (Peak Night)
+              </button>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="card-number" class="form-label">Card Number <span class="required" aria-label="required">*</span></label>
-            <div class="input-icon-wrap has-left has-right">
-              <svg class="icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-              <input type="text" id="card-number" class="form-input" placeholder="1234 5678 9012 3456" data-validate="required" autocomplete="cc-number" inputmode="numeric" maxlength="19" aria-required="true" aria-describedby="card-number-hint" />
-              <svg class="icon-right" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events:none;" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div class="date-time-layout">
+            
+            <!-- Calendar Picker -->
+            <div class="cal-wrapper-box" id="booking-calendar" aria-label="Session date picker">
+              <div class="cal-header-bar">
+                <div>
+                  <h3 class="cal-month-title" aria-live="polite">October 2026</h3>
+                  <span id="selected-date-display" style="font-size:0.875rem;font-weight:700;color:var(--clr-primary);" aria-live="polite">Saturday, October 17, 2026</span>
+                </div>
+                <div style="display:flex;gap:var(--sp-1);">
+                  <button class="ctrl-btn" data-cal="prev" aria-label="Previous month" title="Previous month">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                  </button>
+                  <button class="ctrl-btn" data-cal="next" aria-label="Next month" title="Next month">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="calendar-grid" role="grid" aria-label="Calendar date selection"></div>
             </div>
-            <span id="card-number-hint" class="form-hint">16-digit card number</span>
-            <span class="form-error-msg" role="alert"></span>
+
+            <!-- Time Slots Section -->
+            <div class="time-picker-box" aria-label="Select Time Slot">
+              <div class="time-picker-header">
+                <h3 class="time-picker-title">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  Select Time Slot
+                </h3>
+                <div class="time-slots-legend" aria-hidden="true">
+                  <span class="legend-item"><span class="legend-dot legend-dot--available"></span> Available</span>
+                  <span class="legend-item"><span class="legend-dot legend-dot--popular"></span> Popular</span>
+                  <span class="legend-item"><span class="legend-dot legend-dot--glow"></span> Cyber Glow</span>
+                  <span class="legend-item"><span class="legend-dot legend-dot--booked"></span> Sold Out</span>
+                </div>
+              </div>
+
+              <!-- Afternoon Category -->
+              <div class="time-slot-category">
+                <span class="time-slot-category-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                  Afternoon Sessions (2:00 PM – 5:00 PM)
+                </span>
+                <div class="time-slots-grid" role="group" aria-label="Afternoon time slots">
+                  <button class="time-slot" type="button" aria-pressed="false">
+                    <span class="slot-time-text">2:00 PM</span>
+                    <span class="slot-badge-sub status-available">Available</span>
+                  </button>
+                  <button class="time-slot" type="button" aria-pressed="false">
+                    <span class="slot-time-text">3:00 PM</span>
+                    <span class="slot-badge-sub status-available">Available</span>
+                  </button>
+                  <button class="time-slot disabled" type="button" disabled aria-disabled="true">
+                    <span class="slot-time-text">4:00 PM</span>
+                    <span class="slot-badge-sub status-booked">Sold Out</span>
+                  </button>
+                  <button class="time-slot" type="button" aria-pressed="false">
+                    <span class="slot-time-text">5:00 PM</span>
+                    <span class="slot-badge-sub status-available">Available</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Evening Prime Category -->
+              <div class="time-slot-category">
+                <span class="time-slot-category-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                  Evening Prime (6:00 PM – 8:00 PM)
+                </span>
+                <div class="time-slots-grid" role="group" aria-label="Evening prime time slots">
+                  <button class="time-slot selected" type="button" aria-pressed="true">
+                    <span class="slot-time-text">6:00 PM</span>
+                    <span class="slot-badge-sub status-popular">Popular</span>
+                  </button>
+                  <button class="time-slot disabled" type="button" disabled aria-disabled="true">
+                    <span class="slot-time-text">7:00 PM</span>
+                    <span class="slot-badge-sub status-booked">Sold Out</span>
+                  </button>
+                  <button class="time-slot" type="button" aria-pressed="false">
+                    <span class="slot-time-text">8:00 PM</span>
+                    <span class="slot-badge-sub status-available">Available</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Late Night Glow Category -->
+              <div class="time-slot-category" style="margin-bottom:0;">
+                <span class="time-slot-category-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  Late Night Cyber Glow (9:00 PM – 11:00 PM)
+                </span>
+                <div class="time-slots-grid" role="group" aria-label="Late night cyber glow time slots">
+                  <button class="time-slot" type="button" aria-pressed="false">
+                    <span class="slot-time-text">9:00 PM</span>
+                    <span class="slot-badge-sub status-glow">⚡ UV Glow</span>
+                  </button>
+                  <button class="time-slot" type="button" aria-pressed="false">
+                    <span class="slot-time-text">10:00 PM</span>
+                    <span class="slot-badge-sub status-glow">⚡ UV Glow</span>
+                  </button>
+                  <button class="time-slot disabled" type="button" disabled aria-disabled="true">
+                    <span class="slot-time-text">11:00 PM</span>
+                    <span class="slot-badge-sub status-booked">Sold Out</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="step-card__footer">
+          <button class="btn btn--secondary btn--sm" type="button" onclick="goToStep(1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Lanes
+          </button>
+          <button class="btn btn--primary" type="button" onclick="goToStep(3)" aria-label="Proceed to Step 3: Group Size and Duration">
+            Continue to Group &amp; Duration
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- ── STEP 3: GROUP SIZE & DURATION ── -->
+      <section class="step-card" id="step-group" aria-labelledby="step-group-heading">
+        <div class="step-card__header">
+          <div class="step-header-left">
+            <span class="step-badge-pill">Step 03 of 05</span>
+            <div>
+              <h2 class="step-card__title" id="step-group-heading">Group Size &amp; Duration</h2>
+              <p class="step-card__desc">Customize your headcount and how long you want to play.</p>
+            </div>
+          </div>
+          <span class="step-status-chip" id="badge-group-status">1 Person · 1 Hour</span>
+        </div>
+
+        <div class="step-card__body">
+          <div class="group-planner-box">
+            
+            <!-- Left: Thrower Count Stepper -->
+            <div>
+              <label for="group-size-value" style="font-weight:700;font-size:1.0625rem;display:block;margin-bottom:var(--sp-3);">
+                Number of Throwers
+              </label>
+
+              <div class="qty-control" data-min="1" data-max="20" aria-label="Group size control">
+                <button class="qty-btn" data-qty="minus" type="button" aria-label="Decrease group size">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+                <span class="qty-value" id="group-size-value" aria-live="polite" aria-atomic="true">1</span>
+                <button class="qty-btn" data-qty="plus" type="button" aria-label="Increase group size">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+              </div>
+
+              <!-- Quick Headcount Preset Chips -->
+              <div class="quick-group-chips">
+                <button class="group-chip-btn active" type="button" data-val="1">Solo Thrower</button>
+                <button class="group-chip-btn" type="button" data-val="2">Duo (2)</button>
+                <button class="group-chip-btn" type="button" data-val="4">Squad of 4</button>
+                <button class="group-chip-btn" type="button" data-val="6">Full Lane (6)</button>
+                <button class="group-chip-btn" type="button" data-val="12">Party (12+)</button>
+              </div>
+
+              <!-- Dynamic Lane Recommendation Notice -->
+              <div class="recommendation-banner" id="recommendation-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                <span id="recommendation-text">1 Lane is ideal for 1–6 guests. You'll rotate turns with maximum throw time per player.</span>
+              </div>
+            </div>
+
+            <!-- Right: Duration Selection & Skill Level -->
+            <div>
+              <label style="font-weight:700;font-size:1.0625rem;display:block;margin-bottom:var(--sp-2);">
+                Select Duration
+              </label>
+
+              <!-- Hidden native select for full compatibility -->
+              <select class="form-select sr-only" id="duration-select" name="duration" aria-label="Select session duration">
+                <option value="1" selected>1 Hour</option>
+                <option value="2">2 Hours</option>
+                <option value="3">3 Hours</option>
+              </select>
+
+              <!-- Visual Duration Cards -->
+              <div class="duration-cards-grid" role="radiogroup" aria-label="Session duration selection">
+                
+                <div class="duration-card selected" data-hours="1" tabindex="0" role="radio" aria-checked="true" aria-label="1 Hour Casual Session">
+                  <div class="duration-hours">1 Hour</div>
+                  <div class="duration-desc">Casual blast · 10 min warm-up &amp; 50 min games</div>
+                </div>
+
+                <div class="duration-card" data-hours="2" tabindex="0" role="radio" aria-checked="false" aria-label="2 Hours Most Popular Session">
+                  <span class="duration-card-badge">Most Popular</span>
+                  <div class="duration-hours">2 Hours</div>
+                  <div class="duration-desc">Sweet spot · Warm-up, trick shots &amp; mini bracket</div>
+                </div>
+
+                <div class="duration-card" data-hours="3" tabindex="0" role="radio" aria-checked="false" aria-label="3 Hours Best Value Session">
+                  <span class="duration-card-badge" style="background:var(--clr-accent);color:#1c1c1e;">Best Value</span>
+                  <div class="duration-hours">3 Hours</div>
+                  <div class="duration-desc">Party marathon · Full tournament &amp; drink breaks</div>
+                </div>
+
+              </div>
+
+              <!-- Skill Level Dropdown -->
+              <div class="form-group" style="margin-top:var(--sp-5);">
+                <label for="skill-level" class="form-label">Thrower Skill Level</label>
+                <select class="form-select" id="skill-level" name="skill" aria-label="Select your group skill level">
+                  <option value="beginner">Beginner — First time throwing (Coach guide included)</option>
+                  <option value="intermediate">Intermediate — Thrown before, knows basic stance</option>
+                  <option value="advanced">Advanced / Pro — League player, competitive thrower</option>
+                </select>
+              </div>
+
+            </div>
+
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);">
-            <div class="form-group">
-              <label for="card-expiry" class="form-label">Expiry Date <span class="required" aria-label="required">*</span></label>
-              <input type="text" id="card-expiry" class="form-input" placeholder="MM / YY" data-validate="required" autocomplete="cc-exp" maxlength="7" aria-required="true" />
-              <span class="form-error-msg" role="alert"></span>
+          <!-- Closed Toe Shoe Safety Banner -->
+          <div class="policy-banner" style="margin-top:var(--sp-6);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div>
+              <strong style="color:var(--clr-text-primary);">Footwear Requirement:</strong>
+              <span> Closed-toe shoes are strictly mandatory in the throwing lanes for safety. No sandals or open-toed shoes permitted. Lockers and shoe rentals are available at the front desk.</span>
             </div>
+          </div>
+
+        </div>
+
+        <div class="step-card__footer">
+          <button class="btn btn--secondary btn--sm" type="button" onclick="goToStep(2)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Schedule
+          </button>
+          <button class="btn btn--primary" type="button" onclick="goToStep(4)" aria-label="Proceed to Step 4: Upgrades and Extras">
+            Continue to Add-Ons
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- ── STEP 4: UPGRADES & ADD-ONS ── -->
+      <section class="step-card" id="step-extras" aria-labelledby="step-extras-heading">
+        <div class="step-card__header">
+          <div class="step-header-left">
+            <span class="step-badge-pill">Step 04 of 05</span>
+            <div>
+              <h2 class="step-card__title" id="step-extras-heading">Enhance Your Throwing Session</h2>
+              <p class="step-card__desc">Add coaching, premium drinks, photography, or engraved trophies.</p>
+            </div>
+          </div>
+          <span class="step-status-chip" id="badge-extras-status">0 Extras Selected</span>
+        </div>
+
+        <div class="step-card__body">
+          <div class="extras-grid" role="group" aria-label="Optional session upgrades">
+            
+            <!-- Extra 1: Private Coaching -->
+            <label class="extra-card" for="extra-coaching" role="checkbox" aria-checked="false">
+              <input type="checkbox" id="extra-coaching" name="extras" data-extra="coaching" value="coaching" aria-label="Private 1-on-1 Coaching Session — $30 flat" />
+              <div class="extra-card__top">
+                <div class="extra-card__icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                </div>
+                <div class="extra-card__check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </div>
+              <h3 class="extra-card__name">Private 1-on-1 Coach</h3>
+              <p class="extra-card__desc">Dedicated coach for 30 minutes before your main session. Master trick throws, improve accuracy, and host your tournament bracket.</p>
+              <div class="extra-card__footer">
+                <span class="extra-card__price">+$30.00 <span style="font-size:0.875rem;font-weight:500;color:var(--clr-text-muted);">flat</span></span>
+                <span class="extra-card__tag">Coach's Pick</span>
+              </div>
+            </label>
+
+            <!-- Extra 2: Craft Drinks Package -->
+            <label class="extra-card" for="extra-drinks" role="checkbox" aria-checked="false">
+              <input type="checkbox" id="extra-drinks" name="extras" data-extra="drinks" value="drinks" aria-label="Craft Beer and Drinks Package — $20 per person" />
+              <div class="extra-card__top">
+                <div class="extra-card__icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                </div>
+                <div class="extra-card__check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </div>
+              <h3 class="extra-card__name">Craft Drinks Package</h3>
+              <p class="extra-card__desc">2 craft beers, ciders, or specialty mocktails per person plus unlimited soft drinks, served lane-side during your session.</p>
+              <div class="extra-card__footer">
+                <span class="extra-card__price">+$20.00 <span style="font-size:0.875rem;font-weight:500;color:var(--clr-text-muted);">/person</span></span>
+                <span class="extra-card__tag">Party Favorite</span>
+              </div>
+            </label>
+
+            <!-- Extra 3: Action Photo & Video -->
+            <label class="extra-card" for="extra-photo" role="checkbox" aria-checked="false">
+              <input type="checkbox" id="extra-photo" name="extras" data-extra="photo" value="photo" aria-label="Pro Action Photo and Video Package — $15 flat" />
+              <div class="extra-card__top">
+                <div class="extra-card__icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                </div>
+                <div class="extra-card__check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </div>
+              <h3 class="extra-card__name">Pro Action Photography</h3>
+              <p class="extra-card__desc">High-speed camera action shots of your throws, celebration moments, and bullseyes. Digital high-res gallery delivered to your inbox.</p>
+              <div class="extra-card__footer">
+                <span class="extra-card__price">+$15.00 <span style="font-size:0.875rem;font-weight:500;color:var(--clr-text-muted);">flat</span></span>
+                <span class="extra-card__tag">Memory Maker</span>
+              </div>
+            </label>
+
+            <!-- Extra 4: Trophy Engraving -->
+            <label class="extra-card" for="extra-trophy" role="checkbox" aria-checked="false">
+              <input type="checkbox" id="extra-trophy" name="extras" data-extra="trophy" value="trophy" aria-label="Custom Engraved Steel Trophy — $25 flat" />
+              <div class="extra-card__top">
+                <div class="extra-card__icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+                </div>
+                <div class="extra-card__check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </div>
+              <h3 class="extra-card__name">Winner's Engraved Trophy</h3>
+              <p class="extra-card__desc">Real mini steel throwing axe mounted on a timber pedestal, custom laser engraved with your party winner's name and high score.</p>
+              <div class="extra-card__footer">
+                <span class="extra-card__price">+$25.00 <span style="font-size:0.875rem;font-weight:500;color:var(--clr-text-muted);">flat</span></span>
+                <span class="extra-card__tag">Keepsake</span>
+              </div>
+            </label>
+
+            <!-- Extra 5: Cyber Glow Neon Pack -->
+            <label class="extra-card" for="extra-glow" role="checkbox" aria-checked="false" style="grid-column: 1 / -1;">
+              <input type="checkbox" id="extra-glow" name="extras" data-extra="glow" value="glow" aria-label="Cyber Glow UV Neon Pack — $18 flat" />
+              <div class="extra-card__top">
+                <div class="extra-card__icon" style="background:rgba(168, 85, 247, 0.15);color:#c084fc;" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <div class="extra-card__check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </div>
+              <h3 class="extra-card__name">Cyber Glow Neon Target &amp; Axes Pack</h3>
+              <p class="extra-card__desc">Equips your lane with UV blacklight fluorescent axes, reactive neon target rings, and glowing wristbands for all throwers.</p>
+              <div class="extra-card__footer">
+                <span class="extra-card__price" style="color:#c084fc;">+$18.00 <span style="font-size:0.875rem;font-weight:500;color:var(--clr-text-muted);">flat</span></span>
+                <span class="extra-card__tag" style="color:#c084fc;background:rgba(168, 85, 247, 0.1);">Ultraviolet Glow</span>
+              </div>
+            </label>
+
+          </div>
+        </div>
+
+        <div class="step-card__footer">
+          <button class="btn btn--secondary btn--sm" type="button" onclick="goToStep(3)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Group Size
+          </button>
+          <button class="btn btn--primary" type="button" onclick="goToStep(5)" aria-label="Proceed to Step 5: Review and Secure Payment">
+            Review &amp; Proceed to Payment
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- ── STEP 5: REVIEW & SECURE PAYMENT ── -->
+      <section class="step-card" id="payment-section" aria-labelledby="step-payment-heading">
+        <div class="step-card__header">
+          <div class="step-header-left">
+            <span class="step-badge-pill">Step 05 of 05</span>
+            <div>
+              <h2 class="step-card__title" id="step-payment-heading">Review &amp; Secure Payment</h2>
+              <p class="step-card__desc">Protected by 256-bit bank-grade SSL encryption.</p>
+            </div>
+          </div>
+          <span class="step-status-chip done">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            SSL Encrypted
+          </span>
+        </div>
+
+        <div class="step-card__body">
+          
+          <!-- Live Itinerary Recap -->
+          <div class="order-recap-banner">
+            <div class="recap-details">
+              <div class="recap-lane-thumb">
+                <img id="recap-lane-img" src="../assets/images/lane-champion.jpg" alt="Selected lane preview" />
+              </div>
+              <div>
+                <strong id="recap-lane-title" style="font-size:1.125rem;color:var(--clr-text-primary);display:block;">Champion Lane (VIP)</strong>
+                <p id="recap-lane-sub" style="font-size:0.9375rem;color:var(--clr-text-secondary);margin:0;">1 Thrower · 1 Hour · Saturday, Oct 17, 2026 @ 6:00 PM</p>
+              </div>
+            </div>
+            <div style="text-align:end;">
+              <span style="font-size:0.875rem;color:var(--clr-text-muted);display:block;">ESTIMATED TOTAL</span>
+              <strong id="recap-total-display" style="font-size:1.5rem;color:var(--clr-primary);font-weight:800;">$39.55</strong>
+            </div>
+          </div>
+
+          <!-- Payment Method Selector Tabs -->
+          <label style="font-weight:700;font-size:1rem;display:block;margin-bottom:var(--sp-3);">
+            Select Payment Method
+          </label>
+          <div class="payment-methods" role="group" aria-label="Payment method selection">
+            <button class="payment-method-btn active" type="button" aria-pressed="true" aria-label="Pay with credit or debit card">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              Credit / Debit Card
+            </button>
+            <button class="payment-method-btn" type="button" aria-pressed="false" aria-label="Pay with digital wallet Apple Pay or Google Pay">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              Apple / Google Pay
+            </button>
+            <button class="payment-method-btn" type="button" aria-pressed="false" aria-label="Pay at venue with credit card hold">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              Pay at Venue (Hold)
+            </button>
+          </div>
+
+          <!-- Checkout Form -->
+          <form data-form-validate action="#" method="post" aria-label="Booking payment form">
             <div class="form-group">
-              <label for="card-cvv" class="form-label">CVV <span class="required" aria-label="required">*</span></label>
-              <div class="input-icon-wrap has-right">
-                <input type="text" id="card-cvv" class="form-input" placeholder="123" data-validate="required" autocomplete="cc-csc" maxlength="4" aria-required="true" data-tooltip="3-4 digit security code on back of card" />
-                <svg class="icon-right" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events:none;" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <label for="card-name" class="form-label">Cardholder Full Name <span class="required" aria-label="required">*</span></label>
+              <div class="input-icon-wrap has-left">
+                <svg class="icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <input type="text" id="card-name" class="form-input" placeholder="e.g. Alex Henderson" data-validate="required" autocomplete="cc-name" aria-required="true" />
               </div>
               <span class="form-error-msg" role="alert"></span>
             </div>
-          </div>
 
-          <div class="form-check">
-            <input type="checkbox" id="save-card" name="save_card" />
-            <label for="save-card" class="form-check__label">Save card securely for future bookings</label>
-          </div>
+            <div class="form-group">
+              <label for="card-number" class="form-label">Card Number <span class="required" aria-label="required">*</span></label>
+              <div class="input-icon-wrap has-left has-right">
+                <svg class="icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                <input type="text" id="card-number" class="form-input" placeholder="4532 •••• •••• 8892" data-validate="required" autocomplete="cc-number" inputmode="numeric" maxlength="19" aria-required="true" />
+                <svg class="icon-right" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--clr-success)" stroke-width="2" style="pointer-events:none;" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <span class="form-hint">Accepted: Visa, Mastercard, American Express, Discover</span>
+              <span class="form-error-msg" role="alert"></span>
+            </div>
 
-          <div class="form-check" style="margin-top:var(--sp-3);">
-            <input type="checkbox" id="accept-terms" name="terms" required data-validate="required" aria-required="true" />
-            <label for="accept-terms" class="form-check__label">I have read and agree to the <a href="#" style="color:var(--clr-primary);text-decoration:underline;">Terms of Service</a>, <a href="#" style="color:var(--clr-primary);text-decoration:underline;">Safety Waiver</a>, and <a href="#" style="color:var(--clr-primary);text-decoration:underline;">Cancellation Policy</a>.</label>
-          </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);">
+              <div class="form-group">
+                <label for="card-expiry" class="form-label">Expiry Date <span class="required" aria-label="required">*</span></label>
+                <input type="text" id="card-expiry" class="form-input" placeholder="MM / YY" data-validate="required" autocomplete="cc-exp" maxlength="7" aria-required="true" />
+                <span class="form-error-msg" role="alert"></span>
+              </div>
+              <div class="form-group">
+                <label for="card-cvv" class="form-label">CVV / CVC <span class="required" aria-label="required">*</span></label>
+                <div class="input-icon-wrap has-right">
+                  <input type="text" id="card-cvv" class="form-input" placeholder="123" data-validate="required" autocomplete="cc-csc" maxlength="4" aria-required="true" />
+                  <svg class="icon-right" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events:none;" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <span class="form-error-msg" role="alert"></span>
+              </div>
+            </div>
 
-          <button type="submit" class="btn btn--primary btn--full" style="margin-top:var(--sp-6);" aria-label="Confirm and pay $113.00">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Confirm &amp; Pay — $113.00
+            <div class="form-check" style="margin-top:var(--sp-2);">
+              <input type="checkbox" id="save-card" name="save_card" />
+              <label for="save-card" class="form-check__label" style="font-size:0.9375rem;">Save payment method securely for 1-click future reservations</label>
+            </div>
+
+            <div class="form-check" style="margin-top:var(--sp-4);">
+              <input type="checkbox" id="accept-terms" name="terms" required data-validate="required" aria-required="true" />
+              <label for="accept-terms" class="form-check__label" style="font-size:0.9375rem;">I confirm that all participants will wear closed-toe shoes and I agree to the <a href="#" style="color:var(--clr-primary);text-decoration:underline;">Safety Waiver</a> and <a href="#" style="color:var(--clr-primary);text-decoration:underline;">Cancellation Policy</a>.</label>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--full btn--lg" id="submit-booking-btn" style="margin-top:var(--sp-6);" aria-label="Confirm booking and reserve lane">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Confirm &amp; Secure Lane — <span id="submit-btn-price">$39.55</span>
+            </button>
+
+            <div style="display:flex;align-items:center;justify-content:center;gap:var(--sp-3);margin-top:var(--sp-4);color:var(--clr-text-muted);font-size:0.875rem;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>Powered by Stripe. Encrypted with 256-bit TLS security.</span>
+            </div>
+          </form>
+
+        </div>
+
+        <div class="step-card__footer">
+          <button class="btn btn--secondary btn--sm" type="button" onclick="goToStep(4)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Add-Ons
           </button>
+          <span style="font-size:0.875rem;color:var(--clr-text-muted);">Instant SMS &amp; Email receipt dispatched upon booking.</span>
+        </div>
+      </section>
 
-          <div style="display:flex;align-items:center;justify-content:center;gap:var(--sp-4);margin-top:var(--sp-5);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--clr-text-muted)" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span style="font-size:0.8125rem;color:var(--clr-text-muted);">Secured by Stripe. 256-bit SSL encryption.</span>
-          </div>
-        </form>
-      </div>
     </div>
+
+    <!-- RIGHT COLUMN: PERSISTENT STICKY LIVE SUMMARY RECEIPT -->
+    <aside class="booking-summary-sidebar" id="booking-summary" aria-label="Live booking itinerary and pricing summary">
+      
+      <div class="summary-card__header-box">
+        <h3 class="summary-card__title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--clr-primary)" stroke-width="2.2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Booking Summary
+        </h3>
+        <span style="font-size:0.875rem;color:var(--clr-text-muted);display:block;margin-top:4px;">Live updating as you configure</span>
+      </div>
+
+      <!-- Selected Lane Thumbnail Card -->
+      <div class="summary-lane-preview-card">
+        <div class="preview-thumb">
+          <img id="sidebar-lane-img" src="../assets/images/lane-champion.jpg" alt="Selected lane preview" />
+        </div>
+        <div>
+          <div class="preview-title" id="sum-lane">Champion Lane</div>
+          <div class="preview-rate" id="sidebar-lane-rate">$35/person/hr</div>
+        </div>
+      </div>
+
+      <!-- Quick Session Parameters Grid -->
+      <div class="summary-parameters-grid">
+        <div class="summary-param-chip">
+          <span class="param-label">Date</span>
+          <span class="param-val" id="sum-date">Sat, Oct 17</span>
+        </div>
+        <div class="summary-param-chip">
+          <span class="param-label">Time</span>
+          <span class="param-val" id="sum-time">6:00 PM</span>
+        </div>
+        <div class="summary-param-chip">
+          <span class="param-label">Throwers</span>
+          <span class="param-val" id="sum-group">1 person</span>
+        </div>
+        <div class="summary-param-chip">
+          <span class="param-label">Duration</span>
+          <span class="param-val" id="sum-duration">1 hour</span>
+        </div>
+      </div>
+
+      <!-- Itemized Price Calculation Breakdown -->
+      <div class="summary-calc-list">
+        <div class="summary-row">
+          <span>Lane Base Rate</span>
+          <strong id="sidebar-base-math">$35.00</strong>
+        </div>
+        <div class="summary-row">
+          <span>Selected Extras</span>
+          <strong id="sum-extras">None</strong>
+        </div>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <strong id="price-subtotal">$35.00</strong>
+        </div>
+        <div class="summary-row">
+          <span>Tax (13% HST)</span>
+          <strong id="price-tax">$4.55</strong>
+        </div>
+        <div class="summary-row total-row">
+          <span style="font-weight:700;color:var(--clr-text-primary);">Total</span>
+          <strong id="price-total">$39.55</strong>
+        </div>
+      </div>
+
+      <!-- Contextual Action Button -->
+      <button class="btn btn--primary btn--full" id="sidebar-action-btn" type="button" onclick="document.getElementById('payment-section').scrollIntoView({behavior:'smooth'})" aria-label="Proceed to payment">
+        Proceed to Payment
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+
+      <!-- Trust Badges & Guarantee -->
+      <div class="summary-trust-perks">
+        <div class="trust-perk-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Free cancellation up to 24 hours</span>
+        </div>
+        <div class="trust-perk-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Axe throwing coaching included</span>
+        </div>
+        <div class="trust-perk-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Instant reservation lock</span>
+        </div>
+      </div>
+
+    </aside>
+
   </div>
-</section>
+</main>
 
 <!-- ================================================================
-     SECTION 8: BOOKING FAQ
+     SECTION 8: FREQUENTLY ASKED QUESTIONS
      ================================================================ -->
 <section class="faq-section section-pad" id="booking-faq" aria-labelledby="faq-heading">
-  <div class="container" style="max-width:800px;">
+  <div class="container" style="max-width:860px;">
     <div class="section-header centered reveal">
       <span class="section-label">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        Common Questions
+        Need Help?
       </span>
-      <h2 id="faq-heading">Booking FAQ</h2>
+      <h2 id="faq-heading">Booking &amp; Venue FAQ</h2>
       <div class="divider divider-center"></div>
+      <p class="text-lead">Have questions before locking in your targets? Here's what you need to know.</p>
     </div>
 
     <div class="accordion reveal" role="list">
       <div class="accordion__item" role="listitem">
         <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq1">
-          How far in advance should I book?
+          How far in advance should I book my lane?
           <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="accordion__content" id="faq1" role="region">
-          <div class="accordion__body">We recommend booking at least 48 hours in advance, especially for weekends. Walk-ins are welcome based on availability, but pre-booking guarantees your preferred lane and time.</div>
+          <div class="accordion__body">We recommend booking at least 48 hours in advance, especially for Friday and Saturday evening slots. Walk-ins are accommodated on a first-come, first-served basis, but online booking guarantees your lane and time slot.</div>
         </div>
       </div>
       <div class="accordion__item" role="listitem">
         <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq2">
-          What is your cancellation policy?
+          What is your cancellation and refund policy?
           <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="accordion__content" id="faq2" role="region">
-          <div class="accordion__body">Full refunds are available for cancellations made more than 24 hours before your session. Cancellations within 24 hours receive a credit toward a future booking. No-shows forfeit their payment.</div>
+          <div class="accordion__body">Full 100% refunds are provided for cancellations made more than 24 hours prior to your scheduled session. Cancellations within 24 hours receive full venue credit toward any future booking.</div>
         </div>
       </div>
       <div class="accordion__item" role="listitem">
         <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq3">
-          Can I add more people after booking?
+          Can I adjust my group size after completing my booking?
           <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="accordion__content" id="faq3" role="region">
-          <div class="accordion__body">Yes! You can modify your group size up to 12 hours before your session through your dashboard, or call us directly. Additional charges will apply based on the per-person rate.</div>
+          <div class="accordion__body">Yes! You can add additional throwers up to 2 hours before your session directly through your confirmation link or by calling our desk. Additional throwers will be charged at the per-person lane rate.</div>
         </div>
       </div>
       <div class="accordion__item" role="listitem">
         <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq4">
-          What should I wear?
+          What footwear and clothing are required?
           <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="accordion__content" id="faq4" role="region">
-          <div class="accordion__body">Wear comfortable, casual clothing you can move freely in. Closed-toe shoes are mandatory — sandals, heels, and open-toed footwear will not be permitted in the throwing area.</div>
+          <div class="accordion__body">Closed-toe shoes (sneakers, boots) are strictly mandatory in the throwing arena. No sandals, flip-flops, or open heels are allowed past the check-in lounge. We recommend casual, flexible clothing for optimal throwing range.</div>
         </div>
       </div>
       <div class="accordion__item" role="listitem">
         <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq5">
-          Do you offer group discounts?
+          Are coaches included with every booking?
           <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="accordion__content" id="faq5" role="region">
-          <div class="accordion__body">Groups of 10+ receive a 10% discount automatically applied at checkout. For groups of 20+, contact our events team for a custom corporate package with additional perks.</div>
+          <div class="accordion__body">Yes! Every session kicks off with a certified throwing master who covers safety, the two-handed and one-handed throw technique, and trick shots. Dedicated 1-on-1 private coaching is also available in Step 4.</div>
         </div>
       </div>
     </div>
@@ -773,33 +2499,489 @@
 
 <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}</style>
 
+<!-- ================================================================
+     CLIENT SCRIPTING: INTERACTIVE WIZARD CONTROLLER
+     ================================================================ -->
 <script>
-  // Time Slot Selection
-  document.querySelectorAll('.time-slot:not(.disabled)').forEach(slot => {
-    slot.addEventListener('click', () => {
-      document.querySelectorAll('.time-slot').forEach(s => { s.classList.remove('selected'); s.setAttribute('aria-pressed', 'false'); });
-      slot.classList.add('selected');
-      slot.setAttribute('aria-pressed', 'true');
-      const sumTime = document.getElementById('sum-time');
-      if (sumTime) sumTime.textContent = slot.textContent.trim();
-    });
-  });
+  // Step Navigation Helper
+  function goToStep(stepNum) {
+    const stepIds = ['step-lane', 'step-datetime', 'step-group', 'step-extras', 'payment-section'];
+    const targetId = stepIds[stepNum - 1];
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 
-  // Extra Card checkbox toggle
-  document.querySelectorAll('.extra-card input[type="checkbox"]').forEach(cb => {
-    cb.addEventListener('change', () => {
-      cb.closest('.extra-card').classList.toggle('checked', cb.checked);
-      cb.closest('.extra-card').setAttribute('aria-checked', cb.checked);
-    });
-  });
+  // Booking Wizard Interactive Logic
+  document.addEventListener('DOMContentLoaded', () => {
 
-  // Payment method toggle
-  document.querySelectorAll('.payment-method-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.payment-method-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
-      btn.classList.add('active');
-      btn.setAttribute('aria-pressed', 'true');
+    /* ── 1. Interactive Step Bar Controller (Real-time Scroll Spy & Auto-scroll) ── */
+    const stepBtns = document.querySelectorAll('.wizard-step-btn');
+    const stepCards = document.querySelectorAll('.step-card');
+    const wizardTrack = document.getElementById('wizard-steps-track');
+    const liveCounter = document.getElementById('wizard-live-counter');
+    const progressBar = document.getElementById('wizard-progress-bar');
+    const scrollPrev = document.getElementById('wizard-scroll-prev');
+    const scrollNext = document.getElementById('wizard-scroll-next');
+
+    let currentActiveIdx = 0;
+    let hasDragged = false;
+
+    // Mouse Drag-to-Scroll Mechanism on Steps Track
+    if (wizardTrack) {
+      let isDown = false;
+      let startX = 0;
+      let scrollLeftPos = 0;
+
+      wizardTrack.addEventListener('mousedown', (e) => {
+        isDown = true;
+        hasDragged = false;
+        wizardTrack.classList.add('is-dragging');
+        startX = e.pageX - wizardTrack.offsetLeft;
+        scrollLeftPos = wizardTrack.scrollLeft;
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isDown) {
+          isDown = false;
+          wizardTrack.classList.remove('is-dragging');
+          setTimeout(() => { hasDragged = false; }, 50);
+        }
+      });
+
+      wizardTrack.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        const x = e.pageX - wizardTrack.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        if (Math.abs(walk) > 4) {
+          hasDragged = true;
+        }
+        wizardTrack.scrollLeft = scrollLeftPos - walk;
+      });
+
+      // Mouse wheel horizontal scroll on wizard track
+      wizardTrack.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          wizardTrack.scrollLeft += e.deltaY;
+        }
+      }, { passive: true });
+    }
+
+    // Smooth Click-to-Scroll on Step Buttons with accurate navbar offset
+    stepBtns.forEach((btn, idx) => {
+      btn.addEventListener('click', (e) => {
+        if (hasDragged) {
+          e.preventDefault();
+          return;
+        }
+        e.preventDefault();
+        const targetId = btn.getAttribute('data-target');
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          const navOffset = 90;
+          const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - navOffset;
+          window.scrollTo({ top: targetTop, behavior: 'smooth' });
+        }
+      });
     });
+
+    // Real-Time Scroll Spy: updates active states, counter badge, and progress line
+    function updateActiveStepFromScroll() {
+      const scrollY = window.scrollY;
+      const triggerThreshold = 180; // distance from top of viewport
+
+      let newActiveIdx = 0;
+      stepCards.forEach((card, idx) => {
+        const rect = card.getBoundingClientRect();
+        // If top of card is at or above the upper trigger threshold
+        if (rect.top <= triggerThreshold) {
+          newActiveIdx = idx;
+        }
+      });
+
+      // Special check: if near bottom of page, activate last step (Step 5: Review & Pay)
+      if ((window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 150)) {
+        newActiveIdx = stepCards.length - 1;
+      }
+
+      if (newActiveIdx !== currentActiveIdx) {
+        currentActiveIdx = newActiveIdx;
+
+        // Update step buttons classes
+        stepBtns.forEach((btn, idx) => {
+          const isActive = idx === currentActiveIdx;
+          const isCompleted = idx < currentActiveIdx;
+          btn.classList.toggle('is-active', isActive);
+          btn.classList.toggle('is-completed', isCompleted);
+          btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+
+        // Update live overall step counter pill
+        if (liveCounter) {
+          liveCounter.innerHTML = `<span class="pulse-dot"></span> Step 0${currentActiveIdx + 1} of 05`;
+        }
+
+        // Update dynamic animated progress bar
+        if (progressBar) {
+          progressBar.style.width = `${((currentActiveIdx + 1) / 5) * 100}%`;
+        }
+
+        // Automatically scroll the horizontal track to keep the active step button centered!
+        const activeBtn = stepBtns[currentActiveIdx];
+        if (activeBtn && wizardTrack && !wizardTrack.classList.contains('is-dragging')) {
+          const trackRect = wizardTrack.getBoundingClientRect();
+          const btnRect = activeBtn.getBoundingClientRect();
+          const targetLeft = wizardTrack.scrollLeft + (btnRect.left - trackRect.left) - (trackRect.width / 2) + (btnRect.width / 2);
+          wizardTrack.scrollTo({ left: targetLeft, behavior: 'smooth' });
+        }
+      }
+    }
+
+    // Attach scroll listener with requestAnimationFrame throttling
+    let isScrollTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!isScrollTicking) {
+        window.requestAnimationFrame(() => {
+          updateActiveStepFromScroll();
+          isScrollTicking = false;
+        });
+        isScrollTicking = true;
+      }
+    }, { passive: true });
+
+    // Left and Right Arrow Buttons for Wizard Track
+    if (scrollPrev && wizardTrack) {
+      scrollPrev.addEventListener('click', () => {
+        wizardTrack.scrollBy({ left: -240, behavior: 'smooth' });
+      });
+    }
+    if (scrollNext && wizardTrack) {
+      scrollNext.addEventListener('click', () => {
+        wizardTrack.scrollBy({ left: 240, behavior: 'smooth' });
+      });
+    }
+
+    // Initial check on page load
+    updateActiveStepFromScroll();
+
+    /* ── 2. Lane Selection Synchronization ── */
+    const laneCards = document.querySelectorAll('.lane-card');
+    const sumLane = document.getElementById('sum-lane');
+    const sidebarLaneRate = document.getElementById('sidebar-lane-rate');
+    const sidebarLaneImg = document.getElementById('sidebar-lane-img');
+    const recapLaneTitle = document.getElementById('recap-lane-title');
+    const recapLaneImg = document.getElementById('recap-lane-img');
+    const footerLaneName = document.getElementById('footer-selected-lane-name');
+    const previewLane = document.getElementById('preview-step-lane');
+
+    laneCards.forEach(card => {
+      if (card.classList.contains('busy')) return;
+      card.addEventListener('click', () => {
+        laneCards.forEach(c => {
+          c.classList.remove('selected');
+          c.setAttribute('aria-checked', 'false');
+        });
+        card.classList.add('selected');
+        card.setAttribute('aria-checked', 'true');
+
+        const name = card.getAttribute('data-name') || 'Champion Lane';
+        const price = card.getAttribute('data-price') || '35';
+        const img = card.getAttribute('data-img') || '../assets/images/lane-champion.jpg';
+
+        if (sumLane) sumLane.textContent = name;
+        if (sidebarLaneRate) sidebarLaneRate.textContent = `$${price}/person/hr`;
+        if (sidebarLaneImg) sidebarLaneImg.src = img;
+        if (recapLaneTitle) recapLaneTitle.textContent = `${name} (Selected)`;
+        if (recapLaneImg) recapLaneImg.src = img;
+        if (footerLaneName) footerLaneName.textContent = name;
+        if (previewLane) previewLane.textContent = `${name.split(' ')[0]} ($${price})`;
+
+        const badgeLane = document.getElementById('badge-lane-status');
+        if (badgeLane) {
+          badgeLane.classList.remove('active');
+          badgeLane.classList.add('done');
+          badgeLane.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> ${name}`;
+        }
+
+        recalculateBooking();
+      });
+    });
+
+    /* ── 3. Quick Date Selector Chips & Calendar Sync ── */
+    const quickDateChips = document.querySelectorAll('.quick-date-chip');
+    quickDateChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        quickDateChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        const offset = parseInt(chip.getAttribute('data-days-offset') || 0);
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + offset);
+
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const formatted = targetDate.toLocaleDateString('en-US', options);
+        const shortFormat = targetDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+
+        const dateDisplay = document.getElementById('selected-date-display');
+        const sumDate = document.getElementById('sum-date');
+        const previewDate = document.getElementById('preview-step-datetime');
+
+        if (dateDisplay) dateDisplay.textContent = formatted;
+        if (sumDate) sumDate.textContent = shortFormat;
+        if (previewDate) {
+          const currentTime = document.getElementById('sum-time')?.textContent || '6:00 PM';
+          previewDate.textContent = `${shortFormat}, ${currentTime}`;
+        }
+        updateRecapSub();
+      });
+    });
+
+    /* ── 4. Time Slot Selection ── */
+    const timeSlots = document.querySelectorAll('.time-slot:not(.disabled)');
+    timeSlots.forEach(slot => {
+      slot.addEventListener('click', () => {
+        document.querySelectorAll('.time-slot').forEach(s => {
+          s.classList.remove('selected');
+          s.setAttribute('aria-pressed', 'false');
+        });
+        slot.classList.add('selected');
+        const timeText = slot.querySelector('.slot-time-text')?.textContent.trim() || slot.querySelector('span')?.textContent.trim() || slot.textContent.trim();
+        const sumTime = document.getElementById('sum-time');
+        const previewDate = document.getElementById('preview-step-datetime');
+        const sumDateText = document.getElementById('sum-date')?.textContent || 'Oct 17';
+
+        if (sumTime) sumTime.textContent = timeText;
+        if (previewDate) previewDate.textContent = `${sumDateText}, ${timeText}`;
+
+        const badgeDatetime = document.getElementById('badge-datetime-status');
+        if (badgeDatetime) {
+          badgeDatetime.classList.add('done');
+          badgeDatetime.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> ${sumDateText} @ ${timeText}`;
+        }
+
+        updateRecapSub();
+      });
+    });
+
+    /* ── 5. Quick Group Headcount Chips & Stepper ── */
+    const groupChips = document.querySelectorAll('.group-chip-btn');
+    const groupVal = document.getElementById('group-size-value');
+    const recText = document.getElementById('recommendation-text');
+
+    function updateRecommendation(count) {
+      if (!recText) return;
+      if (count <= 2) {
+        recText.textContent = "1 Lane is plenty for 1–2 throwers with non-stop rotations!";
+      } else if (count <= 6) {
+        recText.textContent = "1 Lane is perfect for 3–6 throwers to compete in round-robin matches.";
+      } else if (count <= 12) {
+        recText.textContent = `Great group of ${count}! We recommend selecting our Group Forge dual-lane setup so everyone throws simultaneously.`;
+      } else {
+        recText.textContent = `Party of ${count}! Dual lanes and private lounge included with tournament host.`;
+      }
+    }
+
+    groupChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        groupChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        const val = parseInt(chip.getAttribute('data-val') || 1);
+        if (groupVal) {
+          groupVal.textContent = val;
+          groupVal.dispatchEvent(new Event('change'));
+        }
+        updateRecommendation(val);
+        recalculateBooking();
+      });
+    });
+
+    // Quantity button listener enhancement
+    document.querySelectorAll('[data-qty]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setTimeout(() => {
+          const count = parseInt(groupVal?.textContent || 1);
+          groupChips.forEach(c => {
+            c.classList.toggle('active', parseInt(c.getAttribute('data-val')) === count);
+          });
+          updateRecommendation(count);
+          recalculateBooking();
+        }, 10);
+      });
+    });
+
+    /* ── 6. Visual Duration Cards ── */
+    const durationCards = document.querySelectorAll('.duration-card');
+    const durationSelect = document.getElementById('duration-select');
+
+    durationCards.forEach(card => {
+      card.addEventListener('click', () => {
+        durationCards.forEach(c => {
+          c.classList.remove('selected');
+          c.setAttribute('aria-checked', 'false');
+        });
+        card.classList.add('selected');
+        card.setAttribute('aria-checked', 'true');
+
+        const hours = card.getAttribute('data-hours') || '1';
+        if (durationSelect) {
+          durationSelect.value = hours;
+          durationSelect.dispatchEvent(new Event('change'));
+        }
+        recalculateBooking();
+      });
+    });
+
+    /* ── 7. Extras Checkbox Toggles ── */
+    const extraCheckboxes = document.querySelectorAll('.extra-card input[type="checkbox"]');
+    extraCheckboxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        const card = cb.closest('.extra-card');
+        if (card) {
+          card.classList.toggle('checked', cb.checked);
+          card.setAttribute('aria-checked', cb.checked ? 'true' : 'false');
+        }
+        recalculateBooking();
+      });
+    });
+
+    /* ── 8. Payment Method Toggle ── */
+    const payBtns = document.querySelectorAll('.payment-method-btn');
+    payBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        payBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+      });
+    });
+
+    /* ── 9. Comprehensive Booking Price Calculation & Receipt Sync ── */
+    function recalculateBooking() {
+      const selectedLane = document.querySelector('.lane-card.selected');
+      const basePrice = selectedLane ? parseFloat(selectedLane.getAttribute('data-price') || 35) : 35;
+      const laneName = selectedLane ? (selectedLane.getAttribute('data-name') || 'Champion Lane') : 'Champion Lane';
+      const groupSize = parseInt(document.getElementById('group-size-value')?.textContent || 1);
+      const duration = parseInt(document.getElementById('duration-select')?.value || 1);
+
+      // Add-ons computation
+      const EXTRAS_PRICING = {
+        coaching: { name: 'Private Coaching', price: 30, perPerson: false },
+        drinks: { name: 'Drinks Package', price: 20, perPerson: true },
+        photo: { name: 'Photo Package', price: 15, perPerson: false },
+        trophy: { name: 'Engraved Trophy', price: 25, perPerson: false },
+        glow: { name: 'Cyber Glow UV Pack', price: 18, perPerson: false }
+      };
+
+      let extrasTotal = 0;
+      let extrasNames = [];
+
+      document.querySelectorAll('[data-extra]:checked').forEach(cb => {
+        const key = cb.getAttribute('data-extra');
+        const item = EXTRAS_PRICING[key];
+        if (item) {
+          const cost = item.perPerson ? (item.price * groupSize) : item.price;
+          extrasTotal += cost;
+          extrasNames.push(item.name);
+        }
+      });
+
+      const laneSubtotal = basePrice * groupSize * duration;
+      const subtotal = laneSubtotal + extrasTotal;
+      const tax = subtotal * 0.13;
+      const total = subtotal + tax;
+
+      // Update Live Sidebar & Step Status Elements
+      const sumGroup = document.getElementById('sum-group');
+      const sumDuration = document.getElementById('sum-duration');
+      const sumExtras = document.getElementById('sum-extras');
+      const sidebarBaseMath = document.getElementById('sidebar-base-math');
+      const priceSubtotal = document.getElementById('price-subtotal');
+      const priceTax = document.getElementById('price-tax');
+      const priceTotal = document.getElementById('price-total');
+      const submitBtnPrice = document.getElementById('submit-btn-price');
+      const recapTotalDisplay = document.getElementById('recap-total-display');
+
+      const previewGroup = document.getElementById('preview-step-group');
+      const previewExtras = document.getElementById('preview-step-extras');
+      const badgeGroup = document.getElementById('badge-group-status');
+      const badgeExtras = document.getElementById('badge-extras-status');
+
+      if (sumGroup) sumGroup.textContent = `${groupSize} ${groupSize === 1 ? 'person' : 'people'}`;
+      if (sumDuration) sumDuration.textContent = `${duration} ${duration === 1 ? 'hour' : 'hours'}`;
+      if (sumExtras) sumExtras.textContent = extrasNames.length ? extrasNames.join(', ') : 'None';
+      if (sidebarBaseMath) sidebarBaseMath.textContent = `$${laneSubtotal.toFixed(2)}`;
+      if (priceSubtotal) priceSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+      if (priceTax) priceTax.textContent = `$${tax.toFixed(2)}`;
+      if (priceTotal) priceTotal.textContent = `$${total.toFixed(2)}`;
+      if (submitBtnPrice) submitBtnPrice.textContent = `$${total.toFixed(2)}`;
+      if (recapTotalDisplay) recapTotalDisplay.textContent = `$${total.toFixed(2)}`;
+
+      if (previewGroup) previewGroup.textContent = `${groupSize} ${groupSize === 1 ? 'Guest' : 'Guests'} · ${duration}h`;
+      if (previewExtras) previewExtras.textContent = extrasNames.length ? `${extrasNames.length} Extras` : 'No Extras';
+
+      if (badgeGroup) {
+        badgeGroup.classList.add('done');
+        badgeGroup.textContent = `${groupSize} Throwers · ${duration}h`;
+      }
+      if (badgeExtras) {
+        badgeExtras.classList.toggle('done', extrasNames.length > 0);
+        badgeExtras.textContent = extrasNames.length ? `${extrasNames.length} Selected (+$${extrasTotal.toFixed(0)})` : '0 Extras Selected';
+      }
+
+      updateRecapSub();
+    }
+
+    function updateRecapSub() {
+      const recapSub = document.getElementById('recap-lane-sub');
+      const sumDate = document.getElementById('sum-date')?.textContent || 'Sat, Oct 17';
+      const sumTime = document.getElementById('sum-time')?.textContent || '6:00 PM';
+      const groupSize = document.getElementById('group-size-value')?.textContent || '1';
+      const duration = document.getElementById('duration-select')?.value || '1';
+      if (recapSub) {
+        recapSub.textContent = `${groupSize} ${groupSize === '1' ? 'Thrower' : 'Throwers'} · ${duration} ${duration === '1' ? 'Hour' : 'Hours'} · ${sumDate} @ ${sumTime}`;
+      }
+    }
+
+    /* ── 10. URL Search Params Auto-prefill Support ── */
+    const params = new URLSearchParams(window.location.search);
+    const tierParam = params.get('tier');
+    const dateParam = params.get('date');
+    const timeParam = params.get('time');
+    const groupParam = params.get('group');
+
+    if (tierParam) {
+      let targetLane = null;
+      if (tierParam === 'standard' || tierParam === 'rookie') targetLane = document.querySelector('[data-lane="2"]');
+      else if (tierParam === 'glow') {
+        targetLane = document.querySelector('[data-lane="1"]');
+        const glowCb = document.getElementById('extra-glow');
+        if (glowCb) { glowCb.checked = true; glowCb.dispatchEvent(new Event('change')); }
+      } else if (tierParam === 'group') targetLane = document.querySelector('[data-lane="3"]');
+      else if (tierParam === 'elite' || tierParam === 'vip') targetLane = document.querySelector('[data-lane="1"]') || document.querySelector('[data-lane="4"]');
+
+      if (targetLane) targetLane.click();
+    }
+
+    if (timeParam) {
+      document.querySelectorAll('.time-slot').forEach(slot => {
+        if (slot.textContent.includes(timeParam)) slot.click();
+      });
+    }
+
+    if (groupParam && parseInt(groupParam)) {
+      const gv = document.getElementById('group-size-value');
+      if (gv) {
+        gv.textContent = groupParam;
+        updateRecommendation(parseInt(groupParam));
+      }
+    }
+
+    // Initial run
+    recalculateBooking();
   });
 </script>
 

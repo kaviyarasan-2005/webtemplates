@@ -124,7 +124,7 @@
           RTL
         </button>
       </div>
-      <a href="${root}pages/login.html" class="btn btn--primary btn--sm" aria-label="Login" style="width:100%; justify-content:center; margin-top: 16px; margin-bottom: 16px;">
+      <a href="${root}pages/login.html" class="btn btn--primary btn--sm mobile-menu__login" aria-label="Login" style="width:100%; justify-content:center; margin-top: 16px; margin-bottom: 16px;">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
         Login
       </a>
@@ -216,9 +216,9 @@
             </li>
           </ul>
           <div style="margin-top: var(--sp-5);">
-            <p style="font-size:0.8rem;color:rgba(255,255,255,0.4);margin-bottom:var(--sp-2);">Hours of Operation</p>
-            <p style="font-size:0.875rem;color:rgba(255,255,255,0.6);">Mon–Fri: 2pm – 11pm</p>
-            <p style="font-size:0.875rem;color:rgba(255,255,255,0.6);">Sat–Sun: 10am – 12am</p>
+            <p style="font-size:0.875rem;color:rgba(255,255,255,0.88);margin-bottom:var(--sp-2);">Hours of Operation</p>
+            <p style="font-size:1rem;color:rgba(255,255,255,0.95);">Mon–Fri: 2pm – 11pm</p>
+            <p style="font-size:1rem;color:rgba(255,255,255,0.95);">Sat–Sun: 10am – 12am</p>
           </div>
         </div>
       </div>

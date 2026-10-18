@@ -542,17 +542,18 @@ const LaneSelection = (() => {
 
 /* ─── PRICE CALCULATOR ──────────────────────────────────────── */
 const PriceCalculator = (() => {
-  const BASE_PRICE = 25;
-  const EXTRAS = { coaching: 30, drinks: 20, photo: 15 };
+  const EXTRAS = { coaching: 30, drinks: 20, photo: 15, trophy: 25, glow: 18 };
 
   function update() {
+    const selectedCard = document.querySelector('.lane-card.selected');
+    const basePrice = selectedCard ? parseFloat(selectedCard.getAttribute('data-price') || 25) : 25;
     const groupSize = parseInt(document.querySelector('#group-size-value')?.textContent || 1);
     const duration = parseInt(document.querySelector('#duration-select')?.value || 1);
     let extras = 0;
     document.querySelectorAll('[data-extra]:checked').forEach(cb => {
       extras += EXTRAS[cb.getAttribute('data-extra')] || 0;
     });
-    const subtotal = (BASE_PRICE * groupSize * duration) + extras;
+    const subtotal = (basePrice * groupSize * duration) + extras;
     const tax = subtotal * 0.13;
     const total = subtotal + tax;
 
@@ -563,6 +564,9 @@ const PriceCalculator = (() => {
     if (elSubtotal) elSubtotal.textContent = `$${subtotal.toFixed(2)}`;
     if (elTax) elTax.textContent = `$${tax.toFixed(2)}`;
     if (elTotal) elTotal.textContent = `$${total.toFixed(2)}`;
+
+    // Dispatch event so custom booking UI can react
+    window.dispatchEvent(new CustomEvent('booking-price-updated', { detail: { basePrice, groupSize, duration, extras, subtotal, tax, total } }));
   }
 
   function init() {
@@ -574,10 +578,12 @@ const PriceCalculator = (() => {
     const sizeEl = document.querySelector('#group-size-value');
     if (sizeEl) obs.observe(sizeEl, { childList: true, characterData: true, subtree: true });
 
+    document.querySelectorAll('.lane-card').forEach(card => card.addEventListener('click', () => setTimeout(update, 10)));
+
     update();
   }
 
-  return { init };
+  return { init, update };
 })();
 
 /* ─── SKELETON LOADER DEMO ──────────────────────────────────── */
