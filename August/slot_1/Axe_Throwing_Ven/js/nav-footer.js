@@ -86,6 +86,17 @@
     </div>
   </nav>
 
+  <style>
+    @media (min-width: 640px) {
+      .mobile-menu__login {
+        display: none !important;
+      }
+      .mobile-menu__controls {
+        display: none !important;
+      }
+    }
+  </style>
+
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
     <ul role="list">

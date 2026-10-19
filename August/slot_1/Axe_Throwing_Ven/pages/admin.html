@@ -173,6 +173,7 @@
     }
     .dash-main {
       padding: var(--sp-8);
+      padding-bottom: var(--sp-16);
       max-width: 1400px;
       margin: 0 auto;
       width: 100%;
@@ -240,8 +241,25 @@
     [data-theme="light"] .status-badge--info::before { background: #2563eb; }
 
     /* Lane Grid */
-    .lane-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--sp-5); }
-    .lane-card { background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-lg); padding: var(--sp-6); position: relative; overflow: hidden; }
+    #panel-lanes {
+      padding-bottom: var(--sp-8);
+    }
+    .lane-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--sp-5);
+      margin-bottom: var(--sp-8);
+    }
+    .lane-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-6);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
     .lane-card::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px; }
     .lane-card.status-active::before { background: #4ade80; }
     .lane-card.status-available::before { background: #9ca3af; }
@@ -252,7 +270,7 @@
     .lane-details { margin-bottom: var(--sp-5); }
     .lane-details p { font-size: 1rem; color: var(--clr-text-secondary); margin-bottom: 2px; }
     .lane-details strong { color: var(--clr-text-primary); font-weight: 600; }
-    .lane-actions { display: flex; gap: var(--sp-2); }
+    .lane-actions { display: flex; gap: var(--sp-2); margin-top: auto; padding-top: var(--sp-4); }
     
     .lane-progress { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; margin-top: var(--sp-2); }
     [data-theme="light"] .lane-progress { background: rgba(0,0,0,0.1); }
@@ -287,7 +305,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 var(--sp-4);
+        padding: 0 var(--sp-6);
         width: 100%;
       }
       .dash-logo-wrap { padding: 0 !important; }
@@ -324,19 +342,28 @@
         overflow-x: auto;
         padding-bottom: 0;
         margin-inline: 0;
-        padding-inline: var(--sp-4);
+        padding-inline: var(--sp-6);
         scrollbar-width: none;
       }
       .dash-nav::-webkit-scrollbar { display: none; }
       .dash-nav-link { white-space: nowrap; width: auto; }
       .dash-user { display: none; }
-      .dash-main { padding: var(--sp-4); }
+      .dash-main {
+        padding: var(--sp-6);
+        padding-bottom: var(--sp-16);
+      }
     }
 
     .admin-chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: var(--sp-6); margin-bottom: var(--sp-8); }
     .admin-grid-split { display: grid; grid-template-columns: minmax(0,2fr) minmax(0,1fr); gap: var(--sp-6); }
 
     @media (max-width: 639px) {
+      .dash-sidebar-header { padding: 0 var(--sp-4); }
+      .dash-nav { padding-inline: var(--sp-4); }
+      .dash-main {
+        padding: var(--sp-4);
+        padding-bottom: var(--sp-12);
+      }
       .admin-chart-grid { grid-template-columns: minmax(0, 1fr); }
       .admin-grid-split { grid-template-columns: minmax(0, 1fr); }
       .lane-grid { grid-template-columns: minmax(0, 1fr); }
@@ -352,7 +379,10 @@
     @media (max-width: 480px) {
       .dash-sidebar-header { padding: 0 var(--sp-3); }
       .dash-nav { padding-inline: var(--sp-3); }
-      .dash-main { padding: var(--sp-3); }
+      .dash-main {
+        padding: var(--sp-3);
+        padding-bottom: var(--sp-12);
+      }
     }
     /* RTL Specific Refinements */
     [dir="rtl"] .dash-sidebar {
@@ -594,7 +624,6 @@
           </div>
         </div>
       </div>
-    </div>
 
       <!-- Admin Content Expansion Grid -->
       <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:var(--sp-6);margin-top:var(--sp-6);">
@@ -684,7 +713,7 @@
          SECTION 3: LIVE LANES
          ================================================================ -->
     <div class="dash-panel" id="panel-lanes" role="tabpanel" aria-labelledby="tab-lanes">
-      <div style="margin-bottom:var(--sp-8);display:flex;justify-content:space-between;align-items:flex-end;">
+      <div style="margin-bottom:var(--sp-8);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:var(--sp-4);">
         <div>
           <h1 style="font-size:2rem;margin-bottom:var(--sp-1);">Live Lanes</h1>
           <p style="color:var(--clr-text-secondary);">Real-time status of all throwing lanes.</p>
