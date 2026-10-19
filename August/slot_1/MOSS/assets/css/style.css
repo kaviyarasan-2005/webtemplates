@@ -742,10 +742,11 @@ button.btn--ghost:hover * {
   z-index: calc(var(--z-navbar) + 10);
   display: flex;
   flex-direction: column;
-  padding: var(--space-10) var(--space-4);
+  padding: var(--space-10) var(--space-4) var(--space-6);
   opacity: 0;
   visibility: hidden;
   transition: all var(--dur-fast) ease;
+  overflow-y: auto;
 }
 
 .mobile-menu.open {
@@ -793,12 +794,28 @@ button.btn--ghost:hover * {
   color: var(--color-primary);
 }
 
+.mobile-menu__ctas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6) 0 var(--space-4);
+  border-top: var(--border-hairline);
+}
+
+.mobile-menu__cta-btn {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  padding: 14px var(--space-4);
+  font-size: 0.9375rem;
+  letter-spacing: 0.25px;
+}
+
 .mobile-menu__toggles {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: auto;
-  padding-top: var(--space-6);
+  padding-top: var(--space-4);
   border-top: var(--border-hairline);
 }
 
@@ -974,6 +991,33 @@ button.btn--ghost:hover * {
   object-position: center;
 }
 
+/* Inner page reduced hero banner — applied to all non-home pages */
+.hero--full,
+.hero--inner {
+  min-height: 55vh;
+}
+
+.hero--full:has(> .hero__bg .hero__img) {
+  min-height: 55vh;
+}
+
+.hero--full .hero__bg:has(.hero__img) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero--full .hero__img,
+.hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 60%;
+  display: block;
+}
+
 .hero__overlay {
   position: absolute;
   inset: 0;
@@ -1095,6 +1139,7 @@ button.btn--ghost:hover * {
   align-items: center;
   justify-content: center;
   min-height: 60vh;
+  padding: var(--space-15) var(--container-pad);
 }
 
 /* ── SECTION TITLE ────────────────────────────────────────── */
@@ -1115,6 +1160,7 @@ button.btn--ghost:hover * {
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--color-stone);
+  margin-bottom: 0.5rem;
 }
 
 /* ── ALIGN CENTER UTIL ────────────────────────────────────── */
@@ -3310,6 +3356,26 @@ a.card:hover .card__link {
 }
 
 /* ── SPLIT HERO (HOME 2) ──────────────────────────────────── */
+.hero--split--compact {
+  min-height: 65vh;
+}
+.hero--split--compact .hero--split__left {
+  min-height: 65vh;
+  padding: calc(var(--navbar-height) + var(--space-4)) calc(var(--container-pad) + 16px) var(--space-6);
+}
+@media (max-width: 1024px) {
+  .hero--split--compact {
+    min-height: unset;
+  }
+  .hero--split--compact .hero--split__left {
+    min-height: unset;
+    padding: calc(var(--navbar-height) + var(--space-4)) var(--space-4) var(--space-6);
+  }
+  .hero--split--compact .hero--split__right {
+    height: 40vh;
+  }
+}
+
 .hero--split {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -3322,7 +3388,7 @@ a.card:hover .card__link {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: var(--space-20) calc(var(--container-pad) + 16px) var(--space-10);
+  padding: calc(var(--navbar-height) + var(--space-10)) calc(var(--container-pad) + 16px) var(--space-10);
   position: relative;
   overflow: hidden;
   gap: var(--space-4);
@@ -3381,9 +3447,9 @@ a.card:hover .card__link {
 }
 .hero--split__sub {
   font-size: 0.9375rem;
-  color: rgba(255,255,255,0.55);
-  line-height: 1.75;
-  max-width: 40ch;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.8;
+  max-width: 44ch;
 }
 .hero--split__actions {
   display: flex;
@@ -3571,13 +3637,19 @@ a.card:hover .card__link {
 .philosophy-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 680px;
+  align-items: stretch;
+  min-height: 520px;
+  padding: var(--space-10) var(--container-pad);
+  gap: 0;
 }
 .philosophy-split__image {
   position: relative;
   overflow: hidden;
+  min-height: 520px;
 }
 .philosophy-split__image img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -3587,7 +3659,7 @@ a.card:hover .card__link {
 }
 .philosophy-split__text {
   background: var(--color-bg-alt);
-  padding: var(--space-15) var(--space-8);
+  padding: var(--space-10) var(--space-8);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -4240,9 +4312,9 @@ a.card:hover .card__link {
 .contact-hero-info {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
-  margin-top: var(--space-6);
-  padding-top: var(--space-6);
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
   border-top: var(--border-hairline);
 }
 
@@ -4325,7 +4397,7 @@ a.card:hover .card__link {
 .visitor-info-split__dark {
   background: #1c2016;
   color: #ffffff;
-  padding: var(--space-10) var(--space-8);
+  padding: var(--space-8) var(--space-8);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -4353,7 +4425,7 @@ a.card:hover .card__link {
 
 .visitor-info-split__light {
   background: var(--color-surface);
-  padding: var(--space-8);
+  padding: var(--space-8) var(--space-10);
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
@@ -4461,7 +4533,7 @@ a.card:hover .card__link {
 }
 
 .nursery-portal__body {
-  padding: var(--space-6);
+  padding: var(--space-6) var(--space-5);
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -4540,7 +4612,7 @@ a.card:hover .card__link {
 }
 
 .faq-item summary {
-  padding: var(--space-4) var(--space-5);
+  padding: var(--space-4) var(--space-6);
   font-family: var(--font-heading);
   font-size: 1.125rem;
   font-weight: 500;
@@ -4568,7 +4640,7 @@ a.card:hover .card__link {
 }
 
 .faq-item__body {
-  padding: 0 var(--space-5) var(--space-5) var(--space-5);
+  padding: 0 var(--space-6) var(--space-5) var(--space-6);
   color: var(--color-stone);
   font-size: 0.9375rem;
   line-height: 1.7;
@@ -4635,9 +4707,15 @@ a.card:hover .card__link {
   .philosophy-split {
     grid-template-columns: 1fr;
     min-height: unset;
+    padding: var(--space-8) var(--container-pad);
   }
-  .philosophy-split__image { height: 380px; }
-  .philosophy-split__text { padding: var(--space-10) var(--space-6); }
+  .philosophy-split__image {
+    min-height: 0;
+    height: 320px;
+  }
+  .philosophy-split__text {
+    padding: var(--space-10) var(--space-6);
+  }
   .hero--split { grid-template-columns: 1fr; min-height: unset; }
   .hero--split__left {
     padding: calc(var(--navbar-height) + 64px) var(--container-pad) var(--space-10);
@@ -4668,6 +4746,10 @@ a.card:hover .card__link {
     padding: calc(var(--navbar-height) + 40px) var(--space-4) var(--space-8);
   }
   .commission-split__title { font-size: 2rem; }
+  .philosophy-split {
+    padding: var(--space-6) var(--container-pad);
+  }
+  .philosophy-split__image { height: 260px; }
   .philosophy-split__text { padding: var(--space-8) var(--space-4); }
   .mini-form { padding: var(--space-4); }
 }
