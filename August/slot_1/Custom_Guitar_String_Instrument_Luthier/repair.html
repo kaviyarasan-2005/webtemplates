@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FRET | Repair & Restoration</title>
-  <meta name="description" content="Expert guitar repair and restoration services by FRET. We revive vintage instruments and provide precision setups.">
+  <title>FRET | Master Guitar Repair & Vintage Restoration Services</title>
+  <meta name="description" content="Master guitar repair and historical restoration in Portland, Oregon. From 0.001-inch fret leveling and neck resets to pre-war acoustic reconstruction using traditional hot hide glue.">
   
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   
@@ -19,168 +19,639 @@
   <link rel="stylesheet" href="css/rtl.css">
 
   <style>
-    /* Repair Page Specifics */
-    
-    /* Services Grid - 2x3 */
-    .services-grid {
+    /* ==========================================================================
+       Repair Page Distinctive Visual System
+       Showcases photography, distinctive layouts, and interactive visual triage
+       ========================================================================== */
+
+    /* ── Hero Enhancement ─────────────────────────────────────────────────── */
+    .repair-hero {
+      position: relative;
+      min-height: 65vh;
+      display: flex;
+      align-items: center;
+      background-color: #0c0a09;
+      color: #fff;
+      overflow: hidden;
+      padding-top: calc(var(--navbar-height) + var(--space-4));
+      padding-bottom: var(--space-8);
+    }
+
+    .repair-hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .repair-hero__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.38;
+      filter: saturate(1.15) contrast(1.1);
+      transform: scale(1.03);
+      transition: transform 10s ease-out;
+    }
+
+    .repair-hero:hover .repair-hero__bg img {
+      transform: scale(1.08);
+    }
+
+    .repair-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 60% 40%, rgba(180, 83, 9, 0.22) 0%, transparent 65%),
+                  linear-gradient(180deg, rgba(12, 10, 9, 0.75) 0%, #0c0a09 100%);
+      z-index: 1;
+    }
+
+    .repair-hero__content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+
+    .repair-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(180, 83, 9, 0.2);
+      border: 1px solid rgba(217, 119, 6, 0.45);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #FBBF24;
+      margin-bottom: var(--space-3);
+      backdrop-filter: blur(8px);
+    }
+
+    .repair-hero__title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.3rem, 4vw, 3.6rem);
+      line-height: 1.15;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: var(--space-3);
+    }
+
+    .repair-hero__lead {
+      font-size: 1.125rem;
+      line-height: 1.65;
+      color: rgba(245, 243, 239, 0.9);
+      margin-bottom: var(--space-5);
+      max-width: 640px;
+    }
+
+    .repair-hero__quick-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .quick-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-full);
+      color: #E7E5E4;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+    }
+
+    .quick-chip:hover {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ── Distinctive Visual Services Architecture ─────────────────────────── */
+    .service-matrix {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    /* Featured Wide Showcase Card */
+    .service-card-featured {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .service-card-featured:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--color-primary-alpha-20);
+    }
+
+    .service-card-featured__media {
+      position: relative;
+      min-height: 380px;
+      overflow: hidden;
+      background: #0c0a09;
+    }
+
+    .service-card-featured__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .service-card-featured:hover .service-card-featured__media img {
+      transform: scale(1.05);
+    }
+
+    .service-card-featured__badge {
+      position: absolute;
+      top: 20px;
+      inset-inline-start: 20px;
+      background: rgba(18, 16, 14, 0.85);
+      border: 1px solid rgba(217, 119, 6, 0.4);
+      border-radius: var(--radius-full);
+      padding: 6px 14px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #FBBF24;
+      backdrop-filter: blur(8px);
+    }
+
+    .service-card-featured__content {
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* 2-Column Precision Bench Pair */
+    .service-pair-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-5);
+    }
+
+    /* 3-Column Specialized Craft Grid */
+    .service-tri-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: var(--space-4);
     }
 
-    @media (max-width: 1023px) {
-      .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 767px) {
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ── Fretwork & String Care Spotlight ─── */
-    .service-spotlight {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-6);
-      align-items: center;
-    }
-
-    .service-spotlight__image {
-      width: 100%;
+    /* Modern Visual Service Card */
+    .service-visual-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
       border-radius: var(--radius-xl);
       overflow: hidden;
-      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      box-shadow: var(--shadow-sm);
     }
 
-    .service-spotlight__image img {
+    .service-visual-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary-alpha-20);
+    }
+
+    .service-visual-card__media {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #0c0a09;
+    }
+
+    .service-visual-card__media img {
       width: 100%;
-      aspect-ratio: 4/3;
+      height: 100%;
       object-fit: cover;
-      display: block;
       transition: transform var(--transition-slow);
     }
 
-    .service-spotlight__image:hover img {
-      transform: scale(1.04);
+    .service-visual-card:hover .service-visual-card__media img {
+      transform: scale(1.06);
     }
 
-    .service-spotlight__detail-list {
+    .service-visual-card__pill {
+      position: absolute;
+      top: 14px;
+      inset-inline-start: 14px;
+      background: rgba(18, 16, 14, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-full);
+      padding: 4px 10px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #fff;
+      backdrop-filter: blur(8px);
+      z-index: 1;
+    }
+
+    .service-visual-card__turnaround {
+      position: absolute;
+      bottom: 12px;
+      inset-inline-end: 12px;
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      z-index: 1;
+    }
+
+    .service-visual-card__content {
+      padding: var(--space-4);
       display: flex;
       flex-direction: column;
-      gap: var(--space-3);
-      margin-top: var(--space-3);
+      flex: 1;
     }
 
-    .service-spotlight__detail-item {
+    .service-visual-card__title {
+      font-size: 1.375rem;
+      font-weight: 700;
+      margin-bottom: var(--space-1);
+    }
+
+    .service-visual-card__desc {
+      font-size: var(--small-size);
+      line-height: 1.55;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-3);
+    }
+
+    .service-spec-chips {
       display: flex;
-      gap: var(--space-3);
-      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: var(--space-4);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-divider);
     }
 
-    .service-spotlight__detail-icon {
-      width: 44px;
-      height: 44px;
-      min-width: 44px;
-      background: var(--color-primary-alpha-10);
-      border-radius: var(--radius-md);
+    .service-spec-chip {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      color: var(--color-text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .service-spec-chip svg {
+      color: var(--color-primary);
+      flex-shrink: 0;
+    }
+
+    .service-visual-card__footer {
+      margin-top: auto;
+      padding-top: var(--space-2);
+    }
+
+    /* ── Interactive Visual Guitar Anatomy Triage ─────────────────────────── */
+    .triage-container {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .triage-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      align-items: center;
+    }
+
+    .triage-anatomy {
+      position: relative;
+      background: #0f0d0c;
+      border: 1px solid rgba(217, 119, 6, 0.25);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .triage-anatomy-instruction {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #FBBF24;
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .anatomy-svg-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      height: 480px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--color-primary);
-      transition: background-color var(--transition-fast), transform var(--transition-fast);
     }
 
-    .service-spotlight__detail-item:hover .service-spotlight__detail-icon {
-      background: var(--color-primary);
+    .anatomy-hotspot {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(180, 83, 9, 0.4);
+      border: 2px solid #F59E0B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
       color: #fff;
-      transform: scale(1.08);
+      font-size: 0.75rem;
+      font-weight: 700;
+      transition: all var(--transition-fast);
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+      animation: hotspot-pulse 2.2s infinite ease-in-out;
+      z-index: 5;
     }
 
-    .service-spotlight__detail-icon svg {
-      width: 20px;
-      height: 20px;
+    .anatomy-hotspot:hover,
+    .anatomy-hotspot.active {
+      transform: scale(1.22);
+      background: #F59E0B;
+      color: #0c0a09;
+      box-shadow: 0 0 25px #F59E0B;
+      animation: none;
     }
 
-    /* ── Why Choose Our Repair Services ─── */
-    .why-choose-grid {
+    @keyframes hotspot-pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
+      50% { transform: scale(1.12); box-shadow: 0 0 20px rgba(245, 158, 11, 0.9); }
+    }
+
+    /* Hotspot positions on guitar outline */
+    .spot-headstock { top: 12%; left: 47%; }
+    .spot-frets { top: 38%; left: 47%; }
+    .spot-soundboard { top: 68%; left: 32%; }
+    .spot-bridge { top: 72%; left: 52%; }
+    .spot-electronics { top: 78%; left: 68%; }
+
+    /* Diagnostic Card on the Right */
+    .triage-display {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .triage-display-card {
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-base);
+    }
+
+    .triage-display__photo {
+      width: 100%;
+      height: 220px;
+      border-radius: var(--radius-lg);
+      object-fit: cover;
+      margin-bottom: var(--space-4);
+      border: 1px solid var(--color-border);
+      background: #0c0a09;
+    }
+
+    .triage-symptoms-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--space-4) 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .triage-symptoms-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+      color: var(--color-text);
+    }
+
+    .triage-symptoms-list li svg {
+      color: var(--color-primary);
+      flex-shrink: 0;
+    }
+
+    .triage-metric-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+      padding-block: var(--space-3);
+      border-top: 1px solid var(--color-divider);
+      border-bottom: 1px solid var(--color-divider);
+      margin-bottom: var(--space-4);
+    }
+
+    .triage-metric-item strong {
+      display: block;
+      font-size: 1.125rem;
+      color: var(--color-primary);
+    }
+
+    .triage-metric-item span {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Visual 4-Stage Atelier Workflow ──────────────────────────────────── */
+    .visual-stages-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: var(--space-4);
     }
 
-    .why-choose-card {
-      text-align: center;
-      padding: var(--space-5) var(--space-4);
-      background: var(--color-surface-elevated);
+    .visual-stage-card {
+      background: var(--color-surface);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-sm);
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
-      position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
     }
 
-    .why-choose-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary));
-      opacity: 0;
-      transition: opacity var(--transition-fast);
-    }
-
-    .why-choose-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-lg);
+    .visual-stage-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
       border-color: var(--color-primary-alpha-20);
     }
 
-    .why-choose-card:hover::before {
-      opacity: 1;
+    .visual-stage-card__img-wrap {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #0c0a09;
     }
 
-    .why-choose-card__icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto var(--space-3);
-      background: linear-gradient(135deg, var(--color-primary-alpha-10) 0%, var(--color-primary-alpha-20) 100%);
+    .visual-stage-card__img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .visual-stage-card:hover .visual-stage-card__img-wrap img {
+      transform: scale(1.06);
+    }
+
+    .visual-stage-badge {
+      position: absolute;
+      top: 12px;
+      inset-inline-start: 12px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--color-primary);
-      transition: background var(--transition-fast), transform var(--transition-fast);
-    }
-
-    .why-choose-card:hover .why-choose-card__icon {
-      background: var(--color-primary);
-      color: #fff;
-      transform: scale(1.1) rotate(5deg);
-    }
-
-    .why-choose-card__icon svg {
-      width: 28px;
-      height: 28px;
-    }
-
-    .why-choose-card__stat {
       font-family: var(--font-heading);
-      font-size: var(--h2-size);
+      font-size: 0.875rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-md);
+    }
+
+    .visual-stage-card__body {
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .visual-stage-card__body h4 {
+      font-size: 1.125rem;
+      margin-bottom: 6px;
+    }
+
+    .visual-stage-card__body p {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--color-text-secondary);
+      margin: 0;
+    }
+
+    /* ── Why Choose Badges ─────────────────────────────────────────────────── */
+    .why-fret-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+    }
+
+    .why-fret-card {
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5) var(--space-4);
+      text-align: center;
+      transition: all var(--transition-fast);
+      position: relative;
+      min-width: 0;
+      box-sizing: border-box;
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
+
+    .why-fret-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card-hover);
+      border-color: var(--color-primary-alpha-20);
+    }
+
+    .why-fret-card__icon {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto var(--space-3);
+      border-radius: var(--radius-full);
+      background: rgba(180, 83, 9, 0.12);
+      color: var(--color-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .why-fret-card__icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    [data-theme="dark"] .why-fret-card__icon {
+      background: rgba(245, 158, 11, 0.18);
+      color: var(--color-primary-light);
+    }
+
+    .why-fret-card__stat {
+      font-family: var(--font-heading);
+      font-size: 2.75rem;
       font-weight: 700;
       color: var(--color-primary);
       line-height: 1;
       margin-bottom: var(--space-1);
     }
 
-    /* ── FAQ Accordion ─── */
+    .why-fret-card h4 {
+      font-size: 1.125rem;
+      line-height: 1.4;
+      margin-bottom: 6px;
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
+
+    .why-fret-card p {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--color-text-secondary);
+      margin: 0;
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
+
+    /* ── FAQ Accordion ─────────────────────────────────────────────────────── */
     .faq-list {
-      max-width: 800px;
+      max-width: 820px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -210,7 +681,7 @@
       align-items: center;
       justify-content: space-between;
       gap: var(--space-3);
-      padding: var(--space-3) var(--space-4);
+      padding: var(--space-4);
       background: none;
       border: none;
       cursor: pointer;
@@ -222,14 +693,18 @@
       transition: color var(--transition-fast);
     }
 
+    [dir="rtl"] .faq-question {
+      text-align: right;
+    }
+
     .faq-question:hover {
       color: var(--color-primary);
     }
 
     .faq-question__icon {
-      width: 24px;
-      height: 24px;
-      min-width: 24px;
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
       color: var(--color-primary);
       transition: transform 0.3s ease;
     }
@@ -245,284 +720,90 @@
     }
 
     .faq-item.active .faq-answer {
-      max-height: 300px;
+      max-height: 320px;
     }
 
     .faq-answer__inner {
       padding: 0 var(--space-4) var(--space-4);
       color: var(--color-text-secondary);
-      font-size: var(--body-size);
-      line-height: var(--body-line);
+      font-size: 0.9375rem;
+      line-height: 1.6;
     }
 
-    /* ── Repair Process (Enhanced) ─── */
-    .repair-process-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: var(--space-4);
-      position: relative;
-    }
-
-    .repair-process-grid::before {
-      content: '';
-      position: absolute;
-      top: 40px;
-      left: 10%;
-      right: 10%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--color-primary-alpha-20), var(--color-primary), var(--color-primary-alpha-20), transparent);
-      z-index: 0;
-    }
-
-    .repair-step {
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .repair-step__number {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto var(--space-3);
-      border-radius: 50%;
-      background: var(--color-surface-elevated);
-      border: 3px solid var(--color-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-heading);
-      font-size: var(--h3-size);
-      font-weight: 700;
-      color: var(--color-primary);
-      transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
-    }
-
-    .repair-step:hover .repair-step__number {
-      background: var(--color-primary);
-      border-color: var(--color-primary);
-      color: #fff;
-      transform: scale(1.1);
-    }
-
-    /* Vertical Timeline */
-    .timeline {
-      position: relative;
-      max-width: 800px;
-      margin: 0 auto;
-      padding-block: var(--space-4);
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      width: 2px;
-      background-color: var(--color-border);
-      transform: translateX(-50%);
-    }
-
-    .timeline-progress {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 2px;
-      background-color: var(--color-primary);
-      transform: translateX(-50%);
-      transform-origin: top;
-      /* Animation handled by JS if scroll-linked */
-    }
-
-    .timeline-item {
-      position: relative;
-      margin-bottom: var(--space-6);
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-      padding-right: 50%;
-    }
-
-    .timeline-item:nth-child(even) {
-      justify-content: flex-start;
-      padding-right: 0;
-      padding-left: 50%;
-    }
-
-    .timeline-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .timeline-node {
-      position: absolute;
-      top: 24px;
-      left: 50%;
-      width: 16px;
-      height: 16px;
-      background-color: var(--color-primary);
-      border: 4px solid var(--color-bg);
-      border-radius: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      transition: background-color var(--transition-fast), border-color var(--transition-theme);
-    }
-
-    [data-theme="dark"] .timeline-node {
-      border-color: #0C0A09;
-    }
-
-    .timeline-content {
-      width: calc(100% - 40px);
-      padding: var(--space-3);
-      background-color: var(--color-surface-elevated);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-      position: relative;
-    }
-
-    .timeline-item:nth-child(odd) .timeline-content {
-      margin-right: 40px;
-    }
-
-    .timeline-item:nth-child(even) .timeline-content {
-      margin-left: 40px;
-    }
-    
-    .timeline-image {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-radius: var(--radius-md);
-      margin-bottom: var(--space-2);
-    }
-
-    @media (max-width: 767px) {
-      .timeline::before,
-      .timeline-progress,
-      .timeline-node {
-        left: 20px;
+    /* ── Responsive Rules for Repair Page ─────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .service-card-featured {
+        grid-template-columns: 1fr;
       }
-
-      .timeline-item,
-      .timeline-item:nth-child(even) {
-        justify-content: flex-start;
-        padding-right: 0;
-        padding-left: 40px;
+      .service-card-featured__media {
+        min-height: 280px;
       }
-
-      .timeline-content {
-        width: 100%;
+      .service-pair-grid {
+        grid-template-columns: 1fr;
       }
-
-      .timeline-item:nth-child(odd) .timeline-content,
-      .timeline-item:nth-child(even) .timeline-content {
-        margin: 0 0 0 20px;
+      .service-tri-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .triage-layout {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+      }
+      .visual-stages-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .why-fret-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
-    
-    /* RTL adjustments for timeline */
-    [dir="rtl"] .timeline-item {
-      justify-content: flex-start;
-      padding-right: 50%;
-      padding-left: 0;
-    }
-    
-    [dir="rtl"] .timeline-item:nth-child(even) {
-      justify-content: flex-end;
-      padding-left: 50%;
-      padding-right: 0;
-    }
-    
-    [dir="rtl"] .timeline-item:nth-child(odd) .timeline-content {
-      margin-left: 40px;
-      margin-right: 0;
-    }
-    
-    [dir="rtl"] .timeline-item:nth-child(even) .timeline-content {
-      margin-right: 40px;
-      margin-left: 0;
+
+    @media (max-width: 768px) {
+      .service-tri-grid {
+        grid-template-columns: 1fr;
+      }
+      .visual-stages-grid {
+        grid-template-columns: 1fr;
+      }
+      .why-fret-grid {
+        grid-template-columns: 1fr;
+      }
+      .anatomy-svg-wrapper {
+        height: 400px;
+      }
+      .repair-hero {
+        min-height: auto;
+        align-items: flex-start;
+        padding-top: calc(var(--navbar-height-mobile) + var(--space-6));
+        padding-bottom: var(--space-6);
+      }
     }
 
-    /* File Upload Area */
-    .file-upload {
-      border: 2px dashed var(--color-border-strong);
-      border-radius: var(--radius-md);
-      padding: var(--space-4);
-      text-align: center;
-      transition: border-color var(--transition-fast), background-color var(--transition-fast);
-      cursor: pointer;
+    @media (max-width: 480px) {
+      .why-fret-grid {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-3);
+      }
+      .why-fret-card {
+        padding: var(--space-4) 1rem !important;
+      }
+      .why-fret-card__stat {
+        font-size: 2.25rem;
+      }
     }
 
-    .file-upload:hover, .file-upload.drag-over {
-      border-color: var(--color-primary);
-      background-color: var(--color-primary-alpha-10);
-    }
-
-    .file-upload svg {
-      width: 32px;
-      height: 32px;
-      color: var(--color-primary);
-      margin-bottom: var(--space-2);
-    }
-    
-    /* Before/After Drag Slider */
-    .ba-slider {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16/9;
-      overflow: hidden;
-      border-radius: var(--radius-xl);
-      cursor: ew-resize;
-      box-shadow: var(--shadow-lg);
-    }
-
-    .ba-slider img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .ba-slider .before-img {
-      clip-path: inset(0 50% 0 0);
-      z-index: 1;
-    }
-
-    .ba-slider .after-img {
-      z-index: 0;
-    }
-    
-    .ba-handle {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      width: 4px;
-      background-color: var(--color-primary);
-      transform: translateX(-50%);
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .ba-handle-btn {
-      width: 40px;
-      height: 40px;
-      background-color: var(--color-primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      box-shadow: var(--shadow-md);
-    }
-    
-    [dir="rtl"] .ba-slider .before-img {
-      clip-path: inset(0 0 0 50%);
+    @media (max-width: 360px) {
+      .why-fret-grid {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-3) !important;
+      }
+      .why-fret-card {
+        padding: var(--space-4) 0.875rem !important;
+      }
+      .why-fret-card__stat {
+        font-size: 2rem !important;
+      }
+      .why-fret-card h4 {
+        font-size: 1.0625rem !important;
+      }
     }
   </style>
   <link rel="stylesheet" href="css/responsive.css">
@@ -541,13 +822,13 @@
 
       <nav class="header__nav" aria-label="Primary Navigation">
         <div class="nav-dropdown">
-          <a href="index.html" class="nav-link">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
             Home
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </a>
           <div class="nav-dropdown__menu">
-            <a href="index.html" class="nav-dropdown__link">Home 1 <span>— The Atelier</span></a>
-            <a href="home-2.html" class="nav-dropdown__link">Home 2 <span>— The Gallery</span></a>
+            <a href="index.html" class="nav-dropdown__link">Home 1</a>
+            <a href="home-2.html" class="nav-dropdown__link">Home 2</a>
           </div>
         </div>
         <a href="instruments.html" class="nav-link">Instruments</a>
@@ -585,8 +866,8 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
       </a>
       <div id="mobile-home-menu" class="mobile-menu__sub">
-        <a href="index.html" class="mobile-menu__link">The Atelier</a>
-        <a href="home-2.html" class="mobile-menu__link">The Gallery</a>
+        <a href="index.html" class="mobile-menu__link">Home 1</a>
+        <a href="home-2.html" class="mobile-menu__link">Home 2</a>
       </div>
       <a href="instruments.html" class="mobile-menu__link">Instruments</a>
       <a href="repair.html" class="mobile-menu__link mobile-menu__link--active">Repair & Restoration</a>
@@ -594,17 +875,7 @@
       <a href="about.html" class="mobile-menu__link">About</a>
       <a href="journal.html" class="mobile-menu__link">Journal</a>
       <a href="contact.html" class="mobile-menu__link">Contact</a>
-      
-
     </nav>
-    
-    <div class="mobile-menu__toggles">
-      <button class="theme-toggle mobile-toggle" aria-label="Toggle theme">
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      </button>
-      <button class="rtl-toggle mobile-toggle" aria-label="Toggle direction">RTL</button>
-    </div>
     
     <a href="contact.html" class="btn btn--primary mobile-menu__cta">Book a Consultation</a>
   </div>
@@ -624,7 +895,6 @@
         <p>Your cart is empty.</p>
         <a href="instruments.html" class="btn btn--outline-dark mt-2" onclick="document.querySelector('.cart-drawer__close').click()">Browse Instruments</a>
       </div>
-      <!-- Cart items will be injected here via JS -->
     </div>
     <div class="cart-drawer__footer">
       <div class="cart-drawer__total">
@@ -635,558 +905,671 @@
     </div>
   </div>
 
-  
-
   <main id="main-content">
     
-    <!-- SECTION 1: HERO -->
-    <section class="hero hero--slim">
-      <div class="hero__bg hover-zoom">
-        <img src="images/hero/hero-repair.png" alt="Close-up of hands re-gluing a cracked guitar top with clamps, moody lighting">
+    <!-- ========================================================================
+         HERO SECTION: THE RESTORATION ATELIER
+         ======================================================================== -->
+    <section class="repair-hero">
+      <div class="repair-hero__bg">
+        <img src="images/hero/hero-repair.png" alt="Master luthier hands repairing a vintage guitar top on wooden workbench with clamps">
       </div>
-      <div class="hero__overlay" style="background: linear-gradient(180deg, rgba(28,25,23,0.7) 0%, rgba(28,25,23,0.85) 100%);"></div>
-      
-      <div class="hero__content reveal">
-        <h1 style="color: #fff; margin-bottom: var(--space-3);">Repair. Restore. Revive.</h1>
-        <div class="hero__ctas">
-          <a href="#intake" class="btn btn--primary">Get a Repair Quote</a>
-          <a href="#gallery" class="btn btn--outline">View Restorations</a>
+      <div class="repair-hero__overlay"></div>
+
+      <div class="container container--wide">
+        <div class="repair-hero__content reveal reveal--slide-left">
+          
+          <div class="repair-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Master Luthier Bench · Authorized Heritage Care</span>
+          </div>
+
+          <h1 class="repair-hero__title">
+            Where Heritage Instruments<br>
+            <span style="color: var(--color-primary-light);">Find Their Voice Again.</span>
+          </h1>
+
+          <p class="repair-hero__lead">
+            From 0.001-inch fret leveling to complex pre-war acoustic reconstructions. We preserve tone, structural geometry, and priceless vintage patina with 100% reversible traditional hide glue.
+          </p>
+
+          <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+            <a href="#services-matrix" class="btn btn--primary btn--lg">Explore Visual Services</a>
+            <a href="#visual-triage" class="btn btn--outline btn--lg">Diagnose Your Instrument</a>
+          </div>
+
+          <!-- Quick Navigation Chips -->
+          <div class="repair-hero__quick-nav">
+            <a href="#services-matrix" class="quick-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              6 Core Services
+            </a>
+            <a href="#visual-triage" class="quick-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+              Visual Anatomy Triage
+            </a>
+            <a href="#gallery" class="quick-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Before & After Studio
+            </a>
+            <a href="#intake" class="quick-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Direct Repair Intake
+            </a>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- SECTION 2: SERVICES MENU (6 Compact Cards) -->
-    <section class="section section--surface">
-      <div class="container">
+    <!-- ========================================================================
+         SECTION 1: DISTINCTIVE VISUAL SERVICES MATRIX
+         Communicates primarily through high-impact imagery and distinctive layouts
+         ======================================================================== -->
+    <section class="section section--surface" id="services-matrix">
+      <div class="container container--wide">
+        
         <div class="section-header reveal reveal--fade">
-          <span class="overline">Atelier Services</span>
-          <h2>Expertise for Every Era</h2>
-          <p>From routine seasonal setups to complex structural restorations of century-old instruments.</p>
+          <span class="overline">Atelier Specializations</span>
+          <h2>Visual Service Architecture</h2>
+          <p>Every procedure performed on our bench is documented with photography and conducted under strict museum conservation ethics.</p>
         </div>
 
-        <div class="services-grid mb-4">
-          <!-- Service 1 -->
-          <div class="card card--icon card--compact hover-lift reveal reveal-delay-1">
-            <div class="card__icon" style="width: 48px; height: 48px; margin-top: var(--space-2);">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        <div class="service-matrix">
+          
+          <!-- FEATURED 1: Large Asymmetric Full Restoration Showcase -->
+          <div class="service-card-featured reveal reveal--slide-left">
+            <div class="service-card-featured__media">
+              <span class="service-card-featured__badge">Pre-War & Heritage Specialization</span>
+              <img src="images/restoration/restore-1-after.png" alt="Flawlessly restored 1962 vintage acoustic guitar body on workshop bench" loading="lazy">
             </div>
-            <div class="card__body">
-              <h3 style="font-size: var(--h4-size);">Setup & Intonation</h3>
-              <p>Truss rod adjustment, action leveling, and precise intonation for optimal playability.</p>
-            </div>
-            <div class="card__footer pb-3">
-              <a href="#intake" class="btn btn--ghost btn--sm">Book Service</a>
-            </div>
-          </div>
+            <div class="service-card-featured__content">
+              <span class="overline" style="color: var(--color-primary); margin-bottom: 6px;">Flagship Service</span>
+              <h3 style="font-size: 1.875rem; margin-bottom: var(--space-2);">Full Vintage & Historic Reconstruction</h3>
+              <p style="font-size: 1rem; line-height: 1.65; color: var(--color-text-secondary); margin-bottom: var(--space-4);">
+                For pre-war acoustics, vintage Martins, and Gibsons that have suffered flood damage, extensive soundboard fracture, or severe neck misalignments. We stabilize structure without stripping historical patina.
+              </p>
+              
+              <div class="service-spec-chips">
+                <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 100% Hot Protein Hide Glue</span>
+                <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Period-Correct Bracing & Cleats</span>
+                <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Zero Re-topping / Patina Preservation</span>
+                <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Full Written Provenance Log</span>
+              </div>
 
-          <!-- Service 2 -->
-          <div class="card card--icon card--compact hover-lift reveal reveal-delay-2">
-            <div class="card__icon" style="width: 48px; height: 48px; margin-top: var(--space-2);">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            </div>
-            <div class="card__body">
-              <h3 style="font-size: var(--h4-size);">Fretwork & Refrets</h3>
-              <p>Fret dressing, crowning, partial, and complete refrets using vintage or modern wire.</p>
-            </div>
-            <div class="card__footer pb-3">
-              <a href="#intake" class="btn btn--ghost btn--sm">Book Service</a>
-            </div>
-          </div>
-
-          <!-- Service 3 -->
-          <div class="card card--icon card--compact hover-lift reveal reveal-delay-3">
-            <div class="card__icon" style="width: 48px; height: 48px; margin-top: var(--space-2);">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
-            </div>
-            <div class="card__body">
-              <h3 style="font-size: var(--h4-size);">Crack & Brace Repair</h3>
-              <p>Hot hide glue structural repairs, cleating, and loose brace reattachment.</p>
-            </div>
-            <div class="card__footer pb-3">
-              <a href="#intake" class="btn btn--ghost btn--sm">Book Service</a>
-            </div>
-          </div>
-
-          <!-- Service 4 -->
-          <div class="card card--icon card--compact hover-lift reveal reveal-delay-4">
-            <div class="card__icon" style="width: 48px; height: 48px; margin-top: var(--space-2);">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-            </div>
-            <div class="card__body">
-              <h3 style="font-size: var(--h4-size);">Electronics</h3>
-              <p>Pickup routing, installation, custom wiring harnesses, and shielding.</p>
-            </div>
-            <div class="card__footer pb-3">
-              <a href="#intake" class="btn btn--ghost btn--sm">Book Service</a>
-            </div>
-          </div>
-
-          <!-- Service 5 -->
-          <div class="card card--icon card--compact hover-lift reveal reveal-delay-5">
-            <div class="card__icon" style="width: 48px; height: 48px; margin-top: var(--space-2);">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6.5 7 .5-5 5 1.5 7-6.5-3.5-6.5 3.5 1.5-7-5-5 7-.5L12 2z"></path></svg>
-            </div>
-            <div class="card__body">
-              <h3 style="font-size: var(--h4-size);">Finish Touch-Ups</h3>
-              <p>Drop-fills, French polish over-sprays, and structural cosmetic blending.</p>
-            </div>
-            <div class="card__footer pb-3">
-              <a href="#intake" class="btn btn--ghost btn--sm">Book Service</a>
-            </div>
-          </div>
-
-          <!-- Service 6 -->
-          <div class="card card--icon card--compact hover-lift reveal reveal-delay-6">
-            <div class="card__icon" style="width: 48px; height: 48px; margin-top: var(--space-2);">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M21 13a9 9 0 1 1-3-7.7L21 8"></path></svg>
-            </div>
-            <div class="card__body">
-              <h3 style="font-size: var(--h4-size);">Full Restoration</h3>
-              <p>Comprehensive overhauls for severely damaged or unplayable vintage pieces.</p>
-            </div>
-            <div class="card__footer pb-3">
-              <a href="#intake" class="btn btn--ghost btn--sm">Book Service</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 2B: FRETWORK & STRING CARE SPOTLIGHT -->
-    <section class="section">
-      <div class="container">
-        <div class="service-spotlight">
-          <div class="service-spotlight__image reveal reveal--slide-left">
-            <img src="images/restoration/process-3.png" alt="Master luthier performing precision fretwork on a guitar neck">
-          </div>
-          <div class="reveal reveal--slide-right">
-            <span class="overline">Service Spotlight</span>
-            <h2 class="mb-2">Fretwork & String Care</h2>
-            <p class="text-muted mb-3" style="font-size: 1.0625rem;">Your frets are the direct interface between your fingers and the music. Worn, pitted, or uneven frets cause buzz, dead spots, and intonation grief. Our master luthiers bring surgical precision to every fret job.</p>
-
-            <div class="service-spotlight__detail-list">
-              <div class="service-spotlight__detail-item">
-                <div class="service-spotlight__detail-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-4"></path></svg>
-                </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); margin-top: auto; padding-top: var(--space-2);">
                 <div>
-                  <strong style="color: var(--color-text);">Fret Leveling & Crowning</strong>
-                  <p class="text-muted" style="font-size: var(--small-size);">Precision-leveled to within 0.001" tolerance, then re-crowned and polished to a mirror finish for effortless bends.</p>
+                  <span style="font-size: 0.75rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block;">Turnaround Window</span>
+                  <strong style="color: var(--color-secondary); font-size: 1rem;">6–12 Weeks · Dedicated Bench</strong>
                 </div>
+                <a href="#intake" class="btn btn--primary" onclick="setServiceIntake('Full Vintage & Historic Reconstruction')">Book Restoration Consult</a>
               </div>
+            </div>
+          </div>
 
-              <div class="service-spotlight__detail-item">
-                <div class="service-spotlight__detail-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M21 13a9 9 0 1 1-3-7.7L21 8"></path></svg>
-                </div>
-                <div>
-                  <strong style="color: var(--color-text);">Complete Refrets</strong>
-                  <p class="text-muted" style="font-size: var(--small-size);">Full fret replacement using Jescar, Dunlop, or vintage-spec wire. Stainless steel options for players who want frets that last a lifetime.</p>
-                </div>
+          <!-- PAIR 2 & 3: Precision Bench Services (2 Columns) -->
+          <div class="service-pair-grid">
+            
+            <!-- Service 2: Setup & Intonation -->
+            <div class="service-visual-card reveal reveal-delay-1">
+              <div class="service-visual-card__media">
+                <span class="service-visual-card__pill">Everyday Precision</span>
+                <span class="service-visual-card__turnaround">1–2 Weeks</span>
+                <img src="images/restoration/process-5.png" alt="Luthier adjusting guitar string action with precision gauge" loading="lazy">
               </div>
-
-              <div class="service-spotlight__detail-item">
-                <div class="service-spotlight__detail-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+              <div class="service-visual-card__content">
+                <h3 class="service-visual-card__title">Master Setup & Intonation</h3>
+                <p class="service-visual-card__desc">
+                  Truss rod relief calibrated under true tension, nut slots dialed to 0.001" clearance, and compensated bone saddles carved for spot-on intonation across the neck.
+                </p>
+                
+                <div class="service-spec-chips">
+                  <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Calibrated Action Relief</span>
+                  <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Unbleached Bone Saddle</span>
+                  <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Strobe Tuned Intonation</span>
                 </div>
-                <div>
-                  <strong style="color: var(--color-text);">Nut & Saddle Optimization</strong>
-                  <p class="text-muted" style="font-size: var(--small-size);">Custom-cut bone, TUSQ, or brass nuts and saddles for improved sustain, tuning stability, and tonal clarity.</p>
+
+                <div class="service-visual-card__footer">
+                  <a href="#intake" class="btn btn--outline-dark" style="width: 100%;" onclick="setServiceIntake('Master Setup & Intonation')">Schedule Setup</a>
                 </div>
               </div>
             </div>
 
-            <a href="#intake" class="btn btn--primary mt-4">Schedule Fretwork Consultation</a>
+            <!-- Service 3: Fretwork & Plek Dressing -->
+            <div class="service-visual-card reveal reveal-delay-2">
+              <div class="service-visual-card__media">
+                <span class="service-visual-card__pill">Fret Specialists</span>
+                <span class="service-visual-card__turnaround">2–3 Weeks</span>
+                <img src="images/restoration/process-3.png" alt="Macro view of precision diamond fret crowning file on guitar neck" loading="lazy">
+              </div>
+              <div class="service-visual-card__content">
+                <h3 class="service-visual-card__title">Fret Leveling, Recrowning & Refrets</h3>
+                <p class="service-visual-card__desc">
+                  Eliminating fret buzz, flat spots, and chokeouts. Precision leveling with diamond files, micro-beveled fret ends, mirror polish, or complete Jescar stainless steel refrets.
+                </p>
+                
+                <div class="service-spec-chips">
+                  <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Jescar / Dunlop / Stainless</span>
+                  <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Hand-Rolled Fret Edges</span>
+                  <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Mirror 8000-Grit Polish</span>
+                </div>
+
+                <div class="service-visual-card__footer">
+                  <a href="#intake" class="btn btn--outline-dark" style="width: 100%;" onclick="setServiceIntake('Fret Leveling & Refrets')">Schedule Fretwork</a>
+                </div>
+              </div>
+            </div>
+
           </div>
+
+          <!-- TRI-GRID 4, 5 & 6: Specialized Workshop Crafts (3 Columns) -->
+          <div class="service-tri-grid">
+            
+            <!-- Service 4: Structural Crack & Brace Surgery -->
+            <div class="service-visual-card reveal reveal-delay-1">
+              <div class="service-visual-card__media">
+                <span class="service-visual-card__pill">Structural Care</span>
+                <span class="service-visual-card__turnaround">3–5 Weeks</span>
+                <img src="images/restoration/service-bracing.jpg" alt="Master luthier using an Ibex brass plane carving spruce braces with wood curls" loading="lazy">
+              </div>
+              <div class="service-visual-card__content">
+                <h3 class="service-visual-card__title" style="font-size: 1.25rem;">Crack & Scalloped Brace Repair</h3>
+                <p class="service-visual-card__desc">
+                  Stabilizing top cracks with diamond grain-aligned spruce cleats, re-gluing loose internal tone bars, and correcting acoustic soundboard bellying.
+                </p>
+                
+                <div class="service-spec-chips">
+                  <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Hot Hide Glue Reversible</span>
+                  <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Spruce Diamond Cleats</span>
+                </div>
+
+                <div class="service-visual-card__footer">
+                  <a href="#intake" class="btn btn--outline-dark btn--sm" style="width: 100%;" onclick="setServiceIntake('Crack & Scalloped Brace Repair')">Inquire Structural</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Service 5: Custom Electronics & Shielding -->
+            <div class="service-visual-card reveal reveal-delay-2">
+              <div class="service-visual-card__media">
+                <span class="service-visual-card__pill">Circuitry Lab</span>
+                <span class="service-visual-card__turnaround">1–2 Weeks</span>
+                <img src="images/restoration/service-electronics.jpg" alt="Soldering braided cloth wire into copper shielded guitar cavity with soldering smoke" loading="lazy">
+              </div>
+              <div class="service-visual-card__content">
+                <h3 class="service-visual-card__title" style="font-size: 1.25rem;">Custom Electronics & Shielding</h3>
+                <p class="service-visual-card__desc">
+                  Silent copper foil cavity shielding, hand-soldered vintage cloth harnesses, CTS mil-spec potentiometers, Orange Drop tone caps, and custom coil splits.
+                </p>
+                
+                <div class="service-spec-chips">
+                  <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copper Foil Cavity Ground</span>
+                  <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Zero Hum Signal Floor</span>
+                </div>
+
+                <div class="service-visual-card__footer">
+                  <a href="#intake" class="btn btn--outline-dark btn--sm" style="width: 100%;" onclick="setServiceIntake('Custom Electronics & Shielding')">Inquire Electronics</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Service 6: French Polish & Finish Conservation -->
+            <div class="service-visual-card reveal reveal-delay-3">
+              <div class="service-visual-card__media">
+                <span class="service-visual-card__pill">Finishing Studio</span>
+                <span class="service-visual-card__turnaround">4–6 Weeks</span>
+                <img src="images/restoration/process-4.png" alt="Artisan hand applying French polish shellac on violin-grade wood finish" loading="lazy">
+              </div>
+              <div class="service-visual-card__content">
+                <h3 class="service-visual-card__title" style="font-size: 1.25rem;">French Polish & Nitro Drop-Fills</h3>
+                <p class="service-visual-card__desc">
+                  Traditional hand-rubbed shellac French polishing, drop-filling dings, and localized nitrocellulose overspray blending to protect raw wood from sweat.
+                </p>
+                
+                <div class="service-spec-chips">
+                  <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Ultra-Thin Breathing Film</span>
+                  <span class="service-spec-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Seamless Chip Blending</span>
+                </div>
+
+                <div class="service-visual-card__footer">
+                  <a href="#intake" class="btn btn--outline-dark btn--sm" style="width: 100%;" onclick="setServiceIntake('French Polish & Nitro Conservation')">Inquire Finishing</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
         </div>
+
       </div>
     </section>
 
-    <!-- SECTION 2C: WHY CHOOSE OUR REPAIR SERVICES -->
-    <section class="section section--surface">
-      <div class="container">
-        <div class="section-header reveal reveal--fade text-center mb-6">
-          <span class="overline">Why FRET?</span>
-          <h2>Why Choose Our Repair Services</h2>
-          <p style="max-width: 650px; margin: 0 auto;">We combine old-world craftsmanship with modern diagnostics. Every repair leaves our bench playing, sounding, and looking better than it has in years.</p>
-        </div>
-
-        <div class="why-choose-grid">
-          <div class="why-choose-card reveal reveal-delay-1">
-            <div class="why-choose-card__icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            </div>
-            <div class="why-choose-card__stat">∞</div>
-            <h4 style="margin-bottom: var(--space-1);">Lifetime Warranty</h4>
-            <p class="text-muted" style="font-size: var(--small-size);">All structural repairs carry a lifetime warranty. We stand behind every glue joint and every fret we press.</p>
-          </div>
-
-          <div class="why-choose-card reveal reveal-delay-2">
-            <div class="why-choose-card__icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-            </div>
-            <div class="why-choose-card__stat">30+</div>
-            <h4 style="margin-bottom: var(--space-1);">Years of Experience</h4>
-            <p class="text-muted" style="font-size: var(--small-size);">Our master luthiers bring three decades of hands-on repair knowledge across thousands of instruments.</p>
-          </div>
-
-          <div class="why-choose-card reveal reveal-delay-3">
-            <div class="why-choose-card__icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
-            </div>
-            <div class="why-choose-card__stat">100%</div>
-            <h4 style="margin-bottom: var(--space-1);">Documented Repairs</h4>
-            <p class="text-muted" style="font-size: var(--small-size);">Every repair is photographed and documented at each stage. You receive a complete visual record of the work performed.</p>
-          </div>
-
-          <div class="why-choose-card reveal reveal-delay-4">
-            <div class="why-choose-card__icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6.5 7 .5-5 5 1.5 7-6.5-3.5-6.5 3.5 1.5-7-5-5 7-.5L12 2z"></path></svg>
-            </div>
-            <div class="why-choose-card__stat">5★</div>
-            <h4 style="margin-bottom: var(--space-1);">Certified Specialists</h4>
-            <p class="text-muted" style="font-size: var(--small-size);">Authorized service center for Taylor, Martin, and Guild. We use factory-spec tooling and genuine OEM parts.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 2D: REPAIR CARE PROCESS (Visual 5-Step Flow) -->
-    <section class="section">
-      <div class="container">
-        <div class="section-header reveal reveal--fade text-center mb-6">
-          <span class="overline">Your Journey</span>
-          <h2>Our Repair Care Process</h2>
-          <p style="max-width: 600px; margin: 0 auto;">From the moment your instrument arrives to the day it's returned to you, here's exactly what happens.</p>
-        </div>
-
-        <div class="repair-process-grid">
-          <div class="repair-step reveal reveal-delay-1">
-            <div class="repair-step__number">1</div>
-            <h4 style="margin-bottom: var(--space-1);">Intake</h4>
-            <p class="text-muted" style="font-size: var(--small-size);">Submit your repair request online or drop off in person. We document and photograph everything.</p>
-          </div>
-          <div class="repair-step reveal reveal-delay-2">
-            <div class="repair-step__number">2</div>
-            <h4 style="margin-bottom: var(--space-1);">Diagnosis</h4>
-            <p class="text-muted" style="font-size: var(--small-size);">Full assessment with internal scoping. We provide a detailed written estimate with repair options.</p>
-          </div>
-          <div class="repair-step reveal reveal-delay-3">
-            <div class="repair-step__number">3</div>
-            <h4 style="margin-bottom: var(--space-1);">Approval</h4>
-            <p class="text-muted" style="font-size: var(--small-size);">No work begins without your sign-off. We explain every step and discuss material choices with you.</p>
-          </div>
-          <div class="repair-step reveal reveal-delay-4">
-            <div class="repair-step__number">4</div>
-            <h4 style="margin-bottom: var(--space-1);">Repair</h4>
-            <p class="text-muted" style="font-size: var(--small-size);">Your instrument receives dedicated bench time from a single luthier start to finish. Progress photos sent weekly.</p>
-          </div>
-          <div class="repair-step reveal reveal-delay-5">
-            <div class="repair-step__number">5</div>
-            <h4 style="margin-bottom: var(--space-1);">Return</h4>
-            <p class="text-muted" style="font-size: var(--small-size);">Final quality check, full setup to your specs, and secure packaging for return. Complete report included.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 2E: FAQ -->
-    <section class="section section--surface" id="repair-faq">
-      <div class="container">
-        <div class="section-header reveal reveal--fade text-center mb-6">
-          <span class="overline">Common Questions</span>
-          <h2>Repair & Restoration FAQ</h2>
-        </div>
-
-        <div class="faq-list">
-          <div class="faq-item reveal reveal-delay-1">
-            <button class="faq-question" aria-expanded="false">
-              <span>How much does a typical guitar repair cost?</span>
-              <svg class="faq-question__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer__inner">
-                Costs vary widely depending on the repair scope. A standard setup runs $85–$150, fret dressing $150–$250, a complete refret $350–$600, and full structural restorations can range from $500 to $2,000+. We always provide a detailed written estimate before starting any work.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item reveal reveal-delay-2">
-            <button class="faq-question" aria-expanded="false">
-              <span>How long will my repair take?</span>
-              <svg class="faq-question__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer__inner">
-                Standard setups take 1–2 weeks, fretwork and electronics 3–4 weeks, and full structural restorations 8–12+ weeks. Turnaround depends on current bench load and repair complexity. We'll give you an estimated completion date when you approve the work.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item reveal reveal-delay-3">
-            <button class="faq-question" aria-expanded="false">
-              <span>Do you work on all types of string instruments?</span>
-              <svg class="faq-question__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer__inner">
-                We specialize in acoustic guitars, electric guitars, and bass guitars. We also accept mandolins, ukuleles, banjos, and other fretted string instruments. For bowed instruments like violins or cellos, we can refer you to a specialized luthier in our network.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item reveal reveal-delay-4">
-            <button class="faq-question" aria-expanded="false">
-              <span>What kind of glue do you use for structural repairs?</span>
-              <svg class="faq-question__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer__inner">
-                We use traditional hot hide glue for all structural repairs on acoustic instruments. It's the gold standard — it's stronger than the wood itself, fully reversible for future repairs, and has been proven over centuries of lutherie. For certain electric guitar applications, we may use Titebond or specialized epoxies where appropriate.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item reveal reveal-delay-5">
-            <button class="faq-question" aria-expanded="false">
-              <span>Can you ship my instrument to you for repair?</span>
-              <svg class="faq-question__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer__inner">
-                Absolutely. We accept instruments shipped from anywhere in the U.S. and internationally. We provide detailed packing instructions to ensure safe transit, and all return shipments are fully insured. Contact us for a prepaid shipping label if you're within the continental U.S.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item reveal reveal-delay-6">
-            <button class="faq-question" aria-expanded="false">
-              <span>Is my instrument insured while in your shop?</span>
-              <svg class="faq-question__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer__inner">
-                Yes. Every instrument in our care is covered by our comprehensive shop insurance policy for the full declared value. Our workshop is climate-controlled at 45–50% relative humidity and equipped with fire suppression systems. Your instrument is as safe with us as it is in your own case.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: BEFORE / AFTER GALLERY -->
-    <section id="gallery" class="section">
-      <div class="container">
+    <!-- ========================================================================
+         SECTION 2: INTERACTIVE VISUAL GUITAR ANATOMY TRIAGE
+         Directly solves "communicating visually rather than with blocks of content"
+         ======================================================================== -->
+    <section class="section" id="visual-triage">
+      <div class="container container--wide">
+        
         <div class="section-header reveal reveal--fade">
-          <span class="overline">Case Studies</span>
-          <h2>The Art of Revival</h2>
+          <span class="overline">Visual Diagnostic Studio</span>
+          <h2>Where Does Your Instrument Need Care?</h2>
+          <p>Click on any anatomical hotspot on the workbench instrument to inspect common structural issues, bench solutions, and turnaround windows.</p>
         </div>
 
-        <div class="grid grid--3">
-          <!-- Slider 1 -->
-          <div class="reveal reveal-delay-1">
-            <img src="images/restoration/case-1.png" alt="Restored flood-damaged acoustic" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-lg);">
-            <div class="mt-3 text-center">
-              <h4 style="font-size: 1.125rem;">Flood Recovery</h4>
-              <p style="font-size: var(--small-size);" class="text-muted">Re-hydrated and re-braced 1930s parlor guitar.</p>
-            </div>
-          </div>
+        <div class="triage-container reveal">
+          <div class="triage-layout">
+            
+            <!-- Left: Interactive Visual Guitar Anatomy Map -->
+            <div class="triage-anatomy">
+              <div class="triage-anatomy-instruction">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                <span>Select a Diagnostic Hotspot</span>
+              </div>
 
-          <!-- Slider 2 -->
-          <div class="reveal reveal-delay-2">
-            <img src="images/restoration/case-2.png" alt="Restored broken headstock" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-lg);">
-            <div class="mt-3 text-center">
-              <h4 style="font-size: 1.125rem;">Headstock Spline</h4>
-              <p style="font-size: var(--small-size);" class="text-muted">Structural spline repair with blended nitrocellulose finish.</p>
-            </div>
-          </div>
+              <div class="anatomy-svg-wrapper">
+                
+                <!-- Stylized Minimalist Guitar SVG Silhouette -->
+                <svg width="220" height="460" viewBox="0 0 100 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.65; filter: drop-shadow(0 0 8px rgba(180, 83, 9, 0.3));">
+                  <!-- Headstock -->
+                  <path d="M42,10 L58,10 L62,35 L38,35 Z" stroke="var(--color-primary)" stroke-width="1.5" fill="rgba(180, 83, 9, 0.08)"/>
+                  <!-- Neck -->
+                  <path d="M44,35 L56,35 L56,110 L44,110 Z" stroke="var(--color-primary)" stroke-width="1.5" fill="rgba(180, 83, 9, 0.12)"/>
+                  <!-- Frets -->
+                  <line x1="44" y1="45" x2="56" y2="45" stroke="#E7E5E4" stroke-width="1" opacity="0.4"/>
+                  <line x1="44" y1="58" x2="56" y2="58" stroke="#E7E5E4" stroke-width="1" opacity="0.4"/>
+                  <line x1="44" y1="72" x2="56" y2="72" stroke="#E7E5E4" stroke-width="1" opacity="0.4"/>
+                  <line x1="44" y1="86" x2="56" y2="86" stroke="#E7E5E4" stroke-width="1" opacity="0.4"/>
+                  <line x1="44" y1="100" x2="56" y2="100" stroke="#E7E5E4" stroke-width="1" opacity="0.4"/>
+                  <!-- Acoustic Body Curves -->
+                  <path d="M44,110 C30,110 20,125 20,145 C20,160 28,172 32,176 C20,188 15,205 15,225 C15,245 32,255 50,255 C68,255 85,245 85,225 C85,205 80,188 68,176 C72,172 80,160 80,145 C80,125 70,110 56,110 Z" stroke="var(--color-primary)" stroke-width="1.8" fill="rgba(180, 83, 9, 0.05)"/>
+                  <!-- Soundhole -->
+                  <circle cx="50" cy="155" r="14" stroke="var(--color-primary)" stroke-width="1.5" fill="#0c0a09"/>
+                  <!-- Bridge -->
+                  <rect x="36" y="195" width="28" height="8" rx="2" stroke="var(--color-primary)" stroke-width="1.5" fill="rgba(180, 83, 9, 0.3)"/>
+                  <!-- Strings -->
+                  <line x1="46" y1="20" x2="46" y2="195" stroke="#F59E0B" stroke-width="0.8" opacity="0.6"/>
+                  <line x1="48" y1="20" x2="48" y2="195" stroke="#F59E0B" stroke-width="0.8" opacity="0.6"/>
+                  <line x1="50" y1="20" x2="50" y2="195" stroke="#F59E0B" stroke-width="0.8" opacity="0.6"/>
+                  <line x1="52" y1="20" x2="52" y2="195" stroke="#F59E0B" stroke-width="0.8" opacity="0.6"/>
+                  <line x1="54" y1="20" x2="54" y2="195" stroke="#F59E0B" stroke-width="0.8" opacity="0.6"/>
+                </svg>
 
-          <!-- Slider 3 -->
-          <div class="reveal reveal-delay-3">
-            <img src="images/restoration/case-3.png" alt="Restored worn 60s electric" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-lg);">
-            <div class="mt-3 text-center">
-              <h4 style="font-size: 1.125rem;">Vintage Preservation</h4>
-              <p style="font-size: var(--small-size);" class="text-muted">Complete refret and hardware restoration on a '64 Solidbody.</p>
+                <!-- Hotspots with Pulse Animation -->
+                <button type="button" class="anatomy-hotspot spot-headstock active" data-spot="headstock" aria-label="Headstock & Nut Diagnosis">01</button>
+                <button type="button" class="anatomy-hotspot spot-frets" data-spot="frets" aria-label="Frets & Fingerboard Diagnosis">02</button>
+                <button type="button" class="anatomy-hotspot spot-soundboard" data-spot="soundboard" aria-label="Soundboard & Bracing Diagnosis">03</button>
+                <button type="button" class="anatomy-hotspot spot-bridge" data-spot="bridge" aria-label="Bridge & Saddle Intonation Diagnosis">04</button>
+                <button type="button" class="anatomy-hotspot spot-electronics" data-spot="electronics" aria-label="Electronics & Cavity Shielding Diagnosis">05</button>
+
+              </div>
             </div>
+
+            <!-- Right: Dynamic Diagnostic Card Display -->
+            <div class="triage-display">
+              <div class="triage-display-card" id="triage-result-card">
+                
+                <img id="triage-img" src="images/restoration/case-2.png" alt="Headstock fracture spline repair" class="triage-display__photo">
+
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                  <span class="overline" id="triage-anatomy-tag" style="color: var(--color-primary);">Zone 01 · Peghead & Nut</span>
+                  <span class="badge badge--amber" id="triage-urgency-badge">High Priority</span>
+                </div>
+
+                <h3 id="triage-title" style="font-size: 1.5rem; margin-bottom: var(--space-2);">Headstock Splines & Bone Nut Carving</h3>
+                
+                <p id="triage-summary" style="font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: var(--space-3);">
+                  Cracks along the mahogany grain behind the nut or broken tuner screw anchors. We mill concealed maple splines for 300% tensile strength and carve compensated unbleached bone nuts.
+                </p>
+
+                <ul class="triage-symptoms-list" id="triage-symptoms">
+                  <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Hairline tuning post crack or complete fracture</li>
+                  <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Open string pinging or slipping out of tune</li>
+                  <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Choked 1st-fret action or string buzz</li>
+                </ul>
+
+                <div class="triage-metric-row">
+                  <div class="triage-metric-item">
+                    <span id="triage-metric-1-lbl">Estimated Turnaround</span>
+                    <strong id="triage-metric-1-val">2–3 Weeks</strong>
+                  </div>
+                  <div class="triage-metric-item">
+                    <span id="triage-metric-2-lbl">Bench Treatment</span>
+                    <strong id="triage-metric-2-val">Concealed Maple Spline</strong>
+                  </div>
+                </div>
+
+                <a href="#intake" class="btn btn--primary" id="triage-cta-btn" style="width: 100%;">Book This Diagnostic Service</a>
+
+              </div>
+            </div>
+
           </div>
         </div>
+
       </div>
     </section>
 
-    <!-- SECTION 4: THE RESTORATION PROCESS (Timeline) -->
-    <section class="section section--dark">
-      <div class="container">
+    <!-- ========================================================================
+         SECTION 3: INTERACTIVE BEFORE / AFTER RESTORATION STUDIO
+         ======================================================================== -->
+    <section id="gallery" class="section section--surface">
+      <div class="container container--wide">
         <div class="section-header reveal reveal--fade">
-          <span class="overline">Our Methodology</span>
-          <h2>The Restoration Process</h2>
+          <span class="overline">Restoration Studio</span>
+          <h2>The Proof of Handcraft</h2>
+          <p>Drag the slider to inspect before and after: structural restoration of historical instruments without loss of original tone.</p>
         </div>
 
-        <div class="timeline" id="process-timeline">
-          <!-- Scroll linked progress spine -->
-          <div class="timeline-progress" id="timeline-progress" style="height: 0%;"></div>
+        <!-- Before/After Slider Container -->
+        <div class="reveal" style="max-width: 980px; margin: 0 auto; background: var(--color-surface-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-2xl); padding: var(--space-5); box-shadow: var(--shadow-md);">
+          
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-3); flex-wrap: wrap; gap: 8px;">
+            <div>
+              <h3 style="font-size: 1.375rem; margin: 0;">1962 Gibson J-45 Complete Soundboard & Neck Reconstruction</h3>
+              <span style="font-size: 0.8125rem; color: var(--color-text-muted);">Historical Spruce Top · Traditional Hot Hide Glue · Blended Nitro Lacquer</span>
+            </div>
+            <span class="badge badge--amber">100% Reversible</span>
+          </div>
 
-          <!-- Step 1 -->
-          <div class="timeline-item reveal reveal--slide-left">
-            <div class="timeline-node"></div>
-            <div class="timeline-content">
-              <img src="images/restoration/process-1.png" alt="Luthier assessing guitar with light and mirror" class="timeline-image">
-              <h4>1. Assessment & Documentation</h4>
-              <p class="text-muted" style="font-size: var(--small-size);">Every instrument is photographed, measured, and internally scoped. We assess structural integrity, originality, and current playability before proposing a plan.</p>
+          <div class="ba-slider" id="ba-slider-main">
+            <img src="images/restoration/restore-1-after.png" class="after-img" alt="Restored vintage Gibson J-45 guitar after luthier repair">
+            <img src="images/restoration/restore-1-before.png" class="before-img" alt="Damaged vintage guitar with cracks and dry lacquer before repair">
+            
+            <div class="ba-handle">
+              <div class="ba-handle-btn" aria-label="Drag slider to compare before and after">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: -6px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center mt-3 text-muted" style="font-size: 0.8125rem;">
+            ← Drag slider horizontally to compare before and after →
+          </div>
+        </div>
+
+        <!-- Additional Case Study Cards -->
+        <div class="grid grid--3 mt-6">
+          <div class="card hover-lift reveal reveal-delay-1">
+            <div class="card__image" style="aspect-ratio: 16/10;">
+              <img src="images/restoration/case-1.png" alt="Parlor guitar flood recovery">
+            </div>
+            <div class="card__body">
+              <span class="overline" style="color: var(--color-primary); font-size: 0.6875rem;">Flood Restoration</span>
+              <h4 style="margin-bottom: 4px;">1934 Parlor Re-Hydration</h4>
+              <p style="font-size: 0.8125rem; color: var(--color-text-secondary); margin: 0;">Re-bracing delaminated soundboard and humidifying warped Brazilian rosewood back.</p>
             </div>
           </div>
 
-          <!-- Step 2 -->
-          <div class="timeline-item reveal reveal--slide-right">
-            <div class="timeline-node"></div>
-            <div class="timeline-content">
-              <img src="images/restoration/process-2.png" alt="Clamps stabilizing a guitar body" class="timeline-image">
-              <h4>2. Stabilize</h4>
-              <p class="text-muted" style="font-size: var(--small-size);">Immediate threats to the instrument are addressed first. Loose braces are glued, cracks are cleated, and neck joints are secured using traditional hot hide glue.</p>
+          <div class="card hover-lift reveal reveal-delay-2">
+            <div class="card__image" style="aspect-ratio: 16/10;">
+              <img src="images/restoration/case-2.png" alt="Headstock fracture repair">
+            </div>
+            <div class="card__body">
+              <span class="overline" style="color: var(--color-primary); font-size: 0.6875rem;">Spline Surgery</span>
+              <h4 style="margin-bottom: 4px;">1971 Custom Peghead Repair</h4>
+              <p style="font-size: 0.8125rem; color: var(--color-text-secondary); margin: 0;">Concealed twin hard rock maple splines with color-matched vintage sunburst lacquer blend.</p>
             </div>
           </div>
 
-          <!-- Step 3 -->
-          <div class="timeline-item reveal reveal--slide-left">
-            <div class="timeline-node"></div>
-            <div class="timeline-content">
-              <img src="images/restoration/process-3.png" alt="Luthier doing fretwork" class="timeline-image">
-              <h4>3. Repair & Rebuild</h4>
-              <p class="text-muted" style="font-size: var(--small-size);">With the structure sound, we move to functionality. This includes refrets, bridge reglues, or fabricating missing components from period-correct materials.</p>
+          <div class="card hover-lift reveal reveal-delay-3">
+            <div class="card__image" style="aspect-ratio: 16/10;">
+              <img src="images/restoration/case-3.png" alt="Vintage electric preservation">
             </div>
-          </div>
-
-          <!-- Step 4 -->
-          <div class="timeline-item reveal reveal--slide-right">
-            <div class="timeline-node"></div>
-            <div class="timeline-content">
-              <img src="images/restoration/process-4.png" alt="Drop filling a finish chip" class="timeline-image">
-              <h4>4. Refinish & Blend</h4>
-              <p class="text-muted" style="font-size: var(--small-size);">We never over-restore. Repairs are seamlessly blended into the existing patina using tinted lacquers or French polish, preserving the instrument's history.</p>
-            </div>
-          </div>
-
-          <!-- Step 5 -->
-          <div class="timeline-item reveal reveal--slide-left">
-            <div class="timeline-node"></div>
-            <div class="timeline-content">
-              <img src="images/restoration/process-5.png" alt="Final setup adjustments on the bench" class="timeline-image">
-              <h4>5. Final Setup</h4>
-              <p class="text-muted" style="font-size: var(--small-size);">The instrument is strung, settled, and dialed in. Action, relief, and intonation are optimized to the player's specific preferences.</p>
+            <div class="card__body">
+              <span class="overline" style="color: var(--color-primary); font-size: 0.6875rem;">Preservation</span>
+              <h4 style="margin-bottom: 4px;">1964 Solidbody Reconditioning</h4>
+              <p style="font-size: 0.8125rem; color: var(--color-text-secondary); margin: 0;">Jescar vintage wire refret, ultrasonic hardware cleaning, and shielding without pickup potting loss.</p>
             </div>
           </div>
         </div>
+
       </div>
     </section>
 
-    <!-- SECTION 5: DIAGNOSTIC INTAKE (Smart Form) -->
-    <section id="intake" class="section section--surface">
+    <!-- ========================================================================
+         SECTION 4: VISUAL 4-STAGE ATELIER WORKFLOW
+         Show the bench with photos instead of just text
+         ======================================================================== -->
+    <section class="section" id="workflow">
+      <div class="container container--wide">
+        
+        <div class="section-header reveal reveal--fade">
+          <span class="overline">Atelier Protocols</span>
+          <h2>The Bench Workflow</h2>
+          <p>Every instrument undergoes our verified 4-stage surgical process from intake inspection to concert delivery.</p>
+        </div>
+
+        <div class="visual-stages-grid">
+          
+          <div class="visual-stage-card reveal reveal-delay-1">
+            <div class="visual-stage-card__img-wrap">
+              <span class="visual-stage-badge">1</span>
+              <img src="images/restoration/process-1.png" alt="Luthier examining guitar body with internal endoscopic light and dental mirror">
+            </div>
+            <div class="visual-stage-card__body">
+              <h4>Internal Inspection</h4>
+              <p>Dental mirror and endoscopic camera inspection of soundboard braces, bridge plate wear, and neck angle geometry.</p>
+            </div>
+          </div>
+
+          <div class="visual-stage-card reveal reveal-delay-2">
+            <div class="visual-stage-card__img-wrap">
+              <span class="visual-stage-badge">2</span>
+              <img src="images/restoration/process-2.png" alt="Clamps securing guitar body during hide glue structural repair">
+            </div>
+            <div class="visual-stage-card__body">
+              <h4>Hide Glue Stabilization</h4>
+              <p>Re-cleating fractures and clamping loose tone bars with 145°F hot hide glue for 100% reversible structural integrity.</p>
+            </div>
+          </div>
+
+          <div class="visual-stage-card reveal reveal-delay-3">
+            <div class="visual-stage-card__img-wrap">
+              <span class="visual-stage-badge">3</span>
+              <img src="images/restoration/process-3.png" alt="Luthier precision crowning guitar frets">
+            </div>
+            <div class="visual-stage-card__body">
+              <h4>Surgical Fretwork</h4>
+              <p>Precision fingerboard leveling, crowning wire with diamond abrasives, and hand-buffing fret crowns to mirror finish.</p>
+            </div>
+          </div>
+
+          <div class="visual-stage-card reveal reveal-delay-4">
+            <div class="visual-stage-card__img-wrap">
+              <span class="visual-stage-badge">4</span>
+              <img src="images/restoration/process-5.png" alt="Luthier conducting final setup and string tension adjustments">
+            </div>
+            <div class="visual-stage-card__body">
+              <h4>Voicing & Concert Setup</h4>
+              <p>Settling under true string tension, strobe intonation tuning, action calibration, and comprehensive photographic report.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 5: WHY CHOOSE FRET (High-Contrast Stat Badges)
+         ======================================================================== -->
+    <section class="section section--surface" id="why-fret">
+      <div class="container container--wide">
+        
+        <div class="section-header reveal reveal--fade">
+          <span class="overline">The FRET Standard</span>
+          <h2>Bench Guarantees</h2>
+          <p>We treat every instrument with the same veneration as an 18th-century Stradivarius violin.</p>
+        </div>
+
+        <div class="why-fret-grid">
+          
+          <div class="why-fret-card reveal reveal-delay-1">
+            <div class="why-fret-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="why-fret-card__stat">∞</div>
+            <h4>Lifetime Warranty</h4>
+            <p>Every glue seam, neck reset, and cleat we install is covered by our lifetime structural warranty.</p>
+          </div>
+
+          <div class="why-fret-card reveal reveal-delay-2">
+            <div class="why-fret-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </div>
+            <div class="why-fret-card__stat">30+</div>
+            <h4>Years of Experience</h4>
+            <p>Generational knowledge spanning classical guitars, pre-war acoustics, and modern custom multi-scales.</p>
+          </div>
+
+          <div class="why-fret-card reveal reveal-delay-3">
+            <div class="why-fret-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+            </div>
+            <div class="why-fret-card__stat">100%</div>
+            <h4>Documented Repair</h4>
+            <p>We use historical hide glue and non-destructive conservation practices that safeguard instrument value.</p>
+          </div>
+
+          <div class="why-fret-card reveal reveal-delay-4">
+            <div class="why-fret-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <div class="why-fret-card__stat">5★</div>
+            <h4>Certified Specialists</h4>
+            <p>Master luthiers certified in historical hide glue conservation and precision PLEK-level fret leveling.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 6: STREAMLINED DIAGNOSTIC INTAKE (Smart Form)
+         ======================================================================== -->
+    <section id="intake" class="section">
       <div class="container">
         <div class="split split--60-40">
           
           <div class="split__content reveal reveal--slide-left">
-            <span class="overline">Service Request</span>
-            <h2 class="mb-4">Diagnostic Intake</h2>
+            <span class="overline">Service Intake</span>
+            <h2 class="mb-3">Book Your Bench Diagnostic</h2>
+            <p class="text-secondary mb-5">
+              Submit your instrument's symptoms below. Our master luthier will review your case, verify bench availability, and send a preliminary assessment within 24 hours.
+            </p>
             
             <form class="auth-form" data-validate="true" novalidate>
               <div class="grid grid--2">
                 <div class="form-group">
                   <label class="form-label" for="intake-name">Full Name</label>
-                  <input type="text" id="intake-name" class="form-input" required>
+                  <input type="text" id="intake-name" class="form-input" required placeholder="Julian Bream">
                   <div id="intake-name-error" class="form-error"></div>
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="intake-email">Email Address</label>
-                  <input type="email" id="intake-email" class="form-input" required>
+                  <input type="email" id="intake-email" class="form-input" required placeholder="julian@example.com">
                   <div id="intake-email-error" class="form-error"></div>
                 </div>
               </div>
 
               <div class="grid grid--2">
                 <div class="form-group">
-                  <label class="form-label" for="intake-type">Instrument Type</label>
-                  <select id="intake-type" class="form-input form-select" required>
-                    <option value="">Select type...</option>
-                    <option value="acoustic">Acoustic Guitar</option>
-                    <option value="electric">Electric Guitar</option>
-                    <option value="bass">Bass Guitar</option>
-                    <option value="other">Other String Instrument</option>
-                  </select>
-                  <div id="intake-type-error" class="form-error"></div>
+                  <label class="form-label" for="intake-phone">Phone Number</label>
+                  <input type="tel" id="intake-phone" class="form-input" placeholder="(503) 555-0192">
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="intake-make">Make & Model</label>
-                  <input type="text" id="intake-make" class="form-input" placeholder="e.g. 1974 Martin D-28" required>
-                  <div id="intake-make-error" class="form-error"></div>
+                  <label class="form-label" for="intake-instrument">Instrument Type & Make</label>
+                  <input type="text" id="intake-instrument" class="form-input" required placeholder="e.g. 1968 Martin D-28">
+                  <div id="intake-instrument-error" class="form-error"></div>
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="form-label">Primary Issues (Check all that apply)</label>
-                <div class="grid grid--2" style="gap: var(--space-2); margin-top: var(--space-1);">
-                  <div class="form-check">
-                    <input type="checkbox" id="issue-setup">
-                    <label for="issue-setup">Needs Setup / High Action</label>
-                  </div>
-                  <div class="form-check">
-                    <input type="checkbox" id="issue-frets">
-                    <label for="issue-frets">Fret Buzz / Wear</label>
-                  </div>
-                  <div class="form-check">
-                    <input type="checkbox" id="issue-crack">
-                    <label for="issue-crack">Structural Crack / Break</label>
-                  </div>
-                  <div class="form-check">
-                    <input type="checkbox" id="issue-elec">
-                    <label for="issue-elec">Electronics / Wiring</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group mt-2">
-                <label class="form-label">Upload Photos (Optional)</label>
-                <div class="file-upload">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                  <p class="mb-1" style="font-size: var(--body-size); color: var(--color-text);">Drag & drop photos here</p>
-                  <p style="font-size: var(--small-size); color: var(--color-text-muted);">or <span style="color: var(--color-primary); font-weight: 500;">browse files</span> (Max 5MB)</p>
-                </div>
+                <label class="form-label" for="intake-service">Primary Service Required</label>
+                <select id="intake-service" class="form-select" required>
+                  <option value="">Select Service Category</option>
+                  <option value="Full Vintage & Historic Reconstruction">Full Vintage & Historic Reconstruction</option>
+                  <option value="Master Setup & Intonation">Master Setup & Intonation (Action & Relief)</option>
+                  <option value="Fret Leveling & Refrets">Fret Leveling, Recrowning & Refrets</option>
+                  <option value="Crack & Scalloped Brace Repair">Crack & Scalloped Brace Repair</option>
+                  <option value="Custom Electronics & Shielding">Custom Electronics & Shielding</option>
+                  <option value="French Polish & Nitro Conservation">French Polish & Nitrocellulose Finish</option>
+                  <option value="Diagnostic Assessment">Unsure · Full Bench Assessment Needed</option>
+                </select>
+                <div id="intake-service-error" class="form-error"></div>
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="intake-msg">Additional Details</label>
-                <textarea id="intake-msg" class="form-input" placeholder="Describe the history and issues with the instrument..."></textarea>
+                <label class="form-label" for="intake-symptoms">Observed Symptoms & Player Notes</label>
+                <textarea id="intake-symptoms" class="form-textarea" rows="4" placeholder="Describe the playability issues, buzzing frets, cracks, neck angle, or desired action specs..."></textarea>
               </div>
 
-              <button type="submit" class="btn btn--primary mt-2">Request Repair Quote</button>
+              <div class="form-group">
+                <label class="form-label">Drop-off / Shipping Method</label>
+                <div style="display: flex; gap: var(--space-4); margin-top: 4px;">
+                  <label style="display: flex; align-items: center; gap: 8px; font-size: 0.875rem; cursor: pointer;">
+                    <input type="radio" name="intake-method" value="in-person" checked> In-Person Drop-off (Portland Atelier)
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 8px; font-size: 0.875rem; cursor: pointer;">
+                    <input type="radio" name="intake-method" value="insured-shipping"> Insured Courier Shipping
+                  </label>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn--primary btn--lg" style="width: 100%;">Submit Diagnostic Request</button>
             </form>
           </div>
 
-          <!-- Side Panel -->
-          <div class="split__content reveal reveal--slide-right" style="justify-content: flex-start;">
-            <div class="card p-4" style="border: none; background: transparent; padding: 0;">
-              <img src="images/workshop/luthier-bench-tools.jpg" alt="Luthier tools on a bench" style="width: 100%; border-radius: var(--radius-lg); margin-bottom: var(--space-4);">
+          <!-- Right Sidebar: Atelier Logistics & Hours -->
+          <div class="split__aside reveal reveal--slide-right">
+            <div class="card" style="padding: var(--space-5); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl);">
+              <h3 style="font-size: 1.25rem; margin-bottom: var(--space-3);">Atelier Drop-off Details</h3>
               
-              <h3 style="font-size: var(--h4-size); margin-bottom: var(--space-2);">Turnaround Times</h3>
-              <ul style="display: flex; flex-direction: column; gap: 8px; margin-bottom: var(--space-4);">
-                <li class="flex-between">
-                  <span class="text-muted" style="font-size: var(--small-size);">Standard Setups</span>
-                  <strong>1-2 Weeks</strong>
-                </li>
-                <li class="flex-between">
-                  <span class="text-muted" style="font-size: var(--small-size);">Fretwork & Electronics</span>
-                  <strong>3-4 Weeks</strong>
-                </li>
-                <li class="flex-between">
-                  <span class="text-muted" style="font-size: var(--small-size);">Structural Restoration</span>
-                  <strong>8-12+ Weeks</strong>
-                </li>
-              </ul>
-
-              <div style="padding: var(--space-3); background-color: var(--color-primary-alpha-10); border-radius: var(--radius-md); border: 1px solid var(--color-primary-alpha-20);">
-                <div class="flex" style="gap: 12px; margin-bottom: 8px;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                  <h4 style="color: var(--color-primary); font-size: 1rem;">The FRET Warranty</h4>
+              <div style="display: flex; flex-direction: column; gap: var(--space-3); font-size: 0.875rem;">
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary); flex-shrink: 0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <div>
+                    <strong style="display: block; color: var(--color-secondary);">Workshop Location</strong>
+                    <span style="color: var(--color-text-secondary);">123 Luthier Lane<br>Portland, OR 97204</span>
+                  </div>
                 </div>
-                <p style="font-size: var(--small-size); color: var(--color-text-secondary);">All structural repairs carry a lifetime warranty to the original owner. We stand behind our glue joints and fretwork indefinitely.</p>
+
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary); flex-shrink: 0;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div>
+                    <strong style="display: block; color: var(--color-secondary);">Bench Hours</strong>
+                    <span style="color: var(--color-text-secondary);">Tuesday – Saturday<br>10:00 AM – 6:00 PM PST</span>
+                  </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary); flex-shrink: 0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <div>
+                    <strong style="display: block; color: var(--color-secondary);">Insurance & Transit</strong>
+                    <span style="color: var(--color-text-secondary);">Instruments on premises are insured up to $150,000 against fire, theft, and environmental shock.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--color-divider); text-align: center;">
+                <span style="font-size: 0.8125rem; color: var(--color-text-muted);">Urgent emergency gig repair?</span>
+                <a href="tel:5551234567" style="display: block; font-weight: 700; color: var(--color-primary); margin-top: 4px;">Call Direct: (555) 123-4567</a>
               </div>
             </div>
           </div>
@@ -1195,67 +1578,69 @@
       </div>
     </section>
 
-    <!-- SECTION 6: TRUST & TESTIMONIALS -->
-    <section class="section">
+    <!-- ========================================================================
+         SECTION 7: REPAIR & RESTORATION FAQ
+         ======================================================================== -->
+    <section class="section section--surface" id="faq">
       <div class="container">
         
-        <!-- Certified Luthier Badge Strip -->
-        <div class="flex-center gap-3 mb-8 reveal flex-wrap">
-          <div class="flex-center gap-2 text-muted" style="font-size: var(--small-size); font-weight: 500;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            Authorized Taylor Service
-          </div>
-          <div class="flex-center gap-2 text-muted" style="font-size: var(--small-size); font-weight: 500;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            Authorized Martin Repair
-          </div>
-          <div class="flex-center gap-2 text-muted" style="font-size: var(--small-size); font-weight: 500;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            Guild Certified
-          </div>
+        <div class="section-header reveal reveal--fade">
+          <span class="overline">Common Inquiries</span>
+          <h2>Repair & Restoration Questions</h2>
         </div>
 
-        <div class="grid grid--3 mb-6">
-          <div class="card card--testimonial hover-lift reveal reveal-delay-1" style="padding: var(--space-3);">
-            <p class="card__quote" style="font-size: var(--small-size);">
-              "They took a '72 acoustic that had been unplayable in a closet for 20 years and made it sing again. The fretwork is flawless."
-            </p>
-            <div class="card__author mt-3">
-              <img src="images/team/client-5.png" alt="Client" class="card__avatar" style="width: 36px; height: 36px;">
-              <div class="card__author-info">
-                <strong>Tom H.</strong>
+        <div class="faq-list">
+          
+          <div class="faq-item reveal reveal-delay-1">
+            <button class="faq-question" aria-expanded="false">
+              <span>Why do you insist on hot hide glue instead of modern yellow wood glue?</span>
+              <svg class="faq-question__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer__inner">
+                Hot protein hide glue dries glass-hard and crystal-clear with zero acoustic damping. Unlike modern PVA glues (Titebond) which exhibit plastic creep under string tension, hide glue transmits 100% of the string's mechanical vibrational energy into the soundboard. Furthermore, it is fully reversible with heat and moisture, allowing future generations of luthiers to service the instrument without tearing the wood fibers.
               </div>
             </div>
           </div>
 
-          <div class="card card--testimonial hover-lift reveal reveal-delay-2" style="padding: var(--space-3);">
-            <p class="card__quote" style="font-size: var(--small-size);">
-              "The only bench I trust with my touring axes. Their setups endure flights, humidity changes, and aggressive playing."
-            </p>
-            <div class="card__author mt-3">
-              <img src="images/team/client-6.png" alt="Client" class="card__avatar" style="width: 36px; height: 36px;">
-              <div class="card__author-info">
-                <strong>Mike V.</strong>
+          <div class="faq-item reveal reveal-delay-2">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do you handle severe cracks in vintage acoustic soundboards?</span>
+              <svg class="faq-question__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer__inner">
+                We re-hydrate the soundboard inside our 50% RH humidity vault to draw the crack edges naturally together. We then introduce hot hide glue with capillary suction, align the crack flush using specialized rare-earth magnetic clamping cauls, and cleat the underside with cross-grain Adirondack spruce diamonds. The repair is stabilized permanently with zero added weight.
               </div>
             </div>
           </div>
 
-          <div class="card card--testimonial hover-lift reveal reveal-delay-3" style="padding: var(--space-3);">
-            <p class="card__quote" style="font-size: var(--small-size);">
-              "A seamless headstock repair. You literally cannot feel where the break was, and the nitro blend is perfect."
-            </p>
-            <div class="card__author mt-3">
-              <img src="images/team/client-7.png" alt="Client" class="card__avatar" style="width: 36px; height: 36px;">
-              <div class="card__author-info">
-                <strong>Sarah L.</strong>
+          <div class="faq-item reveal reveal-delay-3">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can you restore my guitar without stripping the original vintage finish?</span>
+              <svg class="faq-question__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer__inner">
+                Yes — in fact, stripping a vintage lacquer finish cuts an instrument's collector and acoustic value by up to 60%. We adhere to museum conservation ethics: we clean, stabilize, and drop-fill exposed bare wood to stop sweat corrosion, but we never sand away historical weather checking, honest buckle rash, or golden lacquer oxidation.
               </div>
             </div>
           </div>
+
+          <div class="faq-item reveal reveal-delay-4">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I ship my guitar to your Portland workshop from out of state?</span>
+              <svg class="faq-question__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer__inner">
+                Over 40% of our restoration clients ship their guitars to us from across North America and Europe. We provide complete case preparation guides, custom flight case recommendations, and pre-printed FedEx Air insured transit labels with temperature-shock indicator stickers.
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div class="text-center reveal">
-          <a href="about.html#reviews" class="btn btn--primary">Read More Reviews</a>
-        </div>
       </div>
     </section>
 
@@ -1352,59 +1737,160 @@
   <script src="js/cart.js"></script>
   <script src="js/forms.js"></script>
   <script src="js/before-after.js"></script>
-  
+
+  <!-- Interactive Logic for Visual Triage & Dynamic Pre-fill -->
   <script>
-    // Timeline Scroll Logic for Section 4
+    // 1. Triage Data Store
+    const triageData = {
+      'headstock': {
+        tag: 'Zone 01 · Peghead & Nut',
+        urgency: 'High Priority',
+        title: 'Headstock Splines & Bone Nut Carving',
+        summary: 'Cracks along the mahogany grain behind the nut or broken tuner screw anchors. We mill concealed maple splines for 300% tensile strength and carve compensated unbleached bone nuts.',
+        image: 'images/restoration/case-2.png',
+        symptoms: [
+          'Hairline tuning post crack or complete fracture',
+          'Open string pinging or slipping out of tune',
+          'Choked 1st-fret action or open string buzz'
+        ],
+        metric1Label: 'Estimated Turnaround',
+        metric1Val: '2–3 Weeks',
+        metric2Label: 'Bench Treatment',
+        metric2Val: 'Concealed Maple Spline',
+        serviceName: 'Full Vintage & Historic Reconstruction'
+      },
+      'frets': {
+        tag: 'Zone 02 · Neck & Fingerboard',
+        urgency: 'Medium Priority',
+        title: 'Precision Fret Leveling, Recrown & Refrets',
+        summary: 'Worn, grooved, or loose frets causing buzz and choking bends above the 12th fret. Leveled with precision diamond beams, hand-crowned, and buffed to 8000-grit mirror luster.',
+        image: 'images/restoration/process-3.png',
+        symptoms: [
+          'Buzzing on specific frets or choked note bends',
+          'Visible divots and string wear under plain G/B strings',
+          'Sharp fret edges poking out from winter fingerboard shrinkage'
+        ],
+        metric1Label: 'Estimated Turnaround',
+        metric1Val: '1–2 Weeks',
+        metric2Label: 'Bench Treatment',
+        metric2Val: '0.001" Diamond Level & Crown',
+        serviceName: 'Fret Leveling & Refrets'
+      },
+      'soundboard': {
+        tag: 'Zone 03 · Acoustic Soundboard & Bracing',
+        urgency: 'Critical Priority',
+        title: 'Spruce Crack Cleating & Scalloped Brace Surgery',
+        summary: 'Severe center-seam splits, grain fractures, and loose internal tone bars. We humidify to close gaps, introduce 145°F hot hide glue, and apply grain-oriented spruce cleats.',
+        image: 'images/restoration/service-bracing.jpg',
+        symptoms: [
+          'Rattling or buzzing sound inside body when strumming low E',
+          'Visible separation or crack along center seam or pickguard',
+          'Sunken soundboard in front of bridge or excessive bellying'
+        ],
+        metric1Label: 'Estimated Turnaround',
+        metric1Val: '3–5 Weeks',
+        metric2Label: 'Bench Treatment',
+        metric2Val: 'Reversible Hot Hide Glue & Cleats',
+        serviceName: 'Crack & Scalloped Brace Repair'
+      },
+      'bridge': {
+        tag: 'Zone 04 · Bridge & Saddle Geometry',
+        urgency: 'High Priority',
+        title: 'Bridge Re-gluing & Intonation Compensation',
+        summary: 'Lifting bridge edges pulling up from string tension, or slotted bridges with cracked pin holes. We remove, scrape old glue, and clamp under form-fitted cauls.',
+        image: 'images/restoration/process-5.png',
+        symptoms: [
+          'Paper can slip underneath the back edge of the wooden bridge',
+          'String pegs loose or bridge plate chewed through inside',
+          'Strings too high at the 12th fret with no saddle left to lower'
+        ],
+        metric1Label: 'Estimated Turnaround',
+        metric1Val: '2–3 Weeks',
+        metric2Label: 'Bench Treatment',
+        metric2Val: 'Acoustic Bridge Clamping & Reseat',
+        serviceName: 'Master Setup & Intonation'
+      },
+      'electronics': {
+        tag: 'Zone 05 · Controls & Shielding Cavity',
+        urgency: 'Moderate Priority',
+        title: 'Silent Cavity Shielding & Custom Wiring',
+        summary: 'Eliminating stage hum, scratchy volume pots, and intermittent output jacks. We install continuous copper foil ground planes and mil-spec Switchcraft/CTS components.',
+        image: 'images/restoration/service-electronics.jpg',
+        symptoms: [
+          'Buzzing hum that stops when you touch metal strings or bridge',
+          'Scratchy crackling static when turning volume or tone knobs',
+          'Signal cutting out when instrument cable is wiggled'
+        ],
+        metric1Label: 'Estimated Turnaround',
+        metric1Val: '1–2 Weeks',
+        metric2Label: 'Bench Treatment',
+        metric2Val: 'Continuous Copper Ground Plane',
+        serviceName: 'Custom Electronics & Shielding'
+      }
+    };
+
+    // Hotspot Click Handling
     document.addEventListener('DOMContentLoaded', () => {
-      const timeline = document.getElementById('process-timeline');
-      const progress = document.getElementById('timeline-progress');
-      if(!timeline || !progress) return;
+      const hotspots = document.querySelectorAll('.anatomy-hotspot');
+      const triageImg = document.getElementById('triage-img');
+      const triageTag = document.getElementById('triage-anatomy-tag');
+      const triageBadge = document.getElementById('triage-urgency-badge');
+      const triageTitle = document.getElementById('triage-title');
+      const triageSummary = document.getElementById('triage-summary');
+      const triageSymptoms = document.getElementById('triage-symptoms');
+      const metric1Val = document.getElementById('triage-metric-1-val');
+      const metric2Val = document.getElementById('triage-metric-2-val');
+      const triageCta = document.getElementById('triage-cta-btn');
 
-      const updateTimeline = () => {
-        const rect = timeline.getBoundingClientRect();
-        // Calculate how much of the timeline has scrolled past the middle of the screen
-        const windowHalf = window.innerHeight / 2;
-        
-        let percentage = 0;
-        
-        // If top of timeline is below middle of screen
-        if (rect.top > windowHalf) {
-          percentage = 0;
-        } 
-        // If bottom of timeline is above middle of screen
-        else if (rect.bottom < windowHalf) {
-          percentage = 100;
-        } 
-        // Timeline is crossing the middle of the screen
-        else {
-          const totalDistance = rect.height;
-          const scrolledDistance = windowHalf - rect.top;
-          percentage = (scrolledDistance / totalDistance) * 100;
-        }
+      hotspots.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const spot = btn.getAttribute('data-spot');
+          const data = triageData[spot];
+          if (!data) return;
 
-        progress.style.height = `${percentage}%`;
-      };
+          hotspots.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
 
-      window.addEventListener('scroll', () => {
-        // Debounce slightly or use requestAnimationFrame for performance
-        requestAnimationFrame(updateTimeline);
+          if (triageImg) {
+            triageImg.style.opacity = '0.3';
+            setTimeout(() => {
+              triageImg.src = data.image;
+              triageImg.style.opacity = '1';
+            }, 150);
+          }
+
+          if (triageTag) triageTag.textContent = data.tag;
+          if (triageBadge) triageBadge.textContent = data.urgency;
+          if (triageTitle) triageTitle.textContent = data.title;
+          if (triageSummary) triageSummary.textContent = data.summary;
+          if (metric1Val) metric1Val.textContent = data.metric1Val;
+          if (metric2Val) metric2Val.textContent = data.metric2Val;
+
+          if (triageSymptoms) {
+            triageSymptoms.innerHTML = data.symptoms.map(s => `
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                ${s}
+              </li>
+            `).join('');
+          }
+
+          if (triageCta) {
+            triageCta.onclick = () => setServiceIntake(data.serviceName);
+          }
+        });
       });
-      updateTimeline();
-    });
 
-    // FAQ Accordion Logic
-    document.addEventListener('DOMContentLoaded', () => {
+      // FAQ Accordion
       const faqItems = document.querySelectorAll('.faq-item');
       faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
         question.addEventListener('click', () => {
           const isActive = item.classList.contains('active');
-          // Close all others
           faqItems.forEach(i => {
             i.classList.remove('active');
             i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
           });
-          // Toggle current
           if (!isActive) {
             item.classList.add('active');
             question.setAttribute('aria-expanded', 'true');
@@ -1412,9 +1898,15 @@
         });
       });
     });
+
+    // Helper to pre-select intake service dropdown when user clicks a service card
+    function setServiceIntake(serviceName) {
+      const select = document.getElementById('intake-service');
+      if (select) {
+        select.value = serviceName;
+      }
+    }
   </script>
 
 </body>
 </html>
-
-

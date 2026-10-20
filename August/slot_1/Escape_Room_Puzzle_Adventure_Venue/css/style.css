@@ -443,6 +443,10 @@ p {
   transform: scaleX(1);
 }
 
+.navbar__dropdown-toggle span {
+  pointer-events: none;
+}
+
 .navbar__dropdown-toggle .dropdown-chevron {
   width: 14px;
   height: 14px;
@@ -452,16 +456,17 @@ p {
 }
 
 .navbar__dropdown:hover .dropdown-chevron,
-.navbar__dropdown.open .dropdown-chevron {
+.navbar__dropdown.open .dropdown-chevron,
+.navbar__dropdown-toggle[aria-expanded="true"] .dropdown-chevron {
   transform: rotate(180deg);
   color: var(--ember-amber);
 }
 
 .navbar__dropdown-menu {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 4px);
   left: 0;
-  min-width: 170px;
+  min-width: 175px;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-md);
@@ -469,11 +474,22 @@ p {
   padding: var(--space-2);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-6px);
-  transition: opacity var(--transition-fast), visibility var(--transition-fast), transform var(--transition-fast);
-  z-index: var(--z-dropdown);
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  z-index: 1000;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+
+/* Invisible hover bridge connecting button to menu so hover is never lost */
+.navbar__dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 0;
+  right: 0;
+  height: 16px;
 }
 
 .navbar__dropdown:last-child .navbar__dropdown-menu,
@@ -483,19 +499,14 @@ p {
   min-width: 190px;
 }
 
-@media (min-width: 1024px) {
-  .navbar__dropdown:hover .navbar__dropdown-menu,
-  .navbar__dropdown:focus-within .navbar__dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-}
-
+.navbar__dropdown:hover .navbar__dropdown-menu,
+.navbar__dropdown:focus-within .navbar__dropdown-menu,
 .navbar__dropdown.open .navbar__dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateY(0) !important;
+  display: block !important;
 }
 
 .navbar__dropdown-item {
@@ -622,48 +633,79 @@ p {
 .navbar__actions {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
+}
+
+/* Unified sizing for navbar action controls (Theme icon, RTL toggle, Login CTA, Book Now CTA) */
+.navbar__actions .rtl-toggle,
+.navbar__actions .theme-toggle,
+.navbar__actions .navbar__login-link,
+.navbar__actions .btn-sm {
+  height: 38px;
+  min-height: 38px;
+  max-height: 38px;
+  border-radius: var(--border-radius-sm);
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 /* Theme Toggle */
 .theme-toggle {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--border-radius-full);
+  width: 38px;
+  height: 38px;
+  min-height: 38px;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
   color: var(--text-secondary);
-  transition: background var(--transition-fast), color var(--transition-fast);
+  box-sizing: border-box;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
 }
 
 .theme-toggle:hover {
   background: var(--bg-tertiary);
-  color: var(--text-primary);
+  color: var(--ember-amber);
+  border-color: var(--ember-amber);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(242, 163, 60, 0.2);
 }
 
 .theme-toggle svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 
 /* Navbar Login Link */
 .navbar__login-link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 6px 14px;
+  height: 38px;
+  min-height: 38px;
+  padding: 0 14px;
   font-family: var(--font-primary);
   font-size: var(--small-size);
   font-weight: var(--font-weight-medium);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
-  border-radius: var(--border-radius-full);
+  border-radius: var(--border-radius-sm);
   background: var(--bg-card);
   transition: all var(--transition-fast);
   white-space: nowrap;
   text-decoration: none;
   line-height: 1;
+  box-sizing: border-box;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .navbar__login-link:hover {
@@ -683,20 +725,44 @@ p {
 
 /* RTL Toggle */
 .rtl-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  min-height: 38px;
+  min-width: 38px;
+  padding: 0 var(--space-3);
+  font-family: var(--font-primary);
   font-size: var(--xs-size);
   font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
   color: var(--text-secondary);
-  padding: var(--space-1) var(--space-3);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-sm);
+  background: var(--bg-card);
+  box-sizing: border-box;
+  cursor: pointer;
+  flex-shrink: 0;
   transition: all var(--transition-fast);
   white-space: nowrap;
+  line-height: 1;
 }
 
 .rtl-toggle:hover {
   background: var(--bg-tertiary);
-  color: var(--text-primary);
-  border-color: var(--text-tertiary);
+  color: var(--ember-amber);
+  border-color: var(--ember-amber);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(242, 163, 60, 0.2);
+}
+
+/* Navbar Book Now CTA Specifics */
+.navbar__actions .btn-sm {
+  padding: 0 var(--space-4);
+  font-size: var(--small-size);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--border-radius-sm);
+  flex-shrink: 0;
 }
 
 /* Hamburger */
@@ -1286,6 +1352,36 @@ p {
   color: var(--text-on-dark-secondary);
   font-size: var(--xs-size);
   animation: bounceDown 2s infinite;
+}
+
+/* Home 2 (Atrium) Hero Layout */
+#hero-atrium {
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.hero-atrium__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  width: 100%;
+  min-height: 100vh;
+  padding-top: calc(var(--navbar-height) + var(--space-12));
+  padding-bottom: var(--space-12);
+  position: relative;
+  z-index: 3;
+}
+
+@media (max-width: 992px) {
+  .hero-atrium__container {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: calc(var(--navbar-height-mobile) + var(--space-16));
+    gap: var(--space-8);
+  }
 }
 
 .hero__scroll-indicator svg {
@@ -2020,7 +2116,15 @@ tbody tr:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
+  text-align: left;
   padding: var(--space-16);
+}
+
+.split-panel__content .btn {
+  align-self: flex-start;
+  width: auto;
+  max-width: fit-content;
 }
 
 /* ============================================================
@@ -2679,6 +2783,7 @@ tbody tr:hover {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-width: 0;
 }
 
 .sidebar.collapsed ~ .dashboard__main {
@@ -2875,6 +2980,8 @@ tbody tr:hover {
 .dashboard__content {
   flex: 1;
   padding: var(--space-8);
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* Topbar menu button — hidden on desktop, shown on tablet/mobile */
@@ -2898,6 +3005,12 @@ tbody tr:hover {
   display: flex;
   align-items: flex-start;
   gap: var(--space-4);
+  min-width: 0;
+}
+
+.kpi-card__content {
+  min-width: 0;
+  flex: 1;
 }
 
 .kpi-card__icon {
@@ -2921,8 +3034,11 @@ tbody tr:hover {
   font-size: var(--xs-size);
   color: var(--text-tertiary);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   margin-bottom: var(--space-1);
+  overflow-wrap: break-word;
+  word-break: normal;
+  min-width: 0;
 }
 
 .kpi-card__value {
@@ -2931,6 +3047,10 @@ tbody tr:hover {
   font-weight: 800;
   color: var(--text-primary);
   line-height: 1.2;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "lnum" 1;
+  min-width: 0;
+  white-space: nowrap;
 }
 
 .kpi-card__change {
@@ -3052,13 +3172,18 @@ tbody tr:hover {
    31. RESPONSIVE DESIGN
    ============================================================ */
 
-/* === Compact Desktop: 1024px–1199px === */
-@media (min-width: 1024px) and (max-width: 1199px) {
+/* === Compact Desktop: 1000px–1199px === */
+@media (min-width: 1000px) and (max-width: 1199px) {
+  :root {
+    --page-padding: 32px;
+  }
+
   .navbar__links {
     gap: 14px;
   }
 
-  .navbar__link {
+  .navbar__link,
+  .navbar__dropdown-toggle {
     font-size: 0.8125rem;
   }
 
@@ -3086,11 +3211,131 @@ tbody tr:hover {
 
   .dashboard__main {
     margin-left: 230px;
+    min-width: 0;
+  }
+
+  .dashboard__content {
+    padding: var(--space-5) var(--space-6);
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Topbar on compact desktop */
+  .topbar {
+    padding: var(--space-3) var(--space-6);
+    min-height: 58px;
+  }
+
+  .topbar__title {
+    font-size: 1.25rem;
+    white-space: nowrap;
+  }
+
+  .topbar__search input {
+    width: 170px;
+  }
+
+  /* Compact desktop dashboard KPI grid - 2 columns so cards don't cram */
+  .dashboard__content .grid.grid-4,
+  .dashboard__content .kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: var(--space-4) !important;
+  }
+
+  .dashboard__content .kpi-card {
+    padding: var(--space-4) var(--space-5) !important;
+    gap: var(--space-3) !important;
+  }
+
+  .dashboard__content .kpi-card__icon {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+  }
+
+  .dashboard__content .kpi-card__label {
+    font-size: 0.7rem !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1.3 !important;
+  }
+
+  .dashboard__content .kpi-card__value {
+    font-size: 1.5rem !important;
+  }
+
+  /* Overview page - Performance Chart + Next Booking */
+  .dashboard__content .grid[style*="grid-template-columns:2fr 1fr"],
+  .dashboard__content .grid[style*="grid-template-columns: 2fr 1fr"] {
+    grid-template-columns: 1.4fr 1fr !important;
+    gap: var(--space-4) !important;
+  }
+
+  .dashboard-card div[style*="font-family:var(--font-display);font-size:2rem"] {
+    font-size: 1.625rem !important;
+  }
+
+  .achievements-preview-grid {
+    gap: var(--space-3) !important;
+  }
+
+  /* Stats page - radar & area chart / personal records & share CTA */
+  .dashboard__content .grid[style*="grid-template-columns:1.5fr 1fr"],
+  .dashboard__content .grid[style*="grid-template-columns: 1.5fr 1fr"] {
+    grid-template-columns: 1.3fr 1fr !important;
+    gap: var(--space-4) !important;
+  }
+
+  .dashboard__content .dashboard-card .btn {
+    font-size: var(--xs-size);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  /* Payment methods card text sizing on compact desktop - 2-col with 3rd spanning full width */
+  .dashboard__content .dashboard-card .grid.grid-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: var(--space-4) !important;
+  }
+
+  .dashboard__content .dashboard-card .grid.grid-3 > div:last-child {
+    grid-column: 1 / -1 !important;
+    flex-direction: row !important;
+    gap: var(--space-3) !important;
+    padding: var(--space-4) !important;
+  }
+
+  .dashboard__content .dashboard-card .grid.grid-3 div[style*="font-family:monospace"] {
+    font-size: 0.95rem !important;
+    letter-spacing: 0.08em !important;
+    white-space: nowrap !important;
+  }
+
+  .dashboard__content .dashboard-card .grid.grid-3 div[style*="display:flex;justify-content:space-between;font-size:var(--xs-size)"] {
+    white-space: nowrap !important;
+    gap: var(--space-2) !important;
+  }
+
+  /* Tables horizontal scroll */
+  .dashboard__content .table-wrapper {
+    overflow-x: auto !important;
+    max-width: 100% !important;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+  }
+
+  .dashboard__content table {
+    min-width: 720px;
+  }
+
+  .dashboard__content th,
+  .dashboard__content td {
+    padding: var(--space-3) var(--space-4);
   }
 }
 
-/* === Tablet: 768px–1023px === */
-@media (max-width: 1023px) {
+/* === Tablet: 768px–999px === */
+@media (max-width: 999px) {
   :root {
     --page-padding: 32px;
     --h1-size: 2.5rem;
@@ -3133,6 +3378,13 @@ tbody tr:hover {
   .navbar__actions .rtl-toggle,
   .navbar__actions .theme-toggle {
     display: none;
+  }
+
+  /* At tablet (768px–1023px), Book Now & Login are already in the navbar header */
+  .mobile-drawer .btn-full,
+  .mobile-drawer a.btn-primary,
+  .mobile-drawer .navbar__login-link {
+    display: none !important;
   }
 
   .footer__grid {
@@ -3207,6 +3459,13 @@ tbody tr:hover {
 
   .dashboard__main {
     margin-left: 0 !important;
+    min-width: 0;
+  }
+
+  .dashboard__content {
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   .topbar__menu-btn {
@@ -3234,14 +3493,54 @@ tbody tr:hover {
     grid-template-columns: 1fr !important;
   }
 
+  /* Keep payment methods 2-col on tablet with Add Method spanning full width */
+  .dashboard__content .dashboard-card .grid.grid-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: var(--space-4) !important;
+  }
+
+  .dashboard__content .dashboard-card .grid.grid-3 > div:last-child {
+    grid-column: 1 / -1 !important;
+    flex-direction: row !important;
+    gap: var(--space-4) !important;
+    padding: var(--space-4) var(--space-5) !important;
+    text-align: left !important;
+    justify-content: center !important;
+  }
+
+  .dashboard__content .dashboard-card .grid.grid-3 > div:last-child svg {
+    margin-bottom: 0 !important;
+    flex-shrink: 0;
+  }
+
+  /* Keep payment form expiry/cvv side-by-side on tablet */
+  .dashboard__content #payment-form {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .dashboard__content #payment-form .form-group[style*="grid-column:1 / -1"],
+  .dashboard__content #payment-form > div[style*="grid-column:1 / -1"] {
+    grid-column: 1 / -1 !important;
+  }
+
   .dashboard-card {
     padding: var(--space-5);
+    overflow: hidden;
+    min-width: 0;
+    max-width: 100%;
   }
 
   /* Tables horizontal scroll */
   .dashboard__content .table-wrapper {
-    overflow-x: auto;
+    overflow-x: auto !important;
+    max-width: 100% !important;
+    width: 100%;
     -webkit-overflow-scrolling: touch;
+    display: block;
+  }
+
+  .dashboard__content table {
+    min-width: 780px;
   }
 
   .masonry {
@@ -3439,6 +3738,27 @@ tbody tr:hover {
     grid-template-columns: 1fr !important;
   }
 
+  /* Keep payment methods 2-col on mobile */
+  .dashboard__content .dashboard-card .grid.grid-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: var(--space-4) !important;
+  }
+
+  /* Keep payment form expiry/cvv side-by-side on mobile */
+  .dashboard__content #payment-form {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .dashboard__content #payment-form .form-group[style*="grid-column:1 / -1"],
+  .dashboard__content #payment-form > div[style*="grid-column:1 / -1"] {
+    grid-column: 1 / -1 !important;
+  }
+
+  /* Dashboard cards prevent overflow */
+  .dashboard-card {
+    overflow: hidden;
+  }
+
   .topbar__menu-btn {
     display: inline-flex !important;
   }
@@ -3446,10 +3766,34 @@ tbody tr:hover {
   /* Table touch scrolling */
   .table-wrapper {
     -webkit-overflow-scrolling: touch;
+    overflow-x: auto !important;
+    max-width: 100% !important;
   }
 
   .dashboard__content .table-wrapper {
-    overflow-x: auto;
+    overflow-x: auto !important;
+    max-width: 100% !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  [data-chart="heatmap"] {
+    overflow-x: auto !important;
+    max-width: 100% !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  [data-chart="bar"] {
+    max-width: 100% !important;
+    overflow: hidden;
+  }
+
+  [data-chart="bar"] > div {
+    gap: 4px !important;
+    padding: 0 2px !important;
+  }
+
+  [data-chart="bar"] > div > div {
+    min-width: 0 !important;
   }
 
   .dashboard__content table {
@@ -3514,6 +3858,16 @@ tbody tr:hover {
   /* Show RTL and theme toggles outside hamburger at 360px */
   .navbar__actions .rtl-toggle,
   .navbar__actions .theme-toggle {
+    display: inline-flex !important;
+  }
+
+  /* Show Book Now & Login in mobile drawer when hidden from navbar at <=480px */
+  .mobile-drawer .btn-full,
+  .mobile-drawer a.btn-primary {
+    display: flex !important;
+  }
+
+  .mobile-drawer .navbar__login-link {
     display: inline-flex !important;
   }
 
@@ -3764,24 +4118,57 @@ tbody tr:hover {
     height: 180px !important;
   }
 
-  /* Achievements grid — 3 columns on 360px */
-  .dashboard__content .dashboard-card > div[style*="display:flex"][style*="flex-wrap:wrap"] {
+  /* Achievements grid — 3 columns on mobile */
+  .dashboard__content .achievements-preview-grid,
+  .dashboard__content .dashboard-card > div[style*="padding:var(--space-2) 0"],
+  .dashboard__content .dashboard-card:has(a[href*="achievements"]) > div[style*="display:flex"] {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
     gap: var(--space-2) !important;
   }
 
-  .dashboard__content .dashboard-card > div[style*="display:flex"][style*="flex-wrap:wrap"] > div {
+  .dashboard__content .achievements-preview-grid > div,
+  .dashboard__content .dashboard-card > div[style*="padding:var(--space-2) 0"] > div,
+  .dashboard__content .dashboard-card:has(a[href*="achievements"]) > div[style*="display:flex"] > div {
     padding: var(--space-2) !important;
   }
 
-  .dashboard__content .dashboard-card > div[style*="display:flex"][style*="flex-wrap:wrap"] > div > div:first-child {
+  .dashboard__content .achievements-preview-grid > div > div:first-child,
+  .dashboard__content .dashboard-card > div[style*="padding:var(--space-2) 0"] > div > div:first-child,
+  .dashboard__content .dashboard-card:has(a[href*="achievements"]) > div[style*="display:flex"] > div > div:first-child {
     width: 40px !important;
     height: 40px !important;
   }
 
-  .dashboard__content .dashboard-card > div[style*="display:flex"][style*="flex-wrap:wrap"] > div > div:last-child {
+  .dashboard__content .achievements-preview-grid > div > div:last-child,
+  .dashboard__content .dashboard-card > div[style*="padding:var(--space-2) 0"] > div > div:last-child,
+  .dashboard__content .dashboard-card:has(a[href*="achievements"]) > div[style*="display:flex"] > div > div:last-child {
     font-size: 0.625rem !important;
+  }
+
+  /* Theme & Display Preferences — stacked single column on mobile */
+  .theme-preferences-grid,
+  .dashboard-card:has(button[onclick*="theme-toggle"]) > div[style*="display:flex"],
+  .dashboard-card:has(button[onclick*="rtl-toggle"]) > div[style*="display:flex"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--space-3) !important;
+  }
+
+  .theme-preference-card,
+  .dashboard-card:has(button[onclick*="theme-toggle"]) div[style*="min-width:200px"],
+  .dashboard-card:has(button[onclick*="rtl-toggle"]) div[style*="min-width:200px"] {
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .theme-preference-card .btn,
+  .dashboard-card:has(button[onclick*="theme-toggle"]) div[style*="min-width:200px"] .btn,
+  .dashboard-card:has(button[onclick*="rtl-toggle"]) div[style*="min-width:200px"] .btn {
+    width: 100% !important;
+    white-space: normal !important;
+    text-align: center;
   }
 
 
@@ -3946,6 +4333,95 @@ tbody tr:hover {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-2);
+  }
+
+  /* Room cards layout safety for small mobile */
+  .room-grid {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-4) !important;
+  }
+
+  .room-grid .card__body {
+    padding: var(--space-4);
+  }
+
+  .room-grid .card__body h3 {
+    font-size: 1rem;
+    word-break: break-word;
+  }
+
+  .room-grid .card__meta {
+    gap: var(--space-2);
+  }
+
+  .room-grid .flex-between {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .room-grid .flex-between .btn-sm {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--xs-size);
+    white-space: nowrap;
+  }
+
+  /* Theme & Display preferences at 360px */
+  .theme-preferences-grid,
+  .dashboard-card:has(button[onclick*="theme-toggle"]) > div[style*="display:flex"],
+  .dashboard-card:has(button[onclick*="rtl-toggle"]) > div[style*="display:flex"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--space-3) !important;
+  }
+
+  .theme-preference-card,
+  .dashboard-card:has(button[onclick*="theme-toggle"]) div[style*="min-width:200px"],
+  .dashboard-card:has(button[onclick*="rtl-toggle"]) div[style*="min-width:200px"] {
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Admin Overview 360px fixes: Heatmap & Tables inside cards */
+  .dashboard-card {
+    overflow: hidden !important;
+    max-width: 100% !important;
+  }
+
+  .table-wrapper {
+    overflow-x: auto !important;
+    max-width: 100% !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  [data-chart="heatmap"] {
+    overflow-x: auto !important;
+    max-width: 100% !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dashboard__content table {
+    min-width: 360px !important;
+  }
+
+  /* Bar chart mobile layout */
+  [data-chart="bar"] {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  [data-chart="bar"] > div {
+    gap: 4px !important;
+    padding: 0 2px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  [data-chart="bar"] > div > div {
+    min-width: 0 !important;
   }
 }
 
@@ -4252,11 +4728,13 @@ tbody tr:hover {
 }
 
 /* Grids and Flow */
-.room-grid,
-.journal-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-8);
+@media (min-width: 1024px) {
+  .room-grid,
+  .journal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
 }
 
 @media (min-width: 1024px) {
@@ -4365,6 +4843,7 @@ tbody tr:hover {
 .why-card .card__image { aspect-ratio: 4 / 3; }
 .why-card .card__body { text-align: center; }
 .why-card .card__text { margin-bottom: 0; }
+#why-myst { padding-bottom: var(--space-24); }
 
 /* ---- Home 2: game experiences ---- */
 .exp-card { position: relative; }
@@ -4446,7 +4925,7 @@ tbody tr:hover {
 .banner-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
 /* ---- Responsive hygiene for the new blocks only ---- */
-@media (max-width: 1023px) {
+@media (max-width: 999px) {
   .hero__themes { grid-template-columns: repeat(2, 1fr); }
   .app-promo__grid { grid-template-columns: 1fr; gap: var(--space-10); }
   .loc-grid { grid-template-columns: repeat(2, 1fr); }

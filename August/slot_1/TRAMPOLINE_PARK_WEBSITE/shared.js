@@ -141,6 +141,7 @@
         { label: 'Home Modern', href: 'home-modern.html' }
       ]},
       { label: 'Attractions', href: 'attractions.html' },
+      { label: 'Parties', href: 'parties.html' },
       { label: 'Pricing', href: 'pricing.html' },
       { label: 'About', href: 'about.html' },
       { label: 'Blog', href: 'blog.html' },
@@ -378,22 +379,23 @@
   /* ========== SCROLL REVEAL ========== */
   function initScrollReveal() {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealSelector = '.reveal, .reveal-left, .reveal-right, .reveal-scale, .icon-card, .stat-item, .journey-step, .glow-card';
     if (prefersReduced) {
-      document.querySelectorAll('.reveal').forEach(el => el.classList.add('revealed'));
+      document.querySelectorAll(revealSelector).forEach(el => el.classList.add('revealed'));
       return;
     }
 
     const isMobile = window.innerWidth <= 768;
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           // Stagger delay for siblings
           const parent = entry.target.parentElement;
           if (parent && parent.classList.contains('stagger')) {
-            const siblings = Array.from(parent.querySelectorAll('.reveal'));
+            const siblings = Array.from(parent.querySelectorAll(revealSelector));
             const index = siblings.indexOf(entry.target);
-            const delay = isMobile ? 0 : index * 80;
+            const delay = isMobile ? 0 : Math.min(index * 80, 500);
             setTimeout(() => {
               entry.target.classList.add('revealed');
             }, delay);
@@ -408,7 +410,7 @@
       rootMargin: '0px 0px -40px 0px'
     });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll(revealSelector).forEach(el => observer.observe(el));
   }
 
   /* ========== COUNTER ANIMATION ========== */
@@ -839,6 +841,101 @@
     });
   }
 
+  /* ========== SCROLL PROGRESS LINE ========== */
+  function initScrollProgressLine() {
+    const bar = document.querySelector('.scroll-progress-line');
+    if (!bar) return;
+    const update = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+  /* ========== FLOATING PARTICLES GENERATOR ========== */
+  function initParticles() {
+    const containers = document.querySelectorAll('.particles-container');
+    if (!containers.length) return;
+
+    const colors = ['particle--coral', 'particle--amber', 'particle--blue', 'particle--white'];
+    const sizes = ['particle--sm', 'particle--md', 'particle--lg'];
+
+    containers.forEach(container => {
+      if (container.children.length > 0) return;
+      const count = 16;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        const c = colors[Math.floor(Math.random() * colors.length)];
+        const s = sizes[Math.floor(Math.random() * sizes.length)];
+        p.className = `particle ${c} ${s}`;
+        p.style.left = `${Math.random() * 100}%`;
+        p.style.bottom = `${Math.random() * 20}%`;
+        p.style.animationDelay = `${(Math.random() * 7).toFixed(2)}s`;
+        p.style.animationDuration = `${(6 + Math.random() * 6).toFixed(2)}s`;
+        container.appendChild(p);
+      }
+    });
+  }
+
+  /* ========== 3D TILT CARDS ========== */
+  function initTiltCards() {
+    const cards = document.querySelectorAll('.tilt-card, .glow-card');
+    if (!cards.length || window.innerWidth <= 768) return;
+
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -6;
+        const rotateY = ((x - centerX) / centerX) * 6;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  }
+
+  /* ========== HERO PARALLAX ========== */
+  function initHeroParallax() {
+    const hero = document.querySelector('.hero--parallax');
+    if (!hero) return;
+    const bgImg = hero.querySelector('.hero-bg img');
+    const content = hero.querySelector('.hero-content');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (scrollY < window.innerHeight) {
+        if (bgImg) bgImg.style.transform = `scale(1.1) translateY(${scrollY * 0.25}px)`;
+        if (content) content.style.transform = `translateY(${scrollY * 0.12}px)`;
+      }
+    }, { passive: true });
+  }
+
+  /* ========== MAGNETIC BUTTONS ========== */
+  function initMagneticButtons() {
+    if (window.innerWidth <= 768) return;
+    const btns = document.querySelectorAll('.btn-magnetic');
+    btns.forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+  }
+
   /* ========== GLOBAL EXPOSE ========== */
   window.JUMPToggleTheme = toggleTheme;
   window.JUMPToggleRTL = toggleRTL;
@@ -871,6 +968,11 @@
       initDashboardSidebar();
       initSkeletonRemoval();
       initMarquee();
+      initScrollProgressLine();
+      initParticles();
+      initTiltCards();
+      initHeroParallax();
+      initMagneticButtons();
     });
   });
 

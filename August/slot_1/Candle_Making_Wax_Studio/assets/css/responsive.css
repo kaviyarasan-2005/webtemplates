@@ -37,6 +37,10 @@
     flex-shrink: 0;
   }
 
+  .header__cta {
+    display: none;
+  }
+
   .hamburger {
     display: flex;
   }
@@ -205,30 +209,31 @@
     gap: 4px;
   }
 
-  .header__toggle {
+  .header__toggle,
+  .header__rtl-toggle,
+  .nav__cart {
     width: 32px;
     height: 32px;
+    min-width: 32px;
+    min-height: 32px;
   }
 
-  .header__toggle svg {
-    width: 16px;
-    height: 16px;
+  .header__toggle svg,
+  .nav__cart svg {
+    width: 15px;
+    height: 15px;
   }
 
   .header__rtl-toggle {
-    padding: 3px 6px;
-    font-size: 11px;
+    font-size: 10px;
   }
 
-  .nav__cart {
-    padding: 4px 8px;
-    font-size: 12px;
-    gap: 4px;
-  }
-
-  .nav__cart svg {
-    width: 14px;
-    height: 14px;
+  .nav__cart-badge {
+    top: -4px;
+    right: -4px;
+    min-width: 16px;
+    height: 16px;
+    font-size: 9px;
   }
 
   .hamburger {
@@ -271,6 +276,36 @@
 
   .card__actions .btn {
     width: 100%;
+  }
+
+  /* ── 360px Service Card Actions & Pricing ── */
+  .service-card__body {
+    padding: var(--space-md) !important;
+  }
+
+  .service-card__media {
+    height: 180px !important;
+  }
+
+  .service-card__title {
+    font-size: 1.125rem !important;
+  }
+
+  .service-card__footer {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: var(--space-xs) !important;
+  }
+
+  .service-card__btn {
+    width: 100% !important;
+    min-height: 44px !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .service-card__pricing {
+    margin-bottom: 2px !important;
   }
 
   /* ── 360px PDP & Scent Notes ── */
@@ -353,12 +388,46 @@
   }
 
   /* ── 360px Calendar & Workshops ── */
+  .cal-wrap > * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  #cal-grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .cal-header {
+    font-size: 0.6875rem !important;
+    padding: 6px 1px !important;
+    letter-spacing: 0.01em !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+  }
+
   .cal-cell {
     font-size: 12px !important;
+    min-width: 0 !important;
+    padding: 2px !important;
+  }
+
+  .cal-dots {
+    gap: 2px !important;
+    margin-top: 2px !important;
+  }
+
+  .cal-dots i {
+    width: 5px !important;
+    height: 5px !important;
   }
 
   .cal-panel {
     padding: var(--space-md) !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
   }
 
   .instructor-card {
@@ -568,9 +637,24 @@
   .hero-catalog { grid-template-columns: 1fr; }
 }
 @media (max-width: 767px) {
-  .scroll-strip__item { flex: 0 0 160px; width: 160px; height: 160px; }
+  .scroll-strip__track,
+  .studio-grid__track {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+  }
 }
 @media (max-width: 480px) {
   .hero-catalog__grid { grid-template-columns: 1fr; }
   .hero-catalog__group { padding: var(--space-md); }
+  .scroll-strip__track,
+  .studio-grid__track {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xs);
+  }
+  .scroll-strip__item:last-child,
+  .studio-grid__item:last-child {
+    grid-column: span 2;
+    aspect-ratio: 2 / 1;
+  }
 }
+

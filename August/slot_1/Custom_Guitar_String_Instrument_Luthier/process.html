@@ -142,6 +142,10 @@
       overflow: hidden;
       box-shadow: var(--shadow-sm);
       transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      min-width: 0;
+      box-sizing: border-box;
+      word-break: normal;
+      overflow-wrap: break-word;
     }
 
     .technique-card:hover {
@@ -168,6 +172,16 @@
 
     .technique-card__body {
       padding: var(--space-4);
+    }
+
+    .technique-card__body h3 {
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
+
+    .technique-card__body p {
+      word-break: normal;
+      overflow-wrap: break-word;
     }
 
     .technique-card__tag {
@@ -325,6 +339,91 @@
       color: var(--color-error);
       margin-top: 3px;
     }
+
+    @media (max-width: 1024px) {
+      .technique-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .care-tips-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .technique-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+      }
+      .consult-section {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+      }
+      .care-tips-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .technique-grid {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-3);
+      }
+      .technique-card__body {
+        padding: var(--space-4) var(--space-3);
+      }
+      .care-tips-grid {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-3);
+      }
+      .care-tip {
+        padding: var(--space-4) var(--space-3);
+      }
+    }
+
+    @media (max-width: 360px) {
+      .technique-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: var(--space-3) !important;
+        width: 100% !important;
+      }
+      .technique-card {
+        width: 100% !important;
+        min-width: 0 !important;
+      }
+      .technique-card__body {
+        padding: var(--space-3) 0.875rem !important;
+      }
+      .technique-card__body h3 {
+        font-size: 1.125rem !important;
+        line-height: 1.35 !important;
+        margin-bottom: 6px !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+        white-space: normal !important;
+      }
+      .technique-card__body p {
+        font-size: 0.8125rem !important;
+        line-height: 1.45 !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+      }
+      .care-tips-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: var(--space-3) !important;
+        width: 100% !important;
+      }
+      .care-tip {
+        padding: var(--space-4) 0.875rem !important;
+        width: 100% !important;
+        min-width: 0 !important;
+      }
+      .consult-section {
+        grid-template-columns: 1fr !important;
+      }
+    }
   </style>
   <link rel="stylesheet" href="css/responsive.css">
 </head>
@@ -342,13 +441,13 @@
 
       <nav class="header__nav" aria-label="Primary Navigation">
         <div class="nav-dropdown">
-          <a href="index.html" class="nav-link">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
             Home
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </a>
           <div class="nav-dropdown__menu">
-            <a href="index.html" class="nav-dropdown__link">Home 1 <span>— The Atelier</span></a>
-            <a href="home-2.html" class="nav-dropdown__link">Home 2 <span>— The Gallery</span></a>
+            <a href="index.html" class="nav-dropdown__link">Home 1</a>
+            <a href="home-2.html" class="nav-dropdown__link">Home 2</a>
           </div>
         </div>
         <a href="instruments.html" class="nav-link">Instruments</a>
@@ -386,8 +485,8 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
       </a>
       <div id="mobile-home-menu" class="mobile-menu__sub">
-        <a href="index.html" class="mobile-menu__link">The Atelier</a>
-        <a href="home-2.html" class="mobile-menu__link">The Gallery</a>
+        <a href="index.html" class="mobile-menu__link">Home 1</a>
+        <a href="home-2.html" class="mobile-menu__link">Home 2</a>
       </div>
       <a href="instruments.html" class="mobile-menu__link">Instruments</a>
       <a href="repair.html" class="mobile-menu__link">Repair & Restoration</a>
@@ -398,14 +497,6 @@
       
 
     </nav>
-    
-    <div class="mobile-menu__toggles">
-      <button class="theme-toggle mobile-toggle" aria-label="Toggle theme">
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      </button>
-      <button class="rtl-toggle mobile-toggle" aria-label="Toggle direction">RTL</button>
-    </div>
     
     <a href="contact.html" class="btn btn--primary mobile-menu__cta">Book a Consultation</a>
   </div>
