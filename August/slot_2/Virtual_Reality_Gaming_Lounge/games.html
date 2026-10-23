@@ -1,189 +1,1032 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark" dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexus VR | Games Library</title>
-  <meta name="description" content="Browse our extensive library of over 100 virtual reality titles across all genres.">
-  
+  <title>Nexus VR | Games Library – Explore 50+ Titles & Venue Experiences</title>
+  <meta name="description"
+    content="Browse the complete Nexus VR game catalog. Filter by genre, player count, and venue zone (Standard Pods, Apex Motion Pods, Free-Roam Arena, Escape Suites).">
+
   <link rel="stylesheet" href="src/css/main.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon-2.svg">
-  
+
   <style>
+    /* ==========================================================================
+       Games Library: Visual Aesthetics, Venue Zones & Discovery Design
+       ========================================================================== */
+
+    /* 1. Hero Section: Crisp Artwork Visibility with Reduced Overlays */
     .games-hero {
       position: relative;
-      padding: 8rem 0 5rem;
-      /* Darkened the top gradient from 0.6 to 0.85 for better contrast */
-      background: linear-gradient(to bottom, rgba(8, 11, 20, 0.85), rgba(8, 11, 20, 1)), url('src/assets/images/game-top.jpg') center/cover no-repeat fixed;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 6.5rem 0 4.5rem;
+      min-height: 52vh;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      min-height: 40vh;
+      background: #070A14;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
-    
-    .games-hero::before {
-      content: '';
+
+    .games-hero-bg {
       position: absolute;
       inset: 0;
-      /* Darkened radial gradient */
-      background: radial-gradient(circle at center, rgba(8,11,20,0.3) 0%, rgba(8,11,20,0.95) 100%);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%;
+      opacity: 0.88; /* Reduced excessive dimming so arcade & pod artwork is vivid */
+      filter: saturate(1.15) contrast(1.05) brightness(1.02);
       pointer-events: none;
+      z-index: 1;
+      transition: transform 8s ease;
     }
-    
+
+    .games-hero:hover .games-hero-bg {
+      transform: scale(1.03);
+    }
+
+    /* Directional subtle scrim rather than heavy black mask */
+    .games-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(7, 10, 20, 0.25) 0%, rgba(7, 10, 20, 0.12) 40%, rgba(7, 10, 20, 0.65) 85%, #070A14 100%),
+        radial-gradient(circle at 50% 30%, rgba(34, 211, 238, 0.12) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
     .games-hero-content {
       position: relative;
       z-index: 2;
-      /* Darkened the glassmorphism background */
-      background: rgba(8, 11, 20, 0.75);
+      background: rgba(10, 15, 28, 0.62);
       backdrop-filter: blur(16px);
-      border-radius: var(--radius-lg);
-      padding: 3.5rem 2.5rem;
-      max-width: 800px;
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem 2.25rem 2rem;
+      max-width: 940px;
       margin: 0 auto;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-    }
-    
-    .games-hero-content::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.5), transparent 50%, rgba(34, 211, 238, 0.5));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 25px rgba(34, 211, 238, 0.05);
     }
 
-    /* Force text to remain light in the hero section even in light mode */
-    [data-theme="light"] .games-hero h1 {
-      color: #ffffff;
-    }
-    [data-theme="light"] .games-hero .text-gradient {
-      /* Ensure gradient text still works or provide a fallback if needed */
+    .games-hero h1 {
+      text-shadow: 0 3px 14px rgba(0, 0, 0, 0.9);
     }
 
-    /* Remove top-rated section gradient in light mode */
-    [data-theme="light"] .top-rated-fade {
-      display: none;
+    .games-hero p {
+      color: #E2E8F0;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
     }
 
+    /* 2. Venue Experience Zones Guide */
+    .venue-zones-wrapper {
+      margin-top: 2rem;
+      text-align: left;
+    }
 
-    /* Enhanced Game Card Styling */
+    .venue-zones-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+      padding: 0 0.25rem;
+    }
+
+    .venue-zones-header-title {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: var(--clr-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .venue-zones-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 0.85rem;
+    }
+
+    @media (min-width: 640px) {
+      .venue-zones-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .venue-zones-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .zone-card {
+      background: rgba(13, 20, 36, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .zone-card:hover {
+      border-color: rgba(34, 211, 238, 0.5);
+      background: rgba(20, 29, 52, 0.95);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .zone-card.active-zone {
+      border-color: var(--clr-primary);
+      box-shadow: 0 0 16px rgba(139, 92, 246, 0.4);
+      background: rgba(24, 32, 58, 0.98);
+    }
+
+    .zone-card-top {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .zone-card-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .zone-card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .zone-card-badge {
+      font-size: 0.68rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      display: inline-block;
+      margin-top: 0.2rem;
+    }
+
+    .zone-card-desc {
+      font-size: 0.78rem;
+      color: var(--clr-text-muted);
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .zone-card-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--clr-primary);
+      padding-top: 0.4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* 3. Filter & Discovery Bar */
+    .filter-wrapper {
+      position: relative;
+      z-index: 20;
+      margin-top: -2.25rem;
+      margin-bottom: 2.75rem;
+    }
+
+    .filter-bar {
+      background: rgba(13, 20, 36, 0.96);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-xl);
+      padding: 1.25rem 1.6rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .filter-inputs-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      align-items: center;
+    }
+
+    /* Category Pill Quick Filters */
+    .category-pills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      align-items: center;
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .cat-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--clr-text-muted);
+      border-radius: var(--radius-full);
+      padding: 0.42rem 1.15rem;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .cat-pill:hover {
+      background: rgba(34, 211, 238, 0.12);
+      color: #FFFFFF;
+      border-color: rgba(34, 211, 238, 0.45);
+    }
+
+    .cat-pill.active {
+      background: linear-gradient(135deg, var(--clr-primary), var(--clr-secondary));
+      color: #FFFFFF;
+      border-color: transparent;
+      box-shadow: 0 0 16px rgba(34, 211, 238, 0.35);
+    }
+
+    .cat-pill-count {
+      font-size: 0.72rem;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.1rem 0.4rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+    }
+
+    /* Active filter counter */
+    .active-filter-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--clr-text-muted);
+      padding: 0 0.25rem;
+    }
+
+    /* 4. Game Card Design: Full Artwork Detail, Clean 16:9, Visible Titles & Genres */
     .game-card {
       display: flex;
       flex-direction: column;
       height: 100%;
-      overflow: hidden;
-      border: 1px solid var(--border-glass);
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-      background: var(--clr-surface);
       border-radius: var(--radius-lg);
-    }
-    
-    .game-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--clr-primary);
-    }
-    
-    .game-card-img {
-      position: relative;
       overflow: hidden;
-      border-top-left-radius: inherit;
-      border-top-right-radius: inherit;
-    }
-    
-    .game-card-img img {
-      transition: transform 0.6s ease;
-      display: block;
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-    }
-    
-    .game-card:hover .game-card-img img {
-      transform: scale(1.08);
-    }
-    
-    .game-card-img::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 60%;
-      background: linear-gradient(to top, var(--clr-surface), transparent);
-      pointer-events: none;
+      background: rgba(14, 20, 36, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+      position: relative;
     }
 
-    .game-card-content {
+    .game-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(34, 211, 238, 0.45);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(34, 211, 238, 0.15);
+    }
+
+    /* Uniform 16:9 Image Proportions - Artwork shines with ZERO dark overlays */
+    .game-card-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #090E1D;
+    }
+
+    .game-card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      filter: brightness(1.03) contrast(1.03); /* Preserves every detail of the game's visuals */
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .game-card:hover .game-card-img-wrap img {
+      transform: scale(1.05);
+    }
+
+    /* Sleek minimal corner pills: Do NOT obscure artwork subject */
+    .img-badge-top-left {
+      position: absolute;
+      top: 0.65rem;
+      left: 0.65rem;
+      z-index: 3;
+    }
+
+    .img-badge-top-right {
+      position: absolute;
+      top: 0.65rem;
+      right: 0.65rem;
+      z-index: 3;
+    }
+
+    .badge-live-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.22rem 0.55rem;
+      border-radius: var(--radius-full);
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: rgba(8, 12, 22, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #E2E8F0;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .dot-live-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #10B981;
+      box-shadow: 0 0 8px #10B981;
+      display: inline-block;
+    }
+
+    .badge-rating-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.22rem 0.55rem;
+      border-radius: var(--radius-full);
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #FBBF24;
+      background: rgba(8, 12, 22, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    /* Card Body: Clear Typography & Structured Venue Availability */
+    .game-card-body {
+      padding: 1.25rem 1.35rem;
       display: flex;
       flex-direction: column;
       flex: 1;
-      padding: 2rem;
-      position: relative;
-      z-index: 1;
-      margin-top: -3rem; /* overlap with image fade */
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .game-card-header {
+    .game-card-meta-row {
       display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .genre-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .genre-action {
+      background: rgba(34, 211, 238, 0.15);
+      color: #22D3EE;
+      border: 1px solid rgba(34, 211, 238, 0.3);
+    }
+
+    .genre-horror {
+      background: rgba(239, 68, 68, 0.15);
+      color: #F87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .genre-rhythm {
+      background: rgba(139, 92, 246, 0.15);
+      color: #A78BFA;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .genre-family {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .player-count-badge {
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: var(--clr-text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .game-card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 0.4rem;
+      line-height: 1.35;
+      min-height: 2.8rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .game-card-desc {
+      font-size: 0.85rem;
+      color: var(--clr-text-muted);
+      line-height: 1.5;
+      margin-bottom: 0.85rem;
+      flex-grow: 1;
+    }
+
+    /* Venue Experience Specs Row: Informs user which stations/hardware are available */
+    .venue-availability-box {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.75rem;
+      margin-bottom: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .venue-spec-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.75rem;
+      color: #CBD5E1;
+    }
+
+    .venue-spec-item strong {
+      color: #F1F5F9;
+    }
+
+    /* Card Footer: Comfort & CTA */
+    .game-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .comfort-badge {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--clr-text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-card-action {
+      padding: 0.45rem 1.15rem;
+      font-size: 0.84rem;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      height: 36px;
+      min-height: 36px;
+      flex-shrink: 0;
+    }
+
+    /* 5. Varied Section Theming: Supports Gaming Aesthetic without Flat Monotony */
+    .section-action {
+      background: radial-gradient(ellipse at 85% 15%, rgba(34, 211, 238, 0.08) 0%, transparent 60%), #0A1224;
+      border-bottom: 1px solid rgba(34, 211, 238, 0.16);
+    }
+
+    .section-horror {
+      background: radial-gradient(ellipse at 15% 30%, rgba(239, 68, 68, 0.09) 0%, transparent 60%), #13080B;
+      border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .section-rhythm {
+      background: radial-gradient(ellipse at 85% 40%, rgba(139, 92, 246, 0.11) 0%, transparent 60%), #110A26;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .section-family {
+      background: radial-gradient(ellipse at 20% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 60%), #061816;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.16);
+    }
+
+    .section-spotlight {
+      background: radial-gradient(ellipse at 50% 25%, rgba(245, 158, 11, 0.09) 0%, transparent 65%), #0D121F;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .section-suggest {
+      background: #090E1D;
+    }
+
+    /* Category Section Headers for Easy Scanning */
+    .category-header {
+      display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.5rem;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
     }
 
-    .game-card-content h4 {
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-      color: var(--clr-text);
+    .category-title-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
-    .game-card-content p {
-      color: var(--clr-text-muted);
-      margin-bottom: 1.5rem;
-      line-height: 1.5;
-      flex: 1;
+    .category-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
     }
 
-    /* Filter Bar Enhancements */
-    .filter-bar {
-      background: var(--clr-surface);
-      border: 1px solid var(--border-glass);
-      backdrop-filter: blur(12px);
-      padding: 1rem 1.5rem;
-      border-radius: var(--radius-lg);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    .category-headline {
+      font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+      margin: 0;
+      line-height: 1.2;
     }
+
+    /* Light Theme Balancing */
+    [data-theme="light"] .games-hero {
+      background: linear-gradient(180deg, rgba(241, 245, 249, 0.4) 0%, rgba(241, 245, 249, 0.8) 60%, #F1F5F9 100%),
+                  url('src/assets/images/hero-bg-2.jpg') center/cover no-repeat;
+    }
+
+    [data-theme="light"] .games-hero-content {
+      background: rgba(255, 255, 255, 0.94);
+      border-color: rgba(0, 0, 0, 0.12);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .games-hero-content h1 {
+      color: #0F172A !important;
+    }
+
+    [data-theme="light"] .games-hero-content p {
+      color: #334155 !important;
+    }
+
+    [data-theme="light"] .zone-card {
+      background: #FFFFFF;
+      border-color: rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="light"] .zone-card:hover {
+      background: #F8FAFC;
+    }
+
+    [data-theme="light"] .zone-card-title {
+      color: #0F172A;
+    }
+
+    [data-theme="light"] .filter-bar {
+      background: rgba(255, 255, 255, 0.98);
+      border-color: rgba(0, 0, 0, 0.1);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .cat-pill {
+      background: rgba(0, 0, 0, 0.05);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #475569;
+    }
+
+    [data-theme="light"] .cat-pill.active {
+      color: #FFFFFF;
+    }
+
+    [data-theme="light"] .game-card {
+      background: #FFFFFF;
+      border-color: rgba(0, 0, 0, 0.09);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="light"] .game-card-title {
+      color: #0F172A;
+    }
+
+    [data-theme="light"] .game-card-desc {
+      color: #475569;
+    }
+
+    [data-theme="light"] .venue-availability-box {
+      background: #F1F5F9;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .venue-spec-item {
+      color: #475569;
+    }
+
+    [data-theme="light"] .venue-spec-item strong {
+      color: #0F172A;
+    }
+
+    [data-theme="light"] .comfort-badge {
+      color: #64748B;
+    }
+
+    [data-theme="light"] .section-action {
+      background: #F8FAFC;
+    }
+
+    [data-theme="light"] .section-horror {
+      background: #FFF5F5;
+    }
+
+    [data-theme="light"] .section-rhythm {
+      background: #FAF5FF;
+    }
+
+    [data-theme="light"] .section-family {
+      background: #F0FDF7;
+    }
+
+    [data-theme="light"] .section-spotlight {
+      background: #FFFFFF;
+    }
+
+    [data-theme="light"] .section-suggest {
+      background: #F8FAFC;
+    }
+  
+    /* ==========================================================================
+       MOBILE & 360px VIEWPORT RESPONSIVENESS (Alignment, Spacing & Hierarchy)
+       ========================================================================== */
+
+    @media (max-width: 768px) {
+      /* Hero Section Spacing */
+      .games-hero {
+        padding: 3.25rem 0 2rem;
+        min-height: auto;
+      }
+      .games-hero-content {
+        padding: 1.35rem 1rem;
+        border-radius: var(--radius-lg);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      }
+      .games-hero h1 {
+        font-size: clamp(1.75rem, 6.5vw, 2.25rem);
+        line-height: 1.2;
+        margin-bottom: 0.65rem;
+      }
+      .games-hero p.text-large {
+        font-size: 0.88rem;
+        line-height: 1.5;
+        margin-bottom: 0;
+      }
+
+      /* Venue Zones Guide Mobile Alignment */
+      .venue-zones-wrapper {
+        margin-top: 1.25rem;
+      }
+      .venue-zones-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        margin-bottom: 0.65rem;
+      }
+      .venue-zones-header-title {
+        font-size: 0.76rem;
+      }
+      .venue-zones-grid {
+        gap: 0.65rem;
+      }
+      .zone-card {
+        padding: 0.75rem 0.85rem;
+        gap: 0.5rem;
+      }
+      .zone-card-top {
+        gap: 0.65rem;
+      }
+      .zone-card-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        font-size: 1.15rem;
+        border-radius: 6px;
+      }
+      .zone-card-title {
+        font-size: 0.9rem;
+      }
+      .zone-card-badge {
+        font-size: 0.65rem;
+        padding: 0.12rem 0.4rem;
+      }
+      .zone-card-desc {
+        font-size: 0.75rem;
+        line-height: 1.4;
+      }
+      .zone-card-action {
+        font-size: 0.7rem;
+        padding-top: 0.35rem;
+      }
+
+      /* Filter & Discovery Bar Full-Width Stacking */
+      .filter-wrapper {
+        margin-top: -1.25rem;
+        margin-bottom: 2rem;
+      }
+      .filter-bar {
+        padding: 1rem 0.85rem;
+        border-radius: var(--radius-lg);
+        gap: 0.85rem;
+      }
+      .filter-inputs-row {
+        flex-direction: column;
+        gap: 0.65rem;
+        width: 100%;
+      }
+      .filter-input-col {
+        width: 100% !important;
+        min-width: 100% !important;
+        flex: 1 1 100% !important;
+      }
+      .filter-inputs-row .form-input {
+        width: 100% !important;
+        height: 42px;
+        font-size: 0.88rem;
+      }
+      #game-search-input {
+        padding-left: 2.75rem !important;
+      }
+
+      /* Horizontal Swipeable Category Chips */
+      .category-pills-row {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-top: 0.65rem;
+        padding-bottom: 0.35rem;
+        gap: 0.45rem;
+        margin: 0 -0.85rem;
+        padding-left: 0.85rem;
+        padding-right: 0.85rem;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .category-pills-row::-webkit-scrollbar {
+        display: none;
+      }
+      .category-pills-row > span {
+        display: none;
+      }
+      .cat-pill {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 0.35rem 0.85rem;
+        font-size: 0.8rem;
+      }
+
+      /* Filter Status */
+      .active-filter-status {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+        font-size: 0.78rem;
+        line-height: 1.4;
+      }
+
+      /* Category Headers */
+      .category-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.65rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+      }
+      .category-title-group {
+        gap: 0.75rem;
+        align-items: flex-start;
+      }
+      .category-icon-box {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        min-height: 38px;
+        font-size: 1.2rem;
+        border-radius: 10px;
+        margin-top: 0.15rem;
+      }
+      .category-headline {
+        font-size: 1.35rem;
+        line-height: 1.2;
+      }
+      .category-title-group p {
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+
+      /* Game Cards Mobile Polish */
+      .game-card-body {
+        padding: 0.95rem 0.85rem;
+      }
+      .game-card-meta-row {
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin-bottom: 0.45rem;
+      }
+      .genre-pill {
+        font-size: 0.68rem;
+        padding: 0.18rem 0.45rem;
+      }
+      .player-count-badge {
+        font-size: 0.7rem;
+      }
+      .game-card-title {
+        font-size: 1.05rem;
+        min-height: auto;
+        margin-bottom: 0.35rem;
+        line-height: 1.3;
+      }
+      .game-card-desc {
+        font-size: 0.82rem;
+        line-height: 1.45;
+        margin-bottom: 0.65rem;
+      }
+      .venue-availability-box {
+        padding: 0.5rem 0.65rem;
+        margin-bottom: 0.65rem;
+        gap: 0.3rem;
+      }
+      .venue-spec-item {
+        font-size: 0.72rem;
+        gap: 0.4rem;
+      }
+      .venue-spec-item i {
+        flex-shrink: 0;
+        font-size: 0.85rem;
+      }
+      .game-card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding-top: 0.65rem;
+      }
+      .comfort-badge {
+        font-size: 0.72rem;
+      }
+      .btn-card-action {
+        padding: 0.4rem 0.95rem;
+        font-size: 0.78rem;
+        height: 34px;
+        min-height: 34px;
+      }
+
+      /* Spotlight Section Mobile Polish */
+      .spotlight-img-wrap {
+        min-height: 220px !important;
+        aspect-ratio: 16 / 9;
+      }
+      .spotlight-badge {
+        top: 0.85rem !important;
+        left: 0.85rem !important;
+        font-size: 0.75rem !important;
+        padding: 0.3rem 0.75rem !important;
+      }
+      .spotlight-content-wrap {
+        padding: 1.5rem 1rem !important;
+      }
+      .spotlight-title {
+        font-size: 1.6rem !important;
+        margin-bottom: 0.65rem !important;
+      }
+      .spotlight-desc {
+        font-size: 0.88rem !important;
+        line-height: 1.5 !important;
+        margin-bottom: 1.25rem !important;
+      }
+      .spotlight-tags {
+        gap: 0.45rem !important;
+        margin-bottom: 1.25rem !important;
+      }
+      .spotlight-tags > div {
+        font-size: 0.75rem !important;
+        padding: 0.35rem 0.65rem !important;
+      }
+      .spotlight-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+        font-size: 0.95rem !important;
+        padding: 0.75rem 1.25rem !important;
+      }
+
+      /* Suggest Card Mobile Polish */
+      .suggest-card {
+        padding: 1.75rem 1rem !important;
+        border-radius: var(--radius-lg);
+      }
+      .suggest-card h2 {
+        font-size: 1.4rem !important;
+      }
+      .suggest-card p {
+        font-size: 0.85rem !important;
+      }
+    }
+
+    /* 360px Specific Refinements */
+    @media (max-width: 480px) {
+      .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+      .games-hero-content {
+        padding: 1.25rem 0.85rem;
+      }
+      .filter-bar {
+        padding: 0.85rem 0.75rem;
+      }
+      .category-pills-row {
+        margin: 0 -0.75rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+      .game-card-body {
+        padding: 0.85rem 0.75rem;
+      }
+      .spotlight-content-wrap {
+        padding: 1.25rem 0.85rem !important;
+      }
+      .suggest-card {
+        padding: 1.5rem 0.85rem !important;
+      }
+    }
+
   </style>
 </head>
+
 <body>
 
   <!-- Navbar -->
   <nav class="navbar">
     <div class="container flex justify-between items-center">
-      <a href="home1.html" class="flex items-center gap-2" aria-label="Nexus VR Home">
-        <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" style="height: 44px; width: 44px; border-radius: 50%; box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);">
-        <span class="text-large" style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+      <!-- Brand -->
+      <a href="home1.html" class="nav-brand" aria-label="Nexus VR Home">
+        <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" class="nav-brand__logo">
+        <span class="nav-brand__name">Nexus <span class="text-gradient">VR</span></span>
       </a>
 
-      <div class="nav-links items-center">
+      <!-- Desktop Nav -->
+      <div class="nav-links">
         <div class="dropdown">
-          <a href="#" class="nav-link flex items-center gap-1">Home <i class="ph ph-caret-down"></i></a>
+          <a href="#" class="nav-link">Home <i class="ph ph-caret-down dropdown-caret"></i></a>
           <div class="dropdown-menu">
             <a href="home1.html" class="dropdown-item">Home 1</a>
             <a href="home2.html" class="dropdown-item">Home 2</a>
           </div>
         </div>
-        <a href="games.html" class="nav-link" style="color: var(--clr-primary);">Games Library</a>
+        <a href="games.html" class="nav-link active">Games Library</a>
         <a href="pricing.html" class="nav-link">Pricing</a>
-        <a href="groups.html" class="nav-link">Parties & Groups</a>
+        <a href="groups.html" class="nav-link">Parties &amp; Groups</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
         <div class="dropdown">
-          <a href="#" class="nav-link flex items-center gap-1">Dashboards <i class="ph ph-caret-down"></i></a>
+          <a href="#" class="nav-link">Dashboards <i class="ph ph-caret-down dropdown-caret"></i></a>
           <div class="dropdown-menu">
             <a href="dashboard.html" class="dropdown-item">User</a>
             <a href="admin.html" class="dropdown-item">Admin</a>
@@ -191,15 +1034,18 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-4">
-        <button id="theme-toggle" class="btn-icon flex items-center justify-center" aria-label="Toggle Theme">
+      <!-- Actions -->
+      <div class="nav-actions">
+        <button id="theme-toggle" class="nav-icon-btn" aria-label="Toggle Theme">
           <i class="ph ph-moon"></i>
         </button>
-        <button id="rtl-toggle" class="btn-rtl hidden lg:flex">RTL</button>
-        <a href="login.html" class="btn btn-primary hidden lg:flex">Login</a>
-        <a href="dashboard.html" class="btn btn-secondary hidden lg:flex">Book Now</a>
-        <button id="mobile-menu-btn" class="btn-icon lg:hidden flex items-center justify-center">
-          <i class="ph ph-list" style="font-size: 1.5rem;"></i>
+        <button id="rtl-toggle" class="btn-rtl-compact" title="Toggle RTL Layout">RTL</button>
+        <a href="login.html" class="nav-link-login">Login</a>
+        <a href="contact.html" class="nav-cta-btn">
+          <i class="ph ph-ticket"></i> Book Now
+        </a>
+        <button id="mobile-menu-btn" class="nav-icon-btn" aria-label="Toggle Navigation Menu">
+          <i class="ph ph-list" style="font-size: 1.4rem;"></i>
         </button>
       </div>
     </div>
@@ -207,7 +1053,6 @@
 
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="mobile-menu flex-col gap-6">
-    <!-- Home Group -->
     <div class="mob-group">
       <button class="mob-group-btn">
         Home <i class="ph ph-caret-down mob-caret"></i>
@@ -217,317 +1062,913 @@
         <a href="home2.html" class="nav-link text-large">Home 2</a>
       </div>
     </div>
-    <a href="games.html" class="nav-link text-large">Games Library</a>
-    <a href="pricing.html" class="nav-link text-large">Pricing</a>
+    <a href="games.html" class="nav-link text-large" style="color: var(--clr-primary);">Games Library</a>
+    <a href="pricing.html" class="nav-link text-large">Pricing &amp; Bundles</a>
     <a href="groups.html" class="nav-link text-large">Parties &amp; Groups</a>
-    <!-- Dashboards Group -->
+    <a href="about.html" class="nav-link text-large">About</a>
+    <a href="contact.html" class="nav-link text-large">Contact</a>
     <div class="mob-group">
       <button class="mob-group-btn">
         Dashboards <i class="ph ph-caret-down mob-caret"></i>
       </button>
       <div class="mob-group-links">
-        <a href="dashboard.html" class="nav-link text-large">User</a>
-        <a href="admin.html" class="nav-link text-large">Admin</a>
+        <a href="dashboard.html" class="nav-link text-large">User Dashboard</a>
+        <a href="admin.html" class="nav-link text-large">Admin Console</a>
       </div>
     </div>
+        <hr style="border-color: rgba(255,255,255,0.1);">
+    <!-- Theme & RTL Toggles (Shifted into Hamburger) -->
+    <div class="mob-control-row">
+      <span>Theme</span>
+      <button id="theme-toggle-mobile" class="nav-icon-btn" aria-label="Toggle Theme">
+        <i class="ph ph-moon" style="font-size:1.2rem;"></i>
+      </button>
+    </div>
+    <div class="mob-control-row">
+      <span>Layout Direction</span>
+      <button id="rtl-toggle-mobile" class="btn-rtl-compact">RTL</button>
+    </div>
     <hr style="border-color: rgba(255,255,255,0.1);">
-    <a href="login.html" class="btn btn-primary justify-center">Login</a>
-    <a href="dashboard.html" class="btn btn-secondary justify-center">Book Now</a>
+    <a href="login.html" class="btn btn-secondary justify-center" style="width: 100%;">Login</a>
+    <a href="contact.html" class="btn btn-primary justify-center" style="width: 100%;"><i class="ph ph-ticket"></i> Book Now</a>
   </div>
 
   <main style="padding-top: 76px;">
-    <!-- Section 1: Library Header -->
+    <!-- ==========================================================================
+         1. GAMES HERO (Artwork Detail Preserved with Reduced Overlays)
+         ========================================================================== -->
     <section class="games-hero">
+      <img src="src/assets/images/hero-bg-2.jpg" alt="Nexus VR Gaming Lounge Arena" class="games-hero-bg">
+      <div class="games-hero-overlay"></div>
       <div class="container animate-on-scroll">
         <div class="games-hero-content">
-          <div class="badge mb-4 mx-auto" style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(34, 211, 238, 0.1); color: var(--clr-secondary); border: 1px solid rgba(34, 211, 238, 0.2);">
-            <i class="ph-fill ph-game-controller"></i> Explore the Archive
+          <div class="badge mb-3 mx-auto"
+            style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(34, 211, 238, 0.14); color: var(--clr-primary); border: 1px solid rgba(34, 211, 238, 0.35); font-weight: 700;">
+            <i class="ph-bold ph-game-controller"></i> 50+ Installed & Calibrated VR Titles
           </div>
-          <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1rem; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Games <span class="text-gradient">Library</span></h1>
-          <p class="text-large mx-auto mb-0" style="color: rgba(255, 255, 255, 0.95); max-width: 600px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Over 100+ premium VR titles covering every genre. Find your next adventure below.</p>
-        </div>
-      </div>
-    </section>
+          <h1 style="font-size: clamp(2.3rem, 4.2vw, 3.5rem); line-height: 1.15; margin-bottom: 0.85rem;">
+            Games & <span class="text-gradient">Experiences Library</span>
+          </h1>
+          <p class="text-large mx-auto mb-0" style="max-width: 680px; line-height: 1.6;">
+            Every title below is installed across our high-performance stations. Switch games freely during your session with instant setup from our on-floor VR Masters.
+          </p>
 
-    <!-- Section 2: Filters -->
-    <section class="section" style="padding-top: 0; padding-bottom: var(--space-8); margin-top: -3rem; position: relative; z-index: 10;">
-      <div class="container animate-on-scroll flex justify-center">
-        <div class="filter-bar flex gap-4 justify-center items-center" style="flex-wrap: wrap; width: 100%; max-width: 900px; padding: 1.5rem; background: rgba(8, 11, 20, 0.7); backdrop-filter: blur(16px); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-          <div class="form-group mb-0 flex-1 w-100" style="position: relative; min-width: 250px;">
-            <i class="ph ph-magnifying-glass" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--clr-primary); font-size: 1.25rem;"></i>
-            <input type="text" class="form-input" placeholder="Search games..." style="padding-left: 3.5rem; width: 100%;">
-          </div>
-          <div class="flex gap-4 w-100 md:w-auto" style="flex-wrap: wrap;">
-            <div style="position: relative;">
-              <i class="ph ph-funnel" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--clr-secondary); font-size: 1.25rem; pointer-events: none;"></i>
-              <select class="form-input" style="width: auto; padding-left: 3.5rem; padding-right: 2.5rem; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23ffffff%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 0.5rem center;">
-                <option>All Genres</option>
-                <option>Action</option>
-                <option>Horror</option>
-                <option>Family</option>
-                <option>Sports</option>
-              </select>
+          <!-- Venue Experience Zones Guide: Helps users understand where each game is played -->
+          <div class="venue-zones-wrapper">
+            <div class="venue-zones-header">
+              <span class="venue-zones-header-title">
+                <i class="ph-bold ph-map-pin text-primary"></i> Venue Experience Zones: Select a zone to filter
+              </span>
+              <span class="text-small text-muted font-bold">4 Distinct Zones</span>
             </div>
-            <div style="position: relative;">
-              <i class="ph ph-users" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--clr-secondary); font-size: 1.25rem; pointer-events: none;"></i>
-              <select class="form-input" style="width: auto; padding-left: 3.5rem; padding-right: 2.5rem; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23ffffff%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 0.5rem center;">
-                <option>Any Players</option>
-                <option>Singleplayer</option>
-                <option>Multiplayer</option>
-                <option>Co-op</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Section 3: Action & Adventure Grid -->
-    <section class="section container pt-0 animate-on-scroll">
-      <div class="flex items-center justify-between mb-8" style="padding: 0 2rem;">
-        <div class="flex items-center gap-3">
-          <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(34, 211, 238, 0.1); color: var(--clr-secondary); display: flex; align-items: center; justify-content: center;">
-            <i class="ph ph-sword" style="font-size: 1.5rem;"></i>
-          </div>
-          <h3 class="m-0" style="font-size: 1.75rem;">Action & Adventure</h3>
-        </div>
-        <a href="#" class="btn btn-sm" style="background: transparent; border: 1px solid var(--border-glass);">View All <i class="ph ph-arrow-right"></i></a>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Game Card -->
-        <div class="game-card">
-          <div class="game-card-img">
-            <img src="src/assets/images/game-action-1.jpg" alt="Game">
-          </div>
-          <div class="game-card-content">
-            <div class="game-card-header">
-              <span class="badge" style="background: rgba(34, 211, 238, 0.15); color: var(--clr-secondary); border: none;">Action</span>
-              <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-users text-primary"></i> 1-4</span>
+            <div class="venue-zones-grid">
+              <!-- Zone 1: Standard Pods -->
+              <div class="zone-card" data-zone-filter="Standard VR Pod" title="Filter games playable in Standard Pods">
+                <div class="zone-card-top">
+                  <div class="zone-card-icon" style="background: rgba(34, 211, 238, 0.14); color: var(--clr-primary);">
+                    <i class="ph-bold ph-desktop"></i>
+                  </div>
+                  <div>
+                    <h4 class="zone-card-title">Standard Pods</h4>
+                    <span class="zone-card-badge" style="background: rgba(34, 211, 238, 0.15); color: var(--clr-primary);">24 Stations</span>
+                  </div>
+                </div>
+                <p class="zone-card-desc">All titles playable. Solo or linked co-op on HTC Vive Pro 2 & Meta Quest Pro 5K.</p>
+                <div class="zone-card-action">
+                  <span>Browse Standard Games</span>
+                  <i class="ph-bold ph-arrow-right"></i>
+                </div>
+              </div>
+
+              <!-- Zone 2: Apex Motion Pods -->
+              <div class="zone-card" data-zone-filter="Motion Pod" title="Filter games playable in Motion Pods">
+                <div class="zone-card-top">
+                  <div class="zone-card-icon" style="background: rgba(239, 68, 68, 0.15); color: var(--clr-error);">
+                    <i class="ph-bold ph-gauge"></i>
+                  </div>
+                  <div>
+                    <h4 class="zone-card-title">Apex Motion Pods</h4>
+                    <span class="zone-card-badge" style="background: rgba(239, 68, 68, 0.15); color: var(--clr-error);">4 Motion Rigs</span>
+                  </div>
+                </div>
+                <p class="zone-card-desc">3-Axis hydraulic motion rigs with Force-Feedback wheels and synchronized wind turbines.</p>
+                <div class="zone-card-action">
+                  <span style="color: var(--clr-error);">Browse Motion Games</span>
+                  <i class="ph-bold ph-arrow-right"></i>
+                </div>
+              </div>
+
+              <!-- Zone 3: Free-Roam Arena -->
+              <div class="zone-card" data-zone-filter="Free-Roam Arena" title="Filter games playable in Free-Roam Arena">
+                <div class="zone-card-top">
+                  <div class="zone-card-icon" style="background: rgba(139, 92, 246, 0.15); color: var(--clr-secondary);">
+                    <i class="ph-bold ph-users-three"></i>
+                  </div>
+                  <div>
+                    <h4 class="zone-card-title">Free-Roam Arena</h4>
+                    <span class="zone-card-badge" style="background: rgba(139, 92, 246, 0.15); color: var(--clr-secondary);">1,500 sq ft</span>
+                  </div>
+                </div>
+                <p class="zone-card-desc">Untethered Wi-Fi 6E streaming backpacks with full-body tracking for 2–8 player squad battles.</p>
+                <div class="zone-card-action">
+                  <span style="color: var(--clr-secondary);">Browse Arena Squads</span>
+                  <i class="ph-bold ph-arrow-right"></i>
+                </div>
+              </div>
+
+              <!-- Zone 4: VR Escape Suites -->
+              <div class="zone-card" data-zone-filter="Escape Suite" title="Filter games playable in Escape Suites">
+                <div class="zone-card-top">
+                  <div class="zone-card-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--clr-warning);">
+                    <i class="ph-bold ph-key"></i>
+                  </div>
+                  <div>
+                    <h4 class="zone-card-title">Escape Suites</h4>
+                    <span class="zone-card-badge" style="background: rgba(245, 158, 11, 0.15); color: var(--clr-warning);">3 Private Suites</span>
+                  </div>
+                </div>
+                <p class="zone-card-desc">Room-scale private soundproof suites with physical prop puzzles and spatial clue syncing.</p>
+                <div class="zone-card-action">
+                  <span style="color: var(--clr-warning);">Browse Escape Suites</span>
+                  <i class="ph-bold ph-arrow-right"></i>
+                </div>
+              </div>
             </div>
-            <h4>Cyber Ninja VR</h4>
-            <p>Slice through neon cityscapes with perfectly timed strikes.</p>
-            <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Book to Play</a>
-          </div>
-        </div>
-        <!-- Game Card -->
-        <div class="game-card">
-          <div class="game-card-img">
-            <img src="src/assets/images/game-action-2.jpg" alt="Game">
-          </div>
-          <div class="game-card-content">
-            <div class="game-card-header">
-              <span class="badge" style="background: rgba(34, 211, 238, 0.15); color: var(--clr-secondary); border: none;">Shooter</span>
-              <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-users text-primary"></i> 1-8</span>
-            </div>
-            <h4>Zero Caliber</h4>
-            <p>Experience ultra-realistic tactical military combat.</p>
-            <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Book to Play</a>
-          </div>
-        </div>
-        <!-- Game Card -->
-        <div class="game-card">
-          <div class="game-card-img">
-            <img src="src/assets/images/game-action-3.jpg" alt="Game">
-          </div>
-          <div class="game-card-content">
-            <div class="game-card-header">
-              <span class="badge" style="background: rgba(34, 211, 238, 0.15); color: var(--clr-secondary); border: none;">Adventure</span>
-              <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-user text-primary"></i> 1</span>
-            </div>
-            <h4>Wanderer</h4>
-            <p>Solve intricate puzzles while traveling across different eras.</p>
-            <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Book to Play</a>
-          </div>
-        </div>
-        <!-- Game Card -->
-        <div class="game-card">
-          <div class="game-card-img">
-            <img src="src/assets/images/game-action-4.jpg" alt="Game">
-          </div>
-          <div class="game-card-content">
-            <div class="game-card-header">
-              <span class="badge" style="background: rgba(34, 211, 238, 0.15); color: var(--clr-secondary); border: none;">Action</span>
-              <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-user text-primary"></i> 1</span>
-            </div>
-            <h4>Apex Construct</h4>
-            <p>Master the futuristic bow in a shattered, robot-filled world.</p>
-            <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Book to Play</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 4: Horror & Survival Grid -->
-    <section class="section" style="background: linear-gradient(to bottom, var(--clr-surface-alt), var(--clr-background)); border-top: 1px solid var(--border-glass);">
+    <!-- ==========================================================================
+         2. INTERACTIVE DISCOVERY & SEARCH STRIP
+         ========================================================================== -->
+    <div class="container filter-wrapper animate-on-scroll">
+      <div class="filter-bar">
+        <!-- Search & Filter Selectors -->
+        <div class="filter-inputs-row">
+          <div class="filter-input-col search-col" style="position: relative; flex: 1 1 260px; min-width: 220px;">
+            <i class="ph-bold ph-magnifying-glass"
+              style="position: absolute; left: 1.15rem; top: 50%; transform: translateY(-50%); color: var(--clr-primary); font-size: 1.25rem;"></i>
+            <input type="text" id="game-search-input" class="form-input" placeholder="Search by game name, genre, or keyword..."
+              style="padding-left: 3.25rem; width: 100%;">
+          </div>
+
+          <div class="filter-input-col select-col" style="position: relative; flex: 0 1 185px; min-width: 160px;">
+            <select id="player-filter-select" class="form-input" style="padding-right: 2rem;">
+              <option value="all">Any Player Count</option>
+              <option value="solo">Solo Singleplayer</option>
+              <option value="coop">Co-op (2–4 Players)</option>
+              <option value="squad">Squad (4–8 Players)</option>
+            </select>
+          </div>
+
+          <div class="filter-input-col select-col" style="position: relative; flex: 0 1 195px; min-width: 165px;">
+            <select id="venue-zone-select" class="form-input" style="padding-right: 2rem;">
+              <option value="all">All Venue Zones</option>
+              <option value="Standard VR Pod">Standard VR Pods</option>
+              <option value="Motion Pod">Apex Motion Pods</option>
+              <option value="Free-Roam Arena">Free-Roam Arena</option>
+              <option value="Escape Suite">VR Escape Suites</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Category Pill Quick Toggles with Item Counts -->
+        <div class="category-pills-row">
+          <span class="text-small text-muted font-bold" style="margin-right: 0.4rem;">Browse Genre:</span>
+          <button class="cat-pill active" data-category="all">
+            <i class="ph-bold ph-squares-four"></i> All Titles <span class="cat-pill-count" id="total-games-count">14</span>
+          </button>
+          <button class="cat-pill" data-category="action">
+            <i class="ph-bold ph-sword"></i> Action & Combat <span class="cat-pill-count">4</span>
+          </button>
+          <button class="cat-pill" data-category="horror">
+            <i class="ph-bold ph-ghost"></i> Horror Thrillers <span class="cat-pill-count">3</span>
+          </button>
+          <button class="cat-pill" data-category="rhythm">
+            <i class="ph-bold ph-music-note"></i> Rhythm & Sports <span class="cat-pill-count">3</span>
+          </button>
+          <button class="cat-pill" data-category="family">
+            <i class="ph-bold ph-smiley"></i> Family & Casual <span class="cat-pill-count">4</span>
+          </button>
+        </div>
+
+        <!-- Real-Time Filter Status -->
+        <div class="active-filter-status">
+          <span>Showing <strong id="visible-games-count" class="text-primary">14</strong> of 14 experiences available at the lounge</span>
+          <button id="reset-filters-btn" class="btn-text text-small font-bold text-muted hover:text-primary" style="cursor: pointer; background: none; border: none;">
+            <i class="ph ph-arrow-counter-clockwise"></i> Reset Filters
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- No results message -->
+    <div id="no-games-found" class="container text-center py-12" style="display: none;">
+      <i class="ph ph-magnifying-glass text-muted" style="font-size: 3.5rem; margin-bottom: 1rem; color: var(--clr-primary);"></i>
+      <h3 style="font-size: 1.75rem; margin-bottom: 0.5rem;">No matching titles found</h3>
+      <p class="text-muted" style="max-width: 480px; margin: 0 auto 1.5rem;">
+        No games match your current filter combination. Try clearing your search keyword, resetting player counts, or selecting all venue zones.
+      </p>
+      <button id="reset-filters-btn-empty" class="btn btn-secondary">Reset All Filters</button>
+    </div>
+
+    <!-- ==========================================================================
+         3. SECTION: ACTION & ADVENTURE (Cool Cyber Navy Theme)
+         ========================================================================== -->
+    <section class="section section-action category-section" data-section-cat="action">
       <div class="container animate-on-scroll">
-        <div class="flex items-center justify-between mb-8" style="padding: 0 2rem;">
+        <div class="category-header">
+          <div class="category-title-group">
+            <div class="category-icon-box" style="background: rgba(34, 211, 238, 0.15); color: #22D3EE;">
+              <i class="ph-bold ph-sword"></i>
+            </div>
+            <div>
+              <h2 class="category-headline">Action & Combat Arena</h2>
+              <p class="text-small text-muted" style="margin: 0;">High-intensity tactical shooters, neon katana duels, and cybernetic archery</p>
+            </div>
+          </div>
           <div class="flex items-center gap-3">
-            <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(239, 68, 68, 0.1); color: var(--clr-error); display: flex; align-items: center; justify-content: center;">
-              <i class="ph ph-ghost" style="font-size: 1.5rem;"></i>
-            </div>
-            <h3 class="m-0" style="font-size: 1.75rem;">Horror & Survival</h3>
+            <span class="badge" style="background: rgba(34, 211, 238, 0.12); color: #22D3EE; border: 1px solid rgba(34, 211, 238, 0.3);">
+              4 Experiences at Venue
+            </span>
           </div>
-          <a href="#" class="btn btn-sm" style="background: transparent; border: 1px solid var(--border-glass);">View All <i class="ph ph-arrow-right"></i></a>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="game-card">
-            <div class="game-card-img">
-              <img src="src/assets/images/game-horror-1.jpg" alt="Game">
-            </div>
-            <div class="game-card-content text-center">
-              <div class="flex justify-center items-center gap-3 mb-3">
-                <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--clr-error); border: none;">18+ Horror</span>
-                <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-user text-primary"></i> 1</span>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Game 1: Cyber Ninja VR -->
+          <div class="game-card" data-category="action" data-players="coop" data-zone="Standard VR Pod" data-title="Cyber Ninja: Blade Protocol">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/game-action-5.jpg" alt="Cyber Ninja: Blade Protocol VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
               </div>
-              <h4 style="font-size: 1.4rem;">Dark Asylum</h4>
-              <p>Can you escape the terrifying secrets hidden within the abandoned hospital?</p>
-              <a href="dashboard.html" class="btn btn-primary w-full mt-auto" style="width: 100%; border: 1px solid var(--clr-error); background: rgba(239, 68, 68, 0.1); color: var(--clr-error);">Dare to Play</a>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.9</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-action">Action / Cyber Melee</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-users"></i> 1–4 Linked</span>
+                </div>
+                <h3 class="game-card-title">Cyber Ninja: Blade Protocol</h3>
+                <p class="game-card-desc">Deflect incoming laser fire with twin neon katanas across cyberpunk rooftops with sub-millimeter tracking.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-desktop text-primary"></i>
+                    <span><strong>Station:</strong> Standard Pod (24 Stations)</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-cpu text-muted"></i>
+                    <span>HTC Vive Pro 2 • 5K 120Hz Displays</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-gauge"></i> Moderate VR</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action">Play in Lounge</a>
+              </div>
             </div>
           </div>
-          <div class="game-card">
-            <div class="game-card-img">
-              <img src="src/assets/images/game-horror-2.jpg" alt="Game">
-            </div>
-            <div class="game-card-content text-center">
-              <div class="flex justify-center items-center gap-3 mb-3">
-                <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--clr-error); border: none;">18+ Zombies</span>
-                <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-users text-primary"></i> 1-4</span>
+
+          <!-- Game 2: Zero Caliber Strike -->
+          <div class="game-card" data-category="action" data-players="squad" data-zone="Free-Roam Arena" data-title="Zero Caliber: Tactical Strike">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/game-action-2.jpg" alt="Zero Caliber: Tactical Strike VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
               </div>
-              <h4 style="font-size: 1.4rem;">Dead City VR</h4>
-              <p>Team up and fight through endless waves of the undead in an apocalyptic city.</p>
-              <a href="dashboard.html" class="btn btn-primary w-full mt-auto" style="width: 100%; border: 1px solid var(--clr-error); background: rgba(239, 68, 68, 0.1); color: var(--clr-error);">Dare to Play</a>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.8</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-action">Arena Squad Shooter</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-users-three"></i> 2–6 Squad</span>
+                </div>
+                <h3 class="game-card-title">Zero Caliber: Tactical Strike</h3>
+                <p class="game-card-desc">Realistic military ballistics and tactical reloading. Squad up untethered on our 1,500 sq ft free-roam arena floor.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-users-three" style="color: var(--clr-secondary);"></i>
+                    <span><strong>Station:</strong> Free-Roam Arena (1,500 sq ft)</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-broadcast text-muted"></i>
+                    <span>Untethered Wi-Fi 6E • Recoil Blasters</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-person-simple-walk"></i> Active Floor</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action">Reserve Squad</a>
+              </div>
             </div>
           </div>
-          <div class="game-card">
-            <div class="game-card-img">
-              <img src="src/assets/images/game-horror-3.jpg" alt="Game">
-            </div>
-            <div class="game-card-content text-center">
-              <div class="flex justify-center items-center gap-3 mb-3">
-                <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--clr-warning); border: none;">Survival</span>
-                <span class="text-small text-muted flex items-center gap-1"><i class="ph ph-user text-primary"></i> 1</span>
+
+          <!-- Game 3: Wanderer Cosmic Mysteries -->
+          <div class="game-card" data-category="action" data-players="coop" data-zone="Escape Suite" data-title="Wanderer: Cosmic Mysteries">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/wanderer.jpg" alt="Wanderer: Cosmic Mysteries VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
               </div>
-              <h4 style="font-size: 1.4rem;">The Forest VR</h4>
-              <p>Survive the harsh elements and terrifying mutants after a plane crash.</p>
-              <a href="dashboard.html" class="btn btn-primary w-full mt-auto" style="width: 100%; border: 1px solid var(--clr-error); background: rgba(239, 68, 68, 0.1); color: var(--clr-error);">Dare to Play</a>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.9</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-action">Sci-Fi Adventure / Puzzle</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-users"></i> 1–2 Players</span>
+                </div>
+                <h3 class="game-card-title">Wanderer: Cosmic Mysteries</h3>
+                <p class="game-card-desc">Leap across historical eras from Woodstock to ancient Mayan temples solving intricate mechanical contraptions.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-key text-warning"></i>
+                    <span><strong>Station:</strong> Escape Suite (Private Suite)</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-puzzle-piece text-muted"></i>
+                    <span>Physical Prop Sync • Spatial Puzzles</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-heart"></i> Comfortable VR</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action">Book Suite</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game 4: Apex Construct -->
+          <div class="game-card" data-category="action" data-players="solo" data-zone="Standard VR Pod" data-title="Apex Construct: Sentinels">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/game-action-4.jpg" alt="Apex Construct: Sentinels VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
+              </div>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.7</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-action">Cybernetic Archery</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-user"></i> Solo Station</span>
+                </div>
+                <h3 class="game-card-title">Apex Construct: Sentinels</h3>
+                <p class="game-card-desc">Master an energy bow and reactive shield against robotic sentinels in a lush, shattered post-apocalyptic universe.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-desktop text-primary"></i>
+                    <span><strong>Station:</strong> Standard Pod (24 Stations)</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-hand-fist text-muted"></i>
+                    <span>Haptic Bow Grip • Tactile Feedback</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-heart"></i> Comfortable VR</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action">Play in Lounge</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 5: Family & Casual Grid -->
-    <section class="section container animate-on-scroll">
-      <div class="flex items-center justify-between mb-8" style="padding: 0 2rem;">
-        <div class="flex items-center gap-3">
-          <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(139, 92, 246, 0.1); color: var(--clr-primary); display: flex; align-items: center; justify-content: center;">
-            <i class="ph ph-smiley" style="font-size: 1.5rem;"></i>
-          </div>
-          <h3 class="m-0" style="font-size: 1.75rem;">Family & Casual</h3>
-        </div>
-        <a href="#" class="btn btn-sm" style="background: transparent; border: 1px solid var(--border-glass);">View All <i class="ph ph-arrow-right"></i></a>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="game-card">
-          <div class="game-card-img">
-            <img src="src/assets/images/game-family-1.jpg" alt="Game">
-          </div>
-          <div class="game-card-content">
-            <div class="game-card-header">
-              <span class="badge" style="background: rgba(139, 92, 246, 0.15); color: var(--clr-primary); border: none;">Music</span>
-            </div>
-            <h4>Beat Rhythm</h4>
-            <p>Slash through the beats and feel the music in this high-energy rhythm game.</p>
-            <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Book to Play</a>
-          </div>
-        </div>
-        <div class="game-card">
-          <div class="game-card-img">
-            <img src="src/assets/images/game-family-2.jpg" alt="Game">
-          </div>
-          <div class="game-card-content">
-            <div class="game-card-header">
-              <span class="badge" style="background: rgba(139, 92, 246, 0.15); color: var(--clr-primary); border: none;">Job Sim</span>
-            </div>
-            <h4>Work Simulator</h4>
-            <p>Experience hilarious office antics in a world run entirely by quirky robots.</p>
-            <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Book to Play</a>
-          </div>
-        </div>
-        <div class="game-card">
-          <div class="game-card-img">
-            <img src="src/assets/images/game-family-3.jpg" alt="Game">
-          </div>
-          <div class="game-card-content">
-            <div class="game-card-header">
-              <span class="badge" style="background: rgba(139, 92, 246, 0.15); color: var(--clr-primary); border: none;">Sports</span>
-            </div>
-            <h4>Racket Fury</h4>
-            <p>Immersive table tennis perfection with realistic physics and AI opponents.</p>
-            <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Book to Play</a>
-          </div>
-        </div>
-        <div class="game-card">
-          <div class="game-card-img">
-            <img src="src/assets/images/game-family-4.jpg" alt="Game">
-          </div>
-          <div class="game-card-content">
-            <div class="game-card-header">
-              <span class="badge" style="background: rgba(139, 92, 246, 0.15); color: var(--clr-primary); border: none;">Art</span>
-            </div>
-            <h4>Tilt Brush</h4>
-            <p>Unleash your creativity and paint beautiful masterpieces in 3D space.</p>
-            <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Book to Play</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 6: Top Rated -->
-    <section class="section" style="background: var(--clr-surface); border-top: 1px solid var(--border-glass);">
+    <!-- ==========================================================================
+         4. SECTION: HORROR & THRILLERS (Deep Obsidian Crimson Noir Theme)
+         ========================================================================== -->
+    <section class="section section-horror category-section" data-section-cat="horror">
       <div class="container animate-on-scroll">
-        <h2 class="text-center mb-8" style="font-size: 2.5rem;"><span class="text-gradient">All-Time</span> Top Rated</h2>
-        <div class="card p-0" style="overflow: hidden; border: 1px solid var(--border-glass); background: var(--clr-surface); box-shadow: var(--shadow-card);">
-          <div class="grid grid-cols-1 md:grid-cols-2 items-center">
-            <div style="position: relative; height: 100%; min-height: 400px;">
-              <img src="src/assets/images/alyx_ground_zero.jpg" alt="Alyx Ground Zero" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;">
-              <div class="top-rated-fade" style="position: absolute; inset: 0; background: linear-gradient(to right, transparent, var(--clr-surface));"></div>
+        <div class="category-header">
+          <div class="category-title-group">
+            <div class="category-icon-box" style="background: rgba(239, 68, 68, 0.16); color: #F87171;">
+              <i class="ph-bold ph-ghost"></i>
             </div>
-            <div style="padding: 3rem 4rem; display: flex; flex-direction: column; justify-content: center;">
-              <div class="flex gap-2 text-warning mb-4" style="font-size: 1.25rem; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.5));">
-                <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+            <div>
+              <h2 class="category-headline" style="color: #FCA5A5;">Horror & Psychological Thrillers</h2>
+              <p class="text-small text-muted" style="margin: 0;">Atmospheric darkness, 3D spatial audio jump-scares, and desperate survival</p>
+            </div>
+          </div>
+          <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3);">
+            3 Experiences at Venue
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Horror 1: Dread Manor -->
+          <div class="game-card" data-category="horror" data-players="coop" data-zone="Escape Suite" data-title="Dread Manor: Asylum 18+">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/game-horror-4.jpg" alt="Dread Manor: Asylum 18+ VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
               </div>
-              <h2 class="mb-4" style="font-size: 2.25rem;">Alyx: Ground Zero</h2>
-              <p style="font-size: 1.1rem; color: var(--clr-text-muted); line-height: 1.6; margin-bottom: 2rem;">The defining VR experience. A masterpiece of physics, storytelling, and combat. An absolute must-play for anyone visiting Nexus VR.</p>
-              
-              <div class="flex gap-6 mb-6">
-                <div class="flex items-center gap-2 text-large"><i class="ph ph-clock text-primary"></i> 15h Campaign</div>
-                <div class="flex items-center gap-2 text-large"><i class="ph ph-user text-primary"></i> Singleplayer</div>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.9</span>
               </div>
-              <a href="dashboard.html" class="btn btn-primary" style="align-self: flex-start; padding: 1rem 2rem; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);">Book Session Now <i class="ph ph-arrow-right"></i></a>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-horror">18+ Survival Horror</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-users"></i> 1–4 Players</span>
+                </div>
+                <h3 class="game-card-title">Dread Manor: Asylum 18+</h3>
+                <p class="game-card-desc">Navigate a decaying psychiatric ward using only a flickering UV flashlight with spine-chilling binaural spatial audio.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-key text-error"></i>
+                    <span><strong>Station:</strong> Escape Suite (Soundproof Room)</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-speaker-high text-muted"></i>
+                    <span>3D Spatial Audio • UV Flashlight Prop</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-warning"></i> Extreme Thrills</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action" style="border-color: rgba(239, 68, 68, 0.4);">Dare to Play</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Horror 2: Dead City Outbreak -->
+          <div class="game-card" data-category="horror" data-players="squad" data-zone="Free-Roam Arena" data-title="Dead City: Outbreak Co-op">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/game-horror-2.jpg" alt="Dead City: Outbreak Co-op VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
+              </div>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.8</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-horror">Zombie Wave Defense</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-users-three"></i> 2–6 Squad</span>
+                </div>
+                <h3 class="game-card-title">Dead City: Outbreak Co-op</h3>
+                <p class="game-card-desc">Full squad survival against mutant waves. Back-to-back defense with tactile force-feedback haptic shotguns.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-users-three" style="color: var(--clr-secondary);"></i>
+                    <span><strong>Station:</strong> Free-Roam Arena (1,500 sq ft)</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-crosshair text-muted"></i>
+                    <span>Recoil Shotguns • Full Body Trackers</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-lightning"></i> High Adrenaline</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action" style="border-color: rgba(239, 68, 68, 0.4);">Book Squad</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Horror 3: The Forest VR -->
+          <div class="game-card" data-category="horror" data-players="coop" data-zone="Standard VR Pod" data-title="The Forest: Island Frontier">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/game-horror-3.jpg" alt="The Forest: Island Frontier VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
+              </div>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.7</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-horror">Open-World Survival</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-users"></i> 1–4 Co-op</span>
+                </div>
+                <h3 class="game-card-title">The Forest: Island Frontier</h3>
+                <p class="game-card-desc">Construct fortifications, hunt for survival supplies, and fend off nocturnal subterranean terrors in dense woodlands.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-desktop text-primary"></i>
+                    <span><strong>Station:</strong> Standard Pod (24 Stations)</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-chats-teardrop text-muted"></i>
+                    <span>Cross-Pod Voice Chat • Vive Pro 2</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-shield-check"></i> Moderate VR</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action">Play in Lounge</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 7: Suggest a Game -->
-    <section class="section container text-center animate-on-scroll">
-      <div class="card" style="max-width: 600px; margin: 0 auto;">
-        <i class="ph ph-lightbulb text-secondary mb-4" style="font-size: 3rem;"></i>
-        <h2>Missing a Title?</h2>
-        <p>We are constantly expanding our library. Let us know what you want to play next!</p>
-        <form data-validate class="mt-6 text-left">
-          <div class="form-group">
-            <label class="form-label">Game Title</label>
-            <input type="text" class="form-input" required>
+    <!-- ==========================================================================
+         5. SECTION: RHYTHM & ARCADE (Electric Neon Violet Theme)
+         ========================================================================== -->
+    <section class="section section-rhythm category-section" data-section-cat="rhythm">
+      <div class="container animate-on-scroll">
+        <div class="category-header">
+          <div class="category-title-group">
+            <div class="category-icon-box" style="background: rgba(139, 92, 246, 0.16); color: #A78BFA;">
+              <i class="ph-bold ph-music-note"></i>
+            </div>
+            <div>
+              <h2 class="category-headline" style="color: #DDD6FE;">Rhythm & High-Energy Arcade</h2>
+              <p class="text-small text-muted" style="margin: 0;">Hit targets to the beat, climb the lounge leaderboards, and experience 3-axis motion</p>
+            </div>
+          </div>
+          <span class="badge" style="background: rgba(139, 92, 246, 0.15); color: #A78BFA; border: 1px solid rgba(139, 92, 246, 0.3);">
+            3 Experiences at Venue
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Rhythm 1: Beat Rhythm -->
+          <div class="game-card" data-category="rhythm" data-players="coop" data-zone="Standard VR Pod" data-title="Beat Rhythm: Neon Clash">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/beat_rhythm.jpg" alt="Beat Rhythm: Neon Clash VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
+              </div>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 5.0</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-rhythm">Rhythm / Saber Dance</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-users"></i> 1–4 Duels</span>
+                </div>
+                <h3 class="game-card-title">Beat Rhythm: Neon Clash</h3>
+                <p class="game-card-desc">The #1 most played game at Nexus VR. Slice neon rhythm cubes to EDM, hip-hop, and pop chart-toppers with laser sabers.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-desktop text-secondary"></i>
+                    <span><strong>Station:</strong> Standard Pod (24 Stations)</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-trophy text-muted"></i>
+                    <span>Lounge Leaderboards • Dual Sabers</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-heart"></i> All Skill Levels</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action">Play Beat Rhythm</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rhythm 2: Racket Fury -->
+          <div class="game-card" data-category="rhythm" data-players="coop" data-zone="Standard VR Pod" data-title="Racket Fury: Table Tennis VR">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/game-family-3.jpg" alt="Racket Fury: Table Tennis VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
+              </div>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.8</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-rhythm">Precision Physics Sports</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-users"></i> 1–2 Players</span>
+                </div>
+                <h3 class="game-card-title">Racket Fury: Table Tennis VR</h3>
+                <p class="game-card-desc">Sub-millimeter ball spin physics and ultra-responsive haptic paddle control against AI champions or friends.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-desktop text-primary"></i>
+                    <span><strong>Station:</strong> Standard Pod (24 Stations)</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-gauge text-muted"></i>
+                    <span>120Hz Displays • High-Spin Tracking</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-heart"></i> Comfortable VR</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action">Play Table Tennis</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rhythm 3: Cyber Glider Motion Pod -->
+          <div class="game-card" data-category="rhythm" data-players="solo" data-zone="Motion Pod" data-title="Cyber Glider: Apex Nitro">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/feature-haptic-pod.jpg" alt="Cyber Glider: Apex Nitro VR Motion Simulator" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
+              </div>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.9</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-rhythm">Supersonic 3-Axis Racing</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-user"></i> Solo Station</span>
+                </div>
+                <h3 class="game-card-title">Cyber Glider: Apex Nitro</h3>
+                <p class="game-card-desc">Full 3-axis hydraulic motion pod tilting into supersonic banking curves with synchronized air turbine wind feedback.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-gauge text-error"></i>
+                    <span><strong>Station:</strong> Apex Motion Pod (4 Rigs)</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-wind text-muted"></i>
+                    <span>3-DOF Hydraulic Rig • Wind Turbines</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-lightning"></i> Full Motion Rig</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action">Try Motion Pod</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         6. SECTION: FAMILY & CASUAL (Deep Slate Emerald Theme)
+         ========================================================================== -->
+    <section class="section section-family category-section" data-section-cat="family">
+      <div class="container animate-on-scroll">
+        <div class="category-header">
+          <div class="category-title-group">
+            <div class="category-icon-box" style="background: rgba(16, 185, 129, 0.16); color: #34D399;">
+              <i class="ph-bold ph-smiley"></i>
+            </div>
+            <div>
+              <h2 class="category-headline" style="color: #A7F3D0;">Family, Creative & Party Fun</h2>
+              <p class="text-small text-muted" style="margin: 0;">Zero gaming experience needed — pure laughter, 3D creativity, and casual group fun</p>
+            </div>
+          </div>
+          <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3);">
+            4 Experiences at Venue
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Family 1: Richie's Plank -->
+          <div class="game-card" data-category="family" data-players="coop" data-zone="Standard VR Pod" data-title="Richie's Plank Experience">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/game-family-1.jpg" alt="Richie's Plank Experience VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
+              </div>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.9</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-family">Party Acrophobia Classic</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-users"></i> All Ages</span>
+                </div>
+                <h3 class="game-card-title">Richie's Plank Experience</h3>
+                <p class="game-card-desc">The elevator opens 80 stories above the city skyline on a 6-inch plank. Will you dare take a step forward?</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-desktop text-success"></i>
+                    <span><strong>Station:</strong> Standard Pod + Crowd TV</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-eye text-muted"></i>
+                    <span>Physical Real Wood Plank on Floor</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-heart"></i> Great for Spectating</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action">Play Plank</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Family 2: Work Simulator 2099 -->
+          <div class="game-card" data-category="family" data-players="solo" data-zone="Standard VR Pod" data-title="Work Simulator 2099">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/game-family-2.jpg" alt="Work Simulator 2099 VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
+              </div>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.8</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-family">Absurd Comedy Sandbox</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-user"></i> Solo Station</span>
+                </div>
+                <h3 class="game-card-title">Work Simulator 2099</h3>
+                <p class="game-card-desc">Cook chaotic gourmet meals, cause corporate havoc, and fling staplers in an absurd sandbox run by robots.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-desktop text-success"></i>
+                    <span><strong>Station:</strong> Standard Pod (24 Stations)</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-hand text-muted"></i>
+                    <span>Intuitive Hand Physics • Room-Scale</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-heart"></i> Ultra Comfortable</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action">Play in Lounge</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Family 3: Tilt Brush 3D -->
+          <div class="game-card" data-category="family" data-players="solo" data-zone="Standard VR Pod" data-title="Tilt Brush: 3D Studio VR">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/game-family-4.jpg" alt="Tilt Brush: 3D Studio VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
+              </div>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.7</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-family">Room-Scale 3D Studio</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-user"></i> Solo Creator</span>
+                </div>
+                <h3 class="game-card-title">Tilt Brush: 3D Studio VR</h3>
+                <p class="game-card-desc">Paint with fire, light, and stars in room-scale 3D space. Walk through your artwork and export snapshots.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-desktop text-secondary"></i>
+                    <span><strong>Station:</strong> Standard Pod (24 Stations)</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-paint-brush text-muted"></i>
+                    <span>Infinite Canvas • 3D Art Export</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-heart"></i> Ultra Comfortable</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action">Start Painting</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Family 4: Pet Kingdom Moss Quest -->
+          <div class="game-card" data-category="family" data-players="coop" data-zone="Escape Suite" data-title="Pet Kingdom: Moss Quest">
+            <div class="game-card-img-wrap">
+              <img src="src/assets/images/game-action-3.jpg" alt="Pet Kingdom: Moss Quest VR" loading="lazy">
+              <div class="img-badge-top-left">
+                <span class="badge-live-tag"><span class="dot-live-pulse"></span> Live at Venue</span>
+              </div>
+              <div class="img-badge-top-right">
+                <span class="badge-rating-pill"><i class="ph-fill ph-star"></i> 4.8</span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div>
+                <div class="game-card-meta-row">
+                  <span class="genre-pill genre-family">Cozy Diorama Adventure</span>
+                  <span class="player-count-badge"><i class="ph-bold ph-users"></i> Family Co-op</span>
+                </div>
+                <h3 class="game-card-title">Pet Kingdom: Moss Quest</h3>
+                <p class="game-card-desc">Guide a heroic little mouse through enchanting woodland kingdoms with tactile physics puzzles and heart.</p>
+                <div class="venue-availability-box">
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-key text-success"></i>
+                    <span><strong>Station:</strong> Escape Suite or Standard Pod</span>
+                  </div>
+                  <div class="venue-spec-item">
+                    <i class="ph-bold ph-sparkle text-muted"></i>
+                    <span>Tactile Micro-Physics • Narrative</span>
+                  </div>
+                </div>
+              </div>
+              <div class="game-card-footer">
+                <span class="comfort-badge"><i class="ph-bold ph-heart"></i> Relaxing & Gentle</span>
+                <a href="contact.html" class="btn btn-secondary btn-card-action">Play in Lounge</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         7. SPOTLIGHT: ALL-TIME TOP RATED (Alyx Ground Zero Showcase)
+         ========================================================================== -->
+    <section class="section section-spotlight">
+      <div class="container animate-on-scroll">
+        <div class="text-center mb-8">
+          <span class="badge mb-2" style="background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.35);">
+            Lounge Masterpiece
+          </span>
+          <h2 style="font-size: clamp(2rem, 3.5vw, 2.75rem);"><span class="text-gradient">All-Time</span> Top Rated</h2>
+        </div>
+
+        <div class="card p-0 spotlight-card"
+          style="overflow: hidden; border: 1px solid rgba(34, 211, 238, 0.3); background: rgba(13, 19, 34, 0.9); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);">
+          <div class="grid grid-cols-1 md:grid-cols-2 items-center">
+            <!-- Full, clear artwork with zero heavy fading or dimming -->
+            <div class="spotlight-img-wrap" style="position: relative; height: 100%; min-height: 420px; overflow: hidden;">
+              <img src="src/assets/images/alyx_ground_zero.jpg" alt="Alyx Ground Zero VR Masterpiece"
+                style="width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(1.02) contrast(1.02);">
+              <div class="spotlight-badge" style="position: absolute; top: 1.5rem; left: 1.5rem; background: rgba(8, 12, 22, 0.85); backdrop-filter: blur(8px); padding: 0.45rem 1.15rem; border-radius: var(--radius-full); border: 1px solid rgba(255, 255, 255, 0.18); font-size: 0.85rem; font-weight: 700;">
+                <i class="ph-fill ph-crown text-warning"></i> 99% Player Satisfaction
+              </div>
+            </div>
+
+            <div class="spotlight-content-wrap" style="padding: 3rem 3.5rem; display: flex; flex-direction: column; justify-content: center;">
+              <div class="flex gap-1 text-warning mb-3" style="font-size: 1.35rem;">
+                <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                <span class="text-small text-muted ml-2" style="color: var(--clr-text); font-weight: 700; align-self: center;">5.0 / 5.0 (820+ Ratings)</span>
+              </div>
+              <h3 class="spotlight-title" style="font-size: 2.25rem; margin-bottom: 1rem; line-height: 1.2;">Alyx: Ground Zero</h3>
+              <p class="spotlight-desc" style="font-size: 1.05rem; color: var(--clr-text-muted); line-height: 1.6; margin-bottom: 1.75rem;">
+                The benchmark for all virtual reality. Unmatched tactile gravity gloves, immersive quarantine zone firefights, and story-driven suspense. Fully calibrated on our Apex Headsets with zero latency.
+              </p>
+
+              <div class="flex gap-4 mb-6 flex-wrap spotlight-tags">
+                <div class="flex items-center gap-2 text-small" style="background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.08);">
+                  <i class="ph-bold ph-clock text-primary"></i> 15h Full Campaign
+                </div>
+                <div class="flex items-center gap-2 text-small" style="background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.08);">
+                  <i class="ph-bold ph-desktop text-primary"></i> 4K HDR Apex Pod
+                </div>
+                <div class="flex items-center gap-2 text-small" style="background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.08);">
+                  <i class="ph-bold ph-hand-fist text-primary"></i> Haptic Gloves
+                </div>
+              </div>
+
+              <a href="contact.html" class="btn btn-primary spotlight-btn"
+                style="align-self: flex-start; padding: 0.95rem 2.25rem; font-size: 1.05rem; font-weight: 700;">
+                Book Station to Play <i class="ph ph-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         8. SUGGEST A TITLE & LOUNGE REQUEST
+         ========================================================================== -->
+    <section class="section section-suggest container text-center animate-on-scroll">
+      <div class="card suggest-card" style="max-width: 680px; margin: 0 auto; padding: 3rem 2.5rem; border: 1px solid rgba(255, 255, 255, 0.12); background: rgba(14, 21, 38, 0.9);">
+        <i class="ph-bold ph-lightbulb text-primary mb-3" style="font-size: 3rem;"></i>
+        <h2 style="margin-bottom: 0.5rem;">Have a Specific Game in Mind?</h2>
+        <p class="text-muted" style="max-width: 500px; margin-inline: auto;">
+          We expand our SteamVR and custom arcade licenses every month based on player requests. Tell our VR team what to install next!
+        </p>
+        <form data-validate class="mt-6 text-left" style="display: flex; flex-direction: column; gap: 1rem;">
+          <div class="form-group mb-0">
+            <label class="form-label">Game or Experience Title</label>
+            <input type="text" class="form-input" placeholder="e.g. Pavlov VR, Superhot VR, Walkabout Mini Golf" required>
             <div class="form-error"></div>
           </div>
-          <div class="form-group">
-            <label class="form-label">Why should we add it?</label>
-            <textarea class="form-input" rows="3"></textarea>
+          <div class="form-group mb-0">
+            <label class="form-label">Why would our lounge guests love it?</label>
+            <textarea class="form-input" rows="3" placeholder="Tell us if you want to play solo, with friends, or host a mini tournament..."></textarea>
           </div>
-          <button type="submit" class="btn btn-secondary w-full" style="width: 100%;">Submit Suggestion</button>
+          <button type="submit" class="btn btn-secondary w-full justify-center" style="padding: 0.85rem; font-weight: 700;">
+            Submit Game Suggestion
+          </button>
         </form>
       </div>
     </section>
@@ -538,49 +1979,228 @@
     <div class="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
       <div>
         <a href="home1.html" class="flex items-center gap-2 mb-4">
-          <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" style="height: 2rem; width: 2rem; border-radius: 50%; box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);">
+          <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo"
+            style="height: 2rem; width: 2rem; border-radius: 50%; box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);">
           <span style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
         </a>
-        <p class="text-small">Elevating entertainment through cutting-edge virtual reality experiences.</p>
+        <p class="text-small">The premier local virtual reality lounge delivering next-generation gaming, tournaments, and group events.</p>
         <div class="flex gap-4 mt-4">
-          <a href="#" class="nav-link"><i class="ph ph-twitter-logo" style="font-size: 1.5rem;"></i></a>
-          <a href="#" class="nav-link"><i class="ph ph-instagram-logo" style="font-size: 1.5rem;"></i></a>
-          <a href="#" class="nav-link"><i class="ph ph-discord-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Twitter"><i class="ph ph-twitter-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Instagram"><i class="ph ph-instagram-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Discord"><i class="ph ph-discord-logo" style="font-size: 1.5rem;"></i></a>
         </div>
       </div>
       <div>
-        <h4 style="margin-bottom: var(--space-4);">Explore</h4>
+        <h4 style="margin-bottom: var(--space-4);">Explore Lounge</h4>
         <ul class="flex-col gap-2">
-          <li><a href="games.html" class="nav-link text-small">Games Library</a></li>
-          <li><a href="pricing.html" class="nav-link text-small">Pricing & Bundles</a></li>
-          <li><a href="groups.html" class="nav-link text-small">Group Bookings</a></li>
-          <li><a href="dashboard.html" class="nav-link text-small">User</a></li>
+          <li><a href="games.html" class="nav-link text-small">50+ Games Library</a></li>
+          <li><a href="pricing.html" class="nav-link text-small">Pricing &amp; Bundles</a></li>
+          <li><a href="groups.html" class="nav-link text-small">Parties &amp; Groups</a></li>
+          <li><a href="about.html" class="nav-link text-small">About Us</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Online Booking</a></li>
         </ul>
       </div>
       <div>
-        <h4 style="margin-bottom: var(--space-4);">Support</h4>
+        <h4 style="margin-bottom: var(--space-4);">Guest Info</h4>
         <ul class="flex-col gap-2">
-          <li><a href="#" class="nav-link text-small">FAQ</a></li>
-          <li><a href="#" class="nav-link text-small">Contact Us</a></li>
-          <li><a href="#" class="nav-link text-small">Terms of Service</a></li>
-          <li><a href="#" class="nav-link text-small">Privacy Policy</a></li>
+          <li><a href="contact.html" class="nav-link text-small">First Time FAQ</a></li>
+          <li><a href="about.html" class="nav-link text-small">Venue Hygiene &amp; Safety</a></li>
+          <li><a href="pricing.html" class="nav-link text-small">Gift Vouchers</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact Lounge Staff</a></li>
         </ul>
       </div>
       <div>
-        <h4 style="margin-bottom: var(--space-4);">Location</h4>
-        <p class="text-small">123 Cyber Avenue<br>Neon District, NT 45890</p>
-        <p class="text-small mt-2">Mon - Sun: 10:00 AM - 12:00 AM</p>
+        <h4 style="margin-bottom: var(--space-4);">Location &amp; Hours</h4>
+        <div class="footer-location-col">
+          <!-- Address -->
+          <div class="footer-loc-block">
+            <i class="ph-fill ph-map-pin footer-loc-icon"></i>
+            <div class="footer-loc-info">
+              <strong>Nexus VR Lounge</strong>
+              <span>123 Cyber Avenue, Suite 200</span>
+              <span style="font-size: 0.8rem; color: var(--clr-text-muted);">Neon District, NT 45890</span>
+            </div>
+          </div>
+
+          <!-- Opening Hours -->
+          <div class="footer-loc-block">
+            <i class="ph ph-clock footer-loc-icon"></i>
+            <div class="footer-loc-info" style="width: 100%;">
+              <span class="footer-open-pill">Open Daily</span>
+              <div class="footer-hours-list">
+                <div class="footer-hours-row">
+                  <span>Mon &ndash; Thu:</span>
+                  <strong style="color: var(--clr-text);">12 PM &ndash; 11 PM</strong>
+                </div>
+                <div class="footer-hours-row">
+                  <span>Fri &ndash; Sun:</span>
+                  <strong style="color: var(--clr-secondary);">10 AM &ndash; Midnight</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone & Contact Links -->
+          <div class="footer-contacts-list">
+            <a href="tel:+15550192834" class="footer-contact-item" aria-label="Phone: (555) 019-2834">
+              <i class="ph ph-phone" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>(555) 019-2834</span>
+            </a>
+            <a href="mailto:contact@nexusvr.com" class="footer-contact-item" aria-label="Email: contact@nexusvr.com">
+              <i class="ph ph-envelope-simple" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>contact@nexusvr.com</span>
+            </a>
+          </div>
+
+          <!-- Directions Action Button -->
+          <div>
+            <a href="https://maps.google.com/?q=123+Cyber+Avenue+Neon+District" target="_blank" rel="noopener noreferrer" class="footer-directions-btn" aria-label="Get directions to Nexus VR Lounge on Google Maps">
+              <i class="ph ph-navigation-arrow"></i>
+              <span>Get Directions</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="container text-center text-small" style="color: var(--clr-text-muted); border-top: var(--border-glass); padding-top: var(--space-6);">
+    <div class="container text-center text-small"
+      style="color: var(--clr-text-muted); border-top: var(--border-glass); padding-top: var(--space-6);">
       &copy; 2026 Nexus VR Lounge. All rights reserved.
     </div>
   </footer>
 
   <script src="src/js/main.js"></script>
   <script src="src/js/forms.js"></script>
+  <script>
+    // Live Search, Category Filter, Player Filter & Venue Zone Filter
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('game-search-input');
+      const playerSelect = document.getElementById('player-filter-select');
+      const zoneSelect = document.getElementById('venue-zone-select');
+      const catPills = document.querySelectorAll('.cat-pill');
+      const gameCards = document.querySelectorAll('.game-card');
+      const categorySections = document.querySelectorAll('.category-section');
+      const noGamesBox = document.getElementById('no-games-found');
+      const resetBtn = document.getElementById('reset-filters-btn');
+      const resetBtnEmpty = document.getElementById('reset-filters-btn-empty');
+      const totalCountSpan = document.getElementById('total-games-count');
+      const visibleCountSpan = document.getElementById('visible-games-count');
+      const zoneCards = document.querySelectorAll('.zone-card');
+
+      let currentCategory = 'all';
+
+      if (totalCountSpan) {
+        totalCountSpan.textContent = gameCards.length;
+      }
+
+      function filterGames() {
+        const query = (searchInput.value || '').trim().toLowerCase();
+        const selectedPlayer = playerSelect.value;
+        const selectedZone = zoneSelect.value;
+        let visibleCount = 0;
+
+        gameCards.forEach(card => {
+          const cardCat = card.getAttribute('data-category');
+          const cardPlayers = card.getAttribute('data-players');
+          const cardZone = card.getAttribute('data-zone') || '';
+          const cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
+          const cardDesc = (card.querySelector('.game-card-desc')?.textContent || '').toLowerCase();
+          const genreBadge = (card.querySelector('.genre-pill')?.textContent || '').toLowerCase();
+          const venueNotes = (card.querySelector('.venue-availability-box')?.textContent || '').toLowerCase();
+
+          const matchCat = (currentCategory === 'all' || cardCat === currentCategory);
+          const matchQuery = !query || cardTitle.includes(query) || cardDesc.includes(query) || cardCat.includes(query) || genreBadge.includes(query) || venueNotes.includes(query);
+          const matchPlayer = (selectedPlayer === 'all' || cardPlayers === selectedPlayer);
+          const matchZone = (selectedZone === 'all' || cardZone.includes(selectedZone));
+
+          if (matchCat && matchQuery && matchPlayer && matchZone) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Hide/show category sections if all cards inside them are hidden
+        categorySections.forEach(sec => {
+          const secCards = sec.querySelectorAll('.game-card');
+          const hasVisible = Array.from(secCards).some(c => c.style.display !== 'none');
+          sec.style.display = hasVisible ? 'block' : 'none';
+        });
+
+        if (visibleCountSpan) {
+          visibleCountSpan.textContent = visibleCount;
+        }
+
+        if (noGamesBox) {
+          noGamesBox.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Highlight matching zone card if any zone selected
+        zoneCards.forEach(zc => {
+          const zFilter = zc.getAttribute('data-zone-filter');
+          if (selectedZone !== 'all' && zFilter === selectedZone) {
+            zc.classList.add('active-zone');
+          } else {
+            zc.classList.remove('active-zone');
+          }
+        });
+      }
+
+      // Category Pill click
+      catPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          catPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          currentCategory = pill.getAttribute('data-category');
+          filterGames();
+        });
+      });
+
+      // Zone Card Quick-Filter click
+      zoneCards.forEach(zc => {
+        zc.addEventListener('click', () => {
+          const targetZone = zc.getAttribute('data-zone-filter');
+          if (zoneSelect.value === targetZone) {
+            zoneSelect.value = 'all';
+          } else {
+            zoneSelect.value = targetZone;
+          }
+          filterGames();
+
+          // Smooth scroll down to filter bar if clicked from top
+          const filterElem = document.querySelector('.filter-wrapper');
+          if (filterElem) {
+            filterElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // Search input
+      searchInput?.addEventListener('input', filterGames);
+
+      // Player select
+      playerSelect?.addEventListener('change', filterGames);
+
+      // Zone select
+      zoneSelect?.addEventListener('change', filterGames);
+
+      // Reset function
+      function resetAll() {
+        if (searchInput) searchInput.value = '';
+        if (playerSelect) playerSelect.value = 'all';
+        if (zoneSelect) zoneSelect.value = 'all';
+        currentCategory = 'all';
+        catPills.forEach(p => p.classList.remove('active'));
+        catPills[0]?.classList.add('active');
+        zoneCards.forEach(zc => zc.classList.remove('active-zone'));
+        filterGames();
+      }
+
+      resetBtn?.addEventListener('click', resetAll);
+      resetBtnEmpty?.addEventListener('click', resetAll);
+    });
+  </script>
 </body>
+
 </html>
-
-
-

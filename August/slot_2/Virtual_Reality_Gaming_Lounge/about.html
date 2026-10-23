@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus VR | About Us - Futuristic Gaming Lounge</title>
+  <meta name="description" content="Learn the story behind Nexus VR, our world-class hardware pods, professional gaming crew, and our mission to elevate immersive entertainment in the Neon District.">
+
+  <link rel="stylesheet" href="src/css/main.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon-3.svg">
+
+  <style>
+    /* About Page Scoped Styles */
+
+    /* Hero */
+    .about-hero {
+      position: relative;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding-top: 76px;
+    }
+    .about-hero__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      opacity: 0.88;
+      z-index: 0;
+    }
+    .about-hero__scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(to top, rgba(8,11,20,0.97) 0%, rgba(8,11,20,0.55) 40%, transparent 75%),
+        linear-gradient(to right, rgba(8,11,20,0.70) 0%, transparent 55%);
+    }
+    .about-hero__content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+    .about-hero__glass {
+      background: rgba(8,11,20,0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(139,92,246,0.22);
+      border-radius: var(--radius-lg);
+      padding: 3rem 3.5rem;
+      max-width: 680px;
+    }
+    @media (max-width: 640px) {
+      .about-hero__glass { padding: 2rem 1.5rem; }
+      .about-hero { min-height: 75vh; }
+    }
+
+    /* Hero stats */
+    .about-stats {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .about-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .about-stat__val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      font-family: var(--font-primary);
+      color: #FFFFFF;
+      line-height: 1;
+    }
+    .about-stat__lbl {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Mission section */
+    .mission-img-wrap {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(139,92,246,0.15);
+    }
+    .mission-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      max-height: 460px;
+      display: block;
+    }
+
+    /* Core Values */
+    .value-card {
+      background: rgba(14,20,36,0.85);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.75rem;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .value-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(139,92,246,0.35);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    }
+    .value-card__icon {
+      font-size: 2.5rem;
+      color: var(--clr-secondary);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--clr-primary), var(--clr-secondary));
+      z-index: 0;
+    }
+    @media (max-width: 767px) {
+      .timeline::before {
+        left: 24px;
+        transform: none;
+      }
+    }
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .timeline-item:nth-child(odd) .timeline-content {
+      margin-right: auto;
+      margin-left: 0;
+      text-align: right;
+    }
+    .timeline-item:nth-child(even) .timeline-content {
+      margin-left: auto;
+      margin-right: 0;
+      text-align: left;
+    }
+    @media (max-width: 767px) {
+      .timeline-item:nth-child(odd) .timeline-content,
+      .timeline-item:nth-child(even) .timeline-content {
+        margin-left: 60px;
+        margin-right: 0;
+        text-align: left;
+      }
+    }
+    .timeline-dot {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--clr-primary);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 0.75rem;
+      box-shadow: 0 0 18px rgba(139,92,246,0.6);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+    }
+    @media (max-width: 767px) {
+      .timeline-dot {
+        left: 3px;
+        transform: none;
+      }
+    }
+    .timeline-content {
+      background: rgba(14,20,36,0.85);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem;
+      width: calc(50% - 44px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    @media (max-width: 767px) {
+      .timeline-content {
+        width: 100%;
+      }
+    }
+    .timeline-year {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--clr-secondary);
+      margin-bottom: 0.35rem;
+    }
+
+    /* Team cards */
+    .team-card {
+      background: rgba(14,20,36,0.85);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 1.75rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .team-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+    .team-avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 1.25rem;
+      border: 3px solid rgba(139,92,246,0.4);
+      box-shadow: 0 0 18px rgba(139,92,246,0.3);
+    }
+    .team-role-pill {
+      display: inline-block;
+      background: rgba(139,92,246,0.15);
+      border: 1px solid rgba(139,92,246,0.25);
+      color: var(--clr-primary);
+      border-radius: var(--radius-full);
+      padding: 0.25rem 0.85rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Hardware cards */
+    .hw-card {
+      background: rgba(14,20,36,0.88);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .hw-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(34,211,238,0.3);
+    }
+    .hw-card__img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+    }
+    .hw-card__img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .hw-card:hover .hw-card__img-wrap img {
+      transform: scale(1.04);
+    }
+    .hw-card__img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to top, rgba(14,20,36,0.92), transparent);
+      pointer-events: none;
+    }
+    .hw-card__body {
+      padding: 1.75rem;
+    }
+
+    /* Final CTA */
+    .about-cta-section {
+      background: linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(34,211,238,0.08) 50%, var(--clr-bg) 100%);
+      border-top: 1px solid var(--border-glass);
+      padding: var(--space-16) 0;
+      text-align: center;
+    }
+
+    /* Light Theme */
+    [data-theme="light"] .about-hero__scrim {
+      background:
+        linear-gradient(to top, rgba(8,11,20,0.95) 0%, rgba(8,11,20,0.50) 40%, transparent 75%),
+        linear-gradient(to right, rgba(8,11,20,0.60) 0%, transparent 55%);
+    }
+    [data-theme="light"] .value-card {
+      background: #FFFFFF;
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+    [data-theme="light"] .timeline-content {
+      background: #FFFFFF;
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+    [data-theme="light"] .team-card {
+      background: #FFFFFF;
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+    [data-theme="light"] .hw-card {
+      background: #FFFFFF;
+      border-color: rgba(0,0,0,0.08);
+    }
+    [data-theme="light"] .hw-card__img-wrap::after {
+      background: linear-gradient(to top, #FFFFFF, transparent);
+    }
+    [data-theme="light"] .about-cta-section {
+      background: linear-gradient(135deg, rgba(139,92,246,0.10) 0%, rgba(34,211,238,0.06) 50%, #F9FAFB 100%);
+    }
+
+    /* RTL */
+    [dir="rtl"] .about-hero__glass {
+      margin-right: 0;
+      margin-left: auto;
+    }
+    [dir="rtl"] .timeline-item:nth-child(odd) .timeline-content {
+      text-align: left;
+    }
+    [dir="rtl"] .timeline-item:nth-child(even) .timeline-content {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container flex justify-between items-center">
+      <!-- Brand -->
+      <a href="home1.html" class="nav-brand" aria-label="Nexus VR Home">
+        <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" class="nav-brand__logo">
+        <span class="nav-brand__name">Nexus <span class="text-gradient">VR</span></span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="nav-links">
+        <div class="dropdown">
+          <a href="#" class="nav-link">Home <i class="ph ph-caret-down dropdown-caret"></i></a>
+          <div class="dropdown-menu">
+            <a href="home1.html" class="dropdown-item">Home 1</a>
+            <a href="home2.html" class="dropdown-item">Home 2</a>
+          </div>
+        </div>
+        <a href="games.html" class="nav-link">Games Library</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="groups.html" class="nav-link">Parties &amp; Groups</a>
+        <a href="about.html" class="nav-link active">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <div class="dropdown">
+          <a href="#" class="nav-link">Dashboards <i class="ph ph-caret-down dropdown-caret"></i></a>
+          <div class="dropdown-menu">
+            <a href="dashboard.html" class="dropdown-item">User</a>
+            <a href="admin.html" class="dropdown-item">Admin</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        <button id="theme-toggle" class="nav-icon-btn" aria-label="Toggle Theme">
+          <i class="ph ph-moon"></i>
+        </button>
+        <button id="rtl-toggle" class="btn-rtl-compact" title="Toggle RTL Layout">RTL</button>
+        <a href="login.html" class="nav-link-login">Login</a>
+        <a href="contact.html" class="nav-cta-btn">
+          <i class="ph ph-ticket"></i> Book Now
+        </a>
+        <button id="mobile-menu-btn" class="nav-icon-btn" aria-label="Toggle Navigation Menu">
+          <i class="ph ph-list" style="font-size: 1.4rem;"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu flex-col gap-6">
+    <div class="mob-group">
+      <button class="mob-group-btn">
+        Home <i class="ph ph-caret-down mob-caret"></i>
+      </button>
+      <div class="mob-group-links">
+        <a href="home1.html" class="nav-link text-large">Home 1</a>
+        <a href="home2.html" class="nav-link text-large">Home 2</a>
+      </div>
+    </div>
+    <a href="games.html" class="nav-link text-large">Games Library</a>
+    <a href="pricing.html" class="nav-link text-large">Pricing</a>
+    <a href="groups.html" class="nav-link text-large">Parties &amp; Groups</a>
+    <a href="about.html" class="nav-link text-large" style="color: var(--clr-primary);">About</a>
+    <a href="contact.html" class="nav-link text-large">Contact</a>
+    <div class="mob-group">
+      <button class="mob-group-btn">
+        Dashboards <i class="ph ph-caret-down mob-caret"></i>
+      </button>
+      <div class="mob-group-links">
+        <a href="dashboard.html" class="nav-link text-large">User</a>
+        <a href="admin.html" class="nav-link text-large">Admin</a>
+      </div>
+    </div>
+        <hr style="border-color: rgba(255,255,255,0.1);">
+    <!-- Theme & RTL Toggles (Shifted into Hamburger) -->
+    <div class="mob-control-row">
+      <span>Theme</span>
+      <button id="theme-toggle-mobile" class="nav-icon-btn" aria-label="Toggle Theme">
+        <i class="ph ph-moon" style="font-size:1.2rem;"></i>
+      </button>
+    </div>
+    <div class="mob-control-row">
+      <span>Layout Direction</span>
+      <button id="rtl-toggle-mobile" class="btn-rtl-compact">RTL</button>
+    </div>
+    <hr style="border-color: rgba(255,255,255,0.1);">
+    <a href="login.html" class="btn btn-secondary justify-center" style="width: 100%;">Login</a>
+    <a href="contact.html" class="btn btn-primary justify-center" style="width: 100%;"><i class="ph ph-ticket"></i> Book Now</a>
+  </div>
+
+  <main>
+    <!-- Section 1: Hero -->
+    <section class="about-hero">
+      <img src="src/assets/images/lounge-hero-bg.jpg" alt="Nexus VR Lounge Interior" class="about-hero__bg" loading="eager" fetchpriority="high">
+      <div class="about-hero__scrim" aria-hidden="true"></div>
+
+      <div class="about-hero__content container">
+        <div class="about-hero__glass animate-on-scroll">
+          <span class="badge mb-4" style="background: rgba(139,92,246,0.18); color: var(--clr-primary); border: none; padding: 0.45rem 1rem; font-size: 0.82rem; letter-spacing: 0.08em;">
+            Our Story
+          </span>
+          <h1 style="font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1.1; margin-bottom: 1rem;">
+            The Vision Behind the <span class="text-gradient">Headsets</span>
+          </h1>
+          <p style="color: rgba(255,255,255,0.78); font-size: 1.05rem; line-height: 1.65; margin: 0;">
+            Founded in 2019, Nexus VR was created by passionate gamers and tech pioneers to bring industrial-grade virtual reality out of specialized labs and into a premier social lounge for everyone.
+          </p>
+
+          <!-- Stats row -->
+          <div class="about-stats">
+            <div class="about-stat">
+              <span class="about-stat__val">2019</span>
+              <span class="about-stat__lbl">Founded in Neon District</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat__val">5,000+</span>
+              <span class="about-stat__lbl">Monthly VR Sessions</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat__val">98%</span>
+              <span class="about-stat__lbl">5-Star Guest Rating</span>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex gap-4 mt-8 flex-wrap">
+            <a href="games.html" class="btn btn-primary" style="padding: 0.85rem 1.85rem;">
+              <i class="ph ph-game-controller"></i> Explore Games Library
+            </a>
+            <a href="#team" class="btn btn-secondary" style="padding: 0.85rem 1.85rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.2);">
+              <i class="ph ph-users"></i> Meet the Crew
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Our Mission -->
+    <section class="section" style="background: var(--clr-bg);">
+      <div class="container animate-on-scroll">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+          <div>
+            <span class="badge mb-3" style="background: rgba(34,211,238,0.12); color: var(--clr-secondary); border: 1px solid rgba(34,211,238,0.25);">
+              Mission &amp; Philosophy
+            </span>
+            <h2 class="mb-4">Why We Built Nexus VR</h2>
+            <p class="text-lead mb-4">
+              Virtual reality is one of the most powerful storytelling mediums ever created, but home setups are often limited by space, cost, and cable clutter.
+            </p>
+            <p style="margin-bottom: 1.5rem; line-height: 1.65;">
+              We engineered Nexus VR to remove every barrier. With ceiling-mounted cable retractions, custom padded 3m &times; 3m pods, full-body haptic integration, and optical tracking calibrated to millimeter accuracy, you step directly into fantasy worlds with complete physical freedom.
+            </p>
+            <p style="margin-bottom: 0; line-height: 1.65;">
+              Whether you are an esports veteran chasing leaderboards or someone who has never touched a controller before, our dedicated lounge hosts guide every session so you enjoy the adventure without the learning curve.
+            </p>
+          </div>
+          <div class="mission-img-wrap">
+            <img src="src/assets/images/vr-social-exp.jpg" alt="Players enjoying multiplayer VR at Nexus VR" class="mission-img" loading="lazy">
+          </div>
+        </div>
+
+        <!-- 3 Core Values -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="value-card">
+            <i class="ph ph-users-three value-card__icon"></i>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Community First</h3>
+            <p>
+              We are more than an arcade. From weekly community game nights and tournament brackets to open lobbies for solo travelers, Nexus VR is built around shared excitement.
+            </p>
+          </div>
+          <div class="value-card">
+            <i class="ph ph-cpu value-card__icon"></i>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Cutting-Edge Tech</h3>
+            <p>
+              We continually upgrade our hardware fleet. Our pods feature 4K 120Hz displays, zero-latency local network relays, and full-body haptic feedback vests that let you feel the action.
+            </p>
+          </div>
+          <div class="value-card">
+            <i class="ph ph-hand-heart value-card__icon"></i>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Inclusive by Design</h3>
+            <p>
+              VR should be welcoming to all. We provide prescription spectacle spacers, seated experience options, motion-comfort game curation, and patient first-timer briefings.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Journey / Timeline -->
+    <section class="section" style="background: var(--clr-surface-alt);">
+      <div class="container animate-on-scroll">
+        <div class="text-center mb-16">
+          <span class="badge mb-3" style="background: rgba(139,92,246,0.15); color: var(--clr-primary); border: 1px solid rgba(139,92,246,0.25);">
+            Our Journey
+          </span>
+          <h2 style="margin-bottom: 0.75rem;">From Concept to Neon District Icon</h2>
+          <p class="max-w-prose mx-auto" style="color: var(--clr-text-muted);">
+            How a small pilot project grew into the city's highest-rated immersive gaming lounge.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <!-- 2019 -->
+          <div class="timeline-item">
+            <div class="timeline-dot">2019</div>
+            <div class="timeline-content">
+              <span class="timeline-year">Grand Opening</span>
+              <h4 style="margin-bottom: 0.4rem;">8 Pods in the Neon District</h4>
+              <p>
+                Nexus VR launched its first 8 custom gaming pods on Cyber Avenue, introducing high-resolution wireless VR to local gaming enthusiasts.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2021 -->
+          <div class="timeline-item">
+            <div class="timeline-dot">2021</div>
+            <div class="timeline-content">
+              <span class="timeline-year">Esports &amp; Spectating</span>
+              <h4 style="margin-bottom: 0.4rem;">Competitive Tournament Launch</h4>
+              <p>
+                Installed wall-mounted 65-inch 4K spectator displays, Twitch streaming rigs, and launched monthly community tournaments across Beat Saber and shooters.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2023 -->
+          <div class="timeline-item">
+            <div class="timeline-dot">2023</div>
+            <div class="timeline-content">
+              <span class="timeline-year">Lounge Expansion</span>
+              <h4 style="margin-bottom: 0.4rem;">Sim Racing &amp; VIP Takeover</h4>
+              <p>
+                Doubled venue footprint, added direct-drive force-feedback racing cockpits, and launched our private VIP Lounge Takeover packages for birthday parties and corporate groups.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2024 -->
+          <div class="timeline-item">
+            <div class="timeline-dot">2024</div>
+            <div class="timeline-content">
+              <span class="timeline-year">Full-Body Immersion</span>
+              <h4 style="margin-bottom: 0.4rem;">Haptic Suit Integration</h4>
+              <p>
+                Integrated real-time haptic suits into horror, space combat, and rhythm titles, allowing players to physically feel sound waves, recoil, and environmental effects.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2026 -->
+          <div class="timeline-item">
+            <div class="timeline-dot">2026</div>
+            <div class="timeline-content">
+              <span class="timeline-year">Present Day</span>
+              <h4 style="margin-bottom: 0.4rem;">50+ Titles &amp; 1,500 Members</h4>
+              <p>
+                Now hosting over 5,000 player sessions every month, with an active roster of 50+ curated VR titles and a growing Gold &amp; Diamond lounge membership base.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Team Section -->
+    <section id="team" class="section" style="background: var(--clr-bg);">
+      <div class="container animate-on-scroll">
+        <div class="text-center mb-16">
+          <span class="badge mb-3" style="background: rgba(34,211,238,0.12); color: var(--clr-secondary); border: 1px solid rgba(34,211,238,0.25);">
+            Our Crew
+          </span>
+          <h2 style="margin-bottom: 0.75rem;">The Minds Behind the Machines</h2>
+          <p class="max-w-prose mx-auto" style="color: var(--clr-text-muted);">
+            Meet the esports veterans, hardware engineers, and event coordinators who keep the lounge running at peak performance.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Member 1 -->
+          <div class="team-card">
+            <img src="src/assets/images/avatar-1.jpg" alt="Alex Chen" class="team-avatar" loading="lazy">
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">Alex Chen</h3>
+            <span class="team-role-pill">Founder &amp; CEO</span>
+            <p>Former VR engine developer and tournament player. Alex envisioned a venue that made advanced VR accessible to all skill levels.</p>
+          </div>
+
+          <!-- Member 2 -->
+          <div class="team-card">
+            <img src="src/assets/images/avatar-2.jpg" alt="Priya Sharma" class="team-avatar" loading="lazy">
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">Priya Sharma</h3>
+            <span class="team-role-pill">Head of Guest Experience</span>
+            <p>Hospitality lead who makes first-time visitors feel confident and comfortable. Designed our gentle-onboarding VR curriculum.</p>
+          </div>
+
+          <!-- Member 3 -->
+          <div class="team-card">
+            <img src="src/assets/images/avatar-3.jpg" alt="Jordan Kim" class="team-avatar" loading="lazy">
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">Jordan Kim</h3>
+            <span class="team-role-pill">Lead Hardware Engineer</span>
+            <p>Hardware wizard ensuring all 24 headsets, optical sensors, and direct-drive racing rigs maintain zero-latency calibration.</p>
+          </div>
+
+          <!-- Member 4 -->
+          <div class="team-card">
+            <img src="src/assets/images/avatar-4.jpg" alt="Sam Okafor" class="team-avatar" loading="lazy">
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">Sam Okafor</h3>
+            <span class="team-role-pill">Events Coordinator</span>
+            <p>The mastermind behind our birthday parties and corporate team building tournaments. Handles custom lobbies and catering.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Hardware & Experience -->
+    <section class="section" style="background: var(--clr-surface);">
+      <div class="container animate-on-scroll">
+        <div class="text-center mb-16">
+          <span class="badge mb-3" style="background: rgba(139,92,246,0.15); color: var(--clr-primary); border: 1px solid rgba(139,92,246,0.25);">
+            Hardware Standards
+          </span>
+          <h2 style="margin-bottom: 0.75rem;">Engineered for Pure Immersion</h2>
+          <p class="max-w-prose mx-auto" style="color: var(--clr-text-muted);">
+            We maintain rigorous hardware calibration and medical-grade sanitation between every session.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Card 1 -->
+          <div class="hw-card">
+            <div class="hw-card__img-wrap">
+              <img src="src/assets/images/feature-headset.jpg" alt="4K High-Refresh VR Headset" loading="lazy">
+            </div>
+            <div class="hw-card__body">
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">4K High-Refresh Displays</h3>
+              <p>
+                Crystal-clear OLED optics with 120Hz refresh rates and 110-degree field of view to completely prevent screen-door effect and motion fatigue.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="hw-card">
+            <div class="hw-card__img-wrap">
+              <img src="src/assets/images/feature-haptic-pod.jpg" alt="Haptic Feedback VR Pod" loading="lazy">
+            </div>
+            <div class="hw-card__body">
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Full-Body Haptic Feedback</h3>
+              <p>
+                Feel bass shockwaves, engine rumble, and environmental impacts through dynamic multi-zone haptic suits connected wirelessly to your pod.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="hw-card">
+            <div class="hw-card__img-wrap">
+              <img src="src/assets/images/feature-multiplayer.jpg" alt="Multiplayer Local Fiber Mesh" loading="lazy">
+            </div>
+            <div class="hw-card__body">
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Zero-Latency Local Mesh</h3>
+              <p>
+                All pods are networked on an isolated 10Gbps fiber backbone, ensuring co-op teamwork and competitive PvP with zero frame drops or lag.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Final CTA Banner -->
+    <section class="about-cta-section">
+      <div class="container animate-on-scroll">
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem;">
+          Ready to Step Into the <span class="text-gradient">Next Dimension?</span>
+        </h2>
+        <p class="max-w-prose mx-auto mb-8" style="font-size: 1.1rem; color: var(--clr-text-muted);">
+          Book your first session online in seconds, or speak with our lounge coordinator to plan a group celebration.
+        </p>
+        <div class="flex gap-4 justify-center flex-wrap">
+          <a href="contact.html" class="btn btn-primary" style="padding: 0.9rem 2.25rem; font-size: 1.05rem; box-shadow: 0 10px 28px rgba(139,92,246,0.35);">
+            <i class="ph ph-calendar-plus"></i> Book a Pod Now
+          </a>
+          <a href="contact.html" class="btn btn-secondary" style="padding: 0.9rem 2.25rem; font-size: 1.05rem; background: rgba(255,255,255,0.06);">
+            <i class="ph ph-envelope-simple"></i> Contact Lounge Team
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="background: var(--clr-surface); border-top: var(--border-glass); padding-top: var(--space-12); padding-bottom: var(--space-6);">
+    <div class="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div>
+        <a href="home1.html" class="flex items-center gap-2 mb-4">
+          <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" style="height: 2rem; width: 2rem; border-radius: 50%; box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);">
+          <span style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+        </a>
+        <p class="text-small">Elevating entertainment through cutting-edge virtual reality experiences.</p>
+        <div class="flex gap-4 mt-4">
+          <a href="#" class="nav-link" aria-label="Twitter"><i class="ph ph-twitter-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Instagram"><i class="ph ph-instagram-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Discord"><i class="ph ph-discord-logo" style="font-size: 1.5rem;"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 style="margin-bottom: var(--space-4);">Explore</h4>
+        <ul class="flex-col gap-2">
+          <li><a href="games.html" class="nav-link text-small">Games Library</a></li>
+          <li><a href="pricing.html" class="nav-link text-small">Pricing &amp; Bundles</a></li>
+          <li><a href="groups.html" class="nav-link text-small">Parties &amp; Groups</a></li>
+          <li><a href="about.html" class="nav-link text-small">About Us</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact</a></li>
+          <li><a href="dashboard.html" class="nav-link text-small">User Dashboard</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom: var(--space-4);">Support</h4>
+        <ul class="flex-col gap-2">
+          <li><a href="contact.html" class="nav-link text-small">FAQ &amp; Help</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact Lounge Staff</a></li>
+          <li><a href="#" class="nav-link text-small">Terms of Service</a></li>
+          <li><a href="#" class="nav-link text-small">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom: var(--space-4);">Location &amp; Hours</h4>
+        <div class="footer-location-col">
+          <!-- Address -->
+          <div class="footer-loc-block">
+            <i class="ph-fill ph-map-pin footer-loc-icon"></i>
+            <div class="footer-loc-info">
+              <strong>Nexus VR Lounge</strong>
+              <span>123 Cyber Avenue, Suite 200</span>
+              <span style="font-size: 0.8rem; color: var(--clr-text-muted);">Neon District, NT 45890</span>
+            </div>
+          </div>
+
+          <!-- Opening Hours -->
+          <div class="footer-loc-block">
+            <i class="ph ph-clock footer-loc-icon"></i>
+            <div class="footer-loc-info" style="width: 100%;">
+              <span class="footer-open-pill">Open Daily</span>
+              <div class="footer-hours-list">
+                <div class="footer-hours-row">
+                  <span>Mon &ndash; Thu:</span>
+                  <strong style="color: var(--clr-text);">12 PM &ndash; 11 PM</strong>
+                </div>
+                <div class="footer-hours-row">
+                  <span>Fri &ndash; Sun:</span>
+                  <strong style="color: var(--clr-secondary);">10 AM &ndash; Midnight</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone & Contact Links -->
+          <div class="footer-contacts-list">
+            <a href="tel:+15550192834" class="footer-contact-item" aria-label="Phone: (555) 019-2834">
+              <i class="ph ph-phone" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>(555) 019-2834</span>
+            </a>
+            <a href="mailto:contact@nexusvr.com" class="footer-contact-item" aria-label="Email: contact@nexusvr.com">
+              <i class="ph ph-envelope-simple" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>contact@nexusvr.com</span>
+            </a>
+          </div>
+
+          <!-- Directions Action Button -->
+          <div>
+            <a href="https://maps.google.com/?q=123+Cyber+Avenue+Neon+District" target="_blank" rel="noopener noreferrer" class="footer-directions-btn" aria-label="Get directions to Nexus VR Lounge on Google Maps">
+              <i class="ph ph-navigation-arrow"></i>
+              <span>Get Directions</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container text-center text-small" style="color: var(--clr-text-muted); border-top: var(--border-glass); padding-top: var(--space-6);">
+      &copy; 2026 Nexus VR Lounge. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="src/js/main.js"></script>
+  <script src="src/js/forms.js"></script>
+</body>
+</html>

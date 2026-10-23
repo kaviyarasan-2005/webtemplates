@@ -1,38 +1,675 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark" dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexus VR | Pricing & Bundles</title>
-  <meta name="description" content="View our competitive pricing, time bundles, and membership plans for the best VR experience in the city.">
-  
+  <title>Nexus VR | Pricing, Time Bundles & Membership Tiers</title>
+  <meta name="description"
+    content="Transparent VR gaming lounge pricing. Hourly pay-as-you-play rates, multi-hour time bundles, and Nexus Elite monthly memberships with comparison matrix.">
+
   <link rel="stylesheet" href="src/css/main.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon-8.svg">
+
+  <style>
+    /* ==========================================================================
+       Pricing Page: Structured Layout, Comparison Matrix & Visual Hierarchy
+       ========================================================================== */
+
+    /* 1. Hero Section */
+    .pricing-hero {
+      position: relative;
+      padding: 5.5rem 0 3.75rem;
+      background: radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.15) 0%, rgba(34, 211, 238, 0.05) 50%, #080B14 85%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .pricing-hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 10%;
+      width: 40vw;
+      height: 40vw;
+      background: radial-gradient(circle, rgba(34, 211, 238, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* 2. Structured Section Backgrounds (Gaming Aesthetic with Contrast) */
+    .pricing-section-hourly {
+      background: #080B14;
+    }
+
+    .pricing-section-bundles {
+      background: radial-gradient(ellipse at 80% 20%, rgba(34, 211, 238, 0.07) 0%, transparent 60%), #0A1122;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(34, 211, 238, 0.15);
+    }
+
+    .pricing-section-memberships {
+      background: radial-gradient(ellipse at 20% 30%, rgba(139, 92, 246, 0.09) 0%, transparent 60%), #0D091F;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.18);
+    }
+
+    .pricing-section-guarantees {
+      background: #090E1C;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .pricing-section-faq {
+      background: #080B14;
+    }
+
+    /* 3. Section Title Blocks */
+    .section-header-block {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 3rem;
+    }
+
+    .section-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 0.85rem;
+    }
+
+    /* 4. Pay As You Play Cards */
+    .hourly-card {
+      background: rgba(14, 20, 36, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .hourly-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(34, 211, 238, 0.45);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(34, 211, 238, 0.12);
+    }
+
+    .hourly-card.featured-card {
+      background: linear-gradient(180deg, rgba(22, 19, 48, 0.96) 0%, rgba(14, 20, 36, 0.96) 100%);
+      border: 1.5px solid var(--clr-primary);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 28px rgba(139, 92, 246, 0.25);
+    }
+
+    .price-value-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .price-currency {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--clr-text);
+    }
+
+    .price-amount {
+      font-size: 3.25rem;
+      font-weight: 800;
+      font-family: var(--font-primary);
+      line-height: 1;
+      color: var(--clr-text);
+    }
+
+    .price-unit {
+      font-size: 0.95rem;
+      color: var(--clr-text-muted);
+      font-weight: 600;
+    }
+
+    .card-meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      color: #CBD5E1;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      flex-grow: 1;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      color: #E2E8F0;
+      line-height: 1.4;
+    }
+
+    .feature-icon-check {
+      color: var(--clr-success);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .feature-icon-cross {
+      color: #64748B;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    /* 5. Time Bundles Grid */
+    .bundle-card {
+      background: rgba(14, 20, 36, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 1.85rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .bundle-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(34, 211, 238, 0.5);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 22px rgba(34, 211, 238, 0.14);
+    }
+
+    .bundle-card.popular-bundle {
+      border: 1.5px solid var(--clr-secondary);
+      background: linear-gradient(180deg, rgba(16, 32, 54, 0.96) 0%, rgba(14, 20, 36, 0.96) 100%);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 24px rgba(34, 211, 238, 0.2);
+    }
+
+    .bundle-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .bundle-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+      color: #FFFFFF;
+    }
+
+    .bundle-hours-highlight {
+      font-size: 1.65rem;
+      font-weight: 800;
+      font-family: var(--font-primary);
+      color: var(--clr-secondary);
+      margin: 0.25rem 0 0.75rem;
+    }
+
+    .bundle-pricing-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0.85rem 0;
+      margin: 0.75rem 0 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .bundle-total-price {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      font-family: var(--font-primary);
+    }
+
+    .bundle-per-hour {
+      font-size: 0.82rem;
+      color: var(--clr-text-muted);
+      font-weight: 600;
+    }
+
+    .bundle-discount-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      font-size: 0.76rem;
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.18);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    /* 6. Membership Comparison Matrix */
+    .membership-tier-cards-row {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .membership-tier-cards-row {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .tier-summary-card {
+      background: rgba(14, 20, 36, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 1.85rem;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .tier-summary-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+    }
+
+    .tier-summary-card.gold-tier {
+      border: 1.5px solid var(--clr-primary);
+      background: linear-gradient(180deg, rgba(28, 20, 56, 0.95) 0%, rgba(14, 20, 36, 0.95) 100%);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 24px rgba(139, 92, 246, 0.2);
+    }
+
+    .tier-summary-card.diamond-tier {
+      border: 1.5px solid var(--clr-secondary);
+      background: linear-gradient(180deg, rgba(16, 32, 58, 0.95) 0%, rgba(14, 20, 36, 0.95) 100%);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 24px rgba(34, 211, 238, 0.2);
+    }
+
+    .tier-floating-tag {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.25rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Comparison Table (Desktop full matrix + mobile responsive scrolling) */
+    .matrix-container {
+      margin-top: 1.5rem;
+    }
+
+    .matrix-title-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .matrix-scroll-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--clr-text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-full);
+    }
+
+    .comparison-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(13, 18, 34, 0.95);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .comparison-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 1.15rem 1.35rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      vertical-align: middle;
+    }
+
+    .comparison-table th {
+      background: rgba(9, 13, 24, 0.95);
+      font-family: var(--font-primary);
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .comparison-table th.col-feature {
+      width: 34%;
+      font-size: 0.95rem;
+      color: #CBD5E1;
+    }
+
+    .comparison-table th.col-tier {
+      width: 22%;
+      text-align: center;
+    }
+
+    .comparison-table td.col-tier {
+      text-align: center;
+      font-size: 0.88rem;
+      color: #E2E8F0;
+    }
+
+    .comparison-table td.col-feature {
+      font-size: 0.88rem;
+      color: #E2E8F0;
+      font-weight: 500;
+    }
+
+    .feature-subtext {
+      display: block;
+      font-size: 0.74rem;
+      color: var(--clr-text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .comparison-table tr.category-heading-row td {
+      background: rgba(255, 255, 255, 0.035);
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--clr-secondary);
+      padding: 0.75rem 1.35rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .comparison-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .comparison-table td.col-featured,
+    .comparison-table th.col-featured {
+      background: rgba(139, 92, 246, 0.06);
+      border-left: 1px solid rgba(139, 92, 246, 0.25);
+      border-right: 1px solid rgba(139, 92, 246, 0.25);
+    }
+
+    .comparison-table td.col-diamond,
+    .comparison-table th.col-diamond {
+      background: rgba(34, 211, 238, 0.04);
+      border-left: 1px solid rgba(34, 211, 238, 0.2);
+      border-right: 1px solid rgba(34, 211, 238, 0.2);
+    }
+
+    .comparison-table tr.table-cta-row td {
+      padding: 1.5rem 1.35rem;
+      background: rgba(10, 14, 26, 0.95);
+    }
+
+    /* 7. Guarantees Grid */
+    .guarantee-card {
+      background: rgba(14, 20, 36, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+      transition: transform 0.25s ease;
+    }
+
+    .guarantee-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34, 211, 238, 0.3);
+    }
+
+    .guarantee-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      margin: 0 auto 1.15rem;
+    }
+
+    /* 8. Button Base Styles Inside Pricing Cards: Prevents Overflow & Ensures Multiline Safety */
+    .hourly-card .btn,
+    .bundle-card .btn,
+    .tier-summary-card .btn {
+      min-height: 44px;
+      height: auto;
+      padding: 0.65rem 1rem;
+      font-size: 0.92rem;
+      line-height: 1.25;
+      white-space: normal;
+      text-align: center;
+      word-break: normal;
+      overflow-wrap: break-word;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      box-sizing: border-box;
+    }
+
+    /* 9. Tablet Viewport Optimizations (768px - 1023px) */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      /* Hourly rates 3-col card grid: reduce gaps and card padding at 768px */
+      .pricing-section-hourly .grid.md\:grid-cols-3 {
+        gap: 1.15rem !important;
+      }
+      .hourly-card {
+        padding: 1.75rem 1.15rem;
+      }
+      .hourly-card .btn {
+        padding: 0.65rem 0.5rem;
+        font-size: 0.85rem;
+      }
+
+      /* Membership tiers 3-col grid: reduce gaps and card padding at 768px */
+      .membership-tier-cards-row {
+        gap: 1.15rem !important;
+      }
+      .tier-summary-card {
+        padding: 1.75rem 1.15rem;
+      }
+      .tier-summary-card .btn {
+        padding: 0.65rem 0.5rem;
+        font-size: 0.85rem;
+      }
+
+      /* Bundles grid on tablet */
+      .bundle-card {
+        padding: 1.5rem 1.15rem;
+      }
+      .bundle-card .btn {
+        padding: 0.65rem 0.65rem;
+        font-size: 0.84rem;
+      }
+
+      /* Comparison table action row */
+      .comparison-table tr.table-cta-row td {
+        padding: 1.25rem 0.65rem;
+      }
+      .comparison-table tr.table-cta-row td .btn {
+        padding: 0.5rem 0.5rem !important;
+        font-size: 0.8rem !important;
+        min-height: 42px;
+        height: auto;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .hourly-card,
+      .bundle-card,
+      .tier-summary-card {
+        padding: 1.75rem 1.25rem;
+      }
+    }
+
+    /* 10. Light Theme Support */
+    [data-theme="light"] .pricing-hero {
+      background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
+    }
+
+    [data-theme="light"] .pricing-section-hourly {
+      background: #FFFFFF;
+    }
+
+    [data-theme="light"] .pricing-section-bundles {
+      background: #F8FAFC;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .pricing-section-memberships {
+      background: #F1F5F9;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .pricing-section-guarantees {
+      background: #FFFFFF;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .pricing-section-faq {
+      background: #F8FAFC;
+    }
+
+    [data-theme="light"] .hourly-card,
+    [data-theme="light"] .bundle-card,
+    [data-theme="light"] .tier-summary-card,
+    [data-theme="light"] .guarantee-card {
+      background: #FFFFFF;
+      border-color: rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="light"] .hourly-card.featured-card {
+      background: #FFFFFF;
+      border-color: var(--clr-primary);
+    }
+
+    [data-theme="light"] .bundle-card.popular-bundle {
+      background: #FFFFFF;
+      border-color: var(--clr-secondary);
+    }
+
+    [data-theme="light"] .tier-summary-card.gold-tier,
+    [data-theme="light"] .tier-summary-card.diamond-tier {
+      background: #FFFFFF;
+    }
+
+    [data-theme="light"] .comparison-table-wrap {
+      background: #FFFFFF;
+      border-color: rgba(0, 0, 0, 0.12);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="light"] .comparison-table th {
+      background: #F8FAFC;
+      color: #0F172A;
+    }
+
+    [data-theme="light"] .comparison-table th.col-feature,
+    [data-theme="light"] .comparison-table td.col-feature {
+      color: #1E293B;
+    }
+
+    [data-theme="light"] .comparison-table td.col-tier {
+      color: #334155;
+    }
+
+    [data-theme="light"] .comparison-table tr.category-heading-row td {
+      background: #F1F5F9;
+      color: #0891B2;
+    }
+
+    [data-theme="light"] .price-amount,
+    [data-theme="light"] .bundle-title,
+    [data-theme="light"] .bundle-total-price {
+      color: #0F172A;
+    }
+
+    [data-theme="light"] .feature-item {
+      color: #334155;
+    }
+
+    [data-theme="light"] .card-meta-pill {
+      background: #F1F5F9;
+      color: #475569;
+    }
+  </style>
 </head>
+
 <body>
 
   <!-- Navbar -->
   <nav class="navbar">
     <div class="container flex justify-between items-center">
-      <a href="home1.html" class="flex items-center gap-2" aria-label="Nexus VR Home">
-        <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" style="height: 44px; width: 44px; border-radius: 50%; box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);">
-        <span class="text-large" style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+      <!-- Brand -->
+      <a href="home1.html" class="nav-brand" aria-label="Nexus VR Home">
+        <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" class="nav-brand__logo">
+        <span class="nav-brand__name">Nexus <span class="text-gradient">VR</span></span>
       </a>
 
-      <div class="nav-links items-center">
+      <!-- Desktop Nav -->
+      <div class="nav-links">
         <div class="dropdown">
-          <a href="#" class="nav-link flex items-center gap-1">Home <i class="ph ph-caret-down"></i></a>
+          <a href="#" class="nav-link">Home <i class="ph ph-caret-down dropdown-caret"></i></a>
           <div class="dropdown-menu">
             <a href="home1.html" class="dropdown-item">Home 1</a>
             <a href="home2.html" class="dropdown-item">Home 2</a>
           </div>
         </div>
         <a href="games.html" class="nav-link">Games Library</a>
-        <a href="pricing.html" class="nav-link" style="color: var(--clr-primary);">Pricing</a>
-        <a href="groups.html" class="nav-link">Parties & Groups</a>
+        <a href="pricing.html" class="nav-link active">Pricing</a>
+        <a href="groups.html" class="nav-link">Parties &amp; Groups</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
         <div class="dropdown">
-          <a href="#" class="nav-link flex items-center gap-1">Dashboards <i class="ph ph-caret-down"></i></a>
+          <a href="#" class="nav-link">Dashboards <i class="ph ph-caret-down dropdown-caret"></i></a>
           <div class="dropdown-menu">
             <a href="dashboard.html" class="dropdown-item">User</a>
             <a href="admin.html" class="dropdown-item">Admin</a>
@@ -40,15 +677,18 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-4">
-        <button id="theme-toggle" class="btn-icon flex items-center justify-center" aria-label="Toggle Theme">
+      <!-- Actions -->
+      <div class="nav-actions">
+        <button id="theme-toggle" class="nav-icon-btn" aria-label="Toggle Theme">
           <i class="ph ph-moon"></i>
         </button>
-        <button id="rtl-toggle" class="btn-rtl hidden lg:flex">RTL</button>
-        <a href="login.html" class="btn btn-primary hidden lg:flex">Login</a>
-        <a href="dashboard.html" class="btn btn-secondary hidden lg:flex">Book Now</a>
-        <button id="mobile-menu-btn" class="btn-icon lg:hidden flex items-center justify-center">
-          <i class="ph ph-list" style="font-size: 1.5rem;"></i>
+        <button id="rtl-toggle" class="btn-rtl-compact" title="Toggle RTL Layout">RTL</button>
+        <a href="login.html" class="nav-link-login">Login</a>
+        <a href="contact.html" class="nav-cta-btn">
+          <i class="ph ph-ticket"></i> Book Now
+        </a>
+        <button id="mobile-menu-btn" class="nav-icon-btn" aria-label="Toggle Navigation Menu">
+          <i class="ph ph-list" style="font-size: 1.4rem;"></i>
         </button>
       </div>
     </div>
@@ -56,7 +696,6 @@
 
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="mobile-menu flex-col gap-6">
-    <!-- Home Group -->
     <div class="mob-group">
       <button class="mob-group-btn">
         Home <i class="ph ph-caret-down mob-caret"></i>
@@ -67,221 +706,911 @@
       </div>
     </div>
     <a href="games.html" class="nav-link text-large">Games Library</a>
-    <a href="pricing.html" class="nav-link text-large">Pricing</a>
+    <a href="pricing.html" class="nav-link text-large" style="color: var(--clr-primary);">Pricing &amp; Bundles</a>
     <a href="groups.html" class="nav-link text-large">Parties &amp; Groups</a>
-    <!-- Dashboards Group -->
+    <a href="about.html" class="nav-link text-large">About</a>
+    <a href="contact.html" class="nav-link text-large">Contact</a>
     <div class="mob-group">
       <button class="mob-group-btn">
         Dashboards <i class="ph ph-caret-down mob-caret"></i>
       </button>
       <div class="mob-group-links">
-        <a href="dashboard.html" class="nav-link text-large">User</a>
-        <a href="admin.html" class="nav-link text-large">Admin</a>
+        <a href="dashboard.html" class="nav-link text-large">User Dashboard</a>
+        <a href="admin.html" class="nav-link text-large">Admin Console</a>
       </div>
     </div>
+        <hr style="border-color: rgba(255,255,255,0.1);">
+    <!-- Theme & RTL Toggles (Shifted into Hamburger) -->
+    <div class="mob-control-row">
+      <span>Theme</span>
+      <button id="theme-toggle-mobile" class="nav-icon-btn" aria-label="Toggle Theme">
+        <i class="ph ph-moon" style="font-size:1.2rem;"></i>
+      </button>
+    </div>
+    <div class="mob-control-row">
+      <span>Layout Direction</span>
+      <button id="rtl-toggle-mobile" class="btn-rtl-compact">RTL</button>
+    </div>
     <hr style="border-color: rgba(255,255,255,0.1);">
-    <a href="login.html" class="btn btn-primary justify-center">Login</a>
-    <a href="dashboard.html" class="btn btn-secondary justify-center">Book Now</a>
+    <a href="login.html" class="btn btn-secondary justify-center" style="width: 100%;">Login</a>
+    <a href="contact.html" class="btn btn-primary justify-center" style="width: 100%;"><i class="ph ph-ticket"></i> Book Now</a>
   </div>
 
   <main style="padding-top: 76px;">
-    <!-- Section 1: Pricing Header -->
-    <section class="section" style="background: linear-gradient(135deg, rgba(34,211,238,0.1), rgba(8,11,20,1)); border-bottom: var(--border-glass);">
-      <div class="container text-center animate-on-scroll" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <h1 class="mb-4">Simple, Transparent <span class="text-gradient">Pricing</span></h1>
-        <p class="text-large mb-0" style="max-width: 600px; margin: 0 auto; color: rgba(255,255,255,0.85);">Pay by the hour, grab a bundle for a marathon, or become a member for the best rates.</p>
-      </div>
-    </section>
-
-    <!-- Section 2: Standard Hourly Rates -->
-    <section class="section container animate-on-scroll">
-      <h2 class="text-center mb-12">Pay As You Play</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto" style="max-width: 900px; margin: 0 auto;">
-        <div class="card text-center border" style="border-top: 4px solid var(--clr-secondary);">
-          <h3 class="mb-2">Weekday</h3>
-          <p class="text-small mb-4">Mon - Thu (10AM - 5PM)</p>
-          <div class="mb-6">
-            <span style="font-size: 3rem; font-weight: 800; font-family: var(--font-primary);">$25</span>
-            <span class="text-muted">/ hr</span>
-          </div>
-          <ul class="flex-col gap-2 text-left mx-auto" style="max-width: 200px; margin-bottom: var(--space-6);">
-            <li><i class="ph ph-check text-success"></i> Access to all games</li>
-            <li><i class="ph ph-check text-success"></i> Premium Headset</li>
-            <li><i class="ph ph-check text-success"></i> Basic Lounge Access</li>
-          </ul>
-          <a href="dashboard.html" class="btn btn-secondary w-full" style="width: 100%;">Book Slot</a>
-        </div>
-        
-        <div class="card text-center border" style="border-top: 4px solid var(--clr-primary); transform: scale(1.05); z-index: 2;">
-          <div class="badge mb-4" style="background: var(--clr-primary); color: white;">Peak Hours</div>
-          <h3 class="mb-2">Weekend & Nights</h3>
-          <p class="text-small mb-4">Fri - Sun & After 5PM</p>
-          <div class="mb-6">
-            <span style="font-size: 3rem; font-weight: 800; font-family: var(--font-primary);">$35</span>
-            <span class="text-muted">/ hr</span>
-          </div>
-          <ul class="flex-col gap-2 text-left mx-auto" style="max-width: 200px; margin-bottom: var(--space-6);">
-            <li><i class="ph ph-check text-success"></i> Access to all games</li>
-            <li><i class="ph ph-check text-success"></i> Premium Headset</li>
-            <li><i class="ph ph-check text-success"></i> Haptic Vest Included</li>
-          </ul>
-          <a href="dashboard.html" class="btn btn-primary w-full" style="width: 100%; box-shadow: var(--shadow-glow);">Book Slot</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 3: Premium Bundles -->
-    <section class="section" style="background: var(--clr-surface-alt);">
+    <!-- ==========================================================================
+         HERO SECTION: PRICING ARCHITECTURE
+         ========================================================================== -->
+    <section class="pricing-hero">
       <div class="container animate-on-scroll">
-        <h2 class="text-center mb-12">Time Bundles</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div class="card bg-surface">
-            <h4 class="mb-2">Gamer Pack</h4>
-            <div class="text-primary font-bold text-large mb-4">5 Hours</div>
-            <p class="text-small mb-6">Perfect for weekend warriors.</p>
-            <div class="flex justify-between items-center border-t pt-4" style="border-top: var(--border-glass);">
-              <span class="text-large" style="font-weight: 700;">$140</span>
-              <span class="badge text-small" style="background: rgba(16, 185, 129, 0.2); color: var(--clr-success);">Save $35</span>
+        <div class="section-header-badge" style="background: rgba(34, 211, 238, 0.14); color: var(--clr-secondary); border: 1px solid rgba(34, 211, 238, 0.35);">
+          <i class="ph-bold ph-tag"></i> 100% Transparent Rates • Zero Hidden Equipment Fees
+        </div>
+        <h1 style="font-size: clamp(2.3rem, 4.5vw, 3.6rem); line-height: 1.15; margin-bottom: 0.85rem;">
+          Flexible Rates, <span class="text-gradient">Time Bundles</span> & Memberships
+        </h1>
+        <p class="text-large mx-auto mb-0" style="max-width: 660px; line-height: 1.6; color: #E2E8F0;">
+          Drop in for an hour, save big with non-expiring multi-hour packs, or join Nexus Elite for priority pod bookings and member-only lounge perks.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 1: PAY AS YOU PLAY (HOURLY SESSION PASSES)
+         ========================================================================== -->
+    <section class="section pricing-section-hourly">
+      <div class="container animate-on-scroll">
+        <div class="section-header-block">
+          <span class="section-header-badge" style="background: rgba(139, 92, 246, 0.15); color: var(--clr-primary); border: 1px solid rgba(139, 92, 246, 0.3);">
+            <i class="ph-bold ph-clock"></i> Pay As You Play
+          </span>
+          <h2 style="font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-bottom: 0.5rem;">Standard Session Rates</h2>
+          <p class="text-muted mb-0">Jump into any VR station with complete access to all 50+ titles. Switch games freely with on-floor staff assistance.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Rate 1: Weekday Off-Peak -->
+          <div class="hourly-card">
+            <div>
+              <div class="flex justify-between items-center">
+                <span class="badge" style="background: rgba(34, 211, 238, 0.12); color: var(--clr-secondary); border: 1px solid rgba(34, 211, 238, 0.3);">
+                  Weekday Saver
+                </span>
+                <span class="text-small text-muted font-bold">1 Hour Minimum</span>
+              </div>
+              <h3 style="font-size: 1.45rem; margin-top: 0.75rem; margin-bottom: 0.25rem;">Weekday Off-Peak</h3>
+              <p class="text-small text-muted mb-3">Monday – Thursday (12:00 PM – 5:00 PM)</p>
+              
+              <div class="price-value-row">
+                <span class="price-currency">$</span>
+                <span class="price-amount">25</span>
+                <span class="price-unit">/ hour</span>
+              </div>
+              <div class="card-meta-pill">
+                <i class="ph-bold ph-check-circle text-success"></i> Includes 1 Hour Pod Access
+              </div>
+
+              <ul class="feature-list">
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span><strong>Full 50+ Games Library</strong> (Action, Horror, Rhythm & Family)</span>
+                </li>
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span><strong>HTC Vive Pro 2 & Meta Quest Pro</strong> (5K resolution, 120Hz)</span>
+                </li>
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span><strong>Free Game Switching</strong> anytime during your session</span>
+                </li>
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>Sanitary protective eye cushions & sanitization</span>
+                </li>
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>Free cancellation up to 2 hours before booking</span>
+                </li>
+              </ul>
             </div>
+
+            <a href="contact.html" class="btn btn-secondary w-full justify-center" style="font-weight: 700;">
+              Book Weekday Slot <i class="ph ph-arrow-right"></i>
+            </a>
           </div>
-          <div class="card bg-surface">
-            <h4 class="mb-2">Pro Pack</h4>
-            <div class="text-primary font-bold text-large mb-4">10 Hours</div>
-            <p class="text-small mb-6">For the dedicated VR enthusiast.</p>
-            <div class="flex justify-between items-center border-t pt-4" style="border-top: var(--border-glass);">
-              <span class="text-large" style="font-weight: 700;">$250</span>
-              <span class="badge text-small" style="background: rgba(16, 185, 129, 0.2); color: var(--clr-success);">Save $100</span>
+
+          <!-- Rate 2: Peak Hours & Weekends (Featured) -->
+          <div class="hourly-card featured-card">
+            <div>
+              <div class="flex justify-between items-center">
+                <span class="badge" style="background: var(--clr-primary); color: #FFFFFF;">
+                  Most Popular
+                </span>
+                <span class="text-small text-muted font-bold" style="color: #DDD6FE;">Peak Energy</span>
+              </div>
+              <h3 style="font-size: 1.45rem; margin-top: 0.75rem; margin-bottom: 0.25rem;">Weekends & Evenings</h3>
+              <p class="text-small text-muted mb-3">Friday – Sunday & Daily after 5:00 PM</p>
+              
+              <div class="price-value-row">
+                <span class="price-currency">$</span>
+                <span class="price-amount text-primary">35</span>
+                <span class="price-unit">/ hour</span>
+              </div>
+              <div class="card-meta-pill" style="background: rgba(139, 92, 246, 0.15); color: #DDD6FE; border: 1px solid rgba(139, 92, 246, 0.3);">
+                <i class="ph-bold ph-fire text-primary"></i> Prime Time & Squad Battles
+              </div>
+
+              <ul class="feature-list">
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span><strong>Everything in Weekday Pass</strong></span>
+                </li>
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span><strong>Tactile Haptic Vest Included</strong> ($10 add-on value included)</span>
+                </li>
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span><strong>Local Multiplayer Linking</strong> for 2–4 players side-by-side</span>
+                </li>
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>Spectator Monitor casting for friends to watch your gameplay</span>
+                </li>
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>Dedicated VR Master guidance & leaderboard logging</span>
+                </li>
+              </ul>
             </div>
+
+            <a href="contact.html" class="btn btn-primary w-full justify-center" style="font-weight: 700; box-shadow: var(--shadow-glow);">
+              Book Peak Slot <i class="ph ph-arrow-right"></i>
+            </a>
           </div>
-          <div class="card bg-surface">
-            <h4 class="mb-2">Marathon Pack</h4>
-            <div class="text-primary font-bold text-large mb-4">20 Hours</div>
-            <p class="text-small mb-6">Best value. Shareable with 1 friend.</p>
-            <div class="flex justify-between items-center border-t pt-4" style="border-top: var(--border-glass);">
-              <span class="text-large" style="font-weight: 700;">$450</span>
-              <span class="badge text-small" style="background: rgba(16, 185, 129, 0.2); color: var(--clr-success);">Save $250</span>
+
+          <!-- Rate 3: Full Day Marathon Pass -->
+          <div class="hourly-card">
+            <div>
+              <div class="flex justify-between items-center">
+                <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.35);">
+                  All-Day Value
+                </span>
+                <span class="text-small text-muted font-bold">Unlimited In-Out</span>
+              </div>
+              <h3 style="font-size: 1.45rem; margin-top: 0.75rem; margin-bottom: 0.25rem;">Full Day VR Marathon</h3>
+              <p class="text-small text-muted mb-3">Valid any single operating day (Open to Close)</p>
+              
+              <div class="price-value-row">
+                <span class="price-currency">$</span>
+                <span class="price-amount">89</span>
+                <span class="price-unit">/ day pass</span>
+              </div>
+              <div class="card-meta-pill" style="background: rgba(245, 158, 11, 0.12); color: #FDE68A;">
+                <i class="ph-bold ph-sparkle text-warning"></i> 6 Hours Active Station Time (~$14.80/hr)
+              </div>
+
+              <ul class="feature-list">
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span><strong>Up to 6 Hours</strong> of active VR gaming time</span>
+                </li>
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span><strong>Pause & Resume anytime</strong> to eat or visit the lounge bar</span>
+                </li>
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span><strong>1 Free Apex Motion Pod Session</strong> included (3-axis hydraulic)</span>
+                </li>
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>1 Complimentary Barista Coffee or Energy Drink</span>
+                </li>
+                <li class="feature-item">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>Save over $120 compared to buying peak hours individually</span>
+                </li>
+              </ul>
             </div>
+
+            <a href="contact.html" class="btn btn-secondary w-full justify-center" style="font-weight: 700;">
+              Get Marathon Pass <i class="ph ph-arrow-right"></i>
+            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 4: Membership Plans -->
-    <section class="section container animate-on-scroll">
-      <div class="text-center mb-12">
-        <h2>Nexus Elite Memberships</h2>
-        <p>Monthly subscriptions for ultimate access and perks.</p>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto" style="max-width: 1000px; margin: 0 auto; padding-top: 1rem;">
-        <!-- Guest Card -->
-        <div class="card p-8 flex-col text-center" style="display: flex; flex-direction: column;">
-          <h3 class="mb-2">Guest</h3>
-          <div class="mb-6">
-            <span style="font-size: 3rem; font-weight: 800; font-family: var(--font-primary);">$0</span>
-            <span class="text-muted">/ mo</span>
-          </div>
-          <ul class="flex-col gap-3 text-left mb-8 mx-auto" style="list-style: none; padding: 0; max-width: 250px;">
-            <li class="flex items-center gap-3"><div class="btn-icon flex items-center justify-center rounded-full" style="width:28px;height:28px;min-height:28px;min-width:28px;background:rgba(255,255,255,0.05);color:var(--clr-text-muted);"><i class="ph ph-x"></i></div> 0 Included Hours</li>
-            <li class="flex items-center gap-3"><div class="btn-icon flex items-center justify-center rounded-full" style="width:28px;height:28px;min-height:28px;min-width:28px;background:rgba(255,255,255,0.05);color:var(--clr-text-muted);"><i class="ph ph-x"></i></div> No Discount</li>
-            <li class="flex items-center gap-3"><div class="btn-icon flex items-center justify-center rounded-full" style="width:28px;height:28px;min-height:28px;min-width:28px;background:rgba(255,255,255,0.05);color:var(--clr-text-muted);"><i class="ph ph-x"></i></div> No Priority Booking</li>
-            <li class="flex items-center gap-3"><div class="btn-icon flex items-center justify-center rounded-full" style="width:28px;height:28px;min-height:28px;min-width:28px;background:rgba(255,255,255,0.05);color:var(--clr-text-muted);"><i class="ph ph-x"></i></div> No Free Drinks</li>
-          </ul>
-          <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%;">Current Plan</a>
+    <!-- ==========================================================================
+         SECTION 2: TIME BUNDLES (MULTI-HOUR PACKS - NON-EXPIRING)
+         ========================================================================== -->
+    <section class="section pricing-section-bundles">
+      <div class="container animate-on-scroll">
+        <div class="section-header-block">
+          <span class="section-header-badge" style="background: rgba(34, 211, 238, 0.15); color: var(--clr-secondary); border: 1px solid rgba(34, 211, 238, 0.3);">
+            <i class="ph-bold ph-stack"></i> Non-Expiring Time Bundles
+          </span>
+          <h2 style="font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-bottom: 0.5rem;">Prepaid Packs with Huge Discounts</h2>
+          <p class="text-muted mb-0">Buy hours in advance for maximum savings. Hours are credited to your digital player wallet and <strong>never expire</strong>.</p>
         </div>
-        
-        <!-- Gold Card -->
-        <div class="card p-8 flex-col text-center" style="display: flex; flex-direction: column; border-top: 4px solid var(--clr-primary);">
-          <h3 class="mb-2" style="color: var(--clr-primary);">Gold Member</h3>
-          <div class="mb-6">
-            <span style="font-size: 3rem; font-weight: 800; font-family: var(--font-primary);">$49</span>
-            <span class="text-muted">/ mo</span>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Bundle 1: Starter Pack (3 Hours) -->
+          <div class="bundle-card">
+            <div>
+              <div class="bundle-header-row">
+                <span class="bundle-title">Starter Pack</span>
+                <span class="bundle-discount-badge">Save $26</span>
+              </div>
+              <div class="bundle-hours-highlight">3 Hours VR</div>
+              <p class="text-small text-muted mb-2">Great for first-timers wanting to try multiple game genres.</p>
+
+              <div class="bundle-pricing-row">
+                <div>
+                  <span class="bundle-total-price">$79</span>
+                  <div class="bundle-per-hour">$26.33 / hour</div>
+                </div>
+                <div class="text-right">
+                  <span class="text-small text-muted" style="text-decoration: line-through;">$105 Value</span>
+                  <div class="text-small font-bold text-success">25% Savings</div>
+                </div>
+              </div>
+
+              <ul class="feature-list" style="margin-bottom: 1.5rem; gap: 0.65rem;">
+                <li class="feature-item text-small">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>Valid Peak &amp; Off-Peak anytime</span>
+                </li>
+                <li class="feature-item text-small">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>Split across unlimited visits</span>
+                </li>
+                <li class="feature-item text-small">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>Auto-synced to Player Dashboard</span>
+                </li>
+              </ul>
+            </div>
+
+            <a href="dashboard.html" class="btn btn-secondary w-full justify-center" style="font-size: 0.88rem; font-weight: 700;">
+              Purchase 3-Hr Pack
+            </a>
           </div>
-          <ul class="flex-col gap-3 text-left mb-8 mx-auto" style="list-style: none; padding: 0; max-width: 250px;">
-            <li class="flex items-center gap-3"><div class="btn-icon flex items-center justify-center rounded-full" style="width:28px;height:28px;min-height:28px;min-width:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> 2 Included Hours</li>
-            <li class="flex items-center gap-3"><div class="btn-icon flex items-center justify-center rounded-full" style="width:28px;height:28px;min-height:28px;min-width:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> 15% Hourly Discount</li>
-            <li class="flex items-center gap-3"><div class="btn-icon flex items-center justify-center rounded-full" style="width:28px;height:28px;min-height:28px;min-width:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> 48h Priority Booking</li>
-            <li class="flex items-center gap-3"><div class="btn-icon flex items-center justify-center rounded-full" style="width:28px;height:28px;min-height:28px;min-width:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> 1 Free Drink/Visit</li>
-          </ul>
-          <a href="dashboard.html" class="btn btn-primary w-full mt-auto" style="width: 100%;">Upgrade to Gold</a>
-        </div>
-        
-        <!-- Diamond Card -->
-        <div class="card p-8 flex-col text-center" style="display: flex; flex-direction: column; border-top: 4px solid var(--clr-secondary); position: relative; z-index: 2; transform: scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-          <div class="badge" style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--clr-secondary); color: var(--clr-background);">Ultimate Value</div>
-          <h3 class="mb-2" style="color: var(--clr-secondary);">Diamond Member</h3>
-          <div class="mb-6">
-            <span style="font-size: 3rem; font-weight: 800; font-family: var(--font-primary);">$99</span>
-            <span class="text-muted">/ mo</span>
+
+          <!-- Bundle 2: Gamer Pack (5 Hours - Popular) -->
+          <div class="bundle-card popular-bundle">
+            <div>
+              <div class="bundle-header-row">
+                <span class="bundle-title">Gamer Pack</span>
+                <span class="bundle-discount-badge" style="background: rgba(34, 211, 238, 0.2); color: #22D3EE; border-color: rgba(34, 211, 238, 0.4);">
+                  Save $56
+                </span>
+              </div>
+              <div class="bundle-hours-highlight" style="color: var(--clr-primary);">5 Hours VR</div>
+              <p class="text-small text-muted mb-2">The sweet spot for regular players and weekend duo sessions.</p>
+
+              <div class="bundle-pricing-row">
+                <div>
+                  <span class="bundle-total-price text-primary">$119</span>
+                  <div class="bundle-per-hour">$23.80 / hour</div>
+                </div>
+                <div class="text-right">
+                  <span class="text-small text-muted" style="text-decoration: line-through;">$175 Value</span>
+                  <div class="text-small font-bold text-secondary">32% Savings</div>
+                </div>
+              </div>
+
+              <ul class="feature-list" style="margin-bottom: 1.5rem; gap: 0.65rem;">
+                <li class="feature-item text-small">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span><strong>All Starter benefits</strong> included</span>
+                </li>
+                <li class="feature-item text-small">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>1 Free Haptic Vest rental</span>
+                </li>
+                <li class="feature-item text-small">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>Priority queue during peak hours</span>
+                </li>
+              </ul>
+            </div>
+
+            <a href="dashboard.html" class="btn btn-primary w-full justify-center" style="font-size: 0.88rem; font-weight: 700; box-shadow: var(--shadow-glow);">
+              Purchase 5-Hr Pack
+            </a>
           </div>
-          <ul class="flex-col gap-3 text-left mb-8 mx-auto" style="list-style: none; padding: 0; max-width: 250px;">
-            <li class="flex items-center gap-3"><div class="btn-icon flex items-center justify-center rounded-full" style="width:28px;height:28px;min-height:28px;min-width:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> 5 Included Hours</li>
-            <li class="flex items-center gap-3"><div class="btn-icon flex items-center justify-center rounded-full" style="width:28px;height:28px;min-height:28px;min-width:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> 25% Hourly Discount</li>
-            <li class="flex items-center gap-3"><div class="btn-icon flex items-center justify-center rounded-full" style="width:28px;height:28px;min-height:28px;min-width:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> 7 Days Priority Booking</li>
-            <li class="flex items-center gap-3"><div class="btn-icon flex items-center justify-center rounded-full" style="width:28px;height:28px;min-height:28px;min-width:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> Unlimited Free Drinks</li>
-          </ul>
-          <a href="dashboard.html" class="btn btn-secondary w-full mt-auto" style="width: 100%; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);">Upgrade to Diamond</a>
+
+          <!-- Bundle 3: Pro Pack (10 Hours) -->
+          <div class="bundle-card">
+            <div>
+              <div class="bundle-header-row">
+                <span class="bundle-title">Pro Pack</span>
+                <span class="bundle-discount-badge">Save $131</span>
+              </div>
+              <div class="bundle-hours-highlight">10 Hours VR</div>
+              <p class="text-small text-muted mb-2">Designed for serious enthusiasts and coop campaign players.</p>
+
+              <div class="bundle-pricing-row">
+                <div>
+                  <span class="bundle-total-price">$219</span>
+                  <div class="bundle-per-hour">$21.90 / hour</div>
+                </div>
+                <div class="text-right">
+                  <span class="text-small text-muted" style="text-decoration: line-through;">$350 Value</span>
+                  <div class="text-small font-bold text-success">37% Savings</div>
+                </div>
+              </div>
+
+              <ul class="feature-list" style="margin-bottom: 1.5rem; gap: 0.65rem;">
+                <li class="feature-item text-small">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span><strong>Shareable with 1 registered buddy</strong></span>
+                </li>
+                <li class="feature-item text-small">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>Free Haptic Vest on all sessions</span>
+                </li>
+                <li class="feature-item text-small">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>48h Advance booking guarantee</span>
+                </li>
+              </ul>
+            </div>
+
+            <a href="dashboard.html" class="btn btn-secondary w-full justify-center" style="font-size: 0.88rem; font-weight: 700;">
+              Purchase 10-Hr Pack
+            </a>
+          </div>
+
+          <!-- Bundle 4: Marathon Squad Pass (20 Hours) -->
+          <div class="bundle-card">
+            <div>
+              <div class="bundle-header-row">
+                <span class="bundle-title">Squad Marathon</span>
+                <span class="bundle-discount-badge" style="background: rgba(245, 158, 11, 0.18); color: #FBBF24; border-color: rgba(245, 158, 11, 0.35);">
+                  Save $321
+                </span>
+              </div>
+              <div class="bundle-hours-highlight" style="color: #FBBF24;">20 Hours VR</div>
+              <p class="text-small text-muted mb-2">Best value rate. Shareable with your entire squad or group.</p>
+
+              <div class="bundle-pricing-row">
+                <div>
+                  <span class="bundle-total-price">$379</span>
+                  <div class="bundle-per-hour">$18.95 / hour</div>
+                </div>
+                <div class="text-right">
+                  <span class="text-small text-muted" style="text-decoration: line-through;">$700 Value</span>
+                  <div class="text-small font-bold text-warning">46% Savings</div>
+                </div>
+              </div>
+
+              <ul class="feature-list" style="margin-bottom: 1.5rem; gap: 0.65rem;">
+                <li class="feature-item text-small">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span><strong>Shareable with up to 3 friends</strong></span>
+                </li>
+                <li class="feature-item text-small">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>1 Free Escape Suite reservation</span>
+                </li>
+                <li class="feature-item text-small">
+                  <i class="ph-bold ph-check feature-icon-check"></i>
+                  <span>Dedicated VIP lounge couch seating</span>
+                </li>
+              </ul>
+            </div>
+
+            <a href="dashboard.html" class="btn btn-secondary w-full justify-center" style="font-size: 0.88rem; font-weight: 700;">
+              Purchase 20-Hr Pack
+            </a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 5: Secure Payment Placeholder Info -->
-    <section class="section" style="background: var(--clr-surface);">
-      <div class="container text-center animate-on-scroll">
-        <i class="ph ph-shield-check text-success mb-4" style="font-size: 3rem;"></i>
-        <h2>Secure Transactions</h2>
-        <p class="mb-6">We use industry-standard encryption to process all payments. Your data is never stored on our servers.</p>
-        <div class="flex justify-center gap-4 text-muted text-large">
-          <i class="ph ph-stripe-logo"></i>
-          <i class="ph ph-paypal-logo"></i>
-          <i class="ph ph-credit-card"></i>
+    <!-- ==========================================================================
+         SECTION 3: NEXUS ELITE MEMBERSHIPS & DETAILED COMPARISON MATRIX
+         ========================================================================== -->
+    <section class="section pricing-section-memberships">
+      <div class="container animate-on-scroll">
+        <div class="section-header-block">
+          <span class="section-header-badge" style="background: rgba(139, 92, 246, 0.15); color: #DDD6FE; border: 1px solid rgba(139, 92, 246, 0.35);">
+            <i class="ph-bold ph-crown"></i> Monthly Memberships
+          </span>
+          <h2 style="font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-bottom: 0.5rem;">Nexus Elite Memberships</h2>
+          <p class="text-muted mb-0">Designed for recurring visitors who want guaranteed station priority, monthly included hours, and full VIP hospitality.</p>
+        </div>
+
+        <!-- 3 Tier Cards Summary (Stacks cleanly on Mobile) -->
+        <div class="membership-tier-cards-row">
+          <!-- Tier 1: Guest (Free) -->
+          <div class="tier-summary-card">
+            <span class="text-small text-muted font-bold text-uppercase" style="letter-spacing: 0.08em;">Basic Access</span>
+            <h3 style="font-size: 1.6rem; margin-top: 0.4rem; margin-bottom: 0.25rem;">Guest Player</h3>
+            <p class="text-small text-muted mb-4">Pay as you go with full digital booking privileges.</p>
+
+            <div class="price-value-row">
+              <span class="price-currency">$</span>
+              <span class="price-amount">0</span>
+              <span class="price-unit">/ month</span>
+            </div>
+
+            <div class="card-meta-pill">
+              <i class="ph-bold ph-info text-muted"></i> 0 Monthly Included Hours
+            </div>
+
+            <ul class="feature-list">
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span>Standard hourly pricing ($25 weekday / $35 peak)</span>
+              </li>
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span>Access to all 50+ Games</span>
+              </li>
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span>Online booking window: 24h in advance</span>
+              </li>
+              <li class="feature-item">
+                <i class="ph-bold ph-x feature-icon-cross"></i>
+                <span class="text-muted">No monthly free hours</span>
+              </li>
+              <li class="feature-item">
+                <i class="ph-bold ph-x feature-icon-cross"></i>
+                <span class="text-muted">No discount on additional hours</span>
+              </li>
+            </ul>
+
+            <a href="dashboard.html" class="btn btn-secondary w-full justify-center" style="font-weight: 700;">
+              Current Free Plan
+            </a>
+          </div>
+
+          <!-- Tier 2: Gold Member ($49) -->
+          <div class="tier-summary-card gold-tier">
+            <div class="tier-floating-tag" style="background: var(--clr-primary); color: #FFFFFF;">
+              Most Popular Membership
+            </div>
+            <span class="text-small text-primary font-bold text-uppercase" style="letter-spacing: 0.08em;">Regular Gamer</span>
+            <h3 style="font-size: 1.6rem; margin-top: 0.4rem; margin-bottom: 0.25rem; color: #FFFFFF;">Gold Member</h3>
+            <p class="text-small text-muted mb-4">Pays for itself with 2 monthly hours plus 15% discount on all play.</p>
+
+            <div class="price-value-row">
+              <span class="price-currency">$</span>
+              <span class="price-amount text-primary">49</span>
+              <span class="price-unit">/ month</span>
+            </div>
+
+            <div class="card-meta-pill" style="background: rgba(139, 92, 246, 0.18); color: #DDD6FE; border: 1px solid rgba(139, 92, 246, 0.3);">
+              <i class="ph-bold ph-check-circle text-primary"></i> Includes 2 Monthly Hours ($70 Value)
+            </div>
+
+            <ul class="feature-list">
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span><strong>2 Included VR Hours each month</strong> (Rolls over up to 4 hrs)</span>
+              </li>
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span><strong>15% Discount on all additional hours</strong></span>
+              </li>
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span><strong>48h Priority Booking Window</strong></span>
+              </li>
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span>1 Free craft beverage or specialty coffee per visit</span>
+              </li>
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span>Free Haptic Vest rental on all sessions</span>
+              </li>
+            </ul>
+
+            <a href="contact.html" class="btn btn-primary w-full justify-center" style="font-weight: 700; box-shadow: var(--shadow-glow);">
+              Upgrade to Gold <i class="ph ph-arrow-right"></i>
+            </a>
+          </div>
+
+          <!-- Tier 3: Diamond VIP ($99) -->
+          <div class="tier-summary-card diamond-tier">
+            <div class="tier-floating-tag" style="background: var(--clr-secondary); color: #080B14;">
+              Ultimate VIP Access
+            </div>
+            <span class="text-small font-bold text-uppercase" style="letter-spacing: 0.08em; color: var(--clr-secondary);">Hardcore Enthusiast</span>
+            <h3 style="font-size: 1.6rem; margin-top: 0.4rem; margin-bottom: 0.25rem; color: #FFFFFF;">Diamond VIP</h3>
+            <p class="text-small text-muted mb-4">5 included hours, maximum discounts, guest passes, and motion pod perks.</p>
+
+            <div class="price-value-row">
+              <span class="price-currency">$</span>
+              <span class="price-amount" style="color: var(--clr-secondary);">99</span>
+              <span class="price-unit">/ month</span>
+            </div>
+
+            <div class="card-meta-pill" style="background: rgba(34, 211, 238, 0.15); color: #A5F3FC; border: 1px solid rgba(34, 211, 238, 0.3);">
+              <i class="ph-bold ph-sparkle text-secondary"></i> Includes 5 Monthly Hours ($175 Value)
+            </div>
+
+            <ul class="feature-list">
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span><strong>5 Included VR Hours each month</strong> (Unlimited rollover)</span>
+              </li>
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span><strong>25% Discount on all additional hours</strong></span>
+              </li>
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span><strong>7 Days VIP Priority Booking Window</strong></span>
+              </li>
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span><strong>2 Free Guest Passes</strong> per month for friends</span>
+              </li>
+              <li class="feature-item">
+                <i class="ph-bold ph-check feature-icon-check"></i>
+                <span>1 Free Monthly Apex Motion Pod (3-DOF) session</span>
+              </li>
+            </ul>
+
+            <a href="contact.html" class="btn btn-secondary w-full justify-center" style="font-weight: 700; border-color: var(--clr-secondary); color: var(--clr-secondary);">
+              Upgrade to Diamond <i class="ph ph-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- ======================================================================
+             DESKTOP MEMBERSHIP COMPARISON MATRIX (Responsive Scroll on Mobile)
+             ====================================================================== -->
+        <div class="matrix-container">
+          <div class="matrix-title-bar">
+            <div>
+              <h3 style="font-size: 1.45rem; margin-bottom: 0.2rem;">Detailed Membership Comparison Matrix</h3>
+              <p class="text-small text-muted mb-0">Feature-by-feature breakdown of all included benefits and perks across membership tiers.</p>
+            </div>
+            <div class="matrix-scroll-hint lg:hidden">
+              <i class="ph-bold ph-arrows-left-right"></i> Swipe table horizontally to compare
+            </div>
+          </div>
+
+          <div class="comparison-table-wrap">
+            <table class="comparison-table" aria-label="Membership Tiers Comparison Matrix">
+              <thead>
+                <tr>
+                  <th class="col-feature">Plan Features &amp; Perks</th>
+                  <th class="col-tier">
+                    <div style="font-size: 1.15rem; color: #E2E8F0;">Guest</div>
+                    <div class="text-small text-muted">$0 / month</div>
+                  </th>
+                  <th class="col-tier col-featured">
+                    <span class="badge mb-1" style="background: var(--clr-primary); color: #fff; font-size: 0.68rem;">Most Popular</span>
+                    <div style="font-size: 1.15rem; color: #DDD6FE;">Gold Member</div>
+                    <div class="text-small text-muted">$49 / month</div>
+                  </th>
+                  <th class="col-tier col-diamond">
+                    <span class="badge mb-1" style="background: var(--clr-secondary); color: #080B14; font-size: 0.68rem;">VIP Council</span>
+                    <div style="font-size: 1.15rem; color: #A5F3FC;">Diamond VIP</div>
+                    <div class="text-small text-muted">$99 / month</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Group 1: Time, Hours & Rates -->
+                <tr class="category-heading-row">
+                  <td colspan="4"><i class="ph-bold ph-clock"></i> 1. Monthly Hours &amp; Rate Discounts</td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Monthly Included VR Time
+                    <span class="feature-subtext">Free hours credited automatically on the 1st of each month</span>
+                  </td>
+                  <td class="col-tier"><span class="text-muted">0 Hours</span></td>
+                  <td class="col-tier col-featured"><strong>2 Hours</strong> <span class="text-small text-primary">($70 Value)</span></td>
+                  <td class="col-tier col-diamond"><strong>5 Hours</strong> <span class="text-small text-secondary">($175 Value)</span></td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Discount on Additional Hours
+                    <span class="feature-subtext">Applied automatically whenever you book extra time beyond your bundle</span>
+                  </td>
+                  <td class="col-tier"><span class="text-muted">0% (Standard Rates)</span></td>
+                  <td class="col-tier col-featured"><strong class="text-success">15% Off</strong> ($29.75 Peak / $21.25 Off-Peak)</td>
+                  <td class="col-tier col-diamond"><strong class="text-success">25% Off</strong> ($26.25 Peak / $18.75 Off-Peak)</td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Unused Hours Rollover
+                    <span class="feature-subtext">Unused hours roll over to the following month</span>
+                  </td>
+                  <td class="col-tier"><span class="text-muted">—</span></td>
+                  <td class="col-tier col-featured">Up to 4 Hours Rollover</td>
+                  <td class="col-tier col-diamond"><strong class="text-success">Unlimited Rollover</strong></td>
+                </tr>
+
+                <!-- Group 2: Booking Privileges & Station Access -->
+                <tr class="category-heading-row">
+                  <td colspan="4"><i class="ph-bold ph-calendar-check"></i> 2. Booking Privileges &amp; Station Guarantees</td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Priority Booking Window
+                    <span class="feature-subtext">How far in advance you can reserve peak Friday/Saturday night slots</span>
+                  </td>
+                  <td class="col-tier">24 Hours in Advance</td>
+                  <td class="col-tier col-featured"><strong>48 Hours Priority</strong></td>
+                  <td class="col-tier col-diamond"><strong class="text-secondary">7 Days VIP Priority</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Station Guarantee
+                    <span class="feature-subtext">Pod reservation holding during peak venue hours</span>
+                  </td>
+                  <td class="col-tier">Standard Queue</td>
+                  <td class="col-tier col-featured">Priority Pod Assignment</td>
+                  <td class="col-tier col-diamond"><strong class="text-secondary">Guaranteed Pod Holding</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Cancellation Flexibility
+                    <span class="feature-subtext">Penalty-free booking cancellation window</span>
+                  </td>
+                  <td class="col-tier">Up to 4 Hours Notice</td>
+                  <td class="col-tier col-featured">Up to 2 Hours Notice</td>
+                  <td class="col-tier col-diamond"><strong class="text-success">Instant Cancellation (No fee anytime)</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Apex Motion Pod Upgrades
+                    <span class="feature-subtext">3-DOF Hydraulic motion flight &amp; racing simulators</span>
+                  </td>
+                  <td class="col-tier"><span class="text-muted">Standard Add-on ($15)</span></td>
+                  <td class="col-tier col-featured">1 Free Upgrade / month</td>
+                  <td class="col-tier col-diamond"><strong class="text-secondary">2 Free Upgrades / month</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Free-Roam Arena (1,500 sq ft)
+                    <span class="feature-subtext">Untethered backpack squad battlefield</span>
+                  </td>
+                  <td class="col-tier">Standard Admission</td>
+                  <td class="col-tier col-featured">10% Squad Discount</td>
+                  <td class="col-tier col-diamond"><strong class="text-secondary">20% Squad Discount + Priority Floor</strong></td>
+                </tr>
+
+                <!-- Group 3: Social, Guest & Lounge Perks -->
+                <tr class="category-heading-row">
+                  <td colspan="4"><i class="ph-bold ph-users-three"></i> 3. Guest Passes &amp; Social Benefits</td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Complimentary Guest Passes
+                    <span class="feature-subtext">Bring a friend to game in a linked pod beside you for free</span>
+                  </td>
+                  <td class="col-tier"><span class="text-muted">—</span></td>
+                  <td class="col-tier col-featured">1 Pass / quarter</td>
+                  <td class="col-tier col-diamond"><strong class="text-success">2 Free Passes every month</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Shareable Station Hours
+                    <span class="feature-subtext">Use your membership balance to cover friends in linked co-op</span>
+                  </td>
+                  <td class="col-tier"><span class="text-muted">—</span></td>
+                  <td class="col-tier col-featured">Shareable with 1 Registered Buddy</td>
+                  <td class="col-tier col-diamond"><strong class="text-secondary">Shareable with up to 3 Friends</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Tactile Haptic Vest &amp; Gloves Rental
+                    <span class="feature-subtext">Full body sensory feedback immersion equipment</span>
+                  </td>
+                  <td class="col-tier"><span class="text-muted">$10 / session</span></td>
+                  <td class="col-tier col-featured"><strong class="text-success">Free on all sessions</strong></td>
+                  <td class="col-tier col-diamond"><strong class="text-success">Free on all sessions</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Complimentary Lounge Beverages
+                    <span class="feature-subtext">Craft beer, cold-brew coffee, energy drinks &amp; soft drinks</span>
+                  </td>
+                  <td class="col-tier"><span class="text-muted">Water only</span></td>
+                  <td class="col-tier col-featured">1 Free Beverage per visit</td>
+                  <td class="col-tier col-diamond"><strong class="text-success">Unlimited Specialty Drinks</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Lounge Café &amp; Snack Bar Discount
+                    <span class="feature-subtext">Artisanal pizzas, loaded nachos, and gourmet snacks</span>
+                  </td>
+                  <td class="col-tier"><span class="text-muted">0%</span></td>
+                  <td class="col-tier col-featured">10% Off all food</td>
+                  <td class="col-tier col-diamond"><strong class="text-secondary">20% Off all food &amp; merchandise</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-feature">
+                    Monthly Tournament Entry
+                    <span class="feature-subtext">Beat Saber, Pavlov Arena &amp; Racket Fury cash prize events</span>
+                  </td>
+                  <td class="col-tier">$15 Registration</td>
+                  <td class="col-tier col-featured">50% Off Registration</td>
+                  <td class="col-tier col-diamond"><strong class="text-success">Free VIP Entry to all tournaments</strong></td>
+                </tr>
+
+                <!-- Action Row at Bottom of Matrix -->
+                <tr class="table-cta-row">
+                  <td class="col-feature" style="font-weight: 700;">
+                    Choose Your Plan
+                  </td>
+                  <td class="col-tier">
+                    <a href="dashboard.html" class="btn btn-secondary w-full justify-center" style="font-size: 0.84rem; padding: 0.5rem 1rem;">
+                      Current Plan
+                    </a>
+                  </td>
+                  <td class="col-tier col-featured">
+                    <a href="contact.html" class="btn btn-primary w-full justify-center" style="font-size: 0.84rem; padding: 0.5rem 1rem; box-shadow: var(--shadow-glow);">
+                      Upgrade to Gold
+                    </a>
+                  </td>
+                  <td class="col-tier col-diamond">
+                    <a href="contact.html" class="btn btn-secondary w-full justify-center" style="font-size: 0.84rem; padding: 0.5rem 1rem; border-color: var(--clr-secondary); color: var(--clr-secondary);">
+                      Upgrade to Diamond
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 6: Corporate/Bulk Booking Teaser -->
+    <!-- ==========================================================================
+         SECTION 4: TRANSPARENT BOOKING BENEFITS & GUARANTEES
+         ========================================================================== -->
+    <section class="section pricing-section-guarantees">
+      <div class="container animate-on-scroll">
+        <div class="section-header-block mb-8">
+          <h2 style="font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-bottom: 0.5rem;">Why You'll Love Booking at Nexus VR</h2>
+          <p class="text-muted mb-0">Player-first policies designed to give you the most seamless and comfortable entertainment experience in the city.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="guarantee-card">
+            <div class="guarantee-icon-box" style="background: rgba(16, 185, 129, 0.14); color: var(--clr-success);">
+              <i class="ph-bold ph-shield-check"></i>
+            </div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.4rem;">Motion-Comfort Guarantee</h4>
+            <p class="text-small text-muted mb-0">Feel dizzy within the first 15 minutes? Our VR Masters will switch you to a seated gentle experience or refund your session credit.</p>
+          </div>
+
+          <div class="guarantee-card">
+            <div class="guarantee-icon-box" style="background: rgba(34, 211, 238, 0.14); color: var(--clr-secondary);">
+              <i class="ph-bold ph-wallet"></i>
+            </div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.4rem;">Zero Hidden Equipment Fees</h4>
+            <p class="text-small text-muted mb-0">Headset sanitization, disposable memory-foam liners, wireless controllers, and calibration are 100% free with every booking.</p>
+          </div>
+
+          <div class="guarantee-card">
+            <div class="guarantee-icon-box" style="background: rgba(139, 92, 246, 0.14); color: var(--clr-primary);">
+              <i class="ph-bold ph-hourglass-high"></i>
+            </div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.4rem;">Non-Expiring Hours</h4>
+            <p class="text-small text-muted mb-0">Any time bundle you buy stays in your player wallet permanently. Play 30 minutes today and save the rest for next month.</p>
+          </div>
+
+          <div class="guarantee-card">
+            <div class="guarantee-icon-box" style="background: rgba(245, 158, 11, 0.14); color: var(--clr-warning);">
+              <i class="ph-bold ph-arrow-counter-clockwise"></i>
+            </div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.4rem;">1-Click Rescheduling</h4>
+            <p class="text-small text-muted mb-0">Plans change? Move your booked time slot directly from your user dashboard with zero penalty up to 2 hours before your start time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 5: CORPORATE & GROUP OVERFLOW TEASER
+         ========================================================================== -->
     <section class="section container text-center animate-on-scroll">
-      <div class="card" style="background: linear-gradient(135deg, var(--clr-primary), var(--clr-secondary)); color: white; border: none;">
-        <h2 style="color: white;">Need More than 4 Pods?</h2>
-        <p style="color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto var(--space-6) auto;">Whether it's a birthday party, team building, or a corporate event, we offer customized packages for large groups with exclusive lounge access.</p>
-        <a href="groups.html" class="btn" style="background: white; color: var(--clr-primary); font-weight: bold;">View Group Packages</a>
+      <div class="card"
+        style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.95), rgba(34, 211, 238, 0.92)); color: white; border: none; padding: 3.5rem 2rem; box-shadow: 0 20px 45px rgba(139, 92, 246, 0.35);">
+        <span class="badge mb-3" style="background: rgba(0, 0, 0, 0.25); color: #FFFFFF; font-weight: 700;">Parties of 4 to 40 Guests</span>
+        <h2 style="color: white; font-size: clamp(2rem, 3.8vw, 3rem); margin-bottom: 0.85rem;">Planning a Group Event or Birthday?</h2>
+        <p style="color: rgba(255,255,255,0.92); max-width: 640px; margin: 0 auto var(--space-6) auto; font-size: 1.1rem; line-height: 1.6;">
+          Rent multiple side-by-side pods, book our 1,500 sq ft untethered Free-Roam Arena, or reserve the entire VIP lounge with catering and dedicated coaches.
+        </p>
+        <div class="flex justify-center gap-4 flex-wrap">
+          <a href="groups.html" class="btn" style="background: white; color: var(--clr-primary); font-weight: 800; padding: 0.75rem 1.75rem; min-height: 44px; height: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            Explore Group Packages <i class="ph ph-arrow-right"></i>
+          </a>
+          <a href="contact.html" class="btn" style="background: rgba(0, 0, 0, 0.3); color: white; border: 1px solid rgba(255,255,255,0.4); font-weight: 700; padding: 0.75rem 1.75rem; min-height: 44px; height: auto;">
+            Book Station Now
+          </a>
+        </div>
       </div>
     </section>
 
-    <!-- Section 7: FAQ Accordion -->
-    <section class="section container animate-on-scroll">
-      <h2 class="text-center mb-8">Frequently Asked Questions</h2>
-      <div style="max-width: 800px; margin: 0 auto;">
-        
-        <div class="card mb-4" style="padding: var(--space-4);">
-          <details>
-            <summary style="font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-              Do time bundles expire?
-              <i class="ph ph-caret-down"></i>
-            </summary>
-            <p class="text-muted mt-4 mb-0">No, time bundles purchased in your account never expire. You can use them across multiple visits.</p>
-          </details>
-        </div>
-        
-        <div class="card mb-4" style="padding: var(--space-4);">
-          <details>
-            <summary style="font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-              Can I share my bundle with a friend?
-              <i class="ph ph-caret-down"></i>
-            </summary>
-            <p class="text-muted mt-4 mb-0">The 20-Hour Marathon Pack can be shared with up to 1 other person. Other bundles are strictly tied to a single account.</p>
-          </details>
-        </div>
-        
-        <div class="card" style="padding: var(--space-4);">
-          <details>
-            <summary style="font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-              Is there an age limit for VR?
-              <i class="ph ph-caret-down"></i>
-            </summary>
-            <p class="text-muted mt-4 mb-0">Players must be at least 8 years old. Players under 13 require a parent or guardian present in the lounge.</p>
-          </details>
+    <!-- ==========================================================================
+         SECTION 6: FREQUENTLY ASKED QUESTIONS ACCORDION
+         ========================================================================== -->
+    <section class="section pricing-section-faq">
+      <div class="container animate-on-scroll">
+        <div class="section-header-block">
+          <span class="section-header-badge" style="background: rgba(34, 211, 238, 0.12); color: var(--clr-secondary); border: 1px solid rgba(34, 211, 238, 0.3);">
+            <i class="ph-bold ph-question"></i> Help &amp; Policies
+          </span>
+          <h2 style="font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-bottom: 0.5rem;">Frequently Asked Questions</h2>
+          <p class="text-muted mb-0">Everything you need to know about purchasing hours, memberships, and session policies.</p>
         </div>
 
+        <div style="max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
+          <div class="card p-5" style="border: 1px solid rgba(255,255,255,0.09);">
+            <details>
+              <summary style="font-weight: 700; font-size: 1.05rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--clr-text);">
+                Do time bundles ever expire?
+                <i class="ph ph-caret-down text-primary" style="font-size: 1.25rem;"></i>
+              </summary>
+              <p class="text-muted mt-3 mb-0" style="line-height: 1.6;">
+                No! Prepaid time bundles purchased in your player account never expire. You can consume them in 30-minute or 1-hour increments across as many visits as you like over weeks or months.
+              </p>
+            </details>
+          </div>
+
+          <div class="card p-5" style="border: 1px solid rgba(255,255,255,0.09);">
+            <details>
+              <summary style="font-weight: 700; font-size: 1.05rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--clr-text);">
+                Can I share my hours or bundles with friends?
+                <i class="ph ph-caret-down text-primary" style="font-size: 1.25rem;"></i>
+              </summary>
+              <p class="text-muted mt-3 mb-0" style="line-height: 1.6;">
+                Yes! The <strong>Pro Pack (10 Hours)</strong> can be shared with 1 registered friend, and the <strong>Squad Marathon Pack (20 Hours)</strong> allows you to link up to 3 friends so your whole squad can draw from the same balance. Diamond Members can also bring 2 free guests every month.
+              </p>
+            </details>
+          </div>
+
+          <div class="card p-5" style="border: 1px solid rgba(255,255,255,0.09);">
+            <details>
+              <summary style="font-weight: 700; font-size: 1.05rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--clr-text);">
+                How do monthly membership hours rollover work?
+                <i class="ph ph-caret-down text-primary" style="font-size: 1.25rem;"></i>
+              </summary>
+              <p class="text-muted mt-3 mb-0" style="line-height: 1.6;">
+                For Gold Members ($49/mo), unused monthly hours roll over to the next billing cycle up to a maximum bank of 4 hours. For Diamond VIP ($99/mo), all unused monthly hours roll over indefinitely with zero cap as long as your membership is active.
+              </p>
+            </details>
+          </div>
+
+          <div class="card p-5" style="border: 1px solid rgba(255,255,255,0.09);">
+            <details>
+              <summary style="font-weight: 700; font-size: 1.05rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--clr-text);">
+                Can I switch games during my booked session?
+                <i class="ph ph-caret-down text-primary" style="font-size: 1.25rem;"></i>
+              </summary>
+              <p class="text-muted mt-3 mb-0" style="line-height: 1.6;">
+                Absolutely. You have unrestricted access to all 50+ games in our library. You can switch between games at any time through our custom VR headset dashboard or ask any floor VR Master for an instant recommendation.
+              </p>
+            </details>
+          </div>
+
+          <div class="card p-5" style="border: 1px solid rgba(255,255,255,0.09);">
+            <details>
+              <summary style="font-weight: 700; font-size: 1.05rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--clr-text);">
+                What is your cancellation and refund policy?
+                <i class="ph ph-caret-down text-primary" style="font-size: 1.25rem;"></i>
+              </summary>
+              <p class="text-muted mt-3 mb-0" style="line-height: 1.6;">
+                Standard bookings can be rescheduled or cancelled for a 100% wallet credit up to 2 hours before your scheduled session. Diamond VIP members enjoy instant cancellation privileges with zero time penalty.
+              </p>
+            </details>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -296,33 +1625,82 @@
         </a>
         <p class="text-small">Elevating entertainment through cutting-edge virtual reality experiences.</p>
         <div class="flex gap-4 mt-4">
-          <a href="#" class="nav-link"><i class="ph ph-twitter-logo" style="font-size: 1.5rem;"></i></a>
-          <a href="#" class="nav-link"><i class="ph ph-instagram-logo" style="font-size: 1.5rem;"></i></a>
-          <a href="#" class="nav-link"><i class="ph ph-discord-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Twitter"><i class="ph ph-twitter-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Instagram"><i class="ph ph-instagram-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Discord"><i class="ph ph-discord-logo" style="font-size: 1.5rem;"></i></a>
         </div>
       </div>
       <div>
         <h4 style="margin-bottom: var(--space-4);">Explore</h4>
         <ul class="flex-col gap-2">
           <li><a href="games.html" class="nav-link text-small">Games Library</a></li>
-          <li><a href="pricing.html" class="nav-link text-small">Pricing & Bundles</a></li>
-          <li><a href="groups.html" class="nav-link text-small">Group Bookings</a></li>
-          <li><a href="dashboard.html" class="nav-link text-small">User</a></li>
+          <li><a href="pricing.html" class="nav-link text-small">Pricing &amp; Bundles</a></li>
+          <li><a href="groups.html" class="nav-link text-small">Parties &amp; Groups</a></li>
+          <li><a href="about.html" class="nav-link text-small">About Us</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact</a></li>
+          <li><a href="dashboard.html" class="nav-link text-small">User Dashboard</a></li>
         </ul>
       </div>
       <div>
         <h4 style="margin-bottom: var(--space-4);">Support</h4>
         <ul class="flex-col gap-2">
-          <li><a href="#" class="nav-link text-small">FAQ</a></li>
-          <li><a href="#" class="nav-link text-small">Contact Us</a></li>
+          <li><a href="contact.html" class="nav-link text-small">FAQ &amp; Policies</a></li>
+          <li><a href="about.html" class="nav-link text-small">Venue Hygiene &amp; Safety</a></li>
           <li><a href="#" class="nav-link text-small">Terms of Service</a></li>
           <li><a href="#" class="nav-link text-small">Privacy Policy</a></li>
         </ul>
       </div>
       <div>
-        <h4 style="margin-bottom: var(--space-4);">Location</h4>
-        <p class="text-small">123 Cyber Avenue<br>Neon District, NT 45890</p>
-        <p class="text-small mt-2">Mon - Sun: 10:00 AM - 12:00 AM</p>
+        <h4 style="margin-bottom: var(--space-4);">Location &amp; Hours</h4>
+        <div class="footer-location-col">
+          <!-- Address -->
+          <div class="footer-loc-block">
+            <i class="ph-fill ph-map-pin footer-loc-icon"></i>
+            <div class="footer-loc-info">
+              <strong>Nexus VR Lounge</strong>
+              <span>123 Cyber Avenue, Suite 200</span>
+              <span style="font-size: 0.8rem; color: var(--clr-text-muted);">Neon District, NT 45890</span>
+            </div>
+          </div>
+
+          <!-- Opening Hours -->
+          <div class="footer-loc-block">
+            <i class="ph ph-clock footer-loc-icon"></i>
+            <div class="footer-loc-info" style="width: 100%;">
+              <span class="footer-open-pill">Open Daily</span>
+              <div class="footer-hours-list">
+                <div class="footer-hours-row">
+                  <span>Mon &ndash; Thu:</span>
+                  <strong style="color: var(--clr-text);">12 PM &ndash; 11 PM</strong>
+                </div>
+                <div class="footer-hours-row">
+                  <span>Fri &ndash; Sun:</span>
+                  <strong style="color: var(--clr-secondary);">10 AM &ndash; Midnight</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone & Contact Links -->
+          <div class="footer-contacts-list">
+            <a href="tel:+15550192834" class="footer-contact-item" aria-label="Phone: (555) 019-2834">
+              <i class="ph ph-phone" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>(555) 019-2834</span>
+            </a>
+            <a href="mailto:contact@nexusvr.com" class="footer-contact-item" aria-label="Email: contact@nexusvr.com">
+              <i class="ph ph-envelope-simple" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>contact@nexusvr.com</span>
+            </a>
+          </div>
+
+          <!-- Directions Action Button -->
+          <div>
+            <a href="https://maps.google.com/?q=123+Cyber+Avenue+Neon+District" target="_blank" rel="noopener noreferrer" class="footer-directions-btn" aria-label="Get directions to Nexus VR Lounge on Google Maps">
+              <i class="ph ph-navigation-arrow"></i>
+              <span>Get Directions</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="container text-center text-small" style="color: var(--clr-text-muted); border-top: var(--border-glass); padding-top: var(--space-6);">
@@ -334,5 +1712,3 @@
   <script src="src/js/forms.js"></script>
 </body>
 </html>
-
-

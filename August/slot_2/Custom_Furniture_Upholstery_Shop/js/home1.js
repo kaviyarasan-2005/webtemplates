@@ -2,16 +2,15 @@
  * home1.js — Home Page 1 specific scripts
  * Custom Furniture Upholstery Shop
  */
-import { initBASliders, initCarousel } from './gallery.js';
 
 function initHome1() {
   initBASliders();
   initCarousel('testimonials-carousel');
   initNewsletterHome1();
-  initCounters();
+  initHome1Counters();
 }
 
-function initCounters() {
+function initHome1Counters() {
   const counters = document.querySelectorAll('.stat-number');
   if (!counters.length) return;
   
@@ -61,4 +60,5 @@ function initNewsletterHome1() {
   });
 }
 
-export { initHome1 };
+/* ── Global export (classic script — works from file://) ── */
+window.initHome1 = initHome1;

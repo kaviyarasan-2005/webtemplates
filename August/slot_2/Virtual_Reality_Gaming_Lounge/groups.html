@@ -3,26 +3,504 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexus VR | Parties & Groups</title>
+  <title>Nexus VR | Parties &amp; Groups</title>
   <meta name="description" content="Book Nexus VR for your next birthday party, corporate event, or team building session.">
-  
+
   <link rel="stylesheet" href="src/css/main.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon-3.svg">
+
+  <style>
+    /* =====================================================
+       GROUPS PAGE — SCOPED STYLES
+       ===================================================== */
+
+    /* ---------- Hero ---------- */
+    .groups-hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding-top: 76px;
+    }
+    .groups-hero__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      opacity: 0.87;
+      z-index: 0;
+    }
+    /* Directional scrim: heavy at bottom/left, light at top */
+    .groups-hero__scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(to top,  rgba(8,11,20,0.97) 0%, rgba(8,11,20,0.55) 38%, rgba(8,11,20,0.10) 65%, transparent 100%),
+        linear-gradient(to right, rgba(8,11,20,0.70) 0%, transparent 60%);
+    }
+    .groups-hero__content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+    .groups-hero__glass {
+      background: rgba(8, 11, 20, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(139,92,246,0.22);
+      border-radius: var(--radius-lg);
+      padding: 3rem 3.5rem;
+      max-width: 680px;
+    }
+    @media (max-width: 640px) {
+      .groups-hero__glass { padding: 2rem 1.5rem; }
+      .groups-hero { min-height: 80vh; }
+    }
+
+    /* Hero stat strip */
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .hero-stat__value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      font-family: var(--font-primary);
+      color: var(--clr-text);
+      line-height: 1;
+    }
+    .hero-stat__label {
+      font-size: 0.78rem;
+      color: var(--clr-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Hero CTA strip */
+    .hero-cta-strip {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    /* ---------- Section: Birthday packages ---------- */
+    .pkg-section {
+      background: #080B14;
+      padding: var(--space-20) 0;
+    }
+    .pkg-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Package Card */
+    .pkg-card {
+      background: rgba(14,20,36,0.92);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .pkg-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+    }
+    .pkg-card--featured {
+      border-color: var(--clr-primary);
+      box-shadow: 0 0 0 1px var(--clr-primary), 0 12px 40px rgba(139,92,246,0.18);
+    }
+
+    /* Popular badge — top-center */
+    .pkg-badge {
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--clr-primary);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 1.1rem;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      white-space: nowrap;
+      z-index: 3;
+    }
+
+    /* Card image */
+    .pkg-card__img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+    }
+    .pkg-card__img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .pkg-card:hover .pkg-card__img-wrap img {
+      transform: scale(1.04);
+    }
+    /* Gradient from image into card body */
+    .pkg-card__img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(to top, rgba(14,20,36,0.92), transparent);
+      pointer-events: none;
+    }
+
+    /* Card body */
+    .pkg-card__body {
+      padding: 1.5rem 1.75rem 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .pkg-card__meta {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.85rem;
+    }
+    .pkg-meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 0.28rem 0.75rem;
+      font-size: 0.78rem;
+      color: var(--clr-text-muted);
+    }
+    .pkg-meta-pill i { font-size: 0.85rem; color: var(--clr-secondary); }
+
+    .pkg-card__title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-family: var(--font-primary);
+      margin: 0 0 0.4rem;
+      color: var(--clr-text);
+    }
+    .pkg-card__desc {
+      font-size: 0.9rem;
+      color: var(--clr-text-muted);
+      line-height: 1.55;
+      margin: 0 0 1.1rem;
+    }
+
+    /* Feature list */
+    .pkg-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex: 1;
+    }
+    .pkg-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      color: var(--clr-text);
+      line-height: 1.4;
+    }
+    .pkg-check {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(16,185,129,0.12);
+      color: #10B981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-top: 0.1rem;
+    }
+    .pkg-check--star {
+      background: rgba(245,158,11,0.12);
+      color: #F59E0B;
+    }
+
+    /* Card footer: price + CTA */
+    .pkg-card__footer {
+      padding: 1.25rem 1.75rem 1.75rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .pkg-price {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .pkg-price__label {
+      font-size: 0.72rem;
+      color: var(--clr-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .pkg-price__amount {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: var(--font-primary);
+      color: var(--clr-text);
+      line-height: 1;
+    }
+    .pkg-card--featured .pkg-price__amount { color: var(--clr-primary); }
+    .pkg-price__per {
+      font-size: 0.78rem;
+      color: var(--clr-text-muted);
+    }
+
+    /* ---------- Floating sticky quote CTA ---------- */
+    .floating-cta {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--clr-primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.85rem 1.4rem;
+      border-radius: 100px;
+      box-shadow: 0 8px 30px rgba(139,92,246,0.5);
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .floating-cta.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .floating-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(139,92,246,0.6);
+      color: #fff;
+    }
+    @media (max-width: 640px) {
+      .floating-cta { bottom: 1rem; right: 1rem; font-size: 0.82rem; padding: 0.75rem 1.1rem; }
+    }
+
+    /* ---------- Corporate section (kept, minor polish) ---------- */
+    .corp-section {
+      background: var(--clr-surface-alt);
+    }
+
+    /* ---------- Tournament section ---------- */
+    .tournament-section {
+      background: #080B14;
+    }
+
+    /* ---------- Add-ons section ---------- */
+    .addons-section {
+      background: var(--clr-surface);
+    }
+    .addon-card {
+      background: rgba(14,20,36,0.80);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .addon-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34,211,238,0.3);
+    }
+    .addon-card i { font-size: 2.25rem; color: var(--clr-secondary); display: block; margin-bottom: 0.75rem; }
+    .addon-card h4 { margin: 0 0 0.5rem; font-size: 1rem; font-weight: 700; }
+    .addon-card p  { font-size: 0.85rem; color: var(--clr-text-muted); margin: 0; line-height: 1.5; }
+
+    /* ---------- Inquiry / CTA section ---------- */
+    .inquiry-section {
+      background: linear-gradient(160deg, rgba(139,92,246,0.12) 0%, rgba(8,11,20,0) 55%),
+                  linear-gradient(to bottom, var(--clr-surface-alt), var(--clr-bg));
+      padding: var(--space-20) 0;
+    }
+
+    /* Inquiry anchor strip (above form) */
+    .inquiry-anchor-strip {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .inquiry-anchor-strip .badge-label {
+      display: inline-block;
+      background: rgba(139,92,246,0.15);
+      border: 1px solid rgba(139,92,246,0.3);
+      color: var(--clr-primary);
+      border-radius: 100px;
+      padding: 0.4rem 1.1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .inquiry-anchor-strip h2 { margin: 0 0 0.75rem; font-size: clamp(1.8rem, 3.5vw, 2.5rem); }
+    .inquiry-anchor-strip p  { color: var(--clr-text-muted); max-width: 560px; margin: 0 auto 1.5rem; line-height: 1.6; }
+
+    /* Contact alternatives row */
+    .contact-alt-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .contact-alt-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 0.55rem 1.2rem;
+      font-size: 0.85rem;
+      color: var(--clr-text);
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .contact-alt-pill:hover {
+      border-color: var(--clr-secondary);
+      background: rgba(34,211,238,0.06);
+      color: var(--clr-text);
+    }
+    .contact-alt-pill i { color: var(--clr-secondary); font-size: 1rem; }
+
+    /* Form card */
+    .inquiry-form-card {
+      background: rgba(18,24,40,0.90);
+      border: 1px solid rgba(139,92,246,0.18);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    @media (max-width: 640px) {
+      .inquiry-form-card { padding: 1.5rem 1.25rem; }
+    }
+
+    /* Submit guarantee row */
+    .form-guarantees {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1.25rem;
+    }
+    .form-guarantee {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+      color: var(--clr-text-muted);
+    }
+    .form-guarantee i { color: #10B981; font-size: 0.95rem; }
+
+    /* ---------- Light theme overrides ---------- */
+    [data-theme="light"] .pkg-card {
+      background: rgba(255,255,255,0.92);
+      border-color: rgba(0,0,0,0.08);
+      color: var(--clr-text);
+    }
+    [data-theme="light"] .pkg-card__img-wrap::after {
+      background: linear-gradient(to top, rgba(255,255,255,0.92), transparent);
+    }
+    [data-theme="light"] .pkg-meta-pill {
+      background: rgba(0,0,0,0.04);
+      border-color: rgba(0,0,0,0.1);
+    }
+    [data-theme="light"] .pkg-card__desc { color: var(--clr-text-muted); }
+    [data-theme="light"] .pkg-card--featured {
+      box-shadow: 0 0 0 1px var(--clr-primary), 0 12px 40px rgba(139,92,246,0.12);
+    }
+    [data-theme="light"] .pkg-card__footer { border-top-color: rgba(0,0,0,0.07); }
+    [data-theme="light"] .inquiry-form-card {
+      background: rgba(255,255,255,0.96);
+      border-color: rgba(139,92,246,0.15);
+    }
+    [data-theme="light"] .addon-card {
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(0,0,0,0.07);
+    }
+    [data-theme="light"] .groups-hero__scrim {
+      background:
+        linear-gradient(to top, rgba(8,11,20,0.92) 0%, rgba(8,11,20,0.45) 38%, rgba(8,11,20,0.05) 65%, transparent 100%),
+        linear-gradient(to right, rgba(8,11,20,0.60) 0%, transparent 60%);
+    }
+    [data-theme="light"] .contact-alt-pill {
+      background: rgba(0,0,0,0.03);
+      border-color: rgba(0,0,0,0.1);
+    }
+    [data-theme="light"] .pkg-section  { background: #F0F4FF; }
+    [data-theme="light"] .tournament-section { background: #F0F4FF; }
+    [data-theme="light"] .hero-stat__value { color: #fff; }
+    [data-theme="light"] .hero-stat__label { color: rgba(255,255,255,0.7); }
+
+    /* ---------- RTL tweaks ---------- */
+    [dir="rtl"] .groups-hero__glass  { margin-right: 0; margin-left: auto; }
+    [dir="rtl"] .floating-cta        { right: auto; left: 2rem; }
+    [dir="rtl"] .pkg-badge           { left: 50%; right: auto; }
+  </style>
 </head>
 <body>
 
   <!-- Navbar -->
   <nav class="navbar">
     <div class="container flex justify-between items-center">
-      <a href="home1.html" class="flex items-center gap-2" aria-label="Nexus VR Home">
-        <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" style="height: 44px; width: 44px; border-radius: 50%; box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);">
-        <span class="text-large" style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+      <!-- Brand -->
+      <a href="home1.html" class="nav-brand" aria-label="Nexus VR Home">
+        <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" class="nav-brand__logo">
+        <span class="nav-brand__name">Nexus <span class="text-gradient">VR</span></span>
       </a>
 
-      <div class="nav-links items-center">
+      <!-- Desktop Nav -->
+      <div class="nav-links">
         <div class="dropdown">
-          <a href="#" class="nav-link flex items-center gap-1">Home <i class="ph ph-caret-down"></i></a>
+          <a href="#" class="nav-link">Home <i class="ph ph-caret-down dropdown-caret"></i></a>
           <div class="dropdown-menu">
             <a href="home1.html" class="dropdown-item">Home 1</a>
             <a href="home2.html" class="dropdown-item">Home 2</a>
@@ -30,9 +508,11 @@
         </div>
         <a href="games.html" class="nav-link">Games Library</a>
         <a href="pricing.html" class="nav-link">Pricing</a>
-        <a href="groups.html" class="nav-link" style="color: var(--clr-primary);">Parties & Groups</a>
+        <a href="groups.html" class="nav-link active">Parties &amp; Groups</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
         <div class="dropdown">
-          <a href="#" class="nav-link flex items-center gap-1">Dashboards <i class="ph ph-caret-down"></i></a>
+          <a href="#" class="nav-link">Dashboards <i class="ph ph-caret-down dropdown-caret"></i></a>
           <div class="dropdown-menu">
             <a href="dashboard.html" class="dropdown-item">User</a>
             <a href="admin.html" class="dropdown-item">Admin</a>
@@ -40,15 +520,18 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-4">
-        <button id="theme-toggle" class="btn-icon flex items-center justify-center" aria-label="Toggle Theme">
+      <!-- Actions -->
+      <div class="nav-actions">
+        <button id="theme-toggle" class="nav-icon-btn" aria-label="Toggle Theme">
           <i class="ph ph-moon"></i>
         </button>
-        <button id="rtl-toggle" class="btn-rtl hidden lg:flex">RTL</button>
-        <a href="login.html" class="btn btn-primary hidden lg:flex">Login</a>
-        <a href="dashboard.html" class="btn btn-secondary hidden lg:flex">Book Now</a>
-        <button id="mobile-menu-btn" class="btn-icon lg:hidden flex items-center justify-center">
-          <i class="ph ph-list" style="font-size: 1.5rem;"></i>
+        <button id="rtl-toggle" class="btn-rtl-compact" title="Toggle RTL Layout">RTL</button>
+        <a href="login.html" class="nav-link-login">Login</a>
+        <a href="contact.html" class="nav-cta-btn">
+          <i class="ph ph-ticket"></i> Book Now
+        </a>
+        <button id="mobile-menu-btn" class="nav-icon-btn" aria-label="Toggle Navigation Menu">
+          <i class="ph ph-list" style="font-size: 1.4rem;"></i>
         </button>
       </div>
     </div>
@@ -68,7 +551,9 @@
     </div>
     <a href="games.html" class="nav-link text-large">Games Library</a>
     <a href="pricing.html" class="nav-link text-large">Pricing</a>
-    <a href="groups.html" class="nav-link text-large">Parties &amp; Groups</a>
+    <a href="groups.html" class="nav-link text-large" style="color: var(--clr-primary);">Parties &amp; Groups</a>
+    <a href="about.html" class="nav-link text-large">About</a>
+    <a href="contact.html" class="nav-link text-large">Contact</a>
     <!-- Dashboards Group -->
     <div class="mob-group">
       <button class="mob-group-btn">
@@ -79,186 +564,344 @@
         <a href="admin.html" class="nav-link text-large">Admin</a>
       </div>
     </div>
+        <hr style="border-color: rgba(255,255,255,0.1);">
+    <!-- Theme & RTL Toggles (Shifted into Hamburger) -->
+    <div class="mob-control-row">
+      <span>Theme</span>
+      <button id="theme-toggle-mobile" class="nav-icon-btn" aria-label="Toggle Theme">
+        <i class="ph ph-moon" style="font-size:1.2rem;"></i>
+      </button>
+    </div>
+    <div class="mob-control-row">
+      <span>Layout Direction</span>
+      <button id="rtl-toggle-mobile" class="btn-rtl-compact">RTL</button>
+    </div>
     <hr style="border-color: rgba(255,255,255,0.1);">
-    <a href="login.html" class="btn btn-primary justify-center">Login</a>
-    <a href="dashboard.html" class="btn btn-secondary justify-center">Book Now</a>
+    <a href="login.html" class="btn btn-secondary justify-center" style="width: 100%;">Login</a>
+    <a href="contact.html" class="btn btn-primary justify-center" style="width: 100%;"><i class="ph ph-ticket"></i> Book Now</a>
   </div>
 
-  <main style="padding-top: 76px;">
-    <!-- Section 1: Header -->
-    <section class="section" style="background: linear-gradient(135deg, rgba(139,92,246,0.08), var(--clr-bg)); border-bottom: 1px solid var(--border-glass); padding: 8rem 0 6rem; min-height: 50vh; display: flex; align-items: center; justify-content: center;">
-      <div class="container animate-on-scroll" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-        <span class="badge mb-4" style="background: rgba(139, 92, 246, 0.15); color: var(--clr-primary); border: none; padding: 0.5rem 1rem; font-size: 0.9rem; letter-spacing: 1px;">Groups & Events</span>
-        <h1 class="mb-6" style="font-size: clamp(3rem, 6vw, 4.5rem); line-height: 1.1; font-weight: 800; max-width: 800px; margin-left: auto; margin-right: auto;">Unforgettable <span class="text-gradient">Experiences</span></h1>
-        <p class="text-large mx-auto mb-8" style="max-width: 650px; color: var(--clr-text-muted); line-height: 1.6;">Elevate your next event. From epic birthday parties to next-gen corporate team building, we have the perfect immersive package for your group.</p>
-        <div class="flex gap-4 justify-center">
-          <a href="#inquiry" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);">Request a Quote</a>
-          <a href="#packages" class="btn btn-secondary" style="padding: 1rem 2rem; font-size: 1.1rem; background: transparent; border: 1px solid var(--clr-primary);">View Packages</a>
-        </div>
-      </div>
-    </section>
+  <main>
 
-    <!-- Section 2: Birthday Packages -->
-    <section class="section container animate-on-scroll">
-      <div class="flex items-center justify-center gap-2 mb-8">
-        <i class="ph ph-cake text-primary" style="font-size: 2rem;"></i>
-        <h2 class="m-0">Birthday Parties</h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8" style="max-width: 900px; margin: 0 auto;">
-        <div class="card p-0 overflow-hidden" style="display: flex; flex-direction: column; height: 100%;">
-          <img src="src/assets/images/birthday-1.jpg" alt="Party" style="width: 100%; height: 200px; object-fit: cover; object-position: top;">
-          <div class="p-6 flex-col" style="display: flex; flex: 1;">
-            <h3 class="mb-2">Epic Gamer Party</h3>
-            <p class="text-muted mb-4">Up to 8 Players. 2 Hours.</p>
-            <ul class="flex-col gap-3 mb-6" style="list-style: none; padding: 0;">
-              <li class="flex items-center gap-3"><div class="btn-icon" style="width:28px;height:28px;min-height:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> 8 Dedicated VR Pods</li>
-              <li class="flex items-center gap-3"><div class="btn-icon" style="width:28px;height:28px;min-height:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> Multiplayer Lobby Setup</li>
-              <li class="flex items-center gap-3"><div class="btn-icon" style="width:28px;height:28px;min-height:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> Dedicated Party Host</li>
-            </ul>
-            <div style="margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--border-glass);" class="flex items-center justify-between">
-              <div>
-                <span class="text-muted text-small" style="display:block;">Starting from</span>
-                <span style="font-size: 1.75rem; font-weight: 800; color: var(--clr-text);">$299</span>
-              </div>
-              <a href="pricing.html" class="btn btn-secondary" style="padding: 0 1.25rem;">Book Now</a>
+    <!-- ===================================================
+         SECTION 1: HERO — full-bleed image with directional scrim
+         =================================================== -->
+    <section class="groups-hero">
+      <img
+        src="src/assets/images/vr_group_event_highres.jpg"
+        alt="Group VR event at Nexus VR"
+        class="groups-hero__bg"
+        loading="eager"
+        fetchpriority="high"
+      >
+      <div class="groups-hero__scrim" aria-hidden="true"></div>
+
+      <div class="groups-hero__content container">
+        <div class="groups-hero__glass animate-on-scroll">
+          <span
+            class="badge mb-4"
+            style="background: rgba(139,92,246,0.18); color: var(--clr-primary); border: none; padding: 0.45rem 1rem; font-size: 0.82rem; letter-spacing: 0.08em;"
+          >Groups &amp; Events</span>
+
+          <h1 style="font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 800; line-height: 1.1; margin: 0 0 1rem;">
+            Unforgettable<br><span class="text-gradient">VR Experiences</span>
+          </h1>
+
+          <p style="color: rgba(255,255,255,0.75); font-size: 1.05rem; line-height: 1.65; margin: 0; max-width: 500px;">
+            From epic birthday parties to next-gen corporate team building — we have the perfect immersive package for your group.
+          </p>
+
+          <!-- Stats row -->
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="hero-stat__value">50+</span>
+              <span class="hero-stat__label">Players per event</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat__value">15+</span>
+              <span class="hero-stat__label">VR titles available</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat__value">24 hr</span>
+              <span class="hero-stat__label">Quote turnaround</span>
             </div>
           </div>
-        </div>
-        <div class="card p-0 overflow-hidden" style="border-color: var(--clr-primary); display: flex; flex-direction: column; height: 100%;">
-          <div class="badge" style="position: absolute; top: 1rem; right: 1rem; background: var(--clr-primary); color: white; z-index: 2;">Most Popular</div>
-          <img src="src/assets/images/birthday-2.jpg" alt="VIP Party" style="width: 100%; height: 200px; object-fit: cover; object-position: top; position: relative; z-index: 1;">
-          <div class="p-6 flex-col" style="display: flex; flex: 1; position: relative; z-index: 1;">
-            <h3 class="mb-2">VIP Lounge Takeover</h3>
-            <p class="text-muted mb-4">Up to 15 Players. 3 Hours.</p>
-            <ul class="flex-col gap-3 mb-6" style="list-style: none; padding: 0;">
-              <li class="flex items-center gap-3"><div class="btn-icon" style="width:28px;height:28px;min-height:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> Private Lounge Area</li>
-              <li class="flex items-center gap-3"><div class="btn-icon" style="width:28px;height:28px;min-height:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> 10 VR Pods + 2 Racing Sims</li>
-              <li class="flex items-center gap-3"><div class="btn-icon" style="width:28px;height:28px;min-height:28px;background:rgba(16,185,129,0.1);color:var(--clr-success);"><i class="ph ph-check"></i></div> Pizza & Soda Included</li>
-            </ul>
-            <div style="margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--border-glass);" class="flex items-center justify-between">
-              <div>
-                <span class="text-muted text-small" style="display:block;">Starting from</span>
-                <span style="font-size: 1.75rem; font-weight: 800; color: var(--clr-primary);">$549</span>
-              </div>
-              <a href="pricing.html" class="btn btn-primary" style="box-shadow: var(--shadow-glow); padding: 0 1.25rem;">Book VIP</a>
-            </div>
+
+          <!-- CTA buttons -->
+          <div class="hero-cta-strip">
+            <a href="#inquiry" class="btn btn-primary" style="padding: 0.9rem 2rem; font-size: 1rem; box-shadow: 0 10px 24px rgba(139,92,246,0.35);">
+              <i class="ph ph-paper-plane-tilt" style="font-size: 1.1rem;"></i> Request a Quote
+            </a>
+            <a href="#packages" class="btn btn-secondary" style="padding: 0.9rem 2rem; font-size: 1rem; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.25);">
+              <i class="ph ph-arrow-down" style="font-size: 1.1rem;"></i> View Packages
+            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 3: Corporate Team Building -->
-    <section class="section" style="background: var(--clr-surface-alt);">
+
+    <!-- ===================================================
+         SECTION 2: BIRTHDAY PACKAGES
+         =================================================== -->
+    <section id="packages" class="pkg-section">
+      <div class="container animate-on-scroll">
+
+        <!-- Section header -->
+        <div style="text-align: center; margin-bottom: 3rem;">
+          <span class="badge mb-3" style="background: rgba(245,158,11,0.12); color: #F59E0B; border: 1px solid rgba(245,158,11,0.25); padding: 0.4rem 1rem; font-size: 0.8rem;">
+            <i class="ph ph-cake" style="vertical-align: -2px;"></i> Birthday &amp; Celebrations
+          </span>
+          <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin: 0 0 0.75rem;">Party Packages</h2>
+          <p style="color: var(--clr-text-muted); max-width: 540px; margin: 0 auto; line-height: 1.6;">
+            Choose the package that fits your crew. All packages include a dedicated host and full equipment setup — just show up and play.
+          </p>
+        </div>
+
+        <!-- Package cards -->
+        <div class="pkg-grid">
+
+          <!-- Card 1: Epic Gamer Party -->
+          <div class="pkg-card">
+            <div class="pkg-card__img-wrap">
+              <img src="src/assets/images/birthday-1.jpg" alt="Epic Gamer Party" loading="lazy">
+            </div>
+            <div class="pkg-card__body">
+              <div class="pkg-card__meta">
+                <span class="pkg-meta-pill"><i class="ph ph-users"></i> Up to 8 Players</span>
+                <span class="pkg-meta-pill"><i class="ph ph-clock"></i> 2 Hours</span>
+              </div>
+              <h3 class="pkg-card__title">Epic Gamer Party</h3>
+              <p class="pkg-card__desc">The ideal starter birthday for a small crew. Private VR area with a custom multiplayer lobby tailored to your group.</p>
+              <ul class="pkg-features">
+                <li><span class="pkg-check"><i class="ph ph-check-bold"></i></span> 8 dedicated VR pods, fully set up</li>
+                <li><span class="pkg-check"><i class="ph ph-check-bold"></i></span> Custom multiplayer lobby &amp; game selection</li>
+                <li><span class="pkg-check"><i class="ph ph-check-bold"></i></span> Dedicated party host throughout</li>
+                <li><span class="pkg-check"><i class="ph ph-check-bold"></i></span> Birthday shoutout on lounge displays</li>
+                <li><span class="pkg-check"><i class="ph ph-check-bold"></i></span> Digital group photo pack</li>
+              </ul>
+            </div>
+            <div class="pkg-card__footer">
+              <div class="pkg-price">
+                <span class="pkg-price__label">Starting from</span>
+                <span class="pkg-price__amount">$299</span>
+                <span class="pkg-price__per">~$37 / person</span>
+              </div>
+              <a href="#inquiry" class="btn btn-secondary" style="padding: 0.65rem 1.4rem; white-space: nowrap;">
+                Book Now <i class="ph ph-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 2: VIP Lounge Takeover (Featured) -->
+          <div class="pkg-card pkg-card--featured">
+            <span class="pkg-badge">⭐ Most Popular</span>
+            <div class="pkg-card__img-wrap">
+              <img src="src/assets/images/birthday-2.jpg" alt="VIP Lounge Takeover" loading="lazy">
+            </div>
+            <div class="pkg-card__body">
+              <div class="pkg-card__meta">
+                <span class="pkg-meta-pill"><i class="ph ph-users"></i> Up to 15 Players</span>
+                <span class="pkg-meta-pill"><i class="ph ph-clock"></i> 3 Hours</span>
+              </div>
+              <h3 class="pkg-card__title">VIP Lounge Takeover</h3>
+              <p class="pkg-card__desc">The full experience. Take over our private lounge, mix VR pods with sim racing, and fuel up with food included.</p>
+              <ul class="pkg-features">
+                <li><span class="pkg-check pkg-check--star"><i class="ph ph-star-bold"></i></span> Exclusive private lounge area</li>
+                <li><span class="pkg-check pkg-check--star"><i class="ph ph-star-bold"></i></span> 10 VR pods + 2 racing simulators</li>
+                <li><span class="pkg-check"><i class="ph ph-check-bold"></i></span> Pizza &amp; soda included for all guests</li>
+                <li><span class="pkg-check"><i class="ph ph-check-bold"></i></span> Priority game selection &amp; custom lobby</li>
+                <li><span class="pkg-check"><i class="ph ph-check-bold"></i></span> Dedicated host + event coordinator</li>
+                <li><span class="pkg-check"><i class="ph ph-check-bold"></i></span> Professional mixed-reality highlight reel</li>
+              </ul>
+            </div>
+            <div class="pkg-card__footer">
+              <div class="pkg-price">
+                <span class="pkg-price__label">Starting from</span>
+                <span class="pkg-price__amount">$549</span>
+                <span class="pkg-price__per">~$37 / person</span>
+              </div>
+              <a href="#inquiry" class="btn btn-primary" style="padding: 0.65rem 1.4rem; white-space: nowrap; box-shadow: var(--shadow-glow);">
+                Book VIP <i class="ph ph-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+        </div><!-- /.pkg-grid -->
+
+        <!-- Package comparison teaser -->
+        <p style="text-align: center; margin-top: 2rem; font-size: 0.88rem; color: var(--clr-text-muted);">
+          Need a custom group size or duration? <a href="#inquiry" style="color: var(--clr-primary); font-weight: 600;">Contact us for a tailored quote →</a>
+        </p>
+
+      </div>
+    </section><!-- /#packages -->
+
+
+    <!-- ===================================================
+         SECTION 3: CORPORATE TEAM BUILDING (kept, minor polish)
+         =================================================== -->
+    <section class="section corp-section">
       <div class="container grid grid-cols-1 lg:grid-cols-2 gap-16 items-center animate-on-scroll">
         <div>
-          <span class="badge mb-4">Corporate</span>
+          <span class="badge mb-4" style="background: rgba(34,211,238,0.12); color: var(--clr-secondary); border: 1px solid rgba(34,211,238,0.25);">Corporate</span>
           <h2 class="mb-4">Next-Gen Team Building</h2>
-          <p class="mb-6">Communication, strategy, and teamwork. Our cooperative VR missions require teams to work together to defuse bombs, escape space stations, or survive zombie apocalypses.</p>
+          <p class="mb-6" style="color: var(--clr-text-muted); line-height: 1.65;">
+            Communication, strategy, and teamwork. Our cooperative VR missions require teams to work together to defuse bombs, escape space stations, or survive zombie apocalypses.
+          </p>
           <div class="flex-col gap-8">
             <div class="flex gap-4 items-start">
-              <i class="ph ph-briefcase text-secondary" style="font-size: 1.5rem;"></i>
+              <i class="ph ph-briefcase text-secondary" style="font-size: 1.5rem; margin-top: 0.15rem; flex-shrink: 0;"></i>
               <div>
                 <strong class="text-large">Exclusive Facility Use</strong>
-                <p class="text-small">Book the entire venue for half or full day events.</p>
+                <p class="text-small" style="color: var(--clr-text-muted); margin-top: 0.25rem;">Book the entire venue for half or full day events.</p>
               </div>
             </div>
             <div class="flex gap-4 items-start">
-              <i class="ph ph-presentation-chart text-secondary" style="font-size: 1.5rem;"></i>
+              <i class="ph ph-presentation-chart text-secondary" style="font-size: 1.5rem; margin-top: 0.15rem; flex-shrink: 0;"></i>
               <div>
                 <strong class="text-large">Meeting Space</strong>
-                <p class="text-small">AV equipment and presentation areas available.</p>
+                <p class="text-small" style="color: var(--clr-text-muted); margin-top: 0.25rem;">AV equipment and presentation areas available.</p>
               </div>
             </div>
+          </div>
+          <div class="flex gap-3 flex-wrap mt-8">
+            <a href="#inquiry" class="btn btn-primary" style="box-shadow: 0 8px 20px rgba(139,92,246,0.3);">
+              <i class="ph ph-paper-plane-tilt"></i> Request Corporate Quote
+            </a>
+            <a href="pricing.html" class="btn btn-secondary" style="background: transparent;">
+              See Pricing <i class="ph ph-arrow-right"></i>
+            </a>
           </div>
         </div>
         <div>
-          <img src="src/assets/images/team_building_vr.jpg" alt="Team Building VR" style="border-radius: var(--radius-lg); box-shadow: var(--shadow-card); width: 100%; object-fit: cover;">
+          <img
+            src="src/assets/images/team_building_vr.jpg"
+            alt="Team building VR activity at Nexus VR"
+            loading="lazy"
+            style="border-radius: var(--radius-lg); box-shadow: var(--shadow-card); width: 100%; object-fit: cover; max-height: 460px;"
+          >
         </div>
       </div>
     </section>
 
-    <!-- Section 4: Esports Tournaments -->
-    <section class="section container animate-on-scroll text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-      <h2 class="mb-4">Host Your Own Tournament</h2>
-      <p class="mb-8" style="max-width: 600px; margin: 0 auto;">Want to run a local bracket for your school, club, or friends? We provide the infrastructure, the hardware, and the moderation.</p>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="card p-6">
-          <i class="ph ph-brackets-curly text-primary mb-4" style="font-size: 2.5rem;"></i>
-          <h4>Custom Brackets</h4>
-          <p class="text-small m-0">Single or double elimination tracking displayed on our lounge monitors.</p>
-        </div>
-        <div class="card p-6">
-          <i class="ph ph-broadcast text-primary mb-4" style="font-size: 2.5rem;"></i>
-          <h4>Live Casting</h4>
-          <p class="text-small m-0">Spectator modes casted directly to screens or streamed online.</p>
-        </div>
-        <div class="card p-6">
-          <i class="ph ph-trophy text-primary mb-4" style="font-size: 2.5rem;"></i>
-          <h4>Trophies & Prizes</h4>
-          <p class="text-small m-0">Optional prize pool management and physical trophies.</p>
+
+    <!-- ===================================================
+         SECTION 4: ESPORTS TOURNAMENTS
+         =================================================== -->
+    <section class="section tournament-section">
+      <div class="container animate-on-scroll" style="text-align: center;">
+        <span class="badge mb-4" style="background: rgba(139,92,246,0.12); color: var(--clr-primary); border: 1px solid rgba(139,92,246,0.25); padding: 0.4rem 1rem; font-size: 0.8rem;">
+          <i class="ph ph-trophy" style="vertical-align: -2px;"></i> Esports
+        </span>
+        <h2 class="mb-4">Host Your Own Tournament</h2>
+        <p class="mb-10" style="max-width: 600px; margin: 0 auto 2.5rem; color: var(--clr-text-muted); line-height: 1.65;">
+          Want to run a local bracket for your school, club, or friends? We provide the infrastructure, the hardware, and the moderation.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card p-6" style="text-align: center;">
+            <i class="ph ph-brackets-curly text-primary mb-4" style="font-size: 2.5rem; display: block;"></i>
+            <h4 style="margin: 0 0 0.5rem;">Custom Brackets</h4>
+            <p class="text-small m-0" style="color: var(--clr-text-muted);">Single or double elimination tracking displayed on our lounge monitors.</p>
+          </div>
+          <div class="card p-6" style="text-align: center;">
+            <i class="ph ph-broadcast text-primary mb-4" style="font-size: 2.5rem; display: block;"></i>
+            <h4 style="margin: 0 0 0.5rem;">Live Casting</h4>
+            <p class="text-small m-0" style="color: var(--clr-text-muted);">Spectator modes casted directly to screens or streamed online.</p>
+          </div>
+          <div class="card p-6" style="text-align: center;">
+            <i class="ph ph-trophy text-primary mb-4" style="font-size: 2.5rem; display: block;"></i>
+            <h4 style="margin: 0 0 0.5rem;">Trophies &amp; Prizes</h4>
+            <p class="text-small m-0" style="color: var(--clr-text-muted);">Optional prize pool management and physical trophies.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 5: Catering/Add-ons -->
-    <section class="section" style="background: var(--clr-surface);">
+
+    <!-- ===================================================
+         SECTION 5: EVENT ADD-ONS
+         =================================================== -->
+    <section class="section addons-section">
       <div class="container animate-on-scroll">
-        <h2 class="text-center mb-8">Event Add-ons</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="card text-center">
-            <i class="ph ph-pizza mb-2 text-secondary" style="font-size: 2rem;"></i>
+        <h2 class="text-center mb-3">Event Add-ons</h2>
+        <p style="text-align: center; color: var(--clr-text-muted); margin: 0 auto 2.5rem; max-width: 500px; line-height: 1.6; font-size: 0.95rem;">
+          Customise your package with extras. All add-ons are priced separately — mention them in your inquiry.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="addon-card">
+            <i class="ph ph-pizza"></i>
             <h4>Catering</h4>
-            <p class="text-small">Pizza, snacks, and drinks packages available.</p>
+            <p>Pizza, snacks, and drinks packages available for any group size.</p>
           </div>
-          <div class="card text-center">
-            <i class="ph ph-video-camera mb-2 text-secondary" style="font-size: 2rem;"></i>
+          <div class="addon-card">
+            <i class="ph ph-video-camera"></i>
             <h4>Recording</h4>
-            <p class="text-small">Mixed reality video recording of your sessions.</p>
+            <p>Mixed reality video recording of your sessions to keep forever.</p>
           </div>
-          <div class="card text-center">
-            <i class="ph ph-medal mb-2 text-secondary" style="font-size: 2rem;"></i>
+          <div class="addon-card">
+            <i class="ph ph-medal"></i>
             <h4>Merch Packs</h4>
-            <p class="text-small">Nexus VR t-shirts and souvenirs for guests.</p>
+            <p>Nexus VR t-shirts and souvenirs — a great take-home gift for guests.</p>
           </div>
-          <div class="card text-center">
-            <i class="ph ph-steering-wheel mb-2 text-secondary" style="font-size: 2rem;"></i>
+          <div class="addon-card">
+            <i class="ph ph-steering-wheel"></i>
             <h4>Sim Racing</h4>
-            <p class="text-small">Add racing simulator time to your VR package.</p>
+            <p>Add racing simulator time to your VR package for the full experience.</p>
           </div>
         </div>
       </div>
     </section>
 
 
-    <!-- Section 7: Group Booking Inquiry Form -->
-    <section id="inquiry" class="section" style="background: linear-gradient(to bottom, var(--clr-surface-alt), var(--clr-bg));">
-      <div class="container animate-on-scroll">
-        <div class="card" style="max-width: 800px; margin: 0 auto; padding: var(--space-8);">
-          <div class="text-center mb-8">
-            <h2>Book Your Event</h2>
-            <p>Fill out the form below and our event coordinator will contact you within 24 hours.</p>
+    <!-- ===================================================
+         SECTION 6: INQUIRY FORM — prominent, easy to locate
+         =================================================== -->
+    <section id="inquiry" class="inquiry-section">
+      <div class="container">
+
+        <!-- Anchor strip above form -->
+        <div class="inquiry-anchor-strip animate-on-scroll">
+          <div class="badge-label">Book Your Event</div>
+          <h2>Let's Plan Something Epic</h2>
+          <p>Fill in your details and our event coordinator will reach out within <strong>24 hours</strong> with a custom proposal.</p>
+
+          <!-- Alternative contact options -->
+          <div class="contact-alt-row">
+            <a href="tel:+15550001234" class="contact-alt-pill">
+              <i class="ph ph-phone"></i> (555) 000-1234
+            </a>
+            <a href="mailto:events@nexusvr.com" class="contact-alt-pill">
+              <i class="ph ph-envelope-simple"></i> events@nexusvr.com
+            </a>
+            <span class="contact-alt-pill" style="cursor: default;">
+              <i class="ph ph-clock"></i> Mon–Sun, 10 AM – 12 AM
+            </span>
           </div>
-          
+        </div>
+
+        <!-- Form card -->
+        <div class="inquiry-form-card animate-on-scroll">
           <form data-validate>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div class="form-group mb-0">
                 <label class="form-label">Full Name</label>
-                <input type="text" class="form-input" placeholder="e.g. John Doe" required>
+                <input type="text" class="form-input" placeholder="e.g. Jane Smith" required>
                 <div class="form-error"></div>
               </div>
               <div class="form-group mb-0">
                 <label class="form-label">Email Address</label>
-                <input type="email" class="form-input" placeholder="e.g. john@example.com" required>
+                <input type="email" class="form-input" placeholder="e.g. jane@example.com" required>
                 <div class="form-error"></div>
               </div>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div class="form-group mb-0">
                 <label class="form-label">Event Type</label>
                 <select class="form-input" required>
-                  <option value="">Select...</option>
+                  <option value="">Select event type…</option>
                   <option value="birthday">Birthday Party</option>
                   <option value="corporate">Corporate Event</option>
                   <option value="tournament">Tournament</option>
@@ -275,15 +918,31 @@
 
             <div class="form-group mb-6">
               <label class="form-label">Additional Details</label>
-              <textarea class="form-input" rows="4" placeholder="Tell us about your event..."></textarea>
+              <textarea class="form-input" rows="4" placeholder="Tell us about your event — preferred date, must-have games, dietary needs, budget range…"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary w-full" style="width: 100%;">Submit Inquiry</button>
+            <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.05rem; padding: 1rem; box-shadow: 0 10px 28px rgba(139,92,246,0.35);">
+              <i class="ph ph-paper-plane-tilt" style="font-size: 1.15rem;"></i> Submit Inquiry
+            </button>
+
+            <!-- Form guarantees -->
+            <div class="form-guarantees">
+              <span class="form-guarantee"><i class="ph ph-check-circle-fill"></i> No commitment required</span>
+              <span class="form-guarantee"><i class="ph ph-check-circle-fill"></i> Response within 24 hours</span>
+              <span class="form-guarantee"><i class="ph ph-check-circle-fill"></i> Custom quote for your group</span>
+            </div>
           </form>
-        </div>
+        </div><!-- /.inquiry-form-card -->
+
       </div>
     </section>
   </main>
+
+  <!-- Floating sticky "Book Your Event" CTA -->
+  <a href="#inquiry" class="floating-cta" id="floating-cta" aria-label="Book your event">
+    <i class="ph ph-calendar-check" style="font-size: 1.1rem;"></i>
+    <span>Book Your Event</span>
+  </a>
 
   <!-- Footer -->
   <footer style="background: var(--clr-surface); border-top: var(--border-glass); padding-top: var(--space-12); padding-bottom: var(--space-6);">
@@ -304,24 +963,73 @@
         <h4 style="margin-bottom: var(--space-4);">Explore</h4>
         <ul class="flex-col gap-2">
           <li><a href="games.html" class="nav-link text-small">Games Library</a></li>
-          <li><a href="pricing.html" class="nav-link text-small">Pricing & Bundles</a></li>
-          <li><a href="groups.html" class="nav-link text-small">Group Bookings</a></li>
-          <li><a href="dashboard.html" class="nav-link text-small">User</a></li>
+          <li><a href="pricing.html" class="nav-link text-small">Pricing &amp; Bundles</a></li>
+          <li><a href="groups.html" class="nav-link text-small">Parties &amp; Groups</a></li>
+          <li><a href="about.html" class="nav-link text-small">About Us</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact</a></li>
+          <li><a href="dashboard.html" class="nav-link text-small">User Dashboard</a></li>
         </ul>
       </div>
       <div>
         <h4 style="margin-bottom: var(--space-4);">Support</h4>
         <ul class="flex-col gap-2">
-          <li><a href="#" class="nav-link text-small">FAQ</a></li>
-          <li><a href="#" class="nav-link text-small">Contact Us</a></li>
+          <li><a href="contact.html" class="nav-link text-small">FAQ &amp; Help</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact Lounge Staff</a></li>
           <li><a href="#" class="nav-link text-small">Terms of Service</a></li>
           <li><a href="#" class="nav-link text-small">Privacy Policy</a></li>
         </ul>
       </div>
       <div>
-        <h4 style="margin-bottom: var(--space-4);">Location</h4>
-        <p class="text-small">123 Cyber Avenue<br>Neon District, NT 45890</p>
-        <p class="text-small mt-2">Mon - Sun: 10:00 AM - 12:00 AM</p>
+        <h4 style="margin-bottom: var(--space-4);">Location &amp; Hours</h4>
+        <div class="footer-location-col">
+          <!-- Address -->
+          <div class="footer-loc-block">
+            <i class="ph-fill ph-map-pin footer-loc-icon"></i>
+            <div class="footer-loc-info">
+              <strong>Nexus VR Lounge</strong>
+              <span>123 Cyber Avenue, Suite 200</span>
+              <span style="font-size: 0.8rem; color: var(--clr-text-muted);">Neon District, NT 45890</span>
+            </div>
+          </div>
+
+          <!-- Opening Hours -->
+          <div class="footer-loc-block">
+            <i class="ph ph-clock footer-loc-icon"></i>
+            <div class="footer-loc-info" style="width: 100%;">
+              <span class="footer-open-pill">Open Daily</span>
+              <div class="footer-hours-list">
+                <div class="footer-hours-row">
+                  <span>Mon &ndash; Thu:</span>
+                  <strong style="color: var(--clr-text);">12 PM &ndash; 11 PM</strong>
+                </div>
+                <div class="footer-hours-row">
+                  <span>Fri &ndash; Sun:</span>
+                  <strong style="color: var(--clr-secondary);">10 AM &ndash; Midnight</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone & Contact Links -->
+          <div class="footer-contacts-list">
+            <a href="tel:+15550192834" class="footer-contact-item" aria-label="Phone: (555) 019-2834">
+              <i class="ph ph-phone" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>(555) 019-2834</span>
+            </a>
+            <a href="mailto:contact@nexusvr.com" class="footer-contact-item" aria-label="Email: contact@nexusvr.com">
+              <i class="ph ph-envelope-simple" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>contact@nexusvr.com</span>
+            </a>
+          </div>
+
+          <!-- Directions Action Button -->
+          <div>
+            <a href="https://maps.google.com/?q=123+Cyber+Avenue+Neon+District" target="_blank" rel="noopener noreferrer" class="footer-directions-btn" aria-label="Get directions to Nexus VR Lounge on Google Maps">
+              <i class="ph ph-navigation-arrow"></i>
+              <span>Get Directions</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="container text-center text-small" style="color: var(--clr-text-muted); border-top: var(--border-glass); padding-top: var(--space-6);">
@@ -331,7 +1039,33 @@
 
   <script src="src/js/main.js"></script>
   <script src="src/js/forms.js"></script>
+
+  <!-- Floating CTA show/hide on scroll -->
+  <script>
+    (function () {
+      var floatingCta = document.getElementById('floating-cta');
+      var inquirySection = document.getElementById('inquiry');
+      if (!floatingCta || !inquirySection) return;
+
+      function updateFloatingCta() {
+        var scrollY = window.scrollY || window.pageYOffset;
+        var windowH = window.innerHeight;
+        var heroBottom = windowH * 0.85; // show after scrolling ~85% of viewport
+
+        // Hide once the inquiry form is in view (no need for floating CTA then)
+        var inquiryTop = inquirySection.getBoundingClientRect().top;
+        var isInquiryVisible = inquiryTop < windowH - 80;
+
+        if (scrollY > heroBottom && !isInquiryVisible) {
+          floatingCta.classList.add('is-visible');
+        } else {
+          floatingCta.classList.remove('is-visible');
+        }
+      }
+
+      window.addEventListener('scroll', updateFloatingCta, { passive: true });
+      updateFloatingCta();
+    })();
+  </script>
 </body>
 </html>
-
-

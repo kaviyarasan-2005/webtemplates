@@ -20,23 +20,31 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      background: linear-gradient(180deg, rgba(8, 11, 20, 0.35) 0%, rgba(8, 11, 20, 0.2) 35%, rgba(8, 11, 20, 0.8) 100%), url('src/assets/images/hero-bg-1.jpg') center/cover no-repeat;
+      /* Content-aware scrim: dark only where the copy sits (left),
+         the VR pod / arcade environment on the right stays fully visible. */
+      background:
+        linear-gradient(90deg, rgba(8, 11, 20, 0.92) 0%, rgba(8, 11, 20, 0.8) 30%, rgba(8, 11, 20, 0.42) 54%, rgba(8, 11, 20, 0.12) 72%, rgba(8, 11, 20, 0) 100%),
+        linear-gradient(180deg, rgba(8, 11, 20, 0.32) 0%, rgba(8, 11, 20, 0) 16%, rgba(8, 11, 20, 0) 64%, rgba(8, 11, 20, 0.4) 90%, rgba(8, 11, 20, 0.7) 100%),
+        url('src/assets/images/hero-bg-1.jpg') center right/cover no-repeat;
       position: relative;
       overflow: hidden;
     }
 
     [data-theme="light"] .hero-home1 {
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.35) 0%, rgba(15, 23, 42, 0.2) 35%, rgba(15, 23, 42, 0.8) 100%), url('src/assets/images/hero-bg-1.jpg') center/cover no-repeat;
+      background:
+        linear-gradient(90deg, rgba(6, 10, 20, 0.9) 0%, rgba(6, 10, 20, 0.78) 30%, rgba(6, 10, 20, 0.4) 54%, rgba(6, 10, 20, 0.1) 72%, rgba(6, 10, 20, 0) 100%),
+        linear-gradient(180deg, rgba(6, 10, 20, 0.3) 0%, rgba(6, 10, 20, 0) 16%, rgba(6, 10, 20, 0) 64%, rgba(6, 10, 20, 0.38) 90%, rgba(6, 10, 20, 0.68) 100%),
+        url('src/assets/images/hero-bg-1.jpg') center right/cover no-repeat;
     }
 
     .hero-home1::before {
       content: '';
       position: absolute;
-      top: -20%;
-      left: -10%;
-      width: 50vw;
-      height: 50vw;
-      background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+      top: -22%;
+      left: -12%;
+      width: 42vw;
+      height: 42vw;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.07) 0%, transparent 70%);
       border-radius: 50%;
       z-index: 1;
       pointer-events: none;
@@ -45,11 +53,11 @@
     .hero-home1::after {
       content: '';
       position: absolute;
-      bottom: -20%;
-      right: -10%;
-      width: 40vw;
-      height: 40vw;
-      background: radial-gradient(circle, rgba(34, 211, 238, 0.12) 0%, transparent 70%);
+      bottom: -22%;
+      right: -12%;
+      width: 36vw;
+      height: 36vw;
+      background: radial-gradient(circle, rgba(34, 211, 238, 0.06) 0%, transparent 70%);
       border-radius: 50%;
       z-index: 1;
       pointer-events: none;
@@ -58,14 +66,19 @@
     /* Maintain crisp readable text contrast */
     .hero-home1 h1,
     [data-theme="light"] .hero-home1 h1 {
-      color: #ffffff;
-      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.9), 0 0 35px rgba(139, 92, 246, 0.4);
+      color: #ffffff !important;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8), 0 10px 34px rgba(0, 0, 0, 0.9);
+    }
+
+    /* Gradient headline word: no shadow ghost behind transparent fill */
+    .hero-home1 h1 .text-gradient {
+      text-shadow: none;
     }
 
     .hero-home1 p,
     [data-theme="light"] .hero-home1 p {
-      color: #F3F4F6 !important;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+      color: #F9FAFB !important;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.85);
       font-weight: 500;
     }
 
@@ -79,12 +92,12 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.5rem 1.25rem;
-      background: rgba(8, 11, 20, 0.6);
-      border: 1px solid rgba(34, 211, 238, 0.4);
+      background: rgba(8, 11, 20, 0.65);
+      border: 1px solid rgba(34, 211, 238, 0.45);
       border-radius: 9999px;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
       margin-bottom: 1.5rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(34, 211, 238, 0.2);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(34, 211, 238, 0.25);
     }
 
     .hero-badge-container i {
@@ -110,20 +123,25 @@
     }
 
     .glass-card-hero {
-      background: rgba(8, 11, 20, 0.45);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      /* Lighter + less blur than before so the lounge stays visible behind the copy */
+      background: linear-gradient(140deg, rgba(8, 11, 20, 0.5) 0%, rgba(8, 11, 20, 0.3) 55%, rgba(8, 11, 20, 0.42) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: var(--radius-lg);
-      padding: 3.5rem 2.5rem;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      padding: 3rem 2.5rem;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(8px) saturate(125%);
+      -webkit-backdrop-filter: blur(8px) saturate(125%);
+      max-width: 620px;
+      margin-right: auto;
+      margin-left: 0;
+      text-align: left;
     }
 
     [data-theme="light"] .glass-card-hero {
-      background: rgba(8, 11, 20, 0.55);
-      border-color: rgba(255, 255, 255, 0.25);
+      background: linear-gradient(140deg, rgba(8, 11, 20, 0.56) 0%, rgba(8, 11, 20, 0.36) 55%, rgba(8, 11, 20, 0.48) 100%);
+      border-color: rgba(255, 255, 255, 0.24);
     }
 
     .glass-card-hero::before {
@@ -136,17 +154,38 @@
       background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.8), rgba(139, 92, 246, 0.8), transparent);
     }
 
+    /* Accent rail on the leading edge of the glass panel */
+    .glass-card-hero::after {
+      content: '';
+      position: absolute;
+      top: 14%;
+      bottom: 14%;
+      left: 0;
+      width: 3px;
+      background: linear-gradient(180deg, transparent, var(--clr-secondary) 25%, var(--clr-primary) 75%, transparent);
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* Narrow screens: shrink the panel so more of the lounge stays visible */
+    @media (max-width: 767px) {
+      .glass-card-hero {
+        padding: 2rem 1.5rem;
+        background: linear-gradient(140deg, rgba(8, 11, 20, 0.46) 0%, rgba(8, 11, 20, 0.28) 55%, rgba(8, 11, 20, 0.4) 100%);
+      }
+    }
+
     /* Standout Hero CTA Buttons */
     .hero-btn-primary {
-      background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 50%, #4F46E5 100%) !important;
+      position: relative;
+      background: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 40%, #6D28D9 100%) !important;
       color: #ffffff !important;
       font-weight: 700 !important;
       font-size: 1.1rem !important;
       padding: 0 2.25rem !important;
-      height: 52px !important;
+      height: 54px !important;
       border-radius: var(--radius-full) !important;
-      border: 1px solid rgba(255, 255, 255, 0.3) !important;
-      box-shadow: 0 0 25px rgba(139, 92, 246, 0.7), 0 8px 25px rgba(0, 0, 0, 0.4) !important;
+      border: 1px solid rgba(255, 255, 255, 0.32) !important;
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45), 0 0 30px rgba(139, 92, 246, 0.6) !important;
       letter-spacing: 0.02em;
       transition: all var(--transition-fast) !important;
       display: inline-flex;
@@ -157,21 +196,46 @@
 
     .hero-btn-primary:hover {
       transform: translateY(-3px) scale(1.03) !important;
-      box-shadow: 0 0 40px rgba(139, 92, 246, 0.95), 0 12px 30px rgba(0, 0, 0, 0.5) !important;
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.5), 0 0 52px rgba(139, 92, 246, 0.95) !important;
       border-color: #22D3EE !important;
     }
 
+    /* Soft pulse ring that draws the eye to the primary booking action */
+    .hero-btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: var(--radius-full);
+      border: 2px solid rgba(139, 92, 246, 0.65);
+      animation: cta-ring 2.6s ease-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes cta-ring {
+      0% {
+        transform: scale(1);
+        opacity: 0.75;
+      }
+
+      70%,
+      100% {
+        transform: scale(1.11);
+        opacity: 0;
+      }
+    }
+
     .hero-btn-secondary {
-      background: rgba(8, 11, 20, 0.5) !important;
-      color: #22D3EE !important;
-      border: 1.5px solid rgba(34, 211, 238, 0.7) !important;
+      background: rgba(8, 11, 20, 0.45) !important;
+      color: #ffffff !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
       font-weight: 600 !important;
       font-size: 1.1rem !important;
       padding: 0 2rem !important;
-      height: 52px !important;
+      height: 54px !important;
       border-radius: var(--radius-full) !important;
       backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.4) !important;
       transition: all var(--transition-fast) !important;
       display: inline-flex;
       align-items: center;
@@ -179,11 +243,11 @@
     }
 
     .hero-btn-secondary:hover {
-      background: rgba(34, 211, 238, 0.15) !important;
+      background: rgba(34, 211, 238, 0.18) !important;
       border-color: #22D3EE !important;
       color: #ffffff !important;
-      transform: translateY(-2px) !important;
-      box-shadow: 0 0 20px rgba(34, 211, 238, 0.4) !important;
+      transform: translateY(-3px) !important;
+      box-shadow: 0 12px 34px rgba(34, 211, 238, 0.35) !important;
     }
   </style>
   <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon-4.svg">
@@ -194,26 +258,28 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="container flex justify-between items-center">
-      <!-- Logo -->
-      <a href="home1.html" class="flex items-center gap-2" aria-label="Nexus VR Home">
-        <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" style="height: 44px; width: 44px; border-radius: 50%; box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);">
-        <span class="text-large" style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+      <!-- Brand -->
+      <a href="home1.html" class="nav-brand" aria-label="Nexus VR Home">
+        <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" class="nav-brand__logo">
+        <span class="nav-brand__name">Nexus <span class="text-gradient">VR</span></span>
       </a>
 
       <!-- Desktop Nav -->
-      <div class="nav-links items-center">
+      <div class="nav-links">
         <div class="dropdown">
-          <a href="#" class="nav-link flex items-center gap-1">Home <i class="ph ph-caret-down"></i></a>
+          <a href="#" class="nav-link active">Home <i class="ph ph-caret-down dropdown-caret"></i></a>
           <div class="dropdown-menu">
-            <a href="home1.html" class="dropdown-item">Home 1</a>
+            <a href="home1.html" class="dropdown-item active">Home 1</a>
             <a href="home2.html" class="dropdown-item">Home 2</a>
           </div>
         </div>
         <a href="games.html" class="nav-link">Games Library</a>
         <a href="pricing.html" class="nav-link">Pricing</a>
-        <a href="groups.html" class="nav-link">Parties & Groups</a>
+        <a href="groups.html" class="nav-link">Parties &amp; Groups</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
         <div class="dropdown">
-          <a href="#" class="nav-link flex items-center gap-1">Dashboards <i class="ph ph-caret-down"></i></a>
+          <a href="#" class="nav-link">Dashboards <i class="ph ph-caret-down dropdown-caret"></i></a>
           <div class="dropdown-menu">
             <a href="dashboard.html" class="dropdown-item">User</a>
             <a href="admin.html" class="dropdown-item">Admin</a>
@@ -222,20 +288,17 @@
       </div>
 
       <!-- Actions -->
-      <div class="flex items-center gap-4">
-        <!-- Theme Toggle -->
-        <button id="theme-toggle" class="btn-icon flex items-center justify-center" aria-label="Toggle Theme">
+      <div class="nav-actions">
+        <button id="theme-toggle" class="nav-icon-btn" aria-label="Toggle Theme">
           <i class="ph ph-moon"></i>
         </button>
-        <!-- RTL Toggle -->
-        <button id="rtl-toggle" class="btn-rtl hidden lg:flex">RTL</button>
-
-        <a href="login.html" class="btn btn-primary hidden lg:flex">Login</a>
-        <a href="dashboard.html" class="btn btn-secondary hidden lg:flex">Book Now</a>
-
-        <!-- Mobile Menu Btn -->
-        <button id="mobile-menu-btn" class="btn-icon lg:hidden flex items-center justify-center">
-          <i class="ph ph-list" style="font-size: 1.5rem;"></i>
+        <button id="rtl-toggle" class="btn-rtl-compact" title="Toggle RTL Layout">RTL</button>
+        <a href="login.html" class="nav-link-login">Login</a>
+        <a href="contact.html" class="nav-cta-btn">
+          <i class="ph ph-ticket"></i> Book Now
+        </a>
+        <button id="mobile-menu-btn" class="nav-icon-btn" aria-label="Toggle Navigation Menu">
+          <i class="ph ph-list" style="font-size: 1.4rem;"></i>
         </button>
       </div>
     </div>
@@ -249,13 +312,15 @@
         Home <i class="ph ph-caret-down mob-caret"></i>
       </button>
       <div class="mob-group-links">
-        <a href="home1.html" class="nav-link text-large">Home 1</a>
+        <a href="home1.html" class="nav-link text-large" style="color: var(--clr-primary);">Home 1</a>
         <a href="home2.html" class="nav-link text-large">Home 2</a>
       </div>
     </div>
     <a href="games.html" class="nav-link text-large">Games Library</a>
     <a href="pricing.html" class="nav-link text-large">Pricing</a>
     <a href="groups.html" class="nav-link text-large">Parties &amp; Groups</a>
+    <a href="about.html" class="nav-link text-large">About</a>
+    <a href="contact.html" class="nav-link text-large">Contact</a>
     <!-- Dashboards Group -->
     <div class="mob-group">
       <button class="mob-group-btn">
@@ -266,42 +331,40 @@
         <a href="admin.html" class="nav-link text-large">Admin</a>
       </div>
     </div>
-    <hr style="border-color: rgba(255,255,255,0.1);">
-    <!-- Theme & RTL toggles in mobile menu -->
-    <div style="display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-size:0.9rem;color:var(--clr-text-muted);">Theme</span>
-      <button id="theme-toggle-mobile" class="btn-icon flex items-center justify-center" aria-label="Toggle Theme"
-        style="width:44px;height:44px;" onclick="document.getElementById('theme-toggle').click()">
+        <hr style="border-color: rgba(255,255,255,0.1);">
+    <!-- Theme & RTL Toggles (Shifted into Hamburger) -->
+    <div class="mob-control-row">
+      <span>Theme</span>
+      <button id="theme-toggle-mobile" class="nav-icon-btn" aria-label="Toggle Theme">
         <i class="ph ph-moon" style="font-size:1.2rem;"></i>
       </button>
     </div>
-    <div style="display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-size:0.9rem;color:var(--clr-text-muted);">RTL Mode</span>
-      <button id="rtl-toggle-mobile" class="btn-rtl" style="height:38px;padding:0 1rem;"
-        onclick="document.getElementById('rtl-toggle').click()">RTL</button>
+    <div class="mob-control-row">
+      <span>Layout Direction</span>
+      <button id="rtl-toggle-mobile" class="btn-rtl-compact">RTL</button>
     </div>
     <hr style="border-color: rgba(255,255,255,0.1);">
-    <a href="login.html" class="btn btn-primary justify-center">Login</a>
-    <a href="dashboard.html" class="btn btn-secondary justify-center">Book Now</a>
+    <a href="login.html" class="btn btn-secondary justify-center" style="width: 100%;">Login</a>
+    <a href="contact.html" class="btn btn-primary justify-center" style="width: 100%;"><i class="ph ph-ticket"></i> Book Now</a>
   </div>
 
   <main>
     <!-- Section 1: Hero -->
-    <section class="hero-home1" style="text-align: center; justify-content: center;">
-      <div class="container hero-content animate-on-scroll" style="display: flex; justify-content: center;">
-        <div class="glass-card-hero" style="max-width: 800px; transform: translateY(5%); width: 100%;">
-          <div class="hero-badge-container">
+    <section class="hero-home1">
+      <div class="container hero-content animate-on-scroll" style="display: flex; justify-content: flex-start; width: 100%;">
+        <div class="glass-card-hero" style="width: 100%;">
+          <div class="hero-badge-container" style="display: inline-flex;">
             <i class="ph-fill ph-sparkle"></i>
             <span class="text-small" style="font-weight: 600; letter-spacing: 0.5px; color: #e5e7eb;">NEXT-GEN VR
               LOUNGE</span>
           </div>
-          <h1 class="mt-2" style="font-size: clamp(3rem, 5vw, 5rem); line-height: 1.1; margin-bottom: 1.5rem;">Step
+          <h1 class="mt-2" style="font-size: clamp(2.75rem, 4.5vw, 4.5rem); line-height: 1.1; margin-bottom: 1.25rem;">Step
             Beyond <br><span class="text-gradient">Reality.</span></h1>
-          <p class="text-large" style="color: #9CA3AF; margin-bottom: 2.5rem; max-width: 600px; margin-inline: auto;">
+          <p class="text-large" style="color: #F3F4F6; margin-bottom: 2rem; max-width: 520px;">
             Experience the most immersive virtual reality pods in the city. From heart-pounding action to serene
             exploration, your new reality awaits.</p>
-          <div class="flex justify-center gap-4 mt-6 flex-wrap">
-            <a href="dashboard.html" class="hero-btn-primary">Book Your Pod <i
+          <div class="flex justify-start gap-4 flex-wrap">
+            <a href="contact.html" class="hero-btn-primary">Book Your Pod <i
                 class="ph-bold ph-arrow-right"></i></a>
             <a href="games.html" class="hero-btn-secondary">Browse Games</a>
           </div>
@@ -311,25 +374,46 @@
 
     <!-- Section 2: Features -->
     <section class="section container">
-      <div class="text-center mb-12 animate-on-scroll">
-        <h2>Why Choose Nexus VR?</h2>
-        <p>State-of-the-art technology meets premium lounge comfort.</p>
+      <div class="text-center mb-10 animate-on-scroll">
+        <h2 style="font-weight: 700; margin-bottom: 0.5rem;">Why Choose Nexus VR?</h2>
+        <p style="color: var(--clr-text-muted); font-size: 1rem; max-width: 480px; margin: 0 auto;">State-of-the-art technology meets premium lounge comfort.</p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="card animate-on-scroll">
-          <i class="ph ph-headset text-gradient" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-          <h3>Premium Headsets</h3>
-          <p>4K resolution, 120Hz refresh rate, and crystal clear audio for total immersion without motion sickness.</p>
+        <!-- Card 1: Premium Headsets -->
+        <div class="card animate-on-scroll" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+          <div style="position: relative; overflow: hidden; height: 200px; flex-shrink: 0;">
+            <img src="src/assets/images/feature-headset.jpg" alt="Premium VR Headsets" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(8,11,20,0.85) 100%);"></div>
+            <span style="position: absolute; bottom: 0.85rem; left: 1rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--clr-secondary);">HARDWARE</span>
+          </div>
+          <div style="padding: 1.5rem 1.5rem 1.75rem;">
+            <h3 style="font-size: 1.15rem; font-weight: 600; margin-bottom: 0.6rem;">Premium Headsets</h3>
+            <p style="font-size: 0.93rem; line-height: 1.65; color: var(--clr-text-muted); margin: 0;">4K resolution, 120Hz refresh rate, and crystal clear audio for total immersion without motion sickness.</p>
+          </div>
         </div>
-        <div class="card animate-on-scroll">
-          <i class="ph ph-armchair text-gradient" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-          <h3>Haptic Pods</h3>
-          <p>Feel every explosion, engine rev, and heartbeat with our full-body haptic feedback stations.</p>
+        <!-- Card 2: Haptic Pods -->
+        <div class="card animate-on-scroll" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+          <div style="position: relative; overflow: hidden; height: 200px; flex-shrink: 0;">
+            <img src="src/assets/images/feature-haptic-pod.jpg" alt="Haptic VR Pods" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(8,11,20,0.85) 100%);"></div>
+            <span style="position: absolute; bottom: 0.85rem; left: 1rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--clr-secondary);">EXPERIENCE</span>
+          </div>
+          <div style="padding: 1.5rem 1.5rem 1.75rem;">
+            <h3 style="font-size: 1.15rem; font-weight: 600; margin-bottom: 0.6rem;">Haptic Pods</h3>
+            <p style="font-size: 0.93rem; line-height: 1.65; color: var(--clr-text-muted); margin: 0;">Feel every explosion, engine rev, and heartbeat with our full-body haptic feedback stations.</p>
+          </div>
         </div>
-        <div class="card animate-on-scroll">
-          <i class="ph ph-users-three text-gradient" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-          <h3>Multiplayer Lobbies</h3>
-          <p>Connect instantly with friends in adjacent pods or play globally on our high-speed fiber network.</p>
+        <!-- Card 3: Multiplayer Lobbies -->
+        <div class="card animate-on-scroll" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+          <div style="position: relative; overflow: hidden; height: 200px; flex-shrink: 0;">
+            <img src="src/assets/images/feature-multiplayer.jpg" alt="Multiplayer VR Lobbies" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(8,11,20,0.85) 100%);"></div>
+            <span style="position: absolute; bottom: 0.85rem; left: 1rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--clr-secondary);">SOCIAL</span>
+          </div>
+          <div style="padding: 1.5rem 1.5rem 1.75rem;">
+            <h3 style="font-size: 1.15rem; font-weight: 600; margin-bottom: 0.6rem;">Multiplayer Lobbies</h3>
+            <p style="font-size: 0.93rem; line-height: 1.65; color: var(--clr-text-muted); margin: 0;">Connect instantly with friends in adjacent pods or play globally on our high-speed fiber network.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -337,30 +421,30 @@
     <!-- Section 3: How It Works -->
     <section class="section" style="background: var(--clr-surface);">
       <div class="container text-center animate-on-scroll">
-        <h2>How It Works</h2>
-        <p class="mb-12">Your journey to another dimension is just 3 steps away.</p>
+        <h2 style="font-weight: 700; margin-bottom: 0.5rem;">How It Works</h2>
+        <p class="mb-12" style="font-size: 0.97rem; color: var(--clr-text-muted);">Your journey to another dimension is just 3 steps away.</p>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div class="flex flex-col items-center">
             <div class="btn-icon flex items-center justify-center mb-4"
-              style="width: 64px; height: 64px; font-size: 1.5rem; background: var(--clr-primary); color: white;">1
+              style="width: 60px; height: 60px; font-size: 1.35rem; font-weight: 700; background: var(--clr-primary); color: white;">1
             </div>
-            <h3>Book Online</h3>
-            <p>Reserve your time slot and preferred pod through our secure dashboard.</p>
+            <h4 style="font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem;">Book Online</h4>
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--clr-text-muted); max-width: 220px; margin: 0 auto;">Reserve your time slot and preferred pod through our secure dashboard.</p>
           </div>
           <div class="flex flex-col items-center">
             <div class="btn-icon flex items-center justify-center mb-4"
-              style="width: 64px; height: 64px; font-size: 1.5rem; background: var(--clr-primary); color: white;">2
+              style="width: 60px; height: 60px; font-size: 1.35rem; font-weight: 700; background: var(--clr-primary); color: white;">2
             </div>
-            <h3>Arrive & Briefing</h3>
-            <p>Our VR experts will get you fitted and explain the safety protocols.</p>
+            <h4 style="font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem;">Arrive &amp; Briefing</h4>
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--clr-text-muted); max-width: 220px; margin: 0 auto;">Our VR experts will get you fitted and explain the safety protocols.</p>
           </div>
           <div class="flex flex-col items-center">
             <div class="btn-icon flex items-center justify-center mb-4"
-              style="width: 64px; height: 64px; font-size: 1.5rem; background: var(--clr-primary); color: white;">3
+              style="width: 60px; height: 60px; font-size: 1.35rem; font-weight: 700; background: var(--clr-primary); color: white;">3
             </div>
-            <h3>Dive In</h3>
-            <p>Put on the headset and let the real world fade away.</p>
+            <h4 style="font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem;">Dive In</h4>
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--clr-text-muted); max-width: 220px; margin: 0 auto;">Put on the headset and let the real world fade away.</p>
           </div>
         </div>
       </div>
@@ -370,32 +454,31 @@
     <section class="section container">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center animate-on-scroll">
         <div class="order-2 lg:order-1" style="display: flex; flex-direction: column; align-items: flex-start;">
-          <span class="badge mb-4" style="background: rgba(34, 211, 238, 0.2); color: var(--clr-secondary);">Parties
-            &amp; Groups</span>
+          <span class="badge mb-4" style="background: rgba(34, 211, 238, 0.18); color: #22D3EE; border: 1px solid rgba(34, 211, 238, 0.4); font-weight: 700; letter-spacing: 0.5px;">Parties &amp; Groups</span>
           <h2>Host Your Epic Event</h2>
-          <p class="mb-6 text-muted" style="max-width: 480px;">Whether it's a birthday bash, a corporate team-building
+          <p class="mb-6" style="max-width: 480px; color: var(--clr-text-muted);">Whether it's a birthday bash, a corporate team-building
             event, or just a weekend hangout, the Nexus Lounge provides an unforgettable futuristic experience.</p>
-          <ul style="list-style: none; padding: 0; margin-bottom: 2.5rem; width: 100%; max-width: 360px;">
+          <ul style="list-style: none; padding: 0; margin-bottom: 2.5rem; width: 100%; max-width: 380px;">
             <li class="flex items-center gap-4 mb-4">
-              <div class="btn-icon flex items-center justify-center"
-                style="flex-shrink: 0; width: 48px; height: 48px; background: rgba(139, 92, 246, 0.12); color: var(--clr-primary); border-radius: var(--radius-full);">
-                <i class="ph ph-cake" style="font-size: 1.5rem;"></i>
+              <div class="flex items-center justify-center"
+                style="flex-shrink: 0; width: 48px; height: 48px; background: rgba(139, 92, 246, 0.22); color: #A78BFA; border-radius: var(--radius-full); border: 1px solid rgba(139, 92, 246, 0.45);">
+                <i class="ph ph-cake" style="font-size: 1.4rem;"></i>
               </div>
-              <span class="text-large" style="font-weight: 500;">Birthday Packages</span>
+              <span style="font-size: 1rem; font-weight: 600; color: var(--clr-text);">Birthday Packages</span>
             </li>
             <li class="flex items-center gap-4 mb-4">
-              <div class="btn-icon flex items-center justify-center"
-                style="flex-shrink: 0; width: 48px; height: 48px; background: rgba(139, 92, 246, 0.12); color: var(--clr-primary); border-radius: var(--radius-full);">
-                <i class="ph ph-briefcase" style="font-size: 1.5rem;"></i>
+              <div class="flex items-center justify-center"
+                style="flex-shrink: 0; width: 48px; height: 48px; background: rgba(139, 92, 246, 0.22); color: #A78BFA; border-radius: var(--radius-full); border: 1px solid rgba(139, 92, 246, 0.45);">
+                <i class="ph ph-briefcase" style="font-size: 1.4rem;"></i>
               </div>
-              <span class="text-large" style="font-weight: 500;">Corporate Team Building</span>
+              <span style="font-size: 1rem; font-weight: 600; color: var(--clr-text);">Corporate Team Building</span>
             </li>
             <li class="flex items-center gap-4">
-              <div class="btn-icon flex items-center justify-center"
-                style="flex-shrink: 0; width: 48px; height: 48px; background: rgba(139, 92, 246, 0.12); color: var(--clr-primary); border-radius: var(--radius-full);">
-                <i class="ph ph-star" style="font-size: 1.5rem;"></i>
+              <div class="flex items-center justify-center"
+                style="flex-shrink: 0; width: 48px; height: 48px; background: rgba(139, 92, 246, 0.22); color: #A78BFA; border-radius: var(--radius-full); border: 1px solid rgba(139, 92, 246, 0.45);">
+                <i class="ph ph-star" style="font-size: 1.4rem;"></i>
               </div>
-              <span class="text-large" style="font-weight: 500;">VIP Lounge Access</span>
+              <span style="font-size: 1rem; font-weight: 600; color: var(--clr-text);">VIP Lounge Access</span>
             </li>
           </ul>
 
@@ -417,19 +500,19 @@
             <div
               style="position: absolute; bottom: -1.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: 1rem; z-index: 2; white-space: nowrap;">
               <div class="card p-3"
-                style="display: flex; align-items: center; gap: 0.75rem; backdrop-filter: blur(12px); background: rgba(8,11,20,0.85);">
+                style="display: flex; align-items: center; gap: 0.75rem; backdrop-filter: blur(12px); background: rgba(8,11,20,0.92); border: 1px solid rgba(255,255,255,0.12);">
                 <i class="ph ph-users-four" style="font-size: 1.4rem; color: var(--clr-primary);"></i>
                 <div>
-                  <div class="text-small text-muted" style="line-height: 1.2;">Group Size</div>
-                  <div style="font-weight: 700; color: #fff; font-size: 0.9rem;">Up to 20</div>
+                  <div style="font-size: 0.72rem; font-weight: 600; letter-spacing: 0.5px; color: rgba(255,255,255,0.55); line-height: 1.2; text-transform: uppercase;">Group Size</div>
+                  <div style="font-weight: 700; color: #fff; font-size: 0.95rem;">Up to 20</div>
                 </div>
               </div>
               <div class="card p-3"
-                style="display: flex; align-items: center; gap: 0.75rem; backdrop-filter: blur(12px); background: rgba(8,11,20,0.85);">
+                style="display: flex; align-items: center; gap: 0.75rem; backdrop-filter: blur(12px); background: rgba(8,11,20,0.92); border: 1px solid rgba(255,255,255,0.12);">
                 <i class="ph ph-star" style="font-size: 1.4rem; color: var(--clr-warning);"></i>
                 <div>
-                  <div class="text-small text-muted" style="line-height: 1.2;">Rating</div>
-                  <div style="font-weight: 700; color: #fff; font-size: 0.9rem;">4.9 / 5.0</div>
+                  <div style="font-size: 0.72rem; font-weight: 600; letter-spacing: 0.5px; color: rgba(255,255,255,0.55); line-height: 1.2; text-transform: uppercase;">Rating</div>
+                  <div style="font-weight: 700; color: #fff; font-size: 0.95rem;">4.9 / 5.0</div>
                 </div>
               </div>
             </div>
@@ -439,84 +522,82 @@
     </section>
 
     <!-- Section 5: Pod Features (The Apex Station) -->
-    <section class="section" style="background: var(--clr-surface-alt); position: relative; overflow: hidden;">
-      <div class="container grid grid-cols-1 lg:grid-cols-2 gap-12 items-center animate-on-scroll">
-        <div style="position: relative;">
+    <section class="section" style="background: var(--clr-surface-alt); position: relative; overflow: hidden; padding-top: 6rem; padding-bottom: 6rem;">
+      <div class="container grid grid-cols-1 lg:grid-cols-2 animate-on-scroll" style="gap: 5rem; align-items: center;">
+        <!-- Image column: extra bottom padding so floating badge has room -->
+        <div style="position: relative; padding-bottom: 2.5rem;">
           <!-- Glowing backdrop -->
           <div
-            style="position: absolute; inset: 0; background: var(--clr-primary); opacity: 0.2; filter: blur(40px); border-radius: var(--radius-lg);">
+            style="position: absolute; inset: 0; background: var(--clr-primary); opacity: 0.18; filter: blur(50px); border-radius: var(--radius-lg); pointer-events: none;">
           </div>
 
           <img src="src/assets/images/pod-placeholder.jpg" alt="VR Pod"
-            style="position: relative; z-index: 1; border-radius: var(--radius-lg); border: 1px solid var(--border-glass); width: 100%;">
+            style="position: relative; z-index: 1; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.1); width: 100%; display: block; box-shadow: 0 24px 48px rgba(0,0,0,0.45);">
 
           <!-- Floating badge -->
-          <div class="card p-4"
-            style="position: absolute; bottom: -1.5rem; left: 2rem; z-index: 2; display: flex; align-items: center; gap: 1rem; backdrop-filter: blur(10px); background: rgba(8, 11, 20, 0.8);">
-            <div class="btn-icon" style="background: rgba(34, 211, 238, 0.2); color: var(--clr-secondary);"><i
-                class="ph ph-cpu" style="font-size: 1.5rem;"></i></div>
+          <div class="card"
+            style="position: absolute; bottom: 0; left: 1.75rem; z-index: 2; display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.25rem; backdrop-filter: blur(14px); background: rgba(8, 11, 20, 0.88); border: 1px solid rgba(34, 211, 238, 0.25); box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+            <div style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(34, 211, 238, 0.18); border: 1px solid rgba(34, 211, 238, 0.4); border-radius: 50%; flex-shrink: 0;">
+              <i class="ph ph-cpu" style="font-size: 1.35rem; color: var(--clr-secondary);"></i>
+            </div>
             <div>
-              <div class="text-small text-muted">Latency</div>
-              <div class="text-large" style="font-weight: bold; color: var(--clr-secondary);">Ultra-Low</div>
+              <div style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255,255,255,0.5); line-height: 1;">Latency</div>
+              <div style="font-size: 1.05rem; font-weight: 700; color: var(--clr-secondary); margin-top: 0.2rem;">Ultra-Low</div>
             </div>
           </div>
         </div>
 
-        <div>
-          <span class="badge mb-4" style="background: rgba(139, 92, 246, 0.2); color: var(--clr-primary);">Next-Gen
-            Hardware</span>
-          <h2>The Apex Station</h2>
-          <p class="mb-8 text-muted">Our custom-built haptic VR pods are engineered for total sensory immersion. With
+        <!-- Content column: left-aligned with generous inner spacing -->
+        <div style="padding: 1rem 0;">
+          <span class="badge mb-4" style="background: rgba(139, 92, 246, 0.2); color: #A78BFA; border: 1px solid rgba(139, 92, 246, 0.4); font-weight: 700; letter-spacing: 0.5px;">Next-Gen Hardware</span>
+          <h2 style="margin-bottom: 1rem;">The Apex Station</h2>
+          <p style="margin-bottom: 2rem; color: var(--clr-text-muted); max-width: 440px; line-height: 1.7;">Our custom-built haptic VR pods are engineered for total sensory immersion. With
             complete freedom of movement and acoustic dampening, reality fades away.</p>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-            <div class="flex items-center gap-4 p-5 rounded-lg"
-              style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass);">
-              <div class="flex items-center justify-center" style="width: 48px; height: 48px; min-width: 48px; background: rgba(34, 211, 238, 0.1); color: var(--clr-primary); border-radius: 50%;">
-                <i class="ph ph-arrows-out-cardinal" style="font-size: 1.5rem;"></i>
+          <div class="grid grid-cols-1 sm:grid-cols-2 mb-8" style="gap: 0.85rem;">
+            <div class="flex items-center gap-3" style="padding: 1rem 1.1rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md);">
+              <div style="width: 44px; height: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; background: rgba(34, 211, 238, 0.12); border: 1px solid rgba(34,211,238,0.25); color: var(--clr-secondary); border-radius: 50%;">
+                <i class="ph ph-arrows-out-cardinal" style="font-size: 1.35rem;"></i>
               </div>
               <div>
-                <strong style="display: block; margin-bottom: 0.25rem; font-size: 1.05rem;">Omni-Treadmills</strong>
-                <span class="text-small text-muted" style="line-height: 1.4; display: block;">Run, strafe, and crouch freely.</span>
+                <strong style="display: block; font-size: 0.95rem; margin-bottom: 0.2rem; color: var(--clr-text);">Omni-Treadmills</strong>
+                <span style="font-size: 0.82rem; color: var(--clr-text-muted); line-height: 1.4; display: block;">Run, strafe, and crouch freely.</span>
               </div>
             </div>
 
-            <div class="flex items-center gap-4 p-5 rounded-lg"
-              style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass);">
-              <div class="flex items-center justify-center" style="width: 48px; height: 48px; min-width: 48px; background: rgba(139, 92, 246, 0.1); color: var(--clr-secondary); border-radius: 50%;">
-                <i class="ph ph-wind" style="font-size: 1.5rem;"></i>
+            <div class="flex items-center gap-3" style="padding: 1rem 1.1rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md);">
+              <div style="width: 44px; height: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; background: rgba(139, 92, 246, 0.12); border: 1px solid rgba(139,92,246,0.25); color: #A78BFA; border-radius: 50%;">
+                <i class="ph ph-wind" style="font-size: 1.35rem;"></i>
               </div>
               <div>
-                <strong style="display: block; margin-bottom: 0.25rem; font-size: 1.05rem;">Climate Control</strong>
-                <span class="text-small text-muted" style="line-height: 1.4; display: block;">Dynamic wind & temp effects.</span>
+                <strong style="display: block; font-size: 0.95rem; margin-bottom: 0.2rem; color: var(--clr-text);">Climate Control</strong>
+                <span style="font-size: 0.82rem; color: var(--clr-text-muted); line-height: 1.4; display: block;">Dynamic wind &amp; temp effects.</span>
               </div>
             </div>
 
-            <div class="flex items-center gap-4 p-5 rounded-lg"
-              style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass);">
-              <div class="flex items-center justify-center" style="width: 48px; height: 48px; min-width: 48px; background: rgba(16, 185, 129, 0.1); color: var(--clr-success); border-radius: 50%;">
-                <i class="ph ph-shield-check" style="font-size: 1.5rem;"></i>
+            <div class="flex items-center gap-3" style="padding: 1rem 1.1rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md);">
+              <div style="width: 44px; height: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16,185,129,0.25); color: var(--clr-success); border-radius: 50%;">
+                <i class="ph ph-shield-check" style="font-size: 1.35rem;"></i>
               </div>
               <div>
-                <strong style="display: block; margin-bottom: 0.25rem; font-size: 1.05rem;">UV Sanitization</strong>
-                <span class="text-small text-muted" style="line-height: 1.4; display: block;">Deep cleaned after every run.</span>
+                <strong style="display: block; font-size: 0.95rem; margin-bottom: 0.2rem; color: var(--clr-text);">UV Sanitization</strong>
+                <span style="font-size: 0.82rem; color: var(--clr-text-muted); line-height: 1.4; display: block;">Deep cleaned after every run.</span>
               </div>
             </div>
 
-            <div class="flex items-center gap-4 p-5 rounded-lg"
-              style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass);">
-              <div class="flex items-center justify-center" style="width: 48px; height: 48px; min-width: 48px; background: rgba(34, 211, 238, 0.1); color: var(--clr-primary); border-radius: 50%;">
-                <i class="ph ph-wifi-high" style="font-size: 1.5rem;"></i>
+            <div class="flex items-center gap-3" style="padding: 1rem 1.1rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md);">
+              <div style="width: 44px; height: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; background: rgba(34, 211, 238, 0.12); border: 1px solid rgba(34,211,238,0.25); color: var(--clr-secondary); border-radius: 50%;">
+                <i class="ph ph-wifi-high" style="font-size: 1.35rem;"></i>
               </div>
               <div>
-                <strong style="display: block; margin-bottom: 0.25rem; font-size: 1.05rem;">Zero-Tether</strong>
-                <span class="text-small text-muted" style="line-height: 1.4; display: block;">100% wireless tracking.</span>
+                <strong style="display: block; font-size: 0.95rem; margin-bottom: 0.2rem; color: var(--clr-text);">Zero-Tether</strong>
+                <span style="font-size: 0.82rem; color: var(--clr-text-muted); line-height: 1.4; display: block;">100% wireless tracking.</span>
               </div>
             </div>
           </div>
 
           <div class="flex gap-4">
-            <a href="pricing.html" class="btn btn-primary">Book a Pod</a>
+            <a href="contact.html" class="btn btn-primary">Book a Pod</a>
             <a href="games.html" class="btn btn-secondary">Explore Games</a>
           </div>
         </div>
@@ -617,24 +698,73 @@
         <h4 style="margin-bottom: var(--space-4);">Explore</h4>
         <ul class="flex-col gap-2">
           <li><a href="games.html" class="nav-link text-small">Games Library</a></li>
-          <li><a href="pricing.html" class="nav-link text-small">Pricing & Bundles</a></li>
-          <li><a href="groups.html" class="nav-link text-small">Group Bookings</a></li>
-          <li><a href="dashboard.html" class="nav-link text-small">User</a></li>
+          <li><a href="pricing.html" class="nav-link text-small">Pricing &amp; Bundles</a></li>
+          <li><a href="groups.html" class="nav-link text-small">Parties &amp; Groups</a></li>
+          <li><a href="about.html" class="nav-link text-small">About Us</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact</a></li>
+          <li><a href="dashboard.html" class="nav-link text-small">User Dashboard</a></li>
         </ul>
       </div>
       <div>
         <h4 style="margin-bottom: var(--space-4);">Support</h4>
         <ul class="flex-col gap-2">
-          <li><a href="#" class="nav-link text-small">FAQ</a></li>
-          <li><a href="#" class="nav-link text-small">Contact Us</a></li>
+          <li><a href="contact.html" class="nav-link text-small">FAQ &amp; Help</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact Lounge Staff</a></li>
           <li><a href="#" class="nav-link text-small">Terms of Service</a></li>
           <li><a href="#" class="nav-link text-small">Privacy Policy</a></li>
         </ul>
       </div>
       <div>
-        <h4 style="margin-bottom: var(--space-4);">Location</h4>
-        <p class="text-small">123 Cyber Avenue<br>Neon District, NT 45890</p>
-        <p class="text-small mt-2">Mon - Sun: 10:00 AM - 12:00 AM</p>
+        <h4 style="margin-bottom: var(--space-4);">Location &amp; Hours</h4>
+        <div class="footer-location-col">
+          <!-- Address -->
+          <div class="footer-loc-block">
+            <i class="ph-fill ph-map-pin footer-loc-icon"></i>
+            <div class="footer-loc-info">
+              <strong>Nexus VR Lounge</strong>
+              <span>123 Cyber Avenue, Suite 200</span>
+              <span style="font-size: 0.8rem; color: var(--clr-text-muted);">Neon District, NT 45890</span>
+            </div>
+          </div>
+
+          <!-- Opening Hours -->
+          <div class="footer-loc-block">
+            <i class="ph ph-clock footer-loc-icon"></i>
+            <div class="footer-loc-info" style="width: 100%;">
+              <span class="footer-open-pill">Open Daily</span>
+              <div class="footer-hours-list">
+                <div class="footer-hours-row">
+                  <span>Mon &ndash; Thu:</span>
+                  <strong style="color: var(--clr-text);">12 PM &ndash; 11 PM</strong>
+                </div>
+                <div class="footer-hours-row">
+                  <span>Fri &ndash; Sun:</span>
+                  <strong style="color: var(--clr-secondary);">10 AM &ndash; Midnight</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone & Contact Links -->
+          <div class="footer-contacts-list">
+            <a href="tel:+15550192834" class="footer-contact-item" aria-label="Phone: (555) 019-2834">
+              <i class="ph ph-phone" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>(555) 019-2834</span>
+            </a>
+            <a href="mailto:contact@nexusvr.com" class="footer-contact-item" aria-label="Email: contact@nexusvr.com">
+              <i class="ph ph-envelope-simple" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>contact@nexusvr.com</span>
+            </a>
+          </div>
+
+          <!-- Directions Action Button -->
+          <div>
+            <a href="https://maps.google.com/?q=123+Cyber+Avenue+Neon+District" target="_blank" rel="noopener noreferrer" class="footer-directions-btn" aria-label="Get directions to Nexus VR Lounge on Google Maps">
+              <i class="ph ph-navigation-arrow"></i>
+              <span>Get Directions</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="container text-center text-small"

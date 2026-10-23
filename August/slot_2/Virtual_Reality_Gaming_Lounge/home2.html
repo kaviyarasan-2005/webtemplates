@@ -4,215 +4,690 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexus VR | Home 2 - Dynamic Gaming Lounge</title>
+  <title>Nexus VR | Local VR Gaming Lounge & Immersive Experiences</title>
   <meta name="description"
-    content="Join the competitive scene at Nexus VR Lounge. View leaderboards, join tournaments, and play the latest VR titles.">
+    content="Experience next-generation virtual reality at Nexus VR Lounge. Premium VR pods, multiplayer free-roam arenas, escape rooms, party packages, and craft lounge bar.">
 
   <link rel="stylesheet" href="src/css/main.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <style>
-    /* Home 2 Specific Styles */
-    .hero-home2 {
-      min-height: 100vh;
+    /* =========================================
+       Home 2: Local VR Lounge Aesthetic
+       ========================================= */
+
+    /* Hero Section */
+    .hero-lounge {
+      position: relative;
+      min-height: 92vh;
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      position: relative;
+      padding-top: 7rem;
+      padding-bottom: 5rem;
       overflow: hidden;
       background: #080B14;
     }
 
-    .video-bg {
+    .hero-lounge-bg {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      transform: translateX(-50%) translateY(-50%);
-      z-index: 0;
-      opacity: 0.88;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      filter: saturate(1.25) contrast(1.15) brightness(1.02);
+      object-position: center;
+      /* Full opacity + vividness so the pods, players and neon read clearly */
+      opacity: 1;
+      filter: saturate(1.25) contrast(1.08) brightness(1.08);
+      transform: scale(1.02);
+      transition: transform 12s ease-out;
     }
 
-    .hero-home2::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(8, 11, 20, 0.45) 0%, rgba(8, 11, 20, 0.15) 45%, rgba(8, 11, 20, 0.75) 100%);
-      z-index: 1;
+    .hero-lounge:hover .hero-lounge-bg {
+      transform: scale(1.06);
     }
 
-    /* Cyberpunk Grid Overlay */
-    .hero-grid {
+    .hero-lounge-overlay {
       position: absolute;
       inset: 0;
-      background-image:
-        linear-gradient(rgba(34, 211, 238, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(34, 211, 238, 0.06) 1px, transparent 1px);
-      background-size: 35px 35px;
-      z-index: 1;
-      transform: perspective(600px) rotateX(65deg) translateY(-100px) scale(2.8);
-      opacity: 0.35;
+      /* Content-aware scrim: opaque only behind the copy on the left,
+         the lounge on the right is left untouched. */
+      background:
+        linear-gradient(90deg, rgba(8, 11, 20, 0.95) 0%, rgba(8, 11, 20, 0.88) 34%, rgba(8, 11, 20, 0.58) 54%, rgba(8, 11, 20, 0.16) 72%, rgba(8, 11, 20, 0) 100%),
+        linear-gradient(180deg, rgba(8, 11, 20, 0.42) 0%, rgba(8, 11, 20, 0) 16%, rgba(8, 11, 20, 0) 62%, rgba(8, 11, 20, 0.45) 88%, rgba(8, 11, 20, 0.85) 100%),
+        radial-gradient(circle at 74% 30%, rgba(139, 92, 246, 0.14) 0%, transparent 55%);
       pointer-events: none;
-      animation: grid-move 12s linear infinite;
     }
 
-    @keyframes grid-move {
-      0% {
-        transform: perspective(600px) rotateX(65deg) translateY(0) scale(2.8);
-      }
-
-      100% {
-        transform: perspective(600px) rotateX(65deg) translateY(35px) scale(2.8);
-      }
-    }
-
-    .hero-content {
+    .hero-lounge-content {
       position: relative;
       z-index: 2;
     }
 
-    .cyber-card {
-      background: rgba(8, 11, 20, 0.48);
+    /* Legibility for the headline + stat strip sitting over the photo */
+    .hero-lounge h1 {
+      color: #ffffff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75), 0 10px 34px rgba(0, 0, 0, 0.85);
+    }
+
+    .hero-lounge h1 .text-gradient {
+      text-shadow: none;
+    }
+
+    .hero-lounge p {
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+    }
+
+    /* Live status badge */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-full);
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34D399;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(34, 211, 238, 0.35);
-      border-top: 3px solid var(--clr-secondary);
-      border-bottom: 3px solid var(--clr-primary);
-      padding: 3.5rem 2.5rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 10px #10B981;
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .hero-stats-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @media (min-width: 768px) {
+      .hero-stats-strip {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    /* On narrow screens the copy sits on top of the photo, so the scrim
+       becomes uniform and the stat strip gets its own panel. */
+    @media (max-width: 767px) {
+      .hero-lounge-overlay {
+        background:
+          linear-gradient(180deg, rgba(8, 11, 20, 0.68) 0%, rgba(8, 11, 20, 0.74) 48%, rgba(8, 11, 20, 0.62) 74%, rgba(8, 11, 20, 0.92) 100%),
+          linear-gradient(90deg, rgba(8, 11, 20, 0.5) 0%, rgba(8, 11, 20, 0.28) 100%);
+      }
+
+      .hero-stats-strip {
+        margin-top: 2.5rem;
+        padding: 1.25rem;
+        border-top: none;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-md);
+        background: rgba(8, 11, 20, 0.45);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+    }
+
+    .hero-stat-item h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #fff 30%, var(--clr-primary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-stat-item p {
+      font-size: 0.85rem;
+      color: #E5E7EB;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.95);
+    }
+
+    /* =========================================
+       Hero CTAs - primary booking action stands out
+       ========================================= */
+    .hero-cta {
       position: relative;
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), inset 0 0 30px rgba(34, 211, 238, 0.05);
-    }
-
-    .cyber-card h1 {
-      color: #ffffff !important;
-      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.9), 0 0 30px rgba(34, 211, 238, 0.4);
-    }
-
-    .cyber-card p {
-      color: #E5E7EB !important;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
-      font-weight: 500;
-    }
-
-    /* Standout CTA Buttons */
-    .hero2-cta-primary {
-      background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 50%, #8B5CF6 100%) !important;
-      color: #ffffff !important;
-      font-weight: 800 !important;
-      font-size: 1.15rem !important;
-      padding: 0 2.5rem !important;
-      height: 52px !important;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px) !important;
-      box-shadow: 0 0 30px rgba(6, 182, 212, 0.7), 0 10px 30px rgba(0, 0, 0, 0.5) !important;
-      border: 1px solid rgba(255, 255, 255, 0.3) !important;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      gap: 0.6rem;
+      height: 58px;
+      padding: 0 2.25rem;
+      border-radius: var(--radius-full);
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.01em;
       text-decoration: none;
-      transition: all var(--transition-fast) !important;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+        background-color var(--transition-fast), border-color var(--transition-fast);
     }
 
-    .hero2-cta-primary:hover {
-      transform: translateY(-3px) scale(1.03) !important;
-      box-shadow: 0 0 45px rgba(6, 182, 212, 0.95), 0 15px 35px rgba(0, 0, 0, 0.6) !important;
-      border-color: #ffffff !important;
+    .hero-cta-primary {
+      color: #ffffff;
+      background: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 40%, #6D28D9 100%);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45), 0 0 30px rgba(139, 92, 246, 0.6);
     }
 
-    .hero2-cta-secondary {
-      background: rgba(8, 11, 20, 0.5) !important;
-      color: #22D3EE !important;
-      font-weight: 700 !important;
-      font-size: 1.15rem !important;
-      padding: 0 2.25rem !important;
-      height: 52px !important;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1.5px solid var(--clr-secondary) !important;
-      clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px) !important;
+    .hero-cta-primary i {
+      color: #ffffff;
+    }
+
+    .hero-cta-primary:hover {
+      transform: translateY(-3px);
+      border-color: #22D3EE;
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.5), 0 0 52px rgba(139, 92, 246, 0.95);
+    }
+
+    /* Soft pulse ring that draws the eye to the primary booking action */
+    .hero-cta-primary::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: var(--radius-full);
+      border: 2px solid rgba(139, 92, 246, 0.65);
+      animation: hero-cta-ring 2.6s ease-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes hero-cta-ring {
+      0% {
+        transform: scale(1);
+        opacity: 0.75;
+      }
+
+      70%,
+      100% {
+        transform: scale(1.11);
+        opacity: 0;
+      }
+    }
+
+    .hero-cta-secondary {
+      color: #ffffff;
+      background: rgba(8, 11, 20, 0.45);
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
       backdrop-filter: blur(10px);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
-      transition: all var(--transition-fast) !important;
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.4);
     }
 
-    .hero2-cta-secondary:hover {
-      background: rgba(34, 211, 238, 0.15) !important;
-      color: #ffffff !important;
-      transform: translateY(-2px) !important;
-      box-shadow: 0 0 25px rgba(34, 211, 238, 0.5) !important;
+    .hero-cta-secondary:hover {
+      transform: translateY(-3px);
+      background: rgba(34, 211, 238, 0.18);
+      border-color: #22D3EE;
+      box-shadow: 0 12px 34px rgba(34, 211, 238, 0.35);
     }
 
-    .leaderboard-row {
+    /* Experience Cards */
+    .experience-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--clr-surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all var(--transition-normal);
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: var(--space-4);
-      border-bottom: var(--border-glass);
-      transition: background var(--transition-fast);
+      flex-direction: column;
+      height: 100%;
     }
 
-    .leaderboard-row:hover {
+    .experience-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(34, 211, 238, 0.15);
+    }
+
+    .experience-img-wrap {
+      position: relative;
+      height: 240px;
+      overflow: hidden;
+    }
+
+    .experience-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .experience-card:hover .experience-img-wrap img {
+      transform: scale(1.08);
+    }
+
+    .experience-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      background: rgba(8, 11, 20, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .experience-specs {
+      display: flex;
+      gap: 1rem;
+      padding: 0.75rem 1.25rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.8rem;
+      color: var(--clr-text-muted);
+    }
+
+    .experience-specs span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* Genre Filter Tabs */
+    .filter-tab-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .filter-tab {
+      padding: 0.6rem 1.35rem;
+      border-radius: var(--radius-full);
+      background: var(--clr-surface);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--clr-text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .filter-tab:hover {
+      color: var(--clr-text);
+      border-color: var(--clr-primary);
       background: rgba(34, 211, 238, 0.05);
     }
 
-    .leaderboard-row:last-child {
-      border-bottom: none;
+    .filter-tab.active {
+      background: linear-gradient(135deg, var(--clr-primary), var(--clr-secondary));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
     }
 
-    /* Light Theme Adjustments for Home 2 */
-    [data-theme="light"] .hero-home2 {
-      background: #080B14;
+    /* Game Lounge Card */
+    .lounge-game-card {
+      background: var(--clr-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all var(--transition-fast);
     }
 
-    [data-theme="light"] .hero-home2::after {
-      background: linear-gradient(180deg, rgba(8, 11, 20, 0.45) 0%, rgba(8, 11, 20, 0.15) 45%, rgba(8, 11, 20, 0.75) 100%);
+    .lounge-game-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(139, 92, 246, 0.4);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
     }
 
-    [data-theme="light"] .hero-grid {
-      background-image:
-        linear-gradient(rgba(34, 211, 238, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(34, 211, 238, 0.06) 1px, transparent 1px);
+    .lounge-game-thumb {
+      height: 180px;
+      position: relative;
+      overflow: hidden;
     }
 
-    [data-theme="light"] .cyber-card {
-      background: rgba(8, 11, 20, 0.58);
-      border-color: rgba(34, 211, 238, 0.4);
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+    .lounge-game-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
     }
 
-    [data-theme="light"] .cyber-card h1 {
-      color: #ffffff !important;
+    .lounge-game-card:hover .lounge-game-thumb img {
+      transform: scale(1.06);
     }
 
-    [data-theme="light"] .cyber-card p {
-      color: #E5E7EB !important;
+    .lounge-game-rating {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: rgba(8, 11, 20, 0.85);
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #FBBF24;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      backdrop-filter: blur(4px);
     }
 
-    [data-theme="light"] .leaderboard-row:hover {
-      background: rgba(0, 0, 0, 0.03);
+    /* How It Works Steps */
+    .step-card {
+      position: relative;
+      background: var(--clr-surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: all var(--transition-normal);
     }
 
-    [data-theme="light"] .map-info-box {
-      background: rgba(255, 255, 255, 0.95) !important;
-      border-color: rgba(0, 0, 0, 0.1) !important;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+    .step-card:hover {
+      border-color: rgba(34, 211, 238, 0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
     }
 
-    [data-theme="light"] .map-overlay {
-      background: rgba(255, 255, 255, 0.2) !important;
+    .step-number {
+      font-family: var(--font-primary);
+      font-size: 2.75rem;
+      font-weight: 900;
+      color: rgba(34, 211, 238, 0.15);
+      line-height: 1;
+      margin-bottom: 1rem;
+      letter-spacing: -0.05em;
+      transition: color var(--transition-fast);
+    }
+
+    .step-card:hover .step-number {
+      color: var(--clr-primary);
+    }
+
+    .step-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: rgba(34, 211, 238, 0.1);
+      border: 1px solid rgba(34, 211, 238, 0.25);
+      color: var(--clr-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Pricing Bundles */
+    .bundle-card {
+      background: var(--clr-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2.5rem 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: all var(--transition-normal);
+    }
+
+    .bundle-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(34, 211, 238, 0.35);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .bundle-card.featured {
+      background: linear-gradient(180deg, rgba(34, 211, 238, 0.08) 0%, var(--clr-surface) 100%);
+      border: 2px solid var(--clr-primary);
+      box-shadow: 0 15px 35px rgba(34, 211, 238, 0.15);
+    }
+
+    .bundle-tag {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--clr-primary), var(--clr-secondary));
+      color: #fff;
+      padding: 0.25rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(34, 211, 238, 0.4);
+    }
+
+    .bundle-price {
+      font-size: 2.85rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      margin-top: 1rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .bundle-features {
+      list-style: none;
+      padding: 0;
+      margin: 1.75rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      flex-grow: 1;
+    }
+
+    .bundle-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.92rem;
+      color: var(--clr-text-muted);
+    }
+
+    .bundle-features li i {
+      color: var(--clr-primary);
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+
+    /* Group Bookings */
+    .group-event-card {
+      background: var(--clr-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      transition: all var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .group-event-card:hover {
+      border-color: rgba(139, 92, 246, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+    }
+
+    .group-img-wrap {
+      height: 210px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .group-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .group-event-card:hover .group-img-wrap img {
+      transform: scale(1.06);
+    }
+
+    /* Amenities Bar */
+    .amenities-bar {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      padding: 2.5rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-lg);
+      margin-top: 3.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .amenities-bar {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .amenity-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .amenity-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(139, 92, 246, 0.12);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      color: var(--clr-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    /* Location & Map */
+    .location-card {
+      background: var(--clr-surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .map-container {
+      position: relative;
+      height: 380px;
+      overflow: hidden;
+    }
+
+    .map-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.2) contrast(1.1);
+    }
+
+    .map-floating-box {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      right: 2rem;
+      background: rgba(8, 11, 20, 0.94);
+      padding: 1.5rem 2rem;
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .map-floating-box {
+        max-width: 420px;
+        right: auto;
+      }
+    }
+
+    /* Final CTA Banner */
+    .final-cta-banner {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%),
+                  var(--clr-surface);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      border-radius: var(--radius-xl);
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(34, 211, 238, 0.05);
+    }
+
+    /* Light Theme Tweaks */
+    [data-theme="light"] .hero-lounge {
+      background: #0B101E;
+    }
+
+    [data-theme="light"] .hero-lounge-overlay {
+      background:
+        linear-gradient(90deg, rgba(6, 10, 20, 0.93) 0%, rgba(6, 10, 20, 0.86) 34%, rgba(6, 10, 20, 0.56) 54%, rgba(6, 10, 20, 0.15) 72%, rgba(6, 10, 20, 0) 100%),
+        linear-gradient(180deg, rgba(6, 10, 20, 0.4) 0%, rgba(6, 10, 20, 0) 16%, rgba(6, 10, 20, 0) 62%, rgba(6, 10, 20, 0.42) 88%, rgba(6, 10, 20, 0.85) 100%),
+        radial-gradient(circle at 74% 30%, rgba(139, 92, 246, 0.12) 0%, transparent 55%);
+    }
+
+    [data-theme="light"] .hero-stat-item h3 {
+      background: linear-gradient(135deg, #fff 40%, #22D3EE);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    [data-theme="light"] .step-number {
+      color: rgba(34, 211, 238, 0.25);
+    }
+
+    [data-theme="light"] .map-floating-box {
+      background: rgba(255, 255, 255, 0.96);
+      border-color: rgba(0, 0, 0, 0.1);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    [data-theme="light"] .map-floating-box h4 {
+      color: #111827;
+    }
+
+    [data-theme="light"] .map-floating-box p {
+      color: #4B5563;
+    }
+
+    [data-theme="light"] .bundle-price {
+      color: var(--clr-text);
     }
   </style>
   <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon-5.svg">
@@ -223,24 +698,28 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="container flex justify-between items-center">
-      <a href="home1.html" class="flex items-center gap-2" aria-label="Nexus VR Home">
-        <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" style="height: 44px; width: 44px; border-radius: 50%; box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);">
-        <span class="text-large" style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+      <!-- Brand -->
+      <a href="home1.html" class="nav-brand" aria-label="Nexus VR Home">
+        <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" class="nav-brand__logo">
+        <span class="nav-brand__name">Nexus <span class="text-gradient">VR</span></span>
       </a>
 
-      <div class="nav-links items-center">
+      <!-- Desktop Nav -->
+      <div class="nav-links">
         <div class="dropdown">
-          <a href="#" class="nav-link flex items-center gap-1">Home <i class="ph ph-caret-down"></i></a>
+          <a href="#" class="nav-link active">Home <i class="ph ph-caret-down dropdown-caret"></i></a>
           <div class="dropdown-menu">
             <a href="home1.html" class="dropdown-item">Home 1</a>
-            <a href="home2.html" class="dropdown-item">Home 2</a>
+            <a href="home2.html" class="dropdown-item active">Home 2</a>
           </div>
         </div>
         <a href="games.html" class="nav-link">Games Library</a>
         <a href="pricing.html" class="nav-link">Pricing</a>
-        <a href="groups.html" class="nav-link">Parties & Groups</a>
+        <a href="groups.html" class="nav-link">Parties &amp; Groups</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
         <div class="dropdown">
-          <a href="#" class="nav-link flex items-center gap-1">Dashboards <i class="ph ph-caret-down"></i></a>
+          <a href="#" class="nav-link">Dashboards <i class="ph ph-caret-down dropdown-caret"></i></a>
           <div class="dropdown-menu">
             <a href="dashboard.html" class="dropdown-item">User</a>
             <a href="admin.html" class="dropdown-item">Admin</a>
@@ -248,15 +727,18 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-4">
-        <button id="theme-toggle" class="btn-icon flex items-center justify-center" aria-label="Toggle Theme">
+      <!-- Actions -->
+      <div class="nav-actions">
+        <button id="theme-toggle" class="nav-icon-btn" aria-label="Toggle Theme">
           <i class="ph ph-moon"></i>
         </button>
-        <button id="rtl-toggle" class="btn-rtl hidden lg:flex">RTL</button>
-        <a href="login.html" class="btn btn-primary hidden lg:flex">Login</a>
-        <a href="dashboard.html" class="btn btn-secondary hidden lg:flex">Book Now</a>
-        <button id="mobile-menu-btn" class="btn-icon lg:hidden flex items-center justify-center">
-          <i class="ph ph-list" style="font-size: 1.5rem;"></i>
+        <button id="rtl-toggle" class="btn-rtl-compact" title="Toggle RTL Layout">RTL</button>
+        <a href="login.html" class="nav-link-login">Login</a>
+        <a href="contact.html" class="nav-cta-btn">
+          <i class="ph ph-ticket"></i> Book Now
+        </a>
+        <button id="mobile-menu-btn" class="nav-icon-btn" aria-label="Toggle Navigation Menu">
+          <i class="ph ph-list" style="font-size: 1.4rem;"></i>
         </button>
       </div>
     </div>
@@ -264,284 +746,725 @@
 
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="mobile-menu flex-col gap-6">
-    <!-- Home Group -->
     <div class="mob-group">
       <button class="mob-group-btn">
         Home <i class="ph ph-caret-down mob-caret"></i>
       </button>
       <div class="mob-group-links">
         <a href="home1.html" class="nav-link text-large">Home 1</a>
-        <a href="home2.html" class="nav-link text-large">Home 2</a>
+        <a href="home2.html" class="nav-link text-large" style="color: var(--clr-primary);">Home 2</a>
       </div>
     </div>
     <a href="games.html" class="nav-link text-large">Games Library</a>
-    <a href="pricing.html" class="nav-link text-large">Pricing</a>
+    <a href="pricing.html" class="nav-link text-large">Pricing &amp; Bundles</a>
     <a href="groups.html" class="nav-link text-large">Parties &amp; Groups</a>
-    <!-- Dashboards Group -->
+    <a href="about.html" class="nav-link text-large">About</a>
+    <a href="contact.html" class="nav-link text-large">Contact</a>
     <div class="mob-group">
       <button class="mob-group-btn">
         Dashboards <i class="ph ph-caret-down mob-caret"></i>
       </button>
       <div class="mob-group-links">
-        <a href="dashboard.html" class="nav-link text-large">User</a>
-        <a href="admin.html" class="nav-link text-large">Admin</a>
+        <a href="dashboard.html" class="nav-link text-large">User Dashboard</a>
+        <a href="admin.html" class="nav-link text-large">Admin Console</a>
       </div>
     </div>
-    <hr style="border-color: rgba(255,255,255,0.1);">
-    <!-- Theme & RTL toggles in mobile menu -->
-    <div style="display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-size:0.9rem;color:var(--clr-text-muted);">Theme</span>
-      <button id="theme-toggle-mobile" class="btn-icon flex items-center justify-center" aria-label="Toggle Theme"
-        style="width:44px;height:44px;" onclick="document.getElementById('theme-toggle').click()">
+        <hr style="border-color: rgba(255,255,255,0.1);">
+    <!-- Theme & RTL Toggles (Shifted into Hamburger) -->
+    <div class="mob-control-row">
+      <span>Theme</span>
+      <button id="theme-toggle-mobile" class="nav-icon-btn" aria-label="Toggle Theme">
         <i class="ph ph-moon" style="font-size:1.2rem;"></i>
       </button>
     </div>
-    <div style="display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-size:0.9rem;color:var(--clr-text-muted);">RTL Mode</span>
-      <button id="rtl-toggle-mobile" class="btn-rtl" style="height:38px;padding:0 1rem;"
-        onclick="document.getElementById('rtl-toggle').click()">RTL</button>
+    <div class="mob-control-row">
+      <span>Layout Direction</span>
+      <button id="rtl-toggle-mobile" class="btn-rtl-compact">RTL</button>
     </div>
     <hr style="border-color: rgba(255,255,255,0.1);">
-    <a href="login.html" class="btn btn-primary justify-center">Login</a>
-    <a href="dashboard.html" class="btn btn-secondary justify-center">Book Now</a>
+    <a href="login.html" class="btn btn-secondary justify-center" style="width: 100%;">Login</a>
+    <a href="contact.html" class="btn btn-primary justify-center" style="width: 100%;"><i class="ph ph-ticket"></i> Book Now</a>
   </div>
 
   <main>
-    <!-- Section 1: Dynamic Hero (Video Placeholder via Image) -->
-    <section class="hero-home2">
-      <!-- We use an image to simulate a video poster/bg -->
-      <img src="src/assets/images/hero-bg-2.jpg" alt="Video Background Placeholder" class="video-bg">
-      <div class="hero-grid"></div>
+    <!-- =========================================
+         1. HERO & BOOKING CTA
+         ========================================= -->
+    <section class="hero-lounge">
+      <img src="src/assets/images/lounge-hero-bg.jpg" alt="Nexus VR Gaming Lounge Interior" class="hero-lounge-bg">
+      <div class="hero-lounge-overlay"></div>
 
-      <div class="container hero-content animate-on-scroll" style="display: flex; justify-content: center;">
-        <div class="cyber-card" style="max-width: 800px; width: 100%;">
-          <div class="mb-4 text-secondary"
-            style="font-family: monospace; letter-spacing: 2px; font-size: 0.9rem; text-transform: uppercase;">
-            <i class="ph-fill ph-target"></i> Initialization Sequence Complete
+      <div class="container hero-lounge-content">
+        <div style="max-width: 780px;">
+          <div class="status-pill animate-on-scroll">
+            <span class="status-dot"></span>
+            <span>Open Today: 10:00 AM – Midnight • Walk-ins & Reservations Welcome</span>
           </div>
-          <h1 class="mb-4" style="font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1;">The Next Level of <br><span
-              class="text-gradient">Competitive VR.</span></h1>
-          <p class="text-large mb-8" style="color: #9CA3AF; max-width: 600px; margin-inline: auto;">Join the elite.
-            Compete in weekly tournaments, climb the leaderboards, and experience VR esports like never before.</p>
-          <div class="flex justify-center gap-4 flex-wrap">
-            <a href="dashboard.html" class="hero2-cta-primary">Join
-              the Arena <i class="ph-bold ph-lightning"></i></a>
-            <a href="#leaderboard" class="hero2-cta-secondary">View
-              Rankings</a>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Section 2: Live Leaderboard -->
-    <section id="leaderboard" class="section container">
-      <div class="flex flex-col lg:flex-row justify-between items-center mb-8 gap-4 animate-on-scroll">
-        <div>
-          <h2>Global Leaderboard</h2>
-          <p class="m-0">Top players across all competitive titles this week.</p>
-        </div>
-        <div class="flex gap-2">
-          <button class="badge" style="border: 1px solid var(--clr-primary); background: transparent;">All Time</button>
-          <button class="badge">This Week</button>
-        </div>
-      </div>
+          <h1 class="animate-on-scroll" style="font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.02em;">
+            Step Into the <br>
+            <span class="text-gradient">Ultimate VR Lounge.</span>
+          </h1>
 
-      <div class="card p-0 animate-on-scroll">
-        <div class="leaderboard-row" style="background: var(--clr-surface-alt); font-weight: bold;">
-          <div style="flex: 0 0 50px;">Rank</div>
-          <div style="flex: 1;">Player</div>
-          <div style="flex: 1;" class="hidden sm:block">Title</div>
-          <div style="flex: 0 0 100px; text-align: right;">Score</div>
-        </div>
-        <div class="leaderboard-row">
-          <div style="flex: 0 0 50px;" class="text-warning"><i class="ph-fill ph-trophy"></i> 1</div>
-          <div style="flex: 1;" class="flex items-center gap-2">
-            <img src="src/assets/images/avatar-1.jpg" alt="Avatar"
-              style="width: 32px; height: 32px; border-radius: 50%;">
-            <strong>VoidWalker</strong>
-          </div>
-          <div style="flex: 1;" class="hidden sm:block text-muted">Cyber Ninja VR</div>
-          <div
-            style="flex: 0 0 100px; text-align: right; color: var(--clr-secondary); font-family: monospace; font-size: 1.1rem;">
-            94,200</div>
-        </div>
-        <div class="leaderboard-row">
-          <div style="flex: 0 0 50px; color: #9CA3AF;">2</div>
-          <div style="flex: 1;" class="flex items-center gap-2">
-            <img src="src/assets/images/avatar-2.jpg" alt="Avatar"
-              style="width: 32px; height: 32px; border-radius: 50%;">
-            <strong>NeonDemon</strong>
-          </div>
-          <div style="flex: 1;" class="hidden sm:block text-muted">Racket Fury</div>
-          <div
-            style="flex: 0 0 100px; text-align: right; color: var(--clr-secondary); font-family: monospace; font-size: 1.1rem;">
-            88,150</div>
-        </div>
-        <div class="leaderboard-row">
-          <div style="flex: 0 0 50px; color: #B45309;">3</div>
-          <div style="flex: 1;" class="flex items-center gap-2">
-            <img src="src/assets/images/avatar-3.jpg" alt="Avatar"
-              style="width: 32px; height: 32px; border-radius: 50%;">
-            <strong>GhostProtocol</strong>
-          </div>
-          <div style="flex: 1;" class="hidden sm:block text-muted">Zero Caliber</div>
-          <div
-            style="flex: 0 0 100px; text-align: right; color: var(--clr-secondary); font-family: monospace; font-size: 1.1rem;">
-            85,400</div>
-        </div>
-      </div>
-    </section>
+          <p class="text-large animate-on-scroll" style="max-width: 620px; line-height: 1.7; color: #E5E7EB; margin-bottom: 2.25rem;">
+            Immerse yourself in next-generation VR gaming, free-roam multiplayer arenas, and mind-bending escape rooms. Perfect for solo thrill-seekers, friends night out, and private parties.
+          </p>
 
-    <!-- Section 3: New Arrivals (Horizontal scroll look) -->
-    <section class="section" style="background: var(--clr-surface);">
-      <div class="container animate-on-scroll">
-        <h2 class="text-center mb-8">New Arrivals</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div class="card" style="padding: 0;">
-            <img src="src/assets/images/apex_construct.jpg" alt="Apex Construct" style="width: 100%; height: 250px; object-fit: cover;">
-            <div class="p-4 text-center">
-              <h4>Apex Construct</h4>
-              <p class="text-small">Action / Adventure</p>
+          <div class="flex items-center gap-4 flex-wrap animate-on-scroll">
+            <a href="contact.html" class="hero-cta hero-cta-primary">
+              <i class="ph-bold ph-ticket"></i> Book a VR Station
+            </a>
+            <a href="#experiences" class="hero-cta hero-cta-secondary">
+              <i class="ph ph-play-circle"></i> Explore Experiences
+            </a>
+          </div>
+
+          <!-- Quick Lounge Stats -->
+          <div class="hero-stats-strip animate-on-scroll">
+            <div class="hero-stat-item">
+              <h3>24</h3>
+              <p>Dedicated VR Pods</p>
             </div>
-          </div>
-          <div class="card" style="padding: 0;">
-            <img src="src/assets/images/beat_rhythm.jpg" alt="Beat Rhythm" style="width: 100%; height: 250px; object-fit: cover;">
-            <div class="p-4 text-center">
-              <h4>Beat Rhythm</h4>
-              <p class="text-small">Music / Rhythm</p>
+            <div class="hero-stat-item">
+              <h3>50+</h3>
+              <p>Top-Tier VR Titles</p>
             </div>
-          </div>
-          <div class="card" style="padding: 0;">
-            <img src="src/assets/images/wanderer.jpg" alt="Wanderer" style="width: 100%; height: 250px; object-fit: cover;">
-            <div class="p-4 text-center">
-              <h4>Wanderer</h4>
-              <p class="text-small">Puzzle / Story</p>
+            <div class="hero-stat-item">
+              <h3>4K HDR</h3>
+              <p>Apex Clarity Headsets</p>
+            </div>
+            <div class="hero-stat-item">
+              <h3>4.9 ★</h3>
+              <p>Over 2,400+ Reviews</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 4: Upcoming Tournaments -->
-    <section class="section container animate-on-scroll">
-      <h2 class="text-center mb-12">Upcoming Tournaments</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="card flex-col sm:flex-row gap-6 items-center">
-          <div style="flex: 0 0 120px; text-align: center;">
-            <div class="text-primary" style="font-size: 3rem; font-weight: 800; font-family: var(--font-primary);">15
-            </div>
-            <div class="text-large" style="text-transform: uppercase;">OCT</div>
-          </div>
-          <div style="flex: 1;">
-            <span class="badge mb-2 bg-error">Prize Pool: $500</span>
-            <h3>Neon Showdown</h3>
-            <p class="m-0">Beat Rhythm Championship. Solo players only.</p>
-          </div>
-          <div>
-            <a href="#" class="btn btn-secondary">Register</a>
-          </div>
+    <!-- =========================================
+         2. FEATURED VR EXPERIENCES
+         ========================================= -->
+    <section id="experiences" class="section">
+      <div class="container">
+        <div class="text-center mb-12 animate-on-scroll">
+          <span class="badge mb-3" style="background: rgba(34, 211, 238, 0.1); color: var(--clr-primary); border: 1px solid rgba(34, 211, 238, 0.3);">
+            Lounge Highlights
+          </span>
+          <h2>Featured VR Experiences</h2>
+          <p style="max-width: 620px; margin-inline: auto;">
+            From zero-gravity combat to cooperative mysteries, choose the exact intensity and vibe for your session.
+          </p>
         </div>
 
-        <div class="card flex-col sm:flex-row gap-6 items-center">
-          <div style="flex: 0 0 120px; text-align: center;">
-            <div class="text-primary" style="font-size: 3rem; font-weight: 800; font-family: var(--font-primary);">22
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-on-scroll">
+          <!-- Experience 1: Free-Roam Arena -->
+          <div class="experience-card">
+            <div class="experience-img-wrap">
+              <span class="experience-badge">Multiplayer</span>
+              <img src="src/assets/images/vr-action-exp.jpg" alt="Free-Roam VR Combat Arena">
             </div>
-            <div class="text-large" style="text-transform: uppercase;">OCT</div>
+            <div class="experience-specs">
+              <span><i class="ph ph-users"></i> 2–6 Players</span>
+              <span><i class="ph ph-clock"></i> 45 Mins</span>
+              <span><i class="ph ph-gauge"></i> High Intensity</span>
+            </div>
+            <div class="p-6 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <h4 style="margin-bottom: 0.5rem;">Free-Roam Arena</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.6;">
+                  Step untethered onto our sensory arena floor. Sprint, duck, and squad up for adrenaline-fueled sci-fi warfare.
+                </p>
+              </div>
+              <a href="contact.html" class="btn btn-secondary w-full mt-4 justify-center" style="font-size: 0.88rem;">
+                Reserve Arena
+              </a>
+            </div>
           </div>
-          <div style="flex: 1;">
-            <span class="badge mb-2 bg-warning">Team Event</span>
-            <h3>Tactical Ops</h3>
-            <p class="m-0">Zero Caliber 4v4 team deathmatch.</p>
+
+          <!-- Experience 2: Social & Co-op Lounge -->
+          <div class="experience-card">
+            <div class="experience-img-wrap">
+              <span class="experience-badge" style="background: rgba(139, 92, 246, 0.85);">Social VR</span>
+              <img src="src/assets/images/vr-social-exp.jpg" alt="Friends Playing Social VR Games">
+            </div>
+            <div class="experience-specs">
+              <span><i class="ph ph-users"></i> 1–4 Players</span>
+              <span><i class="ph ph-clock"></i> 30/60 Mins</span>
+              <span><i class="ph ph-gauge"></i> All Skill Levels</span>
+            </div>
+            <div class="p-6 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <h4 style="margin-bottom: 0.5rem;">Social & Party Play</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.6;">
+                  Hilarious rhythm duels, cooking chaos, and mini-golf. Voice chat with friends right next to you while enjoying lounge drinks.
+                </p>
+              </div>
+              <a href="contact.html" class="btn btn-secondary w-full mt-4 justify-center" style="font-size: 0.88rem;">
+                Book Party Pods
+              </a>
+            </div>
           </div>
-          <div>
-            <a href="#" class="btn btn-secondary">Register</a>
+
+          <!-- Experience 3: VR Escape Rooms -->
+          <div class="experience-card">
+            <div class="experience-img-wrap">
+              <span class="experience-badge" style="background: rgba(245, 158, 11, 0.85);">Escape Room</span>
+              <img src="src/assets/images/wanderer.jpg" alt="VR Escape Room Adventure">
+            </div>
+            <div class="experience-specs">
+              <span><i class="ph ph-users"></i> 2–4 Players</span>
+              <span><i class="ph ph-clock"></i> 60 Mins</span>
+              <span><i class="ph ph-gauge"></i> Puzzle / Mystery</span>
+            </div>
+            <div class="p-6 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <h4 style="margin-bottom: 0.5rem;">Time-Warp Escape</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.6;">
+                  Crack cosmic riddles, manipulate ancient artifacts, and escape before the countdown timer hits zero.
+                </p>
+              </div>
+              <a href="contact.html" class="btn btn-secondary w-full mt-4 justify-center" style="font-size: 0.88rem;">
+                Book Quest
+              </a>
+            </div>
+          </div>
+
+          <!-- Experience 4: Apex Haptic Pod -->
+          <div class="experience-card">
+            <div class="experience-img-wrap">
+              <span class="experience-badge" style="background: rgba(239, 68, 68, 0.85);">Full Motion</span>
+              <img src="src/assets/images/feature-haptic-pod.jpg" alt="Apex Haptic Pod Experience">
+            </div>
+            <div class="experience-specs">
+              <span><i class="ph ph-user"></i> Solo Pod</span>
+              <span><i class="ph ph-clock"></i> 30/60 Mins</span>
+              <span><i class="ph ph-gauge"></i> Ultra Immersion</span>
+            </div>
+            <div class="p-6 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <h4 style="margin-bottom: 0.5rem;">Apex Haptic Pod</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.6;">
+                  Full 3-axis motion pod with synchronized wind feedback and sub-bass haptics for hyper-realistic flight and racing.
+                </p>
+              </div>
+              <a href="contact.html" class="btn btn-secondary w-full mt-4 justify-center" style="font-size: 0.88rem;">
+                Try Apex Pod
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 5: Membership Benefits -->
+    <!-- =========================================
+         3. GAMES & GENRES
+         ========================================= -->
     <section class="section" style="background: var(--clr-surface-alt);">
-      <div class="container animate-on-scroll">
-        <div class="text-center mb-12">
-          <h2>Nexus Elite Membership</h2>
-          <p>Unlock premium perks and save on every session.</p>
+      <div class="container">
+        <div class="text-center mb-8 animate-on-scroll">
+          <span class="badge mb-3" style="background: rgba(139, 92, 246, 0.1); color: var(--clr-secondary); border: 1px solid rgba(139, 92, 246, 0.3);">
+            Play What You Love
+          </span>
+          <h2>Explore Games & Genres</h2>
+          <p style="max-width: 600px; margin-inline: auto;">
+            Switch titles freely throughout your booked time slot. Our VR Masters are on hand to swap games in seconds.
+          </p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="text-center">
-            <i class="ph ph-clock-countdown text-primary mb-4" style="font-size: 3rem;"></i>
-            <h4>Priority Booking</h4>
-            <p>Skip the line and book prime weekend slots 48 hours before everyone else.</p>
+
+        <!-- Filter Tab Buttons -->
+        <div class="filter-tab-bar animate-on-scroll">
+          <button class="filter-tab active" data-genre="all">All Titles</button>
+          <button class="filter-tab" data-genre="action">Action & Shooters</button>
+          <button class="filter-tab" data-genre="rhythm">Rhythm & Music</button>
+          <button class="filter-tab" data-genre="escape">Escape & Puzzles</button>
+          <button class="filter-tab" data-genre="horror">Horror Thrillers</button>
+          <button class="filter-tab" data-genre="family">Family & Casual</button>
+        </div>
+
+        <!-- Game Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-on-scroll" id="lounge-games-grid">
+          <!-- Game 1 -->
+          <div class="lounge-game-card" data-category="rhythm">
+            <div class="lounge-game-thumb">
+              <span class="lounge-game-rating"><i class="ph-fill ph-star"></i> 4.9</span>
+              <img src="src/assets/images/beat_rhythm.jpg" alt="Beat Rhythm VR">
+            </div>
+            <div class="p-5 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-small text-primary font-bold">Rhythm & Music</span>
+                  <span class="text-small text-muted"><i class="ph ph-users"></i> 1–4 Local</span>
+                </div>
+                <h4 style="margin-bottom: 0.35rem;">Beat Rhythm</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.5;">
+                  Slash glowing cyber beats to pulse-pounding EDM and pop tracks. The ultimate party warmup.
+                </p>
+              </div>
+              <div class="flex justify-between items-center mt-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.06);">
+                <span class="text-small text-muted">Beginner Friendly</span>
+                <a href="contact.html" class="btn btn-secondary" style="padding: 0.4rem 0.9rem; font-size: 0.82rem;">Play in Lounge</a>
+              </div>
+            </div>
           </div>
-          <div class="text-center">
-            <i class="ph ph-tag text-primary mb-4" style="font-size: 3rem;"></i>
-            <h4>Discounted Rates</h4>
-            <p>Save 20% on all hourly bookings and get exclusive bundle deals.</p>
+
+          <!-- Game 2 -->
+          <div class="lounge-game-card" data-category="action">
+            <div class="lounge-game-thumb">
+              <span class="lounge-game-rating"><i class="ph-fill ph-star"></i> 5.0</span>
+              <img src="src/assets/images/alyx_ground_zero.jpg" alt="Alyx Ground Zero VR">
+            </div>
+            <div class="p-5 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-small text-primary font-bold">Action / Sci-Fi</span>
+                  <span class="text-small text-muted"><i class="ph ph-user"></i> Solo Masterpiece</span>
+                </div>
+                <h4 style="margin-bottom: 0.35rem;">Alyx: Ground Zero</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.5;">
+                  Deep atmospheric shooter physics, tactile reloading, and intense alien quarantine zone combat.
+                </p>
+              </div>
+              <div class="flex justify-between items-center mt-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.06);">
+                <span class="text-small text-muted">Intermediate</span>
+                <a href="contact.html" class="btn btn-secondary" style="padding: 0.4rem 0.9rem; font-size: 0.82rem;">Play in Lounge</a>
+              </div>
+            </div>
           </div>
-          <div class="text-center">
-            <i class="ph ph-ticket text-primary mb-4" style="font-size: 3rem;"></i>
-            <h4>Free Event Entry</h4>
-            <p>Get complimentary access to monthly community nights and minor tournaments.</p>
+
+          <!-- Game 3 -->
+          <div class="lounge-game-card" data-category="escape">
+            <div class="lounge-game-thumb">
+              <span class="lounge-game-rating"><i class="ph-fill ph-star"></i> 4.8</span>
+              <img src="src/assets/images/wanderer.jpg" alt="Wanderer VR">
+            </div>
+            <div class="p-5 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-small text-primary font-bold">Escape & Puzzles</span>
+                  <span class="text-small text-muted"><i class="ph ph-users"></i> 1–2 Players</span>
+                </div>
+                <h4 style="margin-bottom: 0.35rem;">Wanderer Mysteries</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.5;">
+                  Time-traveling adventure solving historical enigmas from 1969 moon landings to ancient temples.
+                </p>
+              </div>
+              <div class="flex justify-between items-center mt-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.06);">
+                <span class="text-small text-muted">Mind Bender</span>
+                <a href="contact.html" class="btn btn-secondary" style="padding: 0.4rem 0.9rem; font-size: 0.82rem;">Play in Lounge</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game 4 -->
+          <div class="lounge-game-card" data-category="action">
+            <div class="lounge-game-thumb">
+              <span class="lounge-game-rating"><i class="ph-fill ph-star"></i> 4.7</span>
+              <img src="src/assets/images/apex_construct.jpg" alt="Apex Construct VR">
+            </div>
+            <div class="p-5 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-small text-primary font-bold">Action / Combat</span>
+                  <span class="text-small text-muted"><i class="ph ph-user"></i> Cyber Bow Combat</span>
+                </div>
+                <h4 style="margin-bottom: 0.35rem;">Apex Construct</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.5;">
+                  Wield a cybernetic bow and shield against rogue synthetic sentinels in a shattered future city.
+                </p>
+              </div>
+              <div class="flex justify-between items-center mt-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.06);">
+                <span class="text-small text-muted">Intermediate</span>
+                <a href="contact.html" class="btn btn-secondary" style="padding: 0.4rem 0.9rem; font-size: 0.82rem;">Play in Lounge</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game 5 -->
+          <div class="lounge-game-card" data-category="horror">
+            <div class="lounge-game-thumb">
+              <span class="lounge-game-rating"><i class="ph-fill ph-star"></i> 4.9</span>
+              <img src="src/assets/images/game-horror-2.jpg" alt="Dread Manor VR Horror">
+            </div>
+            <div class="p-5 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-small text-error font-bold">Horror Thriller</span>
+                  <span class="text-small text-muted"><i class="ph ph-users"></i> 1–4 Brave Souls</span>
+                </div>
+                <h4 style="margin-bottom: 0.35rem;">Dread Manor: Asylum</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.5;">
+                  Heart-stopping survival horror. Navigate dark corridors with only a dying flashlight with friends.
+                </p>
+              </div>
+              <div class="flex justify-between items-center mt-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.06);">
+                <span class="text-small text-error">Extreme Thrill</span>
+                <a href="contact.html" class="btn btn-secondary" style="padding: 0.4rem 0.9rem; font-size: 0.82rem;">Play in Lounge</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game 6 -->
+          <div class="lounge-game-card" data-category="family">
+            <div class="lounge-game-thumb">
+              <span class="lounge-game-rating"><i class="ph-fill ph-star"></i> 4.8</span>
+              <img src="src/assets/images/game-family-1.jpg" alt="Richie's Plank and Party VR">
+            </div>
+            <div class="p-5 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-small text-success font-bold">Family & Party</span>
+                  <span class="text-small text-muted"><i class="ph ph-users"></i> All Ages</span>
+                </div>
+                <h4 style="margin-bottom: 0.35rem;">Plank & Party Challenge</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.5;">
+                  Walk an 80-story skyscraper plank or compete in crazy mini-games. Guaranteed laughs for everyone.
+                </p>
+              </div>
+              <div class="flex justify-between items-center mt-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.06);">
+                <span class="text-small text-success">Great for First-Timers</span>
+                <a href="contact.html" class="btn btn-secondary" style="padding: 0.4rem 0.9rem; font-size: 0.82rem;">Play in Lounge</a>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="text-center mt-12">
-          <a href="pricing.html" class="btn btn-primary">View Plans</a>
+
+        <div class="text-center mt-8 animate-on-scroll">
+          <a href="games.html" class="btn btn-primary" style="padding: 0.85rem 2rem;">
+            View Complete 50+ Game Catalog <i class="ph ph-arrow-right"></i>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- Section 6: VR Hardware Showcase -->
-    <section class="section container animate-on-scroll">
-      <div class="grid grid-cols-1 lg:grid-cols-2 items-center" style="gap: 5rem;">
-        <!-- Image on left for better alignment -->
-        <div class="order-2 lg:order-1">
-          <img src="src/assets/images/hardware.jpg" alt="VR Hardware"
-            style="border-radius: var(--radius-lg); width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+    <!-- =========================================
+         4. HOW IT WORKS
+         ========================================= -->
+    <section class="section">
+      <div class="container">
+        <div class="text-center mb-12 animate-on-scroll">
+          <span class="badge mb-3" style="background: rgba(34, 211, 238, 0.1); color: var(--clr-primary); border: 1px solid rgba(34, 211, 238, 0.3);">
+            First Time Visiting?
+          </span>
+          <h2>How It Works</h2>
+          <p style="max-width: 620px; margin-inline: auto;">
+            We make your VR experience completely seamless. No prior gaming experience required — our team takes care of everything.
+          </p>
         </div>
-        <div class="order-1 lg:order-2">
-          <span class="badge mb-4">Hardware</span>
-          <h2>Powered by the Best</h2>
-          <p>We don't compromise on quality. Our pods are equipped with industry-leading hardware to ensure zero latency
-            and maximum immersion.</p>
-          <div class="grid grid-cols-2 gap-4 mt-6">
-            <div class="card p-4 text-center hover:border-primary transition">
-              <i class="ph ph-cpu text-secondary mb-2" style="font-size: 2rem;"></i>
-              <strong style="display: block;">RTX 4090 Rigs</strong>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-on-scroll">
+          <!-- Step 1 -->
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <div class="step-icon-wrap">
+              <i class="ph ph-calendar-check"></i>
             </div>
-            <div class="card p-4 text-center hover:border-primary transition">
-              <i class="ph ph-wifi-high text-secondary mb-2" style="font-size: 2rem;"></i>
-              <strong style="display: block;">Wi-Fi 6E</strong>
+            <h4 style="margin-bottom: 0.5rem;">Pick Your Session</h4>
+            <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.6;">
+              Book online to guarantee your preferred pod and time, or walk in spontaneously. Choose from 30, 60, or 90-minute blocks.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <div class="step-icon-wrap">
+              <i class="ph ph-sparkle"></i>
             </div>
-            <div class="card p-4 text-center hover:border-primary transition">
-              <i class="ph ph-speaker-hifi text-secondary mb-2" style="font-size: 2rem;"></i>
-              <strong style="display: block;">Spatial Audio</strong>
+            <h4 style="margin-bottom: 0.5rem;">Gear Up & Fit</h4>
+            <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.6;">
+              Our VR Masters guide you through custom lens adjustment, medical-grade hygiene liners, and an effortless 2-minute controls briefing.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <div class="step-icon-wrap">
+              <i class="ph ph-game-controller"></i>
             </div>
-            <div class="card p-4 text-center hover:border-primary transition">
-              <i class="ph ph-goggles text-secondary mb-2" style="font-size: 2rem;"></i>
-              <strong style="display: block;">Valve Index</strong>
+            <h4 style="margin-bottom: 0.5rem;">Jump Into Worlds</h4>
+            <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.6;">
+              Explore our full 50+ library. Want to switch from shooter to rhythm halfway through? One tap on your headset and you're in.
+            </p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="step-card">
+            <div class="step-number">04</div>
+            <div class="step-icon-wrap">
+              <i class="ph ph-wine"></i>
+            </div>
+            <h4 style="margin-bottom: 0.5rem;">Chill & Compare</h4>
+            <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.6;">
+              Relax at our neon lounge bar, sip craft sodas and cocktails, watch live spectator replays on 4K displays, and compare scores.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         5. PRICING & SESSION BUNDLES
+         ========================================= -->
+    <section class="section" style="background: var(--clr-surface-alt);">
+      <div class="container">
+        <div class="text-center mb-12 animate-on-scroll">
+          <span class="badge mb-3" style="background: rgba(16, 185, 129, 0.1); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3);">
+            Transparent Rates
+          </span>
+          <h2>Pricing & Session Bundles</h2>
+          <p style="max-width: 600px; margin-inline: auto;">
+            All sessions include full game library access, sanitized gear, and dedicated VR master support. No surprise add-ons.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-on-scroll">
+          <!-- Bundle 1 -->
+          <div class="bundle-card">
+            <h4>Quick Dive</h4>
+            <p class="text-small text-muted">Great for first-timers & lunch breaks</p>
+            <div class="bundle-price">$25 <span class="text-small text-muted font-normal">/ person</span></div>
+            <span class="text-small text-primary font-bold">30 Minutes</span>
+            <ul class="bundle-features">
+              <li><i class="ph-bold ph-check"></i> 1 Dedicated VR Pod</li>
+              <li><i class="ph-bold ph-check"></i> Unlimited library switching</li>
+              <li><i class="ph-bold ph-check"></i> 4K Apex Clarity Headset</li>
+              <li><i class="ph-bold ph-check"></i> Hygiene mask included</li>
+            </ul>
+            <a href="contact.html" class="btn btn-secondary w-full justify-center">Book 30 Mins</a>
+          </div>
+
+          <!-- Bundle 2 (Featured) -->
+          <div class="bundle-card featured">
+            <span class="bundle-tag">Most Popular</span>
+            <h4>Immersive Hour</h4>
+            <p class="text-small text-muted">The sweet spot for full immersion</p>
+            <div class="bundle-price">$45 <span class="text-small text-muted font-normal">/ person</span></div>
+            <span class="text-small text-primary font-bold">60 Minutes</span>
+            <ul class="bundle-features">
+              <li><i class="ph-bold ph-check"></i> 1 Dedicated VR Pod</li>
+              <li><i class="ph-bold ph-check"></i> Unlimited 50+ titles</li>
+              <li><i class="ph-bold ph-check"></i> Access to Apex Haptic Pods</li>
+              <li><i class="ph-bold ph-check"></i> Free soft drink or mocktail</li>
+              <li><i class="ph-bold ph-check"></i> Highlight clip sent to email</li>
+            </ul>
+            <a href="contact.html" class="btn btn-primary w-full justify-center">Book 60 Mins</a>
+          </div>
+
+          <!-- Bundle 3 -->
+          <div class="bundle-card">
+            <h4>Squad Pass</h4>
+            <p class="text-small text-muted">Synchronized team battle</p>
+            <div class="bundle-price">$150 <span class="text-small text-muted font-normal">/ 4 players</span></div>
+            <span class="text-small text-primary font-bold">60 Mins ($37.50 / person)</span>
+            <ul class="bundle-features">
+              <li><i class="ph-bold ph-check"></i> 4 Linked Side-by-Side Pods</li>
+              <li><i class="ph-bold ph-check"></i> Free-Roam Co-op & Versus</li>
+              <li><i class="ph-bold ph-check"></i> Reserved lounge table area</li>
+              <li><i class="ph-bold ph-check"></i> Gourmet snack basket</li>
+              <li><i class="ph-bold ph-check"></i> Tournament leaderboard score</li>
+            </ul>
+            <a href="contact.html" class="btn btn-secondary w-full justify-center">Book Squad Pass</a>
+          </div>
+
+          <!-- Bundle 4 -->
+          <div class="bundle-card">
+            <h4>VIP All-Access</h4>
+            <p class="text-small text-muted">The ultimate VR lounge luxury</p>
+            <div class="bundle-price">$75 <span class="text-small text-muted font-normal">/ person</span></div>
+            <span class="text-small text-primary font-bold">90 Minutes</span>
+            <ul class="bundle-features">
+              <li><i class="ph-bold ph-check"></i> Priority access to all 24 pods</li>
+              <li><i class="ph-bold ph-check"></i> Unlimited Apex Motion Pods</li>
+              <li><i class="ph-bold ph-check"></i> Dedicated personal VR master</li>
+              <li><i class="ph-bold ph-check"></i> 2 Complimentary lounge drinks</li>
+              <li><i class="ph-bold ph-check"></i> 4K VR Gameplay video file</li>
+            </ul>
+            <a href="contact.html" class="btn btn-secondary w-full justify-center">Book VIP Pass</a>
+          </div>
+        </div>
+
+        <div class="text-center mt-8 animate-on-scroll">
+          <p class="text-small text-muted">
+            Looking for gift cards or monthly memberships? <a href="pricing.html" class="text-primary font-bold">Check out full pricing options &rarr;</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         6. GROUP BOOKINGS & PRIVATE EVENTS
+         ========================================= -->
+    <section class="section">
+      <div class="container">
+        <div class="text-center mb-12 animate-on-scroll">
+          <span class="badge mb-3" style="background: rgba(139, 92, 246, 0.1); color: var(--clr-secondary); border: 1px solid rgba(139, 92, 246, 0.3);">
+            Celebrate With Us
+          </span>
+          <h2>Group Bookings & Private Events</h2>
+          <p style="max-width: 640px; margin-inline: auto;">
+            Turn birthdays, bachelor parties, and corporate team building into unforgettable multiplayer virtual adventures.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 animate-on-scroll">
+          <!-- Event 1: Birthday -->
+          <div class="group-event-card">
+            <div class="group-img-wrap">
+              <img src="src/assets/images/birthday-1.jpg" alt="VR Birthday Party Celebration">
+            </div>
+            <div class="p-6 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <span class="badge mb-2 bg-primary">Ages 8+ & Adults</span>
+                <h4 style="margin-bottom: 0.5rem;">Epic Birthday Bashes</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.6;">
+                  Custom birthday party packages with private party seating, dedicated game hosts, custom tournament setups, and cake space.
+                </p>
+              </div>
+              <div class="mt-6">
+                <a href="groups.html" class="btn btn-secondary w-full justify-center">Plan a Birthday</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event 2: Corporate -->
+          <div class="group-event-card">
+            <div class="group-img-wrap">
+              <img src="src/assets/images/corporate.jpg" alt="Corporate VR Team Building">
+            </div>
+            <div class="p-6 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <span class="badge mb-2 bg-secondary">Teams 6–50+</span>
+                <h4 style="margin-bottom: 0.5rem;">Corporate Team Building</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.6;">
+                  Replace awkward icebreakers with collaborative space station repairs, communication challenges, and friendly competitive brackets.
+                </p>
+              </div>
+              <div class="mt-6">
+                <a href="groups.html" class="btn btn-secondary w-full justify-center">Corporate Packages</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event 3: Full Venue Buyout -->
+          <div class="group-event-card">
+            <div class="group-img-wrap">
+              <img src="src/assets/images/vr_group_event_highres.jpg" alt="Private Venue Buyout Nexus VR">
+            </div>
+            <div class="p-6 flex flex-col justify-between" style="flex: 1;">
+              <div>
+                <span class="badge mb-2 bg-warning text-dark">VIP Buyout</span>
+                <h4 style="margin-bottom: 0.5rem;">Full Venue Buyouts</h4>
+                <p class="text-small" style="color: var(--clr-text-muted); line-height: 1.6;">
+                  Exclusive private access to all 24 VR pods, motion simulators, lounge bar, sound system, and our entire hospitality staff.
+                </p>
+              </div>
+              <div class="mt-6">
+                <a href="groups.html" class="btn btn-secondary w-full justify-center">Inquire Full Buyout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lounge Amenities Bar -->
+        <div class="amenities-bar animate-on-scroll">
+          <div class="amenity-item">
+            <div class="amenity-icon"><i class="ph ph-coffee"></i></div>
+            <div>
+              <h5 style="margin-bottom: 0.2rem;">Lounge Bar</h5>
+              <p class="text-small text-muted" style="margin: 0;">Craft sodas, mocktails & snacks</p>
+            </div>
+          </div>
+          <div class="amenity-item">
+            <div class="amenity-icon"><i class="ph ph-shield-check"></i></div>
+            <div>
+              <h5 style="margin-bottom: 0.2rem;">Hospital-Grade Clean</h5>
+              <p class="text-small text-muted" style="margin: 0;">UV-C sanitized between guests</p>
+            </div>
+          </div>
+          <div class="amenity-item">
+            <div class="amenity-icon"><i class="ph ph-television"></i></div>
+            <div>
+              <h5 style="margin-bottom: 0.2rem;">Spectator Screens</h5>
+              <p class="text-small text-muted" style="margin: 0;">Watch friends' gameplay in 4K</p>
+            </div>
+          </div>
+          <div class="amenity-item">
+            <div class="amenity-icon"><i class="ph ph-wifi-high"></i></div>
+            <div>
+              <h5 style="margin-bottom: 0.2rem;">Free High-Speed Wi-Fi</h5>
+              <p class="text-small text-muted" style="margin: 0;">Gigabit fiber for spectators</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 7: Location / Map Placeholder -->
-    <section class="section" style="background: var(--clr-surface);">
-      <div class="container animate-on-scroll text-center">
-        <h2 class="mb-8">Find Us</h2>
-        <div class="card p-0"
-          style="height: 450px; display: flex; align-items: center; justify-content: center; background: url('src/assets/images/cyber_map.jpg') center/cover; position: relative; border: 1px solid rgba(255,255,255,0.05); overflow: hidden;">
-          <!-- Added dark overlay for better map contrast -->
-          <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.4);" class="map-overlay"></div>
+    <!-- =========================================
+         7. LOCATION & FINAL BOOKING CTA
+         ========================================= -->
+    <section class="section" style="background: var(--clr-surface-alt);">
+      <div class="container">
+        <div class="text-center mb-12 animate-on-scroll">
+          <span class="badge mb-3" style="background: rgba(34, 211, 238, 0.1); color: var(--clr-primary); border: 1px solid rgba(34, 211, 238, 0.3);">
+            Find Us
+          </span>
+          <h2>Visit Our Downtown Lounge</h2>
+          <p style="max-width: 600px; margin-inline: auto;">
+            Conveniently situated in the Neon District with validated parking and easy subway access.
+          </p>
+        </div>
 
-          <div
-            style="position: relative; z-index: 10; background: rgba(8, 11, 20, 0.95); padding: var(--space-8); border-radius: var(--radius-lg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.6); max-width: 90%; width: 400px;"
-            class="map-info-box">
-            <i class="ph ph-map-pin text-primary mb-3" style="font-size: 3rem;"></i>
-            <h3 style="color: var(--clr-text);">Nexus VR Lounge</h3>
-            <p style="color: var(--clr-text-muted); margin-bottom: 1rem;">123 Cyber Avenue, Neon District<br><strong
-                class="text-success mt-2" style="display: block;">Open Today: 10:00 AM - 12:00 AM</strong></p>
-            <a href="#" class="btn btn-primary mt-4 w-full" style="width: 100%;">Get Directions</a>
+        <!-- Location Box + Map Visual -->
+        <div class="location-card mb-16 animate-on-scroll">
+          <div class="map-container">
+            <img src="src/assets/images/cyber_map.jpg" alt="Map Location of Nexus VR Lounge">
+            <div class="map-floating-box">
+              <div class="flex items-center gap-3">
+                <i class="ph-fill ph-map-pin text-primary" style="font-size: 2rem;"></i>
+                <div>
+                  <h4 style="margin: 0;">Nexus VR Lounge</h4>
+                  <p class="text-small text-muted" style="margin: 0;">123 Cyber Avenue, Neon District</p>
+                </div>
+              </div>
+              <div class="flex flex-col gap-1 text-small">
+                <div class="flex justify-between">
+                  <span class="text-muted">Monday – Thursday:</span>
+                  <strong>12:00 PM – 11:00 PM</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-muted">Friday – Sunday:</span>
+                  <strong class="text-success">10:00 AM – Midnight</strong>
+                </div>
+              </div>
+              <div class="flex gap-3 mt-1">
+                <a href="https://maps.google.com" target="_blank" rel="noopener" class="btn btn-secondary flex-1 justify-center" style="font-size: 0.85rem;">
+                  <i class="ph ph-navigation-arrow"></i> Directions
+                </a>
+                <a href="tel:+15550192834" class="btn btn-secondary flex-1 justify-center" style="font-size: 0.85rem;">
+                  <i class="ph ph-phone"></i> Call Lounge
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Final Booking CTA Banner -->
+        <div class="final-cta-banner animate-on-scroll">
+          <h2 style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem;">
+            Ready to Step Into the Next Reality?
+          </h2>
+          <p class="text-large" style="max-width: 620px; margin-inline: auto; margin-bottom: 2rem; color: #E5E7EB;">
+            Slots fill up quickly on weekends! Reserve your station in less than 60 seconds. Free cancellation up to 2 hours before your session.
+          </p>
+          <div class="flex justify-center items-center gap-4 flex-wrap">
+            <a href="contact.html" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.15rem; font-weight: 800;">
+              <i class="ph-bold ph-ticket"></i> Reserve Your VR Pod Now
+            </a>
+            <a href="groups.html" class="btn btn-secondary" style="padding: 1rem 2rem; font-size: 1.1rem;">
+              <i class="ph ph-users-three"></i> Group Inquiries
+            </a>
           </div>
         </div>
       </div>
@@ -549,53 +1472,123 @@
   </main>
 
   <!-- Footer -->
-  <footer
-    style="background: var(--clr-surface); border-top: var(--border-glass); padding-top: var(--space-12); padding-bottom: var(--space-6);">
+  <footer style="background: var(--clr-surface); border-top: var(--border-glass); padding-top: var(--space-12); padding-bottom: var(--space-6);">
     <div class="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
       <div>
         <a href="home1.html" class="flex items-center gap-2 mb-4">
           <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" style="height: 2rem; width: 2rem; border-radius: 50%; box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);">
           <span style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
         </a>
-        <p class="text-small">Elevating entertainment through cutting-edge virtual reality experiences.</p>
+        <p class="text-small">The premier local virtual reality lounge delivering next-generation immersive gaming and unforgettable group events.</p>
         <div class="flex gap-4 mt-4">
-          <a href="#" class="nav-link"><i class="ph ph-twitter-logo" style="font-size: 1.5rem;"></i></a>
-          <a href="#" class="nav-link"><i class="ph ph-instagram-logo" style="font-size: 1.5rem;"></i></a>
-          <a href="#" class="nav-link"><i class="ph ph-discord-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Twitter"><i class="ph ph-twitter-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Instagram"><i class="ph ph-instagram-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Discord"><i class="ph ph-discord-logo" style="font-size: 1.5rem;"></i></a>
         </div>
       </div>
       <div>
-        <h4 style="margin-bottom: var(--space-4);">Explore</h4>
+        <h4 style="margin-bottom: var(--space-4);">Explore Lounge</h4>
         <ul class="flex-col gap-2">
-          <li><a href="games.html" class="nav-link text-small">Games Library</a></li>
-          <li><a href="pricing.html" class="nav-link text-small">Pricing & Bundles</a></li>
-          <li><a href="groups.html" class="nav-link text-small">Group Bookings</a></li>
-          <li><a href="dashboard.html" class="nav-link text-small">User</a></li>
+          <li><a href="games.html" class="nav-link text-small">50+ Games Library</a></li>
+          <li><a href="pricing.html" class="nav-link text-small">Pricing &amp; Bundles</a></li>
+          <li><a href="groups.html" class="nav-link text-small">Parties &amp; Groups</a></li>
+          <li><a href="about.html" class="nav-link text-small">About Us</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Online Booking</a></li>
         </ul>
       </div>
       <div>
-        <h4 style="margin-bottom: var(--space-4);">Support</h4>
+        <h4 style="margin-bottom: var(--space-4);">Guest Info</h4>
         <ul class="flex-col gap-2">
-          <li><a href="#" class="nav-link text-small">FAQ</a></li>
-          <li><a href="#" class="nav-link text-small">Contact Us</a></li>
-          <li><a href="#" class="nav-link text-small">Terms of Service</a></li>
-          <li><a href="#" class="nav-link text-small">Privacy Policy</a></li>
+          <li><a href="contact.html" class="nav-link text-small">First Time FAQ</a></li>
+          <li><a href="about.html" class="nav-link text-small">Hygiene &amp; Safety</a></li>
+          <li><a href="pricing.html" class="nav-link text-small">Gift Vouchers</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact Lounge Staff</a></li>
         </ul>
       </div>
       <div>
-        <h4 style="margin-bottom: var(--space-4);">Location</h4>
-        <p class="text-small">123 Cyber Avenue<br>Neon District, NT 45890</p>
-        <p class="text-small mt-2">Mon - Sun: 10:00 AM - 12:00 AM</p>
+        <h4 style="margin-bottom: var(--space-4);">Location &amp; Hours</h4>
+        <div class="footer-location-col">
+          <!-- Address -->
+          <div class="footer-loc-block">
+            <i class="ph-fill ph-map-pin footer-loc-icon"></i>
+            <div class="footer-loc-info">
+              <strong>Nexus VR Lounge</strong>
+              <span>123 Cyber Avenue, Suite 200</span>
+              <span style="font-size: 0.8rem; color: var(--clr-text-muted);">Neon District, NT 45890</span>
+            </div>
+          </div>
+
+          <!-- Opening Hours -->
+          <div class="footer-loc-block">
+            <i class="ph ph-clock footer-loc-icon"></i>
+            <div class="footer-loc-info" style="width: 100%;">
+              <span class="footer-open-pill">Open Daily</span>
+              <div class="footer-hours-list">
+                <div class="footer-hours-row">
+                  <span>Mon &ndash; Thu:</span>
+                  <strong style="color: var(--clr-text);">12 PM &ndash; 11 PM</strong>
+                </div>
+                <div class="footer-hours-row">
+                  <span>Fri &ndash; Sun:</span>
+                  <strong style="color: var(--clr-secondary);">10 AM &ndash; Midnight</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone & Contact Links -->
+          <div class="footer-contacts-list">
+            <a href="tel:+15550192834" class="footer-contact-item" aria-label="Phone: (555) 019-2834">
+              <i class="ph ph-phone" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>(555) 019-2834</span>
+            </a>
+            <a href="mailto:contact@nexusvr.com" class="footer-contact-item" aria-label="Email: contact@nexusvr.com">
+              <i class="ph ph-envelope-simple" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>contact@nexusvr.com</span>
+            </a>
+          </div>
+
+          <!-- Directions Action Button -->
+          <div>
+            <a href="https://maps.google.com/?q=123+Cyber+Avenue+Neon+District" target="_blank" rel="noopener noreferrer" class="footer-directions-btn" aria-label="Get directions to Nexus VR Lounge on Google Maps">
+              <i class="ph ph-navigation-arrow"></i>
+              <span>Get Directions</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="container text-center text-small"
-      style="color: var(--clr-text-muted); border-top: var(--border-glass); padding-top: var(--space-6);">
+    <div class="container text-center text-small" style="color: var(--clr-text-muted); border-top: var(--border-glass); padding-top: var(--space-6);">
       &copy; 2026 Nexus VR Lounge. All rights reserved.
     </div>
   </footer>
 
   <script src="src/js/main.js"></script>
   <script src="src/js/forms.js"></script>
+  <script>
+    // Simple interactive genre filtering for the game grid
+    document.addEventListener('DOMContentLoaded', () => {
+      const filterTabs = document.querySelectorAll('.filter-tab');
+      const gameCards = document.querySelectorAll('.lounge-game-card');
+
+      filterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          filterTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          const genre = tab.getAttribute('data-genre');
+          gameCards.forEach(card => {
+            if (genre === 'all' || card.getAttribute('data-category') === genre) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

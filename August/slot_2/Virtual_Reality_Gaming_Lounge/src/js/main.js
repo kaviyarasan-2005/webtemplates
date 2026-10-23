@@ -1,55 +1,57 @@
 document.addEventListener('DOMContentLoaded', () => {
   // --- Theme Toggle ---
   const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleMobile = document.getElementById('theme-toggle-mobile');
   const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
   
-  // Set initial theme based on system preference or saved value
-  const currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
+  // Set initial theme based on saved value or default to dark for gaming lounge aesthetic
+  const currentTheme = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', currentTheme);
-  
-  if (themeToggle) {
-    // Update icon initially
-    updateThemeIcon(currentTheme);
+  updateThemeIcon(currentTheme);
 
-    themeToggle.addEventListener('click', () => {
-      let theme = document.documentElement.getAttribute('data-theme');
-      let targetTheme = theme === 'dark' ? 'light' : 'dark';
-      
-      document.documentElement.setAttribute('data-theme', targetTheme);
-      localStorage.setItem('theme', targetTheme);
-      updateThemeIcon(targetTheme);
-    });
+  function handleThemeToggle() {
+    let theme = document.documentElement.getAttribute('data-theme');
+    let targetTheme = theme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', targetTheme);
+    localStorage.setItem('theme', targetTheme);
+    updateThemeIcon(targetTheme);
   }
 
+  if (themeToggle) themeToggle.addEventListener('click', handleThemeToggle);
+  if (themeToggleMobile) themeToggleMobile.addEventListener('click', handleThemeToggle);
+
   function updateThemeIcon(theme) {
-    if(!themeToggle) return;
-    const icon = themeToggle.querySelector('i');
-    if(icon) {
-      if(theme === 'dark') {
-        icon.className = 'ph ph-sun';
-      } else {
-        icon.className = 'ph ph-moon';
-      }
-    }
+    const themeIcons = document.querySelectorAll('#theme-toggle i, #theme-toggle-mobile i');
+    themeIcons.forEach(icon => {
+      icon.className = theme === 'dark' ? 'ph ph-sun' : 'ph ph-moon';
+    });
   }
 
   // --- RTL Toggle ---
   const rtlToggle = document.getElementById('rtl-toggle');
+  const rtlToggleMobile = document.getElementById('rtl-toggle-mobile');
   const currentDir = localStorage.getItem('dir') || 'ltr';
   document.documentElement.setAttribute('dir', currentDir);
+  updateRtlButtonText(currentDir);
 
-  if (rtlToggle) {
-    rtlToggle.addEventListener('click', () => {
-      let dir = document.documentElement.getAttribute('dir');
-      let targetDir = dir === 'ltr' ? 'rtl' : 'ltr';
-      
-      document.documentElement.setAttribute('dir', targetDir);
-      localStorage.setItem('dir', targetDir);
-      
-      // Update button text if needed
-      rtlToggle.textContent = targetDir === 'rtl' ? 'LTR' : 'RTL';
-    });
+  function updateRtlButtonText(dir) {
+    const text = dir === 'rtl' ? 'LTR' : 'RTL';
+    if (rtlToggle) rtlToggle.textContent = text;
+    if (rtlToggleMobile) rtlToggleMobile.textContent = text;
   }
+
+  function handleRtlToggle() {
+    let dir = document.documentElement.getAttribute('dir');
+    let targetDir = dir === 'ltr' ? 'rtl' : 'ltr';
+    
+    document.documentElement.setAttribute('dir', targetDir);
+    localStorage.setItem('dir', targetDir);
+    updateRtlButtonText(targetDir);
+  }
+
+  if (rtlToggle) rtlToggle.addEventListener('click', handleRtlToggle);
+  if (rtlToggleMobile) rtlToggleMobile.addEventListener('click', handleRtlToggle);
 
   // --- Mobile Menu ---
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');

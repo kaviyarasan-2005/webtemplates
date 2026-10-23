@@ -119,27 +119,34 @@ const Navbar = (() => {
     const mobileMenu = document.querySelector('.mobile-menu');
 
     if (hamburger && mobileMenu) {
+      const setMenuState = (open, returnFocus = false) => {
+        hamburger.classList.toggle('active', open);
+        mobileMenu.classList.toggle('active', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+        hamburger.setAttribute('aria-expanded', String(open));
+        hamburger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        if (open) {
+          const firstLink = mobileMenu.querySelector('.mobile-menu__link');
+          if (firstLink) firstLink.focus();
+        } else if (returnFocus) {
+          hamburger.focus();
+        }
+      };
+
       hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        setMenuState(!mobileMenu.classList.contains('active'));
       });
 
-      // Close on link click
+      // Close on link click (but never on the dropdown toggle — it only opens a submenu)
       mobileMenu.querySelectorAll('.mobile-menu__link').forEach(link => {
-        link.addEventListener('click', () => {
-          hamburger.classList.remove('active');
-          mobileMenu.classList.remove('active');
-          document.body.style.overflow = '';
-        });
+        if (link.classList.contains('mobile-menu__dropdown-toggle')) return;
+        link.addEventListener('click', () => setMenuState(false));
       });
 
-      // Close on Escape
+      // Close on Escape and return focus to the hamburger
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-          hamburger.classList.remove('active');
-          mobileMenu.classList.remove('active');
-          document.body.style.overflow = '';
+          setMenuState(false, true);
         }
       });
     }
@@ -147,12 +154,15 @@ const Navbar = (() => {
     // Mobile dropdown toggle
     const mobileDropdowns = document.querySelectorAll('.mobile-menu__dropdown-toggle');
     mobileDropdowns.forEach(toggle => {
+      toggle.setAttribute('aria-expanded', 'false');
       toggle.addEventListener('click', (e) => {
         e.preventDefault();
         const sub = toggle.nextElementSibling;
         if (sub) {
-          sub.style.display = sub.style.display === 'block' ? 'none' : 'block';
-          toggle.classList.toggle('active');
+          const willOpen = sub.style.display !== 'block';
+          sub.style.display = willOpen ? 'block' : 'none';
+          toggle.classList.toggle('active', willOpen);
+          toggle.setAttribute('aria-expanded', String(willOpen));
         }
       });
     });
