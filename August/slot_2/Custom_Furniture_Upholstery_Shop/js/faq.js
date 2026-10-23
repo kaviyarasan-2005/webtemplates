@@ -37,4 +37,5 @@ function initFAQ() {
   }
 }
 
-export { initFAQ };
+/* ── Global export (classic script — works from file://) ── */
+window.initFAQ = initFAQ;

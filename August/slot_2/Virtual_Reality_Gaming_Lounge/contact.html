@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus VR | Contact Us</title>
+  <meta name="description" content="Contact Nexus VR gaming lounge for inquiries, private bookings, group events, and location details in the Neon District.">
+
+  <link rel="stylesheet" href="src/css/main.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon-3.svg">
+
+  <style>
+    /* Contact Page Scoped Styles */
+    .contact-hero {
+      background: linear-gradient(135deg, rgba(139,92,246,0.12) 0%, rgba(34,211,238,0.06) 50%, var(--clr-bg) 100%);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 8rem 0 4rem;
+      text-align: center;
+    }
+
+    .contact-quick-pills {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .quick-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-full);
+      padding: 0.55rem 1.25rem;
+      font-size: 0.85rem;
+      color: var(--clr-text);
+      text-decoration: none;
+      transition: all var(--transition-fast);
+    }
+    .quick-pill:hover {
+      background: rgba(139,92,246,0.15);
+      border-color: var(--clr-primary);
+      color: var(--clr-text);
+      transform: translateY(-2px);
+    }
+    .quick-pill i {
+      color: var(--clr-secondary);
+      font-size: 1rem;
+    }
+
+    .contact-form-card {
+      background: rgba(14,20,36,0.92);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+
+    .contact-info-card {
+      background: rgba(14,20,36,0.85);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    /* FAQ accordion */
+    .contact-faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .contact-faq-btn {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 0.9rem 0;
+      font-family: var(--font-primary);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--clr-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: color var(--transition-fast);
+    }
+    .contact-faq-btn:hover {
+      color: var(--clr-secondary);
+    }
+    .contact-faq-body {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--clr-text-muted);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .contact-faq-body.open {
+      max-height: 220px;
+      padding-bottom: 1rem;
+    }
+    .contact-faq-caret {
+      transition: transform 0.25s ease;
+      font-size: 1rem;
+      color: var(--clr-primary);
+      flex-shrink: 0;
+    }
+    .contact-faq-btn.open .contact-faq-caret {
+      transform: rotate(45deg);
+    }
+
+    /* Transit pill */
+    .transit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 0.65rem 0.9rem;
+      font-size: 0.825rem;
+      color: var(--clr-text-muted);
+    }
+    .transit-badge strong {
+      color: var(--clr-text);
+    }
+
+    /* Map visual banner */
+    .map-banner {
+      position: relative;
+      height: 380px;
+      overflow: hidden;
+      border-top: 1px solid var(--border-glass);
+      border-bottom: 1px solid var(--border-glass);
+    }
+    .map-banner__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(1.15) brightness(0.85);
+    }
+    .map-banner__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(8,11,20,0.85) 0%, rgba(8,11,20,0.3) 50%, rgba(8,11,20,0.85) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .map-banner__card {
+      background: rgba(14,20,36,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(34,211,238,0.3);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2.5rem;
+      text-align: center;
+      max-width: 520px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    }
+
+    /* Social proof strip */
+    .proof-strip {
+      background: var(--clr-surface);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 2.5rem 0;
+    }
+    .proof-item {
+      text-align: center;
+      padding: 1rem;
+    }
+    .proof-item i {
+      font-size: 2rem;
+      color: var(--clr-secondary);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .proof-item strong {
+      display: block;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--clr-text);
+      margin-bottom: 0.2rem;
+    }
+    .proof-item span {
+      font-size: 0.85rem;
+      color: var(--clr-text-muted);
+    }
+
+    /* Light Theme */
+    [data-theme="light"] .contact-form-card {
+      background: #FFFFFF;
+      border-color: rgba(139,92,246,0.25);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+    [data-theme="light"] .contact-info-card {
+      background: #FFFFFF;
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.04);
+    }
+    [data-theme="light"] .quick-pill {
+      background: #F3F4F6;
+      border-color: #E5E7EB;
+      color: #1F2937;
+    }
+    [data-theme="light"] .quick-pill:hover {
+      background: rgba(139,92,246,0.08);
+      border-color: var(--clr-primary);
+    }
+    [data-theme="light"] .contact-faq-item {
+      border-bottom-color: rgba(0,0,0,0.08);
+    }
+    [data-theme="light"] .contact-faq-btn {
+      color: #111827;
+    }
+    [data-theme="light"] .transit-badge {
+      background: #F9FAFB;
+      border-color: #E5E7EB;
+      color: #4B5563;
+    }
+    [data-theme="light"] .transit-badge strong {
+      color: #111827;
+    }
+    [data-theme="light"] .map-banner__card {
+      background: rgba(255,255,255,0.95);
+      border-color: rgba(8,145,178,0.3);
+      color: #111827;
+    }
+    [data-theme="light"] .map-banner__card h3,
+    [data-theme="light"] .map-banner__card p {
+      color: #111827;
+    }
+    [data-theme="light"] .proof-strip {
+      background: #F9FAFB;
+    }
+
+    /* RTL */
+    [dir="rtl"] .contact-faq-btn {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container flex justify-between items-center">
+      <!-- Brand -->
+      <a href="home1.html" class="nav-brand" aria-label="Nexus VR Home">
+        <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" class="nav-brand__logo">
+        <span class="nav-brand__name">Nexus <span class="text-gradient">VR</span></span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="nav-links">
+        <div class="dropdown">
+          <a href="#" class="nav-link">Home <i class="ph ph-caret-down dropdown-caret"></i></a>
+          <div class="dropdown-menu">
+            <a href="home1.html" class="dropdown-item">Home 1</a>
+            <a href="home2.html" class="dropdown-item">Home 2</a>
+          </div>
+        </div>
+        <a href="games.html" class="nav-link">Games Library</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="groups.html" class="nav-link">Parties &amp; Groups</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+        <div class="dropdown">
+          <a href="#" class="nav-link">Dashboards <i class="ph ph-caret-down dropdown-caret"></i></a>
+          <div class="dropdown-menu">
+            <a href="dashboard.html" class="dropdown-item">User</a>
+            <a href="admin.html" class="dropdown-item">Admin</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        <button id="theme-toggle" class="nav-icon-btn" aria-label="Toggle Theme">
+          <i class="ph ph-moon"></i>
+        </button>
+        <button id="rtl-toggle" class="btn-rtl-compact" title="Toggle RTL Layout">RTL</button>
+        <a href="login.html" class="nav-link-login">Login</a>
+        <a href="#booking-form" class="nav-cta-btn">
+          <i class="ph ph-ticket"></i> Book Now
+        </a>
+        <button id="mobile-menu-btn" class="nav-icon-btn" aria-label="Toggle Navigation Menu">
+          <i class="ph ph-list" style="font-size: 1.4rem;"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu flex-col gap-6">
+    <div class="mob-group">
+      <button class="mob-group-btn">
+        Home <i class="ph ph-caret-down mob-caret"></i>
+      </button>
+      <div class="mob-group-links">
+        <a href="home1.html" class="nav-link text-large">Home 1</a>
+        <a href="home2.html" class="nav-link text-large">Home 2</a>
+      </div>
+    </div>
+    <a href="games.html" class="nav-link text-large">Games Library</a>
+    <a href="pricing.html" class="nav-link text-large">Pricing</a>
+    <a href="groups.html" class="nav-link text-large">Parties &amp; Groups</a>
+    <a href="about.html" class="nav-link text-large">About</a>
+    <a href="contact.html" class="nav-link text-large" style="color: var(--clr-primary);">Contact</a>
+    <div class="mob-group">
+      <button class="mob-group-btn">
+        Dashboards <i class="ph ph-caret-down mob-caret"></i>
+      </button>
+      <div class="mob-group-links">
+        <a href="dashboard.html" class="nav-link text-large">User</a>
+        <a href="admin.html" class="nav-link text-large">Admin</a>
+      </div>
+    </div>
+        <hr style="border-color: rgba(255,255,255,0.1);">
+    <!-- Theme & RTL Toggles (Shifted into Hamburger) -->
+    <div class="mob-control-row">
+      <span>Theme</span>
+      <button id="theme-toggle-mobile" class="nav-icon-btn" aria-label="Toggle Theme">
+        <i class="ph ph-moon" style="font-size:1.2rem;"></i>
+      </button>
+    </div>
+    <div class="mob-control-row">
+      <span>Layout Direction</span>
+      <button id="rtl-toggle-mobile" class="btn-rtl-compact">RTL</button>
+    </div>
+    <hr style="border-color: rgba(255,255,255,0.1);">
+    <a href="login.html" class="btn btn-secondary justify-center" style="width: 100%;">Login</a>
+    <a href="#booking-form" class="btn btn-primary justify-center" style="width: 100%;"><i class="ph ph-ticket"></i> Book Now</a>
+  </div>
+
+  <main style="padding-top: 76px;">
+    <!-- Hero Section -->
+    <section class="contact-hero">
+      <div class="container animate-on-scroll">
+        <span class="badge mb-4" style="background: rgba(139,92,246,0.15); color: var(--clr-primary); border: none; padding: 0.45rem 1rem; font-size: 0.85rem; letter-spacing: 0.08em;">
+          Get In Touch
+        </span>
+        <h1 class="mb-4">Contact <span class="text-gradient">Nexus VR</span></h1>
+        <p class="text-large mx-auto mb-0 max-w-prose" style="max-width: 680px;">
+          Have questions about equipment, need game recommendations, or want to plan a custom tournament? Our team is always ready to assist.
+        </p>
+
+        <!-- Quick Contact Pills -->
+        <div class="contact-quick-pills">
+          <a href="tel:+15550192834" class="quick-pill">
+            <i class="ph ph-phone"></i> (555) 019-2834
+          </a>
+          <a href="mailto:contact@nexusvr.com" class="quick-pill">
+            <i class="ph ph-envelope-simple"></i> contact@nexusvr.com
+          </a>
+          <a href="#map" class="quick-pill">
+            <i class="ph ph-map-pin"></i> 123 Cyber Avenue, Neon District
+          </a>
+          <span class="quick-pill" style="cursor: default;">
+            <i class="ph ph-clock"></i> Open Today: 12 PM – 11 PM
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content: Form + Venue Info -->
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Left: Contact Form (7 cols) -->
+          <div class="lg:col-span-7 contact-form-card animate-on-scroll" id="booking-form">
+            <h2 style="font-size: 1.85rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><i class="ph ph-ticket" style="color:var(--clr-primary);"></i> Book a Pod / Send an Inquiry</h2>
+            <p style="margin-bottom: 2rem; color: var(--clr-text-muted);">
+              Reserve your VR pod, inquire about slot availability, or book a group session. Our team confirms within <strong>24 hours</strong>.
+            </p>
+
+            <form data-validate>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div class="form-group mb-0">
+                  <label class="form-label">Full Name</label>
+                  <input type="text" class="form-input" placeholder="e.g. Alex Morgan" required>
+                  <div class="form-error"></div>
+                </div>
+                <div class="form-group mb-0">
+                  <label class="form-label">Email Address</label>
+                  <input type="email" class="form-input" placeholder="e.g. alex@example.com" required>
+                  <div class="form-error"></div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div class="form-group mb-0">
+                  <label class="form-label">Phone Number (Optional)</label>
+                  <input type="tel" class="form-input" placeholder="e.g. (555) 123-4567">
+                  <div class="form-error"></div>
+                </div>
+                <div class="form-group mb-0">
+                  <label class="form-label">Topic / Inquiry Type</label>
+                  <select class="form-input" required>
+                    <option value="booking" selected>VR Pod Booking &amp; Slot Availability</option>
+                    <option value="general">General Lounge Inquiry</option>
+                    <option value="group">Parties &amp; Group Packages</option>
+                    <option value="corporate">Corporate Team Building</option>
+                    <option value="tournament">Esports &amp; Tournaments</option>
+                    <option value="hardware">Hardware &amp; Technical Specs</option>
+                    <option value="feedback">Feedback &amp; Suggestions</option>
+                  </select>
+                  <div class="form-error"></div>
+                </div>
+              </div>
+
+              <div class="form-group mb-6">
+                <label class="form-label">Message</label>
+                <textarea class="form-input" rows="5" placeholder="How can we help? Include any dates, party sizes, or game titles you're interested in..." required></textarea>
+                <div class="form-error"></div>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-full" style="padding: 1rem; font-size: 1.05rem; box-shadow: 0 10px 24px rgba(139,92,246,0.35);">
+                <i class="ph ph-calendar-plus" style="font-size: 1.15rem;"></i> Request Pod Booking / Send Inquiry
+              </button>
+
+              <div class="flex items-center justify-center gap-6 mt-4 flex-wrap text-small" style="color: var(--clr-text-muted);">
+                <span class="flex items-center gap-1"><i class="ph ph-check-circle-fill" style="color: var(--clr-success);"></i> 24-hr response</span>
+                <span class="flex items-center gap-1"><i class="ph ph-check-circle-fill" style="color: var(--clr-success);"></i> Direct staff reply</span>
+                <span class="flex items-center gap-1"><i class="ph ph-check-circle-fill" style="color: var(--clr-success);"></i> Privacy guaranteed</span>
+              </div>
+            </form>
+          </div>
+
+          <!-- Right: Venue Info & Quick Answers (5 cols) -->
+          <div class="lg:col-span-5 flex-col gap-6">
+            
+            <!-- Venue Details Card -->
+            <div class="contact-info-card animate-on-scroll">
+              <div>
+                <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem;">Lounge Location</h3>
+                <p class="text-small" style="color: var(--clr-text-muted); margin-bottom: 1.25rem;">
+                  Walk-ins are always welcome based on pod availability.
+                </p>
+                
+                <div class="footer-location-col">
+                  <!-- Address -->
+                  <div class="footer-loc-block">
+                    <i class="ph-fill ph-map-pin footer-loc-icon"></i>
+                    <div class="footer-loc-info">
+                      <strong>Nexus VR Lounge</strong>
+                      <span>123 Cyber Avenue, Suite 200</span>
+                      <span style="font-size: 0.8rem; color: var(--clr-text-muted);">Neon District, NT 45890</span>
+                    </div>
+                  </div>
+
+                  <!-- Opening Hours -->
+                  <div class="footer-loc-block">
+                    <i class="ph ph-clock footer-loc-icon"></i>
+                    <div class="footer-loc-info" style="width: 100%;">
+                      <span class="footer-open-pill">Open Daily</span>
+                      <div class="footer-hours-list">
+                        <div class="footer-hours-row">
+                          <span>Mon &ndash; Thu:</span>
+                          <strong style="color: var(--clr-text);">12 PM &ndash; 11 PM</strong>
+                        </div>
+                        <div class="footer-hours-row">
+                          <span>Fri &ndash; Sun:</span>
+                          <strong style="color: var(--clr-secondary);">10 AM &ndash; Midnight</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Contacts -->
+                  <div class="footer-contacts-list">
+                    <a href="tel:+15550192834" class="footer-contact-item" aria-label="Phone: (555) 019-2834">
+                      <i class="ph ph-phone" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+                      <span>(555) 019-2834</span>
+                    </a>
+                    <a href="mailto:contact@nexusvr.com" class="footer-contact-item" aria-label="Email: contact@nexusvr.com">
+                      <i class="ph ph-envelope-simple" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+                      <span>contact@nexusvr.com</span>
+                    </a>
+                  </div>
+
+                  <!-- Directions Button -->
+                  <div>
+                    <a href="https://maps.google.com/?q=123+Cyber+Avenue+Neon+District" target="_blank" rel="noopener noreferrer" class="footer-directions-btn" aria-label="Get directions on Google Maps">
+                      <i class="ph ph-navigation-arrow"></i>
+                      <span>Get Directions</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Transit & Parking Info -->
+              <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem;">
+                <h4 style="font-size: 1rem; margin-bottom: 0.75rem;">Getting Here</h4>
+                <div class="flex-col gap-2">
+                  <div class="transit-badge">
+                    <i class="ph ph-train" style="color: var(--clr-secondary); font-size: 1.1rem;"></i>
+                    <span><strong>Subway:</strong> Neon Central (Exit 4, 2-minute walk)</span>
+                  </div>
+                  <div class="transit-badge">
+                    <i class="ph ph-car" style="color: var(--clr-secondary); font-size: 1.1rem;"></i>
+                    <span><strong>Parking:</strong> 3-Hour validated parking at Neon Square Garage</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Social Links -->
+              <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem;">
+                <h4 style="font-size: 1rem; margin-bottom: 0.75rem;">Join Our Community</h4>
+                <div class="flex gap-3">
+                  <a href="#" class="btn-icon" aria-label="Discord Server"><i class="ph ph-discord-logo" style="font-size: 1.25rem;"></i></a>
+                  <a href="#" class="btn-icon" aria-label="Instagram"><i class="ph ph-instagram-logo" style="font-size: 1.25rem;"></i></a>
+                  <a href="#" class="btn-icon" aria-label="Twitter"><i class="ph ph-twitter-logo" style="font-size: 1.25rem;"></i></a>
+                  <a href="#" class="btn-icon" aria-label="YouTube Channel"><i class="ph ph-youtube-logo" style="font-size: 1.25rem;"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick FAQ Card -->
+            <div class="contact-info-card animate-on-scroll">
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">Quick Answers</h3>
+              <p class="text-small" style="color: var(--clr-text-muted); margin-bottom: 0.75rem;">
+                Common questions answered instantly.
+              </p>
+
+              <div>
+                <div class="contact-faq-item">
+                  <button class="contact-faq-btn" type="button">
+                    <span>Do I need prior VR experience?</span>
+                    <i class="ph ph-plus contact-faq-caret"></i>
+                  </button>
+                  <div class="contact-faq-body">
+                    Not at all! Over 40% of our guests are first-timers. Our dedicated lounge crew provides a full briefing, fits your headset, and selects games suited to your comfort level.
+                  </div>
+                </div>
+
+                <div class="contact-faq-item">
+                  <button class="contact-faq-btn" type="button">
+                    <span>Can I walk in without booking?</span>
+                    <i class="ph ph-plus contact-faq-caret"></i>
+                  </button>
+                  <div class="contact-faq-body">
+                    Yes, walk-ins are welcome whenever pods are open. However, peak weekend slots (Friday evenings through Sunday) fill fast, so we strongly recommend reserving online.
+                  </div>
+                </div>
+
+                <div class="contact-faq-item">
+                  <button class="contact-faq-btn" type="button">
+                    <span>What is your cancellation policy?</span>
+                    <i class="ph ph-plus contact-faq-caret"></i>
+                  </button>
+                  <div class="contact-faq-body">
+                    Standard sessions can be rescheduled or cancelled for a full credit up to 2 hours before your start time. Group event packages require 48 hours notice.
+                  </div>
+                </div>
+
+                <div class="contact-faq-item" style="border-bottom: none;">
+                  <button class="contact-faq-btn" type="button">
+                    <span>Is eye wear / glasses accommodated?</span>
+                    <i class="ph ph-plus contact-faq-caret"></i>
+                  </button>
+                  <div class="contact-faq-body">
+                    Yes! All our headsets feature adjustable eye-relief spacers designed to comfortably accommodate standard prescription eyeglasses without scratching lenses.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /right column -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Map & Directions Visual Banner -->
+    <section id="map" class="map-banner">
+      <img src="src/assets/images/cyber_map.jpg" alt="Nexus VR Lounge Location Map" class="map-banner__img" loading="lazy">
+      <div class="map-banner__overlay">
+        <div class="map-banner__card animate-on-scroll">
+          <i class="ph-fill ph-navigation-arrow" style="font-size: 2.5rem; color: var(--clr-secondary); display: block; margin-bottom: 0.5rem;"></i>
+          <h3 style="margin-bottom: 0.5rem; font-size: 1.5rem;">Visit Nexus VR Today</h3>
+          <p class="text-small" style="color: var(--clr-text-muted); margin-bottom: 1.25rem;">
+            123 Cyber Avenue, Neon District &bull; Validated parking available
+          </p>
+          <a href="https://maps.google.com/?q=123+Cyber+Avenue+Neon+District" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.75rem 1.75rem;">
+            <i class="ph ph-arrow-square-out"></i> Open in Google Maps
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Proof Strip -->
+    <section class="proof-strip">
+      <div class="container">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="proof-item">
+            <i class="ph ph-star-fill"></i>
+            <strong>4.9 / 5.0 Rating</strong>
+            <span>250+ Verified Google Reviews</span>
+          </div>
+          <div class="proof-item">
+            <i class="ph ph-game-controller-fill"></i>
+            <strong>50+ VR Experiences</strong>
+            <span>Action, Racing, Co-op &amp; Escape</span>
+          </div>
+          <div class="proof-item">
+            <i class="ph ph-shield-check-fill"></i>
+            <strong>Medical-Grade Hygiene</strong>
+            <span>UV sanitised after every player</span>
+          </div>
+          <div class="proof-item">
+            <i class="ph ph-trophy-fill"></i>
+            <strong>Award Winning</strong>
+            <span>Voted Best Local Venue 2025</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="background: var(--clr-surface); border-top: var(--border-glass); padding-top: var(--space-12); padding-bottom: var(--space-6);">
+    <div class="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div>
+        <a href="home1.html" class="flex items-center gap-2 mb-4">
+          <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" style="height: 2rem; width: 2rem; border-radius: 50%; box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);">
+          <span style="font-family: var(--font-primary); font-weight: 800;">Nexus VR</span>
+        </a>
+        <p class="text-small">Elevating entertainment through cutting-edge virtual reality experiences.</p>
+        <div class="flex gap-4 mt-4">
+          <a href="#" class="nav-link" aria-label="Twitter"><i class="ph ph-twitter-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Instagram"><i class="ph ph-instagram-logo" style="font-size: 1.5rem;"></i></a>
+          <a href="#" class="nav-link" aria-label="Discord"><i class="ph ph-discord-logo" style="font-size: 1.5rem;"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 style="margin-bottom: var(--space-4);">Explore</h4>
+        <ul class="flex-col gap-2">
+          <li><a href="games.html" class="nav-link text-small">Games Library</a></li>
+          <li><a href="pricing.html" class="nav-link text-small">Pricing &amp; Bundles</a></li>
+          <li><a href="groups.html" class="nav-link text-small">Parties &amp; Groups</a></li>
+          <li><a href="about.html" class="nav-link text-small">About Us</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact</a></li>
+          <li><a href="dashboard.html" class="nav-link text-small">User Dashboard</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom: var(--space-4);">Support</h4>
+        <ul class="flex-col gap-2">
+          <li><a href="contact.html" class="nav-link text-small">FAQ &amp; Help</a></li>
+          <li><a href="contact.html" class="nav-link text-small">Contact Lounge Staff</a></li>
+          <li><a href="#" class="nav-link text-small">Terms of Service</a></li>
+          <li><a href="#" class="nav-link text-small">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom: var(--space-4);">Location &amp; Hours</h4>
+        <div class="footer-location-col">
+          <!-- Address -->
+          <div class="footer-loc-block">
+            <i class="ph-fill ph-map-pin footer-loc-icon"></i>
+            <div class="footer-loc-info">
+              <strong>Nexus VR Lounge</strong>
+              <span>123 Cyber Avenue, Suite 200</span>
+              <span style="font-size: 0.8rem; color: var(--clr-text-muted);">Neon District, NT 45890</span>
+            </div>
+          </div>
+
+          <!-- Opening Hours -->
+          <div class="footer-loc-block">
+            <i class="ph ph-clock footer-loc-icon"></i>
+            <div class="footer-loc-info" style="width: 100%;">
+              <span class="footer-open-pill">Open Daily</span>
+              <div class="footer-hours-list">
+                <div class="footer-hours-row">
+                  <span>Mon &ndash; Thu:</span>
+                  <strong style="color: var(--clr-text);">12 PM &ndash; 11 PM</strong>
+                </div>
+                <div class="footer-hours-row">
+                  <span>Fri &ndash; Sun:</span>
+                  <strong style="color: var(--clr-secondary);">10 AM &ndash; Midnight</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone & Contact Links -->
+          <div class="footer-contacts-list">
+            <a href="tel:+15550192834" class="footer-contact-item" aria-label="Phone: (555) 019-2834">
+              <i class="ph ph-phone" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>(555) 019-2834</span>
+            </a>
+            <a href="mailto:contact@nexusvr.com" class="footer-contact-item" aria-label="Email: contact@nexusvr.com">
+              <i class="ph ph-envelope-simple" style="color: var(--clr-secondary); font-size: 1rem;"></i>
+              <span>contact@nexusvr.com</span>
+            </a>
+          </div>
+
+          <!-- Directions Action Button -->
+          <div>
+            <a href="https://maps.google.com/?q=123+Cyber+Avenue+Neon+District" target="_blank" rel="noopener noreferrer" class="footer-directions-btn" aria-label="Get directions to Nexus VR Lounge on Google Maps">
+              <i class="ph ph-navigation-arrow"></i>
+              <span>Get Directions</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container text-center text-small" style="color: var(--clr-text-muted); border-top: var(--border-glass); padding-top: var(--space-6);">
+      &copy; 2026 Nexus VR Lounge. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="src/js/main.js"></script>
+  <script src="src/js/forms.js"></script>
+
+  <!-- FAQ Accordion Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqButtons = document.querySelectorAll('.contact-faq-btn');
+      faqButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const body = btn.nextElementSibling;
+          const isOpen = body.classList.contains('open');
+
+          // Close all FAQ items
+          document.querySelectorAll('.contact-faq-body').forEach(b => b.classList.remove('open'));
+          document.querySelectorAll('.contact-faq-btn').forEach(b => b.classList.remove('open'));
+
+          // Toggle current
+          if (!isOpen) {
+            body.classList.add('open');
+            btn.classList.add('open');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

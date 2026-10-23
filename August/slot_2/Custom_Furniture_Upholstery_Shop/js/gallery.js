@@ -121,4 +121,8 @@ function initCarousel(carouselId) {
   carousel.addEventListener('mouseleave', () => { clearInterval(autoTimer); autoTimer = setInterval(() => goTo(current + 1), 5500); });
 }
 
-export { initBASliders, initFabricGallery, initBAGallery, initCarousel };
+/* ── Global exports (classic script — works from file://) ── */
+window.initBASliders = initBASliders;
+window.initFabricGallery = initFabricGallery;
+window.initBAGallery = initBAGallery;
+window.initCarousel = initCarousel;

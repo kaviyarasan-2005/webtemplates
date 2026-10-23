@@ -14,10 +14,11 @@ const NavbarManager = (() => {
     navbar.classList.toggle('scrolled', window.scrollY > 50);
   }
 
-  function toggleMenu(force) {
+function toggleMenu(force) {
     if (!hamburger || !menu) return;
     const open = force !== undefined ? !force : !menu.classList.contains('open');
     menu.classList.toggle('open', open);
+    menu.setAttribute('aria-hidden', String(!open));
     hamburger.classList.toggle('open', open);
     hamburger.setAttribute('aria-expanded', String(open));
     document.body.style.overflow = open ? 'hidden' : '';
@@ -44,16 +45,20 @@ const NavbarManager = (() => {
     });
   }
 
-  function init() {
+function init() {
     if (!navbar) return;
     window.addEventListener('scroll', scrollHandler, { passive: true });
     scrollHandler();
-    hamburger?.addEventListener('click', () => toggleMenu());
+    menu?.setAttribute('aria-hidden', 'true');
+    hamburger?.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); toggleMenu(); });
+    hamburger?.addEventListener('touchstart', e => { e.preventDefault(); e.stopPropagation(); toggleMenu(); }, { passive: false });
     ddTrigger?.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); toggleDropdown(); });
-    document.addEventListener('click', e => {
+document.addEventListener('click', e => {
       if (ddParent && !ddParent.contains(e.target)) toggleDropdown(true);
-      if (menu?.classList.contains('open') && !menu.contains(e.target) && !hamburger.contains(e.target)) toggleMenu(true);
-    });
+      if (menu?.classList.contains('open') && !menu.contains(e.target) && !hamburger.contains(e.target)) {
+        if (!e.target.closest('.navbar__hamburger')) toggleMenu(true);
+      }
+    }, true);
     menu?.querySelectorAll('.navbar__link:not(#home-dropdown-trigger), .navbar__dropdown-item').forEach(link => {
       link.addEventListener('click', () => {
         if (window.innerWidth <= 1024) {

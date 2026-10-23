@@ -3,236 +3,1735 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexus VR | Admin Dashboard</title>
-  <meta name="description" content="Nexus VR Admin Dashboard - Manage pods, users, and view analytics.">
+  <title>Nexus VR | Admin Console</title>
+  <meta name="description" content="Nexus VR Operations & Admin Console - Live pod telemetry, revenue analytics, bookings, and hardware health.">
+  
   <link rel="stylesheet" href="src/css/main.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon-4.svg">
+
   <style>
-    .dash-wrapper{display:flex;flex-direction:column;min-height:100vh;background:var(--clr-bg);}
-    .dash-page-header{display:flex;align-items:center;justify-content:space-between;padding:2rem 2rem 1.5rem;max-width:1400px;width:100%;margin:0 auto;}
-    @media(max-width:768px){.dash-page-header{padding:1.25rem 1rem 1rem;flex-wrap:wrap;gap:1rem;}}
-    .topbar-brand{display:flex;align-items:center;gap:0.625rem;text-decoration:none;flex-shrink:0;}
-    .topbar-brand-icon{font-size:1.75rem;background:linear-gradient(135deg,var(--clr-primary),var(--clr-secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-    .topbar-brand-name{font-family:var(--font-primary);font-weight:800;font-size:1.2rem;color:var(--clr-text);letter-spacing:-0.01em;}
-    .topbar-center{flex:1;display:flex;align-items:center;justify-content:center;gap:0.25rem;}
-    .topbar-tab{padding:0.375rem 0.875rem;border-radius:99px;font-size:0.85rem;font-weight:500;color:var(--clr-text-muted);text-decoration:none;transition:all 150ms ease;}
-    .topbar-tab:hover{color:var(--clr-text);background:var(--clr-surface-alt);}
-    .topbar-tab.active{background:rgba(139,92,246,0.15);color:var(--clr-primary);}
-    .topbar-actions{display:flex;align-items:center;gap:0.75rem;flex-shrink:0;}
-    .t-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--clr-text-muted);cursor:pointer;transition:all 150ms ease;font-size:1rem;}
-    .t-btn:hover{background:var(--clr-primary);color:#fff;border-color:var(--clr-primary);}
-    [data-theme="light"] .t-btn{border-color:rgba(0,0,0,0.1);background:rgba(0,0,0,0.04);color:var(--clr-text-muted);}
-    .t-rtl{padding:0.25rem 0.75rem;border-radius:99px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:var(--clr-text-muted);font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 150ms ease;font-family:var(--font-primary);}
-    .t-rtl:hover{background:var(--clr-primary);color:#fff;border-color:var(--clr-primary);}
-    [data-theme="light"] .t-rtl{border-color:rgba(0,0,0,0.12);color:var(--clr-text-muted);}
-    .t-avatar{width:34px;height:34px;border-radius:50%;border:2px solid var(--clr-primary);object-fit:cover;cursor:pointer;}
-    .dash-body{padding:0 2rem 4rem;max-width:1400px;width:100%;margin-left:auto;margin-right:auto;}
-    @media(max-width:768px){.dash-body{padding:0 1rem 3rem;}}
-    .section-lbl{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--clr-text-muted);margin-bottom:0.75rem;margin-top:2rem;}
-    .admin-hero{background:linear-gradient(135deg,rgba(139,92,246,0.15) 0%,rgba(34,211,238,0.05) 100%);border:1px solid rgba(139,92,246,0.2);border-radius:20px;padding:1.75rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:0.25rem;}
-    @media(max-width:768px){.admin-hero{flex-direction:column;align-items:flex-start;padding:1.25rem;}}
-    .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
-    @media(max-width:1024px){.g4{grid-template-columns:1fr 1fr;}}
-    @media(max-width:540px){.g4{grid-template-columns:1fr;}}
-    .g2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
-    @media(max-width:768px){.g2{grid-template-columns:1fr;}}
-    .g13{display:grid;grid-template-columns:1fr 3fr;gap:1.25rem;}
-    @media(max-width:768px){.g13{grid-template-columns:1fr;}}
-    .g12{display:grid;grid-template-columns:1fr 2fr;gap:1.25rem;}
-    @media(max-width:768px){.g12{grid-template-columns:1fr;}}
-    .stat-card{background:var(--clr-surface);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:1rem 1.25rem;display:flex;align-items:center;gap:0.875rem;transition:border-color 0.25s,transform 0.25s;}
-    .stat-card:hover{border-color:rgba(139,92,246,0.3);transform:translateY(-2px);}
-    [data-theme="light"] .stat-card{border-color:rgba(0,0,0,0.07);}
-    .stat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.25rem;}
-    .d-card{background:var(--clr-surface);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:1.5rem;transition:border-color 0.25s,box-shadow 0.25s;}
-    .d-card:hover{border-color:rgba(139,92,246,0.3);box-shadow:0 4px 24px rgba(139,92,246,0.1);}
-    [data-theme="light"] .d-card{border-color:rgba(0,0,0,0.07);}
-    .d-card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
-    .d-card-ttl{font-family:var(--font-primary);font-size:0.95rem;font-weight:700;margin:0;display:flex;align-items:center;gap:0.5rem;}
-    .chart-card{background:var(--clr-surface);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:1.5rem;transition:border-color 0.25s,box-shadow 0.25s;}
-    .chart-card:hover{border-color:rgba(139,92,246,0.3);box-shadow:0 0 20px rgba(139,92,246,0.1);}
-    [data-theme="light"] .chart-card{border-color:rgba(0,0,0,0.07);}
-    .chart-ttl{font-family:var(--font-primary);font-size:0.9rem;font-weight:700;margin:0 0 1rem;display:flex;justify-content:space-between;align-items:center;}
-    .pod-cell{padding:0.5rem 0.25rem;border-radius:8px;text-align:center;font-size:0.72rem;font-weight:700;}
-    .pb-wrap{width:100%;height:6px;background:var(--clr-surface-alt);border-radius:99px;overflow:hidden;}
-    .pb-fill{height:100%;border-radius:99px;}
-    .fr-row{display:flex;align-items:center;gap:0.75rem;padding:0.5rem 0;}
-    .tbl{width:100%;border-collapse:collapse;font-size:0.85rem;}
-    .tbl-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
-    @media(max-width:600px){.tbl th,.tbl td{padding:0.5rem 0.625rem;font-size:0.78rem;}}
-    .tbl th{padding:0.625rem 1rem;background:var(--clr-surface-alt);font-size:0.72rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--clr-text-muted);text-align:left;}
-    .tbl td{padding:0.75rem 1rem;border-bottom:1px solid rgba(255,255,255,0.05);}
-    .tbl tr:last-child td{border-bottom:none;}
-    [data-theme="light"] .tbl td{border-bottom-color:rgba(0,0,0,0.05);}
+    /* =========================================================
+       NEXUS VR ADMIN CONSOLE — SIDEBAR ARCHITECTURE
+       ========================================================= */
+
+    :root {
+      --sidebar-width: 270px;
+      --topbar-height: 70px;
+    }
+
+    body {
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Layout Frame */
+    .dash-layout {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+      position: relative;
+    }
+
+    /* ── SIDEBAR ── */
+    .dash-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(14, 20, 36, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+    }
+
+    [dir="rtl"] .dash-sidebar {
+      left: auto;
+      right: 0;
+      border-right: none;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="light"] .dash-sidebar {
+      background: rgba(255, 255, 255, 0.98);
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 2px 0 16px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Sidebar Brand */
+    .sidebar-brand {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    [data-theme="light"] .sidebar-brand {
+      border-bottom-color: rgba(0, 0, 0, 0.08);
+    }
+    .sidebar-brand__logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.45);
+      border: 1px solid rgba(34, 211, 238, 0.35);
+      object-fit: cover;
+    }
+    .sidebar-brand__text {
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-brand__name {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--clr-text);
+      letter-spacing: -0.015em;
+      line-height: 1.1;
+    }
+    .sidebar-brand__tag {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clr-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 0.15rem;
+    }
+
+    /* Sidebar Admin Profile Card */
+    .sidebar-user {
+      padding: 1.15rem 1.25rem;
+      margin: 1rem 1rem 0.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    [data-theme="light"] .sidebar-user {
+      background: #F9FAFB;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+    .sidebar-user__avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .sidebar-user__avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--clr-secondary);
+      object-fit: cover;
+      display: block;
+    }
+    .sidebar-user__dot {
+      position: absolute;
+      bottom: 1px;
+      right: 1px;
+      width: 11px;
+      height: 11px;
+      background: var(--clr-success);
+      border: 2px solid #0E1424;
+      border-radius: 50%;
+    }
+    .sidebar-user__info {
+      min-width: 0;
+      flex: 1;
+    }
+    .sidebar-user__name {
+      font-size: 0.925rem;
+      font-weight: 700;
+      color: var(--clr-text);
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sidebar-user__role {
+      font-size: 0.72rem;
+      color: var(--clr-text-muted);
+      margin: 0.15rem 0 0.25rem;
+    }
+    .sidebar-user__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--clr-secondary);
+      background: rgba(34, 211, 238, 0.12);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      border-radius: var(--radius-full);
+      padding: 0.1rem 0.5rem;
+    }
+
+    /* Sidebar Navigation Links */
+    .sidebar-nav {
+      padding: 1rem 1rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.35rem;
+      flex: 1;
+    }
+    .sidebar-group-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clr-text-muted);
+      padding: 0 0.65rem;
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: var(--radius-md);
+      font-family: var(--font-primary);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--clr-text-muted);
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    .sidebar-link i {
+      font-size: 1.15rem;
+      color: var(--clr-text-muted);
+      transition: color var(--transition-fast);
+      flex-shrink: 0;
+    }
+    .sidebar-link:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--clr-text);
+      transform: translateX(3px);
+    }
+    [dir="rtl"] .sidebar-link:hover {
+      transform: translateX(-3px);
+    }
+    .sidebar-link:hover i {
+      color: var(--clr-secondary);
+    }
+    .sidebar-link.active {
+      background: rgba(34, 211, 238, 0.12);
+      color: #FFFFFF;
+      font-weight: 700;
+      border: 1px solid rgba(34, 211, 238, 0.3);
+    }
+    .sidebar-link.active i {
+      color: var(--clr-secondary);
+    }
+    .sidebar-link.active::before {
+      content: '';
+      position: absolute;
+      left: -1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 20px;
+      background: var(--clr-secondary);
+      border-radius: 0 4px 4px 0;
+    }
+    [dir="rtl"] .sidebar-link.active::before {
+      left: auto;
+      right: -1rem;
+      border-radius: 4px 0 0 4px;
+    }
+
+    [data-theme="light"] .sidebar-link {
+      color: #4B5563;
+    }
+    [data-theme="light"] .sidebar-link:hover {
+      background: #F3F4F6;
+      color: #111827;
+    }
+    [data-theme="light"] .sidebar-link.active {
+      background: rgba(34, 211, 238, 0.15);
+      color: #0891B2;
+      border-color: rgba(34, 211, 238, 0.35);
+    }
+
+    .sidebar-pill {
+      margin-left: auto;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-full);
+      background: rgba(34, 211, 238, 0.15);
+      color: var(--clr-secondary);
+    }
+    .sidebar-pill--success {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--clr-success);
+    }
+    .sidebar-pill--warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--clr-warning);
+    }
+    [dir="rtl"] .sidebar-pill {
+      margin-left: 0;
+      margin-right: auto;
+    }
+
+    /* Sidebar Footer & Dedicated Logout */
+    .sidebar-footer {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+    [data-theme="light"] .sidebar-footer {
+      border-top-color: rgba(0, 0, 0, 0.08);
+    }
+    .sidebar-logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #EF4444;
+      font-family: var(--font-primary);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+    .sidebar-logout-btn:hover {
+      background: #EF4444;
+      color: #FFFFFF;
+      border-color: #EF4444;
+      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* ── MAIN CONTENT WRAPPER ── */
+    .dash-main {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: margin 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    [dir="rtl"] .dash-main {
+      margin-left: 0;
+      margin-right: var(--sidebar-width);
+    }
+
+    /* Topbar */
+    .dash-topbar {
+      height: var(--topbar-height);
+      position: sticky;
+      top: 0;
+      background: rgba(8, 11, 20, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 100;
+    }
+    [data-theme="light"] .dash-topbar {
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .topbar-breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--clr-text-muted);
+    }
+    .topbar-breadcrumbs strong {
+      color: var(--clr-text);
+      font-weight: 700;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .topbar-search {
+      position: relative;
+      width: 280px;
+    }
+    @media (max-width: 900px) {
+      .topbar-search { display: none; }
+    }
+    .topbar-search input {
+      width: 100%;
+      height: 38px;
+      padding: 0 1rem 0 2.25rem;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--clr-text);
+      font-size: 0.85rem;
+      transition: all var(--transition-fast);
+    }
+    .topbar-search input:focus {
+      outline: none;
+      border-color: var(--clr-secondary);
+      background: rgba(34, 211, 238, 0.08);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.25);
+    }
+    .topbar-search i {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--clr-text-muted);
+      font-size: 1rem;
+    }
+    [dir="rtl"] .topbar-search input {
+      padding: 0 2.25rem 0 1rem;
+    }
+    [dir="rtl"] .topbar-search i {
+      left: auto;
+      right: 0.85rem;
+    }
+
+    /* Mobile Hamburger Trigger */
+    .sidebar-toggle-btn {
+      display: none;
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--clr-text);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+    [data-theme="light"] .sidebar-toggle-btn {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #111827;
+    }
+
+    /* Backdrop for Mobile Drawer */
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+    }
+    .sidebar-backdrop.active {
+      display: block;
+    }
+
+    /* Topbar Controls */
+    .nav-icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--clr-text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    .nav-icon-btn:hover {
+      background: var(--clr-secondary);
+      border-color: var(--clr-secondary);
+      color: #0E1424;
+    }
+    [data-theme="light"] .nav-icon-btn {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #4B5563;
+    }
+    [data-theme="light"] .nav-icon-btn:hover {
+      background: var(--clr-secondary);
+      color: #0E1424;
+    }
+    .nav-rtl-btn {
+      height: 38px;
+      padding: 0 0.85rem;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--clr-text-muted);
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .nav-rtl-btn:hover {
+      background: var(--clr-secondary);
+      border-color: var(--clr-secondary);
+      color: #0E1424;
+    }
+    [data-theme="light"] .nav-rtl-btn {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #4B5563;
+    }
+
+    /* ── DASHBOARD BODY CONTENT ── */
+    .dash-content {
+      padding: 2rem;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    /* Operational Hero Banner */
+    .ops-hero {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%);
+      border: 1px solid rgba(34, 211, 238, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .ops-hero::after {
+      content: '';
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(34, 211, 238, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    [data-theme="light"] .ops-hero {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.08) 0%, rgba(139, 92, 246, 0.05) 100%);
+      border-color: rgba(34, 211, 238, 0.2);
+    }
+    .ops-hero-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 0 0 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    /* Stat Cards Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+    @media (max-width: 1200px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 580px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+
+    .stat-tile {
+      background: var(--clr-surface);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-lg);
+      padding: 1.35rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    .stat-tile:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      border-color: rgba(34, 211, 238, 0.3);
+    }
+    [data-theme="light"] .stat-tile {
+      background: #FFFFFF;
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+    .stat-tile__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .stat-tile__val {
+      font-family: var(--font-primary);
+      font-size: 1.65rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin: 0.2rem 0;
+    }
+    .stat-tile__lbl {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--clr-text-muted);
+    }
+    .stat-tile__trend {
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    /* Cards & Containers */
+    .dash-card {
+      background: var(--clr-surface);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      position: relative;
+    }
+    [data-theme="light"] .dash-card {
+      background: #FFFFFF;
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+    }
+    .dash-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .dash-card__title {
+      font-family: var(--font-primary);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* 24-Pod Fleet Matrix */
+    .pod-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.75rem;
+    }
+    @media (max-width: 1200px) {
+      .pod-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .pod-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .pod-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .pod-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 0.75rem;
+      text-align: center;
+      transition: all var(--transition-fast);
+      position: relative;
+      cursor: pointer;
+    }
+    .pod-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    }
+    [data-theme="light"] .pod-card {
+      background: #F9FAFB;
+      border-color: rgba(0, 0, 0, 0.07);
+    }
+
+    .pod-card--active {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.05);
+    }
+    .pod-card--idle {
+      border-color: rgba(34, 211, 238, 0.3);
+      background: rgba(34, 211, 238, 0.04);
+    }
+    .pod-card--cleaning {
+      border-color: rgba(245, 158, 11, 0.35);
+      background: rgba(245, 158, 11, 0.05);
+    }
+    .pod-card--maintenance {
+      border-color: rgba(239, 68, 68, 0.35);
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .pod-card__id {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+    .pod-card__status {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .pod-card__meta {
+      font-size: 0.68rem;
+      color: var(--clr-text-muted);
+      margin-top: 0.35rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Live Bookings Table */
+    .admin-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    [data-theme="light"] .admin-table-wrap {
+      border-color: rgba(0, 0, 0, 0.07);
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+    [dir="rtl"] .admin-table {
+      text-align: right;
+    }
+    .admin-table th {
+      padding: 0.75rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--clr-text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      white-space: nowrap;
+    }
+    [data-theme="light"] .admin-table th {
+      background: #F9FAFB;
+      border-bottom-color: rgba(0, 0, 0, 0.08);
+      color: #6B7280;
+    }
+    .admin-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      vertical-align: middle;
+      color: var(--clr-text);
+      white-space: nowrap;
+    }
+    [data-theme="light"] .admin-table td {
+      border-bottom-color: rgba(0, 0, 0, 0.05);
+      color: #111827;
+    }
+    .admin-table tr:last-child td {
+      border-bottom: none;
+    }
+    .admin-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    [data-theme="light"] .admin-table tr:hover td {
+      background: #F9FAFB;
+    }
+
+    /* Diagnostics Progress Bars */
+    .diag-bar-bg {
+      width: 100%;
+      height: 7px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    [data-theme="light"] .diag-bar-bg {
+      background: #E5E7EB;
+    }
+    .diag-bar-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      transition: width 0.5s ease;
+    }
+
+    /* Responsive Drawer Breakpoint */
+    @media (max-width: 1024px) {
+      .dash-sidebar {
+        transform: translateX(-100%);
+      }
+      [dir="rtl"] .dash-sidebar {
+        transform: translateX(100%);
+      }
+      .dash-sidebar.active {
+        transform: translateX(0);
+      }
+      .dash-main {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .sidebar-toggle-btn {
+        display: flex;
+      }
+    }
   </style>
 </head>
 <body>
-<div class="dash-wrapper">
 
-  <!-- TOP BAR -->
-    <!-- PAGE HEADER -->
-  <div class="dash-page-header">
-    <!-- Brand + Page Title -->
-    <div style="display:flex;flex-direction:column;gap:0.25rem;">
-      <a href="home1.html" class="topbar-brand" style="margin-bottom:0.1rem;">
-        <i class="ph ph-hexagon topbar-brand-icon"></i>
-        <span class="topbar-brand-name">Nexus VR</span>
+<div class="dash-layout">
+
+  <!-- Mobile Backdrop Overlay -->
+  <div class="sidebar-backdrop" id="sidebar-overlay"></div>
+
+  <!-- ── 1. ADMIN SIDEBAR NAVIGATION ── -->
+  <aside class="dash-sidebar" id="admin-sidebar">
+    
+    <!-- Brand Header -->
+    <a href="home1.html" class="sidebar-brand">
+      <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" class="sidebar-brand__logo">
+      <div class="sidebar-brand__text">
+        <span class="sidebar-brand__name text-gradient">Nexus VR</span>
+        <span class="sidebar-brand__tag">
+          <i class="ph ph-shield-check"></i> Admin Console
+        </span>
+      </div>
+    </a>
+
+    <!-- Admin Profile Snippet -->
+    <div class="sidebar-user">
+      <div class="sidebar-user__avatar-wrap">
+        <img src="src/assets/images/avatar-1.jpg" alt="Commander Vance" class="sidebar-user__avatar">
+        <span class="sidebar-user__dot" title="Live Operations Online"></span>
+      </div>
+      <div class="sidebar-user__info">
+        <h4 class="sidebar-user__name">Commander Vance</h4>
+        <div class="sidebar-user__role">Ops Lead &bull; Core 1</div>
+        <div class="sidebar-user__badge">
+          <i class="ph ph-key"></i> Root Access
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Groups -->
+    <nav class="sidebar-nav">
+      
+      <!-- Group 1: Operations -->
+      <div>
+        <span class="sidebar-group-label">Operations Control</span>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="admin.html" class="sidebar-link active">
+              <i class="ph ph-gauge"></i>
+              <span>Live Overview</span>
+            </a>
+          </li>
+          <li>
+            <a href="#pod-management" class="sidebar-link">
+              <i class="ph ph-circles-four"></i>
+              <span>VR Pod Matrix</span>
+              <span class="sidebar-pill sidebar-pill--success">18/24</span>
+            </a>
+          </li>
+          <li>
+            <a href="#active-bookings" class="sidebar-link">
+              <i class="ph ph-calendar-check"></i>
+              <span>Live Bookings</span>
+              <span class="sidebar-pill">4 Now</span>
+            </a>
+          </li>
+          <li>
+            <a href="#qr-scanner" class="sidebar-link">
+              <i class="ph ph-qr-code"></i>
+              <span>Check-In Scanner</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Group 2: Analytics & Revenue -->
+      <div>
+        <span class="sidebar-group-label">Telemetry & Revenue</span>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="#analytics-section" class="sidebar-link">
+              <i class="ph ph-chart-bar"></i>
+              <span>Revenue Reports</span>
+            </a>
+          </li>
+          <li>
+            <a href="#analytics-section" class="sidebar-link">
+              <i class="ph ph-chart-line-up"></i>
+              <span>Pod Utilization</span>
+            </a>
+          </li>
+          <li>
+            <a href="#analytics-section" class="sidebar-link">
+              <i class="ph ph-game-controller"></i>
+              <span>Game Fleet Stats</span>
+            </a>
+          </li>
+          <li>
+            <a href="#analytics-section" class="sidebar-link">
+              <i class="ph ph-users-three"></i>
+              <span>Player Growth</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Group 3: Venue Infrastructure -->
+      <div>
+        <span class="sidebar-group-label">Lounge Infrastructure</span>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="#system-health" class="sidebar-link">
+              <i class="ph ph-cpu"></i>
+              <span>System Health</span>
+              <span class="sidebar-pill sidebar-pill--success">Optimal</span>
+            </a>
+          </li>
+          <li>
+            <a href="#staff-duty" class="sidebar-link">
+              <i class="ph ph-identification-badge"></i>
+              <span>Staff on Duty</span>
+              <span class="sidebar-pill">2 Active</span>
+            </a>
+          </li>
+          <li>
+            <a href="games.html" class="sidebar-link">
+              <i class="ph ph-film-strip"></i>
+              <span>Public Game Library</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Group 4: Portals & Venue Sites -->
+      <div>
+        <span class="sidebar-group-label">Quick Links</span>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="dashboard.html" class="sidebar-link">
+              <i class="ph ph-user-circle"></i>
+              <span>Player Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="home1.html" class="sidebar-link">
+              <i class="ph ph-globe"></i>
+              <span>Public Website</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </nav>
+
+    <!-- Sidebar Footer with Dedicated Logout -->
+    <div class="sidebar-footer">
+      <a href="login.html" class="sidebar-logout-btn">
+        <i class="ph ph-sign-out"></i>
+        <span>Log Out Console</span>
       </a>
-      <div style="display:flex;align-items:center;gap:0.5rem;">
-        <span style="font-size:0.75rem;color:var(--clr-text-muted);">Admin Panel</span>
-        <span style="font-size:0.75rem;color:var(--clr-text-muted);">/</span>
-        <span style="font-size:0.75rem;color:var(--clr-primary);font-weight:600;">Overview</span>
-      </div>
     </div>
-    <!-- Controls -->
-    <div class="topbar-actions">
-      <button id="theme-toggle" class="t-btn" aria-label="Toggle theme"><i class="ph ph-moon"></i></button>
-      <button id="rtl-toggle" class="t-rtl">RTL</button>
-      <div style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--clr-primary);color:#fff;font-size:1rem;" title="Admin">
-        <i class="ph ph-shield-star"></i>
+
+  </aside>
+
+  <!-- ── 2. MAIN ADMIN CONTENT AREA ── -->
+  <div class="dash-main">
+
+    <!-- Top Navigation Bar -->
+    <header class="dash-topbar">
+      
+      <!-- Left: Mobile Trigger & Breadcrumbs -->
+      <div class="topbar-left">
+        <button class="sidebar-toggle-btn" id="sidebar-toggle" aria-label="Toggle navigation drawer">
+          <i class="ph ph-list"></i>
+        </button>
+        <div class="topbar-breadcrumbs">
+          <span>Nexus VR</span>
+          <i class="ph ph-caret-right" style="font-size:0.75rem;"></i>
+          <span>Operations</span>
+          <i class="ph ph-caret-right" style="font-size:0.75rem;"></i>
+          <strong>Live Overview</strong>
+        </div>
       </div>
-    </div>
+
+      <!-- Right: Search, Toggles, Quick Action -->
+      <div class="topbar-right">
+        
+        <!-- Live System Status Pill -->
+        <div style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.3rem 0.75rem;border-radius:var(--radius-full);background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);font-size:0.75rem;font-weight:700;color:var(--clr-success);" class="hide-mobile">
+          <span style="width:7px;height:7px;background:var(--clr-success);border-radius:50%;box-shadow:0 0 8px var(--clr-success);"></span>
+          <span>All 24 Pods Online</span>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="topbar-search">
+          <i class="ph ph-magnifying-glass"></i>
+          <input type="text" placeholder="Search players, pods, bookings...">
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="nav-icon-btn" id="theme-toggle" aria-label="Toggle dark/light theme">
+          <i class="ph ph-moon"></i>
+        </button>
+
+        <!-- RTL Toggle -->
+        <button class="nav-rtl-btn" id="rtl-toggle">
+          RTL
+        </button>
+
+        <!-- New Booking CTA -->
+        <a href="#pod-management" class="btn btn-primary btn-sm" style="display:inline-flex;align-items:center;gap:0.35rem;">
+          <i class="ph ph-plus-circle"></i>
+          <span>New Session</span>
+        </a>
+
+      </div>
+
+    </header>
+
+    <!-- Main Content Hub -->
+    <main class="dash-content">
+
+      <!-- Operations Hero Banner -->
+      <div class="ops-hero animate-on-scroll">
+        <div>
+          <h2 class="ops-hero-title">
+            <i class="ph ph-shield-check" style="color:var(--clr-secondary);"></i>
+            <span>Operations Command Center</span>
+          </h2>
+          <p style="margin:0;font-size:0.875rem;color:var(--clr-text-muted);max-width:680px;">
+            Real-time venue telemetry, automated pod scheduling, hardware diagnostics, and revenue metrics across all 24 sensory stations.
+          </p>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+          <button class="btn btn-secondary btn-sm" onclick="alert('Exporting today\'s revenue and attendance report as CSV...')">
+            <i class="ph ph-download-simple"></i>
+            <span>Export CSV</span>
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="alert('Opening QR check-in camera feed...')">
+            <i class="ph ph-scan"></i>
+            <span>Scan Player Pass</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Stat Tiles -->
+      <section>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+          <span style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--clr-text-muted);">
+            Lounge Key Performance Indicators
+          </span>
+          <span style="font-size:0.75rem;color:var(--clr-text-muted);">
+            Auto-refreshed: <span style="color:var(--clr-secondary);font-weight:600;">Just now</span>
+          </span>
+        </div>
+
+        <div class="stats-grid">
+          
+          <!-- Stat 1: Revenue -->
+          <div class="stat-tile" style="border-left:4px solid var(--clr-success);">
+            <div class="stat-tile__icon" style="background:rgba(16,185,129,0.12);color:var(--clr-success);">
+              <i class="ph ph-currency-dollar"></i>
+            </div>
+            <div style="flex:1;">
+              <span class="stat-tile__lbl">Today's Revenue</span>
+              <div class="stat-tile__val" style="color:var(--clr-success);">$3,240</div>
+              <div class="stat-tile__trend" style="color:var(--clr-success);">
+                <i class="ph ph-trend-up"></i>
+                <span>+14.2% vs yesterday</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stat 2: Active Pods -->
+          <div class="stat-tile" style="border-left:4px solid var(--clr-secondary);">
+            <div class="stat-tile__icon" style="background:rgba(34,211,238,0.12);color:var(--clr-secondary);">
+              <i class="ph ph-game-controller"></i>
+            </div>
+            <div style="flex:1;">
+              <span class="stat-tile__lbl">Active Pods</span>
+              <div class="stat-tile__val" style="color:var(--clr-secondary);">18 / 24</div>
+              <div class="stat-tile__trend" style="color:var(--clr-secondary);">
+                <i class="ph ph-check-circle"></i>
+                <span>75% venue capacity</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stat 3: Total Users -->
+          <div class="stat-tile" style="border-left:4px solid var(--clr-primary);">
+            <div class="stat-tile__icon" style="background:rgba(139,92,246,0.12);color:var(--clr-primary);">
+              <i class="ph ph-users"></i>
+            </div>
+            <div style="flex:1;">
+              <span class="stat-tile__lbl">Registered Gamers</span>
+              <div class="stat-tile__val text-gradient">12,450</div>
+              <div class="stat-tile__trend" style="color:var(--clr-primary);">
+                <i class="ph ph-arrow-up-right"></i>
+                <span>+340 new this week</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stat 4: Maintenance / Cleaning -->
+          <div class="stat-tile" style="border-left:4px solid var(--clr-warning);">
+            <div class="stat-tile__icon" style="background:rgba(245,158,11,0.12);color:var(--clr-warning);">
+              <i class="ph ph-warning-circle"></i>
+            </div>
+            <div style="flex:1;">
+              <span class="stat-tile__lbl">Pods in Service</span>
+              <div class="stat-tile__val" style="color:var(--clr-warning);">2 Pods</div>
+              <div class="stat-tile__trend" style="color:var(--clr-warning);">
+                <i class="ph ph-wrench"></i>
+                <span>P04 Cleaning &bull; P05 Offline</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ── 3. ANALYTICS CHARTS (Preserves charts.js IDs) ── -->
+      <section id="analytics-section">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+          <span style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--clr-text-muted);">
+            Real-Time Analytics &amp; Demographics
+          </span>
+          <div style="display:flex;gap:0.5rem;">
+            <button class="nav-rtl-btn" style="font-size:0.7rem;height:28px;padding:0 0.65rem;">7 Days</button>
+            <button class="nav-rtl-btn" style="font-size:0.7rem;height:28px;padding:0 0.65rem;background:var(--clr-surface-alt);">30 Days</button>
+          </div>
+        </div>
+
+        <!-- Row 1: Weekly Revenue & Pod Utilization -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;">
+          
+          <!-- Chart 1: adminRevenueChart -->
+          <div class="dash-card animate-on-scroll">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">
+                <i class="ph ph-chart-bar" style="color:var(--clr-primary);"></i>
+                <span>Weekly Revenue Stream</span>
+              </h3>
+              <span style="font-size:0.75rem;color:var(--clr-text-muted);">Last 7 Days (USD)</span>
+            </div>
+            <div style="height:230px;position:relative;">
+              <canvas id="adminRevenueChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 2: adminPodChart -->
+          <div class="dash-card animate-on-scroll">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">
+                <i class="ph ph-chart-line-up" style="color:var(--clr-secondary);"></i>
+                <span>Pod Utilization by Hour</span>
+              </h3>
+              <span style="font-size:0.75rem;color:var(--clr-text-muted);">Peak: 8:00 PM (24/24)</span>
+            </div>
+            <div style="height:230px;position:relative;">
+              <canvas id="adminPodChart"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Row 2: Top Games & User Growth -->
+        <div style="display:grid;grid-template-columns:1fr 2fr;gap:1.25rem;">
+          
+          <!-- Chart 3: adminGamesChart -->
+          <div class="dash-card animate-on-scroll">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">
+                <i class="ph ph-chart-donut" style="color:var(--clr-warning);"></i>
+                <span>Top Booked Experiences</span>
+              </h3>
+              <span style="font-size:0.75rem;color:var(--clr-text-muted);">October 2026</span>
+            </div>
+            <div style="height:210px;position:relative;display:flex;justify-content:center;">
+              <canvas id="adminGamesChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 4: adminGrowthChart -->
+          <div class="dash-card animate-on-scroll">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">
+                <i class="ph ph-trend-up" style="color:var(--clr-success);"></i>
+                <span>Player Base &amp; Membership Growth</span>
+              </h3>
+              <span style="font-size:0.75rem;color:var(--clr-text-muted);">6-Month Cohort</span>
+            </div>
+            <div style="height:210px;position:relative;">
+              <canvas id="adminGrowthChart"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ── 4. LIVE POD FLEET MATRIX (All 24 Pods) ── -->
+      <section id="pod-management">
+        <div class="dash-card animate-on-scroll">
+          <div class="dash-card__header">
+            <div>
+              <h3 class="dash-card__title">
+                <i class="ph ph-circles-four" style="color:var(--clr-secondary);"></i>
+                <span>24-Pod Sensory Station Matrix</span>
+              </h3>
+              <p style="margin:0.25rem 0 0;font-size:0.8rem;color:var(--clr-text-muted);">
+                Monitor hardware load, sanitize cycles, and live player sessions.
+              </p>
+            </div>
+            
+            <!-- Quick Filter Badges -->
+            <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+              <span class="sidebar-pill sidebar-pill--success" style="cursor:pointer;">18 In Use</span>
+              <span class="sidebar-pill" style="cursor:pointer;">4 Available</span>
+              <span class="sidebar-pill sidebar-pill--warning" style="cursor:pointer;">1 Cleaning</span>
+              <span class="sidebar-pill" style="background:rgba(239,68,68,0.15);color:var(--clr-error);cursor:pointer;">1 Offline</span>
+            </div>
+          </div>
+
+          <!-- 24 Interactive Pod Grid -->
+          <div class="pod-grid">
+            
+            <!-- Pod 01 -->
+            <div class="pod-card pod-card--active" title="Pod 01: In Use by VoidWalker">
+              <div class="pod-card__id text-gradient">Pod 01</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">VoidWalker &bull; Alyx</div>
+            </div>
+
+            <!-- Pod 02 -->
+            <div class="pod-card pod-card--active" title="Pod 02: In Use by NeonDemon">
+              <div class="pod-card__id text-gradient">Pod 02</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">NeonDemon &bull; Cyber</div>
+            </div>
+
+            <!-- Pod 03 -->
+            <div class="pod-card pod-card--idle" title="Pod 03: Available">
+              <div class="pod-card__id">Pod 03</div>
+              <span class="pod-card__status" style="color:var(--clr-secondary);">&bull; Available</span>
+              <div class="pod-card__meta">Ready for Session</div>
+            </div>
+
+            <!-- Pod 04 -->
+            <div class="pod-card pod-card--cleaning" title="Pod 04: Sanitizing / Headset Clean">
+              <div class="pod-card__id">Pod 04</div>
+              <span class="pod-card__status" style="color:var(--clr-warning);">&bull; Sanitizing</span>
+              <div class="pod-card__meta">UV Clean &bull; 4m left</div>
+            </div>
+
+            <!-- Pod 05 -->
+            <div class="pod-card pod-card--maintenance" title="Pod 05: Offline - Firmware Upgrade">
+              <div class="pod-card__id">Pod 05</div>
+              <span class="pod-card__status" style="color:var(--clr-error);">&bull; Offline</span>
+              <div class="pod-card__meta">FW Update 2.4</div>
+            </div>
+
+            <!-- Pod 06 -->
+            <div class="pod-card pod-card--active" title="Pod 06: In Use by SarahConnor">
+              <div class="pod-card__id text-gradient">Pod 06</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">SarahC &bull; Dark Asy</div>
+            </div>
+
+            <!-- Pod 07 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 07</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Viper99 &bull; Beat Saber</div>
+            </div>
+
+            <!-- Pod 08 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 08</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">NoobMaster &bull; Alyx</div>
+            </div>
+
+            <!-- Pod 09 -->
+            <div class="pod-card pod-card--idle">
+              <div class="pod-card__id">Pod 09</div>
+              <span class="pod-card__status" style="color:var(--clr-secondary);">&bull; Available</span>
+              <div class="pod-card__meta">Ready for Session</div>
+            </div>
+
+            <!-- Pod 10 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 10</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">GhostRider &bull; Flight</div>
+            </div>
+
+            <!-- Pod 11 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 11</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Zenith &bull; Superhot</div>
+            </div>
+
+            <!-- Pod 12 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 12</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Pulse &bull; Racket</div>
+            </div>
+
+            <!-- Pod 13 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 13</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Kira_X &bull; Zero Cal</div>
+            </div>
+
+            <!-- Pod 14 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 14</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Apex &bull; Horizon</div>
+            </div>
+
+            <!-- Pod 15 -->
+            <div class="pod-card pod-card--idle">
+              <div class="pod-card__id">Pod 15</div>
+              <span class="pod-card__status" style="color:var(--clr-secondary);">&bull; Available</span>
+              <div class="pod-card__meta">Ready for Session</div>
+            </div>
+
+            <!-- Pod 16 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 16</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Echo &bull; Moss II</div>
+            </div>
+
+            <!-- Pod 17 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 17</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Titan_B &bull; Squad 4</div>
+            </div>
+
+            <!-- Pod 18 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 18</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Nova_7 &bull; Squad 4</div>
+            </div>
+
+            <!-- Pod 19 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 19</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Shadow_K &bull; Squad 4</div>
+            </div>
+
+            <!-- Pod 20 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 20</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Frost &bull; Squad 4</div>
+            </div>
+
+            <!-- Pod 21 -->
+            <div class="pod-card pod-card--idle">
+              <div class="pod-card__id">Pod 21</div>
+              <span class="pod-card__status" style="color:var(--clr-secondary);">&bull; Available</span>
+              <div class="pod-card__meta">Ready for Session</div>
+            </div>
+
+            <!-- Pod 22 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 22</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Blaze &bull; Blade&amp;Sorcery</div>
+            </div>
+
+            <!-- Pod 23 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 23</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Cipher &bull; Pavlov VR</div>
+            </div>
+
+            <!-- Pod 24 -->
+            <div class="pod-card pod-card--active">
+              <div class="pod-card__id text-gradient">Pod 24</div>
+              <span class="pod-card__status" style="color:var(--clr-success);">&bull; In Use</span>
+              <div class="pod-card__meta">Ranger &bull; Eleven TT</div>
+            </div>
+
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:0.75rem;">
+            <div style="display:flex;align-items:center;gap:1.25rem;font-size:0.78rem;color:var(--clr-text-muted);">
+              <span><i class="ph ph-circle-fill" style="color:var(--clr-success);font-size:0.6rem;"></i> Active Session</span>
+              <span><i class="ph ph-circle-fill" style="color:var(--clr-secondary);font-size:0.6rem;"></i> Pod Available</span>
+              <span><i class="ph ph-circle-fill" style="color:var(--clr-warning);font-size:0.6rem;"></i> UV Sanitizing</span>
+              <span><i class="ph ph-circle-fill" style="color:var(--clr-error);font-size:0.6rem;"></i> Maintenance</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="alert('Initiating automated diagnostic check across all 24 sensory stations...')">
+              <i class="ph ph-arrows-clockwise"></i> Run Fleet Diagnostic
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 5. LIVE BOOKINGS & RECENT CHECK-INS TABLE ── -->
+      <section id="active-bookings">
+        <div class="dash-card animate-on-scroll">
+          <div class="dash-card__header">
+            <div>
+              <h3 class="dash-card__title">
+                <i class="ph ph-list-checks" style="color:var(--clr-primary);"></i>
+                <span>Live Active Bookings &amp; Upcoming Queue</span>
+              </h3>
+              <p style="margin:0.25rem 0 0;font-size:0.8rem;color:var(--clr-text-muted);">
+                Real-time player check-in roster, session timer, and pod reassignments.
+              </p>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <span class="badge" style="background:rgba(34,211,238,0.15);color:var(--clr-secondary);">4 Active Sessions</span>
+              <button class="btn btn-secondary btn-sm"><i class="ph ph-funnel"></i> Filter</button>
+            </div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Player Tag</th>
+                  <th>Pod</th>
+                  <th>Experience Title</th>
+                  <th>Session Window</th>
+                  <th>Tier</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>#NX-8941</code></td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:0.6rem;">
+                      <img src="src/assets/images/avatar-5.jpg" alt="VoidWalker" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+                      <strong style="color:var(--clr-text);">VoidWalker</strong>
+                    </div>
+                  </td>
+                  <td><span class="badge" style="background:rgba(139,92,246,0.15);color:var(--clr-primary);">Pod 01</span></td>
+                  <td>Half-Life: Alyx</td>
+                  <td>14:00 &ndash; 16:00 (42m left)</td>
+                  <td><span class="badge" style="background:rgba(245,158,11,0.15);color:#F59E0B;">Gold</span></td>
+                  <td><span class="badge" style="background:rgba(16,185,129,0.15);color:var(--clr-success);"><i class="ph ph-play-circle"></i> Active</span></td>
+                  <td>
+                    <div style="display:flex;gap:0.35rem;">
+                      <button class="nav-icon-btn" style="width:28px;height:28px;font-size:0.85rem;" title="Extend Session"><i class="ph ph-clock-countdown"></i></button>
+                      <button class="nav-icon-btn" style="width:28px;height:28px;font-size:0.85rem;" title="Pod Options"><i class="ph ph-dots-three"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><code>#NX-8942</code></td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:0.6rem;">
+                      <img src="src/assets/images/avatar-6.jpg" alt="NeonDemon" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+                      <strong style="color:var(--clr-text);">NeonDemon</strong>
+                    </div>
+                  </td>
+                  <td><span class="badge" style="background:rgba(139,92,246,0.15);color:var(--clr-primary);">Pod 02</span></td>
+                  <td>Cyber Ninja VR</td>
+                  <td>14:30 &ndash; 15:30 (18m left)</td>
+                  <td><span class="badge" style="background:rgba(34,211,238,0.15);color:var(--clr-secondary);">Silver</span></td>
+                  <td><span class="badge" style="background:rgba(16,185,129,0.15);color:var(--clr-success);"><i class="ph ph-play-circle"></i> Active</span></td>
+                  <td>
+                    <div style="display:flex;gap:0.35rem;">
+                      <button class="nav-icon-btn" style="width:28px;height:28px;font-size:0.85rem;" title="Extend Session"><i class="ph ph-clock-countdown"></i></button>
+                      <button class="nav-icon-btn" style="width:28px;height:28px;font-size:0.85rem;" title="Pod Options"><i class="ph ph-dots-three"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><code>#NX-8945</code></td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:0.6rem;">
+                      <img src="src/assets/images/avatar-7.jpg" alt="Alex J." style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+                      <strong style="color:var(--clr-text);">Alex Jenkins</strong>
+                    </div>
+                  </td>
+                  <td><span class="badge" style="background:rgba(34,211,238,0.15);color:var(--clr-secondary);">Pod 03</span></td>
+                  <td>Racket Fury Pro</td>
+                  <td>16:00 &ndash; 18:00 (Starts in 45m)</td>
+                  <td><span class="badge" style="background:rgba(255,255,255,0.08);color:var(--clr-text-muted);">Walk-In</span></td>
+                  <td><span class="badge" style="background:rgba(34,211,238,0.15);color:var(--clr-secondary);"><i class="ph ph-clock"></i> Upcoming</span></td>
+                  <td>
+                    <div style="display:flex;gap:0.35rem;">
+                      <button class="btn btn-primary btn-sm" style="font-size:0.75rem;padding:0.25rem 0.6rem;" onclick="alert('Checked in player Alex Jenkins to Pod 03')">Check In</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><code>#NX-8946</code></td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:0.6rem;">
+                      <img src="src/assets/images/avatar-8.jpg" alt="SarahConnor" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+                      <strong style="color:var(--clr-text);">SarahConnor</strong>
+                    </div>
+                  </td>
+                  <td><span class="badge" style="background:rgba(139,92,246,0.15);color:var(--clr-primary);">Pod 06</span></td>
+                  <td>Dark Asylum 4D</td>
+                  <td>15:00 &ndash; 17:00 (1h 14m left)</td>
+                  <td><span class="badge" style="background:rgba(245,158,11,0.15);color:#F59E0B;">Gold</span></td>
+                  <td><span class="badge" style="background:rgba(16,185,129,0.15);color:var(--clr-success);"><i class="ph ph-play-circle"></i> Active</span></td>
+                  <td>
+                    <div style="display:flex;gap:0.35rem;">
+                      <button class="nav-icon-btn" style="width:28px;height:28px;font-size:0.85rem;" title="Extend Session"><i class="ph ph-clock-countdown"></i></button>
+                      <button class="nav-icon-btn" style="width:28px;height:28px;font-size:0.85rem;" title="Pod Options"><i class="ph ph-dots-three"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><code>#NX-8948</code></td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:0.6rem;">
+                      <img src="src/assets/images/avatar-1.jpg" alt="CyberGroup" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+                      <strong style="color:var(--clr-text);">Apex Squad (4 Players)</strong>
+                    </div>
+                  </td>
+                  <td><span class="badge" style="background:rgba(139,92,246,0.15);color:var(--clr-primary);">Pods 17&ndash;20</span></td>
+                  <td>Zero Caliber: Team Assault</td>
+                  <td>17:30 &ndash; 19:30 (Reserved)</td>
+                  <td><span class="badge" style="background:rgba(139,92,246,0.15);color:var(--clr-primary);">Party Bundle</span></td>
+                  <td><span class="badge" style="background:rgba(34,211,238,0.15);color:var(--clr-secondary);"><i class="ph ph-users-four"></i> Group Party</span></td>
+                  <td>
+                    <div style="display:flex;gap:0.35rem;">
+                      <button class="btn btn-secondary btn-sm" style="font-size:0.75rem;padding:0.25rem 0.6rem;">Details</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 6. SYSTEM HEALTH & STAFF ROSTER ── -->
+      <section style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;" id="system-health">
+        
+        <!-- Hardware Telemetry & Health -->
+        <div class="dash-card animate-on-scroll">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">
+              <i class="ph ph-cpu" style="color:var(--clr-secondary);"></i>
+              <span>System &amp; Server Diagnostics</span>
+            </h3>
+            <span class="badge" style="background:rgba(16,185,129,0.15);color:var(--clr-success);font-size:0.75rem;">
+              <i class="ph ph-check"></i> All Cores Optimal
+            </span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:1.1rem;">
+            
+            <!-- Metric 1: CPU -->
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.4rem;">
+                <span style="font-weight:600;">Mainframe Thread Load (AMD EPYC)</span>
+                <span style="color:var(--clr-secondary);font-weight:700;">42% Load</span>
+              </div>
+              <div class="diag-bar-bg">
+                <div class="diag-bar-fill" style="width:42%;background:var(--clr-secondary);"></div>
+              </div>
+            </div>
+
+            <!-- Metric 2: Network Latency -->
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.4rem;">
+                <span style="font-weight:600;">Lounge LAN Latency (Fiber 10G)</span>
+                <span style="color:var(--clr-success);font-weight:700;">14 ms &bull; Ultra-Low</span>
+              </div>
+              <div class="diag-bar-bg">
+                <div class="diag-bar-fill" style="width:14%;background:var(--clr-success);"></div>
+              </div>
+            </div>
+
+            <!-- Metric 3: Storage -->
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.4rem;">
+                <span style="font-weight:600;">NVMe Game Cache Array (64TB)</span>
+                <span style="color:var(--clr-warning);font-weight:700;">78% Utilized (14.2TB Free)</span>
+              </div>
+              <div class="diag-bar-bg">
+                <div class="diag-bar-fill" style="width:78%;background:var(--clr-warning);"></div>
+              </div>
+            </div>
+
+            <!-- Metric 4: VR Headset Fleet -->
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.4rem;">
+                <span style="font-weight:600;">VR Headset Fleet Health (24 Valve Index &amp; Quest Pro)</span>
+                <span style="color:var(--clr-success);font-weight:700;">96% Calibrated</span>
+              </div>
+              <div class="diag-bar-bg">
+                <div class="diag-bar-fill" style="width:96%;background:linear-gradient(90deg,var(--clr-primary),var(--clr-secondary));"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Staff on Duty Roster -->
+        <div class="dash-card animate-on-scroll" id="staff-duty">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">
+              <i class="ph ph-identification-badge" style="color:var(--clr-primary);"></i>
+              <span>Staff Duty Roster &amp; Shifts</span>
+            </h3>
+            <span class="badge" style="font-size:0.75rem;">2 Shift Members On Duty</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:0.9rem;">
+            
+            <!-- Staff 1 -->
+            <div style="display:flex;align-items:center;gap:0.85rem;padding:0.6rem 0.75rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius-md);">
+              <div style="position:relative;">
+                <img src="src/assets/images/avatar-9.jpg" alt="Elena M." style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--clr-primary);">
+                <span style="position:absolute;bottom:0;right:0;width:10px;height:10px;background:var(--clr-success);border-radius:50%;border:2px solid #0E1424;"></span>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:0.9rem;font-weight:700;color:var(--clr-text);">Elena M.</div>
+                <div style="font-size:0.75rem;color:var(--clr-primary);font-weight:600;">Shift Lead &bull; Pods 01&ndash;12</div>
+              </div>
+              <span class="badge" style="background:rgba(16,185,129,0.15);color:var(--clr-success);font-size:0.7rem;">On Duty</span>
+            </div>
+
+            <!-- Staff 2 -->
+            <div style="display:flex;align-items:center;gap:0.85rem;padding:0.6rem 0.75rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius-md);">
+              <div style="position:relative;">
+                <img src="src/assets/images/avatar-10.jpg" alt="Marcus T." style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--clr-secondary);">
+                <span style="position:absolute;bottom:0;right:0;width:10px;height:10px;background:var(--clr-success);border-radius:50%;border:2px solid #0E1424;"></span>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:0.9rem;font-weight:700;color:var(--clr-text);">Marcus T.</div>
+                <div style="font-size:0.75rem;color:var(--clr-text-muted);font-weight:600;">VR Hardware Specialist &bull; Pods 13&ndash;24</div>
+              </div>
+              <span class="badge" style="background:rgba(16,185,129,0.15);color:var(--clr-success);font-size:0.7rem;">On Duty</span>
+            </div>
+
+            <!-- Open Shift -->
+            <div style="display:flex;align-items:center;gap:0.85rem;padding:0.6rem 0.75rem;background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.1);border-radius:var(--radius-md);opacity:0.75;">
+              <div style="width:40px;height:40px;border-radius:50%;background:var(--clr-surface-alt);display:flex;align-items:center;justify-content:center;color:var(--clr-text-muted);">
+                <i class="ph ph-user-plus" style="font-size:1.1rem;"></i>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:0.85rem;font-weight:700;color:var(--clr-text);">Evening Shift (6:00 PM &ndash; Midnight)</div>
+                <div style="font-size:0.72rem;color:var(--clr-text-muted);">Front Desk &bull; Unassigned</div>
+              </div>
+              <button class="btn btn-secondary btn-sm" style="font-size:0.75rem;padding:0.3rem 0.65rem;" onclick="alert('Staff assignment modal opened.')">Assign</button>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+    </main>
   </div>
 
-  <main class="dash-body">
-
-    <!-- ADMIN HERO -->
-    <div class="admin-hero animate-on-scroll">
-      <div>
-        <h2 style="margin:0;font-size:1.5rem;" class="text-gradient"><i class="ph ph-shield-check"></i> Admin Overview</h2>
-        <p style="margin:0.375rem 0 0;font-size:0.83rem;color:var(--clr-text-muted);">Manage lounge operations and view real-time analytics.</p>
-      </div>
-      <div style="display:flex;gap:0.75rem;">
-        <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> New Booking</button>
-        <button class="btn btn-secondary btn-sm"><i class="ph ph-download-simple"></i> Export</button>
-      </div>
-    </div>
-
-    <!-- STAT CARDS -->
-    <div class="section-lbl">Key Metrics</div>
-    <div class="g4" style="margin-bottom:1.25rem;">
-      <div class="stat-card" style="border-left:3px solid var(--clr-primary);">
-        <div class="stat-icon" style="background:rgba(139,92,246,0.12);color:var(--clr-primary);"><i class="ph ph-users"></i></div>
-        <div><div style="font-size:0.72rem;color:var(--clr-text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Total Users</div><div style="font-size:1.35rem;font-weight:800;font-family:var(--font-primary);" class="text-gradient">12,450</div></div>
-      </div>
-      <div class="stat-card" style="border-left:3px solid var(--clr-success);">
-        <div class="stat-icon" style="background:rgba(16,185,129,0.12);color:var(--clr-success);"><i class="ph ph-currency-dollar"></i></div>
-        <div><div style="font-size:0.72rem;color:var(--clr-text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Today's Revenue</div><div style="font-size:1.35rem;font-weight:800;font-family:var(--font-primary);color:var(--clr-success);">$3,240</div></div>
-      </div>
-      <div class="stat-card" style="border-left:3px solid var(--clr-secondary);">
-        <div class="stat-icon" style="background:rgba(34,211,238,0.12);color:var(--clr-secondary);"><i class="ph ph-game-controller"></i></div>
-        <div><div style="font-size:0.72rem;color:var(--clr-text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Active Pods</div><div style="font-size:1.35rem;font-weight:800;font-family:var(--font-primary);color:var(--clr-secondary);">18 / 24</div></div>
-      </div>
-      <div class="stat-card" style="border-left:3px solid var(--clr-warning);">
-        <div class="stat-icon" style="background:rgba(245,158,11,0.12);color:var(--clr-warning);"><i class="ph ph-warning-circle"></i></div>
-        <div><div style="font-size:0.72rem;color:var(--clr-text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Maintenance</div><div style="font-size:1.35rem;font-weight:800;font-family:var(--font-primary);color:var(--clr-warning);">2 Pods</div></div>
-      </div>
-    </div>
-
-    <!-- CHARTS -->
-    <div class="section-lbl">Analytics</div>
-    <div class="g2" style="margin-bottom:1.25rem;">
-      <div class="chart-card animate-on-scroll">
-        <div class="chart-ttl"><span><i class="ph ph-chart-bar" style="color:var(--clr-primary);margin-right:0.3rem;"></i>Weekly Revenue</span><span style="font-size:0.72rem;font-weight:400;color:var(--clr-text-muted);">Last 7 Days</span></div>
-        <div style="height:220px;position:relative;"><canvas id="adminRevenueChart"></canvas></div>
-      </div>
-      <div class="chart-card animate-on-scroll">
-        <div class="chart-ttl"><span><i class="ph ph-chart-line-up" style="color:var(--clr-secondary);margin-right:0.3rem;"></i>Pod Utilization</span><span style="font-size:0.72rem;font-weight:400;color:var(--clr-text-muted);">By Hour</span></div>
-        <div style="height:220px;position:relative;"><canvas id="adminPodChart"></canvas></div>
-      </div>
-    </div>
-    <div class="g12" style="margin-bottom:1.25rem;">
-      <div class="chart-card animate-on-scroll">
-        <div class="chart-ttl"><span><i class="ph ph-chart-donut" style="color:var(--clr-warning);margin-right:0.3rem;"></i>Top Games</span><span style="font-size:0.72rem;font-weight:400;color:var(--clr-text-muted);">This Month</span></div>
-        <div style="height:200px;position:relative;display:flex;justify-content:center;"><canvas id="adminGamesChart"></canvas></div>
-      </div>
-      <div class="chart-card animate-on-scroll">
-        <div class="chart-ttl"><span><i class="ph ph-trend-up" style="color:var(--clr-success);margin-right:0.3rem;"></i>User Growth</span><span style="font-size:0.72rem;font-weight:400;color:var(--clr-text-muted);">Last 6 Months</span></div>
-        <div style="height:200px;position:relative;"><canvas id="adminGrowthChart"></canvas></div>
-      </div>
-    </div>
-
-    <!-- PODS + BOOKINGS TABLE -->
-    <div class="section-lbl">Operations</div>
-    <div class="g13" style="margin-bottom:1.25rem;">
-      <!-- Pod Status -->
-      <div class="d-card animate-on-scroll">
-        <div class="d-card-hdr"><h3 class="d-card-ttl"><i class="ph ph-circles-four" style="color:var(--clr-secondary);"></i> Live Pod Status</h3></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
-          <div class="pod-cell" style="background:rgba(16,185,129,0.15);color:var(--clr-success);">P01<div style="font-size:0.62rem;font-weight:400;">In Use</div></div>
-          <div class="pod-cell" style="background:rgba(16,185,129,0.15);color:var(--clr-success);">P02<div style="font-size:0.62rem;font-weight:400;">In Use</div></div>
-          <div class="pod-cell" style="background:var(--clr-surface-alt);color:var(--clr-text-muted);">P03<div style="font-size:0.62rem;font-weight:400;">Available</div></div>
-          <div class="pod-cell" style="background:rgba(245,158,11,0.15);color:var(--clr-warning);">P04<div style="font-size:0.62rem;font-weight:400;">Cleaning</div></div>
-          <div class="pod-cell" style="background:rgba(239,68,68,0.15);color:var(--clr-error);">P05<div style="font-size:0.62rem;font-weight:400;">Offline</div></div>
-          <div class="pod-cell" style="background:rgba(16,185,129,0.15);color:var(--clr-success);">P06<div style="font-size:0.62rem;font-weight:400;">In Use</div></div>
-        </div>
-        <button class="btn btn-secondary" style="width:100%;margin-top:1rem;">Manage All Pods</button>
-      </div>
-      <!-- Bookings Table -->
-      <div class="d-card animate-on-scroll" style="padding:0;overflow:hidden;">
-        <div style="padding:1rem 1.25rem;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;">
-          <h3 class="d-card-ttl" style="margin:0;"><i class="ph ph-list-checks" style="color:var(--clr-primary);"></i> Recent Bookings</h3>
-          <a href="#" style="font-size:0.78rem;color:var(--clr-primary);text-decoration:none;">View All</a>
-        </div>
-        <div style="overflow-x:auto;">
-          <div class="tbl-wrap"><table class="tbl">
-            <thead><tr><th>User</th><th>Pod</th><th>Time Slot</th><th>Status</th><th>Action</th></tr></thead>
-            <tbody>
-              <tr><td>VoidWalker</td><td>P01</td><td>14:00 &ndash; 16:00</td><td><span class="badge" style="background:rgba(16,185,129,0.15);color:var(--clr-success);font-size:0.72rem;">Active</span></td><td><button class="t-btn" style="width:30px;height:30px;font-size:0.85rem;"><i class="ph ph-dots-three-vertical"></i></button></td></tr>
-              <tr><td>NeonDemon</td><td>P02</td><td>14:30 &ndash; 15:30</td><td><span class="badge" style="background:rgba(16,185,129,0.15);color:var(--clr-success);font-size:0.72rem;">Active</span></td><td><button class="t-btn" style="width:30px;height:30px;font-size:0.85rem;"><i class="ph ph-dots-three-vertical"></i></button></td></tr>
-              <tr><td>Alex J.</td><td>P03</td><td>16:00 &ndash; 18:00</td><td><span class="badge" style="background:rgba(34,211,238,0.15);color:var(--clr-secondary);font-size:0.72rem;">Upcoming</span></td><td><button class="t-btn" style="width:30px;height:30px;font-size:0.85rem;"><i class="ph ph-dots-three-vertical"></i></button></td></tr>
-              <tr><td>SarahConnor</td><td>P06</td><td>15:00 &ndash; 17:00</td><td><span class="badge" style="background:rgba(16,185,129,0.15);color:var(--clr-success);font-size:0.72rem;">Active</span></td><td><button class="t-btn" style="width:30px;height:30px;font-size:0.85rem;"><i class="ph ph-dots-three-vertical"></i></button></td></tr>
-            </tbody>
-          </table></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SYSTEM + STAFF -->
-    <div class="section-lbl">System &amp; Team</div>
-    <div class="g2">
-      <!-- System Health -->
-      <div class="d-card animate-on-scroll">
-        <div class="d-card-hdr">
-          <h3 class="d-card-ttl"><i class="ph ph-cpu" style="color:var(--clr-secondary);"></i> System Health</h3>
-          <span class="badge" style="background:rgba(16,185,129,0.15);color:var(--clr-success);font-size:0.72rem;">Optimal</span>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:1rem;">
-          <div><div style="display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:0.375rem;"><span>Main Server CPU</span><span style="color:var(--clr-secondary);font-weight:600;">42%</span></div><div class="pb-wrap"><div class="pb-fill" style="width:42%;background:var(--clr-secondary);"></div></div></div>
-          <div><div style="display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:0.375rem;"><span>Network Latency</span><span style="color:var(--clr-success);font-weight:600;">14ms</span></div><div class="pb-wrap"><div class="pb-fill" style="width:14%;background:var(--clr-success);"></div></div></div>
-          <div><div style="display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:0.375rem;"><span>Storage Array</span><span style="color:var(--clr-warning);font-weight:600;">78%</span></div><div class="pb-wrap"><div class="pb-fill" style="width:78%;background:var(--clr-warning);"></div></div></div>
-          <div><div style="display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:0.375rem;"><span>VR Headset Fleet</span><span style="color:var(--clr-success);font-weight:600;">Healthy</span></div><div class="pb-wrap"><div class="pb-fill" style="width:90%;background:linear-gradient(90deg,var(--clr-primary),var(--clr-secondary));"></div></div></div>
-        </div>
-      </div>
-      <!-- Staff on Duty -->
-      <div class="d-card animate-on-scroll">
-        <div class="d-card-hdr">
-          <h3 class="d-card-ttl"><i class="ph ph-identification-badge" style="color:var(--clr-primary);"></i> Staff on Duty</h3>
-          <span class="badge" style="font-size:0.7rem;">2 Active</span>
-        </div>
-        <div class="fr-row">
-          <div class="avatar-online"><img src="src/assets/images/avatar-9.jpg" alt="Elena M." style="width:40px;height:40px;border-radius:50%;object-fit:cover;filter:hue-rotate(120deg);"></div>
-          <div style="flex:1;"><div style="font-size:0.875rem;font-weight:600;">Elena M.</div><div style="font-size:0.75rem;color:var(--clr-primary);">Shift Manager</div></div>
-          <span class="badge" style="font-size:0.68rem;background:rgba(16,185,129,0.15);color:var(--clr-success);">On Duty</span>
-        </div>
-        <div class="fr-row">
-          <div class="avatar-online"><img src="src/assets/images/avatar-10.jpg" alt="Marcus T." style="width:40px;height:40px;border-radius:50%;object-fit:cover;filter:hue-rotate(200deg);"></div>
-          <div style="flex:1;"><div style="font-size:0.875rem;font-weight:600;">Marcus T.</div><div style="font-size:0.75rem;color:var(--clr-text-muted);">VR Technician</div></div>
-          <span class="badge" style="font-size:0.68rem;background:rgba(16,185,129,0.15);color:var(--clr-success);">On Duty</span>
-        </div>
-        <div class="fr-row" style="opacity:0.5;">
-          <div style="width:40px;height:40px;border-radius:50%;background:var(--clr-surface-alt);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph ph-user" style="font-size:1.2rem;color:var(--clr-text-muted);"></i></div>
-          <div style="flex:1;"><div style="font-size:0.875rem;font-weight:600;color:var(--clr-text-muted);">Open Shift</div><div style="font-size:0.75rem;color:var(--clr-text-muted);">6:00 PM &ndash; 12:00 AM</div></div>
-          <button class="btn btn-primary btn-sm">Assign</button>
-        </div>
-      </div>
-    </div>
-
-  </main>
 </div>
+
+<!-- Scripts -->
 <script src="src/js/main.js"></script>
 <script src="src/js/charts.js"></script>
+
+<!-- Mobile Sidebar Drawer Toggle Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebar = document.getElementById('admin-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    if (sidebarToggle && sidebar && overlay) {
+      sidebarToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+
+      overlay.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+    }
+  });
+</script>
+
 </body>
 </html>

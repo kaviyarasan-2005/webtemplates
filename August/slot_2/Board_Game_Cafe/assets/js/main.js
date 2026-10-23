@@ -107,9 +107,9 @@ function initMobileMenu() {
   dropdownItems.forEach(item => {
     item.addEventListener('click', (e) => {
       if (window.innerWidth <= 1023) {
-        if(e.target.classList.contains('nav-link')) {
+        if (e.target.closest('.nav-link')) {
           e.preventDefault();
-          item.classList.toggle('active');
+          item.classList.toggle('dropdown-open');
         }
       }
     });
@@ -183,10 +183,17 @@ function simulateSkeletonLoading() {
   setTimeout(() => {
     skeletons.forEach(wrapper => {
       wrapper.style.display = 'none';
-      const realContent = wrapper.nextElementSibling;
-      if (realContent && realContent.classList.contains('real-content')) {
-        realContent.style.display = 'block'; // or flex/grid based on parent
-      }
     });
-  }, 1500); // 1.5s simulated load
+    document.querySelectorAll('.real-content').forEach(content => {
+      content.style.display = 'flex';
+      content.style.opacity = '0';
+      setTimeout(() => {
+        content.style.transition = 'opacity 0.3s ease';
+        content.style.opacity = '1';
+      }, 50);
+    });
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  }, 800);
 }

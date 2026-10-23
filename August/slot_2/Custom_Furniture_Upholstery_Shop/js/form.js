@@ -180,4 +180,7 @@ function initPageNewsletter(formId, resultId) {
   });
 }
 
-export { initContactForm, initSwatchForm, initPageNewsletter };
+/* ── Global exports (classic script — works from file://) ── */
+window.initContactForm = initContactForm;
+window.initSwatchForm = initSwatchForm;
+window.initPageNewsletter = initPageNewsletter;

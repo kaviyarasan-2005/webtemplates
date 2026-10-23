@@ -498,11 +498,16 @@ p {
 }
 
 .card__badge {
+  position: absolute;
+  top: calc(var(--space-8) + var(--space-3));
+  right: calc(var(--space-8) + var(--space-3));
+  z-index: 2;
   display: inline-block;
-  padding: var(--space-1) var(--space-3);
+  padding: 3px var(--space-2);
   background: linear-gradient(135deg, var(--color-accent), #D4A94A);
   color: #fff;
-  font-size: var(--font-size-xs);
+  font-size: 0.625rem;
+  line-height: 1.4;
   font-weight: 700;
   border-radius: var(--radius-full);
   letter-spacing: 0.05em;
@@ -636,7 +641,7 @@ p {
   right: 0;
   height: var(--navbar-height);
   background: var(--color-navbar-bg);
-  z-index: var(--z-fixed);
+  z-index: calc(var(--z-fixed) + 20);
   transition: all var(--transition-base);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -816,6 +821,10 @@ p {
   width: 44px;
   height: 44px;
   gap: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
   cursor: pointer;
   z-index: calc(var(--z-fixed) + 10);
 }
@@ -901,8 +910,10 @@ p {
 
 .mobile-menu__actions {
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
   gap: var(--space-3);
-  margin-top: var(--space-6);
+  margin-top: auto;
   padding-top: var(--space-6);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -2420,6 +2431,8 @@ p {
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: all var(--transition-base);
+  display: flex;
+  flex-direction: column;
 }
 
 .blog-card:hover {
@@ -2435,6 +2448,9 @@ p {
 
 .blog-card__body {
   padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .blog-card__meta {
@@ -2456,6 +2472,7 @@ p {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   margin-bottom: var(--space-4);
+  flex-grow: 1;
 }
 
 /* ── Brands Grid ── */
@@ -2482,15 +2499,22 @@ p {
 }
 
 .brand-card__logo {
-  height: 60px;
+  height: 84px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: var(--space-4);
-  font-family: var(--font-heading);
-  font-size: var(--font-size-2xl);
-  font-weight: 800;
   color: var(--color-primary);
+}
+
+.brand-card__mark {
+  width: 84px;
+  height: 84px;
+  transition: color var(--transition-base);
+}
+
+.brand-card:hover .brand-card__mark {
+  color: var(--color-accent);
 }
 
 [data-theme="dark"] .brand-card__logo {
@@ -2708,21 +2732,71 @@ p {
 /* ── Comparison Chart ── */
 .comparison-chart {
   overflow-x: auto;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+}
+
+.comparison-chart .table th,
+.comparison-chart .table td {
+  vertical-align: middle;
+}
+
+.comparison-chart .table th:not(:first-child) {
+  width: 23%;
+  text-align: center;
+}
+
+.comparison-chart .table td:not(:first-child) {
+  text-align: center;
+}
+
+.comparison-chart .table th:first-child {
+  width: 31%;
 }
 
 .comparison-chart .table th:first-child,
 .comparison-chart .table td:first-child {
   position: sticky;
   left: 0;
-  background: var(--color-bg-card);
   z-index: 1;
+  background: var(--color-bg-card);
   font-weight: 600;
+}
+
+.comparison-chart .table thead th:first-child {
+  background: var(--color-primary);
+  text-align: start;
+}
+
+[data-theme="dark"] .comparison-chart .table thead th:first-child {
+  background: var(--color-bg-alt);
+}
+
+.comparison-chart .table tbody tr:hover td:first-child {
+  background: var(--color-bg-alt);
 }
 
 [dir="rtl"] .comparison-chart .table th:first-child,
 [dir="rtl"] .comparison-chart .table td:first-child {
   left: auto;
   right: 0;
+}
+
+.check-icon,
+.cross-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  margin: 0 auto;
+}
+
+.comparison-chart .table-note {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--font-size-xs);
+  line-height: 1.35;
+  color: var(--color-text-muted);
 }
 
 .check-icon {
@@ -3136,6 +3210,33 @@ p {
 
   .card:hover {
     transform: translateY(-2px);
+  }
+}
+
+/* ── Small phones (≤ 500px): keep navbar aligned ── */
+@media (max-width: 500px) {
+  .navbar__inner {
+    padding: 0 var(--space-4);
+  }
+
+  /* CTA lives in the mobile menu on small screens */
+  .navbar__actions .btn {
+    display: none;
+  }
+
+  .navbar__logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .navbar__brand-name {
+    font-size: var(--font-size-base);
+  }
+
+  .navbar__toggle-btn,
+  .navbar__hamburger {
+    width: 40px;
+    height: 40px;
   }
 }
 

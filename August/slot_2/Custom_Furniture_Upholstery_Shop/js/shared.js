@@ -96,6 +96,9 @@ function getNavbarHTML(activePage = '') {
           </div>
         </li>
         <li class="nav-item">
+          <a href="about.html" class="nav-link ${isActive('about')}" id="nav-about-link">About</a>
+        </li>
+        <li class="nav-item">
           <a href="services.html" class="nav-link ${isActive('services')}" id="nav-services-link">Services</a>
         </li>
         <li class="nav-item">
@@ -138,6 +141,7 @@ function getNavbarHTML(activePage = '') {
           <a href="home2.html" id="mob-home2"><span>Home 2</span></a>
         </div>
       </details>
+      <a href="about.html" class="nav-link ${isActive('about')}" id="mob-about">About</a>
       <a href="services.html" class="nav-link ${isActive('services')}" id="mob-services">Services</a>
       <a href="fabric-gallery.html" class="nav-link ${isActive('fabric')}" id="mob-fabric">Fabric Gallery</a>
       <a href="before-after.html" class="nav-link ${isActive('beforeafter')}" id="mob-ba">Before &amp; After</a>
@@ -198,6 +202,7 @@ function getFooterHTML() {
             <a href="fabric-gallery.html" id="footer-fabric-link">${Icons.chevronRight} Fabric Gallery</a>
             <a href="before-after.html" id="footer-ba-link">${Icons.chevronRight} Before &amp; After</a>
             <a href="contact.html" id="footer-contact-link">${Icons.chevronRight} Contact Us</a>
+            <a href="about.html" id="footer-about-link">${Icons.chevronRight} About ReVox</a>
           </nav>
         </div>
 
@@ -407,9 +412,14 @@ function initScrollReveal() {
 function initPageLoader() {
   const loader = document.getElementById('page-loader');
   if (!loader) return;
-  window.addEventListener('load', () => {
-    setTimeout(() => loader.classList.add('loaded'), 300);
-  });
+  const hide = () => setTimeout(() => loader.classList.add('loaded'), 300);
+  if (document.readyState === 'complete') {
+    hide();
+  } else {
+    window.addEventListener('load', hide);
+    // Safety net: never block the page if a resource hangs
+    setTimeout(() => loader.classList.add('loaded'), 4000);
+  }
 }
 
 /* ── Event Wiring (called after DOM injection) ── */
@@ -507,4 +517,8 @@ function initShared(activePage = '') {
   initBackToTop();
 }
 
-export { initShared, Icons, ThemeManager, RTLManager };
+/* ── Global exports (classic script — works from file://) ── */
+window.Icons = Icons;
+window.ThemeManager = ThemeManager;
+window.RTLManager = RTLManager;
+window.initShared = initShared;

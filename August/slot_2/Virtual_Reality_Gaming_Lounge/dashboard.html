@@ -4,377 +4,1199 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nexus VR | Player Dashboard</title>
-  <meta name="description" content="Manage your Nexus VR experience, track stats, and book sessions.">
+  <meta name="description" content="Manage your Nexus VR account, track gaming stats, view upcoming bookings, and top up session hours.">
+  
   <link rel="stylesheet" href="src/css/main.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon-1.svg">
+  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon-3.svg">
+
   <style>
-    .dash-wrapper{display:flex;flex-direction:column;min-height:100vh;background:var(--clr-bg);}
-    .dash-page-header{display:flex;align-items:center;justify-content:space-between;padding:2rem 2rem 1.5rem;max-width:1400px;width:100%;margin:0 auto;}
-    @media(max-width:768px){.dash-page-header{padding:1.25rem 1rem 1rem;flex-wrap:wrap;gap:1rem;}}
-    .topbar-brand{display:flex;align-items:center;gap:0.625rem;text-decoration:none;flex-shrink:0;}
-    .topbar-brand-icon{font-size:1.75rem;background:linear-gradient(135deg,var(--clr-primary),var(--clr-secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-    .topbar-brand-name{font-family:var(--font-primary);font-weight:800;font-size:1.2rem;color:var(--clr-text);letter-spacing:-0.01em;}
-    .topbar-center{flex:1;display:flex;align-items:center;justify-content:center;gap:0.25rem;}
-    .topbar-tab{padding:0.375rem 0.875rem;border-radius:99px;font-size:0.85rem;font-weight:500;color:var(--clr-text-muted);text-decoration:none;transition:all 150ms ease;}
-    .topbar-tab:hover{color:var(--clr-text);background:var(--clr-surface-alt);}
-    .topbar-tab.active{background:rgba(139,92,246,0.15);color:var(--clr-primary);}
-    .topbar-actions{display:flex;align-items:center;gap:0.75rem;flex-shrink:0;}
-    .t-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--clr-text-muted);cursor:pointer;transition:all 150ms ease;font-size:1rem;}
-    .t-btn:hover{background:var(--clr-primary);color:#fff;border-color:var(--clr-primary);}
-    [data-theme="light"] .t-btn{border-color:rgba(0,0,0,0.1);background:rgba(0,0,0,0.04);color:var(--clr-text-muted);}
-    .t-rtl{padding:0.25rem 0.75rem;border-radius:99px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:var(--clr-text-muted);font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 150ms ease;font-family:var(--font-primary);}
-    .t-rtl:hover{background:var(--clr-primary);color:#fff;border-color:var(--clr-primary);}
-    [data-theme="light"] .t-rtl{border-color:rgba(0,0,0,0.12);color:var(--clr-text-muted);}
-    .t-avatar{width:34px;height:34px;border-radius:50%;border:2px solid var(--clr-primary);object-fit:cover;cursor:pointer;}
-    .dash-body{padding:0 2rem 4rem;max-width:1400px;width:100%;margin-left:auto;margin-right:auto;box-sizing:border-box;overflow-x:hidden;}
-    @media(max-width:768px){.dash-body{padding:0 0.875rem 3rem;width:100%;max-width:100%;}}
-    .section-lbl{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--clr-text-muted);margin-bottom:0.75rem;margin-top:2rem;}
-    .user-hero{background:linear-gradient(135deg,rgba(139,92,246,0.18) 0%,rgba(34,211,238,0.06) 100%);border:1px solid rgba(139,92,246,0.2);border-radius:20px;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-bottom:0.25rem;width:100%;box-sizing:border-box;overflow:hidden;padding:1.75rem 2rem;}
-    .user-hero-left{display:flex;align-items:center;gap:1rem;flex:1 1 300px;min-width:0;}
-    .user-hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;flex:1 1 350px;}
-    .hero-stat{text-align:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.625rem 0.75rem;box-sizing:border-box;}
-    [data-theme="light"] .hero-stat{background:rgba(0,0,0,0.03);border-color:rgba(0,0,0,0.07);}
-    .hero-stat-lbl{font-size:0.62rem;font-weight:700;color:var(--clr-text-muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.2rem;white-space:nowrap;}
-    .hero-stat-val{font-size:1.25rem;font-weight:800;font-family:var(--font-primary);line-height:1;}
-    .g2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;width:100%;box-sizing:border-box;overflow:hidden;}
-    @media(max-width:768px){.g2{grid-template-columns:1fr;}}
-    .g-main{display:grid;grid-template-columns:2fr 1fr;gap:1.25rem;width:100%;box-sizing:border-box;overflow:hidden;}
-    @media(max-width:768px){.g-main{grid-template-columns:1fr;}}
-    .d-card{background:var(--clr-surface);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:1.5rem;transition:border-color 0.25s,box-shadow 0.25s;width:100%;box-sizing:border-box;}
-    .d-card:hover{border-color:rgba(139,92,246,0.3);box-shadow:0 4px 24px rgba(139,92,246,0.1);}
-    [data-theme="light"] .d-card{border-color:rgba(0,0,0,0.07);}
-    .d-card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
-    .d-card-ttl{font-family:var(--font-primary);font-size:0.95rem;font-weight:700;margin:0;display:flex;align-items:center;gap:0.5rem;}
-    .chart-card{background:var(--clr-surface);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:1.5rem;transition:border-color 0.25s,box-shadow 0.25s;width:100%;box-sizing:border-box;overflow:hidden;}
-    .chart-card:hover{border-color:rgba(139,92,246,0.3);box-shadow:0 0 20px rgba(139,92,246,0.1);}
-    [data-theme="light"] .chart-card{border-color:rgba(0,0,0,0.07);}
-    .chart-canvas-wrap{position:relative;width:100%;overflow:hidden;}
-    .chart-ttl{font-family:var(--font-primary);font-size:0.9rem;font-weight:700;margin:0 0 1rem;display:flex;justify-content:space-between;align-items:center;}
-    .act-item{display:flex;align-items:flex-start;gap:1rem;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.05);}
-    .act-item:last-child{border-bottom:none;}
-    [data-theme="light"] .act-item{border-bottom-color:rgba(0,0,0,0.06);}
-    .bk-row{display:flex;align-items:center;gap:1rem;padding:1rem;border-radius:12px;background:var(--clr-surface-alt);border-left:3px solid var(--clr-secondary);margin-bottom:0.625rem;flex-wrap:wrap;}
-    @media(max-width:480px){.bk-row{flex-direction:column;align-items:flex-start;}}
-    .bundle-opt{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 1rem;border-radius:10px;border:1.5px solid rgba(255,255,255,0.06);background:var(--clr-surface-alt);cursor:pointer;transition:all 150ms ease;margin-bottom:0.5rem;}
-    .bundle-opt.sel{border-color:var(--clr-primary);background:rgba(139,92,246,0.08);}
-    .bundle-opt:hover:not(.sel){border-color:rgba(255,255,255,0.15);}
-    [data-theme="light"] .bundle-opt{border-color:rgba(0,0,0,0.07);}
-    .fr-row{display:flex;align-items:center;gap:0.75rem;padding:0.5rem 0;}
-    .ach-it{display:flex;flex-direction:column;align-items:center;gap:0.25rem;padding:0.875rem 0.5rem;border-radius:12px;background:var(--clr-surface-alt);text-align:center;transition:transform 0.2s;}
-    .ach-it:hover{transform:translateY(-3px);}
-    .ach-it.locked{opacity:0.35;}
-    @media(max-width:480px){.ach-grid{grid-template-columns:repeat(2,1fr) !important;}}
-    .pb-wrap{width:100%;height:6px;background:var(--clr-surface-alt);border-radius:99px;overflow:hidden;}
-    .pb-fill{height:100%;border-radius:99px;}
-    .inv-row{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 1.25rem;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.875rem;}
-    .inv-row:last-child{border-bottom:none;}
-    [data-theme="light"] .inv-row{border-bottom-color:rgba(0,0,0,0.06);}
+    /* =========================================================
+       REDESIGNED DASHBOARD WITH PROPER SIDEBAR NAVIGATION
+       ========================================================= */
 
-    /* ── Global Box-Sizing & Overflow Guard ── */
-    .dash-wrapper,.dash-body,.dash-page-header{box-sizing:border-box;}
-    .dash-wrapper{overflow-x:hidden;}
-
-    /* ── Mobile: Uniform Card Alignment & Sizing ── */
-    @media(max-width:768px){
-      /* Ensure body fills width, no overflow */
-      .dash-body{padding:0 0.875rem 3rem;width:100%;max-width:100%;}
-      .dash-page-header{padding:1rem 0.875rem;width:100%;max-width:100%;}
-
-      /* All cards: full-width, uniform padding & radius */
-      .d-card,.chart-card{
-        width:100%;
-        box-sizing:border-box;
-        padding:1rem;
-        border-radius:14px;
-      }
-      .d-card-hdr{flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;}
-      .d-card-ttl{font-size:0.85rem;}
-
-      /* Hero banner */
-      .user-hero{
-        width:100%;
-        box-sizing:border-box;
-        padding:1rem;
-        gap:0.875rem;
-        border-radius:14px;
-      }
-      .user-hero h2{font-size:1.1rem !important;}
-
-      /* Stat pills: 3 equal columns (not scrollable, clean grid) */
-      .hero-stats-row{
-        display:grid;
-        grid-template-columns:repeat(3,1fr);
-        gap:0.625rem;
-        width:100%;
-        overflow-x:unset;
-        padding-bottom:0;
-      }
-      .hero-stat{
-        min-width:unset;
-        width:100%;
-        padding:0.75rem 0.5rem;
-        border-radius:10px;
-        flex-shrink:unset;
-        text-align:center;
-        box-sizing:border-box;
-      }
-
-      /* Section grids: single column, full width */
-      .g2,.g-main{
-        grid-template-columns:1fr;
-        width:100%;
-      }
-      /* Inner flex columns must be full-width too */
-      .g-main > div{width:100%;box-sizing:border-box;}
-
-      /* Charts: uniform height, clamp width to container */
-      .chart-card{padding:0.875rem;overflow:hidden;}
-      .chart-canvas-wrap{height:160px !important;width:100%;overflow:hidden;}
-      .chart-card canvas{max-width:100% !important;}
-
-      /* Booking row */
-      .bk-row{
-        width:100%;
-        box-sizing:border-box;
-        padding:0.75rem;
-        gap:0.625rem;
-        border-radius:10px;
-      }
-
-      /* Activity items */
-      .act-item{gap:0.75rem;padding:0.6rem 0;}
-
-      /* Achievement grid: 4 cols on mobile (icons are small) */
-      .ach-grid{grid-template-columns:repeat(4,1fr) !important;gap:0.5rem !important;}
-      .ach-it{padding:0.75rem 0.25rem;border-radius:10px;box-sizing:border-box;}
-      .ach-it i{font-size:1.4rem !important;}
-      .ach-it span{font-size:0.6rem !important;}
-
-      /* Bundle options: full width */
-      .bundle-opt{width:100%;box-sizing:border-box;padding:0.625rem 0.875rem;}
-
-      /* Friends */
-      .fr-row{padding:0.4rem 0;}
-
-      /* Section labels */
-      .section-lbl{margin-top:1.25rem;margin-bottom:0.625rem;}
+    :root {
+      --sidebar-width: 270px;
+      --topbar-height: 70px;
     }
 
-    /* ── Very small screens (≤480px) ── */
-    @media(max-width:480px){
-      .dash-body{padding:0 0.75rem 2.5rem;}
-      .d-card,.chart-card{padding:0.875rem;border-radius:12px;}
-      .user-hero{padding:0.875rem;border-radius:12px;}
-      .user-hero h2{font-size:0.95rem !important;}
-      .hero-stats-row{grid-template-columns:repeat(3,1fr);gap:0.5rem;}
-      .hero-stat{padding:0.625rem 0.25rem;}
-      /* Achievements: 2×2 on very small screens */
-      .ach-grid{grid-template-columns:repeat(2,1fr) !important;}
-      .d-card-hdr .btn{font-size:0.72rem;padding:0.3rem 0.625rem;white-space:nowrap;}
+    body {
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Layout Frame */
+    .dash-layout {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+      position: relative;
+    }
+
+    /* ── SIDEBAR ── */
+    .dash-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(14, 20, 36, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+    }
+
+    [dir="rtl"] .dash-sidebar {
+      left: auto;
+      right: 0;
+      border-right: none;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="light"] .dash-sidebar {
+      background: rgba(255, 255, 255, 0.98);
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 2px 0 16px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Sidebar Brand */
+    .sidebar-brand {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    [data-theme="light"] .sidebar-brand {
+      border-bottom-color: rgba(0, 0, 0, 0.08);
+    }
+    .sidebar-brand__logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.45);
+      border: 1px solid rgba(34, 211, 238, 0.35);
+      object-fit: cover;
+    }
+    .sidebar-brand__text {
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-brand__name {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--clr-text);
+      letter-spacing: -0.015em;
+      line-height: 1.1;
+    }
+    .sidebar-brand__tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--clr-primary);
+    }
+
+    /* Sidebar User Profile Card */
+    .sidebar-user {
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 1rem 0.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    [data-theme="light"] .sidebar-user {
+      background: #F9FAFB;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+    .sidebar-user__avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--clr-primary);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .sidebar-user__info {
+      min-width: 0;
+      flex: 1;
+    }
+    .sidebar-user__name {
+      font-size: 0.925rem;
+      font-weight: 700;
+      color: var(--clr-text);
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sidebar-user__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #F59E0B;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: var(--radius-full);
+      padding: 0.15rem 0.5rem;
+      margin-top: 0.2rem;
+    }
+
+    /* Sidebar Navigation Links */
+    .sidebar-nav {
+      padding: 1rem 1rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      flex: 1;
+    }
+    .sidebar-group-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clr-text-muted);
+      padding: 0 0.65rem;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: var(--radius-md);
+      font-family: var(--font-primary);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--clr-text-muted);
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    .sidebar-link i {
+      font-size: 1.15rem;
+      color: var(--clr-text-muted);
+      transition: color var(--transition-fast);
+      flex-shrink: 0;
+    }
+    .sidebar-link:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--clr-text);
+      transform: translateX(3px);
+    }
+    [dir="rtl"] .sidebar-link:hover {
+      transform: translateX(-3px);
+    }
+    .sidebar-link:hover i {
+      color: var(--clr-primary);
+    }
+    .sidebar-link.active {
+      background: rgba(139, 92, 246, 0.15);
+      color: #FFFFFF;
+      font-weight: 700;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+    .sidebar-link.active i {
+      color: var(--clr-primary);
+    }
+    .sidebar-link.active::before {
+      content: '';
+      position: absolute;
+      left: -1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 20px;
+      background: var(--clr-primary);
+      border-radius: 0 4px 4px 0;
+    }
+    [dir="rtl"] .sidebar-link.active::before {
+      left: auto;
+      right: -1rem;
+      border-radius: 4px 0 0 4px;
+    }
+
+    [data-theme="light"] .sidebar-link {
+      color: #4B5563;
+    }
+    [data-theme="light"] .sidebar-link:hover {
+      background: #F3F4F6;
+      color: #111827;
+    }
+    [data-theme="light"] .sidebar-link.active {
+      background: rgba(139, 92, 246, 0.12);
+      color: var(--clr-primary);
+      border-color: rgba(139, 92, 246, 0.25);
+    }
+
+    .sidebar-pill {
+      margin-left: auto;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-full);
+      background: rgba(34, 211, 238, 0.15);
+      color: var(--clr-secondary);
+    }
+    [dir="rtl"] .sidebar-pill {
+      margin-left: 0;
+      margin-right: auto;
+    }
+
+    /* Sidebar Footer & Logout */
+    .sidebar-footer {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+    [data-theme="light"] .sidebar-footer {
+      border-top-color: rgba(0, 0, 0, 0.08);
+    }
+    .sidebar-logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #EF4444;
+      font-family: var(--font-primary);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+    .sidebar-logout-btn:hover {
+      background: #EF4444;
+      color: #FFFFFF;
+      border-color: #EF4444;
+      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* ── MAIN CONTENT WRAPPER ── */
+    .dash-main {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: margin 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    [dir="rtl"] .dash-main {
+      margin-left: 0;
+      margin-right: var(--sidebar-width);
+    }
+
+    /* Topbar */
+    .dash-topbar {
+      height: var(--topbar-height);
+      position: sticky;
+      top: 0;
+      background: rgba(8, 11, 20, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 100;
+    }
+    [data-theme="light"] .dash-topbar {
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .topbar-breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--clr-text-muted);
+    }
+    .topbar-breadcrumbs strong {
+      color: var(--clr-text);
+      font-weight: 700;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .topbar-search {
+      position: relative;
+      width: 260px;
+    }
+    @media (max-width: 768px) {
+      .topbar-search { display: none; }
+    }
+    .topbar-search input {
+      width: 100%;
+      height: 38px;
+      padding: 0 1rem 0 2.25rem;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--clr-text);
+      font-size: 0.85rem;
+      transition: all var(--transition-fast);
+    }
+    .topbar-search input:focus {
+      outline: none;
+      border-color: var(--clr-primary);
+      background: rgba(139, 92, 246, 0.08);
+      box-shadow: 0 0 12px rgba(139, 92, 246, 0.25);
+    }
+    .topbar-search i {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--clr-text-muted);
+      font-size: 1rem;
+    }
+    [dir="rtl"] .topbar-search input {
+      padding: 0 2.25rem 0 1rem;
+    }
+    [dir="rtl"] .topbar-search i {
+      left: auto;
+      right: 0.85rem;
+    }
+
+    /* Mobile Hamburger Trigger */
+    .sidebar-toggle-btn {
+      display: none;
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--clr-text);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+    [data-theme="light"] .sidebar-toggle-btn {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #111827;
+    }
+
+    /* Backdrop for Mobile Drawer */
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+    }
+    .sidebar-backdrop.active {
+      display: block;
+    }
+
+    /* ── DASHBOARD BODY CONTENT ── */
+    .dash-content {
+      padding: 2rem;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    /* Hero Banner */
+    .player-hero {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.22) 0%, rgba(34, 211, 238, 0.08) 50%, rgba(14, 20, 36, 0.8) 100%);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    [data-theme="light"] .player-hero {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(34, 211, 238, 0.08) 100%), #FFFFFF;
+      border-color: rgba(139, 92, 246, 0.25);
+    }
+    .player-hero-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex: 1 1 300px;
+    }
+    .player-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .player-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 3px solid var(--clr-primary);
+      box-shadow: 0 0 16px rgba(139, 92, 246, 0.4);
+      object-fit: cover;
+    }
+    .player-title {
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 800;
+      font-family: var(--font-primary);
+      margin: 0 0 0.35rem;
+      color: var(--clr-text);
+    }
+    .player-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    /* Stat Tiles */
+    .player-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+      flex: 1 1 450px;
+    }
+    .stat-tile {
+      background: rgba(14, 20, 36, 0.65);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      text-align: center;
+      transition: transform var(--transition-fast);
+    }
+    .stat-tile:hover {
+      transform: translateY(-2px);
+      border-color: rgba(139, 92, 246, 0.35);
+    }
+    [data-theme="light"] .stat-tile {
+      background: rgba(255, 255, 255, 0.85);
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+    .stat-tile__lbl {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--clr-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.25rem;
+    }
+    .stat-tile__val {
+      font-size: 1.45rem;
+      font-weight: 800;
+      font-family: var(--font-primary);
+      line-height: 1.1;
+    }
+
+    /* Grid Sections */
+    .dash-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .dash-grid-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    /* Cards */
+    .dash-card {
+      background: rgba(14, 20, 36, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    }
+    [data-theme="light"] .dash-card {
+      background: #FFFFFF;
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+    .dash-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .dash-card-title {
+      font-family: var(--font-primary);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--clr-text);
+    }
+
+    /* Charts */
+    .chart-container {
+      position: relative;
+      height: 220px;
+      width: 100%;
+    }
+
+    /* Booking Row */
+    .booking-banner {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(14, 20, 36, 0.9) 100%);
+      border: 1px solid rgba(34, 211, 238, 0.25);
+      border-left: 4px solid var(--clr-secondary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    [dir="rtl"] .booking-banner {
+      border-left: 1px solid rgba(34, 211, 238, 0.25);
+      border-right: 4px solid var(--clr-secondary);
+    }
+
+    /* Bundle options */
+    .bundle-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .bundle-tile {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.15rem;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .bundle-tile:hover {
+      border-color: var(--clr-primary);
+      background: rgba(139, 92, 246, 0.06);
+    }
+    .bundle-tile.selected {
+      border-color: var(--clr-primary);
+      background: rgba(139, 92, 246, 0.12);
+      box-shadow: 0 0 16px rgba(139, 92, 246, 0.2);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1024px) {
+      .dash-sidebar {
+        transform: translateX(-100%);
+      }
+      [dir="rtl"] .dash-sidebar {
+        transform: translateX(100%);
+      }
+      .dash-sidebar.active {
+        transform: translateX(0);
+      }
+      .dash-main {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .sidebar-toggle-btn {
+        display: inline-flex;
+      }
+      .dash-grid-main {
+        grid-template-columns: 1fr;
+      }
+      .player-stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dash-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .dash-topbar {
+        padding: 0 1rem;
+      }
+      .dash-content {
+        padding: 1rem;
+      }
+      .player-hero {
+        padding: 1.25rem;
+      }
     }
   </style>
 </head>
 <body>
-<div class="dash-wrapper">
 
-  <!-- TOP BAR -->
-    <!-- PAGE HEADER -->
-  <div class="dash-page-header">
-    <!-- Brand + Page Title -->
-    <div style="display:flex;flex-direction:column;gap:0.25rem;">
-      <a href="home1.html" class="topbar-brand" style="margin-bottom:0.1rem;">
-        <i class="ph ph-hexagon topbar-brand-icon"></i>
-        <span class="topbar-brand-name">Nexus VR</span>
-      </a>
-      <div style="display:flex;align-items:center;gap:0.5rem;">
-        <span style="font-size:0.75rem;color:var(--clr-text-muted);">Player Dashboard</span>
-        <span style="font-size:0.75rem;color:var(--clr-text-muted);">/</span>
-        <span style="font-size:0.75rem;color:var(--clr-primary);font-weight:600;">Overview</span>
+<div class="dash-layout">
+  
+  <!-- Backdrop for Mobile Drawer -->
+  <div class="sidebar-backdrop" id="sidebar-overlay"></div>
+
+  <!-- =========================================================
+       SIDEBAR NAVIGATION
+       ========================================================= -->
+  <aside class="dash-sidebar" id="dashboard-sidebar">
+    
+    <!-- Consistent Logo & Brand Name -->
+    <a href="home1.html" class="sidebar-brand" aria-label="Nexus VR Home">
+      <img src="src/assets/images/logo.jpg" alt="Nexus VR Logo" class="sidebar-brand__logo">
+      <div class="sidebar-brand__text">
+        <span class="sidebar-brand__name">Nexus <span class="text-gradient">VR</span></span>
+        <span class="sidebar-brand__tag">Player Portal</span>
       </div>
-    </div>
-    <!-- Controls -->
-    <div class="topbar-actions">
-      <button id="theme-toggle" class="t-btn" aria-label="Toggle theme"><i class="ph ph-moon"></i></button>
-      <button id="rtl-toggle" class="t-rtl">RTL</button>
+    </a>
+
+    <!-- Player Profile Snippet -->
+    <div class="sidebar-user">
       <div class="avatar-online">
-        <img src="src/assets/images/avatar-4.jpg" alt="VoidWalker" class="t-avatar">
+        <img src="src/assets/images/avatar-5.jpg" alt="VoidWalker Profile" class="sidebar-user__avatar">
+      </div>
+      <div class="sidebar-user__info">
+        <h4 class="sidebar-user__name">VoidWalker</h4>
+        <span class="sidebar-user__badge"><i class="ph-fill ph-crown"></i> Gold Tier</span>
       </div>
     </div>
+
+    <!-- Navigation Menu Groups -->
+    <nav class="sidebar-nav">
+      
+      <!-- Group 1: Experience -->
+      <div>
+        <span class="sidebar-group-label">Experience</span>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="dashboard.html" class="sidebar-link active">
+              <i class="ph-fill ph-squares-four"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="#bookings" class="sidebar-link">
+              <i class="ph ph-calendar-check"></i>
+              <span>My Bookings</span>
+              <span class="sidebar-pill">1 Active</span>
+            </a>
+          </li>
+          <li>
+            <a href="games.html" class="sidebar-link">
+              <i class="ph ph-game-controller"></i>
+              <span>Games Library</span>
+            </a>
+          </li>
+          <li>
+            <a href="groups.html" class="sidebar-link">
+              <i class="ph ph-users-three"></i>
+              <span>Parties &amp; Groups</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Group 2: Account & Wallet -->
+      <div>
+        <span class="sidebar-group-label">Account &amp; Loyalty</span>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="#topup" class="sidebar-link">
+              <i class="ph ph-wallet"></i>
+              <span>Top Up Hours</span>
+              <span class="sidebar-pill">4.5h left</span>
+            </a>
+          </li>
+          <li>
+            <a href="#points" class="sidebar-link">
+              <i class="ph ph-star"></i>
+              <span>Reward Points</span>
+              <span class="sidebar-pill">1,250 pts</span>
+            </a>
+          </li>
+          <li>
+            <a href="#achievements" class="sidebar-link">
+              <i class="ph ph-medal"></i>
+              <span>Achievements</span>
+            </a>
+          </li>
+          <li>
+            <a href="#friends" class="sidebar-link">
+              <i class="ph ph-users"></i>
+              <span>Friends &amp; Squad</span>
+              <span class="sidebar-pill" style="background:rgba(16,185,129,0.15);color:var(--clr-success);">3 Online</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Group 3: Lounge Info & Links -->
+      <div>
+        <span class="sidebar-group-label">Venue</span>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="pricing.html" class="sidebar-link">
+              <i class="ph ph-tag"></i>
+              <span>Pricing &amp; Bundles</span>
+            </a>
+          </li>
+          <li>
+            <a href="about.html" class="sidebar-link">
+              <i class="ph ph-info"></i>
+              <span>About Nexus VR</span>
+            </a>
+          </li>
+          <li>
+            <a href="contact.html" class="sidebar-link">
+              <i class="ph ph-chats-circle"></i>
+              <span>Contact Staff</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Sidebar Footer with Required Logout Option -->
+    <div class="sidebar-footer">
+      <a href="login.html" class="sidebar-logout-btn" aria-label="Log Out of Nexus VR">
+        <i class="ph-bold ph-sign-out"></i>
+        <span>Log Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- =========================================================
+       MAIN CONTENT CONTAINER
+       ========================================================= -->
+  <div class="dash-main">
+    
+    <!-- Topbar Header -->
+    <header class="dash-topbar">
+      <div class="topbar-left">
+        <!-- Mobile Sidebar Toggle -->
+        <button id="sidebar-toggle" class="sidebar-toggle-btn" aria-label="Open Sidebar Menu">
+          <i class="ph ph-list"></i>
+        </button>
+
+        <div class="topbar-breadcrumbs">
+          <a href="home1.html" style="color:var(--clr-text-muted);display:flex;align-items:center;"><i class="ph ph-house"></i></a>
+          <span>/</span>
+          <span>Player Portal</span>
+          <span>/</span>
+          <strong>Overview</strong>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <!-- Search -->
+        <div class="topbar-search">
+          <i class="ph ph-magnifying-glass"></i>
+          <input type="text" placeholder="Search games, bookings, rewards...">
+        </div>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="nav-icon-btn" aria-label="Toggle Theme">
+          <i class="ph ph-moon"></i>
+        </button>
+
+        <!-- RTL Toggle -->
+        <button id="rtl-toggle" class="btn-rtl-compact" title="Toggle RTL Layout">RTL</button>
+
+        <!-- Book a Pod Quick CTA -->
+        <a href="#bookings" class="btn btn-primary btn-sm" style="height:38px;padding:0 1.15rem;font-size:0.85rem;white-space:nowrap;">
+          <i class="ph ph-plus"></i> Reserve Pod
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="dash-content">
+      
+      <!-- Player Welcome Hero -->
+      <section class="player-hero animate-on-scroll">
+        <div class="player-hero-left">
+          <div class="player-avatar-wrap">
+            <img src="src/assets/images/avatar-5.jpg" alt="VoidWalker Profile" class="player-avatar">
+          </div>
+          <div>
+            <h1 class="player-title">Welcome back, <span class="text-gradient">VoidWalker</span></h1>
+            <div class="player-meta">
+              <span class="badge" style="background:rgba(245,158,11,0.15);color:var(--clr-warning);"><i class="ph-fill ph-crown"></i> Gold Tier Member</span>
+              <span class="text-small" style="color:var(--clr-text-muted);"><i class="ph ph-shield-check"></i> Account Verified</span>
+              <span class="text-small" style="color:var(--clr-text-muted);"><i class="ph ph-map-pin"></i> Pod 04 Regular</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="player-stat-grid">
+          <div class="stat-tile">
+            <div class="stat-tile__lbl">Remaining Time</div>
+            <div class="stat-tile__val" style="color:var(--clr-primary);">4.5h</div>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-tile__lbl">Reward Points</div>
+            <div class="stat-tile__val" style="color:var(--clr-secondary);">1,250</div>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-tile__lbl">Total Sessions</div>
+            <div class="stat-tile__val" style="color:var(--clr-success);">38</div>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-tile__lbl">Lounge Level</div>
+            <div class="stat-tile__val" style="color:var(--clr-warning);">Lvl 18</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Analytics Charts Section -->
+      <section>
+        <div class="flex items-center justify-between mb-4">
+          <h2 style="font-size:1.25rem;margin:0;"><i class="ph ph-chart-line-up" style="color:var(--clr-secondary);margin-right:0.4rem;"></i> Performance Analytics</h2>
+          <span class="text-small" style="color:var(--clr-text-muted);">Real-time tracking</span>
+        </div>
+
+        <div class="dash-grid-2">
+          <!-- Chart 1: Play Time -->
+          <div class="dash-card animate-on-scroll">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title"><i class="ph ph-clock" style="color:var(--clr-primary);"></i> Play Time (Hours)</h3>
+              <span class="text-small" style="color:var(--clr-text-muted);">Last 7 Days</span>
+            </div>
+            <div class="chart-container">
+              <canvas id="userPlayTimeChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 2: Favorite Genres -->
+          <div class="dash-card animate-on-scroll">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title"><i class="ph ph-chart-pie-slice" style="color:var(--clr-secondary);"></i> Favorite Genres</h3>
+              <span class="text-small" style="color:var(--clr-text-muted);">Session Breakdown</span>
+            </div>
+            <div class="chart-container">
+              <canvas id="userGenresChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 3: Reward Points History -->
+          <div class="dash-card animate-on-scroll" id="points">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title"><i class="ph ph-star" style="color:var(--clr-warning);"></i> Reward Points Growth</h3>
+              <span class="text-small" style="color:var(--clr-text-muted);">This Month</span>
+            </div>
+            <div class="chart-container">
+              <canvas id="userPointsChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 4: Game Completion -->
+          <div class="dash-card animate-on-scroll">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title"><i class="ph ph-checks" style="color:var(--clr-success);"></i> Mission Completion</h3>
+              <span class="text-small" style="color:var(--clr-text-muted);">Active Titles</span>
+            </div>
+            <div class="chart-container">
+              <canvas id="userCompletionChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Active Bookings Section -->
+      <section id="bookings">
+        <div class="dash-card animate-on-scroll">
+          <div class="dash-card-header">
+            <h3 class="dash-card-title"><i class="ph ph-calendar-check" style="color:var(--clr-primary);"></i> Upcoming Reservation</h3>
+            <a href="games.html" class="btn btn-secondary btn-sm" style="font-size:0.8rem;">Browse Games</a>
+          </div>
+
+          <div class="booking-banner">
+            <div class="flex items-center gap-4">
+              <div style="background:rgba(34,211,238,0.15);color:var(--clr-secondary);padding:0.6rem 0.85rem;border-radius:var(--radius-md);text-align:center;line-height:1.1;">
+                <div style="font-size:1.5rem;font-weight:800;font-family:var(--font-primary);">24</div>
+                <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;">OCT</div>
+              </div>
+              <div>
+                <strong style="font-size:1.05rem;display:block;">Pod 04 &mdash; Immersive Suite (Haptic Rig)</strong>
+                <span class="text-small" style="color:var(--clr-text-muted);display:flex;align-items:center;gap:0.4rem;margin-top:0.2rem;">
+                  <i class="ph ph-clock"></i> 6:00 PM &ndash; 8:00 PM (2 Hours) &bull; Host: Jordan K.
+                </span>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-center">
+              <span class="badge" style="background:rgba(16,185,129,0.15);color:var(--clr-success);"><i class="ph ph-check"></i> Confirmed</span>
+              <button class="btn btn-secondary btn-sm" style="font-size:0.8rem;"><i class="ph ph-qr-code"></i> Check-in QR</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Lower Grid: Activity + Top Up -->
+      <div class="dash-grid-main">
+        
+        <!-- Left: Recent Activity & Achievements -->
+        <div class="flex-col gap-6">
+          
+          <!-- Recent Sessions -->
+          <div class="dash-card animate-on-scroll">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title"><i class="ph ph-clock-counter-clockwise" style="color:var(--clr-primary);"></i> Recent Lounge Sessions</h3>
+              <a href="games.html" class="text-small" style="color:var(--clr-primary);text-decoration:none;">View All</a>
+            </div>
+
+            <div class="flex-col gap-3">
+              <div class="flex items-center gap-4 p-2" style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <img src="src/assets/images/game-action-5.jpg" alt="Cyber Ninja VR" style="width:52px;height:52px;border-radius:var(--radius-md);object-fit:cover;flex-shrink:0;">
+                <div style="flex:1;">
+                  <strong style="font-size:0.925rem;">Cyber Ninja VR</strong>
+                  <div class="text-small" style="color:var(--clr-text-muted);margin-top:0.15rem;">
+                    Logged 1.5 hrs &bull; Unlocked <span style="color:var(--clr-warning);">&ldquo;Master Swordsman&rdquo;</span>
+                  </div>
+                </div>
+                <span class="text-small" style="color:var(--clr-text-muted);">Oct 12</span>
+              </div>
+
+              <div class="flex items-center gap-4 p-2" style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <div style="width:52px;height:52px;border-radius:var(--radius-md);background:rgba(34,211,238,0.12);color:var(--clr-secondary);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">
+                  <i class="ph ph-shopping-bag"></i>
+                </div>
+                <div style="flex:1;">
+                  <strong style="font-size:0.925rem;">Purchased 5-Hour Bundle</strong>
+                  <div class="text-small" style="color:var(--clr-text-muted);margin-top:0.15rem;">
+                    Added 5 hours to wallet balance at member discount.
+                  </div>
+                </div>
+                <span class="text-small" style="color:var(--clr-text-muted);">Oct 10</span>
+              </div>
+
+              <div class="flex items-center gap-4 p-2">
+                <div style="width:52px;height:52px;border-radius:var(--radius-md);background:rgba(139,92,246,0.12);color:var(--clr-primary);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">
+                  <i class="ph ph-crown"></i>
+                </div>
+                <div style="flex:1;">
+                  <strong style="font-size:0.925rem;">Tier Upgrade &mdash; Prestige II</strong>
+                  <div class="text-small" style="color:var(--clr-text-muted);margin-top:0.15rem;">
+                    Automatic upgrade unlocked priority Friday booking.
+                  </div>
+                </div>
+                <span class="text-small" style="color:var(--clr-text-muted);">Sep 28</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Achievements Section -->
+          <div class="dash-card animate-on-scroll" id="achievements">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title"><i class="ph ph-medal" style="color:var(--clr-warning);"></i> Achievements &amp; Trophies</h3>
+              <span class="text-small" style="color:var(--clr-warning);font-weight:700;">14 / 50 Unlocked (28%)</span>
+            </div>
+
+            <div style="margin-bottom:1.5rem;">
+              <div class="pb-wrap" style="height:8px;background:rgba(255,255,255,0.06);border-radius:var(--radius-full);overflow:hidden;">
+                <div style="width:28%;height:100%;background:linear-gradient(90deg,var(--clr-primary),var(--clr-warning));border-radius:var(--radius-full);"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div class="ach-it" style="background:rgba(255,255,255,0.03);padding:1rem 0.5rem;border-radius:var(--radius-md);text-align:center;">
+                <i class="ph-fill ph-sword text-error" style="font-size:2rem;display:block;margin-bottom:0.25rem;"></i>
+                <span style="font-size:0.75rem;font-weight:700;display:block;">First Blood</span>
+                <span class="text-xs" style="color:var(--clr-text-muted);">Win 1 PvP Match</span>
+              </div>
+              <div class="ach-it" style="background:rgba(255,255,255,0.03);padding:1rem 0.5rem;border-radius:var(--radius-md);text-align:center;">
+                <i class="ph-fill ph-trophy text-warning" style="font-size:2rem;display:block;margin-bottom:0.25rem;"></i>
+                <span style="font-size:0.75rem;font-weight:700;display:block;">Champion</span>
+                <span class="text-xs" style="color:var(--clr-text-muted);">Top 3 in Bracket</span>
+              </div>
+              <div class="ach-it" style="background:rgba(255,255,255,0.03);padding:1rem 0.5rem;border-radius:var(--radius-md);text-align:center;">
+                <i class="ph-fill ph-ghost text-secondary" style="font-size:2rem;display:block;margin-bottom:0.25rem;"></i>
+                <span style="font-size:0.75rem;font-weight:700;display:block;">Survivor</span>
+                <span class="text-xs" style="color:var(--clr-text-muted);">Escape Dark Asylum</span>
+              </div>
+              <div class="ach-it" style="background:rgba(255,255,255,0.02);padding:1rem 0.5rem;border-radius:var(--radius-md);text-align:center;opacity:0.4;">
+                <i class="ph-fill ph-lock-key text-muted" style="font-size:2rem;display:block;margin-bottom:0.25rem;"></i>
+                <span style="font-size:0.75rem;font-weight:700;display:block;">Speed Demon</span>
+                <span class="text-xs" style="color:var(--clr-text-muted);">Locked (Sim Rig)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Wallet Top Up & Friends Squad -->
+        <div class="flex-col gap-6">
+          
+          <!-- Top Up Wallet Card -->
+          <div class="dash-card animate-on-scroll" id="topup" style="background:linear-gradient(150deg,rgba(139,92,246,0.12) 0%,rgba(14,20,36,0.95) 100%);border-color:rgba(139,92,246,0.25);">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title"><i class="ph ph-wallet" style="color:var(--clr-primary);"></i> Top Up Hours</h3>
+              <span class="badge" style="background:rgba(16,185,129,0.12);color:var(--clr-success);">Member Rates</span>
+            </div>
+            <p class="text-small" style="color:var(--clr-text-muted);margin-bottom:1.25rem;">
+              You have <strong>4.5 hours</strong> remaining. Add session bundles before your next visit to save up to 25%.
+            </p>
+
+            <div class="bundle-selector">
+              <div class="bundle-tile selected">
+                <div>
+                  <strong style="font-size:0.95rem;display:block;">2 Hours Session</strong>
+                  <span class="text-small" style="color:var(--clr-text-muted);">Standard Member Rate</span>
+                </div>
+                <strong style="font-size:1.15rem;color:var(--clr-primary);">$60</strong>
+              </div>
+
+              <div class="bundle-tile">
+                <div>
+                  <strong style="font-size:0.95rem;display:block;">5 Hours Bundle</strong>
+                  <span class="text-small" style="color:var(--clr-success);"><i class="ph ph-tag"></i> Save $10 &bull; $28/hr</span>
+                </div>
+                <strong style="font-size:1.15rem;color:var(--clr-text);">$140</strong>
+              </div>
+
+              <div class="bundle-tile">
+                <div>
+                  <strong style="font-size:0.95rem;display:block;">10 Hours Marathon</strong>
+                  <span class="text-small" style="color:var(--clr-secondary);"><i class="ph ph-sparkle"></i> Best Value &bull; Save $30</span>
+                </div>
+                <strong style="font-size:1.15rem;color:var(--clr-secondary);">$270</strong>
+              </div>
+            </div>
+
+            <button class="btn btn-primary w-full mt-4" style="padding:0.85rem;box-shadow:var(--shadow-glow);">
+              <i class="ph ph-credit-card"></i> Top Up Selected Bundle
+            </button>
+          </div>
+
+          <!-- Friends Online Squad -->
+          <div class="dash-card animate-on-scroll" id="friends">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title"><i class="ph ph-users" style="color:var(--clr-secondary);"></i> Friends in Lounge</h3>
+              <span class="badge" style="background:rgba(16,185,129,0.15);color:var(--clr-success);">3 In Venue</span>
+            </div>
+
+            <div class="flex-col gap-3">
+              <div class="flex items-center gap-3 p-2" style="border-radius:var(--radius-md);background:rgba(255,255,255,0.03);">
+                <div class="avatar-online">
+                  <img src="src/assets/images/avatar-6.jpg" alt="Alex_VR" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">
+                </div>
+                <div style="flex:1;min-width:0;">
+                  <strong style="font-size:0.9rem;display:block;">Alex_VR</strong>
+                  <span class="text-xs" style="color:var(--clr-text-muted);">Playing Cyber Ninja &bull; Pod 02</span>
+                </div>
+                <button class="nav-icon-btn" title="Invite to Co-op"><i class="ph ph-user-plus"></i></button>
+              </div>
+
+              <div class="flex items-center gap-3 p-2" style="border-radius:var(--radius-md);background:rgba(255,255,255,0.03);">
+                <div class="avatar-online">
+                  <img src="src/assets/images/avatar-7.jpg" alt="SarahConnor" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">
+                </div>
+                <div style="flex:1;min-width:0;">
+                  <strong style="font-size:0.9rem;display:block;">SarahConnor</strong>
+                  <span class="text-xs" style="color:var(--clr-secondary);">Waiting in Lobby</span>
+                </div>
+                <button class="nav-icon-btn" title="Invite to Co-op"><i class="ph ph-user-plus"></i></button>
+              </div>
+
+              <div class="flex items-center gap-3 p-2" style="border-radius:var(--radius-md);background:rgba(255,255,255,0.03);">
+                <div class="avatar-online">
+                  <img src="src/assets/images/avatar-8.jpg" alt="NoobMaster" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">
+                </div>
+                <div style="flex:1;min-width:0;">
+                  <strong style="font-size:0.9rem;display:block;">NoobMaster</strong>
+                  <span class="text-xs" style="color:var(--clr-text-muted);">Playing Alyx &bull; Pod 08</span>
+                </div>
+                <button class="nav-icon-btn" title="Invite to Co-op"><i class="ph ph-user-plus"></i></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
   </div>
-
-  <main class="dash-body">
-
-    <!-- USER HERO -->
-    <div class="user-hero animate-on-scroll">
-
-      <!-- Left: Avatar + Info -->
-      <div class="user-hero-left">
-        <div class="avatar-online" style="flex-shrink:0;">
-          <img src="src/assets/images/avatar-5.jpg" alt="Profile" style="width:56px;height:56px;border-radius:50%;border:2px solid var(--clr-primary);object-fit:cover;">
-        </div>
-        <div style="min-width:0;">
-          <h2 style="margin:0;font-size:1.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" class="text-gradient">Welcome back, VoidWalker</h2>
-          <div style="display:flex;align-items:center;gap:0.375rem;margin-top:0.3rem;flex-wrap:wrap;">
-            <span class="badge" style="background:rgba(245,158,11,0.15);color:var(--clr-warning);font-size:0.7rem;padding:0.15rem 0.5rem;"><i class="ph-fill ph-crown"></i> Gold</span>
-            <span style="font-size:0.72rem;color:var(--clr-text-muted);white-space:nowrap;">Oct 12</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right: Stats -->
-      <div class="user-hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-lbl">Time</div>
-          <div class="hero-stat-val" style="color:var(--clr-primary);">4.5h</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-lbl">Points</div>
-          <div class="hero-stat-val" style="color:var(--clr-secondary);">1,250</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-lbl">Sessions</div>
-          <div class="hero-stat-val" style="color:var(--clr-success);">38</div>
-        </div>
-      </div>
-
-
-    <!-- CHARTS -->
-    <div class="section-lbl">Analytics</div>
-    <div class="g2" style="margin-bottom:1.25rem;">
-      <div class="chart-card animate-on-scroll">
-        <div class="chart-ttl"><span><i class="ph ph-chart-line" style="color:var(--clr-primary);margin-right:0.3rem;"></i>Play Time</span><span style="font-size:0.72rem;font-weight:400;color:var(--clr-text-muted);">Last 7 Days</span></div>
-        <div class="chart-canvas-wrap" style="height:210px;"><canvas id="userPlayTimeChart"></canvas></div>
-      </div>
-      <div class="chart-card animate-on-scroll">
-        <div class="chart-ttl"><span><i class="ph ph-chart-pie-slice" style="color:var(--clr-secondary);margin-right:0.3rem;"></i>Favorite Genres</span><span style="font-size:0.72rem;font-weight:400;color:var(--clr-text-muted);">All Time</span></div>
-        <div class="chart-canvas-wrap" style="height:210px;display:flex;justify-content:center;"><canvas id="userGenresChart"></canvas></div>
-      </div>
-      <div class="chart-card animate-on-scroll">
-        <div class="chart-ttl"><span><i class="ph ph-star" style="color:var(--clr-warning);margin-right:0.3rem;"></i>Reward Points</span><span style="font-size:0.72rem;font-weight:400;color:var(--clr-text-muted);">This Month</span></div>
-        <div class="chart-canvas-wrap" style="height:210px;"><canvas id="userPointsChart"></canvas></div>
-      </div>
-      <div class="chart-card animate-on-scroll">
-        <div class="chart-ttl"><span><i class="ph ph-checks" style="color:var(--clr-success);margin-right:0.3rem;"></i>Completion Rate</span><span style="font-size:0.72rem;font-weight:400;color:var(--clr-text-muted);">By Game</span></div>
-        <div class="chart-canvas-wrap" style="height:210px;display:flex;justify-content:center;"><canvas id="userCompletionChart"></canvas></div>
-      </div>
-    </div>
-
-    <!-- MAIN COLUMNS -->
-    <div class="section-lbl">Overview</div>
-    <div class="g-main">
-
-      <!-- LEFT -->
-      <div style="display:flex;flex-direction:column;gap:1.25rem;">
-
-        <!-- Bookings -->
-        <div class="d-card animate-on-scroll">
-          <div class="d-card-hdr">
-            <h3 class="d-card-ttl"><i class="ph ph-calendar-check" style="color:var(--clr-primary);"></i> Upcoming Bookings</h3>
-            <button class="btn btn-secondary btn-sm">+ Book New Slot</button>
-          </div>
-          <div class="bk-row">
-            <div style="min-width:48px;text-align:center;line-height:1.1;">
-              <div style="font-size:1.5rem;font-weight:800;font-family:var(--font-primary);">24</div>
-              <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--clr-text-muted);">OCT</div>
-            </div>
-            <div style="flex:1;">
-              <strong style="font-size:0.9rem;">Pod 04 &mdash; Immersive Suite</strong>
-              <div style="font-size:0.78rem;color:var(--clr-text-muted);margin-top:0.15rem;"><i class="ph ph-clock"></i> 6:00 PM &ndash; 8:00 PM &nbsp;&middot;&nbsp; 2 hrs</div>
-            </div>
-            <button class="t-btn" style="background:rgba(239,68,68,0.1);color:var(--clr-error);border-color:rgba(239,68,68,0.2);" title="Cancel"><i class="ph ph-x"></i></button>
-          </div>
-          <p style="text-align:center;color:var(--clr-text-muted);font-size:0.83rem;margin:0.25rem 0 0;">No other upcoming bookings.</p>
-        </div>
-
-        <!-- Activity -->
-        <div class="d-card animate-on-scroll">
-          <div class="d-card-hdr">
-            <h3 class="d-card-ttl"><i class="ph ph-clock-counter-clockwise" style="color:var(--clr-primary);"></i> Recent Activity</h3>
-          </div>
-          <div class="act-item">
-            <img src="src/assets/images/game-action-5.jpg" style="width:50px;height:50px;border-radius:8px;object-fit:cover;flex-shrink:0;" alt="">
-            <div style="flex:1;">
-              <strong style="font-size:0.88rem;">Cyber Ninja VR</strong>
-              <div style="font-size:0.78rem;color:var(--clr-text-muted);margin-top:0.1rem;">Played 1.5 hrs &middot; Earned <span style="color:var(--clr-warning);">&ldquo;Master Swordsman&rdquo;</span></div>
-            </div>
-            <span style="font-size:0.72rem;color:var(--clr-text-muted);white-space:nowrap;">Oct 12</span>
-          </div>
-          <div class="act-item">
-            <div style="width:50px;height:50px;border-radius:8px;background:rgba(34,211,238,0.1);color:var(--clr-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph ph-shopping-cart" style="font-size:1.3rem;"></i></div>
-            <div style="flex:1;">
-              <strong style="font-size:0.88rem;">Purchased 5-Hour Bundle</strong>
-              <div style="font-size:0.78rem;color:var(--clr-text-muted);margin-top:0.1rem;">Added 5 hours to wallet balance.</div>
-            </div>
-            <span style="font-size:0.72rem;color:var(--clr-text-muted);white-space:nowrap;">Oct 10</span>
-          </div>
-          <div class="act-item">
-            <div style="width:50px;height:50px;border-radius:8px;background:rgba(139,92,246,0.1);color:var(--clr-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph ph-trophy" style="font-size:1.3rem;"></i></div>
-            <div style="flex:1;">
-              <strong style="font-size:0.88rem;">Level Up &mdash; Prestige II</strong>
-              <div style="font-size:0.78rem;color:var(--clr-text-muted);margin-top:0.1rem;">Loyalty tier upgraded automatically.</div>
-            </div>
-            <span style="font-size:0.72rem;color:var(--clr-text-muted);white-space:nowrap;">Sep 28</span>
-          </div>
-        </div>
-
-        <!-- Achievements -->
-        <div class="d-card animate-on-scroll">
-          <div class="d-card-hdr">
-            <h3 class="d-card-ttl"><i class="ph ph-medal" style="color:var(--clr-warning);"></i> Achievements &amp; Badges</h3>
-            <span style="font-size:0.78rem;color:var(--clr-text-muted);">14 / 50 Unlocked</span>
-          </div>
-          <div style="margin-bottom:1.25rem;">
-            <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.375rem;"><span style="color:var(--clr-text-muted);">Overall Progress</span><span style="color:var(--clr-warning);font-weight:700;">28%</span></div>
-            <div class="pb-wrap"><div class="pb-fill" style="width:28%;background:linear-gradient(90deg,var(--clr-primary),var(--clr-warning));"></div></div>
-          </div>
-          <div class="ach-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.625rem;">
-            <div class="ach-it"><i class="ph-fill ph-sword text-error" style="font-size:1.75rem;"></i><span style="font-size:0.67rem;font-weight:700;">First Blood</span></div>
-            <div class="ach-it"><i class="ph-fill ph-trophy text-warning" style="font-size:1.75rem;"></i><span style="font-size:0.67rem;font-weight:700;">Champion</span></div>
-            <div class="ach-it"><i class="ph-fill ph-ghost text-secondary" style="font-size:1.75rem;"></i><span style="font-size:0.67rem;font-weight:700;">Survivor</span></div>
-            <div class="ach-it locked"><i class="ph-fill ph-lock-key text-muted" style="font-size:1.75rem;"></i><span style="font-size:0.67rem;">Locked</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT -->
-      <div style="display:flex;flex-direction:column;gap:1.25rem;">
-
-        <!-- Top Up -->
-        <div class="d-card animate-on-scroll" style="background:linear-gradient(150deg,rgba(139,92,246,0.12),var(--clr-surface));">
-          <div class="d-card-hdr"><h3 class="d-card-ttl"><i class="ph ph-wallet" style="color:var(--clr-primary);"></i> Top Up Balance</h3></div>
-          <p style="font-size:0.8rem;color:var(--clr-text-muted);margin:0 0 1rem;">You have 4.5 hrs. Grab a bundle before your next session.</p>
-          <div class="bundle-opt sel"><div><strong style="font-size:0.875rem;">2 Hours</strong><div style="font-size:0.72rem;color:var(--clr-text-muted);">Standard Rate</div></div><strong style="color:var(--clr-primary);">$60</strong></div>
-          <div class="bundle-opt"><div><strong style="font-size:0.875rem;">5 Hours</strong><div style="font-size:0.72rem;color:var(--clr-success);">Save $10</div></div><strong>$140</strong></div>
-          <div class="bundle-opt"><div><strong style="font-size:0.875rem;">10 Hours</strong><div style="font-size:0.72rem;color:var(--clr-success);">Best Value &mdash; Save $30</div></div><strong>$270</strong></div>
-          <button class="btn btn-primary" style="width:100%;margin-top:0.75rem;">Purchase Selected</button>
-        </div>
-
-        <!-- Recommended -->
-        <div class="d-card animate-on-scroll">
-          <div class="d-card-hdr"><h3 class="d-card-ttl"><i class="ph ph-game-controller" style="color:var(--clr-secondary);"></i> Recommended</h3><a href="games.html" style="font-size:0.78rem;color:var(--clr-primary);text-decoration:none;">View All</a></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.625rem;">
-            <div style="position:relative;border-radius:10px;overflow:hidden;"><img src="src/assets/images/game-top-2.jpg" style="width:100%;height:88px;object-fit:cover;display:block;" alt="Alyx"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.8));padding:0.4rem 0.5rem;font-size:0.72rem;font-weight:600;">Alyx</div></div>
-            <div style="position:relative;border-radius:10px;overflow:hidden;"><img src="src/assets/images/game-horror-4.jpg" style="width:100%;height:88px;object-fit:cover;display:block;" alt="Dark Asylum"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.8));padding:0.4rem 0.5rem;font-size:0.72rem;font-weight:600;">Dark Asylum</div></div>
-          </div>
-        </div>
-
-        <!-- Friends -->
-        <div class="d-card animate-on-scroll">
-          <div class="d-card-hdr"><h3 class="d-card-ttl"><i class="ph ph-users" style="color:var(--clr-primary);"></i> Friends Online</h3><span class="badge" style="font-size:0.7rem;">3 Online</span></div>
-          <div class="fr-row"><div class="avatar-online"><img src="src/assets/images/avatar-6.jpg" alt="Alex_VR" style="width:36px;height:36px;border-radius:50%;object-fit:cover;filter:hue-rotate(90deg);"></div><div style="flex:1;"><div style="font-size:0.85rem;font-weight:600;">Alex_VR</div><div style="font-size:0.72rem;color:var(--clr-text-muted);">Playing Cyber Ninja</div></div><button class="t-btn" style="font-size:0.8rem;" title="Invite"><i class="ph ph-plus"></i></button></div>
-          <div class="fr-row"><div class="avatar-online"><img src="src/assets/images/avatar-7.jpg" alt="SarahConnor" style="width:36px;height:36px;border-radius:50%;object-fit:cover;filter:hue-rotate(180deg);"></div><div style="flex:1;"><div style="font-size:0.85rem;font-weight:600;">SarahConnor</div><div style="font-size:0.72rem;color:var(--clr-text-muted);">In Lobby</div></div><button class="t-btn" style="font-size:0.8rem;" title="Invite"><i class="ph ph-plus"></i></button></div>
-          <div class="fr-row"><div class="avatar-online"><img src="src/assets/images/avatar-8.jpg" alt="NoobMaster" style="width:36px;height:36px;border-radius:50%;object-fit:cover;filter:hue-rotate(270deg);"></div><div style="flex:1;"><div style="font-size:0.85rem;font-weight:600;">NoobMaster</div><div style="font-size:0.72rem;color:var(--clr-text-muted);">Playing Alyx</div></div><button class="t-btn" style="font-size:0.8rem;" title="Invite"><i class="ph ph-plus"></i></button></div>
-        </div>
-
-
-
-      </div>
-    </div>
-  </main>
 </div>
+
+<!-- Scripts -->
 <script src="src/js/main.js"></script>
 <script src="src/js/charts.js"></script>
+
+<!-- Dashboard Sidebar Mobile Drawer Toggle & Bundle Select Logic -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Sidebar Mobile Drawer
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebar = document.getElementById('dashboard-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    if (sidebarToggle && sidebar && overlay) {
+      sidebarToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+
+      overlay.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+    }
+
+    // Bundle Selection Interactive Logic
+    const bundleTiles = document.querySelectorAll('.bundle-tile');
+    bundleTiles.forEach(tile => {
+      tile.addEventListener('click', () => {
+        bundleTiles.forEach(t => t.classList.remove('selected'));
+        tile.classList.add('selected');
+      });
+    });
+  });
+</script>
+
 </body>
 </html>
