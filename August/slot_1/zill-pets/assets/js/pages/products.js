@@ -1,4 +1,4 @@
-﻿/**
+/**
  * products.js
  * Handles products grid filtering, searching, sorting, and detail page population.
  */
@@ -168,6 +168,17 @@ function initProductDetailPage() {
     elSticker.style.display = 'none';
   }
 
+  const elEnquireBtn = document.getElementById('detail-enquire-btn');
+  if (elEnquireBtn) {
+    const topicType = product.category === 'reptile' ? 'availability' : 'products';
+    elEnquireBtn.href = `contact.html?type=${topicType}&item=${encodeURIComponent(product.name)}`;
+    if (product.category !== 'reptile') {
+      elEnquireBtn.textContent = 'Enquire About Product';
+    } else {
+      elEnquireBtn.textContent = 'Enquire to Reserve';
+    }
+  }
+
   // Specs
   if (elSpecs) {
     let specs = [];
@@ -270,11 +281,11 @@ function getMockProducts() {
     { id: '1', name: 'Bearded Dragon', category: 'reptile', price: 150, image: 'https://images.unsplash.com/photo-1619816128374-a6b4766ca92c?w=600&q=80', badge: 'Best Seller', description: 'Friendly, diurnal, and active. A classic starter lizard with tons of personality.' },
     { id: '2', name: 'Ball Python', category: 'reptile', price: 200, image: 'https://images.unsplash.com/photo-1546992772-3318f1f3a1be?w=600&q=80', description: 'Shy, slow-moving snakes that tolerate handling well. A great introduction to keeping snakes.' },
     { id: '3', name: 'Crested Gecko', category: 'reptile', price: 80, image: 'https://images.unsplash.com/photo-1769986289575-d402e93d5885?w=600&q=80', badge: 'Staff Pick', description: 'Arboreal acrobats that thrive at room temperature. Perfect for planted vertical tanks.' },
-    { id: '4', name: '40G PVC Enclosure', category: 'habitat', price: 250, image: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=600&q=80', description: 'Premium PVC enclosure built for long-term health, holding heat and humidity perfectly.' },
-    { id: '5', name: 'Bioactive Kit', category: 'habitat', price: 90, image: 'https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&q=80', description: 'Complete bioactive setup with drainage layer, substrate, and live plant starter pack.' },
-    { id: '6', name: 'Live Crickets (500ct)', category: 'feeder', price: 25, image: 'https://images.unsplash.com/photo-1591792111137-5b8219d5fad6?w=600&q=80', badge: 'Subscribe', description: 'Live gut-loaded crickets, pre-dusted with calcium supplement. Ship same-day.' },
-    { id: '7', name: 'UVB Lamp', category: 'supply', price: 45, image: 'https://images.unsplash.com/photo-1746196596959-c6153c84982a?w=600&q=80', description: 'Professional-grade T5 HO UVB lamp for desert-dwelling reptiles.' },
-    { id: '8', name: 'Calcium Supplement', category: 'supply', price: 15, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600&q=80', description: 'Veterinarian-recommended calcium and D3 supplement powder for dusting feeders.' }
+    { id: '4', name: '40G PVC Enclosure', category: 'habitat', price: 250, image: 'https://images.unsplash.com/photo-1779634683474-7f78c08e4f03?w=600&q=80', description: 'Premium PVC enclosure built for long-term health, holding heat and humidity perfectly.' },
+    { id: '5', name: 'Bioactive Kit', category: 'habitat', price: 90, image: 'https://images.unsplash.com/photo-1560177490-6796cd8cd3a1?w=600&q=80', description: 'Complete bioactive setup with drainage layer, substrate, and live plant starter pack.' },
+    { id: '6', name: 'Live Crickets (500ct)', category: 'feeder', price: 25, image: 'https://images.unsplash.com/photo-1683634809203-fe2c5056d389?w=600&q=80', badge: 'Subscribe', description: 'Live gut-loaded crickets, pre-dusted with calcium supplement. Ship same-day.' },
+    { id: '7', name: 'UVB Lamp', category: 'supply', price: 45, image: 'https://images.unsplash.com/photo-1512551980832-13df02babc9e?w=600&q=80', description: 'Professional-grade T5 HO UVB lamp for desert-dwelling reptiles.' },
+    { id: '8', name: 'Calcium Supplement', category: 'supply', price: 15, image: 'https://images.unsplash.com/photo-1633171031508-a8f26271e8aa?w=600&q=80', description: 'Veterinarian-recommended calcium and D3 supplement powder for dusting feeders.' }
   ];
 }
 

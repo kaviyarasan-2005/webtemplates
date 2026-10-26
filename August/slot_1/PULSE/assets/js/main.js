@@ -145,7 +145,6 @@
     el.innerHTML =
       '<button class="m-close" type="button" aria-label="Close menu"><i class="ph-bold ph-x" aria-hidden="true"></i></button>' +
       base +
-      '<a href="login.html" class="btn btn-cyan m-login"><i class="ph-bold ph-sign-in" aria-hidden="true"></i><span>Login</span></a>' +
       '<div class="m-tools">' +
       toggleHTML("theme-toggle m-toggle", "themeToggleM", "Toggle color theme") +
       toggleHTML("rtl-toggle m-toggle", "rtlToggleM", "Toggle writing direction") +
@@ -395,7 +394,11 @@
         $$("[data-cat]").forEach(function (card) {
           var show = cat === "All" || card.getAttribute("data-cat") === cat;
           card.style.display = show ? "" : "none";
-          if (show) card.classList.remove("in-view");
+          if (show && card.classList.contains("reveal")) {
+            card.classList.remove("in-view");
+            void card.offsetWidth;
+            card.classList.add("in-view");
+          }
         });
       });
     });

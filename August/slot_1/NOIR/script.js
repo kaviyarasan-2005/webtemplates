@@ -291,46 +291,64 @@ function initAccordion() {
 }
 
 /* ========================================
-   9. PRODUCT FILTER (Products page)
+   9. PRODUCT FILTER (Products page — multi-group)
+   Supports any number of filter groups (origin, strength, brand…)
+   via [data-filter-group] on tab buttons or <select> elements.
 ======================================== */
 function initProductFilter() {
-  const filterTabs = document.querySelectorAll('.filter-tab');
-  const sortSelect = document.querySelector('.filter-sort');
-  const products   = document.querySelectorAll('.product-card');
-  if (!filterTabs.length || !products.length) return;
+  const products = document.querySelectorAll('.product-card');
+  if (!products.length) return;
 
-  let activeOrigin = 'all';
-  let activeSort   = 'default';
+  const tabs      = document.querySelectorAll('.filter-tab[data-filter-group]');
+  const selects   = document.querySelectorAll('select[data-filter-group]');
+  const sortSelect = document.getElementById('product-sort');
+  const countEl   = document.getElementById('product-count');
+
+  if (!tabs.length && !selects.length && !sortSelect) return;
+
+  const state = {};
+  tabs.forEach(t => { if (!(t.getAttribute('data-filter-group') in state)) state[t.getAttribute('data-filter-group')] = 'all'; });
+  selects.forEach(s => { state[s.getAttribute('data-filter-group')] = s.value || 'all'; });
+
+  let activeSort = sortSelect ? sortSelect.value : 'default';
+
+  // Map a filter-group name to the card's data attribute
+  function cardValue(card, group) {
+    if (group === 'strength') return card.getAttribute('data-strength-label') || '';
+    return card.getAttribute('data-' + group) || '';
+  }
 
   function filterAndSort() {
+    const groups = Object.keys(state);
     const visible = [];
+
     products.forEach(card => {
-      const origin = card.getAttribute('data-origin') || '';
-      const show = activeOrigin === 'all' || origin === activeOrigin;
+      const show = groups.every(g => {
+        const want = state[g];
+        return want === 'all' || cardValue(card, g) === want;
+      });
       card.style.display = show ? '' : 'none';
+      card.setAttribute('aria-hidden', show ? 'false' : 'true');
       if (show) visible.push(card);
     });
 
-    // Sort visible cards
+    if (countEl) countEl.textContent = visible.length + (visible.length === 1 ? ' cigar' : ' cigars');
+
     const grid = document.querySelector('.product-grid');
     if (!grid) return;
+
     const sorted = [...visible].sort((a, b) => {
-      if (activeSort === 'strength-asc') {
+      if (activeSort === 'strength-asc')
         return (parseInt(a.getAttribute('data-strength') || 0)) - (parseInt(b.getAttribute('data-strength') || 0));
-      }
-      if (activeSort === 'strength-desc') {
+      if (activeSort === 'strength-desc')
         return (parseInt(b.getAttribute('data-strength') || 0)) - (parseInt(a.getAttribute('data-strength') || 0));
-      }
-      if (activeSort === 'price-asc') {
+      if (activeSort === 'price-asc')
         return parseFloat(a.getAttribute('data-price') || 0) - parseFloat(b.getAttribute('data-price') || 0);
-      }
-      if (activeSort === 'price-desc') {
+      if (activeSort === 'price-desc')
         return parseFloat(b.getAttribute('data-price') || 0) - parseFloat(a.getAttribute('data-price') || 0);
-      }
       return 0;
     });
 
-    // Re-order in DOM with smooth animation
     products.forEach(p => { p.style.opacity = '0'; p.style.transform = 'translateY(10px)'; });
     setTimeout(() => {
       sorted.forEach(p => grid.appendChild(p));
@@ -344,11 +362,21 @@ function initProductFilter() {
     }, 150);
   }
 
-  filterTabs.forEach(tab => {
+  tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      filterTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      activeOrigin = tab.getAttribute('data-filter') || 'all';
+      const group = tab.getAttribute('data-filter-group');
+      const value = tab.getAttribute('data-filter') || 'all';
+      state[group] = value;
+      document.querySelectorAll('.filter-tab[data-filter-group="' + group + '"]').forEach(t => {
+        t.classList.toggle('active', t === tab);
+      });
+      filterAndSort();
+    });
+  });
+
+  selects.forEach(sel => {
+    sel.addEventListener('change', () => {
+      state[sel.getAttribute('data-filter-group')] = sel.value || 'all';
       filterAndSort();
     });
   });
@@ -430,25 +458,27 @@ function initContactForm() {
    11. NEWSLETTER FORM
 ======================================== */
 function initNewsletterForm() {
-  const form = document.getElementById('newsletter-form');
-  if (!form) return;
+  const forms = document.querySelectorAll('.newsletter-form');
+  if (!forms.length) return;
 
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const input = form.querySelector('.newsletter-input');
-    const msg = form.querySelector('.newsletter-msg');
-    if (!input || !msg) return;
+  forms.forEach(form => {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const input = form.querySelector('.newsletter-input');
+      const msg = form.querySelector('.newsletter-msg');
+      if (!input || !msg) return;
 
-    const email = input.value.trim();
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      msg.textContent = 'Please enter a valid email address.';
-      msg.className = 'newsletter-msg error';
-      return;
-    }
+      const email = input.value.trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        msg.textContent = 'Please enter a valid email address.';
+        msg.className = 'newsletter-msg error';
+        return;
+      }
 
-    msg.textContent = 'Thank you. You\'re on the list.';
-    msg.className = 'newsletter-msg success';
-    input.value = '';
+      msg.textContent = 'Thank you. You\'re on the list.';
+      msg.className = 'newsletter-msg success';
+      input.value = '';
+    });
   });
 }
 
@@ -541,15 +571,52 @@ function initActiveNav() {
 ======================================== */
 function initSmoothAnchors() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    const href = anchor.getAttribute('href');
+    if (!href || href === '#') return;
     anchor.addEventListener('click', e => {
-      const target = document.querySelector(anchor.getAttribute('href'));
+      const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
       const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navbar-h')) || 72;
-      const top  = target.getBoundingClientRect().top + window.scrollY - navH - 16;
-      window.scrollTo({ top, behavior: 'smooth' });
+      const filterBar = document.querySelector('.filter-bar');
+      const filterH = filterBar ? filterBar.offsetHeight : 0;
+      const top = target.getBoundingClientRect().top + window.scrollY - navH - filterH - 16;
+      window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
     });
   });
+}
+
+/* ========================================
+   14b. CATEGORY NAV (anchor filter bars, e.g. Bar menu)
+======================================== */
+function initCategoryNav() {
+  const nav = document.querySelector('[data-category-nav]');
+  if (!nav) return;
+  const links = nav.querySelectorAll('.filter-tab');
+  if (!links.length) return;
+
+  function setActive(link) {
+    links.forEach(l => l.classList.toggle('active', l === link));
+  }
+
+  links.forEach(link => {
+    link.addEventListener('click', () => setActive(link));
+  });
+
+  const sections = [...links]
+    .map(l => document.querySelector(l.getAttribute('href')))
+    .filter(Boolean);
+
+  if (sections.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const link = nav.querySelector('.filter-tab[href="#' + entry.target.id + '"]');
+        if (link) setActive(link);
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    sections.forEach(s => io.observe(s));
+  }
 }
 
 /* ========================================
@@ -637,6 +704,18 @@ function initProductCards() {
 }
 
 /* ========================================
+   18b. OPENING HOURS — highlight today
+======================================== */
+function initHoursToday() {
+  const table = document.querySelector('.hours-table');
+  if (!table) return;
+  const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+  const today = days[new Date().getDay()];
+  const row = table.querySelector('[data-day="' + today + '"]');
+  if (row) row.classList.add('hours-table__today');
+}
+
+/* ========================================
    19. PARALLAX DISABLE ON MOBILE
 ======================================== */
 function initParallax() {
@@ -668,6 +747,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCarousels();
   initAccordion();
   initProductFilter();
+  initCategoryNav();
   initContactForm();
   initNewsletterForm();
   initCalendar();
@@ -677,6 +757,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initQtySelector();
   initMarquee();
   initProductCards();
+  initHoursToday();
   initParallax();
 });
 
