@@ -137,6 +137,76 @@ function updateRTLButtons() {
 })();
 
 /* ============================================================
+   4B. NAVBAR DROPDOWN CONTROLLER (Desktop, Tablet, 1024px & Touch)
+   ============================================================ */
+(function initNavbarDropdowns() {
+  const items = document.querySelectorAll('.navbar__item');
+
+  items.forEach(item => {
+    const trigger = item.querySelector('.navbar__link[aria-haspopup="true"]');
+    const dropdown = item.querySelector('.navbar__dropdown');
+    if (!trigger || !dropdown) return;
+
+    trigger.setAttribute('aria-expanded', 'false');
+
+    // Click / Touch Toggle (Crucial for 1024px tablet / touch & mouse click)
+    trigger.addEventListener('click', (e) => {
+      // Prevent default navigation to index.html so the dropdown can be toggled
+      e.preventDefault();
+      e.stopPropagation();
+
+      const isOpen = item.classList.contains('navbar__item--open');
+      closeAll();
+      if (!isOpen) {
+        item.classList.add('navbar__item--open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // Keyboard support: Enter, Space, ArrowDown opens dropdown
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        item.classList.add('navbar__item--open');
+        trigger.setAttribute('aria-expanded', 'true');
+        const firstLink = dropdown.querySelector('a');
+        if (firstLink) firstLink.focus();
+      }
+    });
+
+    // Close when focus moves outside the dropdown
+    item.addEventListener('focusout', (e) => {
+      if (!item.contains(e.relatedTarget)) {
+        item.classList.remove('navbar__item--open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
+  function closeAll() {
+    items.forEach(item => {
+      item.classList.remove('navbar__item--open');
+      const trigger = item.querySelector('.navbar__link[aria-haspopup="true"]');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  // Close dropdown on click outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.navbar__item')) {
+      closeAll();
+    }
+  });
+
+  // Close dropdown on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeAll();
+    }
+  });
+})();
+
+/* ============================================================
    5. SCROLL-REVEAL via IntersectionObserver
    ============================================================ */
 (function initScrollReveal() {
