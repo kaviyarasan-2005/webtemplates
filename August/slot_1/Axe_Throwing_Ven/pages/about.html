@@ -1,0 +1,445 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+  <meta name="description" content="Learn the story behind Axe Forge — Toronto's premier NATF-certified axe throwing venue. Meet the founders, coaches, and the values that drive everything we do." />
+  <title>About — Axe Forge Throwing Venue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <style>
+    /* ── Story Section ─────────────────────────────────────── */
+    .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-12); align-items: center; }
+    .story-img-wrap { position: relative; border-radius: var(--radius-xl); overflow: hidden; }
+    .story-img-wrap img { width: 100%; height: 480px; object-fit: cover; display: block; }
+    .story-badge-founded { position: absolute; bottom: var(--sp-6); left: var(--sp-6); background: var(--clr-primary); color: #fff; padding: var(--sp-4) var(--sp-6); border-radius: var(--radius-md); box-shadow: var(--shadow-primary); }
+    .story-badge-founded .badge-year { font-family: var(--font-display); font-size: 2rem; line-height: 1; display: block; }
+    .story-badge-founded .badge-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.9; }
+    .story-badge-award { position: absolute; bottom: var(--sp-6); right: var(--sp-6); background: var(--clr-accent); color: var(--clr-secondary, #111); padding: var(--sp-3) var(--sp-5); border-radius: var(--radius-md); font-weight: 700; font-size: 0.875rem; }
+
+    /* ── Values Grid ───────────────────────────────────────── */
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-6); }
+    .value-card { background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-lg); padding: var(--sp-8); transition: all var(--transition-base); }
+    .value-card:hover { border-color: var(--clr-primary); transform: translateY(-6px); box-shadow: var(--shadow-md); }
+    .value-card__icon { width: 64px; height: 64px; background: rgba(255,102,64,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--clr-primary); margin-bottom: var(--sp-5); font-size: 1.75rem; }
+    .value-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: var(--sp-3); color: var(--clr-text-primary); }
+    .value-card p { font-size: 0.9375rem; color: var(--clr-text-muted); line-height: 1.65; margin: 0; }
+
+    /* ── Team Grid ─────────────────────────────────────────── */
+    .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-6); }
+    .team-card { background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-xl); overflow: hidden; transition: all var(--transition-base); }
+    .team-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: rgba(255,102,64,0.3); }
+    .team-card__avatar { height: 180px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(255,102,64,0.12), rgba(245,179,36,0.08)); font-family: var(--font-display); font-size: 4.5rem; color: var(--clr-primary); letter-spacing: 0.05em; }
+    .team-card__body { padding: var(--sp-6); }
+    .team-card__body h3 { font-size: 1.2rem; font-weight: 700; color: var(--clr-text-primary); margin: 0 0 var(--sp-2); }
+    .team-card__role { display: inline-block; background: var(--clr-primary); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: var(--radius-full); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: var(--sp-3); margin-top: var(--sp-2); }
+    .team-card__body p { font-size: 0.9375rem; color: var(--clr-text-muted); line-height: 1.65; margin: 0; }
+
+    /* ── Stats Bar ─────────────────────────────────────────── */
+    .stats-bar { background: var(--clr-secondary, #0F0F10); border-top: 2px solid var(--clr-primary); border-bottom: 2px solid var(--clr-primary); padding: var(--sp-16) 0; }
+    .stats-bar-inner { display: flex; justify-content: center; align-items: center; gap: 0; flex-wrap: wrap; }
+    .stat-item { flex: 1; min-width: 160px; text-align: center; padding: var(--sp-6) var(--sp-8); position: relative; }
+    .stat-item + .stat-item::before { content: ''; position: absolute; left: 0; top: 20%; height: 60%; width: 1px; background: rgba(255,255,255,0.1); }
+    .stat-num { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4.5rem); color: var(--clr-primary); line-height: 1; display: block; }
+    .stat-label { font-size: 0.875rem; color: rgba(255,255,255,0.7); margin-top: var(--sp-2); display: block; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* ── Hero Layout ────────────────────────────────────────── */
+    .about-hero {
+      padding-top: calc(var(--nav-height) + var(--sp-4)) !important;
+      padding-bottom: var(--sp-16) !important;
+    }
+    .about-hero .about-hero__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      max-width: 680px;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .about-hero .page-hero__eyebrow {
+      margin-bottom: var(--sp-5);
+    }
+    .about-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      line-height: 0.97;
+      letter-spacing: 0.02em;
+      color: var(--clr-text-primary);
+      margin: 0 0 var(--sp-5) 0;
+    }
+    .about-hero .page-hero__desc {
+      font-size: clamp(1rem, 1.6vw, 1.125rem);
+      color: var(--clr-text-secondary);
+      line-height: 1.75;
+      margin: 0 0 var(--sp-8) 0;
+      max-width: 560px;
+    }
+    .about-hero__ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-4);
+      align-items: center;
+    }
+
+
+
+    /* ── Join Section ──────────────────────────────────────── */
+    .join-section { position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(255,102,64,0.06) 0%, rgba(245,179,36,0.04) 100%); border-top: 1px solid var(--clr-border); }
+    .trust-pills { display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: center; margin-top: var(--sp-6); }
+    .trust-pill { background: rgba(255,255,255,0.04); border: 1px solid var(--clr-border); border-radius: var(--radius-full); padding: 8px 20px; font-size: 0.875rem; font-weight: 600; color: var(--clr-text-secondary); white-space: nowrap; }
+
+    /* ── Light Mode: Hero overrides ─────────────────────────── */
+    [data-theme="light"] .about-hero-overlay {
+      background: linear-gradient(135deg, rgba(245,242,238,0.88) 0%, rgba(245,242,238,0.65) 55%, rgba(245,242,238,0.2) 100%) !important;
+    }
+    [data-theme="light"] .about-hero-img {
+      opacity: 0.30 !important;
+    }
+    [data-theme="light"] .page-hero__title,
+    [data-theme="light"] .about-hero h1 {
+      color: #1A1A1B;
+    }
+    [data-theme="light"] .about-hero .page-hero__desc {
+      color: #4A4A4C;
+    }
+    [data-theme="light"] .about-hero .page-hero__eyebrow span {
+      color: var(--clr-primary-dark);
+    }
+    [data-theme="light"] .about-hero .page-hero__eyebrow {
+      border-color: var(--clr-primary-dark);
+      background: rgba(200,64,27,0.06);
+    }
+    [data-theme="light"] .about-hero .page-hero__eyebrow svg {
+      stroke: var(--clr-primary-dark);
+    }
+
+    /* Ghost button in hero — light mode */
+    [data-theme="light"] .about-hero .btn--ghost {
+      background: rgba(0,0,0,0.04);
+      border-color: rgba(26,26,27,0.35);
+      color: #1A1A1B;
+    }
+    [data-theme="light"] .about-hero .btn--ghost:hover {
+      background: rgba(0,0,0,0.08);
+      border-color: var(--clr-primary-dark);
+      color: var(--clr-primary-dark);
+    }
+
+    /* ── Responsive ────────────────────────────────────────── */
+    @media (max-width: 1023px) {
+      .story-grid { grid-template-columns: 1fr; }
+      .story-img-wrap img { height: 360px; }
+    }
+    @media (max-width: 767px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .stats-bar-inner { display: grid; grid-template-columns: repeat(2, 1fr); }
+      .stat-item + .stat-item::before { display: none; }
+    }
+    @media (max-width: 767px) {
+      .about-hero .about-hero__inner { max-width: 100%; }
+    }
+    @media (max-width: 639px) {
+      .about-hero {
+        padding-top: calc(var(--nav-height) + var(--sp-2)) !important;
+        padding-bottom: var(--sp-10) !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 1 — HERO
+═══════════════════════════════════════════════════════════ -->
+<section class="page-hero about-hero" aria-label="About hero" style="position:relative; overflow:hidden;">
+
+  <!-- Background image -->
+  <div aria-hidden="true" style="position:absolute;inset:0;z-index:0;">
+    <img src="../assets/images/events-hero.jpg" alt="" class="about-hero-img" style="width:100%;height:100%;object-fit:cover;opacity:0.40;" />
+    <div class="about-hero-overlay" style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,11,0.96) 0%,rgba(10,10,11,0.65) 60%,transparent);"></div>
+  </div>
+
+  <div class="container" style="position:relative;z-index:1;width:100%;">
+    <div class="about-hero__inner">
+
+      <!-- Eyebrow pill -->
+      <div class="page-hero__eyebrow reveal" style="display:inline-flex;align-items:center;gap:var(--sp-2);border:1px solid var(--clr-primary);border-radius:var(--radius-full);padding:6px 16px;background:rgba(255,102,64,0.08);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--clr-primary)" stroke-width="2.2" aria-hidden="true">
+          <path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9"/>
+          <path d="M15 13 9 7l4-4 6 6h3a8 8 0 0 1-7 7z"/>
+        </svg>
+        <span style="font-size:0.8125rem;font-weight:700;color:var(--clr-primary);letter-spacing:0.08em;text-transform:uppercase;">Toronto's Premier Axe Throwing Venue</span>
+      </div>
+
+      <!-- Heading -->
+      <h1 class="reveal animate-delay-1">
+        Forged From <span style="color:var(--clr-primary);">Passion</span>
+      </h1>
+
+      <!-- Tagline -->
+      <p class="page-hero__desc reveal animate-delay-2">
+        Axe Forge was built on one bold idea: that anyone can experience the raw thrill of axe throwing in a safe, welcoming, professionally run environment.
+      </p>
+
+      <!-- CTAs -->
+      <div class="about-hero__ctas reveal animate-delay-2">
+        <a href="book-a-lane.html" class="btn btn--primary btn--lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book Your Lane
+        </a>
+        <a href="#team" class="btn btn--ghost btn--lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Meet the Team
+        </a>
+      </div>
+
+
+    </div><!-- /.about-hero__inner -->
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 2 — OUR STORY
+═══════════════════════════════════════════════════════════ -->
+<section id="our-story" class="section-pad" aria-label="Our story">
+  <div class="container">
+    <div class="story-grid">
+      <!-- Text content -->
+      <div>
+        <div class="section-header reveal">
+          <p class="section-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Our Story
+          </p>
+          <h2>From a Garage Dream to Toronto's Forge</h2>
+        </div>
+        <div class="reveal animate-delay-1" style="margin-top:var(--sp-6);">
+          <p style="color:var(--clr-text-secondary);line-height:1.75;margin-bottom:var(--sp-5);">
+            Co-founders Marcus Webb and Tara Ng both competed at the national level in axe throwing leagues — and they both saw the same gap in Toronto's market. There was nowhere that offered a truly professional, safety-first experience for new throwers and serious competitors alike. In 2019, they signed a lease on a reclaimed industrial warehouse in Toronto's west end and got to work building Axe Forge from scratch.
+          </p>
+          <p style="color:var(--clr-text-secondary);line-height:1.75;">
+            Since opening day, Axe Forge has welcomed over 12,000 throwers through its doors — from birthday groups and corporate teams to NATF league competitors chasing gold. In 2022, demand was so high that Marcus and Tara expanded with a second lane block, bringing the venue to 10 full throwing lanes. Today, Axe Forge is recognized as one of Canada's top dedicated axe throwing facilities — and it all started with a bold idea and a whole lot of grit.
+          </p>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="story-img-wrap reveal animate-delay-2">
+        <img src="../assets/images/lane-glow.jpg" alt="Inside Axe Forge — glowing throwing lanes" loading="lazy" />
+        <div class="story-badge-founded">
+          <span class="badge-year">2019</span>
+          <span class="badge-label">Est. Toronto</span>
+        </div>
+        <div class="story-badge-award">🏆 Award-Winning Venue</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 3 — CORE VALUES
+═══════════════════════════════════════════════════════════ -->
+<section id="values" class="section-pad bg-surface-alt" aria-label="Core values">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;">
+      <p class="section-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        What We Stand For
+      </p>
+      <h2>Our Core Values</h2>
+    </div>
+
+    <div class="divider divider-center reveal"></div>
+
+    <div class="values-grid reveal animate-delay-1">
+
+      <!-- 1 Safety First -->
+      <article class="value-card">
+        <div class="value-card__icon" aria-hidden="true">🎯</div>
+        <h3>Safety First</h3>
+        <p>Every session begins with a certified safety briefing. Our lanes meet NATF standards with full protective barriers and trained coaches watching every throw.</p>
+      </article>
+
+      <!-- 2 Radical Inclusion -->
+      <article class="value-card">
+        <div class="value-card__icon" aria-hidden="true">🌍</div>
+        <h3>Radical Inclusion</h3>
+        <p>Axe throwing is for everyone — first-timers, seasoned veterans, people of all abilities. We meet you where you are and celebrate every bullseye equally.</p>
+      </article>
+
+      <!-- 3 Competitive Excellence -->
+      <article class="value-card">
+        <div class="value-card__icon" aria-hidden="true">🏆</div>
+        <h3>Competitive Excellence</h3>
+        <p>We host NATF-sanctioned leagues and tournaments, pushing the limits of skill and competitive spirit for throwers at every level of the game.</p>
+      </article>
+
+      <!-- 4 Community First -->
+      <article class="value-card">
+        <div class="value-card__icon" aria-hidden="true">🤝</div>
+        <h3>Community First</h3>
+        <p>We're more than a venue. We've built a community of regulars, coaches, and champions who keep coming back — and who bring their friends.</p>
+      </article>
+
+      <!-- 5 Sustainable Operations -->
+      <article class="value-card">
+        <div class="value-card__icon" aria-hidden="true">♻️</div>
+        <h3>Sustainable Operations</h3>
+        <p>Our axes are Canadian-forged, our wood targets are sustainably sourced, and we compost all target shavings. We care about what we leave behind.</p>
+      </article>
+
+      <!-- 6 Relentless Innovation -->
+      <article class="value-card">
+        <div class="value-card__icon" aria-hidden="true">⚡</div>
+        <h3>Relentless Innovation</h3>
+        <p>From Cyber Glow UV nights to digital score tracking, we never stop finding new ways to elevate the experience and keep things fresh for our community.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 4 — MEET THE TEAM
+═══════════════════════════════════════════════════════════ -->
+<section id="team" class="section-pad" aria-label="Meet the team">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;">
+      <p class="section-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        The People
+      </p>
+      <h2>Meet the Founders &amp; Coaches</h2>
+    </div>
+
+    <div class="divider divider-center reveal"></div>
+
+    <div class="team-grid reveal animate-delay-1">
+
+      <!-- Marcus Webb -->
+      <article class="team-card">
+        <div class="team-card__avatar" aria-label="Marcus Webb initials">MW</div>
+        <div class="team-card__body">
+          <h3>Marcus Webb</h3>
+          <span class="team-card__role">Co-Founder &amp; Head Coach</span>
+          <p>Former 3x Canadian Axe Throwing Champion. Marcus built the safety protocols and competitive training programs that define Axe Forge's reputation across the country.</p>
+        </div>
+      </article>
+
+      <!-- Tara Ng -->
+      <article class="team-card">
+        <div class="team-card__avatar" aria-label="Tara Ng initials">TN</div>
+        <div class="team-card__body">
+          <h3>Tara Ng</h3>
+          <span class="team-card__role">Co-Founder &amp; Operations Director</span>
+          <p>Tara brings 10+ years of hospitality experience to every booking and event. She ensures every guest — from walk-ins to corporate groups — has the time of their life.</p>
+        </div>
+      </article>
+
+      <!-- Devon Okafor -->
+      <article class="team-card">
+        <div class="team-card__avatar" aria-label="Devon Okafor initials">DO</div>
+        <div class="team-card__body">
+          <h3>Devon Okafor</h3>
+          <span class="team-card__role">Lead Coach &amp; Tournaments Manager</span>
+          <p>Devon coaches 200+ league players each season and manages all NATF sanctioned events at Axe Forge. He's thrown over 50,000 axes and is still counting.</p>
+        </div>
+      </article>
+
+      <!-- Priya Sharma -->
+      <article class="team-card">
+        <div class="team-card__avatar" aria-label="Priya Sharma initials">PS</div>
+        <div class="team-card__body">
+          <h3>Priya Sharma</h3>
+          <span class="team-card__role">Events &amp; Community Manager</span>
+          <p>Priya runs our corporate events program and built our monthly community nights from scratch. She's the reason our regulars keep coming back — and bringing new faces with them.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 5 — BY THE NUMBERS
+═══════════════════════════════════════════════════════════ -->
+<section id="by-the-numbers" class="stats-bar" aria-label="Axe Forge by the numbers">
+  <div class="container">
+    <div class="stats-bar-inner">
+      <div class="stat-item">
+        <span class="stat-num">2019</span>
+        <span class="stat-label">Year Founded</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">10</span>
+        <span class="stat-label">Throwing Lanes</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">12K+</span>
+        <span class="stat-label">Throwers Served</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">350+</span>
+        <span class="stat-label">Events Hosted</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">98%</span>
+        <span class="stat-label">Satisfaction Rate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 6 — JOIN THE COMMUNITY
+═══════════════════════════════════════════════════════════ -->
+<section id="join" class="section-pad join-section" aria-label="Call to action — join Axe Forge">
+  <div class="container" style="text-align:center;">
+    <div class="section-header reveal">
+      <p class="section-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9"/>
+          <path d="M15 13 9 7l4-4 6 6h3a8 8 0 0 1-7 7z"/>
+        </svg>
+        Ready to Throw?
+      </p>
+      <h2 style="max-width:520px;margin-inline:auto;">Forge Your <span style="color:var(--clr-primary);">Story</span></h2>
+    </div>
+
+    <p class="text-lead reveal animate-delay-1" style="max-width:600px;margin-inline:auto;color:var(--clr-text-secondary);margin-top:var(--sp-4);margin-bottom:var(--sp-8);">
+      Whether you're a first-timer or a seasoned league competitor, Axe Forge has a place for you. Book a lane today and discover why 12,000+ Torontonians have made us their favourite throwback destination.
+    </p>
+
+    <div class="reveal animate-delay-2" style="display:flex;flex-wrap:wrap;gap:var(--sp-4);justify-content:center;">
+      <a href="book-a-lane.html" class="btn btn--primary btn--lg">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book a Lane
+      </a>
+      <a href="events.html" class="btn btn--ghost btn--lg">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        View Events
+      </a>
+    </div>
+
+    <!-- Trust pills -->
+    <div class="trust-pills reveal animate-delay-3">
+      <span class="trust-pill">✓ No Experience Needed</span>
+      <span class="trust-pill">✓ All Equipment Provided</span>
+      <span class="trust-pill">✓ NATF Certified Coaches</span>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="../js/nav-footer.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

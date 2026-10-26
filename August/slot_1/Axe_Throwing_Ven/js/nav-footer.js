@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    AXE FORGE VENUE — nav-footer.js
    Shared Navigation + Footer HTML injection
    ============================================================ */
@@ -48,6 +48,7 @@
           <li><a href="${root}pages/book-a-lane.html" class="nav-link">Book a Lane</a></li>
           <li><a href="${root}pages/leagues.html" class="nav-link">Leagues</a></li>
           <li><a href="${root}pages/events.html" class="nav-link">Events</a></li>
+          <li><a href="${root}pages/about.html" class="nav-link">About</a></li>
           <li class="nav-dropdown">
             <button class="nav-link nav-dropdown__trigger" aria-expanded="false" aria-haspopup="true" id="dashboard-dropdown-btn">
               Dashboard
@@ -113,6 +114,7 @@
       <li><a href="${root}pages/book-a-lane.html" class="nav-link">Book a Lane</a></li>
       <li><a href="${root}pages/leagues.html" class="nav-link">Leagues</a></li>
       <li><a href="${root}pages/events.html" class="nav-link">Events</a></li>
+      <li><a href="${root}pages/about.html" class="nav-link">About</a></li>
       <li class="mobile-nav-group">
         <button class="mobile-nav-group__btn" aria-expanded="false">
           Dashboard
@@ -185,6 +187,7 @@
             <li><a href="${root}pages/book-a-lane.html" class="footer__link">Book a Lane</a></li>
             <li><a href="${root}pages/leagues.html" class="footer__link">Leagues &amp; Tournaments</a></li>
             <li><a href="${root}pages/events.html" class="footer__link">Group &amp; Corporate Events</a></li>
+            <li><a href="${root}pages/about.html" class="footer__link">About Us</a></li>
             <li><a href="${root}pages/login.html" class="footer__link">Login Portal</a></li>
             <li><a href="${root}pages/dashboard.html" class="footer__link">My Dashboard</a></li>
           </ul>
