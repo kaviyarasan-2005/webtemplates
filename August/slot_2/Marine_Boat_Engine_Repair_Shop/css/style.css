@@ -10,6 +10,7 @@
    1. CSS VARIABLES — Design Tokens
    ======================================================================== */
 :root {
+  color-scheme: light;
   /* ── Light Mode Colors ── */
   --color-primary: #073B4C;
   --color-secondary: #0E9F9A;
@@ -109,6 +110,7 @@
    2. DARK MODE
    ======================================================================== */
 [data-theme="dark"] {
+  color-scheme: dark;
   --color-primary: #0D4F5F;
   --color-secondary: #16B8B0;
   --color-accent: #D0A84B;
@@ -572,6 +574,26 @@ p {
   outline: none;
 }
 
+/* Date Input & Calendar Picker Indicator */
+input[type="date"] {
+  position: relative;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  opacity: 0.85;
+  transition: opacity var(--transition-fast);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+[data-theme="dark"] input[type="date"] {
+  color-scheme: dark;
+}
+
 .form-input.error,
 .form-select.error,
 .form-textarea.error {
@@ -916,6 +938,13 @@ p {
   margin-top: auto;
   padding-top: var(--space-6);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* At 768px, 1024px and tablet sizes, CTA is already in the navbar, so hide from hamburger menu */
+@media (min-width: 501px) {
+  .mobile-menu__actions {
+    display: none;
+  }
 }
 
 /* ========================================================================
