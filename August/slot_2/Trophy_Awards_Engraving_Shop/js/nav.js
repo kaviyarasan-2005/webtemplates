@@ -55,6 +55,18 @@
         hamburger.focus();
       }
     });
+
+    // Close on link click inside navMenu (e.g. CTA button or navigation links)
+    navMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (!link.classList.contains('nav__link--dropdown')) {
+          hamburger.setAttribute('aria-expanded', 'false');
+          hamburger.classList.remove('is-open');
+          navMenu.classList.remove('nav__menu--open');
+          document.body.classList.remove('nav-open');
+        }
+      });
+    });
   }
 
   /* ════════════════════════════════════════
