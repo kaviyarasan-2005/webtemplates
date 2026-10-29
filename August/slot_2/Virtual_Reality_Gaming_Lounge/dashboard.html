@@ -834,7 +834,56 @@
       border-color: rgba(8, 145, 178, 0.25);
     }
 
-    /* Bundle Selector */
+    /* Quick Top Up Card in Overview */
+    .quick-topup-card {
+      background: linear-gradient(150deg, rgba(139, 92, 246, 0.14) 0%, rgba(14, 20, 36, 0.95) 100%);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: var(--radius-lg);
+    }
+    [data-theme="light"] .quick-topup-card {
+      background: linear-gradient(150deg, rgba(139, 92, 246, 0.08) 0%, #FFFFFF 100%) !important;
+      border-color: rgba(139, 92, 246, 0.25) !important;
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.08) !important;
+    }
+    .quick-topup-card .dash-card-title i {
+      color: var(--clr-primary);
+    }
+    [data-theme="light"] .quick-topup-card .dash-card-title i {
+      color: #7C3AED;
+    }
+    .quick-topup-badge {
+      background: rgba(16, 185, 129, 0.18);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+    }
+    [data-theme="light"] .quick-topup-badge {
+      background: rgba(5, 150, 105, 0.12);
+      color: #047857;
+      border-color: rgba(5, 150, 105, 0.3);
+    }
+    .quick-topup-desc {
+      color: var(--clr-text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+    .quick-topup-desc strong {
+      color: var(--clr-text);
+      font-weight: 700;
+    }
+    [data-theme="light"] .quick-topup-desc {
+      color: #475569;
+    }
+    [data-theme="light"] .quick-topup-desc strong {
+      color: #0F172A;
+    }
+
+    /* Bundle Selector & Tiles Contrast Optimization */
     .bundle-selector {
       display: flex;
       flex-direction: column;
@@ -846,23 +895,76 @@
       justify-content: space-between;
       padding: 0.9rem 1.25rem;
       border-radius: var(--radius-md);
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       cursor: pointer;
       transition: all var(--transition-fast);
-    }
-    [data-theme="light"] .bundle-tile {
-      background: #F8FAFC;
-      border-color: #E2E8F0;
+      color: var(--clr-text);
     }
     .bundle-tile:hover {
-      border-color: var(--clr-primary);
-      background: rgba(139, 92, 246, 0.06);
+      border-color: rgba(139, 92, 246, 0.6);
+      background: rgba(139, 92, 246, 0.08);
     }
     .bundle-tile.selected {
-      border-color: var(--clr-primary);
-      background: rgba(139, 92, 246, 0.15);
+      border-color: #8B5CF6;
+      background: rgba(139, 92, 246, 0.18);
       box-shadow: 0 0 16px rgba(139, 92, 246, 0.25);
+    }
+    [data-theme="light"] .bundle-tile {
+      background: #FFFFFF;
+      border-color: #CBD5E1;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      color: #0F172A;
+    }
+    [data-theme="light"] .bundle-tile:hover {
+      background: #F8FAFC;
+      border-color: #7C3AED;
+    }
+    [data-theme="light"] .bundle-tile.selected {
+      background: #F5F3FF;
+      border-color: #7C3AED;
+      box-shadow: 0 0 16px rgba(124, 58, 237, 0.15);
+    }
+    .bundle-tile strong {
+      color: var(--clr-text);
+    }
+    [data-theme="light"] .bundle-tile strong {
+      color: #0F172A;
+    }
+    .bundle-tile .bundle-price {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--clr-text);
+    }
+    [data-theme="light"] .bundle-tile .bundle-price {
+      color: #0F172A;
+    }
+    .bundle-tile.selected .bundle-price,
+    .bundle-tile .bundle-price--accent {
+      color: #DDD6FE;
+    }
+    [data-theme="light"] .bundle-tile.selected .bundle-price,
+    [data-theme="light"] .bundle-tile .bundle-price--accent {
+      color: #6D28D9;
+    }
+    .bundle-tile .bundle-tag {
+      color: #34D399;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    [data-theme="light"] .bundle-tile .bundle-tag {
+      color: #047857;
+    }
+    .bundle-tile .bundle-sub {
+      color: var(--clr-text-muted);
+    }
+    [data-theme="light"] .bundle-tile .bundle-sub {
+      color: #64748B;
+    }
+    [data-theme="light"] .btn-primary {
+      background-color: #7C3AED;
     }
 
     /* Modal Styling */
@@ -1673,28 +1775,28 @@
           </div>
 
           <!-- Quick Top-Up Widget -->
-          <div class="dash-card" style="background:linear-gradient(150deg,rgba(139,92,246,0.12) 0%,rgba(14,20,36,0.95) 100%);border-color:rgba(139,92,246,0.3);">
+          <div class="dash-card quick-topup-card">
             <div class="dash-card-header">
-              <h3 class="dash-card-title"><i class="ph ph-wallet" style="color:var(--clr-primary);"></i> Quick Top Up</h3>
-              <span class="badge" style="background:rgba(16,185,129,0.12);color:var(--clr-success);">15% Off</span>
+              <h3 class="dash-card-title"><i class="ph ph-wallet"></i> Quick Top Up</h3>
+              <span class="badge quick-topup-badge">15% Off</span>
             </div>
-            <p class="text-small" style="color:var(--clr-text-muted);margin-bottom:1.25rem;">
+            <p class="text-small quick-topup-desc">
               You have <strong>4.5 hours</strong> remaining. Add more session hours seamlessly:
             </p>
             <div class="bundle-selector">
               <div class="bundle-tile selected" onclick="selectQuickBundle(this, 60)">
                 <div>
                   <strong style="font-size:0.95rem;display:block;">2 Hours Session</strong>
-                  <span class="text-small" style="color:var(--clr-text-muted);">Member Rate</span>
+                  <span class="text-small bundle-sub">Member Rate</span>
                 </div>
-                <strong style="font-size:1.15rem;color:var(--clr-primary);">$60</strong>
+                <strong class="bundle-price bundle-price--accent">$60</strong>
               </div>
               <div class="bundle-tile" onclick="selectQuickBundle(this, 140)">
                 <div>
                   <strong style="font-size:0.95rem;display:block;">5 Hours Bundle</strong>
-                  <span class="text-small" style="color:var(--clr-success);"><i class="ph ph-tag"></i> Save $10 &bull; $28/hr</span>
+                  <span class="text-small bundle-tag"><i class="ph ph-tag"></i> Save $10 &bull; $28/hr</span>
                 </div>
-                <strong style="font-size:1.15rem;color:var(--clr-text);">$140</strong>
+                <strong class="bundle-price">$140</strong>
               </div>
             </div>
             <button class="btn btn-primary w-full mt-4" onclick="switchSection('wallet')">
